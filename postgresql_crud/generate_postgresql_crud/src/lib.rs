@@ -960,6 +960,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let error_2_token_stream = token_patterns::Error2;
     let error_3_token_stream = token_patterns::Error3;
     // let curly_brace_space_filter_snake_case_space_curly_braces_token_stream = quote::quote! {{ #filter_snake_case }};
+    //todo rename
     let generate_query_vec_column_token_stream = |
         // operation: &Operation
     | {
@@ -2526,13 +2527,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             pub #field_ident: #as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream
         }
     });
-    let generate_try_operation_token_stream = |operation: &Operation,
-                                               operation_parameters_lifetime_token_stream: &dyn quote::ToTokens,
-                                               type_variants_from_request_response_syn_variants: &[syn::Variant],
-                                               result_ok_type_token_stream: &dyn quote::ToTokens,
-                                               payload_check_token_stream: &dyn quote::ToTokens,
-                                               desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &dyn quote::ToTokens|
-     -> proc_macro2::TokenStream {
+    let generate_try_operation_token_stream = |
+        operation: &Operation,
+        operation_parameters_lifetime_token_stream: &dyn quote::ToTokens,
+        type_variants_from_request_response_syn_variants: &[syn::Variant],
+        result_ok_type_token_stream: &dyn quote::ToTokens,
+        payload_check_token_stream: &dyn quote::ToTokens,
+        desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &dyn quote::ToTokens
+    | -> proc_macro2::TokenStream {
         let try_operation_snake_case = naming::parameter::TrySelfSnakeCase::from_display(operation);
         let try_operation_error_named_upper_camel_case = naming::parameter::TrySelfErrorNamedUpperCamelCase::from_display(operation);
         let operation_parameters_upper_camel_case = naming::parameter::SelfParametersUpperCamelCase::from_display(operation);
@@ -4626,6 +4628,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(non_existing_primary_keys_to_delete_syn_variant_wrapper.get_syn_variant());
                 value.push(non_existing_primary_keys_to_delete_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(not_unique_primary_key_to_delete_syn_variant_wrapper.get_syn_variant());
+                value.push(checked_add_syn_variant_wrapper.get_syn_variant());
                 not_unique_fields_syn_variants_wrappers.iter().for_each(|element| {
                     value.push(element.get_syn_variant());
                 });
@@ -4684,129 +4687,80 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         // #filter_not_unique_fields_token_stream
                     }
                 });
-                let expected_primary_keys_token_stream = quote::quote! {
-                    let #expected_primary_keys_snake_case = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident.clone();
-                };
                 let query_string_token_stream = {
-                    let additional_parameters_modification_token_stream = fields_without_primary_key.iter().map(|element| {
+                    let additional_parameters_modification_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
-                        let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {{{value_snake_case}}}"));
+                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                for #element_snake_case in #value_snake_case {
-                                    // match PostgresqlTypeWhereFilter::where_query_bind(
-                                    //     #element_snake_case,
-                                    //     &mut #increment_snake_case
-                                    // ) {
-                                    //     Ok(#value_snake_case) => {
-                                    //         let handle = format!(#handle_token_stream);
-                                    //         match additional_parameters.is_empty() {
-                                    //             true => {
-                                    //                 additional_parameters.push_str(&handle);
-                                    //             },
-                                    //             false => {
-                                    //                 additional_parameters.push_str(&format!(" AND {handle}"));//todo
-                                    //             },
-                                    //         }
-                                    //     },
-                                    //     Err(#error_0_token_stream) => {
-                                    //         todo!()
-                                    //     },
-                                    // }
-                                    todo!()
+                                match #postgresql_crud_postgresql_type_trait_postgresql_type_where_filter_where_query_part_token_stream(
+                                    #value_snake_case,
+                                    &mut increment,
+                                    &#field_ident_double_quotes_token_stream,
+                                    is_first_push_to_additional_parameters_already_happend,//todo generate is in proc macro (first element ignore)
+                                ) {
+                                    Ok(value) => {
+                                        additional_parameters.push_str(&value);
+                                        is_first_push_to_additional_parameters_already_happend = true;
+                                    }
+                                    Err(#error_0_token_stream) => {
+                                        #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    }
                                 }
                             }
                         }
                     });
-                    let additional_parameters_primary_key_modification_token_stream = {
-                        let handle_token_stream = {
-                            let handle_stringified = format!("\" {primary_key_field_ident} {in_snake_case} ({{}})\"");
-                            handle_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{handle_stringified} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                    let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {{}} returning {primary_key_field_ident}"));
+                    let by_snake_case = naming::BySnakeCase;
+                    let additional_parameters_order_by_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}{order_snake_case} {by_snake_case} {{}} {{}}"));
+                    let prefix_snake_case = naming::PrefixSnakeCase;
+                    let prefix_to_additional_parameters_token_stream = quote::quote! {
+                        let #prefix_snake_case = match additional_parameters.is_empty() {
+                            true => "",
+                            false => " ",
                         };
-                        quote::quote! {
-                            if let Some(#primary_key_field_ident) = &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
-                                if let false = additional_parameters.is_empty() {
-                                    additional_parameters.push_str(#space_and_double_quotes_token_stream);
-                                }
-                                additional_parameters.push_str(&format!(
-                                    #handle_token_stream,
-                                    {
-                                        let mut additional_parameters = #std_string_string::default();
-                                        for #element_snake_case in #primary_key_field_ident {
-                                            // match PostgresqlTypeWhereFilter::where_query_bind(
-                                            //     #element_snake_case,
-                                            //     &mut #increment_snake_case,
-                                            // ) {
-                                            //     Ok(#value_snake_case) => {
-                                            //         additional_parameters.push_str(&format!("{value},"));
-                                            //     }
-                                            //     Err(#error_0_token_stream) => {
-                                            //         todo!()
-                                            //     }
-                                            // }
-                                            todo!()
-                                        }
-                                        let _ = additional_parameters.pop();
-                                        additional_parameters
-                                    }
-                                ));
-                            }
-                        }
                     };
-                    let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {{}} {returning_primary_key_stringified}"));
+                    let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
-                        format!(
-                            #handle_token_stream,
-                            {
-                                #increment_initialization_token_stream
-                                let mut additional_parameters = #std_string_string::default();
-                                #(#additional_parameters_modification_token_stream)*
-                                #additional_parameters_primary_key_modification_token_stream
-                                additional_parameters
-                            }
-                        )
+                        {
+                            format!(
+                                #handle_token_stream,
+                                {
+                                    #increment_initialization_token_stream
+                                    //todo is all None then do not start with "where"
+                                    let mut additional_parameters = #std_string_string::from("where");
+                                    let mut is_first_push_to_additional_parameters_already_happend = false;
+                                    #(#additional_parameters_modification_token_stream)*
+                                    additional_parameters
+                                }
+                            )
+                        }
                     }
                 };
                 // println!("{query_string_token_stream}");
                 let binded_query_token_stream = {
-                    let binded_query_modifications_token_stream = fields_without_primary_key.iter().map(|element| {
+                    let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         quote::quote! {
                             if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
-                                // for #element_snake_case in #value_snake_case {
-                                //     #query_snake_case = PostgresqlTypeWhereFilter::where_query_bind(#element_snake_case, #query_snake_case);
-                                // }
-                                todo!()
+                                query = #postgresql_crud_postgresql_type_trait_postgresql_type_where_filter_where_query_bind_token_stream(
+                                    value,
+                                    query
+                                );
                             }
                         }
                     });
-                    let binded_query_primary_key_modifications_token_stream = quote::quote! {
-                        if let Some(#primary_key_field_ident) = #parameters_snake_case.#payload_snake_case.#primary_key_field_ident {
-                            // for #element_snake_case in #primary_key_field_ident {
-                            //     #query_snake_case = #PostgresqlTypeWhereFilter::where_query_bind(#element_snake_case, #query_snake_case);
-                            // }
-                            todo!()
-                        }
-                    };
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
                         #(#binded_query_modifications_token_stream)*
-                        #binded_query_primary_key_modifications_token_stream
                         #query_snake_case
                     }
                 };
-                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &{
-                    let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(&operation);
-                    let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(&operation, &error_snake_case);
-                    quote::quote! {
-                        #fetch_token_stream
-                        {
-                            if let Some(#error_snake_case) = #expected_primary_keys_snake_case {
-                                #non_existing_primary_keys_check_token_stream
-                            }
-                        }
-                    }
-                });
+                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
+                    &operation,
+                    &generate_create_update_delete_many_fetch_token_stream(&operation),
+                );
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 //     &ident_snake_case_stringified,
                 //     &unique_status_codes,
@@ -4819,7 +4773,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &expected_primary_keys_token_stream,
+                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -4897,17 +4851,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&naming::parameter::SelfPayloadUpperCamelCase::from_display(&operation), &proc_macro2::TokenStream::new(), &{
                 let primary_key_token_stream = {
                     quote::quote! {
-                        #primary_key_field_ident: Some(vec![
-                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                        ])
+                        #primary_key_field_ident: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                     }
                 };
                 let fields_without_primary_key_token_stream = fields_without_primary_key.iter().map(|element| {
                     let field_ident = &element.field_ident;
                     quote::quote! {
-                        #field_ident: Some(vec![
-                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                        ])
+                        #field_ident: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                     }
                 });
                 quote::quote! {
@@ -4928,7 +4878,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
+    //     &"delete_many",
     //     &delete_many_token_stream,
     // );
     let delete_one_token_stream = {
@@ -5141,7 +5091,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             //todo fix trait calls in update many comparing with update_one
             #update_many_token_stream
             #update_one_token_stream
-            //// #delete_many_token_stream
+            #delete_many_token_stream
             #delete_one_token_stream
         // // }
     };
