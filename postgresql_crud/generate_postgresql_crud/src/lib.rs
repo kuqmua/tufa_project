@@ -550,10 +550,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {#as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream #tokens}
     };
 
-    // let primary_key_field_type_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
+    //todo rewrite as postgresql primery key trait and use it type instead
     let primary_key_field_type_read_upper_camel_case = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_tokens_token_stream(&primary_key_field_type, &naming::ReadUpperCamelCase);
-    let primary_key_field_type_update_upper_camel_case = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_tokens_token_stream(&primary_key_field_type, &naming::UpdateUpperCamelCase);
-    let primary_key_field_type_delete_upper_camel_case = naming::parameter::SelfDeleteUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     // let contains_generic_json = {
     //     let mut contains_generic_json = false;
     //     for element in &syn_field_with_additional_info_fields_named {
@@ -1401,7 +1399,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
         ],
     );
-    let std_vec_vec_primary_key_field_type_update_syn_punctuated_punctuated = {
+    let std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated = {
         if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
             if let Some(last_path_segment) = value.path.segments.last() {
                 let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
@@ -1439,65 +1437,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             });
                                         }
                                         handle.push_value(syn::PathSegment {
-                                            ident: proc_macro2::Ident::new(&naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(), proc_macro2::Span::call_site()),
-                                            arguments: syn::PathArguments::None,
-                                        });
-                                        handle
-                                    },
-                                },
-                            })));
-                            handle
-                        },
-                        gt_token: syn::token::Gt { spans: [proc_macro2::Span::call_site()] },
-                    }),
-                });
-                handle
-            } else {
-                panic!("no last path segment");
-            }
-        } else {
-            panic!("primary key syn::Type in not syn::Type::Path");
-        }
-    };
-    let std_vec_vec_primary_key_field_type_delete_syn_punctuated_punctuated = {
-        if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
-            if let Some(last_path_segment) = value.path.segments.last() {
-                let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                handle.push_value(syn::PathSegment {
-                    ident: proc_macro2::Ident::new("std", proc_macro2::Span::call_site()),
-                    arguments: syn::PathArguments::None,
-                });
-                handle.push_punct(syn::token::PathSep {
-                    spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                });
-                handle.push_value(syn::PathSegment {
-                    ident: proc_macro2::Ident::new("vec", proc_macro2::Span::call_site()),
-                    arguments: syn::PathArguments::None,
-                });
-                handle.push_punct(syn::token::PathSep {
-                    spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                });
-                handle.push_value(syn::PathSegment {
-                    ident: proc_macro2::Ident::new("Vec", proc_macro2::Span::call_site()),
-                    arguments: syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
-                        colon2_token: None,
-                        lt_token: syn::token::Lt { spans: [proc_macro2::Span::call_site()] },
-                        args: {
-                            let mut handle = syn::punctuated::Punctuated::<syn::GenericArgument, syn::token::Comma>::new();
-                            handle.push(syn::GenericArgument::Type(syn::Type::Path(syn::TypePath {
-                                qself: None,
-                                path: syn::Path {
-                                    leading_colon: None,
-                                    segments: {
-                                        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                                        for element in value.path.segments.iter().rev().skip(1).rev() {
-                                            handle.push_value(element.clone());
-                                            handle.push_punct(syn::token::PathSep {
-                                                spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                                            });
-                                        }
-                                        handle.push_value(syn::PathSegment {
-                                            ident: proc_macro2::Ident::new(&naming::parameter::SelfDeleteUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(), proc_macro2::Span::call_site()),
+                                            ident: proc_macro2::Ident::new(&naming::parameter::SelfReadUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(), proc_macro2::Span::call_site()),
                                             arguments: syn::PathArguments::None,
                                         });
                                         handle
@@ -1523,7 +1463,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         vec![(
             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
             &naming::NonExistingPrimaryKeysSnakeCase,
-            std_vec_vec_primary_key_field_type_update_syn_punctuated_punctuated.clone(),
+            std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated.clone(),
         )],
     );
     let non_existing_primary_keys_update_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
@@ -1533,7 +1473,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (
                 macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
                 &naming::NonExistingPrimaryKeysSnakeCase,
-                std_vec_vec_primary_key_field_type_update_syn_punctuated_punctuated.clone(),
+                std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated.clone(),
             ),
             (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
         ],
@@ -1544,7 +1484,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         vec![(
             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
             &naming::NonExistingPrimaryKeysSnakeCase,
-            std_vec_vec_primary_key_field_type_delete_syn_punctuated_punctuated.clone(),
+            std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated.clone(),
         )],
     );
     let non_existing_primary_keys_delete_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
@@ -1554,7 +1494,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (
                 macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
                 &naming::NonExistingPrimaryKeysSnakeCase,
-                std_vec_vec_primary_key_field_type_delete_syn_punctuated_punctuated.clone(),
+                std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated.clone(),
             ),
             (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
         ],
@@ -1735,7 +1675,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         })],
     );
-    let not_unique_primary_key_update_syn_variant_wrapper = new_syn_variant_wrapper(
+    //todo use trait primary key and its type instead
+    let not_unique_primary_key_read_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::NotUniquePrimaryKeyUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
         vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming::NotUniquePrimaryKeySnakeCase, {
@@ -1749,33 +1690,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         });
                     }
                     handle.push_value(syn::PathSegment {
-                        ident: proc_macro2::Ident::new(&naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(), proc_macro2::Span::call_site()),
-                        arguments: syn::PathArguments::None,
-                    });
-                    handle
-                } else {
-                    panic!("no last path segment");
-                }
-            } else {
-                panic!("primary key syn::Type in not syn::Type::Path");
-            }
-        })],
-    );
-    let not_unique_primary_key_delete_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::NotUniquePrimaryKeyUpperCamelCase,
-        Some(macros_helpers::status_code::StatusCode::BadRequest400),
-        vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming::NotUniquePrimaryKeySnakeCase, {
-            if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
-                if let Some(last_path_segment) = value.path.segments.last() {
-                    let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                    for element in value.path.segments.iter().rev().skip(1).rev() {
-                        handle.push_value(element.clone());
-                        handle.push_punct(syn::token::PathSep {
-                            spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                        });
-                    }
-                    handle.push_value(syn::PathSegment {
-                        ident: proc_macro2::Ident::new(&naming::parameter::SelfDeleteUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(), proc_macro2::Span::call_site()),
+                        ident: proc_macro2::Ident::new(&naming::parameter::SelfReadUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(), proc_macro2::Span::call_site()),
                         arguments: syn::PathArguments::None,
                     });
                     handle
@@ -2814,9 +2729,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         generate_fetch_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &match operation {
-                    Operation::CreateMany => quote::quote! {#primary_key_field_type_read_upper_camel_case}, //todo maybe other parameters must be read too?
-                    Operation::UpdateMany => quote::quote! {#primary_key_field_type_update_upper_camel_case},
-                    Operation::DeleteMany => quote::quote! {#primary_key_field_type_delete_upper_camel_case},
+                    Operation::CreateMany |
+                    Operation::UpdateMany |
+                    Operation::DeleteMany => quote::quote! {#primary_key_field_type_read_upper_camel_case},
                     _ => panic!("supported only CreateMany, UpdateMany, DeleteMany"),
                 },
                 // &quote::quote! {Some(#primary_key_inner_type_token_stream(#value_snake_case))},
@@ -2830,9 +2745,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         generate_fetch_one_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &match operation {
-                    Operation::CreateOne => quote::quote! {#primary_key_field_type_read_upper_camel_case}, //todo maybe other must also be read
-                    Operation::UpdateOne => quote::quote! {#primary_key_field_type_update_upper_camel_case},
-                    Operation::DeleteOne => quote::quote! {#primary_key_field_type_delete_upper_camel_case},
+                    Operation::CreateOne |
+                    Operation::UpdateOne |
+                    Operation::DeleteOne => quote::quote! {#primary_key_field_type_read_upper_camel_case},
                     _ => panic!("supported only CreateOne, UpdateOne, DeleteOne"),
                 },
                 // &quote::quote! {#primary_key_inner_type_token_stream(#value_snake_case)},
@@ -4022,7 +3937,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(non_existing_primary_keys_update_syn_variant_wrapper.get_syn_variant());
                 value.push(non_existing_primary_keys_update_and_rollback_syn_variant_wrapper.get_syn_variant());
-                value.push(not_unique_primary_key_update_syn_variant_wrapper.get_syn_variant());
+                value.push(not_unique_primary_key_read_syn_variant_wrapper.get_syn_variant());
                 value.push(no_payload_fields_primary_key_syn_variant_wrapper.get_syn_variant());
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
                 value
@@ -4270,7 +4185,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(&operation, &{
                 let mut value = common_http_request_syn_variants.clone();
-                value.push(not_unique_primary_key_update_syn_variant_wrapper.get_syn_variant().clone());
+                value.push(not_unique_primary_key_read_syn_variant_wrapper.get_syn_variant().clone());
                 value
             });
             // println!("{try_operation_error_named_token_stream}");
@@ -4287,7 +4202,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         &quote::quote! {#element_snake_case.#primary_key_field_ident.clone()},
                         &{
                             let try_operation_error_named_upper_camel_case = naming::parameter::TrySelfErrorNamedUpperCamelCase::from_display(&operation);
-                            let not_unique_primary_key_syn_variant_initialization_token_stream = generate_initialization_token_stream(&not_unique_primary_key_update_syn_variant_wrapper, file!(), line!(), column!());
+                            let not_unique_primary_key_syn_variant_initialization_token_stream = generate_initialization_token_stream(&not_unique_primary_key_read_syn_variant_wrapper, file!(), line!(), column!());
                             quote::quote! {
                                 return Err(#try_operation_error_named_upper_camel_case::#not_unique_primary_key_syn_variant_initialization_token_stream);
                             }
@@ -4418,7 +4333,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                     &operation,
-                    &primary_key_field_type_update_upper_camel_case,
+                    &primary_key_field_type_read_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
                 );
             let try_operation_route_logic_token_stream = {
@@ -4553,7 +4468,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
-                &primary_key_field_type_update_upper_camel_case,
+                &primary_key_field_type_read_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
                 &value_snake_case,
             );
@@ -4622,7 +4537,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(non_existing_primary_keys_delete_syn_variant_wrapper.get_syn_variant());
                 value.push(non_existing_primary_keys_delete_and_rollback_syn_variant_wrapper.get_syn_variant());
-                value.push(not_unique_primary_key_delete_syn_variant_wrapper.get_syn_variant());
+                value.push(not_unique_primary_key_read_syn_variant_wrapper.get_syn_variant());
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
                 not_unique_fields_syn_variants_wrappers.iter().for_each(|element| {
                     value.push(element.get_syn_variant());
@@ -4876,7 +4791,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             generate_operation_payload_token_stream(
                 &operation,
                 &proc_macro2::TokenStream::new(),
-                &generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream(&naming::parameter::SelfDeleteUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty)),
+                &generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream(&naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty)),
             ),
         );
         // println!("{parameters_token_stream}");
@@ -4884,7 +4799,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                     &operation,
-                    &primary_key_field_type_delete_upper_camel_case,
+                    &primary_key_field_type_read_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
                 );
             let try_operation_route_logic_token_stream = {
@@ -4936,7 +4851,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
-                &primary_key_field_type_delete_upper_camel_case,
+                &primary_key_field_type_read_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
                 &value_snake_case,
             );
