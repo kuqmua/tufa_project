@@ -484,7 +484,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let ident_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident);
         let ident_update_error_named_upper_camel_case = naming::parameter::SelfUpdateErrorNamedUpperCamelCase::from_tokens(&ident);
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let postgresql_json_type_ident_option_to_update_try_generate_bind_increments_error_named_token_stream = {
+        let postgresql_json_type_ident_option_to_update_query_part_error_named_token_stream = {
             quote::quote! {
                 #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                 pub enum #ident_update_error_named_upper_camel_case {
@@ -593,7 +593,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #postgresql_json_type_ident_where_element_token_stream
             // #postgresql_json_type_ident_where_element_second_dimension_token_stream
             #ident_update_alias_token_stream
-            #postgresql_json_type_ident_option_to_update_try_generate_bind_increments_error_named_token_stream
+            #postgresql_json_type_ident_option_to_update_query_part_error_named_token_stream
             #impl_crate_postgresql_json_type_for_ident_token_stream
         };
         // println!("{}", quote::quote!{#ident});

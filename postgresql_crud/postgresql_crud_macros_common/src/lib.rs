@@ -111,9 +111,9 @@ where
     }
 }
 
-pub fn crate_try_generate_bind_increments_error_named_token_stream() -> proc_macro2::TokenStream {
-    let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-    quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
+pub fn crate_query_part_error_named_token_stream() -> proc_macro2::TokenStream {
+    let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+    quote::quote! {crate::#query_part_error_named_upper_camel_case}
 }
 
 pub fn generate_struct_ident_double_quotes_token_stream(postgresql_type_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens) -> proc_macro2::TokenStream {

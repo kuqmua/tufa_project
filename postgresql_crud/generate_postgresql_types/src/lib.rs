@@ -2285,7 +2285,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 }
             };
-            let crate_try_generate_bind_increments_error_named_token_stream = postgresql_crud_macros_common::crate_try_generate_bind_increments_error_named_token_stream();
+            let crate_query_part_error_named_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_token_stream();
             enum CanBePrimaryKey {
                 True,
                 False,
@@ -2913,7 +2913,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote!{"uuid_generate_v4()"});
                 type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);
                 //todo rename as query_part
-                let typical_try_generate_bind_increments_token_stream = {
+                let typical_query_part_token_stream = {
                     let acc_snake_case = naming::AccSnakeCase;
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
                     quote::quote! {
@@ -2924,7 +2924,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 #acc_snake_case.push_str(&format!(#format_handle_token_stream));
                             }
                             None => {
-                                return Err(#crate_try_generate_bind_increments_error_named_token_stream::#checked_add_upper_camel_case {
+                                return Err(#crate_query_part_error_named_token_stream::#checked_add_upper_camel_case {
                                     code_occurence: error_occurence_lib::code_occurence!(),
                                 });
                             }
@@ -2933,12 +2933,12 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 let (
-                    try_generate_bind_increments_create_token_stream,
+                    query_part_create_token_stream,
                     bind_value_to_query_create_token_stream,
                 ): Handle = {
                     let typical: Handle = {
                         (
-                            &typical_try_generate_bind_increments_token_stream,
+                            &typical_query_part_token_stream,
                             &typical_bind_value_to_query_token_stream
                         )
                     };
@@ -2999,7 +2999,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &postgresql_crud_macros_common::ImportPath::Crate,
                     &postgresql_type_not_null_or_nullable_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_create_upper_camel_case,
-                    &try_generate_bind_increments_create_token_stream,
+                    &query_part_create_token_stream,
                     &bind_value_to_query_create_token_stream,
                     &postgresql_type_not_null_or_nullable_select_upper_camel_case,
                     &quote::quote!{#column_snake_case.to_string()},
@@ -3007,10 +3007,10 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &postgresql_type_not_null_or_nullable_read_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_update_upper_camel_case,
                     &{
-                        let try_generate_bind_increments_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-                        quote::quote! {crate::#try_generate_bind_increments_error_named_upper_camel_case}
+                        let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+                        quote::quote! {crate::#query_part_error_named_upper_camel_case}
                     },
-                    &typical_try_generate_bind_increments_token_stream,
+                    &typical_query_part_token_stream,
                     &typical_bind_value_to_query_token_stream
                 )
             };

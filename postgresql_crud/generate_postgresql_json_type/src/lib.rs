@@ -1569,7 +1569,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let generate_tokens_to_update_methods_token_stream = |
         struct_token_stream: &dyn quote::ToTokens,
         //todo rename
-        tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream: &dyn quote::ToTokens,
+        tokens_query_part_error_named_upper_camel_case_token_stream: &dyn quote::ToTokens,
         update_query_part_token_stream: &dyn quote::ToTokens,
         update_query_bind_token_stream: &dyn quote::ToTokens,
     |{
@@ -1581,7 +1581,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     #jsonb_set_target_snake_case: &std::primitive::str,
                     #jsonb_set_path_snake_case: &std::primitive::str,
                     #increment_snake_case: &mut std::primitive::u64,
-                ) -> Result<std::string::String, #tokens_try_generate_bind_increments_error_named_upper_camel_case_token_stream> {
+                ) -> Result<std::string::String, #tokens_query_part_error_named_upper_camel_case_token_stream> {
                     #update_query_part_token_stream
                 }
                 fn #update_query_bind_snake_case(self, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -2066,7 +2066,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 &ident_update_error_named_upper_camel_case,
                 &{
                     let generate_jsonb_set_path_snake_case = naming::GenerateJsonbSetPathSnakeCase;
-                    let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
+                    let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
                         let field_ident_stringified = element
                             .ident
                             .as_ref()
@@ -2114,7 +2114,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let mut local_acc = format!(#local_acc_format_handle_token_stream);
                         for element in &self.0 {
                             match &element {
-                                #(#try_generate_bind_increments_variants_token_stream),*
+                                #(#query_part_variants_token_stream),*
                             }
                         }
                         Ok(local_acc)
@@ -3765,7 +3765,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         &struct_ident_token_stream,
                         &ident_json_array_change_try_generate_error_named_upper_camel_case,
                         &{
-                            let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
+                            let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
                                     .as_ref()
@@ -3841,7 +3841,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                             };
                                             for element in &element_handle.fields.0 {
                                                 match element {
-                                                    #(#try_generate_bind_increments_variants_token_stream),*
+                                                    #(#query_part_variants_token_stream),*
                                                 }
                                             }
                                             update_query_part_acc.push_str(&format!(#update_push_str_format_handle_token_stream));
@@ -4300,7 +4300,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                                 &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{object_acc_snake_case}}})")
                             );
-                            let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
+                            let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
                                     .as_ref()
@@ -4344,7 +4344,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #generate_jsonb_set_target_token_stream
                                 for element in &#value_snake_case.0.0 {
                                     match element {
-                                        #(#try_generate_bind_increments_variants_token_stream),*
+                                        #(#query_part_variants_token_stream),*
                                     }
                                 }
                                 if #jsonb_set_accumulator_snake_case.is_empty() && #jsonb_set_path_snake_case.is_empty() {
@@ -4360,7 +4360,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                                 &format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{std_option_option_object_acc_snake_case}}})")
                             );
-                            let try_generate_bind_increments_variants_token_stream = vec_syn_field.iter().map(|element| {
+                            let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
                                     .as_ref()
@@ -4406,7 +4406,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         #generate_jsonb_set_target_token_stream
                                         for element in &value.0 {
                                             match element {
-                                                #(#try_generate_bind_increments_variants_token_stream),*
+                                                #(#query_part_variants_token_stream),*
                                             }
                                         }
                                         if #jsonb_set_accumulator_snake_case.is_empty() && #jsonb_set_path_snake_case.is_empty() {

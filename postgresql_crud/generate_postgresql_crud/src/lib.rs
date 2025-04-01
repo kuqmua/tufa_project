@@ -3396,7 +3396,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                         &format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} ({column_increments}) {returning_primary_key_stringified}")
                     );
-                    let try_generate_bind_increments = fields.iter().map(|element| {
+                    let query_part_token_stream = fields.iter().map(|element| {
                         let element_field_ident = &element.field_ident;
                         let as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
                             &element.syn_field.ty
@@ -3422,7 +3422,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let mut increment: std::primitive::u64 = 0;
                             format!(
                                 #format_handle_token_stream,
-                                #(#try_generate_bind_increments),*
+                                #(#query_part_token_stream),*
                             )
                         }
                     }
