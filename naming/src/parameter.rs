@@ -27,7 +27,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "create"],
     ["self", "read"],
     ["self", "update"],
-    ["self", "to", "delete"],
+    ["self", "delete"],
     ["object", "self"],
     ["std", "option", "option", "object", "self"],
     ["object", "with", "id", "self"],
