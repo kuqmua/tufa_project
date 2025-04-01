@@ -19,7 +19,5 @@ pub trait PostgresqlTypeWhereFilter<'a> {
 }
 
 pub trait PostgresqlTypePrimaryKey {
-    type PrimaryKey: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> sqlx::Decode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
-    fn query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
-    fn query_bind(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    type PrimaryKey;
 }
