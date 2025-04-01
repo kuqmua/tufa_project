@@ -2642,7 +2642,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             //         #impl_error_occurence_lib_to_std_string_string_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
             //         #impl_sqlx_decode_sqlx_postgres_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
             //         #impl_sqlx_type_sqlx_postgres_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
-            //         #impl_crate_bind_query_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
             //         #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_delete_token_stream
             //     }
             // };
