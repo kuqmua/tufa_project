@@ -2623,10 +2623,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             if is_relevant_only_for_not_null {
                                 &postgresql_type_not_null_upper_camel_case
                             } else {
-                                // &postgresql_type_not_null_upper_camel_case
-                                &postgresql_type_not_null_or_nullable_upper_camel_case //todo
+                                &postgresql_type_not_null_or_nullable_upper_camel_case
                             }
-                        }, //todo
+                        },
                         &postgresql_type_not_null_or_nullable_upper_camel_case,
                         &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
                     )
@@ -2794,7 +2793,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let ok_std_string_string_from_default_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"DEFAULT"});
                 let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"uuid_generate_v4()"});
                 type Handle<'a> = (&'a dyn quote::ToTokens, &'a dyn quote::ToTokens);
-                //todo rename as query_part
                 let typical_query_part_token_stream = {
                     let acc_snake_case = naming::AccSnakeCase;
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
