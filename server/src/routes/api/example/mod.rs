@@ -27,8 +27,8 @@ fn crud(app_state: common::repositories_types::server::routes::app_state::DynArc
         //todo generate axum::Router and make it pub instead of create_many -like router handlers
         .route("/create_many", axum::routing::post(common::repositories_types::server::routes::api::example::try_create_many_route_logic))
         .route("/create_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::create_many_payload_example_route_logic))
-        // .route("/create_one", axum::routing::post(common::repositories_types::server::routes::api::example::try_create_one_route_logic))
-        // .route("/create_one_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::create_one_payload_example_route_logic))
+        .route("/create_one", axum::routing::post(common::repositories_types::server::routes::api::example::try_create_one_route_logic))
+        .route("/create_one_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::create_one_payload_example_route_logic))
         .route("/read_many", axum::routing::post(common::repositories_types::server::routes::api::example::try_read_many_route_logic))
         .route("/read_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::read_many_payload_example_route_logic))
         .route("/read_one", axum::routing::post(common::repositories_types::server::routes::api::example::try_read_one_route_logic))

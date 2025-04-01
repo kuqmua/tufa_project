@@ -1582,10 +1582,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let status_code_snake_case = naming::StatusCodeSnakeCase;
     let body_snake_case = naming::BodySnakeCase;
 
-    // let std_vec_vec_primary_key_field_type_create_token_stream = quote::quote! {std::vec::Vec::<#postgresql_type_primary_key_field_type_create_upper_camel_case>};
+    //todo make primarykey trait and use it here instead
     let std_vec_vec_primary_key_field_type_read_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_read_upper_camel_case>};
-    let std_vec_vec_primary_key_field_type_update_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_update_upper_camel_case>};
-    let std_vec_vec_primary_key_field_type_delete_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_delete_upper_camel_case>};
 
     let std_vec_vec_struct_options_ident_token_stream = quote::quote! {std::vec::Vec::<#ident_options_upper_camel_case>};
     // //todo rename not_unique_column to something what mean json tree getter too
@@ -4042,7 +4040,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                     &operation,
-                    &std_vec_vec_primary_key_field_type_update_token_stream,
+                    &std_vec_vec_primary_key_field_type_read_token_stream,
                     &type_variants_from_request_response_syn_variants,
                 );
             // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
@@ -4077,7 +4075,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .0
                         .iter()
                         .map(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
-                        .collect::<#std_vec_vec_primary_key_field_type_update_token_stream>();
+                        .collect::<#std_vec_vec_primary_key_field_type_read_token_stream>();
                 };
                 let query_string_token_stream = {
                     let query_start_token_stream = generate_quotes::double_quotes_token_stream(&format!("{update_snake_case} {ident_snake_case_stringified} {set_snake_case} "));
@@ -4280,7 +4278,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
-                &std_vec_vec_primary_key_field_type_update_token_stream,
+                &std_vec_vec_primary_key_field_type_read_token_stream,
                 &{
                     let filter_not_unique_primary_key_token_stream = generate_filter_not_unique_token_stream(
                         &quote::quote! {&#parameters_snake_case.#payload_snake_case.0},
@@ -4644,7 +4642,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                     &operation,
-                    &std_vec_vec_primary_key_field_type_delete_token_stream,
+                    &std_vec_vec_primary_key_field_type_read_token_stream,
                     &type_variants_from_request_response_syn_variants,
                 );
             // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
@@ -4780,7 +4778,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
-                &std_vec_vec_primary_key_field_type_delete_token_stream,
+                &std_vec_vec_primary_key_field_type_read_token_stream,
                 &proc_macro2::TokenStream::new(), //todo maybe add filter on not unique primary key like in read_many ?
                 &value_snake_case,
             );
