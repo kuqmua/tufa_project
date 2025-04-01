@@ -4336,6 +4336,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_type_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream(
                             &element.syn_field.ty
                         );
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                            &operation,
+                            &checked_add_syn_variant_wrapper,
+                            file!(),
+                            line!(),
+                            column!()
+                        );
                         quote::quote! {
                             {
                                 let mut #is_field_ident_update_exists_snake_case = false;
@@ -4360,7 +4367,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 ) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_0_token_stream) => {
-                                                        todo!()
+                                                        #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     }
                                                 },
                                                 match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream #update_query_part_snake_case(
@@ -4372,7 +4379,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 ) {
                                                     Ok(#value_snake_case) => #value_snake_case,
                                                     Err(#error_0_token_stream) => {
-                                                        todo!()
+                                                        #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                                     }
                                                 }
                                             ));
