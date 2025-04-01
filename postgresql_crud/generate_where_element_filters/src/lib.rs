@@ -60,6 +60,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
         }
     };
+    let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
     let generate_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
         quote::quote!{
             match increment.checked_add(1) {
@@ -67,7 +68,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     *increment = value;
                     Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
                 }
-                None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
             }
         }
     };
@@ -621,10 +622,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                         let and_snake_case = naming::AndSnakeCase;
                                         Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                                     }
-                                    None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                 }
                             }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
                     &quote::quote!{
@@ -648,7 +649,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     acc.push_str(&format!("${},", value));
                                 }
                                 None => {
-                                    return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
                                 }
                             }
                         }
@@ -756,7 +757,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 *increment = value;
                                 Ok(format!("{}(encode({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, &self.encode_format, increment))
                             }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
                     &quote::quote!{
@@ -837,7 +838,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 *increment = value;
                                 Ok(format!("{}(upper({}) - lower({}) = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, column, increment))
                             }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
                     &query_bind_one_value_token_stream
@@ -1194,10 +1195,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                         let and_snake_case = naming::AndSnakeCase;
                                         Ok(format!("{}({column} {between_snake_case} ${first_value} {and_snake_case} ${second_value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
                                     }
-                                    None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                 }
                             }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
                     &quote::quote!{
@@ -1221,7 +1222,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     acc.push_str(&format!("${},", value));
                                 }
                                 None => {
-                                    return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
                                 }
                             }
                         }
@@ -1283,10 +1284,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                         *increment = second_increment;
                                         Ok(format!("{}({}->${} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
                                     }
-                                    None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                 }
                             }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
                     &quote::quote!{
@@ -1314,10 +1315,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                         *increment = second_increment;
                                         Ok(format!("{}({}->${} > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
                                     }
-                                    None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                 }
                             }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
                     &quote::quote!{
@@ -1345,10 +1346,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                         *increment = second_increment;
                                         Ok(format!("{}({}->>${} ~ ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
                                     }
-                                    None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                 }
                             }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
                     &quote::quote!{
@@ -1376,10 +1377,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                         *increment = second_increment;
                                         Ok(format!("{}({}->>${} ~* ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
                                     }
-                                    None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                 }
                             }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
                     &quote::quote!{

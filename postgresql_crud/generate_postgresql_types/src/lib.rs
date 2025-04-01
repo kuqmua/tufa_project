@@ -2329,26 +2329,29 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     #query_snake_case
                 },
             };
+            let postgresql_crud_macros_common_import_path_crate = postgresql_crud_macros_common::ImportPath::Crate;
             let maybe_impl_postgresql_type_where_filter_for_ident_if_can_be_primary_key_token_stream = if let (CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
                 postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
                     &quote::quote! {<'a>},
                     &postgresql_type_not_null_upper_camel_case,
                     &proc_macro2::TokenStream::new(),
-                    &quote::quote! {
-                        //todo maybe reuse this code from equal filter ?
-                        match #increment_snake_case.checked_add(1) {
-                            Some(value) => {
-                                *#increment_snake_case = value;
-                                Ok(format!("({} = ${})", column, #increment_snake_case))
+                    &{
+                        let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
+                        quote::quote! {
+                            match #increment_snake_case.checked_add(1) {
+                                Some(value) => {
+                                    *#increment_snake_case = value;
+                                    Ok(format!("({} = ${})", column, #increment_snake_case))
+                                }
+                                None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                             }
-                            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
                     },
                     &quote::quote! {
                         let value = self;//todo refactor?
                         #typical_query_bind_token_stream
                     },
-                    &postgresql_crud_macros_common::ImportPath::Crate, //todo reuse it
+                    &postgresql_crud_macros_common_import_path_crate,
                 )
             } else {
                 proc_macro2::TokenStream::new()
@@ -2827,7 +2830,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     }
                 };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
-                    &postgresql_crud_macros_common::ImportPath::Crate,
+                    &postgresql_crud_macros_common_import_path_crate,
                     &postgresql_type_not_null_or_nullable_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_create_upper_camel_case,
                     &query_part_create_token_stream,

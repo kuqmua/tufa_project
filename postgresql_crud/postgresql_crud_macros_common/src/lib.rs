@@ -767,3 +767,7 @@ pub fn generate_create_table_column_query_part_token_stream(
         }
     }
 }
+
+pub fn crate_query_part_error_named_checked_add_initialization_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
+}
