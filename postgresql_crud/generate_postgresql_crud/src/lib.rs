@@ -4741,9 +4741,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             column!()
                         );
                         quote::quote! {
-                            match <#primary_key_field_type as postgresql_crud::postgresql_type_trait::PostgresqlType>::#update_query_part_snake_case(
+                            match #primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_trait_postgresql_type_token_stream #update_query_part_snake_case(
                                 &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
-                                // &#primary_key_field_ident_double_quotes_token_stream,
                                 &"",
                                 &#primary_key_field_ident_double_quotes_token_stream,
                                 &"",
