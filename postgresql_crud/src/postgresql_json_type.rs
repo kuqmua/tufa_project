@@ -52,7 +52,7 @@ generate_postgresql_json_types::generate_postgresql_json_types!();
 //     }
 // }
 // impl crate::postgresql_type_trait::PostgresqlTypeWhereFilter<'_> for StdVecVecStdVecVecUuidUuidWhereElementEqual {
-//     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+//     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         match increment.checked_add(1) {
 //             Some(value) => {
 //                 *increment = value;
@@ -61,7 +61,7 @@ generate_postgresql_json_types::generate_postgresql_json_types!();
 //             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
 //         }
 //     }
-//     fn where_query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//     fn query_bind<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         query = query.bind(sqlx::types::Json(self.value));
 //         query
 //     }
@@ -72,14 +72,14 @@ generate_postgresql_json_types::generate_postgresql_json_types!();
 //     Equal(StdVecVecStdVecVecUuidUuidWhereElementEqual),
 // }
 // impl crate::postgresql_type_trait::PostgresqlTypeWhereFilter<'_> for StdVecVecStdVecVecUuidUuidWhereElement {
-//     fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+//     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         match &self {
-//             Self::Equal(value) => crate::postgresql_type_trait::PostgresqlTypeWhereFilter::where_query_part(value, increment, column, is_need_to_add_logical_operator),
+//             Self::Equal(value) => crate::postgresql_type_trait::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
 //         }
 //     }
-//     fn where_query_bind<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//     fn query_bind<'a>(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
 //         match self {
-//             Self::Equal(value) => crate::postgresql_type_trait::PostgresqlTypeWhereFilter::where_query_bind(value, query),
+//             Self::Equal(value) => crate::postgresql_type_trait::PostgresqlTypeWhereFilter::query_bind(value, query),
 //         }
 //     }
 // }

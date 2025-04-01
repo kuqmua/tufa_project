@@ -1049,11 +1049,11 @@ const _: () = {
     }
 };
 impl<'a, PostgresqlTypeWhereElement: crate::postgresql_type_trait::PostgresqlTypeWhereFilter<'a>> crate::postgresql_type_trait::PostgresqlTypeWhereFilter<'a> for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
-    fn where_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
         let mut is_need_to_add_logical_operator_inner_handle = false;
         for element in &self.value {
-            match crate::postgresql_type_trait::PostgresqlTypeWhereFilter::where_query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+            match crate::postgresql_type_trait::PostgresqlTypeWhereFilter::query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
                 Ok(value) => {
                     acc.push_str(&format!("{value} "));
                     is_need_to_add_logical_operator_inner_handle = true;
@@ -1066,9 +1066,9 @@ impl<'a, PostgresqlTypeWhereElement: crate::postgresql_type_trait::PostgresqlTyp
         let _ = acc.pop();
         Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
     }
-    fn where_query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.value {
-            query = crate::postgresql_type_trait::PostgresqlTypeWhereFilter::where_query_bind(element, query);
+            query = crate::postgresql_type_trait::PostgresqlTypeWhereFilter::query_bind(element, query);
         }
         query
     }

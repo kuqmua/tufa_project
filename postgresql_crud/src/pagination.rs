@@ -202,7 +202,7 @@ impl Pagination {
 }
 //for Read in GeneratePostgresqlCrud
 impl<'a> crate::PostgresqlTypeWhereFilter<'a> for Pagination {
-    fn where_query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(limit_increment) => {
                 *increment = limit_increment;
@@ -217,7 +217,7 @@ impl<'a> crate::PostgresqlTypeWhereFilter<'a> for Pagination {
             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
     }
-    fn where_query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(self.limit);
         query = query.bind(self.offset);
         query

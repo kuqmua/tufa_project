@@ -53,7 +53,7 @@ where
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeWhereFilter::where_query_part(
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeWhereFilter::query_part(
                         #value_snake_case,
                         #increment_snake_case,
                         #column_snake_case,
@@ -71,7 +71,7 @@ where
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
                 quote::quote! {
-                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeWhereFilter::where_query_bind(
+                    Self::#element_upper_camel_case(#value_snake_case) => crate::postgresql_type_trait::PostgresqlTypeWhereFilter::query_bind(
                         #value_snake_case,
                         #query_snake_case
                     )
@@ -597,8 +597,8 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     impl_generic_token_stream: &dyn quote::ToTokens,
     ident_token_stream: &dyn quote::ToTokens,
     ident_generic_token_stream: &dyn quote::ToTokens,
-    where_query_part_content_token_stream: &dyn quote::ToTokens,
-    where_query_bind_content_token_stream: &dyn quote::ToTokens,
+    query_part_content_token_stream: &dyn quote::ToTokens,
+    query_bind_content_token_stream: &dyn quote::ToTokens,
     import_path: &ImportPath,
 ) -> proc_macro2::TokenStream {
     let increment_snake_case = naming::IncrementSnakeCase;
@@ -609,21 +609,21 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
     let std_string_string_token_stream = token_patterns::StdStringString;
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-    let where_query_part_snake_case = naming::WhereQueryPartSnakeCase;
-    let where_query_bind_snake_case = naming::WhereQueryBindSnakeCase;
+    let query_part_snake_case = naming::QueryPartSnakeCase;
+    let query_bind_snake_case = naming::QueryBindSnakeCase;
     let postgresql_type_where_filter_upper_camel_case = naming::PostgresqlTypeWhereFilterUpperCamelCase;
     quote::quote!{
         impl #impl_generic_token_stream #import_path ::postgresql_type_trait::#postgresql_type_where_filter_upper_camel_case<'a> for #ident_token_stream #ident_generic_token_stream {
-            fn #where_query_part_snake_case(
+            fn #query_part_snake_case(
                 &self,
                 #increment_snake_case: &mut #std_primitive_u64_token_stream,
                 #column_snake_case: &dyn #std_fmt_display_token_stream,
                 #is_need_to_add_logical_operator_snake_case: #std_primitive_bool_token_stream
             ) -> Result<#std_string_string_token_stream, #import_path::#query_part_error_named_upper_camel_case> {
-                #where_query_part_content_token_stream
+                #query_part_content_token_stream
             }
-            fn #where_query_bind_snake_case(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                #where_query_bind_content_token_stream
+            fn #query_bind_snake_case(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                #query_bind_content_token_stream
             }
         }
     }

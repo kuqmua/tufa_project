@@ -55,12 +55,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote!{
         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
     };
-    let generate_where_query_part_zero_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
+    let generate_query_part_zero_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
         quote::quote!{
             Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
         }
     };
-    let generate_where_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
+    let generate_query_part_one_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
         quote::quote!{
             match increment.checked_add(1) {
                 Some(value) => {
@@ -503,8 +503,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         filter_type: &FilterType,
         should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
         ident: &dyn quote::ToTokens,
-        where_query_part_content_token_stream: &dyn quote::ToTokens,
-        where_query_bind_content_token_stream: &dyn quote::ToTokens,
+        query_part_content_token_stream: &dyn quote::ToTokens,
+        query_bind_content_token_stream: &dyn quote::ToTokens,
     |{
         postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
             &{
@@ -522,8 +522,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
             },
-            &where_query_part_content_token_stream,
-            &where_query_bind_content_token_stream,
+            &query_part_content_token_stream,
+            &query_bind_content_token_stream,
             &postgresql_crud_macros_common::ImportPath::Crate,
         )
     };
@@ -575,7 +575,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter|{
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
-            let where_query_bind_one_value_token_stream = quote::quote!{
+            let query_bind_one_value_token_stream = quote::quote!{
                 query = query.bind(self.value);
                 query
             };
@@ -583,22 +583,22 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
                 impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
-                where_query_part_content_token_stream,
-                where_query_bind_content_token_stream,
+                query_part_content_token_stream,
+                query_bind_content_token_stream,
             ) = match &filter {
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Equal => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
-                    &where_query_bind_one_value_token_stream,
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
+                    &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
-                    &where_query_bind_one_value_token_stream,
+                    &generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
+                    &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Between => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -667,78 +667,78 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Before => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("<")),
-                    &where_query_bind_one_value_token_stream,
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("<")),
+                    &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_date)"}),
+                    &generate_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_date)"}),
                     &quote::quote!{#query_snake_case},
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_date)"}),
+                    &generate_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_date)"}),
                     &quote::quote!{#query_snake_case},
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_timestamp)"}),
+                    &generate_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_timestamp)"}),
                     &quote::quote!{#query_snake_case},
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_timestamp)"}),
+                    &generate_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_timestamp)"}),
                     &quote::quote!{#query_snake_case},
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_time)"}),
+                    &generate_query_part_zero_value_token_stream(&quote::quote!{"{}({} = current_time)"}),
                     &quote::quote!{#query_snake_case},
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &proc_macro2_token_stream_new,
                     &proc_macro2_token_stream_new,
-                    &generate_where_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_time)"}),
+                    &generate_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_time)"}),
                     &quote::quote!{#query_snake_case},
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) = ${})"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) = ${})"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -768,64 +768,64 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&>")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&>")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(lower({}) = ${})"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(lower({}) = ${})"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(upper({}) = ${})"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(upper({}) = ${})"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("-|-")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("-|-")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
@@ -840,7 +840,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                         }
                     },
-                    &where_query_bind_one_value_token_stream
+                    &query_bind_one_value_token_stream
                 ),
             };
             let filter_initialized_with_try_new_result = PostgresqlTypeFilterInitializedWithTryNew::try_from(filter);
@@ -1079,8 +1079,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &FilterType::PostgresqlType,
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
-                &where_query_part_content_token_stream,
-                &where_query_bind_content_token_stream,
+                &query_part_content_token_stream,
+                &query_bind_content_token_stream,
             );
             quote::quote! {
                 #struct_token_stream
@@ -1148,7 +1148,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter|{
             let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             let ident_try_new_error_named = naming::parameter::PostgresqlJsonTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
-            let where_query_bind_one_value_token_stream = quote::quote!{
+            let query_bind_one_value_token_stream = quote::quote!{
                 query = query.bind(sqlx::types::Json(self.value));
                 query
             };
@@ -1156,22 +1156,22 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
                 impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
-                where_query_part_content_token_stream,
-                where_query_bind_content_token_stream,
+                query_part_content_token_stream,
+                query_bind_content_token_stream,
             ) = match &filter {
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
-                    &where_query_bind_one_value_token_stream,
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
+                    &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
-                    &where_query_bind_one_value_token_stream,
+                    &generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
+                    &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -1240,29 +1240,29 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) = ${})"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) = ${})"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -1394,8 +1394,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &generate_where_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
+                    &query_bind_one_value_token_stream
                 ),
                 // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainedInArray => todo!(),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray => (
@@ -1404,8 +1404,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -1413,8 +1413,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -1422,8 +1422,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -1431,36 +1431,36 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
                     },
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <= ${}))"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <= ${}))"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~ ${}))"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~ ${}))"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~* ${}))"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~* ${}))"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !~ ${}))"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !~ ${}))"}),
+                    &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_where_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !~* ${}))"}),
-                    &where_query_bind_one_value_token_stream
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !~* ${}))"}),
+                    &query_bind_one_value_token_stream
                 ),
             };
             let filter_initialized_with_try_new_result = PostgresqlJsonTypeFilterInitializedWithTryNew::try_from(filter);
@@ -1940,8 +1940,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &FilterType::PostgresqlJsonType,
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
-                &where_query_part_content_token_stream,
-                &where_query_bind_content_token_stream,
+                &query_part_content_token_stream,
+                &query_bind_content_token_stream,
             );
             quote::quote! {
                 #struct_token_stream
