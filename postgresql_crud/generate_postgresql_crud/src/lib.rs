@@ -4962,12 +4962,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let binded_query_token_stream = {
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
-                        // #query_snake_case = PostgresqlTypeWhereFilter::where_query_bind(
-                        //     #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
-                        //     #query_snake_case
-                        // );
-                        // #query_snake_case
-                        todo!()
+                        #query_snake_case = postgresql_crud::PostgresqlTypeWhereFilter::where_query_bind(
+                            #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
+                            #query_snake_case
+                        );
+                        #query_snake_case
                     }
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_one_fetch_token_stream(&operation));
@@ -5054,7 +5053,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
+    //     &"DeleteOne",
     //     &delete_one_token_stream,
     // );
     // // let emulate_crud_api_usage_test_token_stream = {
@@ -5143,7 +5142,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #update_many_token_stream
             #update_one_token_stream
             //// #delete_many_token_stream
-            // #delete_one_token_stream
+            #delete_one_token_stream
         // // }
     };
     // println!("{generated}");
