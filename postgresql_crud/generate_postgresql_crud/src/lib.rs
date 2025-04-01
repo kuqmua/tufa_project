@@ -1577,9 +1577,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
     let increment_snake_case = naming::IncrementSnakeCase;
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
-    let and_snake_case = naming::AndSnakeCase;
     let order_by_snake_case = naming::OrderBySnakeCase;
-    let in_snake_case = naming::InSnakeCase;
     let response_snake_case = naming::ResponseSnakeCase;
     let status_code_snake_case = naming::StatusCodeSnakeCase;
     let body_snake_case = naming::BodySnakeCase;
@@ -2846,7 +2844,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_match_postgres_transaction_rollback_await_token_stream(operation, file!(), line!(), column!(), file!(), line!(), column!()),
         )
     };
-    let space_and_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!(" {and_snake_case}"));
     let generate_operation_payload_example_route_logic_token_stream = |operation: &Operation| {
         let operation_payload_example_route_logic_snake_case = naming::parameter::SelfPayloadExampleRouteLogicSnakeCase::from_display(operation);
         let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(
@@ -4712,16 +4709,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     });
                     let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {{}} returning {primary_key_field_ident}"));
-                    let by_snake_case = naming::BySnakeCase;
-                    let additional_parameters_order_by_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}{order_snake_case} {by_snake_case} {{}} {{}}"));
-                    let prefix_snake_case = naming::PrefixSnakeCase;
-                    let prefix_to_additional_parameters_token_stream = quote::quote! {
-                        let #prefix_snake_case = match additional_parameters.is_empty() {
-                            true => "",
-                            false => " ",
-                        };
-                    };
-                    let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         {
                             format!(
