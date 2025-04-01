@@ -41,10 +41,30 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
     let postgersql_crud_pagination_token_stream = quote::quote! {#postgresql_crud_path_token_stream Pagination};
 
-    let postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream = quote::quote! {#postgresql_crud_path_token_stream postgresql_json_type::UuidUuid};
-    let postgresql_crud_path_postgresql_json_type_uuid_uuid_select_token_stream = quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::UuidUuidSelect};
-    let postgresql_crud_path_postgresql_json_type_uuid_uuid_read_token_stream = quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::UuidUuidRead};
-    let postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream = quote::quote! {#postgresql_crud_path_token_stream postgresql_json_type::UuidUuidUpdate};
+    let (
+        postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream,
+        postgresql_crud_path_postgresql_json_type_uuid_uuid_select_token_stream,
+        postgresql_crud_path_postgresql_json_type_uuid_uuid_read_token_stream,
+        postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream
+    ) = {
+        let path_token_stream = quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type::};
+        let uuid_uuid_token_stream = quote::quote!{UuidUuid};
+        (
+            quote::quote! {#path_token_stream UuidUuid},
+            {
+                let uuid_uuid_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&uuid_uuid_token_stream);
+                quote::quote! {#path_token_stream #uuid_uuid_select_upper_camel_case}
+            },
+            {
+                let uuid_uuid_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&uuid_uuid_token_stream);
+                quote::quote! {#path_token_stream #uuid_uuid_read_upper_camel_case}
+            },
+            {
+                let uuid_uuid_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&uuid_uuid_token_stream);
+                quote::quote! {#path_token_stream #uuid_uuid_select_upper_camel_case}
+            },
+        )
+    };
 
     let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
