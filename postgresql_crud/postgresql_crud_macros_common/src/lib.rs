@@ -424,7 +424,6 @@ pub fn generate_postgresql_json_type_token_stream(
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
     let query_snake_case = naming::QuerySnakeCase;
@@ -473,7 +472,6 @@ pub fn generate_postgresql_json_type_token_stream(
             type #where_element_upper_camel_case<'a> = #postgresql_json_type_ident_where_element_token_stream;
             type #read_upper_camel_case<'a> = #postgresql_json_type_ident_read;
             type #update_upper_camel_case<'a> = #postgresql_json_type_ident_option_to_update;
-            type #update_query_part_error_named_upper_camel_case = #path_token_stream QueryPartErrorNamed;
             fn #update_query_part_snake_case(
                 #value_snake_case: &Self::#update_upper_camel_case<'_>,
                 #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
