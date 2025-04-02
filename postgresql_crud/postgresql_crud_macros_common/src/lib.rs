@@ -669,7 +669,6 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     ident_where_element_upper_camel_case: &dyn quote::ToTokens,
     ident_read_upper_camel_case: &dyn quote::ToTokens,
     ident_update_upper_camel_case: &dyn quote::ToTokens,
-    ident_update_query_part_error_named_upper_camel_case: &dyn quote::ToTokens,
     update_query_part_content_token_stream: &dyn quote::ToTokens,
     update_query_bind_content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -684,7 +683,6 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
     let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
@@ -722,14 +720,13 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             type #where_element_upper_camel_case = #ident_where_element_upper_camel_case;
             type #read_upper_camel_case = #ident_read_upper_camel_case;
             type #update_upper_camel_case = #ident_update_upper_camel_case;
-            type #update_query_part_error_named_upper_camel_case = #ident_update_query_part_error_named_upper_camel_case;
             fn #update_query_part_snake_case(
                 #value_snake_case: &Self::#update_upper_camel_case,
                 #jsonb_set_accumulator_snake_case: &std::primitive::str,
                 #jsonb_set_target_snake_case: &std::primitive::str,
                 #jsonb_set_path_snake_case: &std::primitive::str,
                 #increment_snake_case: &mut std::primitive::u64
-            ) -> Result<#std_string_string_token_stream, Self::#update_query_part_error_named_upper_camel_case> {
+            ) -> Result<#std_string_string_token_stream, #import_path ::QueryPartErrorNamed> {
                 #update_query_part_content_token_stream
             }
             fn #update_query_bind_snake_case<'a>(

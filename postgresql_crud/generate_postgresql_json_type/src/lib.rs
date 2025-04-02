@@ -4413,7 +4413,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         &tokens_as_type_where_element_upper_camel_case,
                         &tokens_as_type_read_upper_camel_case,
                         &tokens_as_type_update_upper_camel_case,
-                        &tokens_as_type_update_query_part_error_named_upper_camel_case,
                         &{
                             //todo remove jsonb_ prefix (coz it can be json, jsonb, json not null, jsonb not null)
                             let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;

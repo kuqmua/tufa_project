@@ -2773,10 +2773,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &postgresql_type_not_null_or_nullable_where_element_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_read_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_update_upper_camel_case,
-                    &{
-                        let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
-                        quote::quote! {crate::#query_part_error_named_upper_camel_case}
-                    },
                     &typical_query_part_token_stream,
                     &typical_query_bind_token_stream,
                 )
