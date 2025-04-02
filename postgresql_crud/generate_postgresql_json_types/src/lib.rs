@@ -416,21 +416,17 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             }
         };
         let impl_crate_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
-            &quote::quote! {crate::postgresql_json_type_trait::},
+            &quote::quote! {crate::},
             &ident,
             &ident_create_upper_camel_case,
             &{
-                //todo reuse
-                let crate_postgresql_json_type_postgresql_json_type_trait_create_query_part_error_named_token_stream = quote::quote! {
-                    crate::postgresql_json_type_trait::CreateQueryPartErrorNamed
-                };
                 quote::quote! {
                     match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
                             Ok(format!("${increment}"))
                         }
-                        None => Err(#crate_postgresql_json_type_postgresql_json_type_trait_create_query_part_error_named_token_stream::#checked_add_upper_camel_case {
+                        None => Err(crate::QueryPartErrorNamed::#checked_add_upper_camel_case {
                             code_occurence: error_occurence_lib::code_occurence!()
                         }),
                     }

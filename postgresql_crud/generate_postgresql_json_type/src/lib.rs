@@ -204,10 +204,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         };
         macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(postgresql_json_type_tokens_read_token_stream, &postgresql_json_type_tokens_read_with_or_without_id_token_stream)
     };
-    let postgresql_crud_create_query_part_error_named_token_stream = {
-        let create_query_part_error_named_upper_camel_case = naming::CreateQueryPartErrorNamedUpperCamelCase;
-        quote::quote! {#postgresql_crud_path_token_stream #create_query_part_error_named_upper_camel_case}
-    };
     let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
@@ -216,7 +212,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let generate_tokens_to_create_methods_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, create_query_part_content_token_stream: &dyn quote::ToTokens, create_query_bind_content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
             impl #struct_ident_token_stream {
-                fn #create_query_part_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<std::string::String, #postgresql_crud_create_query_part_error_named_token_stream> {
+                fn #create_query_part_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
                     #create_query_part_content_token_stream
                 }
                 fn #create_query_bind_snake_case(self, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -1227,7 +1223,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #checked_add_variant_declaration_token_stream,
                         Create {
                             #[eo_error_occurence]
-                            error: #postgresql_crud_create_query_part_error_named_token_stream,
+                            error: postgresql_crud::QueryPartErrorNamed,
                             code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                         },
                         #(#variants_token_stream),*

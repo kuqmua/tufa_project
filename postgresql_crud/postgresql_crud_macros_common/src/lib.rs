@@ -435,7 +435,6 @@ pub fn generate_postgresql_json_type_token_stream(
     let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
     let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
     let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
-    let create_query_part_error_named_upper_camel_case = naming::CreateQueryPartErrorNamedUpperCamelCase;
     let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
     let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
@@ -453,7 +452,7 @@ pub fn generate_postgresql_json_type_token_stream(
             fn #create_query_part_snake_case(
                 #value_snake_case: &Self::#create_upper_camel_case<'_>,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
-            ) -> Result<#std_string_string_token_stream, #path_token_stream #create_query_part_error_named_upper_camel_case> {
+            ) -> Result<#std_string_string_token_stream, #path_token_stream QueryPartErrorNamed> {
                 #create_query_part_token_stream
             }
             fn #create_query_bind_snake_case<'a>(

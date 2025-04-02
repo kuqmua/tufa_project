@@ -34,8 +34,6 @@ pub use generate_postgresql_crud::read_one_additional_route_logic;
 pub use generate_postgresql_crud::update_many_additional_route_logic;
 pub use generate_postgresql_crud::update_one_additional_route_logic;
 
-pub use postgresql_json_type_trait::CreateQueryPartErrorNamed;
-pub use postgresql_json_type_trait::CreateQueryPartErrorNamedWithSerializeDeserialize;
 pub use postgresql_json_type_trait::PostgresqlJsonType;
 pub use postgresql_type::PostgresqlTypeWhere;
 pub use postgresql_type_trait::PostgresqlType;
@@ -69,14 +67,6 @@ pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::pr
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum QueryPartErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
-}
-//todo add another error variant instead for CreateQueryPartErrorNamed
-impl std::convert::From<crate::postgresql_json_type_trait::CreateQueryPartErrorNamed> for QueryPartErrorNamed {
-    fn from(value: crate::postgresql_json_type_trait::CreateQueryPartErrorNamed) -> Self {
-        match value {
-            crate::postgresql_json_type_trait::CreateQueryPartErrorNamed::CheckedAdd { code_occurence } => Self::CheckedAdd { code_occurence },
-        }
-    }
 }
 
 #[derive(Debug, Clone, Copy, serde::Serialize, serde::Deserialize, Eq, PartialEq, schemars::JsonSchema)]

@@ -102,13 +102,13 @@ generate_postgresql_json_types::generate_postgresql_json_types!();
 // }
 // impl crate::postgresql_json_type_trait::PostgresqlJsonType for StdVecVecStdVecVecUuidUuid {
 //     type Create<'a> = StdVecVecStdVecVecUuidUuidCreate;
-//     fn create_query_part(_: &Self::Create<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::postgresql_json_type_trait::CreateQueryPartErrorNamed> {
+//     fn create_query_part(_: &Self::Create<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         match increment.checked_add(1) {
 //             Some(value) => {
 //                 *increment = value;
 //                 Ok(format!("${increment}"))
 //             }
-//             None => Err(crate::postgresql_json_type_trait::CreateQueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
 //         }
 //     }
 //     fn create_query_bind<'a>(value: Self::Create<'a>, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -141,3 +141,7 @@ generate_postgresql_json_types::generate_postgresql_json_types!();
 //         query
 //     }
 // }
+
+
+
+
