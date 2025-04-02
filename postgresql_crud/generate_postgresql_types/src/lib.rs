@@ -2557,7 +2557,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
 
                 let where_element_number_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between, &in_handle]);
-                let where_element_sqlx_postgres_types_pg_money_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between, &in_handle]);
+                let where_element_sqlx_postgres_types_pg_money_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &in_handle]);
                 let where_element_sqlx_types_decimal_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between]);
                 let where_element_sqlx_types_big_decimal_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between]);
                 let where_element_bool_token_stream = {
@@ -2573,7 +2573,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 let where_element_sqlx_types_chrono_naive_date_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_date, &greater_than_current_date]);
                 let where_element_sqlx_types_chrono_naive_time_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_time, &greater_than_current_time]);
                 let where_element_sqlx_types_time_time_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_time, &greater_than_current_time]);
-                let where_element_sqlx_postgres_types_pg_interval_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal, &greater_than, &between]);
+                let where_element_sqlx_postgres_types_pg_interval_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&vec![&equal]);
                 let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |range_type: RangeType| {
                     enum ShouldImplRangeLength {
                         True,
@@ -2791,7 +2791,6 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             // let vec_field_type_handle = quote::quote! {std::vec::Vec<#postgresql_type_not_null_upper_camel_case>}
             quote::quote! {
                 #pub_struct_postgresql_type_not_null_or_nullable_token_stream
-                #maybe_impl_partial_ord_token_stream
                 #maybe_impl_is_empty_token_stream
                 #maybe_impl_try_new_for_postgresql_type_not_null_token_stream
                 #maybe_impl_serde_serialize_for_postgresql_type_not_null_token_stream
