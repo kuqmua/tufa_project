@@ -111,26 +111,12 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveBool => &proc_macro2_token_stream_new,
-                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &{
-                    quote::quote! {
-                        impl crate::where_element_filters::IsEmpty for #postgresql_json_type_ident_wrapper {
-                            fn is_empty(&self) -> std::primitive::bool {
-                                //todo refactor it
-                                self.0.to_string().is_empty()
-                            }
-                        }
-                    }
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &{
-                    quote::quote! {
-                        impl crate::where_element_filters::IsEmpty for #postgresql_json_type_ident_wrapper {
-                            fn is_empty(&self) -> std::primitive::bool {
-                                //todo refactor it
-                                self.0.to_string().is_empty()
-                            }
-                        }
-                    }
-                },
+                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &postgresql_crud_macros_common::generate_impl_crate_where_element_filters_is_empty_for_ident_token_stream(
+                    &postgresql_json_type_ident_wrapper
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &postgresql_crud_macros_common::generate_impl_crate_where_element_filters_is_empty_for_ident_token_stream(
+                    &postgresql_json_type_ident_wrapper
+                ),
             },
             (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath) => match &postgresql_json_type_handle {
                 postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8
