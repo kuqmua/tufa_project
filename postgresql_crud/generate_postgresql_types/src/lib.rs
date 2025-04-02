@@ -505,14 +505,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
                     PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
                     PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => &proc_macro2_token_stream_new,
-                    PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &quote::quote! {
-                        impl ::core::cmp::PartialOrd for #postgresql_type_not_null_or_nullable_upper_camel_case {
-                            #[inline]
-                            fn partial_cmp(&self, other: &#postgresql_type_not_null_or_nullable_upper_camel_case) -> ::core::option::Option<std::cmp::Ordering> {
-                                ::core::cmp::PartialOrd::partial_cmp(&self.0.0, &other.0.0)
-                            }
-                        }
-                    },
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => &proc_macro2_token_stream_new,
                     PostgresqlType::StdPrimitiveBoolAsPostgresqlBool => &proc_macro2_token_stream_new,
@@ -529,16 +522,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     },
                     PostgresqlType::SqlxTypesChronoNaiveTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesTimeTimeAsPostgresqlTime => &proc_macro2_token_stream_new,
-                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &quote::quote! {
-                        impl ::core::cmp::PartialOrd for #postgresql_type_not_null_or_nullable_upper_camel_case {
-                            #[inline]
-                            fn partial_cmp(&self, other: &#postgresql_type_not_null_or_nullable_upper_camel_case) -> ::core::option::Option<std::cmp::Ordering> {
-                                //todo impl PartialOrd for sqlx::postgres::types::PgInterval wrapper
-                                todo!()
-                                // ::core::cmp::PartialOrd::partial_cmp(&self.0.0, &other.0.0)
-                            }
-                        }
-                    },
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsPostgresqlInterval => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesTimeDateAsPostgresqlDate => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesChronoNaiveDateAsPostgresqlDate => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => &proc_macro2_token_stream_new,
