@@ -198,7 +198,9 @@ pub struct Example {
 }
 //todo enum tree support
 //todo generate wrapper type for all possible json type
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema, postgresql_crud::GeneratePostgresqlJsonType)] //user type must implement utoipa::ToSchema trait
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema
+    , postgresql_crud::GeneratePostgresqlJsonType
+)] //user type must implement utoipa::ToSchema trait
 pub struct Animal {
     // pub id: postgresql_crud::postgresql_json_type::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 

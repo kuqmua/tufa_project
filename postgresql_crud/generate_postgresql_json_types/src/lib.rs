@@ -405,16 +405,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         //
         let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
         let ident_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident);
-        let ident_update_error_named_upper_camel_case = naming::parameter::SelfUpdateErrorNamedUpperCamelCase::from_tokens(&ident);
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let postgresql_json_type_ident_option_to_update_query_part_error_named_token_stream = {
-            quote::quote! {
-                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #ident_update_error_named_upper_camel_case {
-                    #checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
-                }
-            }
-        };
         let impl_crate_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
             &quote::quote! {crate::},
             &ident,
@@ -474,18 +465,16 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             },
             &ident_where_element_upper_camel_case,
             &ident_update_upper_camel_case,
-            &ident_update_error_named_upper_camel_case,
             &{
                 let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
-                let update_query_part_error_named_upper_camel_case = naming::UpdateQueryPartErrorNamedUpperCamelCase;
                 quote::quote! {
                     match increment.checked_add(1) {
                         Some(value) => {
                             *increment = value;
                             Ok(format!(#format_handle_token_stream))
                         }
-                        None => Err(Self::#update_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                        None => Err(crate::QueryPartErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
                     }
                 }
             },
@@ -512,7 +501,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #postgresql_json_type_ident_where_element_token_stream
             // #postgresql_json_type_ident_where_element_second_dimension_token_stream
             #ident_update_alias_token_stream
-            #postgresql_json_type_ident_option_to_update_query_part_error_named_token_stream
             #impl_crate_postgresql_json_type_for_ident_token_stream
         };
         // println!("{}", quote::quote!{#ident});
