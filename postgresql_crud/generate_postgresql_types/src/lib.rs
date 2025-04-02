@@ -495,7 +495,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     pub struct #postgresql_type_not_null_or_nullable_upper_camel_case(pub #field_type_handle);
                 }
             };     
-            let impl_is_empty_for_postgresql_type_not_null_or_nullable_token_stream = &postgresql_crud_macros_common::generate_impl_crate_where_element_filters_is_empty_for_ident_token_stream(
+            let impl_is_empty_for_postgresql_type_not_null_or_nullable_token_stream = &postgresql_crud_macros_common::generate_impl_crate_is_empty_for_ident_token_stream(
                 &postgresql_type_not_null_or_nullable_upper_camel_case
             );
             let maybe_impl_is_empty_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {

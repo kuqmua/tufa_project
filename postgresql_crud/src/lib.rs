@@ -437,3 +437,8 @@ impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Pagin
 pub struct Value<T> {
     pub value: T,
 }
+
+//todo ExactSizeIterator now is not a solution. error[E0658]: use of unstable library feature `exact_size_is_empty`. maybe rewrite it later
+pub trait IsEmpty {
+    fn is_empty(&self) -> std::primitive::bool;
+}

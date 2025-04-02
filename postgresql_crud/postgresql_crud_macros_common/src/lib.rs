@@ -765,9 +765,9 @@ pub fn crate_query_part_error_named_checked_add_initialization_token_stream() ->
     quote::quote!{crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
 }
 
-pub fn generate_impl_crate_where_element_filters_is_empty_for_ident_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+pub fn generate_impl_crate_is_empty_for_ident_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
-        impl crate::where_element_filters::IsEmpty for #ident {
+        impl crate::IsEmpty for #ident {
             fn is_empty(&self) -> std::primitive::bool {
                 self.0.to_string().is_empty()
             }
