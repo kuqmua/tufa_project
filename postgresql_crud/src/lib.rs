@@ -1,8 +1,5 @@
 pub mod postgresql_json_type;
-pub mod postgresql_json_type_trait;
 pub mod postgresql_type;
-pub mod postgresql_type_trait;
-pub mod value;
 pub mod where_element_filters;
 
 pub use futures::TryStreamExt;
@@ -33,21 +30,71 @@ pub use generate_postgresql_crud::read_one_additional_route_logic;
 pub use generate_postgresql_crud::update_many_additional_route_logic;
 pub use generate_postgresql_crud::update_one_additional_route_logic;
 
-pub use postgresql_json_type_trait::PostgresqlJsonType;
+pub use generate_postgresql_crud::GeneratePostgresqlCrud;
+pub use generate_postgresql_json_type::GeneratePostgresqlJsonType;
+pub use generate_postgresql_json_types::generate_postgresql_json_types;
+pub use generate_postgresql_types::generate_postgresql_types;
+
 pub use postgresql_type::PostgresqlTypeWhere;
-pub use postgresql_type_trait::PostgresqlType;
-pub use postgresql_type_trait::PostgresqlTypeWhereFilter;
 
 pub use naming::CommitSnakeCase;
 pub use naming::CommitUpperCamelCase;
 
-pub use generate_postgresql_json_type::GeneratePostgresqlJsonType;
+pub trait PostgresqlType {
+    type PostgresqlTypeSelf: std::fmt::Debug;
+    type Create: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    type Select: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String;
+    type WhereElement: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'a> crate::PostgresqlTypeWhereFilter<'a>;
+    type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> sqlx::Decode<'__, sqlx::Postgres> + sqlx::Type<sqlx::Postgres>;
+    type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
+}
 
-pub use value::Value;
+pub trait PostgresqlTypeWhereFilter<'a> {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+}
 
-pub use generate_postgresql_crud::GeneratePostgresqlCrud;
-pub use generate_postgresql_json_types::generate_postgresql_json_types;
-pub use generate_postgresql_types::generate_postgresql_types;
+pub trait PostgresqlTypePrimaryKey {
+    type PrimaryKey;
+}
+
+pub trait PostgresqlJsonType {
+    type Create<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    fn create_query_part(value: &Self::Create<'_>, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn create_query_bind<'a>(value: Self::Create<'a>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+    type Select<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    fn select_query_part(
+        value: &Self::Select<'_>,
+        field_ident: &std::primitive::str,
+        column_name_and_maybe_field_getter: &std::primitive::str,
+        //todo remove this coz its used properly now
+        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+        is_postgresql_type: std::primitive::bool,
+    ) -> std::string::String;
+    type WhereElement<'a>: std::fmt::Debug
+        + Clone
+        + PartialEq
+        + serde::Serialize
+        + serde::Deserialize<'a>
+        // + schemars::JsonSchema //todo
+        + crate::PostgresqlTypeWhereFilter<'a>
+        + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type Read<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    type Update<'a>: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + serde::Deserialize<'a> + utoipa::ToSchema<'a> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+    fn update_query_part(value: &Self::Update<'_>, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn update_query_bind<'a>(value: Self::Update<'_>, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+}
+
+pub trait GeneratePostgresqlJsonTypeToRead {
+    fn generate_postgresql_json_type_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
+    where
+        Self: Sized;
+}
 
 pub fn wrap_into_jsonb_build_object(field: &std::primitive::str, value: &std::primitive::str) -> std::string::String {
     format!("jsonb_build_object('{field}',{value})||")
@@ -385,9 +432,8 @@ impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Pagin
     }
 }
 
-pub trait GeneratePostgresqlJsonTypeToRead {
-    fn generate_postgresql_json_type_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
-    where
-        Self: Sized;
+//this needed coz serde std::option::Option<std::option::Option<T>> #[serde(skip_serializing_if = "Option::is_none")] - if both options: inner and parent is null then it skip - its not correct
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct Value<T> {
+    pub value: T,
 }
-
