@@ -35,8 +35,6 @@ pub use generate_postgresql_json_type::GeneratePostgresqlJsonType;
 pub use generate_postgresql_json_types::generate_postgresql_json_types;
 pub use generate_postgresql_types::generate_postgresql_types;
 
-pub use postgresql_type::PostgresqlTypeWhere;
-
 pub use naming::CommitSnakeCase;
 pub use naming::CommitUpperCamelCase;
 
@@ -441,4 +439,283 @@ pub struct Value<T> {
 //todo ExactSizeIterator now is not a solution. error[E0658]: use of unstable library feature `exact_size_is_empty`. maybe rewrite it later
 pub trait IsEmpty {
     fn is_empty(&self) -> std::primitive::bool;
+}
+
+///////////////
+#[derive(Debug, Clone, PartialEq, serde::Serialize)]
+pub struct PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+    logical_operator: crate::LogicalOperator,
+    value: std::vec::Vec<PostgresqlTypeWhereElement>,
+}
+#[derive(
+    Debug,
+    Clone,
+    serde::Serialize,
+    serde::Deserialize,
+    thiserror::Error,
+    // error_occurence_lib::ErrorOccurence,
+)]
+pub enum PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
+    IsEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUnique {
+        // #[eo_to_std_string_string_serialize_deserialize]
+        value: PostgresqlTypeWhereElement, //PostgresqlTypeWhereElement
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+
+impl<PostgresqlTypeWhereElement: error_occurence_lib::ToStdStringString> std::fmt::Display for PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter,
+            "{}{}",
+            match self {
+                Self::IsEmpty { .. } => format!(""),
+                Self::NotUnique { value, .. } => format!("value: {}", error_occurence_lib::ToStdStringString::to_std_string_string(value)),
+            },
+            match self {
+                Self::IsEmpty { code_occurence, .. } | Self::NotUnique { code_occurence, .. } => code_occurence,
+            }
+        )
+    }
+}
+impl<PostgresqlTypeWhereElement> PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
+    pub fn into_serialize_deserialize_version(self) -> PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize<PostgresqlTypeWhereElement> {
+        #[allow(clippy::redundant_closure_for_method_calls)]
+        match self {
+            Self::IsEmpty { code_occurence } => PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize::IsEmpty { code_occurence },
+            Self::NotUnique { value, code_occurence } => PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize::NotUnique { value, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
+pub enum PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize<PostgresqlTypeWhereElement> {
+    IsEmpty { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+    NotUnique { value: PostgresqlTypeWhereElement, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl<PostgresqlTypeWhereElement: error_occurence_lib::ToStdStringString> std::fmt::Display for PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize<PostgresqlTypeWhereElement> {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            formatter,
+            "{}{}",
+            match self {
+                Self::IsEmpty { .. } => "".to_string(),
+                Self::NotUnique { value, .. } => format!("value: {}", error_occurence_lib::ToStdStringString::to_std_string_string(value)),
+            },
+            match self {
+                Self::IsEmpty { code_occurence, .. } | Self::NotUnique { code_occurence, .. } => code_occurence,
+            }
+        )
+    }
+}
+impl<PostgresqlTypeWhereElement: error_occurence_lib::ToStdStringString> error_occurence_lib::ToStdStringString for PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize<PostgresqlTypeWhereElement> {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+
+impl<PostgresqlTypeWhereElement: std::cmp::PartialEq + Clone> PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+    fn try_new(logical_operator: crate::LogicalOperator, value: std::vec::Vec<PostgresqlTypeWhereElement>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement>> {
+        if value.is_empty() {
+            return Err(PostgresqlTypeWhereTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        {
+            let mut acc = vec![];
+            for element in &value {
+                if !acc.contains(&element) {
+                    acc.push(element);
+                } else {
+                    return Err(PostgresqlTypeWhereTryNewErrorNamed::NotUnique {
+                        value: element.clone(),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            }
+        }
+        Ok(Self { logical_operator, value })
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de, PostgresqlTypeWhereElement: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[allow(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                __field0,
+                __field1,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "field identifier")
+                }
+                fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        0u64 => _serde::__private::Ok(__Field::__field0),
+                        1u64 => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        "logical_operator" => _serde::__private::Ok(__Field::__field0),
+                        "value" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        b"logical_operator" => _serde::__private::Ok(__Field::__field0),
+                        b"value" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+            }
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de, PostgresqlTypeWhere> {
+                marker: _serde::__private::PhantomData<PostgresqlTypeWhere>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            impl<'de, PostgresqlTypeWhereElement: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, PostgresqlTypeWhereElement> {
+                type Value = PostgresqlTypeWhere<PostgresqlTypeWhereElement>;
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "struct PostgresqlTypeWhere")
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<crate::LogicalOperator>(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeWhere with 2 elements"));
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<PostgresqlTypeWhereElement>>(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeWhere with 2 elements"));
+                        }
+                    };
+                    match PostgresqlTypeWhere::try_new(__field0, __field1) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+                #[inline]
+                fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut __field0: _serde::__private::Option<crate::LogicalOperator> = _serde::__private::None;
+                    let mut __field1: _serde::__private::Option<std::vec::Vec<PostgresqlTypeWhereElement>> = _serde::__private::None;
+                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        match __key {
+                            __Field::__field0 => {
+                                if _serde::__private::Option::is_some(&__field0) {
+                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("logical_operator"));
+                                }
+                                __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<crate::LogicalOperator>(&mut __map)?);
+                            }
+                            __Field::__field1 => {
+                                if _serde::__private::Option::is_some(&__field1) {
+                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("value"));
+                                }
+                                __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<std::vec::Vec<PostgresqlTypeWhereElement>>(&mut __map)?);
+                            }
+                            _ => {
+                                let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                            }
+                        }
+                    }
+                    let __field0 = match __field0 {
+                        _serde::__private::Some(__field0) => __field0,
+                        _serde::__private::None => _serde::__private::de::missing_field("logical_operator")?,
+                    };
+                    let __field1 = match __field1 {
+                        _serde::__private::Some(__field1) => __field1,
+                        _serde::__private::None => _serde::__private::de::missing_field("value")?,
+                    };
+                    match PostgresqlTypeWhere::try_new(__field0, __field1) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
+            _serde::Deserializer::deserialize_struct(
+                __deserializer,
+                "PostgresqlTypeWhere",
+                FIELDS,
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<PostgresqlTypeWhereElement>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl<'a, PostgresqlTypeWhereElement: crate::PostgresqlTypeWhereFilter<'a>> crate::PostgresqlTypeWhereFilter<'a> for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        let mut is_need_to_add_logical_operator_inner_handle = false;
+        for element in &self.value {
+            match crate::PostgresqlTypeWhereFilter::query_part(element, increment, column, is_need_to_add_logical_operator_inner_handle) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value} "));
+                    is_need_to_add_logical_operator_inner_handle = true;
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(format!("{}({acc})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator)))
+    }
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.value {
+            query = crate::PostgresqlTypeWhereFilter::query_bind(element, query);
+        }
+        query
+    }
+}
+impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            value: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
+        }
+    }
 }
