@@ -464,7 +464,6 @@ pub enum PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-
 impl<PostgresqlTypeWhereElement: std::cmp::PartialEq + Clone> PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     fn try_new(logical_operator: crate::LogicalOperator, value: std::vec::Vec<PostgresqlTypeWhereElement>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement>> {
         if value.is_empty() {
@@ -669,7 +668,6 @@ impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAl
     }
 }
 
-///////////////////////
 #[derive(
     Debug,
     Clone,
@@ -712,103 +710,96 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
         Ok(Self(value))
     }
 }
-// impl<'de> serde::Deserialize<'de> for UniqueVec {
-//     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-//     where
-//         __D: serde::Deserializer<'de>,
-//     {
-//         #[doc(hidden)]
-//         struct __Visitor<'de> {
-//             marker: serde::__private::PhantomData<UniqueVec>,
-//             lifetime: serde::__private::PhantomData<&'de ()>,
-//         }
-//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-//             type Value = UniqueVec;
-//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-//                 serde::__private::Formatter::write_str(__formatter, "tuple struct UniqueVec")
-//             }
-//             #[inline]
-//             fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-//             where
-//                 __E: serde::Deserializer<'de>,
-//             {
-//                 let __field0: std::vec::Vec<UniqueVecOrigin> = <std::vec::Vec<UniqueVecOrigin> as serde::Deserialize>::deserialize(__e)?;
-//                 match UniqueVec::try_new(__field0) {
-//                     Ok(value) => serde::__private::Ok(value),
-//                     Err(error) => {
-//                         return Err(serde::de::Error::custom(format!("{error:?}")));
-//                     }
-//                 }
-//             }
-//             #[inline]
-//             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-//             where
-//                 __A: serde::de::SeqAccess<'de>,
-//             {
-//                 let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<UniqueVecOrigin>>(&mut __seq)? {
-//                     serde::__private::Some(__value) => __value,
-//                     serde::__private::None => {
-//                         return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
-//                     }
-//                 };
-//                 match UniqueVec::try_new(__field0) {
-//                     Ok(value) => serde::__private::Ok(value),
-//                     Err(error) => {
-//                         return Err(serde::de::Error::custom(format!("{error:?}")));
-//                     }
-//                 }
-//             }
-//         }
-//         serde::Deserializer::deserialize_newtype_struct(
-//             __deserializer,
-//             "UniqueVec",
-//             __Visitor {
-//                 marker: serde::__private::PhantomData::<UniqueVec>,
-//                 lifetime: serde::__private::PhantomData,
-//             },
-//         )
-//     }
-// }
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for UniqueVec {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self(postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-//     }
-// }
-// impl UniqueVec {
-//     fn update_query_part(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         let generate_jsonb_set_target = |value: &std::primitive::str| format!("{jsonb_set_target}->'{value}'");
-//         let generate_jsonb_set_path = |value: &std::primitive::str| {
-//             let previous = match jsonb_set_path.is_empty() {
-//                 true => std::string::String::default(),
-//                 false => format!("{jsonb_set_path},"),
-//             };
-//             format!("{previous}{value}")
-//         };
-//         let mut local_acc = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end)");
-//         for element in &self.0 {
-//             match &element {
-//                 UniqueVecOrigin::StdPrimitiveI8(value) => {
-//                     match <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::update_query_part(&value.value, &local_acc, &generate_jsonb_set_target("std_primitive_i8"), &generate_jsonb_set_path("std_primitive_i8"), increment) {
-//                         Ok(value) => {
-//                             local_acc = value;
-//                         }
-//                         Err(error) => {
-//                             return Err(error);
-//                         }
-//                     }
-//                 }
-//             }
-//         }
-//         Ok(local_acc)
-//     }
-//     fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         for element in self.0 {
-//             match element {
-//                 UniqueVecOrigin::StdPrimitiveI8(value) => {
-//                     query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
-//                 }
-//             }
-//         }
-//         query
-//     }
-// }
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T>
+    where
+        T: _serde::Deserialize<'de>,
+    {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de, T>
+            where
+                T: _serde::Deserialize<'de>,
+            {
+                marker: _serde::__private::PhantomData<UniqueVec<T>>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T>
+            where
+                T: _serde::Deserialize<'de>,
+            {
+                type Value = UniqueVec<T>;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct UniqueVec",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(
+                    self,
+                    __e: __E,
+                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::vec::Vec<T> = <std::vec::Vec<
+                        T,
+                    > as _serde::Deserialize>::deserialize(__e)?;
+                    _serde::__private::Ok(UniqueVec(__field0))
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::vec::Vec<T>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"tuple struct UniqueVec with 1 element",
+                                ),
+                            );
+                        }
+                    };
+                    match UniqueVec::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "UniqueVec",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<UniqueVec<T>>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for UniqueVec<T> {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+    }
+}
