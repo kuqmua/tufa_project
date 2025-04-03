@@ -672,7 +672,6 @@ impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAl
     Debug,
     Clone,
     PartialEq,
-    Default,
     serde::Serialize,
     utoipa::ToSchema,
     schemars::JsonSchema,
@@ -801,5 +800,10 @@ const _: () = {
 impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for UniqueVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+    }
+}
+impl<T> std::default::Default for UniqueVec<T> {
+    fn default() -> Self {
+        Self(::core::default::Default::default())
     }
 }

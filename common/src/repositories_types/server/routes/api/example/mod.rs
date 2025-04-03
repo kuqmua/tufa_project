@@ -940,109 +940,119 @@ impl std::fmt::Display for Animal {
         write!(formatter, "{:?}", &self)
     }
 }
+
+
+
+
+
+
+
 #[derive(
     Debug,
     Clone,
     PartialEq,
     Default,
-    serde :: Serialize,
-    utoipa ::
-ToSchema,
-    schemars :: JsonSchema,
+    serde::Serialize,
+    serde::Deserialize,//+
+    utoipa::ToSchema,
+    schemars::JsonSchema,
 )]
-pub struct AnimalSelect(std::vec::Vec<AnimalFieldToReadWithoutId>);
-#[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-pub enum AnimalSelectTryNewErrorNamed {
-    FieldsFilterIsEmpty {
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    NotUniqueFieldFilter {
-        #[eo_to_std_string_string_serialize_deserialize]
-        field: AnimalFieldToReadWithoutId,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl AnimalSelect {
-    pub fn try_new(value: std::vec::Vec<AnimalFieldToReadWithoutId>) -> Result<Self, AnimalSelectTryNewErrorNamed> {
-        if value.is_empty() {
-            return Err(AnimalSelectTryNewErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-        }
-        let mut unique = vec![];
-        for element in value {
-            if unique.contains(&element) {
-                return Err(AnimalSelectTryNewErrorNamed::NotUniqueFieldFilter {
-                    field: element,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            } else {
-                unique.push(element);
-            }
-        }
-        Ok(Self(unique))
-    }
-}
-impl<'de> serde::Deserialize<'de> for AnimalSelect {
-    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-    where
-        __D: serde::Deserializer<'de>,
-    {
-        #[doc(hidden)]
-        struct __Visitor<'de> {
-            marker: serde::__private::PhantomData<AnimalSelect>,
-            lifetime: serde::__private::PhantomData<&'de ()>,
-        }
-        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = AnimalSelect;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "tuple struct AnimalSelect")
-            }
-            #[inline]
-            fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
-            where
-                __E: serde::Deserializer<'de>,
-            {
-                let __field0: std::vec::Vec<AnimalFieldToReadWithoutId> = <std::vec::Vec<AnimalFieldToReadWithoutId> as serde::Deserialize>::deserialize(__e)?;
-                match AnimalSelect::try_new(__field0) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => {
-                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                    }
-                }
-            }
-            #[inline]
-            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::SeqAccess<'de>,
-            {
-                let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<AnimalFieldToReadWithoutId>>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct AnimalSelect with 1 element"));
-                    }
-                };
-                match AnimalSelect::try_new(__field0) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => {
-                        return Err(serde::de::Error::custom(format!("{error:?}")));
-                    }
-                }
-            }
-        }
-        serde::Deserializer::deserialize_newtype_struct(
-            __deserializer,
-            "AnimalSelect",
-            __Visitor {
-                marker: serde::__private::PhantomData::<AnimalSelect>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
-    }
-}
-impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for AnimalSelect {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
-    }
-}
+pub struct AnimalSelect(
+    // std::vec::Vec<AnimalFieldToReadWithoutId>
+    postgresql_crud::UniqueVec<AnimalFieldToReadWithoutId>
+);
+// #[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+// pub enum AnimalSelectTryNewErrorNamed {
+//     FieldsFilterIsEmpty {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUniqueFieldFilter {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         field: AnimalFieldToReadWithoutId,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// impl AnimalSelect {
+//     pub fn try_new(value: std::vec::Vec<AnimalFieldToReadWithoutId>) -> Result<Self, AnimalSelectTryNewErrorNamed> {
+//         if value.is_empty() {
+//             return Err(AnimalSelectTryNewErrorNamed::FieldsFilterIsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+//         }
+//         let mut unique = vec![];
+//         for element in value {
+//             if unique.contains(&element) {
+//                 return Err(AnimalSelectTryNewErrorNamed::NotUniqueFieldFilter {
+//                     field: element,
+//                     code_occurence: error_occurence_lib::code_occurence!(),
+//                 });
+//             } else {
+//                 unique.push(element);
+//             }
+//         }
+//         Ok(Self(unique))
+//     }
+// }
+// impl<'de> serde::Deserialize<'de> for AnimalSelect {
+//     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+//     where
+//         __D: serde::Deserializer<'de>,
+//     {
+//         #[doc(hidden)]
+//         struct __Visitor<'de> {
+//             marker: serde::__private::PhantomData<AnimalSelect>,
+//             lifetime: serde::__private::PhantomData<&'de ()>,
+//         }
+//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+//             type Value = AnimalSelect;
+//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+//                 serde::__private::Formatter::write_str(__formatter, "tuple struct AnimalSelect")
+//             }
+//             #[inline]
+//             fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+//             where
+//                 __E: serde::Deserializer<'de>,
+//             {
+//                 let __field0: std::vec::Vec<AnimalFieldToReadWithoutId> = <std::vec::Vec<AnimalFieldToReadWithoutId> as serde::Deserialize>::deserialize(__e)?;
+//                 match AnimalSelect::try_new(__field0) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => {
+//                         return Err(serde::de::Error::custom(format!("{error:?}")));
+//                     }
+//                 }
+//             }
+//             #[inline]
+//             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+//             where
+//                 __A: serde::de::SeqAccess<'de>,
+//             {
+//                 let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<AnimalFieldToReadWithoutId>>(&mut __seq)? {
+//                     serde::__private::Some(__value) => __value,
+//                     serde::__private::None => {
+//                         return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct AnimalSelect with 1 element"));
+//                     }
+//                 };
+//                 match AnimalSelect::try_new(__field0) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => {
+//                         return Err(serde::de::Error::custom(format!("{error:?}")));
+//                     }
+//                 }
+//             }
+//         }
+//         serde::Deserializer::deserialize_newtype_struct(
+//             __deserializer,
+//             "AnimalSelect",
+//             __Visitor {
+//                 marker: serde::__private::PhantomData::<AnimalSelect>,
+//                 lifetime: serde::__private::PhantomData,
+//             },
+//         )
+//     }
+// }
+// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for AnimalSelect {
+//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+//         Self(postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+//     }
+// }
 impl postgresql_crud::GeneratePostgresqlJsonTypeToRead for AnimalFieldToReadWithoutId {
     fn generate_postgresql_json_type_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String {
         let mut acc = std::string::String::default();
@@ -1060,6 +1070,12 @@ impl postgresql_crud::GeneratePostgresqlJsonTypeToRead for AnimalFieldToReadWith
         format!("{acc}")
     }
 }
+
+
+
+
+
+
 #[derive(
     Debug,
     Clone,
