@@ -407,14 +407,14 @@ impl std::fmt::Display for PostgresqlTypeOrJsonType {
 pub fn generate_postgresql_json_type_token_stream(
     path_token_stream: &dyn quote::ToTokens,
     ident: &dyn quote::ToTokens,
-    postgresql_json_type_ident_to_create_token_stream: &dyn quote::ToTokens,
+    create_type_token_stream: &dyn quote::ToTokens,
     create_query_part_token_stream: &dyn quote::ToTokens,
     create_query_bind_token_stream: &dyn quote::ToTokens,
-    postgresql_json_type_ident_select: &dyn quote::ToTokens,
-    postgresql_json_type_ident_read: &dyn quote::ToTokens,
+    select_type_token_stream: &dyn quote::ToTokens,
+    read_type_token_stream: &dyn quote::ToTokens,
     select_query_part_token_stream: &dyn quote::ToTokens,
-    postgresql_json_type_ident_where_element_token_stream: &dyn quote::ToTokens,
-    postgresql_json_type_ident_option_to_update: &dyn quote::ToTokens,
+    where_element_type_token_stream: &dyn quote::ToTokens,
+    update_type_token_stream: &dyn quote::ToTokens,
     update_query_part_token_stream: &dyn quote::ToTokens,
     update_query_bind_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -446,7 +446,7 @@ pub fn generate_postgresql_json_type_token_stream(
     //todo maybe reexport sqlx?
     quote::quote! {
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
-            type #create_upper_camel_case<'a> = #postgresql_json_type_ident_to_create_token_stream;
+            type #create_upper_camel_case<'a> = #create_type_token_stream;
             fn #create_query_part_snake_case(
                 #value_snake_case: &Self::#create_upper_camel_case<'_>,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
@@ -459,7 +459,7 @@ pub fn generate_postgresql_json_type_token_stream(
             ) -> #query_postgres_arguments_token_stream {
                 #create_query_bind_token_stream
             }
-            type #select_upper_camel_case<'a> = #postgresql_json_type_ident_select;
+            type #select_upper_camel_case<'a> = #select_type_token_stream;
             fn #select_query_part_snake_case(
                 #value_snake_case: &Self::#select_upper_camel_case<'_>,
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
@@ -469,9 +469,9 @@ pub fn generate_postgresql_json_type_token_stream(
             ) -> #std_string_string_token_stream {
                 #select_query_part_token_stream
             }
-            type #where_element_upper_camel_case<'a> = #postgresql_json_type_ident_where_element_token_stream;
-            type #read_upper_camel_case<'a> = #postgresql_json_type_ident_read;
-            type #update_upper_camel_case<'a> = #postgresql_json_type_ident_option_to_update;
+            type #where_element_upper_camel_case<'a> = #where_element_type_token_stream;
+            type #read_upper_camel_case<'a> = #read_type_token_stream;
+            type #update_upper_camel_case<'a> = #update_type_token_stream;
             fn #update_query_part_snake_case(
                 #value_snake_case: &Self::#update_upper_camel_case<'_>,
                 #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
