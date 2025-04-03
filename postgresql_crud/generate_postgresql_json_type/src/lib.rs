@@ -3897,25 +3897,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             #impl_sqlx_decode_sqlx_postgres_for_tokens_as_type_read_token_stream
                         }
                     };
-                    let tokens_as_type_update_query_part_error_named_upper_camel_case: &dyn quote::ToTokens = match &postgresql_type {
-                        PostgresqlType::JsonbNotNull => &naming::parameter::SelfAsPostgresqlJsonbNotNullUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case),
-                        PostgresqlType::JsonbNullable => &naming::parameter::SelfAsPostgresqlJsonbUpdateQueryPartErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case),
-                    };
-                    let tokens_as_type_update_query_part_error_named_token_stream = {
-                        quote::quote! {
-                            #[derive(
-                                Debug,
-                                Clone,
-                                // PartialEq,
-                                serde::Serialize,
-                                serde::Deserialize,
-                            )]
-                            pub enum #tokens_as_type_update_query_part_error_named_upper_camel_case {
-                                #checked_add_variant_declaration_token_stream,
-                                Todo//todo
-                            }
-                        }
-                    };
                     let tokens_as_type_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
                     let tokens_as_type_update_token_stream = {
                         let tokens_as_type_update_token_stream = {
@@ -4063,7 +4044,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                                     Ok(format!("${increment}"))
                                                 },
                                                 //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
-                                                None => Err(#tokens_as_type_update_query_part_error_named_upper_camel_case::#checked_add_upper_camel_case {
+                                                None => Err(postgersql_crud::QueryPartErrorNamed::#checked_add_upper_camel_case {
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 })
                                             }
@@ -4100,7 +4081,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #tokens_as_type_select_token_stream
                         #tokens_as_type_where_element_token_stream
                         #tokens_as_type_read_token_stream
-                        #tokens_as_type_update_query_part_error_named_token_stream
                         #tokens_as_type_update_token_stream
                         #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_type_token_stream
                     }
