@@ -1296,7 +1296,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     //its for GeneratePostgresqlCrud
     let ident_token_stream = {
-        let impl_std_fmt_display_for_ident_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{:?}", &self)});
         let update_token_stream = {
             let postgresql_json_type_ident_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(&ident_update_upper_camel_case, &quote::quote! {std::vec::Vec<#ident_update_origin_upper_camel_case>}, false, false);
             // println!("{postgresql_json_type_ident_option_to_update_token_stream}");
@@ -1573,7 +1572,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             }
         };
         quote::quote! {
-            #impl_std_fmt_display_for_ident_token_stream
             #update_token_stream
         }
     };
