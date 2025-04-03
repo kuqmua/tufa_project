@@ -1749,6 +1749,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let create_snake_case = naming::CreateSnakeCase;
                     let update_snake_case = naming::UpdateSnakeCase;
                     let delete_snake_case = naming::DeleteSnakeCase;
+                    //todo move this logic into library as type with generic
                     let ident_json_array_change_token_stream = {
                         let serde_skip_serializing_if_vec_is_empty_token_stream = quote::quote! {#[serde(skip_serializing_if = "Vec::is_empty")]};
                         quote::quote! {
