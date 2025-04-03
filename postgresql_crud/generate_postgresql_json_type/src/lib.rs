@@ -3917,7 +3917,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     #postgresql_json_type_token_stream
                 }
             };
-            let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream = {
+            let generate_postgresql_crud_temporary_handle = if need_to_generate_postgresql_crud_logic {
                 enum PostgresqlType {
                     JsonbNullable,
                     JsonbNotNull,
@@ -4450,9 +4450,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     // #postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_postgresql_jsonb_nullable_token_stream
                     #postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_postgresql_jsonb_not_null_token_stream
                 }
-            };
-            let generate_postgresql_crud_temporary_handle = if need_to_generate_postgresql_crud_logic {
-                impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_token_stream
             } else {
                 proc_macro2::TokenStream::new()
             };
