@@ -441,7 +441,6 @@ pub trait IsEmpty {
     fn is_empty(&self) -> std::primitive::bool;
 }
 
-///////////////
 #[derive(Debug, Clone, PartialEq, serde::Serialize)]
 pub struct PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     logical_operator: crate::LogicalOperator,
@@ -453,67 +452,17 @@ pub struct PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     serde::Serialize,
     serde::Deserialize,
     thiserror::Error,
-    // error_occurence_lib::ErrorOccurence,
+    error_occurence_lib::ErrorOccurence,
 )]
 pub enum PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
     IsEmpty {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     NotUnique {
-        // #[eo_to_std_string_string_serialize_deserialize]
-        value: PostgresqlTypeWhereElement, //PostgresqlTypeWhereElement
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: PostgresqlTypeWhereElement,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-}
-
-impl<PostgresqlTypeWhereElement: error_occurence_lib::ToStdStringString> std::fmt::Display for PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            formatter,
-            "{}{}",
-            match self {
-                Self::IsEmpty { .. } => format!(""),
-                Self::NotUnique { value, .. } => format!("value: {}", error_occurence_lib::ToStdStringString::to_std_string_string(value)),
-            },
-            match self {
-                Self::IsEmpty { code_occurence, .. } | Self::NotUnique { code_occurence, .. } => code_occurence,
-            }
-        )
-    }
-}
-impl<PostgresqlTypeWhereElement> PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
-    pub fn into_serialize_deserialize_version(self) -> PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize<PostgresqlTypeWhereElement> {
-        #[allow(clippy::redundant_closure_for_method_calls)]
-        match self {
-            Self::IsEmpty { code_occurence } => PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize::IsEmpty { code_occurence },
-            Self::NotUnique { value, code_occurence } => PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize::NotUnique { value, code_occurence },
-        }
-    }
-}
-#[derive(Debug, thiserror :: Error, serde :: Serialize, serde :: Deserialize)]
-pub enum PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize<PostgresqlTypeWhereElement> {
-    IsEmpty { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
-    NotUnique { value: PostgresqlTypeWhereElement, code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
-}
-impl<PostgresqlTypeWhereElement: error_occurence_lib::ToStdStringString> std::fmt::Display for PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize<PostgresqlTypeWhereElement> {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            formatter,
-            "{}{}",
-            match self {
-                Self::IsEmpty { .. } => "".to_string(),
-                Self::NotUnique { value, .. } => format!("value: {}", error_occurence_lib::ToStdStringString::to_std_string_string(value)),
-            },
-            match self {
-                Self::IsEmpty { code_occurence, .. } | Self::NotUnique { code_occurence, .. } => code_occurence,
-            }
-        )
-    }
-}
-impl<PostgresqlTypeWhereElement: error_occurence_lib::ToStdStringString> error_occurence_lib::ToStdStringString for PostgresqlTypeWhereTryNewErrorNamedWithSerializeDeserialize<PostgresqlTypeWhereElement> {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self}")
-    }
 }
 
 impl<PostgresqlTypeWhereElement: std::cmp::PartialEq + Clone> PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
@@ -719,3 +668,153 @@ impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAl
         }
     }
 }
+
+///////////////////////
+// #[derive(
+//     Debug,
+//     Clone,
+//     PartialEq,
+//     Default,
+//     serde::Serialize,
+//     utoipa::ToSchema,
+//     schemars::JsonSchema,
+// )]
+// pub struct ObjectUpdate<T>(std::vec::Vec<T>);
+// #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+// pub enum ObjectUpdateTryNewErrorNamed {
+//     IsEmpty {
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+//     NotUnique {
+//         #[eo_to_std_string_string_serialize_deserialize]
+//         error: std::string::String,
+//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+//     },
+// }
+// impl ObjectUpdate {
+//     pub fn try_new(value: std::vec::Vec<ObjectUpdateOrigin>) -> Result<Self, ObjectUpdateTryNewErrorNamed> {
+//         if value.is_empty() {
+//             return Err(ObjectUpdateTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+//         }
+//         {
+//             let mut acc = vec![];
+//             let generate_not_unique_field = |value: &std::primitive::str| format!("not unique {value} field");
+//             for element in &value {
+//                 match element {
+//                     ObjectUpdateOrigin::StdPrimitiveI8(_) => {
+//                         let value = ObjectFieldToUpdate::StdPrimitiveI8;
+//                         if acc.contains(&value) {
+//                             return Err(ObjectUpdateTryNewErrorNamed::NotUnique {
+//                                 error: generate_not_unique_field("std_primitive_i8"),
+//                                 code_occurence: error_occurence_lib::code_occurence!(),
+//                             });
+//                         } else {
+//                             acc.push(value);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//         Ok(Self(value))
+//     }
+// }
+// impl<'de> serde::Deserialize<'de> for ObjectUpdate {
+//     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+//     where
+//         __D: serde::Deserializer<'de>,
+//     {
+//         #[doc(hidden)]
+//         struct __Visitor<'de> {
+//             marker: serde::__private::PhantomData<ObjectUpdate>,
+//             lifetime: serde::__private::PhantomData<&'de ()>,
+//         }
+//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+//             type Value = ObjectUpdate;
+//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+//                 serde::__private::Formatter::write_str(__formatter, "tuple struct ObjectUpdate")
+//             }
+//             #[inline]
+//             fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
+//             where
+//                 __E: serde::Deserializer<'de>,
+//             {
+//                 let __field0: std::vec::Vec<ObjectUpdateOrigin> = <std::vec::Vec<ObjectUpdateOrigin> as serde::Deserialize>::deserialize(__e)?;
+//                 match ObjectUpdate::try_new(__field0) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => {
+//                         return Err(serde::de::Error::custom(format!("{error:?}")));
+//                     }
+//                 }
+//             }
+//             #[inline]
+//             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+//             where
+//                 __A: serde::de::SeqAccess<'de>,
+//             {
+//                 let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<ObjectUpdateOrigin>>(&mut __seq)? {
+//                     serde::__private::Some(__value) => __value,
+//                     serde::__private::None => {
+//                         return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct ObjectUpdate with 1 element"));
+//                     }
+//                 };
+//                 match ObjectUpdate::try_new(__field0) {
+//                     Ok(value) => serde::__private::Ok(value),
+//                     Err(error) => {
+//                         return Err(serde::de::Error::custom(format!("{error:?}")));
+//                     }
+//                 }
+//             }
+//         }
+//         serde::Deserializer::deserialize_newtype_struct(
+//             __deserializer,
+//             "ObjectUpdate",
+//             __Visitor {
+//                 marker: serde::__private::PhantomData::<ObjectUpdate>,
+//                 lifetime: serde::__private::PhantomData,
+//             },
+//         )
+//     }
+// }
+// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectUpdate {
+//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+//         Self(postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
+//     }
+// }
+// impl ObjectUpdate {
+//     fn update_query_part(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+//         let generate_jsonb_set_target = |value: &std::primitive::str| format!("{jsonb_set_target}->'{value}'");
+//         let generate_jsonb_set_path = |value: &std::primitive::str| {
+//             let previous = match jsonb_set_path.is_empty() {
+//                 true => std::string::String::default(),
+//                 false => format!("{jsonb_set_path},"),
+//             };
+//             format!("{previous}{value}")
+//         };
+//         let mut local_acc = format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end)");
+//         for element in &self.0 {
+//             match &element {
+//                 ObjectUpdateOrigin::StdPrimitiveI8(value) => {
+//                     match <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::update_query_part(&value.value, &local_acc, &generate_jsonb_set_target("std_primitive_i8"), &generate_jsonb_set_path("std_primitive_i8"), increment) {
+//                         Ok(value) => {
+//                             local_acc = value;
+//                         }
+//                         Err(error) => {
+//                             return Err(error);
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//         Ok(local_acc)
+//     }
+//     fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         for element in self.0 {
+//             match element {
+//                 ObjectUpdateOrigin::StdPrimitiveI8(value) => {
+//                     query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
+//                 }
+//             }
+//         }
+//         query
+//     }
+// }
