@@ -1097,7 +1097,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                     pub struct #ident_options_to_update_upper_camel_case {
                         pub #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
-                        pub fields: #ident_update_upper_camel_case
+                        pub fields: postgresql_crud::UniqueVec<#ident_update_origin_upper_camel_case>
                     }
                 }
             };
@@ -3102,8 +3102,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let postgresql_json_type_tokens_option_to_update_token_stream = generate_tokens_option_to_update_token_stream(
                         &tokens_update_upper_camel_case,
                         &match &postgresql_json_type {
-                            PostgresqlJsonType::Object => quote::quote! {pub #ident_update_upper_camel_case},
-                            PostgresqlJsonType::StdOptionOptionObject => quote::quote! {pub std::option::Option<#ident_update_upper_camel_case>},
+                            PostgresqlJsonType::Object => quote::quote! {pub postgresql_crud::UniqueVec<#ident_update_origin_upper_camel_case>},
+                            PostgresqlJsonType::StdOptionOptionObject => quote::quote! {pub std::option::Option<postgresql_crud::UniqueVec<#ident_update_origin_upper_camel_case>>},
                             PostgresqlJsonType::StdVecVecObjectWithId => quote::quote! {#std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case},
                             PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote! {std::option::Option<#std_option_option_std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case>},
                         },
@@ -4117,7 +4117,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let generated = quote::quote! {
         #common_token_stream
 
-        #update_token_stream
+        // #update_token_stream
         //todo return it later
         // #object_with_id_ident_token_stream
 
