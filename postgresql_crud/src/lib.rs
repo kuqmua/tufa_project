@@ -807,3 +807,16 @@ impl<T> std::default::Default for UniqueVec<T> {
         Self(::core::default::Default::default())
     }
 }
+impl<T> UniqueVec<T> {
+    pub fn to_vec(&self) -> &std::vec::Vec<T> {
+        &self.0
+    }
+    pub fn into_vec(self) -> std::vec::Vec<T> {
+        self.0
+    }
+}
+impl<T> std::convert::Into<Vec<T>> for UniqueVec<T> {
+    fn into(self) -> std::vec::Vec<T> {
+        self.0
+    }
+}
