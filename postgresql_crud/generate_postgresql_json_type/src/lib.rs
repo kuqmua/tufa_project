@@ -14,6 +14,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     } else {
         panic!("does work only on structs!");
     };
+    //todo rename ToCreate to Create
     let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
     let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
 
@@ -1305,12 +1306,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     //its for GeneratePostgresqlCrud
     let ident_token_stream = {
         let impl_std_fmt_display_for_ident_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{:?}", &self)});
-        let create_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_create_upper_camel_case, &ident_to_create_without_generated_id_upper_camel_case);
         let read_token_stream = {
-            let ident_field_to_read_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&naming::parameter::SelfFieldToReadUpperCamelCase::from_tokens(&ident), &ident_field_to_read_without_id_upper_camel_case);
-
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
-            let ident_read_alias_token_stream = generate_postgresql_json_type_tokens_read_alias_token_stream(&ident_read_upper_camel_case, false);
 
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
             let postgresql_json_type_ident_select_token_stream = generate_tokens_select_token_stream(&PostgresqlJsonTypeSelect::Ident);
@@ -1450,20 +1447,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     #impl_postgresql_crud_generate_postgresql_json_type_to_read_ident_generate_postgresql_json_type_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream
                 }
             };
-
-            let ident_reader_token_stream = generate_tokens_reader_alias_token_stream(&naming::parameter::SelfReaderUpperCamelCase::from_tokens(&ident), &ident_read_upper_camel_case);
             quote::quote! {
-                #ident_field_to_read_alias_token_stream
-
-                #ident_read_alias_token_stream
-
                 #postgresql_json_type_ident_select_token_stream
                 #impl_serde_deserialize_for_postgresql_json_type_ident_select_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_select_token_stream
 
                 #impl_postgresql_crud_generate_postgresql_json_type_to_read_ident_generate_postgresql_json_type_to_read_from_self_vec_error_named_for_ident_field_to_read_token_stream
-
-                #ident_reader_token_stream
             }
         };
         let update_token_stream = {
@@ -1744,7 +1733,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         quote::quote! {
             #impl_std_fmt_display_for_ident_token_stream
 
-            #create_token_stream
             #read_token_stream
             #update_token_stream
         }
@@ -2820,7 +2808,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         }
                     };
-                    let tokens_reader_token_stream = generate_tokens_reader_alias_token_stream(&tokens_reader_upper_camel_case, &tokens_read_upper_camel_case);
                     let tokens_where_element_token_stream = {
                         let tokens_where_element_token_stream = {
                             let variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -2930,7 +2917,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #impl_serde_deserialize_for_postgresql_json_type_tokens_read_token_stream
                         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_tokens_select_token_stream
                         #impl_serde_deserialize_for_postgresql_json_type_tokens_select_token_stream
-                        #tokens_reader_token_stream
                         #tokens_where_element_token_stream
                     }
                 };
