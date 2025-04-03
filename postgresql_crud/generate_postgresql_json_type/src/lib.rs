@@ -113,67 +113,63 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 }
             },
         };
-        let tokens_select_try_new_error_named_upper_camel_case_token_stream = naming::parameter::SelfSelectTryNewErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case_token_stream);
-        let fields_filter_is_empty_upper_camel_case = naming::FieldsFilterIsEmptyUpperCamelCase;
-        let not_unique_field_filter_upper_camel_case = naming::NotUniqueFieldFilterUpperCamelCase;
-        let generate_impl_pub_fn_try_new_token_stream = |contains_id: std::primitive::bool, input_parameters_token_stream: &dyn quote::ToTokens, is_vec: std::primitive::bool| {
-            let field_type_token_stream: &dyn quote::ToTokens = if contains_id { &ident_field_to_read_with_id_upper_camel_case } else { &ident_field_to_read_without_id_upper_camel_case };
-
-            let field_vec_snake_case = naming::FieldVecSnakeCase;
-            let pagination_snake_case = naming::PaginationSnakeCase;
-            let check_handle_token_stream = if is_vec {
-                quote::quote! {#field_vec_snake_case}
-            } else {
-                quote::quote! {#value_snake_case}
-            };
-            let unique_snake_case = naming::UniqueSnakeCase;
-            let self_initialization_token_stream = if is_vec {
-                quote::quote! {{ #field_vec_snake_case: #unique_snake_case, #pagination_snake_case }}
-            } else {
-                quote::quote! {(#unique_snake_case)}
-            };
-            quote::quote! {
-                #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #tokens_select_try_new_error_named_upper_camel_case_token_stream {
-                    #fields_filter_is_empty_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                    #not_unique_field_filter_upper_camel_case {
-                        #[eo_to_std_string_string_serialize_deserialize]
-                        field: #field_type_token_stream,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    }
-                }
-                impl #tokens_select_upper_camel_case_token_stream {
-                    pub fn try_new(#input_parameters_token_stream) -> Result<Self, #tokens_select_try_new_error_named_upper_camel_case_token_stream> {
-                        if #check_handle_token_stream.is_empty() {
-                            return Err(#tokens_select_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence!()
-                            });
-                        }
-                        let mut #unique_snake_case = vec![];
-                        for element in #check_handle_token_stream {
-                            if #unique_snake_case.contains(&element) {
-                                return Err(#tokens_select_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
-                                    field: element,
-                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                });
-                            } else {
-                                #unique_snake_case.push(element);
-                            }
-                        }
-                        Ok(Self #self_initialization_token_stream)
-                    }
-                }
-            }
-        };
         let impl_pub_fn_try_new_token_stream = {
-            let generate_value_input_parameter_type_token_stream = |value_token_stream: &dyn quote::ToTokens| {
-                quote::quote! {#value_snake_case: #value_token_stream}
+            let generate_impl_pub_fn_try_new_token_stream = |contains_id: std::primitive::bool, input_parameters_token_stream: &dyn quote::ToTokens, is_vec: std::primitive::bool| {
+                let fields_filter_is_empty_upper_camel_case = naming::FieldsFilterIsEmptyUpperCamelCase;
+                let not_unique_field_filter_upper_camel_case = naming::NotUniqueFieldFilterUpperCamelCase;
+                let field_vec_snake_case = naming::FieldVecSnakeCase;
+                let tokens_select_try_new_error_named_upper_camel_case_token_stream = naming::parameter::SelfSelectTryNewErrorNamedUpperCamelCase::from_tokens(&tokens_upper_camel_case_token_stream);
+                let field_type_token_stream: &dyn quote::ToTokens = if contains_id { &ident_field_to_read_with_id_upper_camel_case } else { &ident_field_to_read_without_id_upper_camel_case };
+                let check_handle_token_stream = if is_vec {
+                    quote::quote! {#field_vec_snake_case}
+                } else {
+                    quote::quote! {#value_snake_case}
+                };
+                let unique_snake_case = naming::UniqueSnakeCase;
+                let self_initialization_token_stream = if is_vec {
+                    let pagination_snake_case = naming::PaginationSnakeCase;
+                    quote::quote! {{ #field_vec_snake_case: #unique_snake_case, #pagination_snake_case }}
+                } else {
+                    quote::quote! {(#unique_snake_case)}
+                };
+                quote::quote! {
+                    #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                    pub enum #tokens_select_try_new_error_named_upper_camel_case_token_stream {
+                        #fields_filter_is_empty_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                        #not_unique_field_filter_upper_camel_case {
+                            #[eo_to_std_string_string_serialize_deserialize]
+                            field: #field_type_token_stream,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        }
+                    }
+                    impl #tokens_select_upper_camel_case_token_stream {
+                        pub fn try_new(#input_parameters_token_stream) -> Result<Self, #tokens_select_try_new_error_named_upper_camel_case_token_stream> {
+                            if #check_handle_token_stream.is_empty() {
+                                return Err(#tokens_select_try_new_error_named_upper_camel_case_token_stream::#fields_filter_is_empty_upper_camel_case {
+                                    code_occurence: error_occurence_lib::code_occurence!()
+                                });
+                            }
+                            let mut #unique_snake_case = vec![];
+                            for element in #check_handle_token_stream {
+                                if #unique_snake_case.contains(&element) {
+                                    return Err(#tokens_select_try_new_error_named_upper_camel_case_token_stream::#not_unique_field_filter_upper_camel_case {
+                                        field: element,
+                                        code_occurence: error_occurence_lib::code_occurence!(),
+                                    });
+                                } else {
+                                    #unique_snake_case.push(element);
+                                }
+                            }
+                            Ok(Self #self_initialization_token_stream)
+                        }
+                    }
+                }
             };
             match &postgresql_json_type_select {
                 PostgresqlJsonTypeSelect::Ident | PostgresqlJsonTypeSelect::ObjectIdent | PostgresqlJsonTypeSelect::StdOptionOptionObjectIdent => {
-                    generate_impl_pub_fn_try_new_token_stream(false, &generate_value_input_parameter_type_token_stream(&std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream), false)
+                    generate_impl_pub_fn_try_new_token_stream(false, &quote::quote! {#value_snake_case: #std_vec_vec_ident_field_to_read_without_id_upper_camel_case_token_stream}, false)
                 }
                 PostgresqlJsonTypeSelect::StdVecVecObjectWithIdIdent | PostgresqlJsonTypeSelect::StdOptionOptionStdVecVecObjectWithIdIdent => {
                     generate_impl_pub_fn_try_new_token_stream(true, &field_vec_std_vec_vec_ident_field_to_read_with_id_upper_camel_case_token_stream_pagination_postgersql_crud_pagination_token_stream_token_stream, true)
