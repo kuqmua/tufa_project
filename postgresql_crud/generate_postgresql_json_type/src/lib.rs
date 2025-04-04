@@ -1967,7 +1967,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let update_query_bind_token_stream = {
-                            let bind_value_to_postgresql_query_part_to_update_variants_token_stream = vec_syn_field.iter().map(|element| {
+                            let update_query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident = element
                                     .ident
                                     .as_ref()
@@ -1988,7 +1988,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     #query_snake_case = #query_snake_case.bind(element_handle.#id_snake_case.0.to_string());//postgresql: error returned from database: operator does not exist: text = jsonb
                                     for element in element_handle.fields.0 {
                                         match element {
-                                            #(#bind_value_to_postgresql_query_part_to_update_variants_token_stream),*
+                                            #(#update_query_bind_variants_token_stream),*
                                         }
                                     }
                                 }
@@ -2488,7 +2488,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     },
                     &match &postgresql_json_type {
                         PostgresqlJsonType::Object => {
-                            let bind_value_to_postgresql_query_part_to_update_variants_token_stream = vec_syn_field.iter().map(|element| {
+                            let update_query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
                                     .as_ref()
@@ -2507,14 +2507,14 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             quote::quote! {
                                 for element in #value_snake_case.into_vec() {
                                     match element {
-                                        #(#bind_value_to_postgresql_query_part_to_update_variants_token_stream),*
+                                        #(#update_query_bind_variants_token_stream),*
                                     }
                                 }
                                 #query_snake_case
                             }
                         }
                         PostgresqlJsonType::StdOptionOptionObject => {
-                            let bind_value_to_postgresql_query_part_to_update_variants_token_stream = vec_syn_field.iter().map(|element| {
+                            let update_query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
                                     .as_ref()
@@ -2535,7 +2535,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     Some(value) => {
                                         for element in value.into_vec() {
                                             match element {
-                                                #(#bind_value_to_postgresql_query_part_to_update_variants_token_stream),*
+                                                #(#update_query_bind_variants_token_stream),*
                                             }
                                         }
                                     },
