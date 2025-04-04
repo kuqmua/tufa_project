@@ -440,28 +440,28 @@ pub fn generate_postgresql_json_type_token_stream(
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
     let reference_std_primitive_str_token_stream = quote::quote! {&std::primitive::str};
     let reference_mut_std_primitive_u64_token_stream = quote::quote! {&mut std::primitive::u64};
-    let mut_query_sqlx_query_postgres_arguments_token_stream = quote::quote! {mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>};
+    let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
+    let mut_query_sqlx_query_postgres_arguments_token_stream = quote::quote! {mut #query_snake_case: #query_postgres_arguments_token_stream};
     let std_string_string_token_stream = token_patterns::StdStringString;
     //todo maybe reexport sqlx?
     quote::quote! {
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
-            type #create_upper_camel_case<'a> = #create_type_token_stream;
+            type #create_upper_camel_case = #create_type_token_stream;
             fn #create_query_part_snake_case(
-                #value_snake_case: &Self::#create_upper_camel_case<'_>,
+                #value_snake_case: &Self::#create_upper_camel_case,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
             ) -> Result<#std_string_string_token_stream, #path_token_stream QueryPartErrorNamed> {
                 #create_query_part_token_stream
             }
-            fn #create_query_bind_snake_case<'a>(
-                #value_snake_case: Self::#create_upper_camel_case<'a>,
+            fn #create_query_bind_snake_case(
+                #value_snake_case: Self::#create_upper_camel_case,
                 #mut_query_sqlx_query_postgres_arguments_token_stream
             ) -> #query_postgres_arguments_token_stream {
                 #create_query_bind_token_stream
             }
-            type #select_upper_camel_case<'a> = #select_type_token_stream;
+            type #select_upper_camel_case = #select_type_token_stream;
             fn #select_query_part_snake_case(
-                #value_snake_case: &Self::#select_upper_camel_case<'_>,
+                #value_snake_case: &Self::#select_upper_camel_case,
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
@@ -469,11 +469,11 @@ pub fn generate_postgresql_json_type_token_stream(
             ) -> #std_string_string_token_stream {
                 #select_query_part_token_stream
             }
-            type #where_element_upper_camel_case<'a> = #where_element_type_token_stream;
-            type #read_upper_camel_case<'a> = #read_type_token_stream;
-            type #update_upper_camel_case<'a> = #update_type_token_stream;
+            type #where_element_upper_camel_case = #where_element_type_token_stream;
+            type #read_upper_camel_case = #read_type_token_stream;
+            type #update_upper_camel_case = #update_type_token_stream;
             fn #update_query_part_snake_case(
-                #value_snake_case: &Self::#update_upper_camel_case<'_>,
+                #value_snake_case: &Self::#update_upper_camel_case,
                 #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
                 #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
                 #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
@@ -481,8 +481,8 @@ pub fn generate_postgresql_json_type_token_stream(
             ) -> Result<#std_string_string_token_stream, #path_token_stream QueryPartErrorNamed> {
                 #update_query_part_token_stream
             }
-            fn #update_query_bind_snake_case<'a>(
-                #value_snake_case: Self::#update_upper_camel_case<'_>,
+            fn #update_query_bind_snake_case(
+                #value_snake_case: Self::#update_upper_camel_case,
                 #mut_query_sqlx_query_postgres_arguments_token_stream
             ) -> #query_postgres_arguments_token_stream {
                 #update_query_bind_token_stream
