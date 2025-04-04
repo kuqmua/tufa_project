@@ -27,7 +27,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
 
     let ident_update_origin_upper_camel_case = naming::parameter::SelfUpdateOriginUpperCamelCase::from_tokens(&ident);
 
-    let ident_options_to_update_upper_camel_case = naming::parameter::SelfOptionsToUpdateUpperCamelCase::from_tokens(&ident);
+    let ident_update_with_id_upper_camel_case = naming::parameter::SelfUpdateWithIdUpperCamelCase::from_tokens(&ident);
 
     let value_snake_case = naming::ValueSnakeCase;
 
@@ -911,18 +911,18 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     });
                     quote::quote! {vec![#(#elements_token_stream),*]}
                 });
-            let ident_options_to_update_token_stream = {
+            let ident_update_with_id_token_stream = {
                 quote::quote! {
                     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                    pub struct #ident_options_to_update_upper_camel_case {
+                    pub struct #ident_update_with_id_upper_camel_case {
                         pub #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
                         pub fields: postgresql_crud::UniqueVec<#ident_update_origin_upper_camel_case>
                     }
                 }
             };
-            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_options_to_update_token_stream =
+            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_with_id_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                    &ident_options_to_update_upper_camel_case,
+                    &ident_update_with_id_upper_camel_case,
                     &proc_macro2::TokenStream::new(),
                     &quote::quote! {Self {
                         #id_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -934,8 +934,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 #ident_json_array_change_try_generate_postgresql_json_type_error_named_token_stream
                 #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_option_to_update_origin_token_stream
 
-                #ident_options_to_update_token_stream
-                #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_options_to_update_token_stream
+                #ident_update_with_id_token_stream
+                #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_with_id_token_stream
             }
         };
         quote::quote! {
@@ -1571,7 +1571,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #serde_skip_serializing_if_vec_is_empty_token_stream
                                 #create_snake_case: std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>,
                                 #serde_skip_serializing_if_vec_is_empty_token_stream
-                                #update_snake_case: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
+                                #update_snake_case: std::vec::Vec<#ident_update_with_id_upper_camel_case>,
                                 #serde_skip_serializing_if_vec_is_empty_token_stream
                                 #delete_snake_case: std::vec::Vec<#postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>,
                             }
@@ -1695,7 +1695,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 impl #struct_ident_token_stream {
                                     pub fn try_new(
                                         #create_snake_case: std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>,
-                                        #update_snake_case: std::vec::Vec<#ident_options_to_update_upper_camel_case>,
+                                        #update_snake_case: std::vec::Vec<#ident_update_with_id_upper_camel_case>,
                                         #delete_snake_case: std::vec::Vec<#postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>,
                                     ) -> Result<Self, #struct_ident_try_new_error_named> {
                                         #maybe_check_create_update_delete_check_fields_are_empty_token_stream
@@ -1803,7 +1803,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                                     vec![]
                                                 }
                                             };
-                                            let __field1 = match serde::de::SeqAccess::next_element::<std::vec::Vec<#ident_options_to_update_upper_camel_case>>(&mut __seq)? {
+                                            let __field1 = match serde::de::SeqAccess::next_element::<std::vec::Vec<#ident_update_with_id_upper_camel_case>>(&mut __seq)? {
                                                 serde::__private::Some(__value) => __value,
                                                 serde::__private::None => {
                                                     vec![]
@@ -1823,7 +1823,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                             __A: serde::de::MapAccess<'de>,
                                         {
                                             let mut __field0: serde::__private::Option<std::vec::Vec<#ident_to_create_with_generated_id_upper_camel_case>> = serde::__private::None;
-                                            let mut __field1: serde::__private::Option<std::vec::Vec<#ident_options_to_update_upper_camel_case>> = serde::__private::None;
+                                            let mut __field1: serde::__private::Option<std::vec::Vec<#ident_update_with_id_upper_camel_case>> = serde::__private::None;
                                             let mut __field2: serde::__private::Option<std::vec::Vec<#postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>> = serde::__private::None;
                                             while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                                                 match __key {
@@ -1837,7 +1837,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                                         if serde::__private::Option::is_some(&__field1) {
                                                             return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("update"));
                                                         }
-                                                        __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<#ident_options_to_update_upper_camel_case>>(&mut __map)?);
+                                                        __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<#ident_update_with_id_upper_camel_case>>(&mut __map)?);
                                                     }
                                                     __Field::__field2 => {
                                                         if serde::__private::Option::is_some(&__field2) {
