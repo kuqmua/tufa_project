@@ -285,11 +285,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             ) = {
                 let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
                 let ident_read_with_or_without_id_try_from_error_named_upper_camel_case = naming::parameter::SelfReadWithOrWithoutIdTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
-                let generate_impl_try_new_for_postgresql_json_type_ident_read_with_or_without_id_token_stream = |contains_id: std::primitive::bool| {
-                    let postgresql_json_type_ident_read_with_or_without_id_token_stream: &dyn quote::ToTokens = if contains_id { &ident_read_with_id_upper_camel_case } else { &ident_read_without_id_upper_camel_case };
+                let generate_impl_try_new_for_ident_read_with_or_without_id_token_stream = |contains_id: std::primitive::bool| {
+                    let ident_read_with_or_without_id_token_stream: &dyn quote::ToTokens = if contains_id { &ident_read_with_id_upper_camel_case } else { &ident_read_without_id_upper_camel_case };
                     let ident_read_with_or_without_id_fields_declaration_token_stream = generate_ident_read_with_or_without_id_fields_declaration_token_stream(contains_id, false);
-                    let (postgresql_json_type_ident_read_with_or_without_id_fields_reference_token_stream, postgresql_json_type_ident_read_with_or_without_id_fields_token_stream) = {
-                        let generate_postgresql_json_type_ident_read_with_or_without_id_fields_token_stream = |with_reference: std::primitive::bool| {
+                    let (ident_read_with_or_without_id_fields_reference_token_stream, ident_read_with_or_without_id_fields_token_stream) = {
+                        let generate_ident_read_with_or_without_id_fields_token_stream = |with_reference: std::primitive::bool| {
                             let maybe_reference_symbol_token_stream = if with_reference {
                                 quote::quote! {&}
                             } else {
@@ -311,11 +311,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #(#fields_token_stream),*
                             }
                         };
-                        let postgresql_json_type_ident_read_with_or_without_id_fields_reference_token_stream = generate_postgresql_json_type_ident_read_with_or_without_id_fields_token_stream(true);
-                        let postgresql_json_type_ident_read_with_or_without_id_fields_token_stream = generate_postgresql_json_type_ident_read_with_or_without_id_fields_token_stream(false);
-                        (postgresql_json_type_ident_read_with_or_without_id_fields_reference_token_stream, postgresql_json_type_ident_read_with_or_without_id_fields_token_stream)
+                        (
+                            generate_ident_read_with_or_without_id_fields_token_stream(true),
+                            generate_ident_read_with_or_without_id_fields_token_stream(false)
+                        )
                     };
-                    let postgresql_json_type_ident_read_with_or_without_id_check_if_all_fields_are_none_token_stream = {
+                    let ident_read_with_or_without_id_check_if_all_fields_are_none_token_stream = {
                         let nones_token_stream = {
                             let range_end = {
                                 let vec_syn_field_len = vec_syn_field.len();
@@ -332,7 +333,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             acc
                         };
                         quote::quote! {
-                            if let (#(#nones_token_stream),*) = (#postgresql_json_type_ident_read_with_or_without_id_fields_reference_token_stream) {
+                            if let (#(#nones_token_stream),*) = (#ident_read_with_or_without_id_fields_reference_token_stream) {
                                 return Err(#ident_read_with_or_without_id_try_from_error_named_upper_camel_case::#all_fields_are_none_upper_camel_case {
                                     code_occurence: error_occurence_lib::code_occurence!()
                                 });
@@ -340,10 +341,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     };
                     quote::quote! {
-                        impl #postgresql_json_type_ident_read_with_or_without_id_token_stream {
+                        impl #ident_read_with_or_without_id_token_stream {
                             pub fn try_new(#ident_read_with_or_without_id_fields_declaration_token_stream) -> Result<Self, #ident_read_with_or_without_id_try_from_error_named_upper_camel_case> {
-                                #postgresql_json_type_ident_read_with_or_without_id_check_if_all_fields_are_none_token_stream
-                                Ok(Self{#postgresql_json_type_ident_read_with_or_without_id_fields_token_stream})
+                                #ident_read_with_or_without_id_check_if_all_fields_are_none_token_stream
+                                Ok(Self{#ident_read_with_or_without_id_fields_token_stream})
                             }
                         }
                     }
@@ -357,8 +358,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             },
                         }
                     },
-                    generate_impl_try_new_for_postgresql_json_type_ident_read_with_or_without_id_token_stream(false),
-                    generate_impl_try_new_for_postgresql_json_type_ident_read_with_or_without_id_token_stream(true),
+                    generate_impl_try_new_for_ident_read_with_or_without_id_token_stream(false),
+                    generate_impl_try_new_for_ident_read_with_or_without_id_token_stream(true),
                 )
             };
             let (impl_serde_deserialize_for_postgresql_json_type_ident_read_without_id_token_stream, impl_serde_deserialize_for_postgresql_json_type_ident_read_with_id_token_stream) = {
