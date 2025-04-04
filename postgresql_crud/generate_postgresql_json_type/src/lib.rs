@@ -948,28 +948,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
     let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
     let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
-    let generate_tokens_to_update_methods_token_stream = |
-        struct_token_stream: &dyn quote::ToTokens,
-        update_query_part_token_stream: &dyn quote::ToTokens,
-        update_query_bind_token_stream: &dyn quote::ToTokens
-    | {
-        quote::quote! {
-            impl #struct_token_stream {
-                fn #update_query_part_snake_case(
-                    &self,
-                    #jsonb_set_accumulator_snake_case: &std::primitive::str,
-                    #jsonb_set_target_snake_case: &std::primitive::str,
-                    #jsonb_set_path_snake_case: &std::primitive::str,
-                    #increment_snake_case: &mut std::primitive::u64,
-                ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-                    #update_query_part_token_stream
-                }
-                fn #update_query_bind_snake_case(self, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                    #update_query_bind_token_stream
-                }
-            }
-        }
-    };
     let (generate_tuple_struct_tokens_double_quotes_token_stream, generate_tuple_struct_tokens_with_1_element_double_quotes_token_stream) = {
         const TUPLE_STRUCT_SPACE_STRINGIFIED: &std::primitive::str = "tuple struct ";
         let generate_tuple_struct_tokens_double_quotes_token_stream = |value: &dyn std::fmt::Display| generate_quotes::double_quotes_token_stream(&format!("{TUPLE_STRUCT_SPACE_STRINGIFIED}{value}"));
@@ -1870,9 +1848,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         }
                     };
-                    let impl_ident_json_array_change_methods_token_stream = generate_tokens_to_update_methods_token_stream(
-                        &struct_ident_token_stream,
-                        &{
+                    let impl_ident_json_array_change_methods_token_stream = {
+                        let update_query_part_token_stream = {
                             let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
@@ -1988,8 +1965,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
                                 #ok_format_handle_token_stream
                             }
-                        },
-                        &{
+                        };
+                        let update_query_bind_token_stream = {
                             let bind_value_to_postgresql_query_part_to_update_variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident = element
                                     .ident
@@ -2023,8 +2000,24 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                                 #query_snake_case
                             }
-                        },
-                    );
+                        };
+                        quote::quote! {
+                            impl #struct_ident_token_stream {
+                                fn #update_query_part_snake_case(
+                                    &self,
+                                    #jsonb_set_accumulator_snake_case: &std::primitive::str,
+                                    #jsonb_set_target_snake_case: &std::primitive::str,
+                                    #jsonb_set_path_snake_case: &std::primitive::str,
+                                    #increment_snake_case: &mut std::primitive::u64,
+                                ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+                                    #update_query_part_token_stream
+                                }
+                                fn #update_query_bind_snake_case(self, mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                                    #update_query_bind_token_stream
+                                }
+                            }
+                        }
+                    };
                     let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_json_array_change_with_content_token_stream =
                         postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                             &struct_ident_token_stream,
