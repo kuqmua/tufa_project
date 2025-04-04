@@ -197,111 +197,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     };
 
     let common_token_stream = {
-        // let create_token_stream = {
-        //     let fields_declaration_token_stream = {
-        //         let value = vec_syn_field.iter().map(|element| {
-        //             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-        //                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
-        //             });
-        //             let type_path_create_token_stream = naming::parameter::SelfCreateUpperCamelCase::from_type_last_segment(&element.ty);
-        //             quote::quote! {
-        //                 pub #field_ident: #type_path_create_token_stream
-        //             }
-        //         });
-        //         quote::quote! {#(#value),*}
-        //     };
-        //     let (ident_to_create_with_generated_id_token_stream, ident_to_create_without_generated_id_token_stream) = {
-        //         let content_token_stream = quote::quote! {{ #fields_declaration_token_stream }};
-        //         (
-        //             generate_supported_generics_template_struct_token_stream(true, &ident_to_create_with_generated_id_upper_camel_case, &content_token_stream),
-        //             generate_supported_generics_template_struct_token_stream(true, &ident_to_create_without_generated_id_upper_camel_case, &content_token_stream)
-        //         )
-        //     };
-        //     let (
-        //         impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_to_create_with_generated_id_token_stream,
-        //         impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_to_create_without_generated_id_token_stream,
-        //     ) = {
-        //         let initialization_token_stream = quote::quote! {Self #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_fields_token_stream};
-        //         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_to_create_with_generated_id_token_stream =
-        //             postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_to_create_with_generated_id_upper_camel_case, &proc_macro2::TokenStream::new(), &initialization_token_stream);
-        //         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_to_create_without_generated_id_token_stream =
-        //             postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_to_create_without_generated_id_upper_camel_case, &proc_macro2::TokenStream::new(), &initialization_token_stream);
-        //         (
-        //             impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_to_create_with_generated_id_token_stream,
-        //             impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_to_create_without_generated_id_token_stream,
-        //         )
-        //     };
-        //     let (impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_with_generated_id_token_stream, impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_without_generated_id_token_stream) = {
-        //         let generate_impl_json_create_tokens_to_create_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool| {
-        //             generate_tokens_to_create_methods_token_stream(
-        //                 &struct_ident_token_stream,
-        //                 &{
-        //                     let ok_value_token_stream = if contains_id {
-        //                         quote::quote! {format!("jsonb_build_object('id', to_jsonb(gen_random_uuid()))||{increments}")}
-        //                     } else {
-        //                         quote::quote! {format!("{increments}")}
-        //                     };
-        //                     let try_generate_postgresql_json_type_to_create_fields_token_stream = vec_syn_field.iter().map(|element| {
-        //                         let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-        //                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
-        //                         });
-        //                         let element_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_field_ident);
-        //                         let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(element);
-        //                         quote::quote! {
-        //                             match #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #create_query_part_snake_case(&self.#element_field_ident, #increment_snake_case) {
-        //                                 Ok(value) => {
-        //                                     #increments_snake_case.push_str(&#postgresql_crud_wrap_into_jsonb_build_object_token_stream(#element_field_ident_double_quotes_token_stream, &value));
-        //                                 }
-        //                                 Err(error) => {
-        //                                     return Err(error);
-        //                                 }
-        //                             }
-        //                         }
-        //                     });
-        //                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{increments_snake_case}}}"));
-        //                     quote::quote! {
-        //                         let mut #increments_snake_case = std::string::String::from("");
-        //                         #(#try_generate_postgresql_json_type_to_create_fields_token_stream)*
-        //                         let _ = #increments_snake_case.pop();
-        //                         let _ = #increments_snake_case.pop();
-        //                         Ok(#ok_value_token_stream)
-        //                     }
-        //                 },
-        //                 &{
-        //                     let bind_value_to_postgresql_query_part_to_create_fields_token_stream = vec_syn_field.iter().map(|element| {
-        //                         let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
-        //                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
-        //                         });
-        //                         let field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream(element);
-        //                         quote::quote! {
-        //                             #query_snake_case = #field_type_as_postgresql_crud_postgresql_json_type_from_field_token_stream #create_query_bind_snake_case(self.#element_field_ident, #query_snake_case);
-        //                         }
-        //                     });
-        //                     quote::quote! {
-        //                         #(#bind_value_to_postgresql_query_part_to_create_fields_token_stream)*
-        //                         #query_snake_case
-        //                     }
-        //                 },
-        //             )
-        //         };
-        //         let impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_with_generated_id_token_stream = generate_impl_json_create_tokens_to_create_token_stream(&ident_to_create_with_generated_id_upper_camel_case, true);
-        //         let impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_without_generated_id_token_stream = generate_impl_json_create_tokens_to_create_token_stream(&ident_to_create_without_generated_id_upper_camel_case, false);
-        //         (
-        //             impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_with_generated_id_token_stream,
-        //             impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_without_generated_id_token_stream,
-        //         )
-        //     };
-        //     quote::quote! {
-        //         #ident_to_create_with_generated_id_token_stream
-        //         #ident_to_create_without_generated_id_token_stream
-
-        //         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_to_create_with_generated_id_token_stream
-        //         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_to_create_without_generated_id_token_stream
-
-        //         #impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_with_generated_id_token_stream
-        //         #impl_postgresql_crud_json_create_postgresql_query_part_for_ident_to_create_without_generated_id_token_stream
-        //     }
-        // };
         let read_token_stream = {
             let (ident_field_to_read_token_stream, ident_with_id_field_to_read_token_stream) = {
                 let generate_template_field_to_read_struct_token_stream = |tokens_field_to_read_token_stream: &dyn quote::ToTokens, additional_content_token_stream: &dyn quote::ToTokens| {
@@ -1110,7 +1005,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             }
         };
         quote::quote! {
-            // #create_token_stream
             #read_token_stream
             #update_token_stream
         }
