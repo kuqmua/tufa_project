@@ -109,17 +109,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         (checked_add_variant_declaration_token_stream, checked_add_variant_initialization_token_stream)
     };
 
-    let generate_postgresql_json_type_tokens_read_token_stream = |postgresql_json_type_token_read_token_stream: &dyn quote::ToTokens, impl_serde_deserialize: std::primitive::bool, content_token_stream: &dyn quote::ToTokens| {
-        let maybe_impl_serde_deserialize_token_stream = if impl_serde_deserialize {
-            quote::quote! {serde::Deserialize,}
-        } else {
-            proc_macro2::TokenStream::new()
-        };
-        quote::quote! {
-            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, #maybe_impl_serde_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
-            pub struct #postgresql_json_type_token_read_token_stream #content_token_stream
-        }
-    };
     let postgresql_crud_wrap_into_jsonb_build_object_token_stream = {
         let wrap_into_jsonb_build_object_snake_case = naming::WrapIntoJsonbBuildObjectSnakeCase;
         quote::quote! {#postgresql_crud_path_token_stream #wrap_into_jsonb_build_object_snake_case}
@@ -276,10 +265,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             };
             let (postgresql_json_type_ident_read_without_id_token_stream, postgresql_json_type_ident_read_with_id_token_stream) = {
                 let generate_struct_postgresql_json_type_tokens_read_token_stream = |struct_ident_token_stream: &dyn quote::ToTokens, contains_id: std::primitive::bool| {
-                    generate_postgresql_json_type_tokens_read_token_stream(&struct_ident_token_stream, false, &{
-                        let postgresql_json_type_ident_read_with_or_without_id_fields_declaration_token_stream = generate_postgresql_json_type_ident_read_with_or_without_id_fields_declaration_token_stream(contains_id, true);
-                        quote::quote! {{#postgresql_json_type_ident_read_with_or_without_id_fields_declaration_token_stream}}
-                    })
+                    let postgresql_json_type_ident_read_with_or_without_id_fields_declaration_token_stream = generate_postgresql_json_type_ident_read_with_or_without_id_fields_declaration_token_stream(contains_id, true);
+                    quote::quote! {
+                        #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+                        pub struct #struct_ident_token_stream {
+                            #postgresql_json_type_ident_read_with_or_without_id_fields_declaration_token_stream
+                        }
+                    }
                 };
                 let postgresql_json_type_ident_read_without_id_token_stream = generate_struct_postgresql_json_type_tokens_read_token_stream(&ident_read_without_id_upper_camel_case, false);
                 let postgresql_json_type_ident_read_with_id_token_stream = generate_struct_postgresql_json_type_tokens_read_token_stream(&ident_read_with_id_upper_camel_case, true);
@@ -1337,20 +1329,24 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }
                 };
                 let read_token_stream = {
-                    let postgresql_json_type_tokens_read_token_stream = generate_postgresql_json_type_tokens_read_token_stream(
-                        &tokens_read_upper_camel_case,
-                        //todo refactor - instead of bool and impl serde deserialize token stream maybe use enum
-                        match &postgresql_json_type {
-                            PostgresqlJsonType::Object | PostgresqlJsonType::StdOptionOptionObject => true,
-                            PostgresqlJsonType::StdVecVecObjectWithId | PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => false,
-                        },
-                        &match &postgresql_json_type {
+                    let postgresql_json_type_tokens_read_token_stream = {
+                        let maybe_impl_serde_deserialize_token_stream = match &postgresql_json_type {
+                            PostgresqlJsonType::Object |
+                            PostgresqlJsonType::StdOptionOptionObject => quote::quote! {serde::Deserialize,},
+                            PostgresqlJsonType::StdVecVecObjectWithId |
+                            PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => proc_macro2::TokenStream::new(),
+                        };
+                        let content_token_stream = match &postgresql_json_type {
                             PostgresqlJsonType::Object => quote::quote! {(pub #ident_read_without_id_upper_camel_case);},
                             PostgresqlJsonType::StdOptionOptionObject => quote::quote! {(pub std::option::Option<#ident_read_without_id_upper_camel_case>);},
                             PostgresqlJsonType::StdVecVecObjectWithId => quote::quote! {(std::vec::Vec<#ident_read_with_id_upper_camel_case>);},
                             PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote! {(pub std::option::Option<std::vec::Vec<#ident_read_with_id_upper_camel_case>>);},
-                        },
-                    );
+                        };
+                        quote::quote! {
+                            #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, #maybe_impl_serde_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
+                            pub struct #tokens_read_upper_camel_case #content_token_stream
+                        }
+                    };
                     //todo maybe all impl must be try_new ?
                     let maybe_impl_try_new_for_postgresql_json_type_tokens_read_token_stream = {
                         let not_unique_id_upper_camel_case = naming::NotUniqueIdUpperCamelCase;
