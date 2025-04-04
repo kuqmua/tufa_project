@@ -93,15 +93,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let increments_snake_case = naming::IncrementsSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
 
-    let generate_tokens_try_generate_postgresql_json_type_error_named_token_stream = |struct_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
-        quote::quote! {
-            #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-            pub enum #struct_token_stream {
-                #content_token_stream
-            }
-        }
-    };
-
     let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
     let (checked_add_variant_declaration_token_stream, checked_add_variant_initialization_token_stream) = {
         let code_occurence_snake_case = naming::CodeOccurenceSnakeCase;
@@ -887,16 +878,21 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }
                 }
             };
-            let ident_json_array_change_try_generate_postgresql_json_type_error_named_token_stream = generate_tokens_try_generate_postgresql_json_type_error_named_token_stream(&ident_json_array_change_try_generate_error_named_upper_camel_case, &{
+            let ident_json_array_change_try_generate_error_named_token_stream = {
                 quote::quote! {
-                    #checked_add_variant_declaration_token_stream,
-                    Create {
-                        #[eo_error_occurence]
-                        error: postgresql_crud::QueryPartErrorNamed,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
+                    #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                    //todo rename or remove
+                    pub enum #ident_json_array_change_try_generate_error_named_upper_camel_case {
+                        #checked_add_variant_declaration_token_stream,
+                        //todo refactor - remove Create variant
+                        Create {
+                            #[eo_error_occurence]
+                            error: postgresql_crud::QueryPartErrorNamed,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
                 }
-            });
+            };
             let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_update_element_upper_camel_case, &{
                     let elements_token_stream = vec_syn_field.iter().map(|element| {
@@ -932,7 +928,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 );
             quote::quote! {
                 #ident_update_element_token_stream
-                #ident_json_array_change_try_generate_postgresql_json_type_error_named_token_stream
+                #ident_json_array_change_try_generate_error_named_token_stream
                 #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_token_stream
 
                 #ident_update_with_id_token_stream
@@ -1335,6 +1331,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_to_create_token_stream
                     }
                 };
+                let select_token_stream = {
+                    quote::quote! {
+
+                    }
+                };
                 let read_token_stream = {
                     let postgresql_json_type_tokens_read_token_stream = generate_postgresql_json_type_tokens_read_token_stream(
                         &tokens_read_upper_camel_case,
@@ -1350,7 +1351,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => quote::quote! {(pub std::option::Option<std::vec::Vec<#ident_read_with_id_upper_camel_case>>);},
                         },
                     );
-                    // println!("{postgresql_json_type_tokens_read_token_stream}");
                     //todo maybe all impl must be try_new ?
                     let maybe_impl_try_new_for_postgresql_json_type_tokens_read_token_stream = {
                         let not_unique_id_upper_camel_case = naming::NotUniqueIdUpperCamelCase;
@@ -2571,6 +2571,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     #tokens_token_stream
 
                     #create_token_stream
+                    #select_token_stream
                     #read_token_stream
                     #update_token_stream
 
