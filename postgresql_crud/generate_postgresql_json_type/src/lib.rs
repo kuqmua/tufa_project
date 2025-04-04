@@ -362,8 +362,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     generate_impl_try_new_for_ident_read_with_or_without_id_token_stream(true),
                 )
             };
-            let (impl_serde_deserialize_for_postgresql_json_type_ident_read_without_id_token_stream, impl_serde_deserialize_for_postgresql_json_type_ident_read_with_id_token_stream) = {
-                let generate_impl_serde_deserialize_for_postgresql_json_type_read_token_stream = |struct_ident_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens, contains_id: std::primitive::bool| {
+            let (impl_serde_deserialize_for_ident_read_without_id_token_stream, impl_serde_deserialize_for_ident_read_with_id_token_stream) = {
+                let generate_impl_serde_deserialize_for_read_token_stream = |ident_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens, contains_id: std::primitive::bool| {
                     let range_end = {
                         let vec_syn_field_len = vec_syn_field.len();
                         if contains_id {
@@ -611,9 +611,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             #(#fields_array_elements_token_stream),*
                         }
                     };
-                    let postgresql_json_type_std_vec_vec_object_with_id_ident_read_origin_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&struct_ident_token_stream);
+                    let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_token_stream);
                     quote::quote! {
-                        impl<'de> serde::Deserialize<'de> for #struct_ident_token_stream {
+                        impl<'de> serde::Deserialize<'de> for #ident_token_stream {
                             fn deserialize<__D>(
                                 __deserializer: __D,
                             ) -> serde::__private::Result<Self, __D::Error>
@@ -693,12 +693,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 #[doc(hidden)]
                                 struct __Visitor<'de> {
                                     marker: serde::__private::PhantomData<
-                                        #struct_ident_token_stream,
+                                        #ident_token_stream,
                                     >,
                                     lifetime: serde::__private::PhantomData<&'de ()>,
                                 }
                                 impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #struct_ident_token_stream;
+                                    type Value = #ident_token_stream;
                                     fn expecting(
                                         &self,
                                         __formatter: &mut serde::__private::Formatter<'_>,
@@ -748,11 +748,11 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 const FIELDS: &'static [&'static str] = &[#fields_array_elements_token_stream];
                                 serde::Deserializer::deserialize_struct(
                                     __deserializer,
-                                    #postgresql_json_type_std_vec_vec_object_with_id_ident_read_origin_double_quotes_token_stream,
+                                    #ident_double_quotes_token_stream,
                                     FIELDS,
                                     __Visitor {
                                         marker: serde::__private::PhantomData::<
-                                            #struct_ident_token_stream,
+                                            #ident_token_stream,
                                         >,
                                         lifetime: serde::__private::PhantomData,
                                     },
@@ -761,9 +761,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         }
                     }
                 };
-                let impl_serde_deserialize_for_postgresql_json_type_ident_read_without_id_token_stream = generate_impl_serde_deserialize_for_postgresql_json_type_read_token_stream(&ident_read_without_id_upper_camel_case, false);
-                let impl_serde_deserialize_for_postgresql_json_type_ident_read_with_id_token_stream = generate_impl_serde_deserialize_for_postgresql_json_type_read_token_stream(&ident_read_with_id_upper_camel_case, true);
-                (impl_serde_deserialize_for_postgresql_json_type_ident_read_without_id_token_stream, impl_serde_deserialize_for_postgresql_json_type_ident_read_with_id_token_stream)
+                (
+                    generate_impl_serde_deserialize_for_read_token_stream(&ident_read_without_id_upper_camel_case, false),
+                    generate_impl_serde_deserialize_for_read_token_stream(&ident_read_with_id_upper_camel_case, true)
+                )
             };
             let (
                 impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_read_without_id_token_stream,
@@ -839,8 +840,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 #impl_try_new_for_ident_read_without_id_token_stream
                 #impl_try_new_for_ident_read_with_id_token_stream
 
-                #impl_serde_deserialize_for_postgresql_json_type_ident_read_without_id_token_stream
-                #impl_serde_deserialize_for_postgresql_json_type_ident_read_with_id_token_stream
+                #impl_serde_deserialize_for_ident_read_without_id_token_stream
+                #impl_serde_deserialize_for_ident_read_with_id_token_stream
 
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_read_without_id_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_read_with_id_token_stream
