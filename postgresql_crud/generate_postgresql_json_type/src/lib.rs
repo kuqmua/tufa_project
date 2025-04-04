@@ -18,7 +18,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
 
     let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
-    let ident_field_to_update_upper_camel_case = naming::parameter::SelfFieldToUpdateUpperCamelCase::from_tokens(&ident);
 
     let ident_select_without_id_upper_camel_case = naming::parameter::SelfSelectWithoutIdUpperCamelCase::from_tokens(&ident);
     let ident_select_with_id_upper_camel_case = naming::parameter::SelfSelectWithIdUpperCamelCase::from_tokens(&ident);
@@ -892,47 +891,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
             }
         };
         let update_token_stream = {
-            let ident_field_to_update_token_stream = {
-                let variants_token_stream = vec_syn_field.iter().map(|element| {
-                    let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                    });
-                    let element_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident);
-                    let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
-                    quote::quote! {
-                        #[serde(rename(serialize = #element_ident_double_quotes_token_stream, deserialize = #element_ident_double_quotes_token_stream))]
-                        #element_ident_upper_camel_case_token_stream
-                    }
-                });
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                    pub enum #ident_field_to_update_upper_camel_case {
-                        #(#variants_token_stream),*
-                    }
-                }
-            };
-            let impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream = {
-                let variants_token_stream = vec_syn_field.iter().map(|element| {
-                    let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                    });
-                    let element_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident);
-                    let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
-                    quote::quote! {
-                        Self::#element_ident_upper_camel_case_token_stream => #element_ident_double_quotes_token_stream.to_owned()
-                    }
-                });
-                macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-                    &proc_macro2::TokenStream::new(),
-                    &ident_field_to_update_upper_camel_case,
-                    &proc_macro2::TokenStream::new(),
-                    &quote::quote! {
-                        match &self {
-                            #(#variants_token_stream),*
-                        }
-                    },
-                )
-            };
             let postgresql_json_type_ident_option_to_update_origin_token_stream = {
                 let variants_token_stream = vec_syn_field.iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -998,9 +956,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     }},
                 );
             quote::quote! {
-                #ident_field_to_update_token_stream
-                #impl_error_occurence_lib_to_std_string_string_for_ident_field_to_update_token_stream
-
                 #postgresql_json_type_ident_option_to_update_origin_token_stream
                 #ident_json_array_change_try_generate_postgresql_json_type_error_named_token_stream
                 #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_option_to_update_origin_token_stream
