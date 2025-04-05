@@ -673,8 +673,6 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     update_query_bind_content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-    let postgresql_type_self_upper_camel_case = naming::PostgresqlTypeSelfUpperCamelCase;
-    let self_upper_camel_case = naming::SelfUpperCamelCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
@@ -696,7 +694,6 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     let std_string_string_token_stream = token_patterns::StdStringString;
     quote::quote! {
         impl #import_path :: #postgresql_type_upper_camel_case for #ident {
-            type #postgresql_type_self_upper_camel_case = #self_upper_camel_case;
             type #create_upper_camel_case = #ident_create_upper_camel_case;
             fn #create_query_part_snake_case(
                 #value_snake_case: &Self::#create_upper_camel_case,
