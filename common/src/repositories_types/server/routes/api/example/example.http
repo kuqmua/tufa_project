@@ -260,7 +260,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 26,
+  "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 1,
   "select": [
     {
       "std_primitive_i16_as_small_int2_not_null": null
@@ -295,18 +295,18 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 26,
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 1,
     "std_primitive_i16_as_small_int2_not_null": {
-      "value": 0
+      "value": 10
     },
     "std_primitive_i16_as_small_int2_nullable": {
-      "value": 0
+      "value": 10
     },
     "object_animal_as_jsonb_not_null": {
       "value": [
         {
           "std_primitive_i8": {
-            "value": 0
+            "value": 10
           }
         }
       ]
@@ -435,7 +435,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       {
         "GreaterThan": {
           "logical_operator": "Or",
-          "value": 37
+          "value": 2
         }
       }
       # ,
