@@ -3371,7 +3371,15 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         //     };
                         //     quote::quote! {format!("{} as {column}", #format_value_token_stream)}
                         // },
-                        &generate_common_select_query_part_token_stream(&postgresql_crud_macros_common::PostgresqlTypeOrJsonType::PostgresqlType),
+                        &{
+                            let common_select_query_part_token_stream = generate_common_select_query_part_token_stream(&postgresql_crud_macros_common::PostgresqlTypeOrJsonType::PostgresqlType);
+                            quote::quote!{
+                                let value = {
+                                    #common_select_query_part_token_stream
+                                };
+                                format!("{value} as {column}")
+                            }
+                        },
                         &tokens_as_type_where_element_upper_camel_case,
                         &tokens_as_type_read_upper_camel_case,
                         &tokens_as_type_update_upper_camel_case,
