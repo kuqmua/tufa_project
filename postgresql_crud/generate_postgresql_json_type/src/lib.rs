@@ -2638,29 +2638,9 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let tokens_as_postgresql_json_type_token_stream = quote::quote! {<#tokens_upper_camel_case as postgresql_crud::PostgresqlJsonType>::};
                     let tokens_as_type_upper_camel_case = postgresql_type.add_postfix(tokens_upper_camel_case);
                     //todo rewrite - must not depend on create type
-                    let tokens_as_type_tokens_stream = {
-                        let tokens_as_type_token_stream = {
-                            //todo maybe std_option_option_object use nullable_object
-                            //todo maybe remove options for postgresql nullable and nullable json
-                            let type_token_stream = match &postgresql_type {
-                                PostgresqlType::JsonbNotNull => quote::quote! {#tokens_create_upper_camel_case},
-                                PostgresqlType::JsonbNullable => quote::quote! {std::option::Option<#tokens_create_upper_camel_case>},
-                            };
-                            quote::quote! {
-                                #[derive(
-                                    Debug,
-                                    Clone,
-                                    PartialEq,
-                                    serde::Serialize,
-                                    serde::Deserialize,
-                                    schemars::JsonSchema,
-                                )]
-                                pub struct #tokens_as_type_upper_camel_case(#type_token_stream);
-                            }
-                        };
-                        quote::quote! {
-                            #tokens_as_type_token_stream
-                        }
+                    let tokens_as_type_tokens_stream = quote::quote! {
+                        #[derive(Debug)]
+                        pub struct #tokens_as_type_upper_camel_case;
                     };
                     let tokens_as_type_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
                     let tokens_as_type_table_type_declaration_token_stream = {
