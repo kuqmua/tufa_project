@@ -3220,7 +3220,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 });
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
-                value.push(not_unique_primary_key_syn_variant_wrapper.get_syn_variant());
                 value.push(not_unique_column_syn_variant_wrapper.get_syn_variant());
                 // if contains_generic_json {
                 //     value.push(&empty_column_json_reader_syn_variant_wrapper.get_syn_variant());
@@ -3420,7 +3419,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(&operation, &{
                 let mut value = common_http_request_syn_variants.clone();
-                value.push(not_unique_primary_key_syn_variant_wrapper.get_syn_variant().clone());
                 value.push(not_unique_column_syn_variant_wrapper.get_syn_variant().clone());
                 value
             });

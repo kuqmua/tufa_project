@@ -351,5 +351,7 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "with", "id", "read"],
     ["self", "without", "id", "read", "try", "from", "error", "named"],
     ["self", "with", "id", "read", "try", "from", "error", "named"],
-    ["self", "table", "type", "declaration"]
+    ["self", "table", "type", "declaration"],
+    ["self", "alias", "origin", "not", "null"],
+    ["self", "alias", "origin", "nullable"]
 ]);
