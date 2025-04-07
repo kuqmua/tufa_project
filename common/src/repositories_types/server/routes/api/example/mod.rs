@@ -201,7 +201,7 @@ pub struct Example {
 //todo enum tree support
 //todo generate wrapper type for all possible json type
 #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema
-    , postgresql_crud::GeneratePostgresqlJsonType
+    // , postgresql_crud::GeneratePostgresqlJsonType
 )] //user type must implement utoipa::ToSchema trait
 pub struct Animal {
     // pub id: postgresql_crud::postgresql_json_type::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -411,3 +411,788 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
 }
 
 //////////////////////////////////
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub enum AnimalSelectWithoutId {
+    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+    StdPrimitiveI8(postgresql_crud::postgresql_json_type::StdPrimitiveI8Select),
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub enum AnimalSelectWithId {
+    #[serde(rename(serialize = "id", deserialize = "id"))]
+    Id(postgresql_crud::postgresql_json_type::UuidUuidSelect),
+    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+    StdPrimitiveI8(postgresql_crud::postgresql_json_type::StdPrimitiveI8Select),
+}
+impl error_occurence_lib::ToStdStringString for AnimalSelectWithoutId {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for AnimalSelectWithoutId {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![AnimalSelectWithoutId::StdPrimitiveI8(
+            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        )]
+    }
+}
+impl error_occurence_lib::ToStdStringString for AnimalSelectWithId {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for AnimalSelectWithId {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![
+            AnimalSelectWithId::Id(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            AnimalSelectWithId::StdPrimitiveI8(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+        ]
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub enum AnimalUpdateElement {
+    #[serde(rename(serialize = "std_primitive_i8", deserialize = "std_primitive_i8"))]
+    StdPrimitiveI8(postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Update>),
+}
+impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for AnimalUpdateElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![AnimalUpdateElement::StdPrimitiveI8(postgresql_crud::Value {
+            value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        })]
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct AnimalUpdateWithId {
+    pub id: postgresql_crud::postgresql_json_type::UuidUuidSelect,
+    pub fields: postgresql_crud::UniqueVec<AnimalUpdateElement>,
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for AnimalUpdateWithId {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            id: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            fields: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde :: Serialize,
+    serde ::
+Deserialize,
+    utoipa :: ToSchema,
+    schemars :: JsonSchema,
+)]
+pub struct ObjectAnimal {
+    pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8,
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimal {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            std_primitive_i8: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde :: Serialize,
+    serde ::
+Deserialize,
+    utoipa :: ToSchema,
+    schemars :: JsonSchema,
+)]
+pub struct ObjectAnimalCreate {
+    pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8Create,
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalCreate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            std_primitive_i8: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    Default,
+    PartialEq,
+    serde :: Serialize,
+    serde ::
+Deserialize,
+    utoipa :: ToSchema,
+    schemars :: JsonSchema,
+)]
+pub struct ObjectAnimalSelect(pub postgresql_crud::UniqueVec<AnimalSelectWithoutId>);
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalSelect {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub enum ObjectAnimalWhereElement {
+    StdPrimitiveI8(postgresql_crud::PostgresqlTypeWhere<postgresql_crud::postgresql_json_type::StdPrimitiveI8WhereElement>),
+}
+impl<'a> postgresql_crud::PostgresqlTypeWhereFilter<'a> for ObjectAnimalWhereElement {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        match &self {
+            Self::StdPrimitiveI8(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, &format!("{column}->'std_primitive_i8'"), is_need_to_add_logical_operator),
+        }
+    }
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self {
+            Self::StdPrimitiveI8(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
+        }
+    }
+}
+impl error_occurence_lib::ToStdStringString for ObjectAnimalWhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalWhereElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![Self::StdPrimitiveI8(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde :: Serialize,
+    utoipa ::
+ToSchema,
+    schemars :: JsonSchema,
+)]
+pub struct ObjectAnimalWithoutIdRead {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum AnimalWithoutIdReadTryFromErrorNamed {
+    AllFieldsAreNone { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl ObjectAnimalWithoutIdRead {
+    pub fn try_new(std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>) -> Result<Self, AnimalWithoutIdReadTryFromErrorNamed> {
+        if let (None) = (&std_primitive_i8) {
+            return Err(AnimalWithoutIdReadTryFromErrorNamed::AllFieldsAreNone { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        Ok(Self { std_primitive_i8 })
+    }
+}
+impl<'de> serde::Deserialize<'de> for ObjectAnimalWithoutIdRead {
+    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[allow(non_camel_case_types)]
+        #[doc(hidden)]
+        enum __Field {
+            __field0,
+            __ignore,
+        }
+        #[doc(hidden)]
+        struct __FieldVisitor;
+        impl serde::de::Visitor<'_> for __FieldVisitor {
+            type Value = __Field;
+            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__formatter, "field identifier")
+            }
+            fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    "std_primitive_i8" => serde::__private::Ok(__Field::__field0),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    b"std_primitive_i8" => serde::__private::Ok(__Field::__field0),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+        }
+        impl<'de> serde::Deserialize<'de> for __Field {
+            #[inline]
+            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+            where
+                __D: serde::Deserializer<'de>,
+            {
+                serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+            }
+        }
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<ObjectAnimalWithoutIdRead>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = ObjectAnimalWithoutIdRead;
+            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__formatter, "struct AnimalRead")
+            }
+            #[inline]
+            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct AnimalRead with 1 elements"));
+                    }
+                };
+                match ObjectAnimalWithoutIdRead::try_new(__field0) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                    }
+                }
+            }
+            #[inline]
+            fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::MapAccess<'de>,
+            {
+                let mut __field0: serde::__private::Option<std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>> = serde::__private::None;
+                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                    match __key {
+                        __Field::__field0 => {
+                            if serde::__private::Option::is_some(&__field0) {
+                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("std_primitive_i8"));
+                            }
+                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>>(&mut __map)?);
+                        }
+                        _ => {
+                            let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                        }
+                    }
+                }
+                let __field0 = match __field0 {
+                    serde::__private::Some(__field0) => __field0,
+                    serde::__private::None => serde::__private::de::missing_field("std_primitive_i8")?,
+                };
+                match ObjectAnimalWithoutIdRead::try_new(__field0) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                    }
+                }
+            }
+        }
+        #[doc(hidden)]
+        const FIELDS: &'static [&'static str] = &["std_primitive_i8"];
+        serde::Deserializer::deserialize_struct(
+            __deserializer,
+            "ObjectAnimalWithoutIdRead",
+            FIELDS,
+            __Visitor {
+                marker: serde::__private::PhantomData::<ObjectAnimalWithoutIdRead>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalWithoutIdRead {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            std_primitive_i8: Some(postgresql_crud::Value {
+                value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            }),
+        }
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde :: Serialize,
+    serde ::
+Deserialize,
+    utoipa :: ToSchema,
+    schemars :: JsonSchema,
+)]
+pub struct ObjectAnimalUpdate(pub postgresql_crud::UniqueVec<AnimalUpdateElement>);
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalUpdate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    }
+}
+impl postgresql_crud::PostgresqlJsonType for ObjectAnimal {
+    type Create = ObjectAnimalCreate;
+    fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut increments = std::string::String::from("");
+        match <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::create_query_part(&value.std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("std_primitive_i8", &value));
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        let _ = increments.pop();
+        let _ = increments.pop();
+        Ok(format!("{increments}"))
+    }
+    fn create_query_bind(value: Self::Create, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::create_query_bind(value.std_primitive_i8, query);
+        query
+    }
+    type Select = ObjectAnimalSelect;
+    fn select_query_part(value: &Self::Select, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
+        let mut acc = std::string::String::default();
+        let column_name_and_maybe_field_getter_field_ident = if is_postgresql_type { column_name_and_maybe_field_getter.to_string() } else { format!("{column_name_and_maybe_field_getter}->'{field_ident}'") };
+        let column_name_and_maybe_field_getter_for_error_message_field_ident = format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}");
+        for element in value.0.to_vec() {
+            acc.push_str(&format!(
+                "{}||",
+                match element {
+                    AnimalSelectWithoutId::StdPrimitiveI8(value) =>
+                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::select_query_part(&value, "std_primitive_i8", &column_name_and_maybe_field_getter_field_ident, &column_name_and_maybe_field_getter_for_error_message_field_ident, false,),
+                }
+            ));
+        }
+        let _ = acc.pop();
+        let _ = acc.pop();
+        if is_postgresql_type {
+            format!("{acc}")
+        } else {
+            format!("jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))")
+        }
+    }
+    type WhereElement = ObjectAnimalWhereElement;
+    type Read = ObjectAnimalWithoutIdRead;
+    type Update = ObjectAnimalUpdate;
+    fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut std_option_option_object_acc = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
+        let generate_jsonb_set_target = |value: &std::primitive::str| format!("{jsonb_set_target}->'{value}'");
+        for element in value.0.to_vec() {
+            match element {
+                AnimalUpdateElement::StdPrimitiveI8(value) => {
+                    match <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::update_query_part(&value.value, &std_option_option_object_acc, &generate_jsonb_set_target("std_primitive_i8"), "std_primitive_i8", increment) {
+                        Ok(value) => {
+                            std_option_option_object_acc = value;
+                        }
+                        Err(error) => {
+                            return Err(error);
+                        }
+                    }
+                }
+            }
+        }
+        if jsonb_set_accumulator.is_empty() && jsonb_set_path.is_empty() {
+            Ok(std_option_option_object_acc)
+        } else {
+            Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',{std_option_option_object_acc})"))
+        }
+    }
+    fn update_query_bind(value: Self::Update, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in value.0.into_vec() {
+            match element {
+                AnimalUpdateElement::StdPrimitiveI8(value) => {
+                    query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
+                }
+            }
+        }
+        query
+    }
+}
+//meow
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
+pub struct ObjectAnimalAsPostgresqlJsonbNotNull
+(ObjectAnimalCreate);
+// impl std::fmt::Display for ObjectAnimalAsPostgresqlJsonbNotNull {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(formatter, "{:?}", self)
+//     }
+// }
+// impl error_occurence_lib::ToStdStringString for ObjectAnimalAsPostgresqlJsonbNotNull {
+//     fn to_std_string_string(&self) -> std::string::String {
+//         format!("{self}")
+//     }
+// }
+impl ObjectAnimalAsPostgresqlJsonbNotNull {
+    pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} jsonb not null check (jsonb_matches_schema('{}', {column}))", serde_json::to_string(&schemars::schema_for!(ObjectAnimalAsPostgresqlJsonbNotNull)).unwrap())
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde :: Serialize,
+    serde ::
+Deserialize,
+    utoipa :: ToSchema,
+    schemars :: JsonSchema,
+)]
+pub struct ObjectAnimalAsPostgresqlJsonbNotNullCreate {
+    pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8Create,
+}
+impl std::fmt::Display for ObjectAnimalAsPostgresqlJsonbNotNullCreate {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self)
+    }
+}
+impl error_occurence_lib::ToStdStringString for ObjectAnimalAsPostgresqlJsonbNotNullCreate {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl ObjectAnimalAsPostgresqlJsonbNotNullCreate {
+    pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} jsonb not null check (jsonb_matches_schema('{}', {column}))", serde_json::to_string(&schemars::schema_for!(ObjectAnimalAsPostgresqlJsonbNotNullCreate)).unwrap())
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalAsPostgresqlJsonbNotNullCreate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            std_primitive_i8: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
+pub struct ObjectAnimalAsPostgresqlJsonbNotNullSelect(postgresql_crud::UniqueVec<AnimalSelectWithoutId>);
+impl sqlx::Type<sqlx::Postgres> for ObjectAnimalAsPostgresqlJsonbNotNullSelect {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<postgresql_crud::UniqueVec<AnimalSelectWithoutId>> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::Json<postgresql_crud::UniqueVec<AnimalSelectWithoutId>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for ObjectAnimalAsPostgresqlJsonbNotNullSelect {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<postgresql_crud::UniqueVec<AnimalSelectWithoutId>> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value.0)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalAsPostgresqlJsonbNotNullSelect {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub enum ObjectAnimalAsPostgresqlJsonbNotNullWhereElement {
+    StdPrimitiveI8(postgresql_crud::PostgresqlTypeWhere<postgresql_crud::postgresql_json_type::StdPrimitiveI8WhereElement>),
+}
+impl<'a> postgresql_crud::PostgresqlTypeWhereFilter<'a> for ObjectAnimalAsPostgresqlJsonbNotNullWhereElement {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        match &self {
+            Self::StdPrimitiveI8(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, &format!("{column}->'std_primitive_i8'"), is_need_to_add_logical_operator),
+        }
+    }
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self {
+            Self::StdPrimitiveI8(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
+        }
+    }
+}
+impl error_occurence_lib::ToStdStringString for ObjectAnimalAsPostgresqlJsonbNotNullWhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalAsPostgresqlJsonbNotNullWhereElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![Self::StdPrimitiveI8(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
+    }
+}
+#[derive(
+    Debug,
+    Clone,
+    PartialEq,
+    Default,
+    serde :: Serialize,
+    utoipa ::
+ToSchema,
+    schemars :: JsonSchema,
+)]
+pub struct ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdReadTryFromErrorNamed {
+    AllFieldsAreNone { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead {
+    pub fn try_new(std_primitive_i8: std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>) -> Result<Self, ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdReadTryFromErrorNamed> {
+        if let (None) = (&std_primitive_i8) {
+            return Err(ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdReadTryFromErrorNamed::AllFieldsAreNone { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        Ok(Self { std_primitive_i8 })
+    }
+}
+impl<'de> serde::Deserialize<'de> for ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead {
+    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[allow(non_camel_case_types)]
+        #[doc(hidden)]
+        enum __Field {
+            __field0,
+            __ignore,
+        }
+        #[doc(hidden)]
+        struct __FieldVisitor;
+        impl serde::de::Visitor<'_> for __FieldVisitor {
+            type Value = __Field;
+            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__formatter, "field identifier")
+            }
+            fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    "std_primitive_i8" => serde::__private::Ok(__Field::__field0),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    b"std_primitive_i8" => serde::__private::Ok(__Field::__field0),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+        }
+        impl<'de> serde::Deserialize<'de> for __Field {
+            #[inline]
+            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+            where
+                __D: serde::Deserializer<'de>,
+            {
+                serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+            }
+        }
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead;
+            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__formatter, "struct AnimalRead")
+            }
+            #[inline]
+            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct AnimalRead with 1 elements"));
+                    }
+                };
+                match ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead::try_new(__field0) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                    }
+                }
+            }
+            #[inline]
+            fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::MapAccess<'de>,
+            {
+                let mut __field0: serde::__private::Option<std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>> = serde::__private::None;
+                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                    match __key {
+                        __Field::__field0 => {
+                            if serde::__private::Option::is_some(&__field0) {
+                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("std_primitive_i8"));
+                            }
+                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::option::Option<postgresql_crud::Value<postgresql_crud::postgresql_json_type::StdPrimitiveI8Read>>>(&mut __map)?);
+                        }
+                        _ => {
+                            let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                        }
+                    }
+                }
+                let __field0 = match __field0 {
+                    serde::__private::Some(__field0) => __field0,
+                    serde::__private::None => serde::__private::de::missing_field("std_primitive_i8")?,
+                };
+                match ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead::try_new(__field0) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                    }
+                }
+            }
+        }
+        #[doc(hidden)]
+        const FIELDS: &'static [&'static str] = &["std_primitive_i8"];
+        serde::Deserializer::deserialize_struct(
+            __deserializer,
+            "ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead",
+            FIELDS,
+            __Visitor {
+                marker: serde::__private::PhantomData::<ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            std_primitive_i8: Some(postgresql_crud::Value {
+                value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            }),
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::Json<ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(value.0),
+            Err(error) => Err(error),
+        }
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
+pub struct ObjectAnimalAsPostgresqlJsonbNotNullUpdate(postgresql_crud::UniqueVec<AnimalUpdateElement>);
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ObjectAnimalAsPostgresqlJsonbNotNullUpdate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    }
+}
+impl postgresql_crud::PostgresqlType for ObjectAnimalAsPostgresqlJsonbNotNull {
+    type Create = ObjectAnimalAsPostgresqlJsonbNotNullCreate;
+    fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut increments = std::string::String::from("");
+        match <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::create_query_part(&value.std_primitive_i8, increment) {
+            Ok(value) => {
+                increments.push_str(&postgresql_crud::wrap_into_jsonb_build_object("std_primitive_i8", &value));
+            }
+            Err(error) => {
+                return Err(error);
+            }
+        }
+        let _ = increments.pop();
+        let _ = increments.pop();
+        Ok(format!("{increments}"))
+    }
+    fn create_query_bind(value: Self::Create, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::create_query_bind(value.std_primitive_i8, query);
+        query
+    }
+    type Select = ObjectAnimalAsPostgresqlJsonbNotNullSelect;
+    fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String {
+        let value = {
+            let field_ident = column;
+            let column_name_and_maybe_field_getter = column;
+            let column_name_and_maybe_field_getter_for_error_message = column;
+            let is_postgresql_type = true;
+            let mut acc = std::string::String::default();
+            let column_name_and_maybe_field_getter_field_ident = if is_postgresql_type { column_name_and_maybe_field_getter.to_string() } else { format!("{column_name_and_maybe_field_getter}->'{field_ident}'") };
+            let column_name_and_maybe_field_getter_for_error_message_field_ident = format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}");
+            for element in value.0.to_vec() {
+                acc.push_str(&format!(
+                    "{}||",
+                    match element {
+                        AnimalSelectWithoutId::StdPrimitiveI8(value) =>
+                            <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::select_query_part(&value, "std_primitive_i8", &column_name_and_maybe_field_getter_field_ident, &column_name_and_maybe_field_getter_for_error_message_field_ident, false,),
+                    }
+                ));
+            }
+            let _ = acc.pop();
+            let _ = acc.pop();
+            if is_postgresql_type {
+                format!("{acc}")
+            } else {
+                format!("jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))")
+            }
+        };
+        format!("{value} as {column}")
+    }
+    type WhereElement = ObjectAnimalAsPostgresqlJsonbNotNullWhereElement;
+    type Read = ObjectAnimalAsPostgresqlJsonbNotNullWithoutIdRead;
+    type Update = ObjectAnimalAsPostgresqlJsonbNotNullUpdate;
+    fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut std_option_option_object_acc = format!("case when jsonb_typeof({jsonb_set_target}) = 'object' then ({jsonb_set_target})::jsonb else '{{}}'::jsonb end");
+        let generate_jsonb_set_target = |value: &std::primitive::str| format!("{jsonb_set_target}->'{value}'");
+        for element in value.0.to_vec() {
+            match element {
+                AnimalUpdateElement::StdPrimitiveI8(value) => {
+                    match <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::update_query_part(&value.value, &std_option_option_object_acc, &generate_jsonb_set_target("std_primitive_i8"), "std_primitive_i8", increment) {
+                        Ok(value) => {
+                            std_option_option_object_acc = value;
+                        }
+                        Err(error) => {
+                            return Err(error);
+                        }
+                    }
+                }
+            }
+        }
+        if jsonb_set_accumulator.is_empty() && jsonb_set_path.is_empty() {
+            Ok(std_option_option_object_acc)
+        } else {
+            Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',{std_option_option_object_acc})"))
+        }
+    }
+    fn update_query_bind<'a>(value: Self::Update, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in value.0.into_vec() {
+            match element {
+                AnimalUpdateElement::StdPrimitiveI8(value) => {
+                    query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8 as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
+                }
+            }
+        }
+        query
+    }
+}
+
+///////////////////////////////////////////
+///////////////////////////////////////
+///////////////////////////////////
+//gav

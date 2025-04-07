@@ -2923,51 +2923,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     };
                     let tokens_as_type_without_id_read_upper_camel_case = naming::parameter::SelfWithoutIdReadUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
                     // let tokens_as_type_with_id_read_upper_camel_case = naming::parameter::SelfWithIdReadUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);//todo
-                    let tokens_as_type_read_token_stream = {
-                        generate_common_read_token_stream(&postgresql_json_object_type, &PostgresqlTypeOrJsonTypeHandle::PostgresqlType(&postgresql_type))
-                        // let tokens_as_type_read_token_stream = {
-                        //     //todo add tokens_with_id_read_upper_camel_case
-                        //     let type_token_stream = match &postgresql_type {
-                        //         PostgresqlType::JsonbNotNull => quote::quote! {#tokens_without_id_read_upper_camel_case},
-                        //         PostgresqlType::JsonbNullable => generate_std_option_option_tokens_token_stream(&tokens_without_id_read_upper_camel_case),
-                        //     };
-                        //     quote::quote! {
-                        //         #[derive(
-                        //             Debug,
-                        //             Clone,
-                        //             PartialEq,
-                        //             serde::Serialize,
-                        //             serde::Deserialize,
-                        //             schemars::JsonSchema,
-                        //         )]
-                        //         pub struct #tokens_as_type_read_upper_camel_case(#type_token_stream);
-                        //     }
-                        // };
-                        // let sqlx_types_json_tokens_read_token_stream = generate_sqlx_types_json_type_token_stream(&tokens_without_id_read_upper_camel_case);
-                        // let std_option_option_sqlx_types_json_tokens_read_token_stream = generate_std_option_option_tokens_token_stream(&sqlx_types_json_tokens_read_token_stream);
-                        // let impl_sqlx_type_sqlx_postgres_for_tokens_as_type_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
-                        //     &tokens_as_type_read_upper_camel_case,
-                        //     &match &postgresql_type {
-                        //         PostgresqlType::JsonbNotNull => &sqlx_types_json_tokens_read_token_stream,
-                        //         PostgresqlType::JsonbNullable => &std_option_option_sqlx_types_json_tokens_read_token_stream,
-                        //     },
-                        // );
-                        // let impl_sqlx_decode_sqlx_postgres_for_tokens_as_type_read_token_stream = {
-                        //     postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
-                        //         &tokens_as_type_read_upper_camel_case,
-                        //         &match &postgresql_type {
-                        //             PostgresqlType::JsonbNotNull => &sqlx_types_json_tokens_read_token_stream,
-                        //             PostgresqlType::JsonbNullable => &std_option_option_sqlx_types_json_tokens_read_token_stream,
-                        //         },
-                        //         &ok_value_match_token_stream,
-                        //     )
-                        // };
-                        // quote::quote! {
-                        //     // #tokens_as_type_read_token_stream
-                        //     // #impl_sqlx_type_sqlx_postgres_for_tokens_as_type_read_token_stream
-                        //     // #impl_sqlx_decode_sqlx_postgres_for_tokens_as_type_read_token_stream
-                        // }
-                    };
+                    let tokens_as_type_read_token_stream = generate_common_read_token_stream(&postgresql_json_object_type, &PostgresqlTypeOrJsonTypeHandle::PostgresqlType(&postgresql_type));
                     let tokens_as_type_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&tokens_as_type_upper_camel_case);
                     let tokens_as_type_update_token_stream = {
                         let tokens_as_type_update_token_stream = {

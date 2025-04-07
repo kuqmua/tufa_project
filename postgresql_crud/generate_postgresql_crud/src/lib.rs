@@ -2000,47 +2000,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let not_unique_fields_syn_variants_wrappers = fields_without_primary_key
-        .iter()
-        .map(|element| {
-            new_syn_variant_wrapper(
-                &naming::parameter::NotUniqueSelfUpperCamelCase::from_tokens(&element.field_ident),
-                Some(not_unique_primary_key_syn_variant_wrapper.get_option_status_code().unwrap()),
-                vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &element.field_ident.to_string(), {
-                    if let syn::Type::Path(value) = &element.syn_field.ty {
-                        value.path.segments.clone()
-                    } else {
-                        panic!("primary key syn::Type in not syn::Type::Path");
-                    }
-                    // let mut value = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                    // value.push_value(syn::PathSegment {
-                    //     ident: proc_macro2::Ident::new(&postgresql_crud_snake_case_stringified.to_string(), proc_macro2::Span::call_site()),
-                    //     arguments: syn::PathArguments::None,
-                    // });
-                    // value.push_punct(syn::token::PathSep {
-                    //     spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                    // });
-                    // value.push_value(syn::PathSegment {
-                    //     ident: proc_macro2::Ident::new(
-                    //         // &postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&postgresql_crud_common::SupportedSqlxPostgresType::from(&element.rust_sqlx_map_to_postgres_type_variant)).to_string(),
-                    //         // &naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&element.syn_field.ty).to_string()
-                    //         "todo"
-                    //         ,
-                    //         proc_macro2::Span::call_site(),
-                    //     ),
-                    //     arguments:
-                    //     // match &element.option_generic {
-                    //     //     Some(value) => syn::PathArguments::AngleBracketed((*value.syn_angle_bracketed_generic_arguments).clone()),
-                    //     //     None => syn::PathArguments::None,
-                    //     // }
-                    //     syn::PathArguments::None
-                    //     ,
-                    // });
-                    // value
-                })],
-            )
-        })
-        .collect::<std::vec::Vec<SynVariantWrapper>>();
     let wrap_into_value_token_stream = |content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
             let #value_snake_case = {
@@ -3256,16 +3215,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation = Operation::ReadMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 4 + not_unique_fields_syn_variants_wrappers.len());
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 4);
                 common_route_syn_variants.iter().for_each(|element| {
                     value.push(*element);
                 });
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
                 value.push(not_unique_primary_key_syn_variant_wrapper.get_syn_variant());
                 value.push(not_unique_column_syn_variant_wrapper.get_syn_variant());
-                not_unique_fields_syn_variants_wrappers.iter().for_each(|element| {
-                    value.push(element.get_syn_variant());
-                });
                 // if contains_generic_json {
                 //     value.push(&empty_column_json_reader_syn_variant_wrapper.get_syn_variant());
                 //     value.push(&not_unique_column_json_reader_syn_variant_wrapper.get_syn_variant());
@@ -3465,9 +3421,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_error_named_token_stream = generate_try_operation_error_named_token_stream(&operation, &{
                 let mut value = common_http_request_syn_variants.clone();
                 value.push(not_unique_primary_key_syn_variant_wrapper.get_syn_variant().clone());
-                not_unique_fields_syn_variants_wrappers.iter().for_each(|element| {
-                    value.push(element.get_syn_variant().clone());
-                });
                 value.push(not_unique_column_syn_variant_wrapper.get_syn_variant().clone());
                 value
             });
@@ -4530,7 +4483,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 7 + not_unique_fields_syn_variants_wrappers.len());
+                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 7);
                 common_route_syn_variants.iter().for_each(|element| {
                     value.push(*element);
                 });
@@ -4541,9 +4494,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(non_existing_primary_keys_delete_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(not_unique_primary_key_read_syn_variant_wrapper.get_syn_variant());
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
-                not_unique_fields_syn_variants_wrappers.iter().for_each(|element| {
-                    value.push(element.get_syn_variant());
-                });
                 value
             },
             &operation,
