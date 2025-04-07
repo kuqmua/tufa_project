@@ -2658,9 +2658,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 pub struct #tokens_as_type_upper_camel_case(#type_token_stream);
                             }
                         };
-                        let impl_std_fmt_display_for_tokens_as_type_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &tokens_as_type_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{:?}", self)});
-                        let impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_token_stream =
-                            macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &tokens_as_type_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self}")});
                         let impl_create_table_column_query_part_for_tokens_as_type_token_stream = postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(&tokens_as_type_upper_camel_case, &proc_macro2::TokenStream::new(), &{
                             let jsonb = "jsonb";
                             let type_stringified: &dyn std::fmt::Display = match &postgresql_type {
@@ -2674,8 +2671,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         });
                         quote::quote! {
                             #tokens_as_type_token_stream
-                            #impl_std_fmt_display_for_tokens_as_type_token_stream
-                            #impl_error_occurence_lib_to_std_string_string_for_tokens_as_type_token_stream
                             #impl_create_table_column_query_part_for_tokens_as_type_token_stream
                         }
                     };
