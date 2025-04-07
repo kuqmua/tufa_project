@@ -1344,7 +1344,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
     //             //todo reuse create_table_column_query_part token stream
     //             quote::quote!{
-    //                 #field_type ::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
+    //                 <#field_type as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
     //             }
     //         };
     //         let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&primary_key_field.syn_field.ty, &primary_key_field.field_ident, true)];

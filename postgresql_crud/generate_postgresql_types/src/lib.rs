@@ -2436,25 +2436,20 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     pub struct #ident_token_stream #content_token_stream
                 }
             }
-            let postgresql_type_not_null_or_nullable_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
-            let postgresql_type_not_null_or_nullable_select_token_stream = {
-                let pub_struct_postgresql_type_not_null_or_nullable_select_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_select_upper_camel_case, &quote::quote! {;}, true, true);
-                let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_select_token_stream =
-                    postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_select_upper_camel_case, &core_default_default_default_token_stream);
-                quote::quote! {
-                    #pub_struct_postgresql_type_not_null_or_nullable_select_token_stream
-                    #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_select_token_stream
-                }
-            };
+            let postgresql_type_not_null_or_nullable_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
+            let postgresql_type_not_null_or_nullable_table_type_declaration_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
+                &postgresql_type_not_null_or_nullable_table_type_declaration_upper_camel_case,
+                &postgresql_type_not_null_or_nullable_upper_camel_case
+            );
             let postgresql_type_not_null_or_nullable_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
-            let postgresql_type_not_null_or_nullable_to_create_token_stream = {
-                let postgresql_type_not_null_or_nullable_to_create_token_stream = {
-                    let postgresql_type_not_null_or_nullable_to_create_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {(());}, false, true);
-                    let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream =
+            let postgresql_type_not_null_or_nullable_create_token_stream = {
+                let postgresql_type_not_null_or_nullable_create_token_stream = {
+                    let postgresql_type_not_null_or_nullable_create_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {(());}, false, true);
+                    let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_create_token_stream =
                         postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &quote::quote! {Self(#core_default_default_default_token_stream)});
                     quote::quote! {
-                        #postgresql_type_not_null_or_nullable_to_create_token_stream
-                        #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_to_create_token_stream
+                        #postgresql_type_not_null_or_nullable_create_token_stream
+                        #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_create_token_stream
                     }
                 };
                 let alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&postgresql_type_not_null_or_nullable_create_upper_camel_case, &postgresql_type_not_null_or_nullable_upper_camel_case);
@@ -2464,9 +2459,9 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::StdPrimitiveI64AsPostgresqlInt8 => alias_token_stream,
                     PostgresqlType::StdPrimitiveF32AsPostgresqlFloat4 => alias_token_stream,
                     PostgresqlType::StdPrimitiveF64AsPostgresqlFloat8 => alias_token_stream,
-                    PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => postgresql_type_not_null_or_nullable_to_create_token_stream,
-                    PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => postgresql_type_not_null_or_nullable_to_create_token_stream,
-                    PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => postgresql_type_not_null_or_nullable_to_create_token_stream,
+                    PostgresqlType::StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql => postgresql_type_not_null_or_nullable_create_token_stream,
+                    PostgresqlType::StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql => postgresql_type_not_null_or_nullable_create_token_stream,
+                    PostgresqlType::StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql => postgresql_type_not_null_or_nullable_create_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgMoneyAsPostgresqlMoney => alias_token_stream,
                     PostgresqlType::SqlxTypesDecimalAsPostgresqlNumeric => alias_token_stream,
                     PostgresqlType::SqlxTypesBigDecimalAsPostgresqlNumeric => alias_token_stream,
@@ -2484,7 +2479,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => alias_token_stream,
                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => alias_token_stream,
                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => alias_token_stream,
-                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => postgresql_type_not_null_or_nullable_to_create_token_stream,
+                    PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql => postgresql_type_not_null_or_nullable_create_token_stream,
                     PostgresqlType::SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient => alias_token_stream,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlInet => alias_token_stream,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr => alias_token_stream,
@@ -2501,6 +2496,16 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange => alias_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => alias_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => alias_token_stream,
+                }
+            };
+            let postgresql_type_not_null_or_nullable_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
+            let postgresql_type_not_null_or_nullable_select_token_stream = {
+                let pub_struct_postgresql_type_not_null_or_nullable_select_token_stream = generate_pub_struct_tokens_token_stream(&postgresql_type_not_null_or_nullable_select_upper_camel_case, &quote::quote! {;}, true, true);
+                let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_select_token_stream =
+                    postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&postgresql_type_not_null_or_nullable_select_upper_camel_case, &core_default_default_default_token_stream);
+                quote::quote! {
+                    #pub_struct_postgresql_type_not_null_or_nullable_select_token_stream
+                    #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_not_null_or_nullable_select_token_stream
                 }
             };
             let postgresql_type_not_null_or_nullable_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&postgresql_type_not_null_or_nullable_upper_camel_case);
@@ -2765,6 +2770,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
                     &postgresql_crud_macros_common_import_path_crate,
                     &postgresql_type_not_null_or_nullable_upper_camel_case,
+                    &postgresql_type_not_null_or_nullable_table_type_declaration_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_create_upper_camel_case,
                     &query_part_create_token_stream,
                     &bind_value_to_query_create_token_stream,
@@ -2804,7 +2810,8 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 #maybe_impl_postgresql_type_where_filter_for_ident_if_can_be_primary_key_token_stream
                 #maybe_impl_postgresql_type_primary_key_for_ident_if_can_be_primary_key_token_stream
                 #impl_create_table_column_query_part_for_postgresql_type_not_null_or_nullable_token_stream
-                #postgresql_type_not_null_or_nullable_to_create_token_stream
+                #postgresql_type_not_null_or_nullable_table_type_declaration_token_stream
+                #postgresql_type_not_null_or_nullable_create_token_stream
                 #postgresql_type_not_null_or_nullable_select_token_stream
                 #postgresql_type_not_null_or_nullable_where_element_token_stream
                 #postgresql_type_not_null_or_nullable_read_token_stream
