@@ -2795,6 +2795,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &postgresql_type_not_null_or_nullable_table_type_declaration_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_create_upper_camel_case,
                     &query_part_create_token_stream,
+                    &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                     &bind_value_to_query_create_token_stream,
                     &postgresql_type_not_null_or_nullable_select_upper_camel_case,
                     &quote::quote! {#column_snake_case.to_string()},
@@ -2802,6 +2803,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     &postgresql_type_not_null_or_nullable_read_upper_camel_case,
                     &postgresql_type_not_null_or_nullable_update_upper_camel_case,
                     &typical_query_part_token_stream,
+                    &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &typical_query_bind_token_stream,
                 )
             };

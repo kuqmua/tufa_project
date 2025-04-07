@@ -405,11 +405,36 @@ impl std::fmt::Display for PostgresqlTypeOrJsonType {
     }
 }
 
+pub enum IsCreateQueryBindMutable {
+    True,
+    False
+}
+impl quote::ToTokens for IsCreateQueryBindMutable {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens)
+        }
+    }
+}
+pub enum IsUpdateQueryBindMutable {
+    True,
+    False
+}
+impl quote::ToTokens for IsUpdateQueryBindMutable {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens)
+        }
+    }
+}
 pub fn generate_postgresql_json_type_token_stream(
     path_token_stream: &dyn quote::ToTokens,
     ident: &dyn quote::ToTokens,
     create_type_token_stream: &dyn quote::ToTokens,
     create_query_part_token_stream: &dyn quote::ToTokens,
+    is_create_query_bind_mutable: &IsCreateQueryBindMutable,
     create_query_bind_token_stream: &dyn quote::ToTokens,
     select_type_token_stream: &dyn quote::ToTokens,
     read_type_token_stream: &dyn quote::ToTokens,
@@ -417,6 +442,7 @@ pub fn generate_postgresql_json_type_token_stream(
     where_element_type_token_stream: &dyn quote::ToTokens,
     update_type_token_stream: &dyn quote::ToTokens,
     update_query_part_token_stream: &dyn quote::ToTokens,
+    is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let create_upper_camel_case = naming::CreateUpperCamelCase;
@@ -442,7 +468,6 @@ pub fn generate_postgresql_json_type_token_stream(
     let reference_std_primitive_str_token_stream = quote::quote! {&std::primitive::str};
     let reference_mut_std_primitive_u64_token_stream = quote::quote! {&mut std::primitive::u64};
     let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
-    let mut_query_sqlx_query_postgres_arguments_token_stream = quote::quote! {mut #query_snake_case: #query_postgres_arguments_token_stream};
     let std_string_string_token_stream = token_patterns::StdStringString;
     //todo maybe reexport sqlx?
     quote::quote! {
@@ -456,7 +481,7 @@ pub fn generate_postgresql_json_type_token_stream(
             }
             fn #create_query_bind_snake_case(
                 #value_snake_case: Self::#create_upper_camel_case,
-                #mut_query_sqlx_query_postgres_arguments_token_stream
+                #is_create_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
             ) -> #query_postgres_arguments_token_stream {
                 #create_query_bind_token_stream
             }
@@ -484,7 +509,7 @@ pub fn generate_postgresql_json_type_token_stream(
             }
             fn #update_query_bind_snake_case(
                 #value_snake_case: Self::#update_upper_camel_case,
-                #mut_query_sqlx_query_postgres_arguments_token_stream
+                #is_update_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
             ) -> #query_postgres_arguments_token_stream {
                 #update_query_bind_token_stream
             }
@@ -678,6 +703,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     ident_table_type_declaration_upper_camel_case: &dyn quote::ToTokens,
     ident_create_upper_camel_case: &dyn quote::ToTokens,
     create_query_part_content_token_stream: &dyn quote::ToTokens,
+    is_create_query_bind_mutable: &IsCreateQueryBindMutable,
     create_query_bind_content_token_stream: &dyn quote::ToTokens,
     ident_select_upper_camel_case: &dyn quote::ToTokens,
     select_query_part_content_token_stream: &dyn quote::ToTokens,
@@ -685,6 +711,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     ident_read_upper_camel_case: &dyn quote::ToTokens,
     ident_update_upper_camel_case: &dyn quote::ToTokens,
     update_query_part_content_token_stream: &dyn quote::ToTokens,
+    is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
@@ -720,7 +747,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             }
             fn #create_query_bind_snake_case(
                 #value_snake_case: Self::#create_upper_camel_case,
-                mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                #is_create_query_bind_mutable #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #create_query_bind_content_token_stream
             }
@@ -745,7 +772,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             }
             fn #update_query_bind_snake_case<'a>(
                 #value_snake_case: Self::#update_upper_camel_case,
-                mut #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+                #is_update_query_bind_mutable #query_snake_case: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #update_query_bind_content_token_stream
             }

@@ -368,6 +368,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     }
                 }
             },
+            &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
             &{
                 let value_snake_case = naming::ValueSnakeCase;
                 quote::quote! {
@@ -423,6 +424,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     }
                 }
             },
+            &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
             &{
                 let value_snake_case = naming::ValueSnakeCase;
                 quote::quote! {

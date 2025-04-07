@@ -2483,6 +2483,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     //         #query_snake_case
                     //     },
                     // },
+                    &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                     &common_create_query_bind_token_stream,
                     &tokens_select_upper_camel_case,
                     // &tokens_read_upper_camel_case,
@@ -2620,6 +2621,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     &tokens_where_element_upper_camel_case,
                     &tokens_update_upper_camel_case,
                     &common_update_query_part_token_stream,
+                    &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &common_update_query_bind_token_stream,
                 );
                 quote::quote! {
@@ -3044,6 +3046,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         //         }
                         //     }
                         // },
+                        &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         &common_create_query_bind_token_stream,
                         &tokens_as_type_select_upper_camel_case,
                         // &{
@@ -3137,6 +3140,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             //     },
                             // }
                         // },
+                        &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                         &common_update_query_bind_token_stream
                     );
                     // println!("{impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_type_token_stream}");
