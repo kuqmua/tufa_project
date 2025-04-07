@@ -1177,9 +1177,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let declaration_excluding_primary_key_token_stream = fields_without_primary_key.iter().map(|element| {
             let field_ident = &element.field_ident;
             let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(
-                // &element.inner_type_with_generic_reader_token_stream
-                // &element.syn_field.ty
-                &naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&element.syn_field.ty),
+                &{
+                    let element_syn_field_ty = &element.syn_field.ty;
+                    quote::quote!{<#element_syn_field_ty as postgresql_crud::PostgresqlType>::Read}
+                }
             );
             quote::quote! {
                 let mut #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
@@ -1245,11 +1246,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         // )
                     }
                 });
-                let element_field_type_read_upper_camel_case_token_stream = &naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&element.syn_field.ty);
+                let element_syn_field_ty = &element.syn_field.ty;
                 quote::quote! {
                     #ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream #maybe_generic_filter_token_stream(_) => match sqlx::Row::try_get::<
-                        // #original_type_with_generic_reader_token_stream,
-                        #element_field_type_read_upper_camel_case_token_stream,
+                        <#element_syn_field_ty as postgresql_crud::PostgresqlType>::Read,
                         #ref_std_primitive_str
                     >(
                         &#value_snake_case,

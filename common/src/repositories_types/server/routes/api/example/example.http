@@ -260,7 +260,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 1,
+  "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 90,
   "select": [
     {
       "std_primitive_i16_as_small_int2_not_null": null
@@ -295,7 +295,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 1,
+    "std_primitive_i64_as_postgresql_big_serial_not_null_primary_key": 90,
     "std_primitive_i16_as_small_int2_not_null": {
       "value": 10
     },
