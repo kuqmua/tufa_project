@@ -348,61 +348,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 },
             }
         };
-        //todo decided what its too early to implement
-        // let postgresql_json_type_ident_where_element_second_dimension_token_stream = {
-        //     let ident_where_element_second_dimension_upper_camel_case = naming::parameter::SelfWhereElementSecondDimensionUpperCamelCase::from_tokens(&ident);
-
-        //     let equal_second_dimension = postgresql_crud_macros_common::EqualSecondDimension;
-
-        //     let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![&equal_second_dimension];
-        //     let common_postgresql_json_type_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = vec![postgresql_json_type_ident_where_element_equal_second_dimension_token_stream];
-
-        //     // let length_equal_second_dimension = postgresql_crud_macros_common::LengthEqualSecondDimension;
-        //     //     &postgresql_json_type_variant,
-        //     // );
-
-        //     let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_filters_variants.clone();
-        //     let common_postgresql_json_type_vec_filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_filters_token_stream.clone();
-
-        //     let generate_where_element_vec_string_second_dimension_token_stream = || {
-        //         let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
-        //         let filters_token_stream: std::vec::Vec<proc_macro2::TokenStream> = common_postgresql_json_type_vec_filters_token_stream.clone();
-        //         let ident_where_element_second_dimension_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-        //             &filters_variants,
-        //             &generate_where_element_variants_types_generic_token_stream,
-        //             &ident,
-        //             &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-        //         );
-        //         let generated = quote::quote! {
-        //             #(#filters_token_stream)*
-        //             #ident_where_element_second_dimension_token_stream
-        //         };
-        //         // if ident == "" {
-        //         //     println!("{generated}");
-        //         //     println!("-------");
-        //         // }
-        //         generated
-        //     };
-        //     match &postgresql_json_type_variant.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
-        //         postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath => match &postgresql_json_type_specific {
-        //             PostgresqlJsonTypeSpecific::Number => &proc_macro2_token_stream_new,
-        //             PostgresqlJsonTypeSpecific::Bool => &proc_macro2_token_stream_new,
-        //             PostgresqlJsonTypeSpecific::String => &proc_macro2_token_stream_new,
-        //         },
-        //         postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath => match &postgresql_json_type_specific {
-        //             PostgresqlJsonTypeSpecific::Number => &proc_macro2_token_stream_new,
-        //             PostgresqlJsonTypeSpecific::Bool => &proc_macro2_token_stream_new,
-        //             PostgresqlJsonTypeSpecific::String => &generate_where_element_vec_string_second_dimension_token_stream(),
-        //         },
-        //         postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => match &postgresql_json_type_specific {
-        //             PostgresqlJsonTypeSpecific::Number => &proc_macro2_token_stream_new,
-        //             PostgresqlJsonTypeSpecific::Bool => &proc_macro2_token_stream_new,
-        //             PostgresqlJsonTypeSpecific::String => &proc_macro2_token_stream_new,
-        //         },
-        //     }
-        // };
-        // println!("{}", quote::quote!{#postgresql_json_type_ident_where_element_second_dimension_token_stream});
-        //
         let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
         let ident_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident);
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
@@ -531,6 +476,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
             },
         },
+
         // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
         //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString,
         //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {

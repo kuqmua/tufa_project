@@ -45,7 +45,7 @@ where
             }
         }
     };
-    let impl_crate_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_element_token_stream = crate::impl_postgresql_type_where_filter_for_ident_token_stream(
+    let impl_crate_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_element_token_stream = impl_postgresql_type_where_filter_for_ident_token_stream(
         &quote::quote!{<'a>},
         &ident,
         &proc_macro2::TokenStream::new(),
@@ -67,6 +67,7 @@ where
                 }
             }
         },
+        &IsQueryBindMutable::True,
         &{
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
@@ -589,11 +590,24 @@ impl quote::ToTokens for ImportPath {
         }.to_tokens(tokens)
     }
 }
+pub enum IsQueryBindMutable {
+    True,
+    False
+}
+impl quote::ToTokens for IsQueryBindMutable {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::MutSnakeCase.to_tokens(tokens),
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens)
+        }
+    }
+}
 pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     impl_generic_token_stream: &dyn quote::ToTokens,
     ident_token_stream: &dyn quote::ToTokens,
     ident_generic_token_stream: &dyn quote::ToTokens,
     query_part_content_token_stream: &dyn quote::ToTokens,
+    is_query_bind_mutable: &IsQueryBindMutable,
     query_bind_content_token_stream: &dyn quote::ToTokens,
     import_path: &ImportPath,
 ) -> proc_macro2::TokenStream {
@@ -618,7 +632,7 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
             ) -> Result<#std_string_string_token_stream, #import_path::#query_part_error_named_upper_camel_case> {
                 #query_part_content_token_stream
             }
-            fn #query_bind_snake_case(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+            fn #query_bind_snake_case(self, #is_query_bind_mutable query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #query_bind_content_token_stream
             }
         }

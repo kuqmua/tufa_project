@@ -505,6 +505,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
         ident: &dyn quote::ToTokens,
         query_part_content_token_stream: &dyn quote::ToTokens,
+        is_query_bind_mutable: &postgresql_crud_macros_common::IsQueryBindMutable,
         query_bind_content_token_stream: &dyn quote::ToTokens,
     |{
         postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
@@ -524,6 +525,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new
             },
             &query_part_content_token_stream,
+            &is_query_bind_mutable,
             &query_bind_content_token_stream,
             &postgresql_crud_macros_common::ImportPath::Crate,
         )
@@ -1081,6 +1083,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
                 &query_part_content_token_stream,
+                &postgresql_crud_macros_common::IsQueryBindMutable::True,
                 &query_bind_content_token_stream,
             );
             quote::quote! {
@@ -1942,6 +1945,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
                 &query_part_content_token_stream,
+                &postgresql_crud_macros_common::IsQueryBindMutable::True,
                 &query_bind_content_token_stream,
             );
             quote::quote! {

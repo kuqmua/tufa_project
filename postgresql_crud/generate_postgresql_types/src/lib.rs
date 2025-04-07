@@ -2287,6 +2287,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                             }
                         }
                     },
+                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
                     &quote::quote! {
                         let value = self;//todo refactor?
                         #typical_query_bind_token_stream

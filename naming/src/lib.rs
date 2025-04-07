@@ -523,7 +523,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["postgresql", "type", "where", "filter"],
     ["is", "primary", "key"],
     ["create", "table", "column", "query", "part"],
-    ["table", "type", "declaration"]
+    ["table", "type", "declaration"],
+    ["mut"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

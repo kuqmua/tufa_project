@@ -1743,6 +1743,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 }
                             }
                         },
+                        &postgresql_crud_macros_common::IsQueryBindMutable::True,
                         &{
                             let query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident_stringified = element
@@ -2890,6 +2891,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     }
                                 }
                             },
+                            &postgresql_crud_macros_common::IsQueryBindMutable::True,
                             &{
                                 let variants_token_stream = vec_syn_field.iter().map(|element| {
                                     let field_ident_stringified = element
