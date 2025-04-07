@@ -411,3 +411,10 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
 }
 
 //////////////////////////////////
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_size_of() {
+        assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
+    }
+}
