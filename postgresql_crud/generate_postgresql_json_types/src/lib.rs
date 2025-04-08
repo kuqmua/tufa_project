@@ -69,23 +69,44 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &{
                     let uuid_uuid_upper_camel_case = naming::UuidUuidUpperCamelCase;
                     let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&uuid_uuid_upper_camel_case.to_string());
-                    let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgresql_crud_common::f::{uuid_uuid_upper_camel_case}"));
+                    let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{uuid_uuid_upper_camel_case}"));
                     quote::quote! {
                         impl schemars::JsonSchema for #uuid_uuid_upper_camel_case {
-                            fn schema_name() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                schemars::_private::alloc::borrow::Cow::Borrowed(#schema_name_format_handle_token_stream)
+                            fn schema_name() -> std::string::String {
+                                #schema_name_format_handle_token_stream.to_owned()
                             }
-                            fn schema_id() -> schemars::_private::alloc::borrow::Cow<'static, str> {
-                                schemars::_private::alloc::borrow::Cow::Borrowed(#schema_id_format_handle_token_stream)
+                            fn schema_id() -> std::borrow::Cow<'static, str> {
+                                std::borrow::Cow::Borrowed(#schema_id_format_handle_token_stream)
                             }
-                            fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::Schema {
+                            fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
                                 {
-                                    let mut schema = generator.subschema_for::<std::string::String>();
-                                    schemars::_private::insert_validation_property(&mut schema, "string", "minLength", 36);
-                                    schemars::_private::insert_validation_property(&mut schema, "string", "maxLength", 36);
-                                    schemars::_private::insert_validation_property(&mut schema, "array", "minItems", 36);
-                                    schemars::_private::insert_validation_property(&mut schema, "array", "maxItems", 36);
-                                    schema
+                                    schemars::schema::Schema::Object(schemars::schema::SchemaObject {
+                                        metadata: Some(Box::new(schemars::schema::Metadata {
+                                            id: None,
+                                            title: Some(#schema_name_format_handle_token_stream.to_owned()),
+                                            description: None,
+                                            default: None,
+                                            deprecated: false,
+                                            read_only: false,
+                                            write_only: false,
+                                            examples: std::vec::Vec::default(),
+                                        })),
+                                        instance_type: Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::String))),
+                                        format: None,
+                                        enum_values: None,
+                                        const_value: None,
+                                        subschemas: None,
+                                        number: None,
+                                        string: Some(Box::new(schemars::schema::StringValidation {
+                                            max_length: Some(36),
+                                            min_length: Some(36),
+                                            pattern: None,
+                                        })),
+                                        array: None,
+                                        object: None,
+                                        reference: None,
+                                        extensions: schemars::Map::default(),
+                                    })
                                 }
                             }
                         }
