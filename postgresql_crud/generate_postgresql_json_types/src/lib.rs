@@ -303,14 +303,14 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &generate_where_element_variants_types_generic_token_stream,
                 &ident,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                &postgresql_crud_macros_common::IsQueryBindMutable::False,
             );
             let postgresql_json_type_where_element_bool_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &common_postgresql_json_type_filters_variants,
                 &generate_where_element_variants_types_generic_token_stream,
                 &ident,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                &postgresql_crud_macros_common::IsQueryBindMutable::False,
             );
             let postgresql_json_type_where_element_string_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &{
@@ -322,7 +322,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &generate_where_element_variants_types_generic_token_stream,
                 &ident,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                &postgresql_crud_macros_common::IsQueryBindMutable::False,
             );
 
             let postgresql_json_type_where_element_vec_number_token_stream = {
@@ -337,7 +337,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     &generate_where_element_variants_types_generic_token_stream,
                     &ident,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::False,
                 )
             };
             let postgresql_json_type_where_element_vec_bool_token_stream = {
@@ -347,7 +347,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     &generate_where_element_variants_types_generic_token_stream,
                     &ident,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::False,
                 )
             };
             let postgresql_json_type_where_element_vec_string_token_stream = {
@@ -365,7 +365,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     &generate_where_element_variants_types_generic_token_stream,
                     &ident,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::False,
                 )
             };
             match &postgresql_json_type_variant.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
