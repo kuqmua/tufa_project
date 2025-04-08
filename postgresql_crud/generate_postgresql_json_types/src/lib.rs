@@ -54,8 +54,11 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         };
         let maybe_impl_schemars_json_schema_for_ident_token_stream: &dyn quote::ToTokens = match (&postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
             (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath) => match &postgresql_json_type_handle {
-                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI16
+                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8 => &{
+                    quote::quote!{
+                    }
+                },
+                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI16
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI32
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI64
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU8
@@ -67,11 +70,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveBool
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &proc_macro2_token_stream_new,
                 postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &{
-                    let uuid_uuid_upper_camel_case = naming::UuidUuidUpperCamelCase;
-                    let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&uuid_uuid_upper_camel_case.to_string());
-                    let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{uuid_uuid_upper_camel_case}"));
+                    let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&quote::quote!{#postgresql_json_type_handle}.to_string());
+                    let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{}", &quote::quote!{#postgresql_json_type_handle}));
                     quote::quote! {
-                        impl schemars::JsonSchema for #uuid_uuid_upper_camel_case {
+                        impl schemars::JsonSchema for #postgresql_json_type_handle {
                             fn schema_name() -> std::string::String {
                                 #schema_name_format_handle_token_stream.to_owned()
                             }
