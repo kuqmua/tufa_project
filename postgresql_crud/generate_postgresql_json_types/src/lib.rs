@@ -111,12 +111,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64
                 | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveBool => &proc_macro2_token_stream_new,
-                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &postgresql_crud_macros_common::generate_impl_crate_is_empty_for_ident_token_stream(
-                    &postgresql_json_type_ident_wrapper
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &postgresql_crud_macros_common::generate_impl_crate_is_empty_for_ident_token_stream(
-                    &postgresql_json_type_ident_wrapper
-                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &postgresql_crud_macros_common::generate_impl_crate_is_empty_for_ident_token_stream(&postgresql_json_type_ident_wrapper),
+                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &postgresql_crud_macros_common::generate_impl_crate_is_empty_for_ident_token_stream(&postgresql_json_type_ident_wrapper),
             },
             (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath) => match &postgresql_json_type_handle {
                 postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8
@@ -478,7 +474,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
             },
         },
-
         // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
         //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString,
         //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
@@ -531,9 +526,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     //      println!("{generated}");
     //      println!("-------");
     //  }
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlJsonTypes",
-    //     &generated,
-    // );
+    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file("GeneratePostgresqlJsonTypes", &generated);
     generated.into()
 }

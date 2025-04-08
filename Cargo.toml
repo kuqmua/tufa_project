@@ -32,7 +32,6 @@ members = [
   "config_lib/server_port/server_port_common",
   "http_logic",
   "route_validators",
-  "schemars/schemars",
   "tests",
   "impl_display_as_debug",
   "error_occurence_test",
