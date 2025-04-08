@@ -303,12 +303,14 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &generate_where_element_variants_types_generic_token_stream,
                 &ident,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                &postgresql_crud_macros_common::IsQueryBindMutable::True,
             );
             let postgresql_json_type_where_element_bool_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &common_postgresql_json_type_filters_variants,
                 &generate_where_element_variants_types_generic_token_stream,
                 &ident,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                &postgresql_crud_macros_common::IsQueryBindMutable::True,
             );
             let postgresql_json_type_where_element_string_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                 &{
@@ -320,6 +322,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &generate_where_element_variants_types_generic_token_stream,
                 &ident,
                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                &postgresql_crud_macros_common::IsQueryBindMutable::True,
             );
 
             let postgresql_json_type_where_element_vec_number_token_stream = {
@@ -329,11 +332,23 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan);
                     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan);
                 }
-                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(&filters_variants, &generate_where_element_variants_types_generic_token_stream, &ident, &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True)
+                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
+                    &filters_variants,
+                    &generate_where_element_variants_types_generic_token_stream,
+                    &ident,
+                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                )
             };
             let postgresql_json_type_where_element_vec_bool_token_stream = {
                 let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
-                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(&filters_variants, &generate_where_element_variants_types_generic_token_stream, &ident, &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True)
+                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
+                    &filters_variants,
+                    &generate_where_element_variants_types_generic_token_stream,
+                    &ident,
+                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                )
             };
             let postgresql_json_type_where_element_vec_string_token_stream = {
                 let mut filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
@@ -345,7 +360,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
                     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
                 }
-                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(&filters_variants, &generate_where_element_variants_types_generic_token_stream, &ident, &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True)
+                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
+                    &filters_variants,
+                    &generate_where_element_variants_types_generic_token_stream,
+                    &ident,
+                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                )
             };
             match &postgresql_json_type_variant.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
                 postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath => match &postgresql_json_type_specific {

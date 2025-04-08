@@ -12,6 +12,7 @@ pub fn generate_postgresql_type_where_element_token_stream<'a, GenerateGenericTy
     generate_where_element_variants_types_generic_token_stream: GenerateGenericTypeTokenStream,
     prefix: &dyn std::fmt::Display,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
+    is_query_bind_mutable: &IsQueryBindMutable,
 ) -> proc_macro2::TokenStream 
 where
     GenerateGenericTypeTokenStream: Fn(std::primitive::bool) -> &'a dyn naming::StdFmtDisplayPlusQuoteToTokens,
@@ -67,7 +68,7 @@ where
                 }
             }
         },
-        &IsQueryBindMutable::True,
+        &is_query_bind_mutable,
         &{
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
