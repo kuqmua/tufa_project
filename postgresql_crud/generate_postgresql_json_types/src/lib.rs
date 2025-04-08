@@ -69,11 +69,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             }
             let none_upper_camel_case = naming::NoneUpperCamelCase;
             let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&quote::quote!{#postgresql_json_type_handle}.to_string());
-            let generate_impl_schemars_json_schema_for_ident_token_stream = |
-                ident: &dyn quote::ToTokens,
-                schema_object_token_stream: &SchemaObjectTokenStream,
-            |{
-                let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{}", &quote::quote!{#ident}));
+            let generate_impl_schemars_json_schema_for_ident_token_stream = |schema_object_token_stream: &SchemaObjectTokenStream|{
+                let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{}", &quote::quote!{#postgresql_json_type_handle}));
                 let metadata_token_stream = &schema_object_token_stream.metadata;
                 let instance_type_token_stream = &schema_object_token_stream.instance_type;
                 let format_token_stream = &schema_object_token_stream.format;
@@ -132,9 +129,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveBool
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &proc_macro2_token_stream_new,
-                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &
-                    generate_impl_schemars_json_schema_for_ident_token_stream(
-                        &postgresql_json_type_handle,
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &generate_impl_schemars_json_schema_for_ident_token_stream(
                         &SchemaObjectTokenStream {
                             metadata: &quote::quote!{
                                 Some(Box::new(schemars::schema::Metadata {
