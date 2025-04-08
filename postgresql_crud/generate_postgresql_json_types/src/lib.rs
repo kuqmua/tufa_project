@@ -52,74 +52,126 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 pub struct #ident(pub #field_type);//todo #[validate(range(min = -128i8, max = 127i8))]
             }
         };
-        let maybe_impl_schemars_json_schema_for_ident_token_stream: &dyn quote::ToTokens = match (&postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
-            (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath) => match &postgresql_json_type_handle {
-                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8 => &{
-                    quote::quote!{
-                    }
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI16
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI32
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI64
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU8
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU16
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU32
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU64
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveBool
-                | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &proc_macro2_token_stream_new,
-                postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &{
-                    let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&quote::quote!{#postgresql_json_type_handle}.to_string());
-                    let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{}", &quote::quote!{#postgresql_json_type_handle}));
-                    quote::quote! {
-                        impl schemars::JsonSchema for #postgresql_json_type_handle {
-                            fn schema_name() -> std::string::String {
-                                #schema_name_format_handle_token_stream.to_owned()
-                            }
-                            fn schema_id() -> std::borrow::Cow<'static, str> {
-                                std::borrow::Cow::Borrowed(#schema_id_format_handle_token_stream)
-                            }
-                            fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
-                                {
-                                    schemars::schema::Schema::Object(schemars::schema::SchemaObject {
-                                        metadata: Some(Box::new(schemars::schema::Metadata {
-                                            id: None,
-                                            title: Some(#schema_name_format_handle_token_stream.to_owned()),
-                                            description: None,
-                                            default: None,
-                                            deprecated: false,
-                                            read_only: false,
-                                            write_only: false,
-                                            examples: std::vec::Vec::default(),
-                                        })),
-                                        instance_type: Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::String))),
-                                        format: None,
-                                        enum_values: None,
-                                        const_value: None,
-                                        subschemas: None,
-                                        number: None,
-                                        string: Some(Box::new(schemars::schema::StringValidation {
-                                            max_length: Some(36),
-                                            min_length: Some(36),
-                                            pattern: None,
-                                        })),
-                                        array: None,
-                                        object: None,
-                                        reference: None,
-                                        extensions: schemars::Map::default(),
-                                    })
-                                }
+        let maybe_impl_schemars_json_schema_for_ident_token_stream: &dyn quote::ToTokens = {
+            struct SchemaObjectTokenStream<'a> {
+                metadata: &'a dyn quote::ToTokens,
+                instance_type: &'a dyn quote::ToTokens,
+                format: &'a dyn quote::ToTokens,
+                enum_values: &'a dyn quote::ToTokens,
+                const_value: &'a dyn quote::ToTokens,
+                subschemas: &'a dyn quote::ToTokens,
+                number: &'a dyn quote::ToTokens,
+                string: &'a dyn quote::ToTokens,
+                array: &'a dyn quote::ToTokens,
+                object: &'a dyn quote::ToTokens,
+                reference: &'a dyn quote::ToTokens,
+                extensions: &'a dyn quote::ToTokens,
+            }
+            let none_upper_camel_case = naming::NoneUpperCamelCase;
+            let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&quote::quote!{#postgresql_json_type_handle}.to_string());
+            let generate_impl_schemars_json_schema_for_ident_token_stream = |
+                ident: &dyn quote::ToTokens,
+                schema_object_token_stream: &SchemaObjectTokenStream,
+            |{
+                let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{}", &quote::quote!{#ident}));
+                let metadata_token_stream = &schema_object_token_stream.metadata;
+                let instance_type_token_stream = &schema_object_token_stream.instance_type;
+                let format_token_stream = &schema_object_token_stream.format;
+                let enum_values_token_stream = &schema_object_token_stream.enum_values;
+                let const_value_token_stream = &schema_object_token_stream.const_value;
+                let subschemas_token_stream = &schema_object_token_stream.subschemas;
+                let number_token_stream = &schema_object_token_stream.number;
+                let string_token_stream = &schema_object_token_stream.string;
+                let array_token_stream = &schema_object_token_stream.array;
+                let object_token_stream = &schema_object_token_stream.object;
+                let reference_token_stream = &schema_object_token_stream.reference;
+                let extensions_token_stream = &schema_object_token_stream.extensions;
+                quote::quote! {
+                    impl schemars::JsonSchema for #ident {
+                        fn schema_name() -> std::string::String {
+                            #schema_name_format_handle_token_stream.to_owned()
+                        }
+                        fn schema_id() -> std::borrow::Cow<'static, str> {
+                            std::borrow::Cow::Borrowed(#schema_id_format_handle_token_stream)
+                        }
+                        fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
+                            {
+                                schemars::schema::Schema::Object(schemars::schema::SchemaObject {
+                                    metadata: #metadata_token_stream,
+                                    instance_type: #instance_type_token_stream,
+                                    format: #format_token_stream,
+                                    enum_values: #enum_values_token_stream,
+                                    const_value: #const_value_token_stream,
+                                    subschemas: #subschemas_token_stream,
+                                    number: #number_token_stream,
+                                    string: #string_token_stream,
+                                    array: #array_token_stream,
+                                    object: #object_token_stream,
+                                    reference: #reference_token_stream,
+                                    extensions: #extensions_token_stream,
+                                })
                             }
                         }
                     }
+                }
+            };
+            match (&postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
+                (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath) => match &postgresql_json_type_handle {
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8 => &{
+                        quote::quote!{
+                        }
+                    },
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI16
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI32
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI64
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU8
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU16
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU32
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU64
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveBool
+                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &proc_macro2_token_stream_new,
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &
+                    generate_impl_schemars_json_schema_for_ident_token_stream(
+                        &postgresql_json_type_handle,
+                        &SchemaObjectTokenStream {
+                            metadata: &quote::quote!{
+                                Some(Box::new(schemars::schema::Metadata {
+                                    id: None,
+                                    title: Some(#schema_name_format_handle_token_stream.to_owned()),
+                                    description: None,
+                                    default: None,
+                                    deprecated: false,
+                                    read_only: false,
+                                    write_only: false,
+                                    examples: std::vec::Vec::default(),
+                                }))
+                            },
+                            instance_type: &quote::quote!{Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::String)))},
+                            format: &none_upper_camel_case,
+                            enum_values: &none_upper_camel_case,
+                            const_value: &none_upper_camel_case,
+                            subschemas: &none_upper_camel_case,
+                            number: &none_upper_camel_case,
+                            string: &quote::quote!{Some(Box::new(schemars::schema::StringValidation {
+                                max_length: Some(36),
+                                min_length: Some(36),
+                                pattern: None,
+                            }))},
+                            array: &none_upper_camel_case,
+                            object: &none_upper_camel_case,
+                            reference: &none_upper_camel_case,
+                            extensions: &quote::quote!{schemars::Map::default()},
+                        },
+                    )
                 },
-            },
-            (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath)
-            | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath)
-            | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath)
-            | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath)
-            | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath) => &proc_macro2_token_stream_new,
+                (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath)
+                | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath)
+                | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath)
+                | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath)
+                | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath) => &proc_macro2_token_stream_new,
+            }
         };
         let maybe_impl_is_empty_for_ident_token_stream: &dyn quote::ToTokens = match (&postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
             (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath) => match &postgresql_json_type_handle {
