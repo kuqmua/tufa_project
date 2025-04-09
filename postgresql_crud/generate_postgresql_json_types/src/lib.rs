@@ -249,7 +249,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath)
             | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath) => &proc_macro2_token_stream_new,
         };
-
         let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_alias_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
             &ident_alias_origin_upper_camel_case,
             &{
@@ -265,6 +264,27 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &proc_macro2::TokenStream::new(),
             &quote::quote! {format!("{self:#?}")}
         );
+        let impl_sqlx_type_sqlx_postgres_for_ident_alias_origin_token_stream = {
+            quote::quote!{
+                impl sqlx::Type<sqlx::Postgres> for #ident_alias_origin_upper_camel_case {
+                    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                        <sqlx::types::Json<#field_type> as sqlx::Type<sqlx::Postgres>>::type_info()
+                    }
+                    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+                        <sqlx::types::Json<#field_type> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+                    }
+                }
+            }
+        };
+        let impl_sqlx_encode_sqlx_postgres_for_ident_alias_origin_token_stream = {
+            quote::quote!{
+                impl sqlx::Encode<'_, sqlx::Postgres> for #ident_alias_origin_upper_camel_case {
+                    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(self.0), buf)
+                    }
+                }
+            }
+        };
 
         let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
         let ident_select_token_stream = {
@@ -482,7 +502,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &{
                 let value_snake_case = naming::ValueSnakeCase;
                 quote::quote! {
-                    query = query.bind(sqlx::types::Json(#value_snake_case.0));
+                    query = query.bind(sqlx::types::Json(#value_snake_case));
                     query
                 }
             },
@@ -538,7 +558,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &{
                 let value_snake_case = naming::ValueSnakeCase;
                 quote::quote! {
-                    query = query.bind(sqlx::types::Json(#value_snake_case.0));
+                    query = query.bind(sqlx::types::Json(#value_snake_case));
                     query
                 }
             },
@@ -551,6 +571,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #maybe_impl_is_empty_for_ident_alias_origin_token_stream
             #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_alias_origin_token_stream
             #impl_error_occurence_lib_to_std_string_string_for_ident_alias_origin_token_stream
+            #impl_sqlx_type_sqlx_postgres_for_ident_alias_origin_token_stream
+            #impl_sqlx_encode_sqlx_postgres_for_ident_alias_origin_token_stream
 
             #ident_select_token_stream
             #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_select_token_stream
