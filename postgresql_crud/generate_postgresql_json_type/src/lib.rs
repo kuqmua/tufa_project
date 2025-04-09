@@ -281,14 +281,17 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
-                    let field_type = &element.ty;
                     //todo maybe rename type_path to tokens for standart naming convention
                     let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                     let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
+                    let field_type_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_crud_postgresql_json_type_token_stream(
+                        &element.ty,
+                        &PostgresqlJsonTypeSubtype::Update
+                    );
                     quote::quote! {
                         #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
                         #variant_ident_upper_camel_case_token_stream(#postgresql_crud_path_token_stream Value<
-                            <#field_type as postgresql_crud::PostgresqlJsonType>::Update
+                            #field_type_as_postgresql_json_type_update_token_stream
                         >)
                     }
                 });
@@ -777,11 +780,14 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
                         });
-                        let field_type = &element.ty;
+                        let field_type_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_crud_postgresql_json_type_token_stream(
+                            &element.ty,
+                            &PostgresqlJsonTypeSubtype::Read
+                        );
                         quote::quote! {
                             #maybe_serde_skip_serializing_if_option_is_none_token_stream
                             #field_ident: std::option::Option<#postgresql_crud_path_token_stream Value<
-                                <#field_type as postgresql_crud::PostgresqlJsonType>::Read
+                                #field_type_as_postgresql_json_type_read_token_stream
                             >>
                         }
                     });
@@ -1000,9 +1006,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let visit_seq_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                            let index = generate_index(index);
-                            let element_type = &element.ty;
-                            generate_serde_de_seq_access_next_element_token_stream(index, &quote::quote!{<#element_type as postgresql_crud::PostgresqlJsonType>::Read})
+                            generate_serde_de_seq_access_next_element_token_stream(
+                                generate_index(index),
+                                &generate_type_as_postgresql_crud_postgresql_json_type_token_stream(
+                                    &element.ty,
+                                    &PostgresqlJsonTypeSubtype::Read
+                                )
+                            )
                         });
                         let maybe_id_serde_de_seq_access_next_element_token_stream = match &postgresql_json_object_type {
                             PostgresqlJsonObjectType::WithoutId => proc_macro2::TokenStream::new(),
@@ -1040,9 +1050,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let visit_map_fields_initialization_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                            let index = generate_index(index);
-                            let element_type = &element.ty;
-                            generate_mut_field_index_serde_private_option_token_stream(index, &quote::quote!{<#element_type as postgresql_crud::PostgresqlJsonType>::Read})
+                            generate_mut_field_index_serde_private_option_token_stream(
+                                generate_index(index),
+                                &generate_type_as_postgresql_crud_postgresql_json_type_token_stream(
+                                    &element.ty,
+                                    &PostgresqlJsonTypeSubtype::Read
+                                )
+                            )
                         });
                         let maybe_id_mut_field_index_serde_private_option_token_stream = match &postgresql_json_object_type {
                             PostgresqlJsonObjectType::WithoutId => proc_macro2::TokenStream::new(),
@@ -1077,13 +1091,13 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             }
                         };
                         let visit_map_match_variants_token_stream = vec_syn_field.iter().enumerate().map(|(index, element)| {
-                            let index = generate_index(index);
-                            let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
-                            let element_type = &element.ty;
                             generate_field_initialization_token_stream(
-                                index,
-                                &field_ident_double_quotes_token_stream,
-                                &quote::quote!{<#element_type as postgresql_crud::PostgresqlJsonType>::Read}
+                                generate_index(index),
+                                &generate_field_ident_double_quotes_token_stream(element),
+                                &generate_type_as_postgresql_crud_postgresql_json_type_token_stream(
+                                    &element.ty,
+                                    &PostgresqlJsonTypeSubtype::Read
+                                )
                             )
                         });
                         let id_field_initialization_token_stream = match &postgresql_json_object_type {
@@ -1723,11 +1737,14 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 })
                                 .to_string();
-                            let field_type = &element.ty;
                             let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                            let field_type_as_postgresql_json_type_where_element_token_stream = generate_type_as_postgresql_crud_postgresql_json_type_token_stream(
+                                &element.ty,
+                                &PostgresqlJsonTypeSubtype::WhereElement
+                            );
                             quote::quote! {
                                 #field_ident_upper_camel_case_token_stream(postgresql_crud::PostgresqlTypeWhere<
-                                    <#field_type as postgresql_crud::PostgresqlJsonType>::WhereElement
+                                    #field_type_as_postgresql_json_type_where_element_token_stream
                                 >)
                             }
                         });
@@ -2875,11 +2892,14 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                     })
                                     .to_string();
-                                let field_type = &element.ty;
                                 let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                                let field_type_as_postgresql_json_type_where_element_token_stream = generate_type_as_postgresql_crud_postgresql_json_type_token_stream(
+                                    &element.ty,
+                                    &PostgresqlJsonTypeSubtype::WhereElement
+                                );
                                 quote::quote! {
                                     #field_ident_upper_camel_case_token_stream(postgresql_crud::PostgresqlTypeWhere<
-                                        <#field_type as postgresql_crud::PostgresqlJsonType>::WhereElement
+                                        #field_type_as_postgresql_json_type_where_element_token_stream
                                     >)
                                 }
                             });
