@@ -10,8 +10,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let field_type = &postgresql_json_type_variant.field_type();
 
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-
-        let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&quote::quote!{#postgresql_json_type_handle}.to_string());
+        let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident);
         let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote!{
             Some(Box::new(schemars::schema::Metadata {
                 id: None,
@@ -152,7 +151,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         let maybe_impl_schemars_json_schema_for_ident_token_stream: &dyn quote::ToTokens = match &schemars_json_schema {
             SchemarsJsonSchema::Derive => &proc_macro2_token_stream_new,
             SchemarsJsonSchema::Impl(schema_object_token_stream) => &{
-                let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{}", &quote::quote!{#postgresql_json_type_handle}));
+                let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{ident}"));
                 let metadata_token_stream = &schema_object_token_stream.metadata;
                 let instance_type_token_stream = &schema_object_token_stream.instance_type;
                 let format_token_stream = &schema_object_token_stream.format;
