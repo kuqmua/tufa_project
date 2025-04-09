@@ -81,39 +81,39 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "std_primitive_i16_as_small_int2_not_null": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": 0
-        }
-      }
-      # ,
-      # {
-      #   "GreaterThan": {
-      #     "logical_operator": "Or",
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "Between": {
-      #     "logical_operator": "Or",
-      #     "start": 0,
-      #     "end": 0
-      #   }
-      # },
-      # {
-      #   "In": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0
-      #     ]
-      #   }
-      # }
-    ]
-  },
+  # "std_primitive_i16_as_small_int2_not_null": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #     # ,
+  #     # {
+  #     #   "GreaterThan": {
+  #     #     "logical_operator": "Or",
+  #     #     "value": 0
+  #     #   }
+  #     # },
+  #     # {
+  #     #   "Between": {
+  #     #     "logical_operator": "Or",
+  #     #     "start": 0,
+  #     #     "end": 0
+  #     #   }
+  #     # },
+  #     # {
+  #     #   "In": {
+  #     #     "logical_operator": "Or",
+  #     #     "value": [
+  #     #       0
+  #     #     ]
+  #     #   }
+  #     # }
+  #   ]
+  # },
   # "std_primitive_i16_as_small_int2_nullable": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -178,45 +178,46 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "object_animal_as_jsonb_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "StdPrimitiveI8": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           {
-  #             "Equal": {
-  #               "logical_operator": "Or",
-  #               "value": 0
-  #             }
-  #           },
-  #           {
-  #             "GreaterThan": {
-  #               "logical_operator": "Or",
-  #               "value": 0
-  #             }
-  #           },
-  #           {
-  #             "Between": {
-  #               "logical_operator": "Or",
-  #               "start": 0,
-  #               "end": 0
-  #             }
-  #           },
-  #           {
-  #             "In": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 0
-  #               ]
-  #             }
-  #           }
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
+  "object_animal_as_jsonb_not_null": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "StdPrimitiveI8": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": 0
+              }
+            }
+            # ,
+            # {
+            #   "GreaterThan": {
+            #     "logical_operator": "Or",
+            #     "value": 0
+            #   }
+            # },
+            # {
+            #   "Between": {
+            #     "logical_operator": "Or",
+            #     "start": 0,
+            #     "end": 0
+            #   }
+            # },
+            # {
+            #   "In": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       0
+            #     ]
+            #   }
+            # }
+          ]
+        }
+      }
+    ]
+  },
   "select": [
     {
       "std_primitive_i16_as_small_int2_not_null": null
@@ -230,7 +231,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "std_primitive_i8": {}
+          "std_primitive_i8": null
         }
       ]
     }
