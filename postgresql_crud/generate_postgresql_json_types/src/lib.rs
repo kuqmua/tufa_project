@@ -266,12 +266,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &quote::quote! {format!("{self:#?}")}
         );
 
-        let ident_alias_origin_create_upper_camel_case = naming::parameter::SelfAliasOriginCreateUpperCamelCase::from_tokens(&ident_alias_origin_upper_camel_case);
-        let ident_alias_origin_create_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_alias_origin_create_upper_camel_case, &ident_alias_origin_upper_camel_case);
         let ident_alias_origin_select_upper_camel_case = naming::parameter::SelfAliasOriginSelectUpperCamelCase::from_tokens(&ident_alias_origin_upper_camel_case);
         let ident_alias_origin_select_token_stream = {
             let content_token_stream = match &postgresql_json_type_pattern.postgresql_json_type_pattern_type {
-                postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath => quote::quote! {{}},
+                postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath => quote::quote! {;},
                 postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath => quote::quote! {{ pagination: crate::pagination::Pagination }},
                 postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => quote::quote! {{ pagination: crate::pagination::Pagination }}, //todo another pagination?
             };
@@ -309,8 +307,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath => todo!(),
                 }
             });
-        let ident_alias_origin_read_upper_camel_case = naming::parameter::SelfAliasOriginReadUpperCamelCase::from_tokens(&ident_alias_origin_upper_camel_case);
-        let ident_alias_origin_read_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_alias_origin_read_upper_camel_case, &ident_alias_origin_upper_camel_case);
 
         let ident_alias_origin_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident_alias_origin_upper_camel_case);
 
@@ -464,13 +460,11 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 },
             }
         };
-        let ident_alias_origin_update_upper_camel_case = naming::parameter::SelfAliasOriginUpdateUpperCamelCase::from_tokens(&ident);
-        let ident_alias_origin_update_alias_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_alias_origin_update_upper_camel_case, &ident_alias_origin_upper_camel_case);
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let impl_crate_postgresql_json_type_for_ident_alias_origin_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
             &quote::quote! {crate::},
             &ident,
-            &ident_alias_origin_create_upper_camel_case,
+            &ident_alias_origin_upper_camel_case,
             &{
                 quote::quote! {
                     match increment.checked_add(1) {
@@ -493,7 +487,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             },
             &ident_alias_origin_select_upper_camel_case,
-            &ident_alias_origin_read_upper_camel_case,
+            &ident_alias_origin_upper_camel_case,
             &{
                 let value_snake_case = naming::ValueSnakeCase;
                 let postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream = |format_handle_token_stream: &dyn quote::ToTokens| {
@@ -526,7 +520,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             },
             &ident_alias_origin_where_element_upper_camel_case,
-            &ident_alias_origin_update_upper_camel_case,
+            &ident_alias_origin_upper_camel_case,
             &{
                 let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
@@ -558,13 +552,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_alias_origin_token_stream
             #impl_error_occurence_lib_to_std_string_string_for_ident_alias_origin_token_stream
 
-            #ident_alias_origin_create_alias_token_stream
             #ident_alias_origin_select_token_stream
             #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_alias_origin_select_token_stream
-            #ident_alias_origin_read_alias_token_stream
             #postgresql_json_type_ident_alias_origin_where_element_token_stream
-            // #postgresql_json_type_ident_where_element_second_dimension_token_stream
-            #ident_alias_origin_update_alias_token_stream
             #impl_crate_postgresql_json_type_for_ident_alias_origin_token_stream
         };
         // println!("{}", quote::quote!{#ident});
