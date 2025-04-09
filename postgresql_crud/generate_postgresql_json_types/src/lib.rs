@@ -18,13 +18,13 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath) => match &postgresql_json_type_handle {
                         postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8 => &proc_macro2_token_stream_new,
                         postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI16 => &proc_macro2_token_stream_new,
-                        postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI32
-                        | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI64
-                        | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU8
-                        | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU16
-                        | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU32
-                        | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU64
-                        | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32
+                        postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI32 => &proc_macro2_token_stream_new,
+                        postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI64 => &proc_macro2_token_stream_new,
+                        postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU8 => &proc_macro2_token_stream_new,
+                        postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU16 => &proc_macro2_token_stream_new,
+                        postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU32 => &proc_macro2_token_stream_new,
+                        postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU64 => &proc_macro2_token_stream_new,
+                        postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32
                         | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64
                         | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveBool
                         | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &schemars_json_schema_token_stream,
@@ -83,6 +83,26 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }))
             };
             let extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream = quote::quote!{schemars::Map::default()};
+            let schema_object_token_stream_integer = SchemaObjectTokenStream {
+                metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
+                instance_type: &quote::quote!{Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::Number)))},
+                format: &none_upper_camel_case,
+                enum_values: &none_upper_camel_case,
+                const_value: &none_upper_camel_case,
+                subschemas: &none_upper_camel_case,
+                number: &quote::quote!{Some(Box::new(schemars::schema::NumberValidation {
+                    multiple_of: None,
+                    maximum: Some(#field_type ::MAX as std::primitive::f64),
+                    exclusive_maximum: None,
+                    minimum: Some(#field_type ::MIN as std::primitive::f64),
+                    exclusive_minimum: None,
+                }))},
+                string: &none_upper_camel_case,
+                array: &none_upper_camel_case,
+                object: &none_upper_camel_case,
+                reference: &none_upper_camel_case,
+                extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
+            };
 
             let generate_impl_schemars_json_schema_for_ident_token_stream = |schema_object_token_stream: &SchemaObjectTokenStream|{
                 let schema_id_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("postgersql_crud::postgersql_json_type::{}", &quote::quote!{#postgresql_json_type_handle}));
@@ -130,56 +150,31 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             match (&postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
                 (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath) => match &postgresql_json_type_handle {
                     postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8 => &generate_impl_schemars_json_schema_for_ident_token_stream(
-                        &SchemaObjectTokenStream {
-                            metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
-                            instance_type: &quote::quote!{Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::Number)))},
-                            format: &none_upper_camel_case,
-                            enum_values: &none_upper_camel_case,
-                            const_value: &none_upper_camel_case,
-                            subschemas: &none_upper_camel_case,
-                            number: &quote::quote!{Some(Box::new(schemars::schema::NumberValidation {
-                                multiple_of: None,
-                                maximum: Some(127.0),
-                                exclusive_maximum: None,
-                                minimum: Some(-128.0),
-                                exclusive_minimum: None,
-                            }))},
-                            string: &none_upper_camel_case,
-                            array: &none_upper_camel_case,
-                            object: &none_upper_camel_case,
-                            reference: &none_upper_camel_case,
-                            extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
-                        },
+                        &schema_object_token_stream_integer,
                     ),
                     postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI16 => &generate_impl_schemars_json_schema_for_ident_token_stream(
-                        &SchemaObjectTokenStream {
-                            metadata: &metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream,
-                            instance_type: &quote::quote!{Some(schemars::schema::SingleOrVec::Single(Box::new(schemars::schema::InstanceType::Number)))},
-                            format: &none_upper_camel_case,
-                            enum_values: &none_upper_camel_case,
-                            const_value: &none_upper_camel_case,
-                            subschemas: &none_upper_camel_case,
-                            number: &quote::quote!{Some(Box::new(schemars::schema::NumberValidation {
-                                multiple_of: None,
-                                maximum: Some(32767),
-                                exclusive_maximum: None,
-                                minimum: Some(-32768),
-                                exclusive_minimum: None,
-                            }))},
-                            string: &none_upper_camel_case,
-                            array: &none_upper_camel_case,
-                            object: &none_upper_camel_case,
-                            reference: &none_upper_camel_case,
-                            extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
-                        },
+                        &schema_object_token_stream_integer,
                     ),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI32
-                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI64
-                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU8
-                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU16
-                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU32
-                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU64
-                    | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI32 => &generate_impl_schemars_json_schema_for_ident_token_stream(
+                        &schema_object_token_stream_integer,
+                    ),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI64 => &generate_impl_schemars_json_schema_for_ident_token_stream(
+                        &schema_object_token_stream_integer,//todo float make constrain incorrect. coz f64 have 2^53 and i64 have 2^63
+                    ),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU8 => &generate_impl_schemars_json_schema_for_ident_token_stream(
+                        &schema_object_token_stream_integer,
+                    ),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU16 => &generate_impl_schemars_json_schema_for_ident_token_stream(
+                        &schema_object_token_stream_integer,
+                    ),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU32 => &generate_impl_schemars_json_schema_for_ident_token_stream(
+                        &schema_object_token_stream_integer,
+                    ),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU64 => &generate_impl_schemars_json_schema_for_ident_token_stream(
+                        &schema_object_token_stream_integer,//todo float make constrain incorrect. coz f64 have 2^53 and u64 have 2^64
+                    ),
+                    //todo how to make f32 and f64 restrictions properly?
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveBool
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &proc_macro2_token_stream_new,
@@ -261,21 +256,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath)
             | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath) => &proc_macro2_token_stream_new,
         };
-
-        //todo migrate to newest version of schemars crate then write validation logic.
-
-        // pub struct StdPrimitiveI8(#[validate(range(min = -128i8, max = 127i8))] pub std::primitive::i8);
-        // pub struct StdPrimitiveI16(#[validate(range(min = -32_768i16, max = 32_767i16))] pub std::primitive::i16);
-        // pub struct StdPrimitiveI32(#[validate(range(min = -2_147_483_648i32, max = 2_147_483_647i32))] pub std::primitive::i32);
-        // pub struct StdPrimitiveI64(#[validate(range(min = -9_223_372_036_854_775_808i64, max = 9_223_372_036_854_775_807i64))] pub std::primitive::i64);
-        // pub struct StdPrimitiveU8(#[validate(range(min = 0u8, max = 255u8))] pub std::primitive::u8);
-        // pub struct StdPrimitiveU16(#[validate(range(min = 0u16, max = 65_535u16))] pub std::primitive::u16);
-        // pub struct StdPrimitiveU32(#[validate(range(min = 0u32, max = 4_294_967_295u32))] pub std::primitive::u32);
-        // pub struct StdPrimitiveU64(#[validate(range(min = 0u64, max = 18_446_744_073_709_551_615u64))] pub std::primitive::u64);
-        // //todo maybe its not correct. https://doc.rust-lang.org/std/primitive.f32.html
-        // pub struct StdPrimitiveF32(#[validate(range(min = -3.40282347E+38f32, max = 3.40282347E+38f32))] pub std::primitive::f32);
-        // //todo maybe its not correct. https://doc.rust-lang.org/core/primitive.f64.html
-        // pub struct StdPrimitiveF64(#[validate(range(min = -1.7976931348623157E+308f64, max = 1.7976931348623157E+308f64))] pub std::primitive::f64);
 
         let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
             let content_token_stream = postgresql_json_type_variant.initialization_token_stream();
@@ -593,7 +573,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         generated
     }
     // postgresql_crud_macros_common::PostgresqlJsonTypeVariant::all_variants()
-    let variants_token_stream = [
+    let variants_token_stream = 
+    // postgresql_crud_macros_common::PostgresqlJsonTypeVariant::all_variants()
+    
+    [
         postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
             postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8,
             postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
@@ -601,6 +584,69 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
             },
         },
+        postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI16,
+            postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
+            },
+        },
+        postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI32,
+            postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
+            },
+        },
+        postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI64,
+            postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
+            },
+        },
+        postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU8,
+            postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
+            },
+        },
+        postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU16,
+            postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
+            },
+        },
+        postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU32,
+            postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
+            },
+        },
+        postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+            postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU64,
+            postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+                postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
+            },
+        },
+        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32,
+        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
+        //     },
+        // },
+        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
+        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64,
+        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
+        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
+        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
+        //     },
+        // },
         postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
             postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid,
             postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {

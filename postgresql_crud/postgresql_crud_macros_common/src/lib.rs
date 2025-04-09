@@ -164,18 +164,18 @@ impl PostgresqlJsonTypePattern {
     fn prefix_stringified(&self) -> std::string::String {
         format!("{}{}", &self.postgresql_json_type_pattern_is_optional.prefix_stringified(), &self.postgresql_json_type_pattern_type.prefix_stringified(),)
     }
-    // fn all_variants() -> std::vec::Vec<Self> {
-    //     let mut acc = vec![];
-    //     for postgresql_json_type_pattern_type in PostgresqlJsonTypePatternType::into_array() {
-    //         for postgresql_json_type_pattern_is_optional in PostgresqlJsonTypePatternIsOptional::into_array() {
-    //             acc.push(Self {
-    //                 postgresql_json_type_pattern_is_optional: postgresql_json_type_pattern_is_optional,
-    //                 postgresql_json_type_pattern_type: postgresql_json_type_pattern_type.clone(),
-    //             });
-    //         }
-    //     }
-    //     acc
-    // }
+    pub fn all_variants() -> std::vec::Vec<Self> {
+        let mut acc = vec![];
+        for postgresql_json_type_pattern_type in PostgresqlJsonTypePatternType::into_array() {
+            for postgresql_json_type_pattern_is_optional in PostgresqlJsonTypePatternIsOptional::into_array() {
+                acc.push(Self {
+                    postgresql_json_type_pattern_is_optional: postgresql_json_type_pattern_is_optional,
+                    postgresql_json_type_pattern_type: postgresql_json_type_pattern_type.clone(),
+                });
+            }
+        }
+        acc
+    }
 }
 
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -249,18 +249,18 @@ pub struct PostgresqlJsonTypeVariant {
     pub postgresql_json_type_pattern: PostgresqlJsonTypePattern,
 }
 impl PostgresqlJsonTypeVariant {
-    // fn all_variants() -> std::vec::Vec<Self> {
-    //     let mut acc = vec![];
-    //     for postgresql_json_type_handle in PostgresqlJsonTypeHandle::into_array() {
-    //         for postgresql_json_type_pattern in PostgresqlJsonTypePattern::all_variants() {
-    //             acc.push(Self {
-    //                 postgresql_json_type_handle: postgresql_json_type_handle.clone(),
-    //                 postgresql_json_type_pattern: postgresql_json_type_pattern,
-    //             });
-    //         }
-    //     }
-    //     acc
-    // }
+    pub fn all_variants() -> std::vec::Vec<Self> {
+        let mut acc = vec![];
+        for postgresql_json_type_handle in PostgresqlJsonTypeHandle::into_array() {
+            for postgresql_json_type_pattern in PostgresqlJsonTypePattern::all_variants() {
+                acc.push(Self {
+                    postgresql_json_type_handle: postgresql_json_type_handle.clone(),
+                    postgresql_json_type_pattern: postgresql_json_type_pattern,
+                });
+            }
+        }
+        acc
+    }
     pub fn is_vec_element_type(&self) -> std::primitive::bool {
         match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
             PostgresqlJsonTypePatternType::FullTypePath => false,
