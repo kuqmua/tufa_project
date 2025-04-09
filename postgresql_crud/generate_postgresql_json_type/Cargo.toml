@@ -11,6 +11,8 @@ proc-macro = true
 proc-macro2 = {version = "=1.0.81"}
 quote = {version = "=1.0.36"}
 syn = {version = "=2.0.60"}
+strum = {version = "=0.24.1"}
+strum_macros = {version = "=0.24.3"}
 postgresql_crud_macros_common = {path = "../postgresql_crud_macros_common"}
 constants = {path = "../../constants"}
 generate_quotes = {path = "../../generate_quotes"}
