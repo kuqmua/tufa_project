@@ -524,7 +524,12 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["is", "primary", "key"],
     ["create", "table", "column", "query", "part"],
     ["table", "type", "declaration"],
-    ["mut"]
+    ["mut"],
+    ["boolean"],
+    ["object"],
+    ["array"],
+    ["number"],
+    ["integer"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
