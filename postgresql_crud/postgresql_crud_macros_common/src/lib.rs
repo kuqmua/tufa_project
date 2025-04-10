@@ -2,6 +2,7 @@ mod filters;
 
 pub use filters::*;
 
+#[derive(Debug, PartialEq, serde::Deserialize)]
 pub enum PostgresqlTypeNotNullOrNullable {
     NotNull,
     Nullable,
