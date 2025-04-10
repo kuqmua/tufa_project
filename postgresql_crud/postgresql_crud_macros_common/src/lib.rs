@@ -450,8 +450,11 @@ pub fn generate_postgresql_json_type_token_stream(
     let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
-    let reference_std_primitive_str_token_stream = quote::quote! {&std::primitive::str};
-    let reference_mut_std_primitive_u64_token_stream = quote::quote! {&mut std::primitive::u64};
+    let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
+    let reference_mut_std_primitive_u64_token_stream = {
+        let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
+        quote::quote! {&mut #std_primitive_u64_token_stream}
+    };
     let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
     let std_string_string_token_stream = token_patterns::StdStringString;
     //todo maybe reexport sqlx?
