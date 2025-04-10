@@ -414,7 +414,7 @@ impl quote::ToTokens for IsUpdateQueryBindMutable {
     }
 }
 pub fn generate_postgresql_json_type_token_stream(
-    path_token_stream: &dyn quote::ToTokens,
+    import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     create_type_token_stream: &dyn quote::ToTokens,
     create_query_part_token_stream: &dyn quote::ToTokens,
@@ -429,6 +429,7 @@ pub fn generate_postgresql_json_type_token_stream(
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
+    let path_token_stream = quote::quote!{#import_path ::};
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
     let select_upper_camel_case = naming::SelectUpperCamelCase;

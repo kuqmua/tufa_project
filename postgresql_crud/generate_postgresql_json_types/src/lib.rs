@@ -487,7 +487,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let impl_crate_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
-            &quote::quote! {crate::},
+            &postgresql_crud_macros_common::ImportPath::Crate,
             &ident,
             &ident_origin_upper_camel_case,
             &{
