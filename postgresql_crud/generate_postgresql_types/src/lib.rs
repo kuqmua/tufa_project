@@ -421,6 +421,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
 
 
+        //todo make all like Origin: StdPrimitiveI16AsPostgresqlInt2NotNullCreate into StdPrimitiveI16AsPostgresqlInt2CreateNotNull
 
         // StdPrimitiveI16AsPostgresqlInt2NotNull
         // StdPrimitiveI16AsPostgresqlInt2OriginNotNull
