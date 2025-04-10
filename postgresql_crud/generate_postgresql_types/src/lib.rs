@@ -439,18 +439,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // StdPrimitiveI16AsPostgresqlInt2NullableWhereElement
         // StdPrimitiveI16AsPostgresqlInt2NullableRead
         // StdPrimitiveI16AsPostgresqlInt2NullableUpdate
-
-        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNull
-        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlOriginNotNull
-        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullTableTypeDeclaration
-        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullCreate
-        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullSelect
-        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullWhereElement
-        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullRead
-        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullUpdate
-
-
-
         
 
         // match (&postgresql_type_not_null_or_nullable, &postgresql_type_pattern_type) {
