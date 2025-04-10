@@ -261,12 +261,35 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &proc_macro2::TokenStream::new(),
                 &quote::quote! {format!("{self:#?}")}
             );
+            let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = {
+                quote::quote!{
+                    impl sqlx::Type<sqlx::Postgres> for #ident_origin_upper_camel_case {
+                        fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+                            <sqlx::types::Json<#field_type> as sqlx::Type<sqlx::Postgres>>::type_info()
+                        }
+                        fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+                            <sqlx::types::Json<#field_type> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+                        }
+                    }
+                }
+            };
+            let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = {
+                quote::quote!{
+                    impl sqlx::Encode<'_, sqlx::Postgres> for #ident_origin_upper_camel_case {
+                        fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                            sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(self.0), buf)
+                        }
+                    }
+                }
+            };
             quote::quote! {
                 #ident_origin_token_stream
                 #maybe_impl_schemars_json_schema_for_ident_origin_token_stream
                 #maybe_impl_is_empty_for_ident_origin_token_stream
                 #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream
                 #impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream
+                #impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream
+                #impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream
             }
         };
 
@@ -484,7 +507,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &{
                 let value_snake_case = naming::ValueSnakeCase;
                 quote::quote! {
-                    query = query.bind(sqlx::types::Json(#value_snake_case.0));
+                    query = query.bind(#value_snake_case);
                     query
                 }
             },
@@ -540,7 +563,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             &{
                 let value_snake_case = naming::ValueSnakeCase;
                 quote::quote! {
-                    query = query.bind(sqlx::types::Json(#value_snake_case.0));
+                    query = query.bind(#value_snake_case);
                     query
                 }
             },
@@ -579,69 +602,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
             },
         },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI16,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI32,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI64,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU8,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU16,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU32,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveU64,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
         postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
             postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid,
             postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
@@ -649,48 +609,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
             },
         },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::FullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecFullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath,
-        //     },
-        // },
-        // postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
-        //     postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid,
-        //     postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-        //         postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True,
-        //         postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::StdVecVecStdVecVecFullTypePath,
-        //     },
-        // },
     ]
     .into_iter()
     .map(|element| generate_postgresql_json_type_handle_token_stream(&element));
