@@ -568,7 +568,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 }
             },
         );
-        //todo maybe impl Encode instead of just wrap into sqlx::types::Json
         let generated = quote::quote! {
             #ident_token_stream
             #ident_origin_token_stream
@@ -578,22 +577,15 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             #ident_where_element_token_stream
             #impl_crate_postgresql_json_type_for_ident_token_stream
         };
-        // println!("{}", quote::quote!{#ident});
-        // if quote::quote!{#ident}.to_string() == "StdVecVecStdVecVecUuidUuid" {
-        //    //  println!("{generated}");
-        //    //  println!("-------");
-        // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        //     "PostgresqlBaseTypeTokensWhereElementSqlxTypesTimeTime",
-        //     &generated,
-        // );
-        //     generated = quote::quote!{}
+        // if ident == "" {
+        //     println!("{generated}");
+        //     println!("-------");
+        //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file("GeneratePostgresqlJsonTypes", &generated);
         // }
         generated
     }
-    // postgresql_crud_macros_common::PostgresqlJsonTypeVariant::all_variants()
     let variants_token_stream = 
     // postgresql_crud_macros_common::PostgresqlJsonTypeVariant::all_variants()
-    
     [
         postgresql_crud_macros_common::PostgresqlJsonTypeVariant {
             postgresql_json_type_handle: postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8,
@@ -615,10 +607,10 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     let generated = quote::quote! {
         #(#variants_token_stream)*
     };
-    //  if ident == "" {
-    //      println!("{generated}");
-    //      println!("-------");
-    //  }
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file("GeneratePostgresqlJsonTypes", &generated);
+    // if ident == "" {
+    //     println!("{generated}");
+    //     println!("-------");
+    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file("GeneratePostgresqlJsonTypes", &generated);
+    // }
     generated.into()
 }
