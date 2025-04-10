@@ -303,6 +303,191 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // VecOf(StdPrimitiveBoolNotNull)Nullable
         // VecOf(StdPrimitiveBoolNullable)Nullable
 
+
+// boolean	
+// boolean | null	
+
+
+// boolean[]	
+// boolean[] | null	
+// (boolean | null)[]	
+// (boolean | null)[] | null	
+
+
+// boolean[][]	
+// boolean[][] | null	
+// (boolean | null)[][]	
+// (boolean | null)[][] | null	
+// ((boolean | null)[] | null)[]	
+// ((boolean | null)[] | null)[] | null	
+
+
+
+// boolean[][][]	
+// boolean[][][] | null	
+// (boolean | null)[][][]	
+// (boolean | null)[][][] | null	
+// ((boolean | null)[] | null)[][]	
+// ((boolean | null)[] | null)[][] | null	
+// (((boolean | null)[] | null)[] | null)[]	
+
+
+// You're absolutely right again — thanks for your patience. Let's go **step by step**, properly and precisely, naming every type you listed, **strictly and consistently** based on these rules:
+
+// ---
+
+// ### ✅ **Rules for Consistent Naming**
+
+// We’ll use:
+// - `Bool` → for `boolean`
+// - `NullableBool` → for `boolean | null`
+// - `ArrayOf<Type>` → when it’s an array of that type
+// - `NullableArrayOf<Type>` → when that array **can be null**
+  
+// All nesting is named **from the inside out**, exactly following the type's structure — no shortcuts or naming drift.
+
+// ---
+
+// Now here’s your **full list**, fully fixed and consistently named:
+
+// ---
+
+// ### 📦 0D (scalars)
+
+// | Type              | Name          |
+// |-------------------|---------------|
+// | `boolean`         | `Bool`        |
+// | `boolean \| null` | `NullableBool`|
+
+// ---
+
+// ### 📚 1D (arrays)
+
+// | Type                          | Name                              |
+// |-------------------------------|-----------------------------------|
+// | `boolean[]`                   | `ArrayOfBool`                     |
+// | `boolean[] \| null`           | `NullableArrayOfBool`             |
+// | `(boolean \| null)[]`         | `ArrayOfNullableBool`             |
+// | `(boolean \| null)[] \| null` | `NullableArrayOfNullableBool`     |
+
+// ---
+
+// ### 🧮 2D (arrays of arrays)
+
+// | Type                                         | Name                                            |
+// |----------------------------------------------|-------------------------------------------------|
+// | `boolean[][]`                                | `ArrayOfArrayOfBool`                            |
+// | `boolean[][] \| null`                        | `NullableArrayOfArrayOfBool`                    |
+// | `(boolean \| null)[][]`                      | `ArrayOfArrayOfNullableBool`                    |
+// | `(boolean \| null)[][] \| null`              | `NullableArrayOfArrayOfNullableBool`            |
+// | `((boolean \| null)[] \| null)[]`            | `ArrayOfNullableArrayOfNullableBool`            |
+// | `((boolean \| null)[] \| null)[] \| null`    | `NullableArrayOfNullableArrayOfNullableBool`    |
+
+// ---
+
+// ### 🧠 3D (arrays of arrays of arrays)
+
+// | Type                                                       | Name                                                      |
+// |--------------------------------------------------------------|-----------------------------------------------------------|
+// | `boolean[][][]`                                              | `ArrayOfArrayOfArrayOfBool`                              |
+// | `boolean[][][] \| null`                                      | `NullableArrayOfArrayOfArrayOfBool`                      |
+// | `(boolean \| null)[][][]`                                    | `ArrayOfArrayOfArrayOfNullableBool`                      |
+// | `(boolean \| null)[][][] \| null`                            | `NullableArrayOfArrayOfArrayOfNullableBool`              |
+// | `((boolean \| null)[] \| null)[][]`                          | `ArrayOfArrayOfNullableArrayOfNullableBool`              |
+// | `((boolean \| null)[] \| null)[][] \| null`                  | `NullableArrayOfArrayOfNullableArrayOfNullableBool`      |
+// | `(((boolean \| null)[] \| null)[] \| null)[]`                | `ArrayOfNullableArrayOfNullableArrayOfNullableBool`      |
+// | `(((boolean \| null)[] \| null)[] \| null)[] \| null`        | `NullableArrayOfNullableArrayOfNullableArrayOfNullableBool` |
+
+// ---
+
+// ### ✅ 100% Consistent and Expandable
+
+// This structure scales **perfectly** to 4D, 5D, etc., and is completely regular.
+
+// Want me to generate a helper function that auto-generates names like this for any nested type?
+
+
+
+
+
+
+
+
+
+// Awesome — thanks! Now let’s switch to your preferred pattern:
+
+// ### ✅ **Updated Naming Convention: `BoolNullable` Style**
+
+// We’ll follow this exact and consistent rule set:
+
+// | Concept                  | Naming                         |
+// |--------------------------|--------------------------------|
+// | `boolean`                | `Bool`                         |
+// | `boolean \| null`        | `BoolNullable`                 |
+// | `T[]`                    | `ArrayOf<T>`                   |
+// | `T[] \| null`            | `ArrayOf<T>Nullable`           |
+
+// So:
+// - **Nullability always moves to the **end** as `Nullable`**
+// - **Nesting is still strictly "from inside out"**
+
+// ---
+
+// ### 📦 0D (scalars)
+
+// | Type              | Name          |
+// |-------------------|---------------|
+// | `boolean`         | `Bool`        |
+// | `boolean \| null` | `BoolNullable`|
+
+// ---
+
+// ### 📚 1D (arrays)
+
+// | Type                          | Name                          |
+// |-------------------------------|-------------------------------|
+// | `boolean[]`                   | `ArrayOfBool`                 |
+// | `boolean[] \| null`           | `ArrayOfBoolNullable`         |
+// | `(boolean \| null)[]`         | `ArrayOfBoolNullable`         |
+// | `(boolean \| null)[] \| null` | `ArrayOfBoolNullableNullable` |
+
+// ---
+
+// ### 🧮 2D (arrays of arrays)
+
+// | Type                                         | Name                                  |
+// |----------------------------------------------|---------------------------------------|
+// | `boolean[][]`                                | `ArrayOfArrayOfBool`                  |
+// | `boolean[][] \| null`                        | `ArrayOfArrayOfBoolNullable`          |
+// | `(boolean \| null)[][]`                      | `ArrayOfArrayOfBoolNullable`          |
+// | `(boolean \| null)[][] \| null`              | `ArrayOfArrayOfBoolNullableNullable`  |
+// | `((boolean \| null)[] \| null)[]`            | `ArrayOfArrayOfBoolNullableNullable`  |
+// | `((boolean \| null)[] \| null)[] \| null`    | `ArrayOfArrayOfBoolNullableNullableNullable` |
+
+// ---
+
+// ### 🧠 3D (arrays of arrays of arrays)
+
+// | Type                                                       | Name                                                      |
+// |--------------------------------------------------------------|-----------------------------------------------------------|
+// | `boolean[][][]`                                              | `ArrayOfArrayOfArrayOfBool`                              |
+// | `boolean[][][] \| null`                                      | `ArrayOfArrayOfArrayOfBoolNullable`                      |
+// | `(boolean \| null)[][][]`                                    | `ArrayOfArrayOfArrayOfBoolNullable`                      |
+// | `(boolean \| null)[][][] \| null`                            | `ArrayOfArrayOfArrayOfBoolNullableNullable`              |
+// | `((boolean \| null)[] \| null)[][]`                          | `ArrayOfArrayOfArrayOfBoolNullableNullable`              |
+// | `((boolean \| null)[] \| null)[][] \| null`                  | `ArrayOfArrayOfArrayOfBoolNullableNullableNullable`      |
+// | `(((boolean \| null)[] \| null)[] \| null)[]`                | `ArrayOfArrayOfArrayOfBoolNullableNullableNullable`      |
+// | `(((boolean \| null)[] \| null)[] \| null)[] \| null`        | `ArrayOfArrayOfArrayOfBoolNullableNullableNullableNullable` |
+
+// ---
+
+// ### 🧼 Notes
+// - This version always attaches `Nullable` **after the type or structure** it modifies.
+// - It's easy to parse and extremely regular — great for code generation or reading at a glance.
+
+// Let me know if you want a TypeScript helper function to generate these names automatically based on a type string!
+
+
         Standart,
         ArrayDimension1 {
             dimension1_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
