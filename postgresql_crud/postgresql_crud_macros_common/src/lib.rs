@@ -125,6 +125,14 @@ pub fn generate_struct_ident_with_number_elements_double_quotes_token_stream(pos
     generate_quotes::double_quotes_token_stream(&format!("struct {postgresql_type_ident_where_element_tokens_upper_camel_case} with {length} elements"))
 }
 
+
+pub fn generate_sqlx_types_json_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    quote::quote! {sqlx::types::Json<#type_token_stream>}
+}
+pub fn generate_std_option_option_tokens_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    quote::quote! {std::option::Option<#type_token_stream>}
+}
+
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonTypePatternType {
     Origin,

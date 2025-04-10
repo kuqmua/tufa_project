@@ -711,13 +711,6 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                 }
             };
 
-            let generate_sqlx_types_json_type_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                quote::quote! {sqlx::types::Json<#type_token_stream>}
-            };
-            let generate_std_option_option_tokens_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                quote::quote! {std::option::Option<#type_token_stream>}
-            };
-
             enum PostgresqlType {
                 JsonbNullable,
                 JsonbNotNull,
@@ -1341,8 +1334,8 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                     },
                 );
                 let maybe_impl_sqlx_type_sqlx_postgres_and_impl_sqlx_decode_sqlx_postgres_token_stream = if let PostgresqlTypeOrJsonTypeHandle::PostgresqlType(postgresql_type) = &postgresql_type_or_json_type_handle {
-                    let sqlx_types_json_tokens_without_id_or_with_id_read_token_stream = generate_sqlx_types_json_type_token_stream(&tokens_without_id_or_with_id_read_upper_camel_case);
-                    let std_option_option_sqlx_types_json_tokens_without_id_or_with_id_read_token_stream = generate_std_option_option_tokens_token_stream(&sqlx_types_json_tokens_without_id_or_with_id_read_token_stream);
+                    let sqlx_types_json_tokens_without_id_or_with_id_read_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&tokens_without_id_or_with_id_read_upper_camel_case);
+                    let std_option_option_sqlx_types_json_tokens_without_id_or_with_id_read_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&sqlx_types_json_tokens_without_id_or_with_id_read_token_stream);
                     let impl_sqlx_type_sqlx_postgres_for_tokens_without_id_or_with_id_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                         &tokens_without_id_or_with_id_read_upper_camel_case,
                         &match &postgresql_type {
@@ -1684,10 +1677,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                             pub struct #tokens_select_upper_camel_case #content_token_stream
                         }
                     };
-                    // let sqlx_types_json_tokens_select_token_stream = generate_sqlx_types_json_type_token_stream(
+                    // let sqlx_types_json_tokens_select_token_stream = generate_sqlx_types_json_type_declaration_token_stream(
                     //     &quote::quote!{postgresql_crud::UniqueVec<#ident_select_without_id_upper_camel_case>}
                     // );
-                    // let std_option_option_sqlx_types_json_tokens_select_token_stream = generate_std_option_option_tokens_token_stream(&sqlx_types_json_tokens_select_token_stream);
+                    // let std_option_option_sqlx_types_json_tokens_select_token_stream = generate_std_option_option_tokens_declaration_token_stream(&sqlx_types_json_tokens_select_token_stream);
                     // let impl_sqlx_type_sqlx_postgres_for_tokens_as_type_select_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                     //     &tokens_as_type_select_upper_camel_case,
                     //     &match &postgresql_type {
@@ -2827,7 +2820,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 PostgresqlType::JsonbNotNull => quote::quote! {
                                     postgresql_crud::UniqueVec<#ident_select_without_id_upper_camel_case>
                                 },
-                                PostgresqlType::JsonbNullable => generate_std_option_option_tokens_token_stream(
+                                PostgresqlType::JsonbNullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                                     &quote::quote!{postgresql_crud::UniqueVec<#ident_select_without_id_upper_camel_case>}
                                 ),
                             };
@@ -2843,10 +2836,10 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 pub struct #tokens_as_type_select_upper_camel_case(#type_token_stream);
                             }
                         };
-                        let sqlx_types_json_tokens_select_token_stream = generate_sqlx_types_json_type_token_stream(
+                        let sqlx_types_json_tokens_select_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(
                             &quote::quote!{postgresql_crud::UniqueVec<#ident_select_without_id_upper_camel_case>}
                         );
-                        let std_option_option_sqlx_types_json_tokens_select_token_stream = generate_std_option_option_tokens_token_stream(&sqlx_types_json_tokens_select_token_stream);
+                        let std_option_option_sqlx_types_json_tokens_select_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&sqlx_types_json_tokens_select_token_stream);
                         let impl_sqlx_type_sqlx_postgres_for_tokens_as_type_select_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                             &tokens_as_type_select_upper_camel_case,
                             &match &postgresql_type {
@@ -3000,7 +2993,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
                                 let postgresql_crud_unique_vec_ident_update_element_token_stream = quote::quote!{postgresql_crud::UniqueVec<#ident_update_element_upper_camel_case>};
                                 match &postgresql_type {
                                     PostgresqlType::JsonbNotNull => postgresql_crud_unique_vec_ident_update_element_token_stream,
-                                    PostgresqlType::JsonbNullable => generate_std_option_option_tokens_token_stream(&postgresql_crud_unique_vec_ident_update_element_token_stream),
+                                    PostgresqlType::JsonbNullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&postgresql_crud_unique_vec_ident_update_element_token_stream),
                                 }
                             };
                             quote::quote! {

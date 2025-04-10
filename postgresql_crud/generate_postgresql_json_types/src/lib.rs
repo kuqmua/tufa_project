@@ -262,13 +262,14 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 &quote::quote! {format!("{self:#?}")}
             );
             let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = {
+                let sqlx_types_json_type_field_type_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&field_type);
                 quote::quote!{
                     impl sqlx::Type<sqlx::Postgres> for #ident_origin_upper_camel_case {
                         fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-                            <sqlx::types::Json<#field_type> as sqlx::Type<sqlx::Postgres>>::type_info()
+                            <#sqlx_types_json_type_field_type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
                         }
                         fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-                            <sqlx::types::Json<#field_type> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+                            <#sqlx_types_json_type_field_type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
                         }
                     }
                 }
