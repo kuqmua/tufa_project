@@ -2867,13 +2867,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             #postgresql_type_not_null_or_nullable_update_token_stream
             #impl_postgresql_type_for_ident_token_stream
         };
-        // if let PostgresqlType:: = &postgresql_type {
-        //     if ident == "" {
-        //           macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        //               "PostgresqlTypeTokens",
-        //               &generated,
-        //           );
-        //     }
+        // if let (
+        //     PostgresqlType::StdPrimitiveI16AsPostgresqlInt2,
+        //     postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull,
+        //     PostgresqlTypePatternType::Origin
+        // ) = (
+        //     &postgresql_type,
+        //     &postgresql_type_not_null_or_nullable,
+        //     &postgresql_type_pattern_type
+        // ) {
+        //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //         "PostgresqlTypeTokens",
+        //         &generated,
+        //     );
         // }
         generated
     });
