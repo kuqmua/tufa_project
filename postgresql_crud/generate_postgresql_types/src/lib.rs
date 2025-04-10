@@ -294,8 +294,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     #[derive(Debug, PartialEq, serde::Deserialize)]
     enum PostgresqlTypePatternType {
-        Origin,
-        VecOrigin,
+        Standart,
+        VecStandart,
     }
     //todo 
     // can i create a postgresql column array of not null int?
