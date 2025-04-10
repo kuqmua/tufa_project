@@ -417,6 +417,42 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // ArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
         // NullableArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
 
+
+
+
+
+
+        // StdPrimitiveI16AsPostgresqlInt2NotNull
+        // StdPrimitiveI16AsPostgresqlInt2OriginNotNull
+        // StdPrimitiveI16AsPostgresqlInt2NotNullTableTypeDeclaration
+        // StdPrimitiveI16AsPostgresqlInt2NotNullCreate
+        // StdPrimitiveI16AsPostgresqlInt2NotNullSelect
+        // StdPrimitiveI16AsPostgresqlInt2NotNullWhereElement
+        // StdPrimitiveI16AsPostgresqlInt2NotNullRead
+        // StdPrimitiveI16AsPostgresqlInt2NotNullUpdate
+
+        // StdPrimitiveI16AsPostgresqlInt2Nullable
+        // StdPrimitiveI16AsPostgresqlInt2OriginNullable
+        // StdPrimitiveI16AsPostgresqlInt2NullableTableTypeDeclaration
+        // StdPrimitiveI16AsPostgresqlInt2NullableCreate
+        // StdPrimitiveI16AsPostgresqlInt2NullableSelect
+        // StdPrimitiveI16AsPostgresqlInt2NullableWhereElement
+        // StdPrimitiveI16AsPostgresqlInt2NullableRead
+        // StdPrimitiveI16AsPostgresqlInt2NullableUpdate
+
+        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNull
+        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlOriginNotNull
+        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullTableTypeDeclaration
+        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullCreate
+        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullSelect
+        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullWhereElement
+        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullRead
+        // StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresqlNotNullUpdate
+
+
+
+        
+
         // match (&postgresql_type_not_null_or_nullable, &postgresql_type_pattern_type) {
         //     (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, PostgresqlTypePatternType::Standart) => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type),
         //     (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, PostgresqlTypePatternType::ArrayDimension1 {
