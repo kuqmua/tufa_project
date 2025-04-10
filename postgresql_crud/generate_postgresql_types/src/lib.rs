@@ -2256,19 +2256,22 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange => CanBePrimaryKey::False,
             };
-            let typical_query_bind_token_stream = match &postgresql_type_not_null_or_nullable {
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => quote::quote! {
-                    #query_snake_case = #query_snake_case.bind(#value_snake_case);
-                    #query_snake_case
-                },
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => quote::quote! {
-                    #query_snake_case = #query_snake_case.bind(match #value_snake_case .0 {
-                        Some(#value_snake_case) => Some(#value_snake_case),
-                        None => None
-                    });
-                    #query_snake_case
-                },
+            let generate_typical_query_bind_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                match &postgresql_type_not_null_or_nullable {
+                    postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => quote::quote! {
+                        #query_snake_case = #query_snake_case.bind(#content_token_stream);
+                        #query_snake_case
+                    },
+                    postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => quote::quote! {
+                        #query_snake_case = #query_snake_case.bind(match #content_token_stream .0 {
+                            Some(#value_snake_case) => Some(#value_snake_case),
+                            None => None
+                        });
+                        #query_snake_case
+                    },
+                }
             };
+            let typical_query_bind_token_stream = generate_typical_query_bind_token_stream(&value_snake_case);
             let postgresql_crud_macros_common_import_path_crate = postgresql_crud_macros_common::ImportPath::Crate;
             let maybe_impl_postgresql_type_where_filter_for_postgresql_type_origin_not_null_or_nullable_if_can_be_primary_key_token_stream = if let (CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
                 postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
@@ -2288,10 +2291,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                         }
                     },
                     &postgresql_crud_macros_common::IsQueryBindMutable::True,
-                    &quote::quote! {
-                        let value = self;//todo refactor?
-                        #typical_query_bind_token_stream
-                    },
+                    &generate_typical_query_bind_token_stream(&naming::SelfSnakeCase),
                     &postgresql_crud_macros_common_import_path_crate,
                 )
             } else {
