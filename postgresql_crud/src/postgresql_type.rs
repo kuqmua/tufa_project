@@ -1,12 +1,24 @@
 generate_postgresql_types::generate_postgresql_types!([
     {
         "postgresql_type": "StdPrimitiveI16AsPostgresqlInt2",
-        "postgresql_type_not_null_or_nullable": "NotNull"
+        "postgresql_type_not_null_or_nullable": "NotNull",
+        "postgresql_type_pattern_type": "Origin"
     },
     {
         "postgresql_type": "StdPrimitiveI16AsPostgresqlInt2",
-        "postgresql_type_not_null_or_nullable": "Nullable"
+        "postgresql_type_not_null_or_nullable": "Nullable",
+        "postgresql_type_pattern_type": "Origin"
     },
+    // {
+    //     "postgresql_type": "StdPrimitiveI16AsPostgresqlInt2",
+    //     "postgresql_type_not_null_or_nullable": "NotNull",
+    //     "postgresql_type_pattern_type": "VecOrigin"
+    // },
+    // {
+    //     "postgresql_type": "StdPrimitiveI16AsPostgresqlInt2",
+    //     "postgresql_type_not_null_or_nullable": "Nullable",
+    //     "postgresql_type_pattern_type": "VecOrigin"
+    // },
     // {
     //     "postgresql_type": "StdPrimitiveI32AsPostgresqlInt4",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
@@ -33,8 +45,15 @@ generate_postgresql_types::generate_postgresql_types!([
     // },
     {
         "postgresql_type": "StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql",
-        "postgresql_type_not_null_or_nullable": "NotNull"
+        "postgresql_type_not_null_or_nullable": "NotNull",
+        "postgresql_type_pattern_type": "Origin"
     }
+    // ,
+    // {
+    //     "postgresql_type": "StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql",
+    //     "postgresql_type_not_null_or_nullable": "NotNull",
+    //     "postgresql_type_pattern_type": "VecOrigin"
+    // }
     // ,
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgMoneyAsPostgresqlMoney",

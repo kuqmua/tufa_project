@@ -292,6 +292,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlTypeRange to proc_macro2::TokenStream")).to_tokens(tokens)
         }
     }
+    #[derive(Debug, PartialEq, serde::Deserialize)]
+    enum PostgresqlTypePatternType {
+        Origin,
+        VecOrigin,
+    }
     //todo 
     // can i create a postgresql column array of not null int?
     // No, PostgreSQL does not natively support enforcing NOT NULL on individual elements of an array column.
@@ -310,6 +315,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     struct PostgresqlTypeRecord {
         postgresql_type: PostgresqlType,
         postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
+        postgresql_type_pattern_type: PostgresqlTypePatternType,
     }
     let postgresql_type_array = {
         //todo write function for gen all variants
@@ -327,10 +333,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         vec
     }.into_iter().map(|element|{
         let postgresql_type = &element.postgresql_type;
+        let field_type = postgresql_type.field_type_token_stream();
         let postgresql_type_not_null_or_nullable = &element.postgresql_type_not_null_or_nullable;
+        let postgresql_type_pattern_type =  &element.postgresql_type_pattern_type;
         if let (CanBeNullable::False, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable) = (&postgresql_type.can_be_nullable(), &postgresql_type_not_null_or_nullable) {
             panic!("type cannot be nullable")//todo maybe rewrite it somehow better?
         }
+        let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
         let column_snake_case = naming::ColumnSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
@@ -349,16 +358,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let microseconds_snake_case = naming::MicrosecondsSnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
 
-        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-        let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-
         let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
         let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
         let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
         let std_string_string_token_stream = token_patterns::StdStringString;
-        let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 
-        let field_type = postgresql_type.field_type_token_stream();
+        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+        let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 
         let postgresql_type_not_null_upper_camel_case = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
         let postgresql_type_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_not_null_or_nullable {
