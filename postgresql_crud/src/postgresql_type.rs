@@ -2,129 +2,130 @@ generate_postgresql_types::generate_postgresql_types!([
     {
         "postgresql_type": "StdPrimitiveI16AsPostgresqlInt2"
     },
-    {
-        "postgresql_type": "StdPrimitiveI32AsPostgresqlInt4"
-    },
-    {
-        "postgresql_type": "StdPrimitiveI64AsPostgresqlInt8"
-    },
-    {
-        "postgresql_type": "StdPrimitiveF32AsPostgresqlFloat4"
-    },
-    {
-        "postgresql_type": "StdPrimitiveF64AsPostgresqlFloat8"
-    },
-    {
-        "postgresql_type": "StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql"
-    },
-    {
-        "postgresql_type": "StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql"
-    },
+    // {
+    //     "postgresql_type": "StdPrimitiveI32AsPostgresqlInt4"
+    // },
+    // {
+    //     "postgresql_type": "StdPrimitiveI64AsPostgresqlInt8"
+    // },
+    // {
+    //     "postgresql_type": "StdPrimitiveF32AsPostgresqlFloat4"
+    // },
+    // {
+    //     "postgresql_type": "StdPrimitiveF64AsPostgresqlFloat8"
+    // },
+    // {
+    //     "postgresql_type": "StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql"
+    // },
+    // {
+    //     "postgresql_type": "StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql"
+    // },
     {
         "postgresql_type": "StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgMoneyAsPostgresqlMoney"
-    },
-    {
-        "postgresql_type": "SqlxTypesDecimalAsPostgresqlNumeric"
-    },
-    {
-        "postgresql_type": "SqlxTypesBigDecimalAsPostgresqlNumeric"
-    },
-    {
-        "postgresql_type": "StdPrimitiveBoolAsPostgresqlBool"
-    },
-    {
-        "postgresql_type": "StdStringStringAsPostgresqlCharN"
-    },
-    {
-        "postgresql_type": "StdStringStringAsPostgresqlVarchar"
-    },
-    {
-        "postgresql_type": "StdStringStringAsPostgresqlText"
-    },
-    {
-        "postgresql_type": "StdVecVecStdPrimitiveU8AsPostgresqlBytea"
-    },
-    {
-        "postgresql_type": "SqlxTypesChronoNaiveTimeAsPostgresqlTime"
-    },
-    {
-        "postgresql_type": "SqlxTypesTimeTimeAsPostgresqlTime"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgIntervalAsPostgresqlInterval"
-    },
-    {
-        "postgresql_type": "SqlxTypesTimeDateAsPostgresqlDate"
-    },
-    {
-        "postgresql_type": "SqlxTypesChronoNaiveDateAsPostgresqlDate"
-    },
-    {
-        "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp"
-    },
-    {
-        "postgresql_type": "SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp"
-    },
-    {
-        "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz"
-    },
-    {
-        "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz"
-    },
-    {
-        "postgresql_type": "SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql"
-    },
-    {
-        "postgresql_type": "SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient"
-    },
-    {
-        "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsPostgresqlInet"
-    },
-    {
-        "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr"
-    },
-    {
-        "postgresql_type": "SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr"
-    },
-    {
-        "postgresql_type": "SqlxTypesBitVecAsPostgresqlBit"
-    },
-    {
-        "postgresql_type": "SqlxTypesBitVecAsPostgresqlVarbit"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange"
-    },
-    {
-        "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange"
     }
+    // ,
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgMoneyAsPostgresqlMoney"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesDecimalAsPostgresqlNumeric"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesBigDecimalAsPostgresqlNumeric"
+    // },
+    // {
+    //     "postgresql_type": "StdPrimitiveBoolAsPostgresqlBool"
+    // },
+    // {
+    //     "postgresql_type": "StdStringStringAsPostgresqlCharN"
+    // },
+    // {
+    //     "postgresql_type": "StdStringStringAsPostgresqlVarchar"
+    // },
+    // {
+    //     "postgresql_type": "StdStringStringAsPostgresqlText"
+    // },
+    // {
+    //     "postgresql_type": "StdVecVecStdPrimitiveU8AsPostgresqlBytea"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsPostgresqlTime"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesTimeTimeAsPostgresqlTime"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsPostgresqlInterval"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesTimeDateAsPostgresqlDate"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesChronoNaiveDateAsPostgresqlDate"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsPostgresqlInet"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesBitVecAsPostgresqlBit"
+    // },
+    // {
+    //     "postgresql_type": "SqlxTypesBitVecAsPostgresqlVarbit"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange"
+    // },
+    // {
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange"
+    // }
 ]);
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
