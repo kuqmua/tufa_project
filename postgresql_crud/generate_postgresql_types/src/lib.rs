@@ -230,23 +230,23 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlType to proc_macro2::TokenStream")).to_tokens(tokens)
         }
     }
-    impl std::convert::From<&RangeType> for PostgresqlType {
-        fn from(value: &RangeType) -> PostgresqlType {
+    impl std::convert::From<&PostgresqlTypeRange> for PostgresqlType {
+        fn from(value: &PostgresqlTypeRange) -> PostgresqlType {
             match value {
-                RangeType::StdPrimitiveI32AsPostgresqlInt4 => Self::StdPrimitiveI32AsPostgresqlInt4,
-                RangeType::StdPrimitiveI64AsPostgresqlInt8 => Self::StdPrimitiveI64AsPostgresqlInt8,
-                RangeType::SqlxTypesDecimalAsPostgresqlNumeric => Self::SqlxTypesDecimalAsPostgresqlNumeric,
-                RangeType::SqlxTypesBigDecimalAsPostgresqlNumeric => Self::SqlxTypesBigDecimalAsPostgresqlNumeric,
-                RangeType::SqlxTypesTimeDateAsPostgresqlDate => Self::SqlxTypesTimeDateAsPostgresqlDate,
-                RangeType::SqlxTypesChronoNaiveDateAsPostgresqlDate => Self::SqlxTypesChronoNaiveDateAsPostgresqlDate,
-                RangeType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp,
-                RangeType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp,
-                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz,
-                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
+                PostgresqlTypeRange::StdPrimitiveI32AsPostgresqlInt4 => Self::StdPrimitiveI32AsPostgresqlInt4,
+                PostgresqlTypeRange::StdPrimitiveI64AsPostgresqlInt8 => Self::StdPrimitiveI64AsPostgresqlInt8,
+                PostgresqlTypeRange::SqlxTypesDecimalAsPostgresqlNumeric => Self::SqlxTypesDecimalAsPostgresqlNumeric,
+                PostgresqlTypeRange::SqlxTypesBigDecimalAsPostgresqlNumeric => Self::SqlxTypesBigDecimalAsPostgresqlNumeric,
+                PostgresqlTypeRange::SqlxTypesTimeDateAsPostgresqlDate => Self::SqlxTypesTimeDateAsPostgresqlDate,
+                PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsPostgresqlDate => Self::SqlxTypesChronoNaiveDateAsPostgresqlDate,
+                PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp,
+                PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => Self::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp,
+                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz,
+                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
             }
         }
     }
-    enum RangeType {
+    enum PostgresqlTypeRange {
         StdPrimitiveI32AsPostgresqlInt4,
         StdPrimitiveI64AsPostgresqlInt8,
         SqlxTypesDecimalAsPostgresqlNumeric,
@@ -258,15 +258,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz,
         SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz,
     }
-    // impl RangeType {
-    //     fn field_type_stringified(&self) -> std::string::String {
-    //         PostgresqlType::from(self).field_type_stringified()
-    //     }
-    //     fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
-    //         PostgresqlType::from(self).field_type_token_stream()
-    //     }
-    // }
-    impl std::convert::TryFrom<PostgresqlType> for RangeType {
+    impl std::convert::TryFrom<PostgresqlType> for PostgresqlTypeRange {
         type Error = ();
         fn try_from(value: PostgresqlType) -> Result<Self, Self::Error> {
             match &value {
@@ -315,14 +307,14 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             }
         }
     }
-    impl std::fmt::Display for RangeType {
+    impl std::fmt::Display for PostgresqlTypeRange {
         fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             write!(formatter, "{}", naming::parameter::SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(self)))
         }
     }
-    impl quote::ToTokens for RangeType {
+    impl quote::ToTokens for PostgresqlTypeRange {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-            self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse RangeType to proc_macro2::TokenStream")).to_tokens(tokens)
+            self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlTypeRange to proc_macro2::TokenStream")).to_tokens(tokens)
         }
     }
 
@@ -2614,28 +2606,28 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                     where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                     where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
                 ) = {
-                    let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |range_type: RangeType| {
-                        enum ShouldImplRangeLength {
+                    let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |postgresql_type_range: PostgresqlTypeRange| {
+                        enum ShouldImplPostgresqlTypeRangeLength {
                             True,
                             False,
                         }
-                        let range_type_should_impl_range_length = {
-                            let should_impl_range_length_true = ShouldImplRangeLength::True;
-                            let should_impl_range_length_false = ShouldImplRangeLength::False;
-                            match &range_type {
-                                RangeType::StdPrimitiveI32AsPostgresqlInt4 => should_impl_range_length_true,
-                                RangeType::StdPrimitiveI64AsPostgresqlInt8 => should_impl_range_length_true,
-                                RangeType::SqlxTypesDecimalAsPostgresqlNumeric => should_impl_range_length_false,
-                                RangeType::SqlxTypesBigDecimalAsPostgresqlNumeric => should_impl_range_length_false,
-                                RangeType::SqlxTypesTimeDateAsPostgresqlDate => should_impl_range_length_false,
-                                RangeType::SqlxTypesChronoNaiveDateAsPostgresqlDate => should_impl_range_length_false,
-                                RangeType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => should_impl_range_length_false,
-                                RangeType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => should_impl_range_length_false,
-                                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => should_impl_range_length_false,
-                                RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => should_impl_range_length_false,
+                        let should_impl_postgresql_type_range_length = {
+                            let should_impl_postgresql_type_range_length_true = ShouldImplPostgresqlTypeRangeLength::True;
+                            let should_impl_postgresql_type_range_length_false = ShouldImplPostgresqlTypeRangeLength::False;
+                            match &postgresql_type_range {
+                                PostgresqlTypeRange::StdPrimitiveI32AsPostgresqlInt4 => should_impl_postgresql_type_range_length_true,
+                                PostgresqlTypeRange::StdPrimitiveI64AsPostgresqlInt8 => should_impl_postgresql_type_range_length_true,
+                                PostgresqlTypeRange::SqlxTypesDecimalAsPostgresqlNumeric => should_impl_postgresql_type_range_length_false,
+                                PostgresqlTypeRange::SqlxTypesBigDecimalAsPostgresqlNumeric => should_impl_postgresql_type_range_length_false,
+                                PostgresqlTypeRange::SqlxTypesTimeDateAsPostgresqlDate => should_impl_postgresql_type_range_length_false,
+                                PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsPostgresqlDate => should_impl_postgresql_type_range_length_false,
+                                PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp => should_impl_postgresql_type_range_length_false,
+                                PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp => should_impl_postgresql_type_range_length_false,
+                                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz => should_impl_postgresql_type_range_length_false,
+                                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz => should_impl_postgresql_type_range_length_false,
                             }
                         };
-                        let postgresql_type_tokens_where_element_token_stream = generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&{
+                        generate_postgresql_type_not_null_or_nullable_where_element_token_stream(&{
                             let mut value: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![
                                 &equal,
                                 &value_is_contained_within_range,
@@ -2648,26 +2640,23 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
                                 &overlap_with_range,
                                 &adjacent_with_range,
                             ];
-                            if let ShouldImplRangeLength::True = &range_type_should_impl_range_length {
+                            if let ShouldImplPostgresqlTypeRangeLength::True = &should_impl_postgresql_type_range_length {
                                 value.push(&range_length);
                             }
                             value
-                        });
-                        quote::quote! {
-                            #postgresql_type_tokens_where_element_token_stream
-                        }
+                        })
                     };
                     (
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::StdPrimitiveI32AsPostgresqlInt4),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::StdPrimitiveI64AsPostgresqlInt8),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesDecimalAsPostgresqlNumeric),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesBigDecimalAsPostgresqlNumeric),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesTimeDateAsPostgresqlDate),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesChronoNaiveDateAsPostgresqlDate),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(RangeType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz)
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI32AsPostgresqlInt4),
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI64AsPostgresqlInt8),
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesDecimalAsPostgresqlNumeric),
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesBigDecimalAsPostgresqlNumeric),
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimeDateAsPostgresqlDate),
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsPostgresqlDate),
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp),
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp),
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz),
+                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz)
                     )
                 };
                 match &postgresql_type {
