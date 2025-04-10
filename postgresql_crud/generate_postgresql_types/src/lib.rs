@@ -339,7 +339,7 @@ pub fn generate_postgresql_types(_input_token_stream: proc_macro::TokenStream) -
             };
             let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &field_type,
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#postgresql_type_origin_not_null_upper_camel_case>},
+                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&postgresql_type_origin_not_null_upper_camel_case)
             };
             let postgresql_type_origin_not_null_or_nullable_token_stream = {
                 let partial_ord_comma_token_stream = quote::quote! {PartialOrd,};
