@@ -312,34 +312,35 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         vec
     }.into_iter().map(|element|{
         let postgresql_type = &element.postgresql_type;
-
-        let column_snake_case = naming::ColumnSnakeCase;
-        let query_snake_case = naming::QuerySnakeCase;
-        let value_snake_case = naming::ValueSnakeCase;
-        let self_snake_case = naming::SelfSnakeCase;
-        let increment_snake_case = naming::IncrementSnakeCase;
-        let start_snake_case = naming::StartSnakeCase;
-        let end_snake_case = naming::EndSnakeCase;
-        let digits_snake_case = naming::DigitsSnakeCase;
-        let scale_snake_case = naming::ScaleSnakeCase;
-        let year_snake_case = naming::YearSnakeCase;
-        let month_snake_case = naming::MonthSnakeCase;
-        let day_snake_case = naming::DaySnakeCase;
-        let months_snake_case = naming::MonthsSnakeCase;
-        let days_snake_case = naming::DaysSnakeCase;
-        let microseconds_snake_case = naming::MicrosecondsSnakeCase;
-
-        let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-        let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
-        let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
-        let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
-        let std_string_string_token_stream = token_patterns::StdStringString;
-        let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-
-        let field_type = postgresql_type.field_type_token_stream();
         let generate_postgresql_type_not_null_or_nullable = |postgresql_type_not_null_or_nullable: &postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable| -> proc_macro2::TokenStream {
+            let column_snake_case = naming::ColumnSnakeCase;
+            let query_snake_case = naming::QuerySnakeCase;
+            let value_snake_case = naming::ValueSnakeCase;
+            let self_snake_case = naming::SelfSnakeCase;
+            let increment_snake_case = naming::IncrementSnakeCase;
+            let start_snake_case = naming::StartSnakeCase;
+            let end_snake_case = naming::EndSnakeCase;
+            let digits_snake_case = naming::DigitsSnakeCase;
+            let scale_snake_case = naming::ScaleSnakeCase;
+            let year_snake_case = naming::YearSnakeCase;
+            let month_snake_case = naming::MonthSnakeCase;
+            let day_snake_case = naming::DaySnakeCase;
+            let months_snake_case = naming::MonthsSnakeCase;
+            let days_snake_case = naming::DaysSnakeCase;
+            let microseconds_snake_case = naming::MicrosecondsSnakeCase;
+
+            let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+            let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+            
+            let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
+            let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
+            let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
+            let std_string_string_token_stream = token_patterns::StdStringString;
+            let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+
+            let field_type = postgresql_type.field_type_token_stream();
+
             let postgresql_type_not_null_upper_camel_case = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
             let postgresql_type_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_type_not_null_or_nullable {
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &postgresql_type_not_null_upper_camel_case,
