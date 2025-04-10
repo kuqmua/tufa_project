@@ -436,7 +436,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       {
         "GreaterThan": {
           "logical_operator": "Or",
-          "value": 110
+          "value": 10
         }
       }
       # ,
