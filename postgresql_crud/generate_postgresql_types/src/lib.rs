@@ -424,28 +424,28 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
 /////////////////
 
-        // StdPrimitiveBool
+        // NotNullStdPrimitiveBool
         // NullableStdPrimitiveBool
 
-        // ArrayOfStdPrimitiveBool
-        // NullableArrayOfStdPrimitiveBool
-        // ArrayOfNullableStdPrimitiveBool
+        // NotNullArrayOfNotNullStdPrimitiveBool
+        // NullableArrayOfNotNullStdPrimitiveBool
+        // NotNullArrayOfNullableStdPrimitiveBool
         // NullableArrayOfNullableStdPrimitiveBool
 
-        // ArrayOfArrayOfStdPrimitiveBool
-        // NullableArrayOfArrayOfStdPrimitiveBool
-        // ArrayOfArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfArrayOfNullableStdPrimitiveBool
-        // ArrayOfNullableArrayOfNullableStdPrimitiveBool
+        // NotNullArrayOfNotNullArrayOfNotNullStdPrimitiveBool
+        // NullableArrayOfNotNullArrayOfNotNullStdPrimitiveBool
+        // NotNullArrayOfNotNullArrayOfNullableStdPrimitiveBool
+        // NullableArrayOfNotNullArrayOfNullableStdPrimitiveBool
+        // NotNullArrayOfNullableArrayOfNullableStdPrimitiveBool
         // NullableArrayOfNullableArrayOfNullableStdPrimitiveBool
 
-        // ArrayOfArrayOfArrayOfStdPrimitiveBool
-        // NullableArrayOfArrayOfArrayOfStdPrimitiveBool
-        // ArrayOfArrayOfArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfArrayOfArrayOfNullableStdPrimitiveBool
-        // ArrayOfArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // ArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
+        // NotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullStdPrimitiveBool
+        // NullableArrayOfNotNullArrayOfNotNullArrayOfNotNullStdPrimitiveBool
+        // NotNullArrayOfNotNullArrayOfNotNullArrayOfNullableStdPrimitiveBool
+        // NullableArrayOfNotNullArrayOfNotNullArrayOfNullableStdPrimitiveBool
+        // NotNullArrayOfNotNullArrayOfNullableArrayOfNullableStdPrimitiveBool
+        // NullableArrayOfNotNullArrayOfNullableArrayOfNullableStdPrimitiveBool
+        // NotNullArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
         // NullableArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
 
 
