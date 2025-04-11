@@ -19,14 +19,14 @@ impl PostgresqlTypeNotNullOrNullable {
 pub fn generate_postgresql_type_where_element_token_stream<'a, GenerateGenericTypeTokenStream>(
     variants: &std::vec::Vec<&dyn crate::PostgresqlFilter>,
     generate_where_element_variants_types_generic_token_stream: GenerateGenericTypeTokenStream,
-    prefix: &dyn std::fmt::Display,
+    prefix: &dyn quote::ToTokens,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
     is_query_bind_mutable: &IsQueryBindMutable,
 ) -> proc_macro2::TokenStream 
 where
     GenerateGenericTypeTokenStream: Fn(std::primitive::bool) -> &'a dyn naming::StdFmtDisplayPlusQuoteToTokens,
 {
-    let ident = naming::parameter::SelfWhereElementUpperCamelCase::from_display(&prefix);
+    let ident = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&prefix);
     let value_snake_case = naming::ValueSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;

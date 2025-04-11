@@ -569,11 +569,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
         let postgresql_type_not_null_or_nullable_rust_name = postgresql_type_not_null_or_nullable.to_rust_name();
 
-        let postgresql_type_not_null_upper_camel_case = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
-        let postgresql_type_not_null_or_nullable_upper_camel_case
-        // : &dyn naming::StdFmtDisplayPlusQuoteToTokens 
-        = 
-        
+        let postgresql_type_not_null_upper_camel_case = format!("{rust_type_name}{as_upper_camel_case}{postgresql_type_not_null_or_nullable}{postgresql_type_name}")
+            .parse::<proc_macro2::TokenStream>().unwrap();
         // StdPrimitiveI16AsNotNullInt2
         // OptionStdPrimitiveI16AsNullableInt2
 
@@ -586,23 +583,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // OptionVecOfVecOfStdPrimitiveI16AsNullableArrayOfNotNullArrayOfNotNullInt2
         // VecOfVecOfOptionStdPrimitiveI16AsNotNullArrayOfNotNullArrayOfNullableInt2
         // OptionVecOfVecOfOptionStdPrimitiveI16AsNullableArrayOfNotNullArrayOfNullableInt2
-
-        match (&postgresql_type_pattern_type, &postgresql_type_not_null_or_nullable) {
-            //todo rewrite it as &dyn naming::StdFmtDisplayPlusQuoteToTokens  using naming::parameter::
+        let postgresql_type_not_null_or_nullable_upper_camel_case: &dyn quote::ToTokens = match (&postgresql_type_pattern_type, &postgresql_type_not_null_or_nullable) {
             (
                 PostgresqlTypePatternType::Standart,
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
-            ) => {
-                format!("{rust_type_name}{as_upper_camel_case}{postgresql_type_not_null_or_nullable}{postgresql_type_name}").parse::<proc_macro2::TokenStream>().unwrap()
-                // naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type)
-            },
+            ) => &postgresql_type_not_null_upper_camel_case,
             (
                 PostgresqlTypePatternType::Standart,
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable
-            ) => {
-                format!("{postgresql_type_not_null_or_nullable_rust_name}{rust_type_name}{as_upper_camel_case}{postgresql_type_not_null_or_nullable}{postgresql_type_name}").parse::<proc_macro2::TokenStream>().unwrap()
-                // let value = &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type);
-                // quote::quote!{#value}
+            ) => &{
+                format!("{postgresql_type_not_null_or_nullable_rust_name}{rust_type_name}{as_upper_camel_case}{postgresql_type_not_null_or_nullable}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
             },
             (
                 PostgresqlTypePatternType::ArrayDimension1 {
@@ -617,7 +608,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable
             ) => todo!()
         };
-        println!("{}", quote::quote!{#postgresql_type_not_null_or_nullable_upper_camel_case});
         let postgresql_type_not_null_or_nullable_token_stream = {
             quote::quote! {
                 #[derive(Debug)]
