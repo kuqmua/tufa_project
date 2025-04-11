@@ -1,194 +1,194 @@
 generate_postgresql_types::generate_postgresql_types!([
     {
-        "postgresql_type": "StdPrimitiveI16AsPostgresqlInt2",
+        "postgresql_type": "StdPrimitiveI16AsInt2",
         "postgresql_type_not_null_or_nullable": "NotNull",
         "postgresql_type_pattern_type": "Standart"
     },
     {
-        "postgresql_type": "StdPrimitiveI16AsPostgresqlInt2",
+        "postgresql_type": "StdPrimitiveI16AsInt2",
         "postgresql_type_not_null_or_nullable": "Nullable",
         "postgresql_type_pattern_type": "Standart"
     },
     // {
-    //     "postgresql_type": "StdPrimitiveI16AsPostgresqlInt2",
+    //     "postgresql_type": "StdPrimitiveI16AsInt2",
     //     "postgresql_type_not_null_or_nullable": "NotNull",
     //     "postgresql_type_pattern_type": "VecStandart"
     // },
     // {
-    //     "postgresql_type": "StdPrimitiveI16AsPostgresqlInt2",
+    //     "postgresql_type": "StdPrimitiveI16AsInt2",
     //     "postgresql_type_not_null_or_nullable": "Nullable",
     //     "postgresql_type_pattern_type": "VecStandart"
     // },
     // {
-    //     "postgresql_type": "StdPrimitiveI32AsPostgresqlInt4",
+    //     "postgresql_type": "StdPrimitiveI32AsInt4",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdPrimitiveI64AsPostgresqlInt8",
+    //     "postgresql_type": "StdPrimitiveI64AsInt8",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdPrimitiveF32AsPostgresqlFloat4",
+    //     "postgresql_type": "StdPrimitiveF32AsFloat4",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdPrimitiveF64AsPostgresqlFloat8",
+    //     "postgresql_type": "StdPrimitiveF64AsFloat8",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdPrimitiveI16AsPostgresqlSmallSerialInitializedByPostgresql",
+    //     "postgresql_type": "StdPrimitiveI16AsSmallSerialInitializedByPostgresql",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdPrimitiveI32AsPostgresqlSerialInitializedByPostgresql",
+    //     "postgresql_type": "StdPrimitiveI32AsSerialInitializedByPostgresql",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     {
-        "postgresql_type": "StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql",
+        "postgresql_type": "StdPrimitiveI64AsBigSerialInitializedByPostgresql",
         "postgresql_type_not_null_or_nullable": "NotNull",
         "postgresql_type_pattern_type": "Standart"
     }
     // ,
     // {
-    //     "postgresql_type": "StdPrimitiveI64AsPostgresqlBigSerialInitializedByPostgresql",
+    //     "postgresql_type": "StdPrimitiveI64AsBigSerialInitializedByPostgresql",
     //     "postgresql_type_not_null_or_nullable": "NotNull",
     //     "postgresql_type_pattern_type": "VecStandart"
     // }
     // ,
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgMoneyAsPostgresqlMoney",
+    //     "postgresql_type": "SqlxPostgresTypesPgMoneyAsMoney",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesDecimalAsPostgresqlNumeric",
+    //     "postgresql_type": "SqlxTypesDecimalAsNumeric",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesBigDecimalAsPostgresqlNumeric",
+    //     "postgresql_type": "SqlxTypesBigDecimalAsNumeric",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdPrimitiveBoolAsPostgresqlBool",
+    //     "postgresql_type": "StdPrimitiveBoolAsBool",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdStringStringAsPostgresqlCharN",
+    //     "postgresql_type": "StdStringStringAsCharN",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdStringStringAsPostgresqlVarchar",
+    //     "postgresql_type": "StdStringStringAsVarchar",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdStringStringAsPostgresqlText",
+    //     "postgresql_type": "StdStringStringAsText",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "StdVecVecStdPrimitiveU8AsPostgresqlBytea",
+    //     "postgresql_type": "StdVecVecStdPrimitiveU8AsBytea",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsPostgresqlTime",
+    //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesTimeTimeAsPostgresqlTime",
+    //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsPostgresqlInterval",
+    //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesTimeDateAsPostgresqlDate",
+    //     "postgresql_type": "SqlxTypesTimeDateAsDate",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesChronoNaiveDateAsPostgresqlDate",
+    //     "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsPostgresqlTimestamp",
+    //     "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestamp",
+    //     "postgresql_type": "SqlxTypesTimePrimitiveDateTimeAsTimestamp",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTz",
+    //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTz",
+    //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesUuidUuidAsPostgresqlUuidV4InitializedByPostgresql",
+    //     "postgresql_type": "SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesUuidUuidAsPostgresqlUuidInitializedByClient",
+    //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsPostgresqlInet",
+    //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsPostgresqlCidr",
+    //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsCidr",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesMacAddressMacAddressAsPostgresqlMacAddr",
+    //     "postgresql_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesBitVecAsPostgresqlBit",
+    //     "postgresql_type": "SqlxTypesBitVecAsBit",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxTypesBitVecAsPostgresqlVarbit",
+    //     "postgresql_type": "SqlxTypesBitVecAsVarbit",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsPostgresqlInt4Range",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI64AsPostgresqlInt8Range",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesDecimalAsPostgresqlNumRange",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsPostgresqlNumRange",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsPostgresqlDateRange",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsPostgresqlDateRange",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsPostgresqlTimestampRange",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsPostgresqlTimestampRange",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsPostgresqlTimestampTzRange",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // },
     // {
-    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsPostgresqlTimestampTzRange",
+    //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange",
     //     "postgresql_type_not_null_or_nullable": "NotNull"
     // }
 ]);
@@ -634,7 +634,7 @@ fn generate_must_be_between_1_and_length_message(length: &dyn std::fmt::Display)
     format!("value must be between 1(included) and {length}(included)")
 }
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum StdStringStringAsPostgresqlCharNLengthTryFromStdPrimitiveU32ErrorNamed {
+pub enum StdStringStringAsCharNLengthTryFromStdPrimitiveU32ErrorNamed {
     NotValid {
         #[eo_to_std_string_string_serialize_deserialize]
         error_message: std::string::String,
@@ -644,9 +644,9 @@ pub enum StdStringStringAsPostgresqlCharNLengthTryFromStdPrimitiveU32ErrorNamed 
     },
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
-pub struct StdStringStringAsPostgresqlCharNLength(std::primitive::u32);
-impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlCharNLength {
-    type Error = StdStringStringAsPostgresqlCharNLengthTryFromStdPrimitiveU32ErrorNamed;
+pub struct StdStringStringAsCharNLength(std::primitive::u32);
+impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsCharNLength {
+    type Error = StdStringStringAsCharNLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
         if (value == 0) || (value > CHAR_AND_VARCHAR_MAX_LENGTH) {
             Err(Self::Error::NotValid {
@@ -663,21 +663,21 @@ const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for StdStringStringAsPostgresqlCharNLength {
+    impl<'de> _serde::Deserialize<'de> for StdStringStringAsCharNLength {
         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<StdStringStringAsPostgresqlCharNLength>,
+                marker: _serde::__private::PhantomData<StdStringStringAsCharNLength>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = StdStringStringAsPostgresqlCharNLength;
+                type Value = StdStringStringAsCharNLength;
                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "tuple struct StdStringStringAsPostgresqlCharNLength")
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct StdStringStringAsCharNLength")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
@@ -685,7 +685,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(__e)?;
-                    match StdStringStringAsPostgresqlCharNLength::try_from(__field0) {
+                    match StdStringStringAsCharNLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -698,10 +698,10 @@ const _: () = {
                     let __field0 = match _serde::de::SeqAccess::next_element::<std::primitive::u32>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct StdStringStringAsPostgresqlCharNLength with 1 element"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct StdStringStringAsCharNLength with 1 element"));
                         }
                     };
-                    match StdStringStringAsPostgresqlCharNLength::try_from(__field0) {
+                    match StdStringStringAsCharNLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -709,22 +709,22 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "StdStringStringAsPostgresqlCharNLength",
+                "StdStringStringAsCharNLength",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<StdStringStringAsPostgresqlCharNLength>,
+                    marker: _serde::__private::PhantomData::<StdStringStringAsCharNLength>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
         }
     }
 };
-impl std::fmt::Display for StdStringStringAsPostgresqlCharNLength {
+impl std::fmt::Display for StdStringStringAsCharNLength {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{}", self.0)
     }
 }
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum StdStringStringAsPostgresqlVarcharLengthTryFromStdPrimitiveU32ErrorNamed {
+pub enum StdStringStringAsVarcharLengthTryFromStdPrimitiveU32ErrorNamed {
     NotValid {
         #[eo_to_std_string_string_serialize_deserialize]
         error_message: std::string::String,
@@ -734,9 +734,9 @@ pub enum StdStringStringAsPostgresqlVarcharLengthTryFromStdPrimitiveU32ErrorName
     },
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
-pub struct StdStringStringAsPostgresqlVarcharLength(std::primitive::u32);
-impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsPostgresqlVarcharLength {
-    type Error = StdStringStringAsPostgresqlVarcharLengthTryFromStdPrimitiveU32ErrorNamed;
+pub struct StdStringStringAsVarcharLength(std::primitive::u32);
+impl std::convert::TryFrom<std::primitive::u32> for StdStringStringAsVarcharLength {
+    type Error = StdStringStringAsVarcharLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
         if (value == 0) || (value > CHAR_AND_VARCHAR_MAX_LENGTH) {
             Err(Self::Error::NotValid {
@@ -753,21 +753,21 @@ const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for StdStringStringAsPostgresqlVarcharLength {
+    impl<'de> _serde::Deserialize<'de> for StdStringStringAsVarcharLength {
         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<StdStringStringAsPostgresqlVarcharLength>,
+                marker: _serde::__private::PhantomData<StdStringStringAsVarcharLength>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = StdStringStringAsPostgresqlVarcharLength;
+                type Value = StdStringStringAsVarcharLength;
                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "tuple struct StdStringStringAsPostgresqlVarcharLength")
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct StdStringStringAsVarcharLength")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
@@ -775,7 +775,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(__e)?;
-                    match StdStringStringAsPostgresqlVarcharLength::try_from(__field0) {
+                    match StdStringStringAsVarcharLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -788,10 +788,10 @@ const _: () = {
                     let __field0 = match _serde::de::SeqAccess::next_element::<std::primitive::u32>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct StdStringStringAsPostgresqlVarcharLength with 1 element"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct StdStringStringAsVarcharLength with 1 element"));
                         }
                     };
-                    match StdStringStringAsPostgresqlVarcharLength::try_from(__field0) {
+                    match StdStringStringAsVarcharLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -799,22 +799,22 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "StdStringStringAsPostgresqlVarcharLength",
+                "StdStringStringAsVarcharLength",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<StdStringStringAsPostgresqlVarcharLength>,
+                    marker: _serde::__private::PhantomData::<StdStringStringAsVarcharLength>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
         }
     }
 };
-impl std::fmt::Display for StdStringStringAsPostgresqlVarcharLength {
+impl std::fmt::Display for StdStringStringAsVarcharLength {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{}", self.0)
     }
 }
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxTypesBitVecAsPostgresqlBitLengthTryFromStdPrimitiveU64ErrorNamed {
+pub enum SqlxTypesBitVecAsBitLengthTryFromStdPrimitiveU64ErrorNamed {
     NotValid {
         #[eo_to_std_string_string_serialize_deserialize]
         error_message: std::string::String,
@@ -824,9 +824,9 @@ pub enum SqlxTypesBitVecAsPostgresqlBitLengthTryFromStdPrimitiveU64ErrorNamed {
     },
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
-pub struct SqlxTypesBitVecAsPostgresqlBitLength(std::primitive::u64);
-impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsPostgresqlBitLength {
-    type Error = SqlxTypesBitVecAsPostgresqlBitLengthTryFromStdPrimitiveU64ErrorNamed;
+pub struct SqlxTypesBitVecAsBitLength(std::primitive::u64);
+impl std::convert::TryFrom<std::primitive::u64> for SqlxTypesBitVecAsBitLength {
+    type Error = SqlxTypesBitVecAsBitLengthTryFromStdPrimitiveU64ErrorNamed;
     fn try_from(value: std::primitive::u64) -> Result<Self, Self::Error> {
         let max_length = 8_589_934_592;
         if (value == 0) || (value > max_length) {
@@ -844,21 +844,21 @@ const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVecAsPostgresqlBitLength {
+    impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVecAsBitLength {
         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<SqlxTypesBitVecAsPostgresqlBitLength>,
+                marker: _serde::__private::PhantomData<SqlxTypesBitVecAsBitLength>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = SqlxTypesBitVecAsPostgresqlBitLength;
+                type Value = SqlxTypesBitVecAsBitLength;
                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesBitVecAsPostgresqlBitLength")
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesBitVecAsBitLength")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
@@ -866,7 +866,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: std::primitive::u64 = <std::primitive::u64 as _serde::Deserialize>::deserialize(__e)?;
-                    match SqlxTypesBitVecAsPostgresqlBitLength::try_from(__field0) {
+                    match SqlxTypesBitVecAsBitLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -879,10 +879,10 @@ const _: () = {
                     let __field0 = match _serde::de::SeqAccess::next_element::<std::primitive::u64>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesBitVecAsPostgresqlBitLength with 1 element"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesBitVecAsBitLength with 1 element"));
                         }
                     };
-                    match SqlxTypesBitVecAsPostgresqlBitLength::try_from(__field0) {
+                    match SqlxTypesBitVecAsBitLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -890,22 +890,22 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "SqlxTypesBitVecAsPostgresqlBitLength",
+                "SqlxTypesBitVecAsBitLength",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<SqlxTypesBitVecAsPostgresqlBitLength>,
+                    marker: _serde::__private::PhantomData::<SqlxTypesBitVecAsBitLength>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
         }
     }
 };
-impl std::fmt::Display for SqlxTypesBitVecAsPostgresqlBitLength {
+impl std::fmt::Display for SqlxTypesBitVecAsBitLength {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{}", self.0)
     }
 }
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum SqlxTypesBitVecAsPostgresqlVarbitLengthTryFromStdPrimitiveU32ErrorNamed {
+pub enum SqlxTypesBitVecAsVarbitLengthTryFromStdPrimitiveU32ErrorNamed {
     NotValid {
         #[eo_to_std_string_string_serialize_deserialize]
         error_message: std::string::String,
@@ -915,9 +915,9 @@ pub enum SqlxTypesBitVecAsPostgresqlVarbitLengthTryFromStdPrimitiveU32ErrorNamed
     },
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
-pub struct SqlxTypesBitVecAsPostgresqlVarbitLength(std::primitive::u32);
-impl std::convert::TryFrom<std::primitive::u32> for SqlxTypesBitVecAsPostgresqlVarbitLength {
-    type Error = SqlxTypesBitVecAsPostgresqlVarbitLengthTryFromStdPrimitiveU32ErrorNamed;
+pub struct SqlxTypesBitVecAsVarbitLength(std::primitive::u32);
+impl std::convert::TryFrom<std::primitive::u32> for SqlxTypesBitVecAsVarbitLength {
+    type Error = SqlxTypesBitVecAsVarbitLengthTryFromStdPrimitiveU32ErrorNamed;
     fn try_from(value: std::primitive::u32) -> Result<Self, Self::Error> {
         let max_length = 83_886_080;
         if (value == 0) || (value > max_length) {
@@ -935,21 +935,21 @@ const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVecAsPostgresqlVarbitLength {
+    impl<'de> _serde::Deserialize<'de> for SqlxTypesBitVecAsVarbitLength {
         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<SqlxTypesBitVecAsPostgresqlVarbitLength>,
+                marker: _serde::__private::PhantomData<SqlxTypesBitVecAsVarbitLength>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = SqlxTypesBitVecAsPostgresqlVarbitLength;
+                type Value = SqlxTypesBitVecAsVarbitLength;
                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesBitVecAsPostgresqlVarbitLength")
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct SqlxTypesBitVecAsVarbitLength")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
@@ -957,7 +957,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(__e)?;
-                    match SqlxTypesBitVecAsPostgresqlVarbitLength::try_from(__field0) {
+                    match SqlxTypesBitVecAsVarbitLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -970,10 +970,10 @@ const _: () = {
                     let __field0 = match _serde::de::SeqAccess::next_element::<std::primitive::u32>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesBitVecAsPostgresqlVarbitLength with 1 element"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct SqlxTypesBitVecAsVarbitLength with 1 element"));
                         }
                     };
-                    match SqlxTypesBitVecAsPostgresqlVarbitLength::try_from(__field0) {
+                    match SqlxTypesBitVecAsVarbitLength::try_from(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -981,16 +981,16 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "SqlxTypesBitVecAsPostgresqlVarbitLength",
+                "SqlxTypesBitVecAsVarbitLength",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<SqlxTypesBitVecAsPostgresqlVarbitLength>,
+                    marker: _serde::__private::PhantomData::<SqlxTypesBitVecAsVarbitLength>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
         }
     }
 };
-impl std::fmt::Display for SqlxTypesBitVecAsPostgresqlVarbitLength {
+impl std::fmt::Display for SqlxTypesBitVecAsVarbitLength {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{}", self.0)
     }
