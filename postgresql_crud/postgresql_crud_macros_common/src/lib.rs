@@ -2,10 +2,18 @@ mod filters;
 
 pub use filters::*;
 
-#[derive(Debug, PartialEq, serde::Deserialize)]
+#[derive(Debug, PartialEq, serde::Deserialize, strum_macros::Display)]
 pub enum PostgresqlTypeNotNullOrNullable {
     NotNull,
     Nullable,
+}
+impl PostgresqlTypeNotNullOrNullable {
+    pub fn to_rust_name(&self) -> &'static dyn std::fmt::Display {
+        match &self {
+            Self::NotNull => &"",
+            Self::Nullable => &naming::OptionUpperCamelCase
+        }
+    }
 }
 
 pub fn generate_postgresql_type_where_element_token_stream<'a, GenerateGenericTypeTokenStream>(
