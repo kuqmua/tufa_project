@@ -536,23 +536,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             acc
         }
     }
-    let postgresql_type_array = 
-    // {
-    //     //todo write function for gen all variants
-    //     let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
-    //     .expect("failed to get Config for generate_postgresql_type");
-    //     let mut acc = vec![];
-    //     for element in &vec {
-    //         if acc.contains(&element) {
-    //             panic!("not unique postgersql type provided: {element:#?}");
-    //         }
-    //         else {
-    //             acc.push(&element);
-    //         }
-    //     }
-    //     vec
-    // }
-    PostgresqlTypeRecord::all()
+    let mut postgresql_crud_table_rust_struct_fields_token_stream = vec![];
+    let mut postgresql_type_array = vec![];
+    {
+        //todo write function for gen all variants
+        let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
+        .expect("failed to get Config for generate_postgresql_type");
+        let mut acc = vec![];
+        for element in &vec {
+            if acc.contains(&element) {
+                panic!("not unique postgersql type provided: {element:#?}");
+            }
+            else {
+                acc.push(&element);
+            }
+        }
+        vec
+    }
+    // PostgresqlTypeRecord::all()
     .into_iter()
     // .filter(|element|{
     //     match &element.postgresql_type {
@@ -600,8 +601,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     //         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
     //     }
     // })
-    .map(|element|{
+    .for_each(|element|{
         // println!("{element:#?}");
+
         let postgresql_type = &element.postgresql_type;
         let field_type = postgresql_type.field_type_token_stream();
         let postgresql_type_not_null_or_nullable = &element.postgresql_type_not_null_or_nullable;
@@ -692,6 +694,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable
             ) => todo!()
         };
+        postgresql_crud_table_rust_struct_fields_token_stream.push({
+            let field_ident = naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&quote::quote!{#ident}.to_string());
+            //path to ident can be changeble
+            quote::quote!{
+                pub #field_ident: postgresql_crud::postgresql_type:: #ident,
+            }
+        });
         let ident_token_stream = {
             quote::quote! {
                 #[derive(Debug)]
@@ -3203,8 +3212,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //         &generated,
         //     );
         // }
-        generated
+        postgresql_type_array.push(generated);
     });
+    //this need only for better development experience
+    let example_of_postgresql_crud_table_rust_struct_token_stream = {
+        let value = postgresql_crud_table_rust_struct_fields_token_stream.clone();
+        quote::quote!{
+            struct Example {
+                #(#value)*
+            }
+        }
+    };
+    if false {
+        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            "PostgresqlTypeTokensExampleStruct",
+            &example_of_postgresql_crud_table_rust_struct_token_stream,
+        );
+    }
     let generated = quote::quote! {#(#postgresql_type_array)*};
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlTypeTokens",
