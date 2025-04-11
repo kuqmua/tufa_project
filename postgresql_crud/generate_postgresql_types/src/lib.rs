@@ -561,117 +561,28 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
         let postgresql_type_not_null_upper_camel_case = naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type);
         let postgresql_type_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = 
+        // StdPrimitiveI16AsPostgresqlNotNullInt2
+        // OptionStdPrimitiveI16AsPostgresqlNullableInt2
 
-        // StdPrimitiveBool
-        // NullableStdPrimitiveBool
+        // VecOfStdPrimitiveI16AsPostgresqlNotNullArrayOfNotNullInt2
+        // OptionVecOfStdPrimitiveI16AsPostgresqlNullableArrayOfNotNullInt2
+        // VecOfOptionStdPrimitiveI16AsPostgresqlNotNullArrayOfNullableInt2
+        // OptionVecOfOptionStdPrimitiveI16AsPostgresqlNullableArrayOfNullableInt2
 
-        // ArrayOfStdPrimitiveBool
-        // NullableArrayOfStdPrimitiveBool
-        // ArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfNullableStdPrimitiveBool
+        // VecOfVecOfStdPrimitiveI16AsPostgresqlNotNullArrayOfNotNullArrayOfNotNullInt2
+        // OptionVecOfVecOfStdPrimitiveI16AsPostgresqlNullableArrayOfNotNullArrayOfNotNullInt2
+        // VecOfVecOfOptionStdPrimitiveI16AsPostgresqlNotNullArrayOfNotNullArrayOfNullableInt2
+        // OptionVecOfVecOfOptionStdPrimitiveI16AsPostgresqlNullableArrayOfNotNullArrayOfNullableInt2
 
-        // ArrayOfArrayOfStdPrimitiveBool
-        // NullableArrayOfArrayOfStdPrimitiveBool
-        // ArrayOfArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfArrayOfNullableStdPrimitiveBool
-        // ArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfNullableArrayOfNullableStdPrimitiveBool
-
-        // ArrayOfArrayOfArrayOfStdPrimitiveBool
-        // NullableArrayOfArrayOfArrayOfStdPrimitiveBool
-        // ArrayOfArrayOfArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfArrayOfArrayOfNullableStdPrimitiveBool
-        // ArrayOfArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // ArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
-
-/////////////////
-
-        // NotNullStdPrimitiveBool
-        // NullableStdPrimitiveBool
-
-        // NotNullArrayOfNotNullStdPrimitiveBool
-        // NullableArrayOfNotNullStdPrimitiveBool
-        // NotNullArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfNullableStdPrimitiveBool
-
-        // NotNullArrayOfNotNullArrayOfNotNullStdPrimitiveBool
-        // NullableArrayOfNotNullArrayOfNotNullStdPrimitiveBool
-        // NotNullArrayOfNotNullArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfNotNullArrayOfNullableStdPrimitiveBool
-        // NotNullArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfNullableArrayOfNullableStdPrimitiveBool
-
-        // NotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullStdPrimitiveBool
-        // NullableArrayOfNotNullArrayOfNotNullArrayOfNotNullStdPrimitiveBool
-        // NotNullArrayOfNotNullArrayOfNotNullArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfNotNullArrayOfNotNullArrayOfNullableStdPrimitiveBool
-        // NotNullArrayOfNotNullArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfNotNullArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // NotNullArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
-        // NullableArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
-
-        ////////////////////////////////////////////
-
-        //2 iteration
-
-        // StdPrimitiveI16AsInt2NotNull
-        // StdPrimitiveI16AsInt2OriginNotNull
-        // StdPrimitiveI16AsInt2TableTypeDeclarationNotNull
-        // StdPrimitiveI16AsInt2CreateNotNull
-        // StdPrimitiveI16AsInt2SelectNotNull
-        // StdPrimitiveI16AsInt2WhereElementNotNull
-        // StdPrimitiveI16AsInt2ReadNotNull
-        // StdPrimitiveI16AsInt2UpdateNotNull
-
-        // OptionStdPrimitiveI16AsInt2Nullable
-        // OptionStdPrimitiveI16AsInt2OriginNullable
-        // OptionStdPrimitiveI16AsInt2TableTypeDeclarationNullable
-        // OptionStdPrimitiveI16AsInt2CreateNullable
-        // OptionStdPrimitiveI16AsInt2SelectNullable
-        // OptionStdPrimitiveI16AsInt2WhereElementNullable
-        // OptionStdPrimitiveI16AsInt2ReadNullable
-        // OptionStdPrimitiveI16AsInt2UpdateNullable
-
-        //3 iteration
-
-        // NotNullInt2
-        // NullableInt2
-
-        // NotNullArrayOfNotNullInt2
-        // NullableArrayOfNotNullInt2
-        // NotNullArrayOfNullableInt2
-        // NullableArrayOfNullableInt2
-
-
-        // NotNullArrayOfNotNullArrayOfNotNullInt2
-        // NullableArrayOfNotNullArrayOfNotNullInt2
-        // NotNullArrayOfNotNullArrayOfNullableInt2
-        // NullableArrayOfNotNullArrayOfNullableInt2
-        // NotNullArrayOfNotNullArrayOfNotNullInt2
-
-
-        
-
-        // match (&postgresql_type_not_null_or_nullable, &postgresql_type_pattern_type) {
-        //     (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, PostgresqlTypePatternType::Standart) => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type),
-        //     (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, PostgresqlTypePatternType::ArrayDimension1 {
-        //         dimension1_postgresql_type_not_null_or_nullable,
-        //     }) => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(
-        //         &naming::parameter::VecOfSelfUpperCamelCase::from_tokens(&postgresql_type)
-        //     ),
-        //     // VecStdPrimitiveBool
-        //     (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable, PostgresqlTypePatternType::Standart) => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
-        //     (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable, PostgresqlTypePatternType::ArrayDimension1 {
-        //         dimension1_postgresql_type_not_null_or_nullable,
-        //     }) => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(
-        //         &postgresql_type
-        //     ),
-        // };
-        match &postgresql_type_not_null_or_nullable {
-            postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type),
-            postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
+        match (&postgresql_type_not_null_or_nullable, &postgresql_type_pattern_type) {
+            (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, PostgresqlTypePatternType::Standart) => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type),
+            (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, PostgresqlTypePatternType::ArrayDimension1 {
+                dimension1_postgresql_type_not_null_or_nullable,
+            }) => todo!(),
+            (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable, PostgresqlTypePatternType::Standart) => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
+            (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable, PostgresqlTypePatternType::ArrayDimension1 {
+                dimension1_postgresql_type_not_null_or_nullable,
+            }) => todo!()
         };
         let postgresql_type_not_null_or_nullable_token_stream = {
             quote::quote! {
