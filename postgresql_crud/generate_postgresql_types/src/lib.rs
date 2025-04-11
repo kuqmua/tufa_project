@@ -2,10 +2,83 @@
 pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
 
+    #[derive(Debug)]
+    enum RustTypeName {
+        StdPrimitiveI16,
+        StdPrimitiveI32,
+        StdPrimitiveI64,
+        StdPrimitiveF32,
+        StdPrimitiveF64,
+        SqlxPostgresTypesPgMoney,
+        SqlxTypesDecimal,
+        SqlxTypesBigDecimal,
+        StdPrimitiveBool,
+        StdStringString,
+        StdVecVecStdPrimitiveU8,
+        SqlxTypesChronoNaiveTime,
+        SqlxTypesTimeTime,
+        SqlxPostgresTypesPgInterval,
+        SqlxTypesTimeDate,
+        SqlxTypesChronoNaiveDate,
+        SqlxTypesChronoNaiveDateTime,
+        SqlxTypesTimePrimitiveDateTime,
+        SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+        SqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+        SqlxTypesUuidUuid,
+        SqlxTypesIpnetworkIpNetwork,
+        SqlxTypesMacAddressMacAddress,
+        SqlxTypesBitVec,
+        SqlxPostgresTypesPgRangeStdPrimitiveI32,
+        SqlxPostgresTypesPgRangeStdPrimitiveI64,
+        SqlxPostgresTypesPgRangeSqlxTypesDecimal,
+        SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
+        SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
+        SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTime,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
+        SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocal,
+    }
+    #[derive(Debug)]
+    enum PostgresqlTypeName {
+        Int2,
+        Int4,
+        Int8,
+        Float4,
+        Float8,
+        SmallSerialInitializedByPostgresql,
+        SerialInitializedByPostgresql,
+        BigSerialInitializedByPostgresql,
+        Money,
+        Numeric,
+        Bool,
+        CharN,
+        Varchar,
+        Text,
+        Bytea,
+        Time,
+        Interval,
+        Date,
+        Timestamp,
+        TimestampTz,
+        UuidV4InitializedByPostgresql,
+        UuidInitializedByClient,
+        Inet,
+        Cidr,
+        MacAddr,
+        Bit,
+        Varbit,
+        Int4Range,
+        Int8Range,
+        NumRange,
+        DateRange,
+        TimestampRange,
+        TimestampTzRange,
+    }
     // #[derive(Debug, Clone, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-    // struct PostgresqlType {
+    // struct PostgresqlTypeF {
     //     rust_type_name: RustTypeName,
-    //     postgresql_type_name: PostgresqlType
+    //     postgresql_type_name: PostgresqlTypeName
     // }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlType {
