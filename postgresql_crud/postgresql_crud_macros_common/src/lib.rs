@@ -2,7 +2,7 @@ mod filters;
 
 pub use filters::*;
 
-#[derive(Debug, PartialEq, serde::Deserialize, strum_macros::Display)]
+#[derive(Debug, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlTypeNotNullOrNullable {
     NotNull,
     Nullable,
