@@ -496,6 +496,41 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
         //2 iteration
 
+        // StdPrimitiveI16AsPostgresqlInt2NotNull
+        // StdPrimitiveI16AsPostgresqlInt2OriginNotNull
+        // StdPrimitiveI16AsPostgresqlInt2TableTypeDeclarationNotNull
+        // StdPrimitiveI16AsPostgresqlInt2CreateNotNull
+        // StdPrimitiveI16AsPostgresqlInt2SelectNotNull
+        // StdPrimitiveI16AsPostgresqlInt2WhereElementNotNull
+        // StdPrimitiveI16AsPostgresqlInt2ReadNotNull
+        // StdPrimitiveI16AsPostgresqlInt2UpdateNotNull
+
+        // OptionStdPrimitiveI16AsPostgresqlInt2Nullable
+        // OptionStdPrimitiveI16AsPostgresqlInt2OriginNullable
+        // OptionStdPrimitiveI16AsPostgresqlInt2TableTypeDeclarationNullable
+        // OptionStdPrimitiveI16AsPostgresqlInt2CreateNullable
+        // OptionStdPrimitiveI16AsPostgresqlInt2SelectNullable
+        // OptionStdPrimitiveI16AsPostgresqlInt2WhereElementNullable
+        // OptionStdPrimitiveI16AsPostgresqlInt2ReadNullable
+        // OptionStdPrimitiveI16AsPostgresqlInt2UpdateNullable
+
+        //3 iteration
+
+        // NotNullInt2
+        // NullableInt2
+
+        // NotNullArrayOfNotNullInt2
+        // NullableArrayOfNotNullInt2
+        // NotNullArrayOfNullableInt2
+        // NullableArrayOfNullableInt2
+
+
+        // NotNullArrayOfNotNullArrayOfNotNullInt2
+        // NullableArrayOfNotNullArrayOfNotNullInt2
+        // NotNullArrayOfNotNullArrayOfNullableInt2
+        // NullableArrayOfNotNullArrayOfNullableInt2
+        // NotNullArrayOfNotNullArrayOfNotNullInt2
+
 
         
 
