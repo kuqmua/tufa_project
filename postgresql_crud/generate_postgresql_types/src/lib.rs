@@ -123,11 +123,54 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         TimestampRange,
         TimestampTzRange,
     }
-    // #[derive(Debug, Clone, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-    // struct PostgresqlTypeF {
-    //     rust_type_name: RustTypeName,
-    //     postgresql_type_name: PostgresqlTypeName
-    // }
+    impl std::convert::From<&PostgresqlType> for PostgresqlTypeName {
+        fn from(value: &PostgresqlType) -> Self {
+            match &value {
+                PostgresqlType::StdPrimitiveI16AsInt2 => Self::Int2,
+                PostgresqlType::StdPrimitiveI32AsInt4 => Self::Int4,
+                PostgresqlType::StdPrimitiveI64AsInt8 => Self::Int8,
+                PostgresqlType::StdPrimitiveF32AsFloat4 => Self::Float4,
+                PostgresqlType::StdPrimitiveF64AsFloat8 => Self::Float8,
+                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => Self::SmallSerialInitializedByPostgresql,
+                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => Self::SerialInitializedByPostgresql,
+                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => Self::BigSerialInitializedByPostgresql,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => Self::Money,
+                PostgresqlType::SqlxTypesDecimalAsNumeric => Self::Numeric,
+                PostgresqlType::SqlxTypesBigDecimalAsNumeric => Self::Numeric,
+                PostgresqlType::StdPrimitiveBoolAsBool => Self::Bool,
+                PostgresqlType::StdStringStringAsCharN => Self::CharN,
+                PostgresqlType::StdStringStringAsVarchar => Self::Varchar,
+                PostgresqlType::StdStringStringAsText => Self::Text,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => Self::Bytea,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Self::Time,
+                PostgresqlType::SqlxTypesTimeTimeAsTime => Self::Time,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::Interval,
+                PostgresqlType::SqlxTypesTimeDateAsDate => Self::Date,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::Date,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::Timestamp,
+                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => Self::Timestamp,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::TimestampTz,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => Self::TimestampTz,
+                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Self::UuidV4InitializedByPostgresql,
+                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Self::UuidInitializedByClient,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Self::Inet,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => Self::Cidr,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::MacAddr,
+                PostgresqlType::SqlxTypesBitVecAsBit => Self::Bit,
+                PostgresqlType::SqlxTypesBitVecAsVarbit => Self::Varbit,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::Int4Range,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::Int8Range,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => Self::NumRange,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => Self::NumRange,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => Self::DateRange,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::DateRange,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::TimestampRange,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => Self::TimestampRange,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::TimestampTzRange,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => Self::TimestampTzRange,
+            }
+        }
+    }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlType {
         StdPrimitiveI16AsInt2,
