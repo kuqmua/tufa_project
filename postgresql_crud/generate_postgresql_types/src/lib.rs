@@ -570,8 +570,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let postgresql_type_not_null_or_nullable_rust_name = postgresql_type_not_null_or_nullable.to_rust_name();
 
         //todo rename - cuurent name work only if Standart type
-        let ident_not_null_upper_camel_case = format!("{rust_type_name}{as_upper_camel_case}{postgresql_type_not_null_or_nullable}{postgresql_type_name}")
-            .parse::<proc_macro2::TokenStream>().unwrap();
+        let ident_not_null_upper_camel_case = {
+            let postgresql_type_not_null_or_nullable = postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull;
+            format!("{rust_type_name}{as_upper_camel_case}{postgresql_type_not_null_or_nullable}{postgresql_type_name}")
+            .parse::<proc_macro2::TokenStream>().unwrap()
+        };
         // StdPrimitiveI16AsNotNullInt2
         // OptionStdPrimitiveI16AsNullableInt2
 
