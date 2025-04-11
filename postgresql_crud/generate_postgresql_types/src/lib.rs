@@ -574,15 +574,27 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // VecOfVecOfOptionStdPrimitiveI16AsPostgresqlNotNullArrayOfNotNullArrayOfNullableInt2
         // OptionVecOfVecOfOptionStdPrimitiveI16AsPostgresqlNullableArrayOfNotNullArrayOfNullableInt2
 
-        match (&postgresql_type_not_null_or_nullable, &postgresql_type_pattern_type) {
-            (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, PostgresqlTypePatternType::Standart) => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type),
-            (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, PostgresqlTypePatternType::ArrayDimension1 {
-                dimension1_postgresql_type_not_null_or_nullable,
-            }) => todo!(),
-            (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable, PostgresqlTypePatternType::Standart) => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
-            (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable, PostgresqlTypePatternType::ArrayDimension1 {
-                dimension1_postgresql_type_not_null_or_nullable,
-            }) => todo!()
+        match (&postgresql_type_pattern_type, &postgresql_type_not_null_or_nullable) {
+            (
+                PostgresqlTypePatternType::Standart,
+                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
+            ) => &naming::parameter::SelfNotNullUpperCamelCase::from_tokens(&postgresql_type),
+            (
+                PostgresqlTypePatternType::Standart,
+                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable
+            ) => &naming::parameter::SelfNullableUpperCamelCase::from_tokens(&postgresql_type),
+            (
+                PostgresqlTypePatternType::ArrayDimension1 {
+                    dimension1_postgresql_type_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
+            ) => todo!(),
+            (
+                PostgresqlTypePatternType::ArrayDimension1 {
+                    dimension1_postgresql_type_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable
+            ) => todo!()
         };
         let postgresql_type_not_null_or_nullable_token_stream = {
             quote::quote! {
