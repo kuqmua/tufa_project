@@ -2,6 +2,11 @@
 pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
 
+    // #[derive(Debug, Clone, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    // struct PostgresqlType {
+    //     rust_type_name: RustTypeName,
+    //     postgresql_type_name: PostgresqlType
+    // }
     #[derive(Debug, Clone, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlType {
         StdPrimitiveI16AsPostgresqlInt2,
@@ -417,7 +422,31 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // ArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
         // NullableArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
 
+/////////////////
 
+        // StdPrimitiveBool
+        // NullableStdPrimitiveBool
+
+        // ArrayOfStdPrimitiveBool
+        // NullableArrayOfStdPrimitiveBool
+        // ArrayOfNullableStdPrimitiveBool
+        // NullableArrayOfNullableStdPrimitiveBool
+
+        // ArrayOfArrayOfStdPrimitiveBool
+        // NullableArrayOfArrayOfStdPrimitiveBool
+        // ArrayOfArrayOfNullableStdPrimitiveBool
+        // NullableArrayOfArrayOfNullableStdPrimitiveBool
+        // ArrayOfNullableArrayOfNullableStdPrimitiveBool
+        // NullableArrayOfNullableArrayOfNullableStdPrimitiveBool
+
+        // ArrayOfArrayOfArrayOfStdPrimitiveBool
+        // NullableArrayOfArrayOfArrayOfStdPrimitiveBool
+        // ArrayOfArrayOfArrayOfNullableStdPrimitiveBool
+        // NullableArrayOfArrayOfArrayOfNullableStdPrimitiveBool
+        // ArrayOfArrayOfNullableArrayOfNullableStdPrimitiveBool
+        // NullableArrayOfArrayOfNullableArrayOfNullableStdPrimitiveBool
+        // ArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
+        // NullableArrayOfNullableArrayOfNullableArrayOfNullableStdPrimitiveBool
 
 
 
@@ -445,7 +474,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
 
         ////////////////////////////////////////////
-        //need to be 
+        //1 iteration need to be 
+        
         // StdPrimitiveI16AsPostgresqlInt2NotNull
         // StdPrimitiveI16AsPostgresqlInt2OriginNotNull
         // StdPrimitiveI16AsPostgresqlInt2TableTypeDeclarationNotNull
@@ -463,6 +493,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // StdPrimitiveI16AsPostgresqlInt2WhereElementNullable
         // StdPrimitiveI16AsPostgresqlInt2ReadNullable
         // StdPrimitiveI16AsPostgresqlInt2UpdateNullable
+
+        //2 iteration
+
+
         
 
         // match (&postgresql_type_not_null_or_nullable, &postgresql_type_pattern_type) {
