@@ -2,7 +2,7 @@ mod filters;
 
 pub use filters::*;
 
-#[derive(Debug, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+#[derive(Debug, Clone, Copy, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum NotNullOrNullable {
     NotNull,
     Nullable,
@@ -13,6 +13,11 @@ impl NotNullOrNullable {
             Self::NotNull => &"",
             Self::Nullable => &naming::OptionUpperCamelCase
         }
+    }
+}
+impl std::default::Default for NotNullOrNullable {
+    fn default() -> Self {
+        Self::NotNull
     }
 }
 
