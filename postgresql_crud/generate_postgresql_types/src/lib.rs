@@ -461,7 +461,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlTypeRange to proc_macro2::TokenStream")).to_tokens(tokens)
         }
     }
-    #[derive(Debug, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(Debug, PartialEq, serde::Deserialize)]
     enum PostgresqlTypePatternType {
         Standart,
         ArrayDimension1 {
@@ -680,7 +680,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             PostgresqlType::into_array().into_iter().for_each(|postgresql_type|{
                 if let CanBeNullable::True = &postgresql_type.can_be_nullable() {
                     postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable|{
-                        PostgresqlTypePatternType::into_array().into_iter().for_each(|postgresql_type_pattern_type|{
+                        PostgresqlTypePatternType::all_variants().into_iter().for_each(|postgresql_type_pattern_type|{
                             acc.push(PostgresqlTypeRecord {
                                 postgresql_type: postgresql_type.clone(),
                                 not_null_or_nullable: not_null_or_nullable,
@@ -692,7 +692,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             });
             PostgresqlType::into_array().into_iter().for_each(|postgresql_type|{
                 if let CanBeNullable::False = &postgresql_type.can_be_nullable() {
-                    PostgresqlTypePatternType::into_array().into_iter().for_each(|postgresql_type_pattern_type|{
+                    PostgresqlTypePatternType::all_variants().into_iter().for_each(|postgresql_type_pattern_type|{
                         acc.push(PostgresqlTypeRecord {
                             postgresql_type: postgresql_type.clone(),
                             not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
@@ -772,26 +772,63 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
             postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
         };
-        let postgresql_type_pattern_type_filter = match &element.postgresql_type_pattern_type {
-            PostgresqlTypePatternType::Standart => true,
-            PostgresqlTypePatternType::ArrayDimension1 {
-                dimension1_not_null_or_nullable: _,
-            } => false,
-            PostgresqlTypePatternType::ArrayDimension2 {
-                dimension1_not_null_or_nullable: _,
-                dimension2_not_null_or_nullable: _,
-            } => false,
-            PostgresqlTypePatternType::ArrayDimension3 {
-                dimension1_not_null_or_nullable: _,
-                dimension2_not_null_or_nullable: _,
-                dimension3_not_null_or_nullable: _,
-            } => false,
-            PostgresqlTypePatternType::ArrayDimension4 {
-                dimension1_not_null_or_nullable: _,
-                dimension2_not_null_or_nullable: _,
-                dimension3_not_null_or_nullable: _,
-                dimension4_not_null_or_nullable: _,
-            } => false,
+        let postgresql_type_pattern_type_filter = {
+            use postgresql_crud_macros_common::NotNullOrNullable;
+            match &element.postgresql_type_pattern_type {
+                PostgresqlTypePatternType::Standart => true,
+                PostgresqlTypePatternType::ArrayDimension1 {
+                    dimension1_not_null_or_nullable,
+                } => match &dimension1_not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => false,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
+                },
+                PostgresqlTypePatternType::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                },
+                PostgresqlTypePatternType::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                },
+                PostgresqlTypePatternType::ArrayDimension4 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                }
+            }
         };
         postgresql_type_filter && not_null_or_nullable_filter && postgresql_type_pattern_type_filter
     })
@@ -835,6 +872,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
         let as_upper_camel_case = naming::AsUpperCamelCase;
         let generate_ident_not_null_token_stream = |postgresql_type: &PostgresqlType|{
+            let rust_type_name = RustTypeName::from(postgresql_type);
+            let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
             let not_null = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
             let not_null_rust = not_null.rust();
             format!("{not_null_rust}{rust_type_name}{as_upper_camel_case}{not_null}{postgresql_type_name}")
