@@ -603,10 +603,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     // })
     .for_each(|element|{
         // println!("{element:#?}");
-
         let postgresql_type = &element.postgresql_type;
         let field_type = postgresql_type.field_type_token_stream();
         let not_null_or_nullable = &element.not_null_or_nullable;
+        let not_null_or_nullable_rust_name = not_null_or_nullable.to_rust_name();
+        let rust_type_name = RustTypeName::from(postgresql_type);
+        let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
         let postgresql_type_pattern_type = &element.postgresql_type_pattern_type;
         if let (CanBeNullable::False, postgresql_crud_macros_common::NotNullOrNullable::Nullable) = (&postgresql_type.can_be_nullable(), &not_null_or_nullable) {
             panic!("type cannot be nullable")//todo maybe rewrite it somehow better?
@@ -644,15 +646,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let nullable_upper_camel_case = naming::NullableUpperCamelCase;
         let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
         let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
-        let rust_type_name = RustTypeName::from(postgresql_type);
-        let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
-        let not_null_or_nullable_rust_name = not_null_or_nullable.to_rust_name();
 
         let generate_ident_not_null_token_stream = |postgresql_type: &PostgresqlType|{
-            let rust_type_name = RustTypeName::from(postgresql_type);
-            let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
-            let not_null_or_nullable = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
-            format!("{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{postgresql_type_name}")
+            let not_null = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
+            let not_null_rust_name = not_null.to_rust_name();
+            format!("{not_null_rust_name}{rust_type_name}{as_upper_camel_case}{not_null}{postgresql_type_name}")
             .parse::<proc_macro2::TokenStream>().unwrap()
         };
         //todo rename - cuurent name work only if Standart type
@@ -686,49 +684,25 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension1_not_null_or_nullable,
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull
-            ) => todo!(),
+            ) => &{
+                let dimension1_not_null_or_nullable_rust_name = dimension1_not_null_or_nullable.to_rust_name();
+                format!("{not_null_or_nullable_rust_name}{vec_of_upper_camel_case}{dimension1_not_null_or_nullable_rust_name}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{dimension1_not_null_or_nullable}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
+            },
             (
                 PostgresqlTypePatternType::ArrayDimension1 {
                     dimension1_not_null_or_nullable,
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable
-            ) => todo!()
+            ) => &{
+                let dimension1_not_null_or_nullable_rust_name = dimension1_not_null_or_nullable.to_rust_name();
+                format!("{not_null_or_nullable_rust_name}{vec_of_upper_camel_case}{dimension1_not_null_or_nullable_rust_name}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{dimension1_not_null_or_nullable}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
+            },
         };
+        println!("{}", quote::quote!{#ident});
         postgresql_crud_table_rust_struct_fields_token_stream.push({
-            // let field_ident = {
-            //     let value = match (&postgresql_type_pattern_type, &not_null_or_nullable) {
-            //         (
-            //             PostgresqlTypePatternType::Standart,
-            //             postgresql_crud_macros_common::NotNullOrNullable::NotNull
-            //         ) => format!("{not_null_or_nullable}{postgresql_type_name}"),
-            //         (
-            //             PostgresqlTypePatternType::Standart,
-            //             postgresql_crud_macros_common::NotNullOrNullable::Nullable
-            //         ) => format!("{not_null_or_nullable}{postgresql_type_name}"),
-            //         (
-            //             PostgresqlTypePatternType::ArrayDimension1 {
-            //                 dimension1_not_null_or_nullable,
-            //             },
-            //             postgresql_crud_macros_common::NotNullOrNullable::NotNull
-            //         ) => todo!(),
-            //         (
-            //             PostgresqlTypePatternType::ArrayDimension1 {
-            //                 dimension1_not_null_or_nullable,
-            //             },
-            //             postgresql_crud_macros_common::NotNullOrNullable::Nullable
-            //         ) => todo!()
-            //     }.parse::<proc_macro2::TokenStream>().unwrap();
-            //     naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&quote::quote!{#value}.to_string())
-            // };
-            // //todo maybe use uuid instead?
-            // let id = ;
-            // println!("{id}");
-            // let value = id.to_string().parse::<proc_macro2::TokenStream>().unwrap();
-            let field_ident = 
-            // naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&format!("column_{}", uuid::Uuid::new_v4()));
-             format!("column_{}", uuid::Uuid::new_v4()).replace("-", "_").parse::<proc_macro2::TokenStream>().unwrap();
-            // let g = quote::quote!{#h};
-            // println!("---{g}");
+            let field_ident = format!("column_{}", uuid::Uuid::new_v4()).replace("-", "_").parse::<proc_macro2::TokenStream>().unwrap();
             quote::quote!{
                 pub #field_ident: postgresql_crud::postgresql_type:: #ident,
             }
