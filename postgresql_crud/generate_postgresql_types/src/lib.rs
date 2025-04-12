@@ -641,7 +641,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     .for_each(|element|{
         // println!("{element:#?}");
         let postgresql_type = &element.postgresql_type;
-        let field_type = postgresql_type.field_type_token_stream();
         let not_null_or_nullable = &element.not_null_or_nullable;
         let not_null_or_nullable_rust = not_null_or_nullable.rust();
         let rust_type_name = RustTypeName::from(postgresql_type);
@@ -904,9 +903,46 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
         let ident_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_not_null_upper_camel_case);
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
-        let field_type_handle: &dyn quote::ToTokens = match &not_null_or_nullable {
-            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
-            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_not_null_origin_upper_camel_case)
+
+        let field_type = postgresql_type.field_type_token_stream();
+        let field_type_handle: &dyn quote::ToTokens = {
+            use postgresql_crud_macros_common::NotNullOrNullable;
+            match &element.postgresql_type_pattern_type {
+                PostgresqlTypePatternType::Standart => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{std::option::Option<#ident_not_null_origin_upper_camel_case>},
+                },
+                PostgresqlTypePatternType::ArrayDimension1 {
+                    dimension1_not_null_or_nullable,
+                } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &quote::quote!{std::vec::Vec<#ident_not_null_origin_upper_camel_case>},
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &quote::quote!{std::vec::Vec<std::option::Option<#ident_not_null_origin_upper_camel_case>>},
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &quote::quote!{std::option::Option<std::vec::Vec<#ident_not_null_origin_upper_camel_case>>},
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &quote::quote!{std::option::Option<std::vec::Vec<std::option::Option<#ident_not_null_origin_upper_camel_case>>>},
+                },
+                PostgresqlTypePatternType::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                } => todo!(),
+                PostgresqlTypePatternType::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                } => todo!(),
+                PostgresqlTypePatternType::ArrayDimension4 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                } => todo!(),
+                PostgresqlTypePatternType::ArrayDimension5 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                    dimension5_not_null_or_nullable,
+                } => todo!(),
+            }
         };
         let ident_origin_token_stream = {
             let partial_ord_comma_token_stream = quote::quote! {PartialOrd,};

@@ -146,6 +146,9 @@ pub fn generate_sqlx_types_json_type_declaration_token_stream(type_token_stream:
 pub fn generate_std_option_option_tokens_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {std::option::Option<#type_token_stream>}
 }
+pub fn generate_std_vec_vec_tokens_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    quote::quote! {std::vec::Vec<#type_token_stream>}
+}
 
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonTypePatternType {
