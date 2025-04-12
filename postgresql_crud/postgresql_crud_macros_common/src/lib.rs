@@ -14,6 +14,12 @@ impl NotNullOrNullable {
             Self::Nullable => &naming::OptionUpperCamelCase
         }
     }
+    pub fn maybe_option_wrap(&self, content_token_stream: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+        match &self {
+            Self::NotNull => content_token_stream,
+            Self::Nullable => quote::quote!{std::option::Option<#content_token_stream>}
+        }
+    }
 }
 impl std::default::Default for NotNullOrNullable {
     fn default() -> Self {
