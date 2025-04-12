@@ -775,16 +775,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension3_not_null_or_nullable,
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull
-            ) => {
+            ) => &{
                 let d1 = dimension1_not_null_or_nullable.rust();
                 let d1_rust = dimension1_not_null_or_nullable.rust();
                 let d2 = dimension1_not_null_or_nullable.rust();
                 let d2_rust = dimension1_not_null_or_nullable.rust();
                 let d3 = dimension1_not_null_or_nullable.rust();
                 let d3_rust = dimension1_not_null_or_nullable.rust();
-                // format!("{not_null_or_nullable_rust}VecOf{dimension1_not_null_or_nullable_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{dimension1_not_null_or_nullable}{postgresql_type_name}")
-                // .parse::<proc_macro2::TokenStream>().unwrap()
-                todo!()
+                format!("{not_null_or_nullable_rust}VecOf{d1_rust}VecOf{d2_rust}VecOf{d3_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{d1}ArrayOf{d2}ArrayOf{d3}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
             },
             (
                 PostgresqlTypePatternType::ArrayDimension3 {
@@ -793,16 +792,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension3_not_null_or_nullable,
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable
-            ) => {
+            ) => &{
                 let d1 = dimension1_not_null_or_nullable.rust();
                 let d1_rust = dimension1_not_null_or_nullable.rust();
                 let d2 = dimension1_not_null_or_nullable.rust();
                 let d2_rust = dimension1_not_null_or_nullable.rust();
                 let d3 = dimension1_not_null_or_nullable.rust();
                 let d3_rust = dimension1_not_null_or_nullable.rust();
-                // format!("{not_null_or_nullable_rust}VecOf{dimension1_not_null_or_nullable_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{dimension1_not_null_or_nullable}{postgresql_type_name}")
-                // .parse::<proc_macro2::TokenStream>().unwrap()
-                todo!()
+                format!("{not_null_or_nullable_rust}VecOf{d1_rust}VecOf{d2_rust}VecOf{d3_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{d1}ArrayOf{d2}ArrayOf{d3}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
             },
             (
                 PostgresqlTypePatternType::ArrayDimension4 {
@@ -812,7 +810,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension4_not_null_or_nullable,
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull
-            ) => {
+            ) => &{
                 let d1 = dimension1_not_null_or_nullable.rust();
                 let d1_rust = dimension1_not_null_or_nullable.rust();
                 let d2 = dimension1_not_null_or_nullable.rust();
@@ -821,9 +819,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let d3_rust = dimension1_not_null_or_nullable.rust();
                 let d4 = dimension1_not_null_or_nullable.rust();
                 let d4_rust = dimension1_not_null_or_nullable.rust();
-                // format!("{not_null_or_nullable_rust}VecOf{dimension1_not_null_or_nullable_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{dimension1_not_null_or_nullable}{postgresql_type_name}")
-                // .parse::<proc_macro2::TokenStream>().unwrap()
-                todo!()
+                format!("{not_null_or_nullable_rust}VecOf{d1_rust}VecOf{d2_rust}VecOf{d3_rust}VecOf{d4_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{d1}ArrayOf{d2}ArrayOf{d3}ArrayOf{d4}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
             },
             (
                 PostgresqlTypePatternType::ArrayDimension4 {
@@ -833,7 +830,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension4_not_null_or_nullable,
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable
-            ) => {
+            ) => &{
                 let d1 = dimension1_not_null_or_nullable.rust();
                 let d1_rust = dimension1_not_null_or_nullable.rust();
                 let d2 = dimension1_not_null_or_nullable.rust();
@@ -842,9 +839,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let d3_rust = dimension1_not_null_or_nullable.rust();
                 let d4 = dimension1_not_null_or_nullable.rust();
                 let d4_rust = dimension1_not_null_or_nullable.rust();
-                // format!("{not_null_or_nullable_rust}VecOf{dimension1_not_null_or_nullable_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{dimension1_not_null_or_nullable}{postgresql_type_name}")
-                // .parse::<proc_macro2::TokenStream>().unwrap()
-                todo!()
+                format!("{not_null_or_nullable_rust}VecOf{d1_rust}VecOf{d2_rust}VecOf{d3_rust}VecOf{d4_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{d1}ArrayOf{d2}ArrayOf{d3}ArrayOf{d4}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
             },
             (
                 PostgresqlTypePatternType::ArrayDimension5 {
@@ -855,7 +851,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension5_not_null_or_nullable,
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull
-            ) => {
+            ) => &{
                 let d1 = dimension1_not_null_or_nullable.rust();
                 let d1_rust = dimension1_not_null_or_nullable.rust();
                 let d2 = dimension1_not_null_or_nullable.rust();
@@ -866,9 +862,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let d4_rust = dimension1_not_null_or_nullable.rust();
                 let d5 = dimension1_not_null_or_nullable.rust();
                 let d5_rust = dimension1_not_null_or_nullable.rust();
-                // format!("{not_null_or_nullable_rust}VecOf{dimension1_not_null_or_nullable_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{dimension1_not_null_or_nullable}{postgresql_type_name}")
-                // .parse::<proc_macro2::TokenStream>().unwrap()
-                todo!()
+                format!("{not_null_or_nullable_rust}VecOf{d1_rust}VecOf{d2_rust}VecOf{d3_rust}VecOf{d4_rust}VecOf{d5_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{d1}ArrayOf{d2}ArrayOf{d3}ArrayOf{d4}ArrayOf{d5}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
             },
             (
                 PostgresqlTypePatternType::ArrayDimension5 {
@@ -879,7 +874,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension5_not_null_or_nullable,
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable
-            ) => {
+            ) => &{
                 let d1 = dimension1_not_null_or_nullable.rust();
                 let d1_rust = dimension1_not_null_or_nullable.rust();
                 let d2 = dimension1_not_null_or_nullable.rust();
@@ -890,9 +885,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let d4_rust = dimension1_not_null_or_nullable.rust();
                 let d5 = dimension1_not_null_or_nullable.rust();
                 let d5_rust = dimension1_not_null_or_nullable.rust();
-                // format!("{not_null_or_nullable_rust}VecOf{dimension1_not_null_or_nullable_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{dimension1_not_null_or_nullable}{postgresql_type_name}")
-                // .parse::<proc_macro2::TokenStream>().unwrap()
-                todo!()
+                format!("{not_null_or_nullable_rust}VecOf{d1_rust}VecOf{d2_rust}VecOf{d3_rust}VecOf{d4_rust}VecOf{d5_rust}{rust_type_name}As{not_null_or_nullable}ArrayOf{d1}ArrayOf{d2}ArrayOf{d3}ArrayOf{d4}ArrayOf{d5}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
             },
         };
         println!("{}", quote::quote!{#ident});
@@ -3402,7 +3396,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // if let (
         //     PostgresqlType::StdPrimitiveI16AsInt2,
         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     PostgresqlTypePatternType::Standart
+        //     PostgresqlTypePatternType::ArrayDimension1 {
+        //         dimension1_not_null_or_nullable
+        //     }
         // ) = (
         //     &postgresql_type,
         //     &not_null_or_nullable,
