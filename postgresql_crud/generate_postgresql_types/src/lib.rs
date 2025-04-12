@@ -467,28 +467,28 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         ArrayDimension1 {
             dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
-        // ArrayDimension2 {
-        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        // },
-        // ArrayDimension3 {
-        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        // },
-        // ArrayDimension4 {
-        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        // },
-        // ArrayDimension5 {
-        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        //     dimension5_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        // },
+        ArrayDimension2 {
+            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        },
+        ArrayDimension3 {
+            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        },
+        ArrayDimension4 {
+            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        },
+        ArrayDimension5 {
+            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension5_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        },
     }
     //todo 
     // can i create a postgresql column array of not null int?
@@ -699,6 +699,98 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 format!("{not_null_or_nullable_rust_name}{vec_of_upper_camel_case}{dimension1_not_null_or_nullable_rust_name}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{dimension1_not_null_or_nullable}{postgresql_type_name}")
                 .parse::<proc_macro2::TokenStream>().unwrap()
             },
+            (
+                PostgresqlTypePatternType::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull
+            ) => todo!(),
+            (
+                PostgresqlTypePatternType::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable
+            ) => todo!(),
+            (
+                PostgresqlTypePatternType::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull
+            ) => todo!(),
+            (
+                PostgresqlTypePatternType::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable
+            ) => todo!(),
+            (
+                PostgresqlTypePatternType::ArrayDimension4 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull
+            ) => todo!(),
+            (
+                PostgresqlTypePatternType::ArrayDimension4 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable
+            ) => todo!(),
+            (
+                PostgresqlTypePatternType::ArrayDimension5 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                    dimension5_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull
+            ) => todo!(),
+            (
+                PostgresqlTypePatternType::ArrayDimension5 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                    dimension5_not_null_or_nullable,
+                },
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable
+            ) => todo!(),
+        // ArrayDimension2 {
+        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        // },
+        // ArrayDimension3 {
+        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        // },
+        // ArrayDimension4 {
+        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        // },
+        // ArrayDimension5 {
+        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension5_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        // },
+
+
         };
         println!("{}", quote::quote!{#ident});
         postgresql_crud_table_rust_struct_fields_token_stream.push({
