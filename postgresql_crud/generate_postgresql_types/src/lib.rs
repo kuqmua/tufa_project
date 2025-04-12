@@ -667,6 +667,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // OptionVecOfVecOfStdPrimitiveI16AsNullableArrayOfNotNullArrayOfNotNullInt2
         // VecOfVecOfOptionStdPrimitiveI16AsNotNullArrayOfNotNullArrayOfNullableInt2
         // OptionVecOfVecOfOptionStdPrimitiveI16AsNullableArrayOfNotNullArrayOfNullableInt2
+
+        //todo reuse\refactor .parse::<proc_macro2::TokenStream>().unwrap()
         let ident: &dyn quote::ToTokens = match (&postgresql_type_pattern_type, &not_null_or_nullable) {
             (
                 PostgresqlTypePatternType::Standart,
@@ -705,12 +707,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension2_not_null_or_nullable,
                 },
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull
-            ) => {
+            ) => &{
                 let dimension1_not_null_or_nullable_rust_name = dimension1_not_null_or_nullable.to_rust_name();
                 let dimension2_not_null_or_nullable_rust_name = dimension2_not_null_or_nullable.to_rust_name();
-                // format!("{not_null_or_nullable_rust_name}{vec_of_upper_camel_case}{dimension1_not_null_or_nullable_rust_name}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{dimension1_not_null_or_nullable}{postgresql_type_name}")
-                // .parse::<proc_macro2::TokenStream>().unwrap()
-                todo!()
+                format!("{not_null_or_nullable_rust_name}{vec_of_upper_camel_case}{dimension1_not_null_or_nullable_rust_name}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{dimension1_not_null_or_nullable}{postgresql_type_name}")
+                .parse::<proc_macro2::TokenStream>().unwrap()
             },
             (
                 PostgresqlTypePatternType::ArrayDimension2 {
