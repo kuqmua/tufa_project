@@ -48,6 +48,8 @@
     // }
 }]
 pub struct Example {
+    pub vec: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
+
     pub column_40d64ae4_a646_4394_bfce_3894bdfced87: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
     pub column_ebe9a28a_eef0_4b1d_a706_8a9c363db7ab: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_b225e9b0_80ae_4aea_ab7f_2444d0b3c5fa: postgresql_crud::postgresql_type::StdPrimitiveI32AsNotNullInt4,
@@ -275,7 +277,10 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
     let _ = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(pool).await.unwrap();
     let create_table_if_not_exists_query_stringified = format!(
         // "create table if not exists example ({},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})",
-         "create table if not exists example ({},{},{},{})",
+         "create table if not exists example ({},{},{},{},{})",
+         <postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2 as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"vec", false),
+
+
         <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"column_6e88acb0_c566_4fef_8a09_66a41338cf36", true),
         <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"column_40d64ae4_a646_4394_bfce_3894bdfced87", false),
         <postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2 as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"column_ebe9a28a_eef0_4b1d_a706_8a9c363db7ab", false),

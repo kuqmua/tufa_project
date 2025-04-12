@@ -1034,7 +1034,7 @@ pub struct VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2;
     serde ::
 Deserialize,
 )]
-pub struct VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin(pub std::primitive::i16);
+pub struct VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin(pub std::vec::Vec<std::primitive::i16>);
 impl std::fmt::Display for VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(formatter, "{self:?}")
@@ -1047,15 +1047,15 @@ impl error_occurence_lib::ToStdStringString for VecOfStdPrimitiveI16AsNotNullArr
 }
 impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(::core::default::Default::default())
+        Self(vec![::core::default::Default::default()])
     }
 }
 impl sqlx::Type<sqlx::Postgres> for VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::type_info()
+        <std::vec::Vec<std::primitive::i16> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <std::primitive::i16 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+        <std::vec::Vec<std::primitive::i16> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin {
@@ -1065,7 +1065,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for VecOfStdPrimitiveI16AsNotNullArrayOfNo
 }
 impl sqlx::Decode<'_, sqlx::Postgres> for VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <std::primitive::i16 as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+        match <std::vec::Vec<std::primitive::i16> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
             Ok(value) => Ok(Self(value)),
             Err(error) => Err(error),
         }
@@ -1078,7 +1078,7 @@ impl sqlx::postgres::PgHasArrayType for VecOfStdPrimitiveI16AsNotNullArrayOfNotN
 }
 impl VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin {
     pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-        format!("{column} int2 not null")
+        format!("{column} int2[] not null")
     }
 }
 pub type VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2TableTypeDeclaration = VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin;
@@ -1095,23 +1095,24 @@ Deserialize,
 pub struct VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Select;
 impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Select {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        // Self(vec![])
         ::core::default::Default::default()
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub enum VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2WhereElement {
     Equal(crate::where_element_filters::PostgresqlTypeWhereElementEqual<VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin>),
-    GreaterThan(crate::where_element_filters::PostgresqlTypeWhereElementGreaterThan<StdPrimitiveI16AsNotNullInt2Origin>),
-    Between(crate::where_element_filters::PostgresqlTypeWhereElementBetween<StdPrimitiveI16AsNotNullInt2Origin>),
-    In(crate::where_element_filters::PostgresqlTypeWhereElementIn<VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin>),
+    // GreaterThan(crate::where_element_filters::PostgresqlTypeWhereElementGreaterThan<StdPrimitiveI16AsNotNullInt2Origin>),
+    // Between(crate::where_element_filters::PostgresqlTypeWhereElementBetween<StdPrimitiveI16AsNotNullInt2Origin>),
+    // In(crate::where_element_filters::PostgresqlTypeWhereElementIn<VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Origin>),
 }
 impl<'a> crate::PostgresqlTypeWhereFilter<'a> for VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2WhereElement {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         match &self {
             Self::Equal(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-            Self::GreaterThan(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-            Self::Between(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-            Self::In(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+            // Self::GreaterThan(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+            // Self::Between(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+            // Self::In(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
         }
     }
     fn query_bind(self, 
@@ -1119,9 +1120,9 @@ impl<'a> crate::PostgresqlTypeWhereFilter<'a> for VecOfStdPrimitiveI16AsNotNullA
         query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self {
             Self::Equal(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
-            Self::GreaterThan(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
-            Self::Between(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
-            Self::In(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+            // Self::GreaterThan(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+            // Self::Between(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+            // Self::In(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
         }
     }
 }
@@ -1134,9 +1135,9 @@ impl crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContains
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
         vec![
             Self::Equal(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-            Self::GreaterThan(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-            Self::Between(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-            Self::In(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            // Self::GreaterThan(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            // Self::Between(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            // Self::In(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
         ]
     }
 }
@@ -1147,6 +1148,9 @@ impl crate::PostgresqlType for VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2 {
     type Create = VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2Create;
     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
+        // for element in &value.0 {
+            
+        // }
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
