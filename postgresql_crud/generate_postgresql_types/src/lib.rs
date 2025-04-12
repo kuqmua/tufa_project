@@ -465,29 +465,29 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     enum PostgresqlTypePatternType {
         Standart,
         ArrayDimension1 {
-            dimension1_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
+            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
         // ArrayDimension2 {
-        //     dimension1_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension2_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
+        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         // },
         // ArrayDimension3 {
-        //     dimension1_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension2_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension3_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
+        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         // },
         // ArrayDimension4 {
-        //     dimension1_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension2_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension3_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension4_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
+        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         // },
         // ArrayDimension5 {
-        //     dimension1_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension2_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension3_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension4_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
-        //     dimension5_postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
+        //     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //     dimension5_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         // },
     }
     //todo 
@@ -507,7 +507,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     #[derive(Debug, PartialEq, serde::Deserialize)]
     struct PostgresqlTypeRecord {
         postgresql_type: PostgresqlType,
-        postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable,
+        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_type_pattern_type: PostgresqlTypePatternType,
     }
     impl PostgresqlTypeRecord {
@@ -515,10 +515,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let mut acc = vec![];
             PostgresqlType::into_array().into_iter().for_each(|postgresql_type|{
                 if let CanBeNullable::True = &postgresql_type.can_be_nullable() {
-                    postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::into_array().into_iter().for_each(|postgresql_type_not_null_or_nullable|{
+                    postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable|{
                         acc.push(PostgresqlTypeRecord {
                             postgresql_type: postgresql_type.clone(),
-                            postgresql_type_not_null_or_nullable: postgresql_type_not_null_or_nullable,
+                            not_null_or_nullable: not_null_or_nullable,
                             postgresql_type_pattern_type: PostgresqlTypePatternType::Standart,//todo not only Standart
                         });
                     });
@@ -528,7 +528,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 if let CanBeNullable::False = &postgresql_type.can_be_nullable() {
                     acc.push(PostgresqlTypeRecord {
                         postgresql_type: postgresql_type.clone(),
-                        postgresql_type_not_null_or_nullable: postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull,
+                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                         postgresql_type_pattern_type: PostgresqlTypePatternType::Standart,//todo not only Standart
                     });
                 }
@@ -538,22 +538,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     let mut postgresql_crud_table_rust_struct_fields_token_stream = vec![];
     let mut postgresql_type_array = vec![];
-    // {
-    //     //todo write function for gen all variants
-    //     let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
-    //     .expect("failed to get Config for generate_postgresql_type");
-    //     let mut acc = vec![];
-    //     for element in &vec {
-    //         if acc.contains(&element) {
-    //             panic!("not unique postgersql type provided: {element:#?}");
-    //         }
-    //         else {
-    //             acc.push(&element);
-    //         }
-    //     }
-    //     vec
-    // }
-    PostgresqlTypeRecord::all()
+    {
+        //todo write function for gen all variants
+        let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
+        .expect("failed to get Config for generate_postgresql_type");
+        let mut acc = vec![];
+        for element in &vec {
+            if acc.contains(&element) {
+                panic!("not unique postgersql type provided: {element:#?}");
+            }
+            else {
+                acc.push(&element);
+            }
+        }
+        vec
+    }
+    // PostgresqlTypeRecord::all()
     .into_iter()
     // .filter(|element|{
     //     match &element.postgresql_type {
@@ -606,9 +606,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
         let postgresql_type = &element.postgresql_type;
         let field_type = postgresql_type.field_type_token_stream();
-        let postgresql_type_not_null_or_nullable = &element.postgresql_type_not_null_or_nullable;
+        let not_null_or_nullable = &element.not_null_or_nullable;
         let postgresql_type_pattern_type = &element.postgresql_type_pattern_type;
-        if let (CanBeNullable::False, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable) = (&postgresql_type.can_be_nullable(), &postgresql_type_not_null_or_nullable) {
+        if let (CanBeNullable::False, postgresql_crud_macros_common::NotNullOrNullable::Nullable) = (&postgresql_type.can_be_nullable(), &not_null_or_nullable) {
             panic!("type cannot be nullable")//todo maybe rewrite it somehow better?
         }
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
@@ -646,13 +646,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
         let rust_type_name = RustTypeName::from(postgresql_type);
         let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
-        let postgresql_type_not_null_or_nullable_rust_name = postgresql_type_not_null_or_nullable.to_rust_name();
+        let not_null_or_nullable_rust_name = not_null_or_nullable.to_rust_name();
 
         let generate_ident_not_null_token_stream = |postgresql_type: &PostgresqlType|{
             let rust_type_name = RustTypeName::from(postgresql_type);
             let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
-            let postgresql_type_not_null_or_nullable = postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull;
-            format!("{rust_type_name}{as_upper_camel_case}{postgresql_type_not_null_or_nullable}{postgresql_type_name}")
+            let not_null_or_nullable = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
+            format!("{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{postgresql_type_name}")
             .parse::<proc_macro2::TokenStream>().unwrap()
         };
         //todo rename - cuurent name work only if Standart type
@@ -669,53 +669,53 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // OptionVecOfVecOfStdPrimitiveI16AsNullableArrayOfNotNullArrayOfNotNullInt2
         // VecOfVecOfOptionStdPrimitiveI16AsNotNullArrayOfNotNullArrayOfNullableInt2
         // OptionVecOfVecOfOptionStdPrimitiveI16AsNullableArrayOfNotNullArrayOfNullableInt2
-        let ident: &dyn quote::ToTokens = match (&postgresql_type_pattern_type, &postgresql_type_not_null_or_nullable) {
+        let ident: &dyn quote::ToTokens = match (&postgresql_type_pattern_type, &not_null_or_nullable) {
             (
                 PostgresqlTypePatternType::Standart,
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull
             ) => &ident_not_null_upper_camel_case,
             (
                 PostgresqlTypePatternType::Standart,
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable
             ) => &{
-                format!("{postgresql_type_not_null_or_nullable_rust_name}{rust_type_name}{as_upper_camel_case}{postgresql_type_not_null_or_nullable}{postgresql_type_name}")
+                format!("{not_null_or_nullable_rust_name}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{postgresql_type_name}")
                 .parse::<proc_macro2::TokenStream>().unwrap()
             },
             (
                 PostgresqlTypePatternType::ArrayDimension1 {
-                    dimension1_postgresql_type_not_null_or_nullable,
+                    dimension1_not_null_or_nullable,
                 },
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull
             ) => todo!(),
             (
                 PostgresqlTypePatternType::ArrayDimension1 {
-                    dimension1_postgresql_type_not_null_or_nullable,
+                    dimension1_not_null_or_nullable,
                 },
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable
             ) => todo!()
         };
         postgresql_crud_table_rust_struct_fields_token_stream.push({
             // let field_ident = {
-            //     let value = match (&postgresql_type_pattern_type, &postgresql_type_not_null_or_nullable) {
+            //     let value = match (&postgresql_type_pattern_type, &not_null_or_nullable) {
             //         (
             //             PostgresqlTypePatternType::Standart,
-            //             postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
-            //         ) => format!("{postgresql_type_not_null_or_nullable}{postgresql_type_name}"),
+            //             postgresql_crud_macros_common::NotNullOrNullable::NotNull
+            //         ) => format!("{not_null_or_nullable}{postgresql_type_name}"),
             //         (
             //             PostgresqlTypePatternType::Standart,
-            //             postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable
-            //         ) => format!("{postgresql_type_not_null_or_nullable}{postgresql_type_name}"),
+            //             postgresql_crud_macros_common::NotNullOrNullable::Nullable
+            //         ) => format!("{not_null_or_nullable}{postgresql_type_name}"),
             //         (
             //             PostgresqlTypePatternType::ArrayDimension1 {
-            //                 dimension1_postgresql_type_not_null_or_nullable,
+            //                 dimension1_not_null_or_nullable,
             //             },
-            //             postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull
+            //             postgresql_crud_macros_common::NotNullOrNullable::NotNull
             //         ) => todo!(),
             //         (
             //             PostgresqlTypePatternType::ArrayDimension1 {
-            //                 dimension1_postgresql_type_not_null_or_nullable,
+            //                 dimension1_not_null_or_nullable,
             //             },
-            //             postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable
+            //             postgresql_crud_macros_common::NotNullOrNullable::Nullable
             //         ) => todo!()
             //     }.parse::<proc_macro2::TokenStream>().unwrap();
             //     naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&quote::quote!{#value}.to_string())
@@ -741,14 +741,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
         let ident_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_not_null_upper_camel_case);
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
-        let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
-            postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => &field_type,
-            postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_not_null_origin_upper_camel_case)
+        let field_type_handle: &dyn quote::ToTokens = match &not_null_or_nullable {
+            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
+            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_not_null_origin_upper_camel_case)
         };
         let ident_origin_token_stream = {
             let partial_ord_comma_token_stream = quote::quote! {PartialOrd,};
-            let maybe_derive_partial_ord_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => match &postgresql_type {
+            let maybe_derive_partial_ord_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsInt2 => &partial_ord_comma_token_stream,
                     PostgresqlType::StdPrimitiveI32AsInt4 => &partial_ord_comma_token_stream,
                     PostgresqlType::StdPrimitiveI64AsInt8 => &partial_ord_comma_token_stream,
@@ -792,11 +792,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => &proc_macro2_token_stream_new,
                 },
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &proc_macro2_token_stream_new,
             };
             let serde_serialize_comma_token_stream = quote::quote! {serde::Serialize,};
-            let maybe_derive_serde_serialize_token_stream: &dyn quote::ToTokens = match &postgresql_type_not_null_or_nullable {
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => match &postgresql_type {
+            let maybe_derive_serde_serialize_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsInt2 => &serde_serialize_comma_token_stream,
                     PostgresqlType::StdPrimitiveI32AsInt4 => &serde_serialize_comma_token_stream,
                     PostgresqlType::StdPrimitiveI64AsInt8 => &serde_serialize_comma_token_stream,
@@ -840,11 +840,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => &proc_macro2_token_stream_new,
                 },
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &serde_serialize_comma_token_stream,
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &serde_serialize_comma_token_stream,
             };
             let serde_deserialize_comma_token_stream = quote::quote! {serde::Deserialize,};
-            let maybe_derive_serde_deserialize_token_stream = match &postgresql_type_not_null_or_nullable {
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => match &postgresql_type {
+            let maybe_derive_serde_deserialize_token_stream = match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsInt2 => &serde_deserialize_comma_token_stream,
                     PostgresqlType::StdPrimitiveI32AsInt4 => &serde_deserialize_comma_token_stream,
                     PostgresqlType::StdPrimitiveI64AsInt8 => &serde_deserialize_comma_token_stream,
@@ -888,7 +888,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => &proc_macro2_token_stream_new,
                 },
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => &serde_deserialize_comma_token_stream,
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &serde_deserialize_comma_token_stream,
             };
             quote::quote! {
                 #[derive(
@@ -906,8 +906,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let impl_is_empty_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_is_empty_for_ident_token_stream(
                 &ident_origin_upper_camel_case
             );
-            match &postgresql_type_not_null_or_nullable {
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => match &postgresql_type {
+            match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsInt2 => proc_macro2::TokenStream::new(),
                     PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
                     PostgresqlType::StdPrimitiveI64AsInt8 => proc_macro2::TokenStream::new(),
@@ -951,7 +951,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => proc_macro2::TokenStream::new(),
                 },
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
             }
         };
 
@@ -1000,8 +1000,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
         let self_dot_zero_token_stream = quote::quote! {#self_snake_case.0};
 
-        let maybe_impl_try_new_for_ident_not_null_origin_token_stream = match &postgresql_type_not_null_or_nullable {
-            postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => match &postgresql_type {
+        let maybe_impl_try_new_for_ident_not_null_origin_token_stream = match &not_null_or_nullable {
+            postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                 PostgresqlType::StdPrimitiveI16AsInt2 => proc_macro2::TokenStream::new(),
                 PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
                 PostgresqlType::StdPrimitiveI64AsInt8 => proc_macro2::TokenStream::new(),
@@ -1112,7 +1112,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => proc_macro2::TokenStream::new(),
             },
-            postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+            postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
         };
         enum ParameterNumber {
             One,
@@ -1222,8 +1222,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &#self_dot_zero_token_stream.iter().collect::<#std_vec_vec_std_primitive_bool_token_stream>(),
                 )
             });
-            match &postgresql_type_not_null_or_nullable {
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => match &postgresql_type {
+            match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsInt2 => proc_macro2::TokenStream::new(),
                     PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
                     PostgresqlType::StdPrimitiveI64AsInt8 => proc_macro2::TokenStream::new(),
@@ -1307,7 +1307,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                 },
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
             }
         };
 
@@ -2387,9 +2387,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 })
             };
             ///////////////////////
-            match &postgresql_type_not_null_or_nullable {
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => match &postgresql_type {
+            match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsInt2 => proc_macro2::TokenStream::new(),
                     PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
                     PostgresqlType::StdPrimitiveI64AsInt8 => proc_macro2::TokenStream::new(),
@@ -2516,8 +2516,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
         // }
 
-        let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream = match &postgresql_type_not_null_or_nullable {
-            postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_origin_upper_camel_case, &{
+        let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream = match &not_null_or_nullable {
+            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_origin_upper_camel_case, &{
                 let generate_sqlx_postgres_types_pg_range_token_stream =
                     |start_token_stream: &dyn quote::ToTokens, end_token_stream: &dyn quote::ToTokens| generate_qlx_postgres_types_pg_range_start_end_token_stream(&quote::quote! {std::ops::Bound::Included(#start_token_stream)}, &quote::quote! {std::ops::Bound::Excluded(#end_token_stream)});
                 let sqlx_postgres_types_pg_range_core_default_default_default_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(&core_default_default_default_token_stream, &core_default_default_default_token_stream);
@@ -2580,7 +2580,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 quote::quote! {Self(#initialization_token_stream)}
             }),
-            postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_origin_upper_camel_case,
                 &quote::quote! {Self(
                     Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
@@ -2657,12 +2657,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => CanBePrimaryKey::False,
         };
         let generate_typical_query_bind_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-            match &postgresql_type_not_null_or_nullable {
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull => quote::quote! {
+            match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                     #query_snake_case = #query_snake_case.bind(#content_token_stream);
                     #query_snake_case
                 },
-                postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable => quote::quote! {
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                     #query_snake_case = #query_snake_case.bind(match #content_token_stream .0 {
                         Some(#value_snake_case) => Some(#value_snake_case),
                         None => None
@@ -2673,7 +2673,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
         let typical_query_bind_token_stream = generate_typical_query_bind_token_stream(&value_snake_case);
         let postgresql_crud_macros_common_import_path_crate = postgresql_crud_macros_common::ImportPath::Crate;
-        let maybe_impl_postgresql_type_where_filter_for_ident_origin_if_can_be_primary_key_token_stream = if let (CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
+        let maybe_impl_postgresql_type_where_filter_for_ident_origin_if_can_be_primary_key_token_stream = if let (CanBePrimaryKey::True, postgresql_crud_macros_common::NotNullOrNullable::NotNull) = (&can_be_primary_key, &not_null_or_nullable) {
             postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
                 &quote::quote! {<'a>},
                 &ident_not_null_origin_upper_camel_case,
@@ -2697,7 +2697,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         } else {
             proc_macro2::TokenStream::new()
         };
-        let maybe_impl_postgresql_type_primary_key_for_ident_not_null_if_can_be_primary_key_token_stream = if let (CanBePrimaryKey::True, postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull) = (&can_be_primary_key, &postgresql_type_not_null_or_nullable) {
+        let maybe_impl_postgresql_type_primary_key_for_ident_not_null_if_can_be_primary_key_token_stream = if let (CanBePrimaryKey::True, postgresql_crud_macros_common::NotNullOrNullable::NotNull) = (&can_be_primary_key, &not_null_or_nullable) {
             quote::quote!{
                 impl crate::PostgresqlTypePrimaryKey for #ident_not_null_upper_camel_case {
                     type PrimaryKey = #ident_not_null_origin_upper_camel_case;
@@ -2807,26 +2807,26 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}");
                     let column_postgresql_query_type_not_null = format!("{column_postgresql_query_type} not null");
                     let space_additional_parameter = " {}";
-                    match (&postgresql_type_not_null_or_nullable, &can_be_primary_key) {
-                        (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, CanBePrimaryKey::False) => {
+                    match (&not_null_or_nullable, &can_be_primary_key) {
+                        (postgresql_crud_macros_common::NotNullOrNullable::NotNull, CanBePrimaryKey::False) => {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type_not_null.to_string());
                             quote::quote! {
                                 format!(#format_handle_token_stream)
                             }
                         }
-                        (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull, CanBePrimaryKey::True) => {
+                        (postgresql_crud_macros_common::NotNullOrNullable::NotNull, CanBePrimaryKey::True) => {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type_not_null}{space_additional_parameter}"));
                             quote::quote! {
                                 format!(#format_handle_token_stream, #crate_maybe_primary_key_is_primary_key_token_stream)
                             }
                         }
-                        (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable, CanBePrimaryKey::False) => {
+                        (postgresql_crud_macros_common::NotNullOrNullable::Nullable, CanBePrimaryKey::False) => {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type);
                             quote::quote! {
                                 format!(#format_handle_token_stream)
                             }
                         }
-                        (postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::Nullable, CanBePrimaryKey::True) => {
+                        (postgresql_crud_macros_common::NotNullOrNullable::Nullable, CanBePrimaryKey::True) => {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{column_postgresql_query_type}{space_additional_parameter}"));
                             quote::quote! {
                                 format!(#format_handle_token_stream, #crate_maybe_primary_key_is_primary_key_token_stream)
@@ -3231,12 +3231,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             #impl_postgresql_type_for_ident_token_stream
         };
         // if let (
-        //     PostgresqlType::,
-        //     postgresql_crud_macros_common::PostgresqlTypeNotNullOrNullable::NotNull,
+        //     PostgresqlType::StdPrimitiveI16AsInt2,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
         //     PostgresqlTypePatternType::Standart
         // ) = (
         //     &postgresql_type,
-        //     &postgresql_type_not_null_or_nullable,
+        //     &not_null_or_nullable,
         //     &postgresql_type_pattern_type
         // ) {
         //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(

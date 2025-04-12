@@ -1,195 +1,195 @@
 generate_postgresql_types::generate_postgresql_types!([
     {
         "postgresql_type": "StdPrimitiveI16AsInt2",
-        "postgresql_type_not_null_or_nullable": "NotNull",
+        "not_null_or_nullable": "NotNull",
         "postgresql_type_pattern_type": "Standart"
     },
     {
         "postgresql_type": "StdPrimitiveI16AsInt2",
-        "postgresql_type_not_null_or_nullable": "Nullable",
+        "not_null_or_nullable": "Nullable",
         "postgresql_type_pattern_type": "Standart"
     },
     // {
     //     "postgresql_type": "StdPrimitiveI16AsInt2",
-    //     "postgresql_type_not_null_or_nullable": "NotNull",
+    //     "not_null_or_nullable": "NotNull",
     //     "postgresql_type_pattern_type": "VecStandart"
     // },
     // {
     //     "postgresql_type": "StdPrimitiveI16AsInt2",
-    //     "postgresql_type_not_null_or_nullable": "Nullable",
+    //     "not_null_or_nullable": "Nullable",
     //     "postgresql_type_pattern_type": "VecStandart"
     // },
     // {
     //     "postgresql_type": "StdPrimitiveI32AsInt4",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdPrimitiveI64AsInt8",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdPrimitiveF32AsFloat4",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdPrimitiveF64AsFloat8",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdPrimitiveI16AsSmallSerialInitializedByPostgresql",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdPrimitiveI32AsSerialInitializedByPostgresql",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     {
         "postgresql_type": "StdPrimitiveI64AsBigSerialInitializedByPostgresql",
-        "postgresql_type_not_null_or_nullable": "NotNull",
+        "not_null_or_nullable": "NotNull",
         "postgresql_type_pattern_type": "Standart"
     }
     // ,
     // {
     //     "postgresql_type": "StdPrimitiveI64AsBigSerialInitializedByPostgresql",
-    //     "postgresql_type_not_null_or_nullable": "NotNull",
+    //     "not_null_or_nullable": "NotNull",
     //     "postgresql_type_pattern_type": "VecStandart"
     // }
     // ,
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgMoneyAsMoney",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesDecimalAsNumeric",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesBigDecimalAsNumeric",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdPrimitiveBoolAsBool",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdStringStringAsCharN",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdStringStringAsVarchar",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdStringStringAsText",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "StdVecVecStdPrimitiveU8AsBytea",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesTimeDateAsDate",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesTimePrimitiveDateTimeAsTimestamp",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsCidr",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesBitVecAsBit",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxTypesBitVecAsVarbit",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // },
     // {
     //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange",
-    //     "postgresql_type_not_null_or_nullable": "NotNull"
+    //     "not_null_or_nullable": "NotNull"
     // }
 ]);
 

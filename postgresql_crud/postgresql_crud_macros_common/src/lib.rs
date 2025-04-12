@@ -3,11 +3,11 @@ mod filters;
 pub use filters::*;
 
 #[derive(Debug, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-pub enum PostgresqlTypeNotNullOrNullable {
+pub enum NotNullOrNullable {
     NotNull,
     Nullable,
 }
-impl PostgresqlTypeNotNullOrNullable {
+impl NotNullOrNullable {
     pub fn to_rust_name(&self) -> &'static dyn std::fmt::Display {
         match &self {
             Self::NotNull => &"",
