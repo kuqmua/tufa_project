@@ -8,7 +8,7 @@ pub enum NotNullOrNullable {
     Nullable,
 }
 impl NotNullOrNullable {
-    pub fn to_rust_name(&self) -> &'static dyn std::fmt::Display {
+    pub fn rust(&self) -> &'static dyn std::fmt::Display {
         match &self {
             Self::NotNull => &"",
             Self::Nullable => &naming::OptionUpperCamelCase
