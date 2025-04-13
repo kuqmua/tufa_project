@@ -779,7 +779,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlTypePatternType::ArrayDimension1 {
                     dimension1_not_null_or_nullable,
                 } => match &dimension1_not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => false,
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                        // if let PostgresqlType::StdPrimitiveI16AsInt2 = &&element.postgresql_type {
+                        //     true
+                        // }
+                        // else {
+                        //     false
+                        // }
+                        false
+                    },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
                 },
                 PostgresqlTypePatternType::ArrayDimension2 {
@@ -3218,7 +3226,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let crate_maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
                     let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}");
-                    let column_postgresql_query_type_not_null = format!("{column_postgresql_query_type}{maybe_array_part} not null");
+                    let column_postgresql_query_type_not_null = format!("{column_postgresql_query_type} not null");
                     let space_additional_parameter = " {}";
                     //todo add additional checks coz postgreql does not support not null elements of array with keyword "not null"
                     match (&not_null_or_nullable, &can_be_primary_key) {
@@ -3376,13 +3384,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlTypePatternType::Standart => quote::quote! {#core_default_default_default_token_stream},
                     PostgresqlTypePatternType::ArrayDimension1 {
                         dimension1_not_null_or_nullable: _,
-                    } => quote::quote! {{
+                    } => quote::quote! {Self {
                         dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     }},
                     PostgresqlTypePatternType::ArrayDimension2 {
                         dimension1_not_null_or_nullable: _,
                         dimension2_not_null_or_nullable: _,
-                    } => quote::quote! {{
+                    } => quote::quote! {Self {
                         dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     }},
@@ -3390,7 +3398,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         dimension1_not_null_or_nullable: _,
                         dimension2_not_null_or_nullable: _,
                         dimension3_not_null_or_nullable: _,
-                    } => quote::quote! {{
+                    } => quote::quote! {Self {
                         dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension3_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -3400,7 +3408,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         dimension2_not_null_or_nullable: _,
                         dimension3_not_null_or_nullable: _,
                         dimension4_not_null_or_nullable: _,
-                    } => quote::quote! {{
+                    } => quote::quote! {Self {
                         dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension3_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -3437,7 +3445,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     &ident,
                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
-                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::False,
                 )
             };
 
