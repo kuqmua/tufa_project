@@ -20,6 +20,12 @@ impl NotNullOrNullable {
             Self::Nullable => quote::quote!{std::option::Option<#content_token_stream>}
         }
     }
+    pub fn maybe_some_wrap(&self, content_token_stream: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
+        match &self {
+            Self::NotNull => content_token_stream,
+            Self::Nullable => quote::quote!{Some(#content_token_stream)}
+        }
+    }
 }
 impl std::default::Default for NotNullOrNullable {
     fn default() -> Self {
