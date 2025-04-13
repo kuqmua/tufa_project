@@ -170,13 +170,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       {
         "Equal": {
           "logical_operator": "Or",
-          "value": 8
+          "value": 1
         }
       },
       {
         "Equal": {
           "logical_operator": "Or",
-          "value": 9
+          "value": 2
         }
       }
       # ,
@@ -246,7 +246,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "vec": {
         "dimension1_pagination": {
-          "limit": 4,
+          "limit": 2,
           "offset": 0
         }
       }

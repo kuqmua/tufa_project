@@ -716,7 +716,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     let mut postgresql_crud_table_rust_struct_fields_token_stream = vec![];
     let mut postgresql_type_array = vec![];
     // {
-    //     //todo write function for gen all variants
     //     let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
     //     .expect("failed to get Config for generate_postgresql_type");
     //     let mut acc = vec![];
@@ -3213,13 +3212,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => "tstzrange",
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => "tstzrange",
                     };
-                    //todo refactor as for loop
                     let maybe_array_part = match &postgresql_type_pattern_type {
-                        PostgresqlTypePatternType::Standart => "",
-                        PostgresqlTypePatternType::ArrayDimension1 {..} => "[]",
-                        PostgresqlTypePatternType::ArrayDimension2 {..} => "[][]",
-                        PostgresqlTypePatternType::ArrayDimension3 {..} => "[][][]",
-                        PostgresqlTypePatternType::ArrayDimension4 {..} => "[][][][]",
+                        PostgresqlTypePatternType::Standart => "".to_string(),
+                        PostgresqlTypePatternType::ArrayDimension1 {..} |
+                        PostgresqlTypePatternType::ArrayDimension2 {..} |
+                        PostgresqlTypePatternType::ArrayDimension3 {..} |
+                        PostgresqlTypePatternType::ArrayDimension4 {..} => {
+                            let mut acc = std::string::String::default();
+                            for _ in 1..=array_dimensions {
+                                acc.push_str("[]");
+                            }
+                            acc
+                        }
                     };
                     let crate_maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
                     let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}");
