@@ -39,7 +39,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 [
   {
     "vec": [
-      10, 20
+      15,25,35,45,55
     ],
     "column_40d64ae4_a646_4394_bfce_3894bdfced87": 10,
     "column_ebe9a28a_eef0_4b1d_a706_8a9c363db7ab": 10,
@@ -87,19 +87,19 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "vec": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": [
-            8
-          ]
-        }
-      }
-    ]
-  },
+  # "vec": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           8
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
   # "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -164,38 +164,45 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": 0,
-  #         "end": 0
-  #       }
-  #     },
-  #     {
-  #       "In": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": 8
+        }
+      },
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": 9
+        }
+      }
+      # ,
+      # {
+      #   "GreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      # {
+      #   "Between": {
+      #     "logical_operator": "Or",
+      #     "start": 0,
+      #     "end": 0
+      #   }
+      # },
+      # {
+      #   "In": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # }
+    ]
+  },
   # "object_animal_as_jsonb_not_null": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -239,7 +246,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "vec": {
         "dimension1_pagination": {
-          "limit": 3,
+          "limit": 4,
           "offset": 0
         }
       }

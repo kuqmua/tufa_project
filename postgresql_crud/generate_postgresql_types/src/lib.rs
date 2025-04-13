@@ -780,13 +780,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension1_not_null_or_nullable,
                 } => match &dimension1_not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                        // if let PostgresqlType::StdPrimitiveI16AsInt2 = &&element.postgresql_type {
-                        //     true
-                        // }
-                        // else {
-                        //     false
-                        // }
-                        false
+                        if let PostgresqlType::StdPrimitiveI16AsInt2 = &&element.postgresql_type {
+                            true
+                        }
+                        else {
+                            false
+                        }
+                        // false
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
                 },
@@ -3203,26 +3203,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => "tstzrange",
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => "tstzrange",
                     };
+                    //todo refactor as for loop
                     let maybe_array_part = match &postgresql_type_pattern_type {
                         PostgresqlTypePatternType::Standart => "",
-                        PostgresqlTypePatternType::ArrayDimension1 {
-                            dimension1_not_null_or_nullable,
-                        } => "[]",
-                        PostgresqlTypePatternType::ArrayDimension2 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                        } => "[][]",
-                        PostgresqlTypePatternType::ArrayDimension3 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                        } => "[][][]",
-                        PostgresqlTypePatternType::ArrayDimension4 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                            dimension4_not_null_or_nullable,
-                        } => "[][][][]",
+                        PostgresqlTypePatternType::ArrayDimension1 {..} => "[]",
+                        PostgresqlTypePatternType::ArrayDimension2 {..} => "[][]",
+                        PostgresqlTypePatternType::ArrayDimension3 {..} => "[][][]",
+                        PostgresqlTypePatternType::ArrayDimension4 {..} => "[][][][]",
                     };
                     let crate_maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
                     let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}");
@@ -3340,35 +3327,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let ident_select_token_stream = {
             let pub_struct_ident_select_token_stream = generate_pub_struct_tokens_token_stream(
                 &ident_select_upper_camel_case,
+                //todo maybe refactor as for loop
                 &match &postgresql_type_pattern_type {
                     PostgresqlTypePatternType::Standart => quote::quote! {;},
-                    PostgresqlTypePatternType::ArrayDimension1 {
-                        dimension1_not_null_or_nullable: _,
-                    } => quote::quote! {{
+                    PostgresqlTypePatternType::ArrayDimension1 {..} => quote::quote! {{
                         dimension1_pagination: crate::Pagination,
                     }},
-                    PostgresqlTypePatternType::ArrayDimension2 {
-                        dimension1_not_null_or_nullable: _,
-                        dimension2_not_null_or_nullable: _,
-                    } => quote::quote! {{
+                    PostgresqlTypePatternType::ArrayDimension2 {..} => quote::quote! {{
                         dimension1_pagination: crate::Pagination,
                         dimension2_pagination: crate::Pagination,
                     }},
-                    PostgresqlTypePatternType::ArrayDimension3 {
-                        dimension1_not_null_or_nullable: _,
-                        dimension2_not_null_or_nullable: _,
-                        dimension3_not_null_or_nullable: _,
-                    } => quote::quote! {{
+                    PostgresqlTypePatternType::ArrayDimension3 {..} => quote::quote! {{
                         dimension1_pagination: crate::Pagination,
                         dimension2_pagination: crate::Pagination,
                         dimension3_pagination: crate::Pagination,
                     }},
-                    PostgresqlTypePatternType::ArrayDimension4 {
-                        dimension1_not_null_or_nullable: _,
-                        dimension2_not_null_or_nullable: _,
-                        dimension3_not_null_or_nullable: _,
-                        dimension4_not_null_or_nullable: _,
-                    } => quote::quote! {{
+                    PostgresqlTypePatternType::ArrayDimension4 {..} => quote::quote! {{
                         dimension1_pagination: crate::Pagination,
                         dimension2_pagination: crate::Pagination,
                         dimension3_pagination: crate::Pagination,
@@ -3380,35 +3354,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             );
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_select_upper_camel_case,
+                //todo refactor as for loop
                 &match &postgresql_type_pattern_type {
                     PostgresqlTypePatternType::Standart => quote::quote! {#core_default_default_default_token_stream},
-                    PostgresqlTypePatternType::ArrayDimension1 {
-                        dimension1_not_null_or_nullable: _,
-                    } => quote::quote! {Self {
+                    PostgresqlTypePatternType::ArrayDimension1 {..} => quote::quote! {Self {
                         dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     }},
-                    PostgresqlTypePatternType::ArrayDimension2 {
-                        dimension1_not_null_or_nullable: _,
-                        dimension2_not_null_or_nullable: _,
-                    } => quote::quote! {Self {
+                    PostgresqlTypePatternType::ArrayDimension2 {..} => quote::quote! {Self {
                         dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     }},
-                    PostgresqlTypePatternType::ArrayDimension3 {
-                        dimension1_not_null_or_nullable: _,
-                        dimension2_not_null_or_nullable: _,
-                        dimension3_not_null_or_nullable: _,
-                    } => quote::quote! {Self {
+                    PostgresqlTypePatternType::ArrayDimension3 {..} => quote::quote! {Self {
                         dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension3_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     }},
-                    PostgresqlTypePatternType::ArrayDimension4 {
-                        dimension1_not_null_or_nullable: _,
-                        dimension2_not_null_or_nullable: _,
-                        dimension3_not_null_or_nullable: _,
-                        dimension4_not_null_or_nullable: _,
-                    } => quote::quote! {Self {
+                    PostgresqlTypePatternType::ArrayDimension4 {..} => quote::quote! {Self {
                         dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                         dimension3_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -3610,24 +3571,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
                 },
                 //todo more filters for arrays
-                PostgresqlTypePatternType::ArrayDimension1 {
-                    dimension1_not_null_or_nullable: _,
-                } => generate_ident_where_element_token_stream(&vec![&equal]),
-                PostgresqlTypePatternType::ArrayDimension2 {
-                    dimension1_not_null_or_nullable: _,
-                    dimension2_not_null_or_nullable: _,
-                } => generate_ident_where_element_token_stream(&vec![&equal]),
-                PostgresqlTypePatternType::ArrayDimension3 {
-                    dimension1_not_null_or_nullable: _,
-                    dimension2_not_null_or_nullable: _,
-                    dimension3_not_null_or_nullable: _,
-                } => generate_ident_where_element_token_stream(&vec![&equal]),
-                PostgresqlTypePatternType::ArrayDimension4 {
-                    dimension1_not_null_or_nullable: _,
-                    dimension2_not_null_or_nullable: _,
-                    dimension3_not_null_or_nullable: _,
-                    dimension4_not_null_or_nullable: _,
-                } => generate_ident_where_element_token_stream(&vec![&equal]),
+                PostgresqlTypePatternType::ArrayDimension1 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
+                PostgresqlTypePatternType::ArrayDimension2 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
+                PostgresqlTypePatternType::ArrayDimension3 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
+                PostgresqlTypePatternType::ArrayDimension4 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
             }
         };
         let impl_postgresql_type_for_ident_token_stream = {
@@ -3714,7 +3661,50 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                 &bind_value_to_query_create_token_stream,
                 &ident_select_upper_camel_case,
-                &quote::quote! {#column_snake_case.to_string()},
+                //todo refactor as for loop
+                &match &postgresql_type_pattern_type {
+                    PostgresqlTypePatternType::Standart => quote::quote! {#column_snake_case.to_string()},
+                    PostgresqlTypePatternType::ArrayDimension1 {..} => quote::quote! {
+                        format!(
+                            "{column}[{}:{}]",
+                            value.dimension1_pagination.start(),
+                            value.dimension1_pagination.end()
+                        )
+                    },
+                    PostgresqlTypePatternType::ArrayDimension2 {..} => quote::quote! {
+                        format!(
+                            "{column}[{}:{}][{}:{}]",
+                            value.dimension1_pagination.start(),
+                            value.dimension1_pagination.end(),
+                            value.dimension2_pagination.start(),
+                            value.dimension2_pagination.end()
+                        )
+                    },
+                    PostgresqlTypePatternType::ArrayDimension3 {..} => quote::quote! {
+                        format!(
+                            "{column}[{}:{}][{}:{}][{}:{}]",
+                            value.dimension1_pagination.start(),
+                            value.dimension1_pagination.end(),
+                            value.dimension2_pagination.start(),
+                            value.dimension2_pagination.end(),
+                            value.dimension3_pagination.start(),
+                            value.dimension3_pagination.end()
+                        )
+                    },
+                    PostgresqlTypePatternType::ArrayDimension4 {..} => quote::quote! {
+                        format!(
+                            "{column}[{}:{}][{}:{}][{}:{}][{}:{}]",
+                            value.dimension1_pagination.start(),
+                            value.dimension1_pagination.end(),
+                            value.dimension2_pagination.start(),
+                            value.dimension2_pagination.end(),
+                            value.dimension3_pagination.start(),
+                            value.dimension3_pagination.end(),
+                            value.dimension4_pagination.start(),
+                            value.dimension4_pagination.end()
+                        )
+                    },
+                },
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &ident_update_upper_camel_case,
