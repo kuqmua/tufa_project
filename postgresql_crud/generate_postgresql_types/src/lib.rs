@@ -653,6 +653,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 },
             }
         }
+        fn dimensions_number(&self) -> std::primitive::u64 {
+            match &self {
+                PostgresqlTypePatternType::Standart => 0,
+                PostgresqlTypePatternType::ArrayDimension1 {..} => 1,
+                PostgresqlTypePatternType::ArrayDimension2 {..} => 2,
+                PostgresqlTypePatternType::ArrayDimension3 {..} => 3,
+                PostgresqlTypePatternType::ArrayDimension4 {..} => 4,
+            }
+        }
     }
     //todo 
     // can i create a postgresql column array of not null int?
@@ -848,6 +857,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let rust_type_name = RustTypeName::from(postgresql_type);
         let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
         let postgresql_type_pattern_type = &element.postgresql_type_pattern_type;
+        let array_dimensions = postgresql_type_pattern_type.dimensions_number();
         if let (CanBeNullable::False, postgresql_crud_macros_common::NotNullOrNullable::Nullable) = (&postgresql_type.can_be_nullable(), &not_null_or_nullable) {
             panic!("type cannot be nullable")//todo maybe rewrite it somehow better?
         }
@@ -3661,49 +3671,38 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                 &bind_value_to_query_create_token_stream,
                 &ident_select_upper_camel_case,
-                //todo refactor as for loop
                 &match &postgresql_type_pattern_type {
                     PostgresqlTypePatternType::Standart => quote::quote! {#column_snake_case.to_string()},
-                    PostgresqlTypePatternType::ArrayDimension1 {..} => quote::quote! {
-                        format!(
-                            "{column}[{}:{}]",
-                            value.dimension1_pagination.start(),
-                            value.dimension1_pagination.end()
-                        )
-                    },
-                    PostgresqlTypePatternType::ArrayDimension2 {..} => quote::quote! {
-                        format!(
-                            "{column}[{}:{}][{}:{}]",
-                            value.dimension1_pagination.start(),
-                            value.dimension1_pagination.end(),
-                            value.dimension2_pagination.start(),
-                            value.dimension2_pagination.end()
-                        )
-                    },
-                    PostgresqlTypePatternType::ArrayDimension3 {..} => quote::quote! {
-                        format!(
-                            "{column}[{}:{}][{}:{}][{}:{}]",
-                            value.dimension1_pagination.start(),
-                            value.dimension1_pagination.end(),
-                            value.dimension2_pagination.start(),
-                            value.dimension2_pagination.end(),
-                            value.dimension3_pagination.start(),
-                            value.dimension3_pagination.end()
-                        )
-                    },
-                    PostgresqlTypePatternType::ArrayDimension4 {..} => quote::quote! {
-                        format!(
-                            "{column}[{}:{}][{}:{}][{}:{}][{}:{}]",
-                            value.dimension1_pagination.start(),
-                            value.dimension1_pagination.end(),
-                            value.dimension2_pagination.start(),
-                            value.dimension2_pagination.end(),
-                            value.dimension3_pagination.start(),
-                            value.dimension3_pagination.end(),
-                            value.dimension4_pagination.start(),
-                            value.dimension4_pagination.end()
-                        )
-                    },
+                    PostgresqlTypePatternType::ArrayDimension1 {..} |
+                    PostgresqlTypePatternType::ArrayDimension2 {..} |
+                    PostgresqlTypePatternType::ArrayDimension3 {..} |
+                    PostgresqlTypePatternType::ArrayDimension4 {..} => {
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
+                            let mut acc = std::string::String::default();
+                            for _ in 1..=array_dimensions {
+                                acc.push_str("[{}:{}]");
+                            }
+                            format!("{{column}}{acc}")
+                        });
+                        let arguments_token_stream = {
+                            let mut acc = vec![];
+                            for element in 1..=array_dimensions {
+                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
+                                .parse::<proc_macro2::TokenStream>().unwrap();
+                                acc.push(quote::quote! {
+                                    #value_snake_case.#dimension_number_pagination_token_stream.start(),
+                                    #value_snake_case.#dimension_number_pagination_token_stream.end(),
+                                });
+                            }
+                            acc
+                        };
+                        quote::quote! {
+                            format!(
+                                #format_handle_token_stream,
+                                #(#arguments_token_stream)*
+                            )
+                        }
+                    }
                 },
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
