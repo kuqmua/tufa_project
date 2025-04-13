@@ -3335,31 +3335,31 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &match &postgresql_type_pattern_type {
                     PostgresqlTypePatternType::Standart => quote::quote! {;},
                     PostgresqlTypePatternType::ArrayDimension1 {
-                        dimension1_not_null_or_nullable,
+                        dimension1_not_null_or_nullable: _,
                     } => quote::quote! {{
                         dimension1_pagination: crate::Pagination,
                     }},
                     PostgresqlTypePatternType::ArrayDimension2 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
+                        dimension1_not_null_or_nullable: _,
+                        dimension2_not_null_or_nullable: _,
                     } => quote::quote! {{
                         dimension1_pagination: crate::Pagination,
                         dimension2_pagination: crate::Pagination,
                     }},
                     PostgresqlTypePatternType::ArrayDimension3 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
+                        dimension1_not_null_or_nullable: _,
+                        dimension2_not_null_or_nullable: _,
+                        dimension3_not_null_or_nullable: _,
                     } => quote::quote! {{
                         dimension1_pagination: crate::Pagination,
                         dimension2_pagination: crate::Pagination,
                         dimension3_pagination: crate::Pagination,
                     }},
                     PostgresqlTypePatternType::ArrayDimension4 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                        dimension4_not_null_or_nullable,
+                        dimension1_not_null_or_nullable: _,
+                        dimension2_not_null_or_nullable: _,
+                        dimension3_not_null_or_nullable: _,
+                        dimension4_not_null_or_nullable: _,
                     } => quote::quote! {{
                         dimension1_pagination: crate::Pagination,
                         dimension2_pagination: crate::Pagination,
@@ -3370,8 +3370,44 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 true,
                 true
             );
-            let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream =
-                postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &core_default_default_default_token_stream);
+            let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                &ident_select_upper_camel_case,
+                &match &postgresql_type_pattern_type {
+                    PostgresqlTypePatternType::Standart => quote::quote! {#core_default_default_default_token_stream},
+                    PostgresqlTypePatternType::ArrayDimension1 {
+                        dimension1_not_null_or_nullable: _,
+                    } => quote::quote! {{
+                        dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    }},
+                    PostgresqlTypePatternType::ArrayDimension2 {
+                        dimension1_not_null_or_nullable: _,
+                        dimension2_not_null_or_nullable: _,
+                    } => quote::quote! {{
+                        dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                        dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    }},
+                    PostgresqlTypePatternType::ArrayDimension3 {
+                        dimension1_not_null_or_nullable: _,
+                        dimension2_not_null_or_nullable: _,
+                        dimension3_not_null_or_nullable: _,
+                    } => quote::quote! {{
+                        dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                        dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                        dimension3_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    }},
+                    PostgresqlTypePatternType::ArrayDimension4 {
+                        dimension1_not_null_or_nullable: _,
+                        dimension2_not_null_or_nullable: _,
+                        dimension3_not_null_or_nullable: _,
+                        dimension4_not_null_or_nullable: _,
+                    } => quote::quote! {{
+                        dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                        dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                        dimension3_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                        dimension4_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    }},
+                },
+            );
             quote::quote! {
                 #pub_struct_ident_select_token_stream
                 #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
