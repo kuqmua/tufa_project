@@ -653,7 +653,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 },
             }
         }
-        fn dimensions_number(&self) -> std::primitive::u64 {
+        fn array_dimensions_number(&self) -> std::primitive::usize {
             match &self {
                 PostgresqlTypePatternType::Standart => 0,
                 PostgresqlTypePatternType::ArrayDimension1 {..} => 1,
@@ -856,7 +856,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let rust_type_name = RustTypeName::from(postgresql_type);
         let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
         let postgresql_type_pattern_type = &element.postgresql_type_pattern_type;
-        let array_dimensions = postgresql_type_pattern_type.dimensions_number();
+        let array_dimensions_number = postgresql_type_pattern_type.array_dimensions_number();
         if let (CanBeNullable::False, postgresql_crud_macros_common::NotNullOrNullable::Nullable) = (&postgresql_type.can_be_nullable(), &not_null_or_nullable) {
             panic!("type cannot be nullable")//todo maybe rewrite it somehow better?
         }
@@ -3217,13 +3217,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypePatternType::ArrayDimension1 {..} |
                         PostgresqlTypePatternType::ArrayDimension2 {..} |
                         PostgresqlTypePatternType::ArrayDimension3 {..} |
-                        PostgresqlTypePatternType::ArrayDimension4 {..} => {
-                            let mut acc = std::string::String::default();
-                            for _ in 1..=array_dimensions {
-                                acc.push_str("[]");
-                            }
-                            acc
-                        }
+                        PostgresqlTypePatternType::ArrayDimension4 {..} => std::iter::repeat("[]").take(array_dimensions_number).collect::<String>()
                     };
                     let crate_maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
                     let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}");
@@ -3341,54 +3335,48 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let ident_select_token_stream = {
             let pub_struct_ident_select_token_stream = generate_pub_struct_tokens_token_stream(
                 &ident_select_upper_camel_case,
-                //todo maybe refactor as for loop
                 &match &postgresql_type_pattern_type {
                     PostgresqlTypePatternType::Standart => quote::quote! {;},
-                    PostgresqlTypePatternType::ArrayDimension1 {..} => quote::quote! {{
-                        dimension1_pagination: crate::Pagination,
-                    }},
-                    PostgresqlTypePatternType::ArrayDimension2 {..} => quote::quote! {{
-                        dimension1_pagination: crate::Pagination,
-                        dimension2_pagination: crate::Pagination,
-                    }},
-                    PostgresqlTypePatternType::ArrayDimension3 {..} => quote::quote! {{
-                        dimension1_pagination: crate::Pagination,
-                        dimension2_pagination: crate::Pagination,
-                        dimension3_pagination: crate::Pagination,
-                    }},
-                    PostgresqlTypePatternType::ArrayDimension4 {..} => quote::quote! {{
-                        dimension1_pagination: crate::Pagination,
-                        dimension2_pagination: crate::Pagination,
-                        dimension3_pagination: crate::Pagination,
-                        dimension4_pagination: crate::Pagination,
-                    }},
+                    PostgresqlTypePatternType::ArrayDimension1 {..} |
+                    PostgresqlTypePatternType::ArrayDimension2 {..} |
+                    PostgresqlTypePatternType::ArrayDimension3 {..} |
+                    PostgresqlTypePatternType::ArrayDimension4 {..} => {
+                        let mut arguments_token_stream = vec![];
+                        for element in 1..=array_dimensions_number {
+                            let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
+                            .parse::<proc_macro2::TokenStream>().unwrap();
+                            arguments_token_stream.push(quote::quote! {
+                                #dimension_number_pagination_token_stream: crate::Pagination
+                            });
+                        }
+                        quote::quote! {{
+                            #(#arguments_token_stream),*
+                        }}
+                    }
                 },
                 true,
                 true
             );
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_select_upper_camel_case,
-                //todo refactor as for loop
                 &match &postgresql_type_pattern_type {
                     PostgresqlTypePatternType::Standart => quote::quote! {#core_default_default_default_token_stream},
-                    PostgresqlTypePatternType::ArrayDimension1 {..} => quote::quote! {Self {
-                        dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    }},
-                    PostgresqlTypePatternType::ArrayDimension2 {..} => quote::quote! {Self {
-                        dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                        dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    }},
-                    PostgresqlTypePatternType::ArrayDimension3 {..} => quote::quote! {Self {
-                        dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                        dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                        dimension3_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    }},
-                    PostgresqlTypePatternType::ArrayDimension4 {..} => quote::quote! {Self {
-                        dimension1_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                        dimension2_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                        dimension3_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                        dimension4_pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    }},
+                    PostgresqlTypePatternType::ArrayDimension1 {..} |
+                    PostgresqlTypePatternType::ArrayDimension2 {..} |
+                    PostgresqlTypePatternType::ArrayDimension3 {..} |
+                    PostgresqlTypePatternType::ArrayDimension4 {..} => {
+                        let mut arguments_token_stream = vec![];
+                        for element in 1..=array_dimensions_number {
+                            let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
+                            .parse::<proc_macro2::TokenStream>().unwrap();
+                            arguments_token_stream.push(quote::quote! {
+                                #dimension_number_pagination_token_stream: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                            });
+                        }
+                        quote::quote! {Self {
+                            #(#arguments_token_stream),*
+                        }}
+                    }
                 },
             );
             quote::quote! {
@@ -3682,15 +3670,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlTypePatternType::ArrayDimension3 {..} |
                     PostgresqlTypePatternType::ArrayDimension4 {..} => {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
-                            let mut acc = std::string::String::default();
-                            for _ in 1..=array_dimensions {
-                                acc.push_str("[{}:{}]");
-                            }
+                            let acc = std::iter::repeat("[{}:{}]").take(array_dimensions_number).collect::<String>();
                             format!("{{column}}{acc}")
                         });
                         let arguments_token_stream = {
                             let mut acc = vec![];
-                            for element in 1..=array_dimensions {
+                            for element in 1..=array_dimensions_number {
                                 let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
                                 .parse::<proc_macro2::TokenStream>().unwrap();
                                 acc.push(quote::quote! {
