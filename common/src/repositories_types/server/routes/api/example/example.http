@@ -281,7 +281,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 16,
   "select": [
     {
       "vec": null
@@ -319,7 +319,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 16,
     "vec": {
       "value": [
         0
@@ -356,7 +356,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 17,
   "vec": {
     "value": [
       0

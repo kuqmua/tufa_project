@@ -3198,10 +3198,35 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => "tstzrange",
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => "tstzrange",
                     };
+                    let maybe_array_part = {
+                        use postgresql_crud_macros_common::NotNullOrNullable;
+                        match &element.postgresql_type_pattern_type {
+                            PostgresqlTypePatternType::Standart => "",
+                            PostgresqlTypePatternType::ArrayDimension1 {
+                                dimension1_not_null_or_nullable,
+                            } => "[]",
+                            PostgresqlTypePatternType::ArrayDimension2 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                            } => "[][]",
+                            PostgresqlTypePatternType::ArrayDimension3 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                            } => "[][][]",
+                            PostgresqlTypePatternType::ArrayDimension4 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                                dimension4_not_null_or_nullable,
+                            } => "[][][][]",
+                        }
+                    };
                     let crate_maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
-                    let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}");
-                    let column_postgresql_query_type_not_null = format!("{column_postgresql_query_type} not null");
+                    let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}");
+                    let column_postgresql_query_type_not_null = format!("{column_postgresql_query_type}{maybe_array_part} not null");
                     let space_additional_parameter = " {}";
+                    //todo add additional checks coz postgreql does not support not null elements of array with keyword "not null"
                     match (&not_null_or_nullable, &can_be_primary_key) {
                         (postgresql_crud_macros_common::NotNullOrNullable::NotNull, CanBePrimaryKey::False) => {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type_not_null.to_string());
