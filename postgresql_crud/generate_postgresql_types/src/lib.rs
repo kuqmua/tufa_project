@@ -499,19 +499,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     Self::Standart => {
                         acc.push(postgresql_type_pattern_type);
                     },
-                    Self::ArrayDimension1 {
-                        dimension1_not_null_or_nullable,
-                    } => {
+                    Self::ArrayDimension1 {..} => {
                         postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension1_not_null_or_nullable| {
                             acc.push(Self::ArrayDimension1 {
                                 dimension1_not_null_or_nullable,
                              });
                         });
                     },
-                    Self::ArrayDimension2 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                    } => {
+                    Self::ArrayDimension2 {..} => {
                         postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension1_not_null_or_nullable| {
                             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension2_not_null_or_nullable| {
                                 acc.push(Self::ArrayDimension2 {
@@ -521,11 +516,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             });
                         });
                     },
-                    Self::ArrayDimension3 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                    } => {
+                    Self::ArrayDimension3 {..} => {
                         postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension1_not_null_or_nullable| {
                             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension2_not_null_or_nullable| {
                                 postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension3_not_null_or_nullable| {
@@ -538,12 +529,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             });
                         });
                     },
-                    Self::ArrayDimension4 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                        dimension4_not_null_or_nullable,
-                    } => {
+                    Self::ArrayDimension4 {..} => {
                         postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension1_not_null_or_nullable| {
                             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension2_not_null_or_nullable| {
                                 postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension3_not_null_or_nullable| {
