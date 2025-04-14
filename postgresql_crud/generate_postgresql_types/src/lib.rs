@@ -675,8 +675,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension1_not_null_or_nullable,
                 } => match &dimension1_not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &element.postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => true,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
+                },
+                PostgresqlTypePatternType::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => match &element.postgresql_type {
+                        PostgresqlType::StdPrimitiveI16AsInt2 => false,
                         PostgresqlType::StdPrimitiveI32AsInt4 => false,
                         PostgresqlType::StdPrimitiveI64AsInt8 => false,
                         PostgresqlType::StdPrimitiveF32AsFloat4 => false,
@@ -719,12 +725,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
                     },
-                },
-                PostgresqlTypePatternType::ArrayDimension2 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
                     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
                     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
