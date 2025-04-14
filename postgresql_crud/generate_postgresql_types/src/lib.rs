@@ -485,7 +485,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     impl PostgresqlTypePatternType {
         fn all_variants() -> std::vec::Vec<Self> {
-            vec!{
+            vec![
                 Self::Standart,
                 Self::ArrayDimension1 {
                     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
@@ -493,7 +493,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::ArrayDimension1 {
                     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
                 },
-
                 Self::ArrayDimension2 {
                     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
@@ -510,9 +509,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
                     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
                 },
-
-
-  
                 Self::ArrayDimension3 {
                     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
@@ -553,8 +549,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
                     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
                 },
-
-
                 Self::ArrayDimension4 {
                     dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                     dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
@@ -651,19 +645,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
                     dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
                 },
-            }
+            ]
         }
         fn array_dimensions_number(&self) -> std::primitive::usize {
             match &self {
                 PostgresqlTypePatternType::Standart => 0,
-                PostgresqlTypePatternType::ArrayDimension1 {..} => 1,
-                PostgresqlTypePatternType::ArrayDimension2 {..} => 2,
-                PostgresqlTypePatternType::ArrayDimension3 {..} => 3,
-                PostgresqlTypePatternType::ArrayDimension4 {..} => 4,
+                PostgresqlTypePatternType::ArrayDimension1 { .. } => 1,
+                PostgresqlTypePatternType::ArrayDimension2 { .. } => 2,
+                PostgresqlTypePatternType::ArrayDimension3 { .. } => 3,
+                PostgresqlTypePatternType::ArrayDimension4 { .. } => 4,
             }
         }
     }
-    //todo 
+    //todo
     // can i create a postgresql column array of not null int?
     // No, PostgreSQL does not natively support enforcing NOT NULL on individual elements of an array column.
     // Use a CHECK constraint to validate elements
@@ -686,10 +680,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     impl PostgresqlTypeRecord {
         fn all() -> std::vec::Vec<Self> {
             let mut acc = vec![];
-            PostgresqlType::into_array().into_iter().for_each(|postgresql_type|{
+            PostgresqlType::into_array().into_iter().for_each(|postgresql_type| {
                 if let CanBeNullable::True = &postgresql_type.can_be_nullable() {
-                    postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable|{
-                        PostgresqlTypePatternType::all_variants().into_iter().for_each(|postgresql_type_pattern_type|{
+                    postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
+                        PostgresqlTypePatternType::all_variants().into_iter().for_each(|postgresql_type_pattern_type| {
                             acc.push(PostgresqlTypeRecord {
                                 postgresql_type: postgresql_type.clone(),
                                 not_null_or_nullable: not_null_or_nullable,
@@ -699,9 +693,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     });
                 }
             });
-            PostgresqlType::into_array().into_iter().for_each(|postgresql_type|{
+            PostgresqlType::into_array().into_iter().for_each(|postgresql_type| {
                 if let CanBeNullable::False = &postgresql_type.can_be_nullable() {
-                    PostgresqlTypePatternType::all_variants().into_iter().for_each(|postgresql_type_pattern_type|{
+                    PostgresqlTypePatternType::all_variants().into_iter().for_each(|postgresql_type_pattern_type| {
                         acc.push(PostgresqlTypeRecord {
                             postgresql_type: postgresql_type.clone(),
                             not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
@@ -3219,9 +3213,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypePatternType::ArrayDimension3 {..} |
                         PostgresqlTypePatternType::ArrayDimension4 {..} => std::iter::repeat("[]").take(array_dimensions_number).collect::<String>()
                     };
+                    //todo
+                    let maybe_constraint_part = match &postgresql_type_pattern_type {
+                        PostgresqlTypePatternType::Standart => "".to_string(),
+                        PostgresqlTypePatternType::ArrayDimension1 {..} => "".to_string(),
+                        PostgresqlTypePatternType::ArrayDimension2 {..} => "".to_string(),
+                        PostgresqlTypePatternType::ArrayDimension3 {..} => "".to_string(),
+                        PostgresqlTypePatternType::ArrayDimension4 {..} => "".to_string(),
+                    };
                     let crate_maybe_primary_key_is_primary_key_token_stream = quote::quote! {crate::maybe_primary_key(is_primary_key)};
-                    let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}");
-                    let column_postgresql_query_type_not_null = format!("{column_postgresql_query_type} not null");
+                    let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}{maybe_constraint_part}");
+                    let column_postgresql_query_type_not_null = format!("{{column}} {postgresql_query_type}{maybe_array_part} not null{maybe_constraint_part}");
                     let space_additional_parameter = " {}";
                     //todo add additional checks coz postgreql does not support not null elements of array with keyword "not null"
                     match (&not_null_or_nullable, &can_be_primary_key) {
