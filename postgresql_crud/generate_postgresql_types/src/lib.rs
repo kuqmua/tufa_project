@@ -824,6 +824,148 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
         //todo rename - cuurent name work only if Standart type
         let ident_not_null_upper_camel_case = generate_ident_not_null_token_stream(&postgresql_type);
+        let generate_ident = |postgresql_type_pattern_type: &PostgresqlTypePatternType, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+            let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
+            let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
+            let not_null_or_nullable_rust = not_null_or_nullable.rust();
+            match (&postgresql_type_pattern_type, &not_null_or_nullable) {
+                (
+                    PostgresqlTypePatternType::Standart,
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                ) => quote::quote!{#ident_not_null_upper_camel_case},
+                (
+                    PostgresqlTypePatternType::Standart,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                ) => {
+                    format!("{not_null_or_nullable_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{postgresql_type_name}")
+                    .parse::<proc_macro2::TokenStream>().unwrap()
+                },
+                (
+                    PostgresqlTypePatternType::ArrayDimension1 {
+                        dimension1_not_null_or_nullable,
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                ) => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{postgresql_type_name}")
+                    .parse::<proc_macro2::TokenStream>().unwrap()
+                },
+                (
+                    PostgresqlTypePatternType::ArrayDimension1 {
+                        dimension1_not_null_or_nullable,
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                ) => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{postgresql_type_name}")
+                    .parse::<proc_macro2::TokenStream>().unwrap()
+                },
+                (
+                    PostgresqlTypePatternType::ArrayDimension2 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                ) => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    let d2 = dimension2_not_null_or_nullable;
+                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{postgresql_type_name}")
+                    .parse::<proc_macro2::TokenStream>().unwrap()
+                },
+                (
+                    PostgresqlTypePatternType::ArrayDimension2 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                ) => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension2_not_null_or_nullable.rust();
+                    let d2 = dimension2_not_null_or_nullable;
+                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{postgresql_type_name}")
+                    .parse::<proc_macro2::TokenStream>().unwrap()
+                },
+                (
+                    PostgresqlTypePatternType::ArrayDimension3 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                ) => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    let d2 = dimension2_not_null_or_nullable;
+                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                    let d3 = dimension3_not_null_or_nullable;
+                    let d3_rust = dimension3_not_null_or_nullable.rust();
+                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{postgresql_type_name}")
+                    .parse::<proc_macro2::TokenStream>().unwrap()
+                },
+                (
+                    PostgresqlTypePatternType::ArrayDimension3 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                ) => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    let d2 = dimension2_not_null_or_nullable;
+                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                    let d3 = dimension3_not_null_or_nullable;
+                    let d3_rust = dimension3_not_null_or_nullable.rust();
+                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{postgresql_type_name}")
+                    .parse::<proc_macro2::TokenStream>().unwrap()
+                },
+                (
+                    PostgresqlTypePatternType::ArrayDimension4 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                        dimension4_not_null_or_nullable,
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                ) => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    let d2 = dimension2_not_null_or_nullable;
+                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                    let d3 = dimension3_not_null_or_nullable;
+                    let d3_rust = dimension3_not_null_or_nullable.rust();
+                    let d4 = dimension4_not_null_or_nullable;
+                    let d4_rust = dimension4_not_null_or_nullable.rust();
+                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{vec_of_upper_camel_case}{d4_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{array_of_upper_camel_case}{d4}{postgresql_type_name}")
+                    .parse::<proc_macro2::TokenStream>().unwrap()
+                },
+                (
+                    PostgresqlTypePatternType::ArrayDimension4 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                        dimension4_not_null_or_nullable,
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                ) => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    let d2 = dimension2_not_null_or_nullable;
+                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                    let d3 = dimension3_not_null_or_nullable;
+                    let d3_rust = dimension3_not_null_or_nullable.rust();
+                    let d4 = dimension4_not_null_or_nullable;
+                    let d4_rust = dimension4_not_null_or_nullable.rust();
+                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{vec_of_upper_camel_case}{d4_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{array_of_upper_camel_case}{d4}{postgresql_type_name}")
+                    .parse::<proc_macro2::TokenStream>().unwrap()
+                },
+            }
+        };
         let ident: &dyn quote::ToTokens = {
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
@@ -1025,6 +1167,83 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
             },
         };
+        // println!("{}", quote::quote!{#field_type_handle});
+        let field_type_handle_x: &dyn quote::ToTokens = match &postgresql_type_pattern_type {
+            PostgresqlTypePatternType::Standart => match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_not_null_origin_upper_camel_case)
+            },
+            PostgresqlTypePatternType::ArrayDimension1 {
+                dimension1_not_null_or_nullable,
+            } => &{
+                use postgresql_crud_macros_common::NotNullOrNullable;
+                let t = match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{std::vec::Vec<#ident_not_null_origin_upper_camel_case>},
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                        let curent_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
+                            &PostgresqlTypePatternType::Standart,
+                            &postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                        ));
+                        quote::quote!{std::vec::Vec<#curent_ident_origin>}
+                    },
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                        let curent_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
+                            &postgresql_type_pattern_type,
+                            &postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                        ));
+                        quote::quote!{std::option::Option<#curent_ident_origin>}
+                    },
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                        let curent_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
+                            &postgresql_type_pattern_type,
+                            &postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                        ));
+                        quote::quote!{std::option::Option<#curent_ident_origin>}
+                    },
+                };
+                println!("{not_null_or_nullable:#?}");
+                println!("{postgresql_type_pattern_type:#?}");
+                println!("1111{}\n\n", quote::quote!{#t});
+                t
+            },
+            PostgresqlTypePatternType::ArrayDimension2 {
+                dimension1_not_null_or_nullable,
+                dimension2_not_null_or_nullable,
+            } => &{
+                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
+                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension2_type));
+                not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
+            },
+            PostgresqlTypePatternType::ArrayDimension3 {
+                dimension1_not_null_or_nullable,
+                dimension2_not_null_or_nullable,
+                dimension3_not_null_or_nullable,
+            } => &{
+                let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
+                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension3_type));
+                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension2_type));
+                not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
+            },
+            PostgresqlTypePatternType::ArrayDimension4 {
+                dimension1_not_null_or_nullable,
+                dimension2_not_null_or_nullable,
+                dimension3_not_null_or_nullable,
+                dimension4_not_null_or_nullable,
+            } => &{
+                let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
+                let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension4_type));
+                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension3_type));
+                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension2_type));
+                not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
+            },
+        };
+        let one = quote::quote!{#field_type_handle}.to_string();
+        let two = quote::quote!{#field_type_handle_x}.to_string();
+        if one != two {
+            // println!("++++++{one}");
+            // println!("------{two}");
+        }
+        // println!("{}", quote::quote!{#field_type_handle_x});
 
         let generate_typical_query_bind_token_stream = |content_token_stream: &dyn quote::ToTokens|{
             match &not_null_or_nullable {
