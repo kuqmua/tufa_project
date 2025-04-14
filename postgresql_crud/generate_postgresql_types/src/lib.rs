@@ -981,6 +981,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
         let field_type = postgresql_type.field_type_token_stream();
+        //todo reuse struct ident instead
+        //todo make inner types private and generate new/try_new methonds just to not construct every single time wrappers
         let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_pattern_type {
             PostgresqlTypePatternType::Standart => match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
