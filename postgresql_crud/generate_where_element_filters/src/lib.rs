@@ -949,16 +949,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 },
                             },
                             &ShouldAddDeclarationOfStructIdentGeneric::True,
-                            &quote::quote!{: crate::IsEmpty},
+                            &quote::quote!{: crate::IsStringEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
-                                if !crate::IsEmpty::is_empty(&value) {
+                                if !crate::IsStringEmpty::is_string_empty(&value) {
                                     Ok(Self { logical_operator, value })
                                 } else {
                                     Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
                                 }
                             },
-                            Some(quote::quote!{+ crate::IsEmpty}),
+                            Some(quote::quote!{+ crate::IsStringEmpty}),
                             &vec![&value_t_field]
                         ),
                         PostgresqlTypeFilterInitializedWithTryNew::CaseInsensitiveRegularExpression => (
@@ -970,16 +970,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 },
                             },
                             &ShouldAddDeclarationOfStructIdentGeneric::True,
-                            &quote::quote!{: crate::IsEmpty},
+                            &quote::quote!{: crate::IsStringEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
-                                if !crate::IsEmpty::is_empty(&value) {
+                                if !crate::IsStringEmpty::is_string_empty(&value) {
                                     Ok(Self { logical_operator, value })
                                 } else {
                                     Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
                                 }
                             },
-                            Some(quote::quote!{+ crate::IsEmpty}),
+                            Some(quote::quote!{+ crate::IsStringEmpty}),
                             &vec![&value_t_field]
                         ),
                         PostgresqlTypeFilterInitializedWithTryNew::LengthEqual => (
@@ -1566,16 +1566,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &quote::quote!{: crate::IsEmpty},
+                            &quote::quote!{: crate::IsStringEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
-                                if !crate::IsEmpty::is_empty(&value) {
+                                if !crate::IsStringEmpty::is_string_empty(&value) {
                                     Ok(Self { logical_operator, value })
                                 } else {
                                     Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
                                 }
                             },
-                            Some(quote::quote!{+ crate::IsEmpty}),
+                            Some(quote::quote!{+ crate::IsStringEmpty}),
                             &vec![&value_t_field]
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::CaseInsensitiveRegularExpression => (
@@ -1586,16 +1586,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &quote::quote!{: crate::IsEmpty},
+                            &quote::quote!{: crate::IsStringEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
-                                if !crate::IsEmpty::is_empty(&value) {
+                                if !crate::IsStringEmpty::is_string_empty(&value) {
                                     Ok(Self { logical_operator, value })
                                 } else {
                                     Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
                                 }
                             },
-                            Some(quote::quote!{+ crate::IsEmpty}),
+                            Some(quote::quote!{+ crate::IsStringEmpty}),
                             &vec![&value_t_field]
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::LengthEqual => (
@@ -1846,17 +1846,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &quote::quote!{: crate::IsEmpty},
+                            &quote::quote!{: crate::IsStringEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
                                 //todo check on empry is wrong. T generic initialization must check it. not here
-                                if !crate::IsEmpty::is_empty(&value) {
+                                if !crate::IsStringEmpty::is_string_empty(&value) {
                                     Ok(Self { logical_operator, value })
                                 } else {
                                     Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
                                 }
                             },
-                            Some(quote::quote!{+ crate::IsEmpty}),
+                            Some(quote::quote!{+ crate::IsStringEmpty}),
                             &vec![&value_t_field]
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::ContainsElementCaseInsensitiveRegularExpression => (
@@ -1866,17 +1866,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &quote::quote!{: crate::IsEmpty},
+                            &quote::quote!{: crate::IsStringEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
                                 //todo check on empry is wrong. T generic initialization must check it. not here
-                                if !crate::IsEmpty::is_empty(&value) {
+                                if !crate::IsStringEmpty::is_string_empty(&value) {
                                     Ok(Self { logical_operator, value })
                                 } else {
                                     Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
                                 }
                             },
-                            Some(quote::quote!{+ crate::IsEmpty}),
+                            Some(quote::quote!{+ crate::IsStringEmpty}),
                             &vec![&value_t_field]
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::AllElementsCaseSensitiveRegularExpression => (
@@ -1886,17 +1886,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &quote::quote!{: crate::IsEmpty},
+                            &quote::quote!{: crate::IsStringEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
                                 //todo check on empry is wrong. T generic initialization must check it. not here
-                                if !crate::IsEmpty::is_empty(&value) {
+                                if !crate::IsStringEmpty::is_string_empty(&value) {
                                     Ok(Self { logical_operator, value })
                                 } else {
                                     Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
                                 }
                             },
-                            Some(quote::quote!{+ crate::IsEmpty}),
+                            Some(quote::quote!{+ crate::IsStringEmpty}),
                             &vec![&value_t_field]
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::AllElementsCaseInsensitiveRegularExpression => (
@@ -1906,17 +1906,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &quote::quote!{: crate::IsEmpty},
+                            &quote::quote!{: crate::IsStringEmpty},
                             &value_t_token_stream,
                             &quote::quote!{
                                 //todo check on empry is wrong. T generic initialization must check it. not here
-                                if !crate::IsEmpty::is_empty(&value) {
+                                if !crate::IsStringEmpty::is_string_empty(&value) {
                                     Ok(Self { logical_operator, value })
                                 } else {
                                     Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
                                 }
                             },
-                            Some(quote::quote!{+ crate::IsEmpty}),
+                            Some(quote::quote!{+ crate::IsStringEmpty}),
                             &vec![&value_t_field]
                         ),
                     };

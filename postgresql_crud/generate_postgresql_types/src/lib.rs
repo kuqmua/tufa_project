@@ -1195,8 +1195,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         };
         //todo is it not correct for arrays?
-        let maybe_impl_is_empty_for_ident_origin_token_stream = {
-            let impl_is_empty_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_is_empty_for_ident_token_stream(
+        let maybe_impl_is_string_empty_for_ident_origin_token_stream = {
+            let impl_is_string_empty_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(
                 &ident_origin_upper_camel_case
             );
             match &not_null_or_nullable {
@@ -1213,9 +1213,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxTypesDecimalAsNumeric => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesBigDecimalAsNumeric => proc_macro2::TokenStream::new(),
                     PostgresqlType::StdPrimitiveBoolAsBool => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdStringStringAsCharN => impl_is_empty_for_ident_origin_token_stream,
-                    PostgresqlType::StdStringStringAsVarchar => impl_is_empty_for_ident_origin_token_stream,
-                    PostgresqlType::StdStringStringAsText => impl_is_empty_for_ident_origin_token_stream,
+                    PostgresqlType::StdStringStringAsCharN => impl_is_string_empty_for_ident_origin_token_stream,
+                    PostgresqlType::StdStringStringAsVarchar => impl_is_string_empty_for_ident_origin_token_stream,
+                    PostgresqlType::StdStringStringAsText => impl_is_string_empty_for_ident_origin_token_stream,
                     PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesTimeTimeAsTime => proc_macro2::TokenStream::new(),
@@ -1226,11 +1226,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => impl_is_empty_for_ident_origin_token_stream,
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => impl_is_empty_for_ident_origin_token_stream,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => impl_is_string_empty_for_ident_origin_token_stream,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => impl_is_string_empty_for_ident_origin_token_stream,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => impl_is_empty_for_ident_origin_token_stream,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => impl_is_string_empty_for_ident_origin_token_stream,
                     PostgresqlType::SqlxTypesBitVecAsBit => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesBitVecAsVarbit => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
@@ -3658,7 +3658,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let generated = quote::quote! {
             #ident_token_stream
             #ident_origin_token_stream
-            #maybe_impl_is_empty_for_ident_origin_token_stream
+            #maybe_impl_is_string_empty_for_ident_origin_token_stream
             #maybe_impl_try_new_for_ident_not_null_origin_token_stream
             #maybe_impl_serde_serialize_for_ident_not_null_origin_token_stream
             #maybe_impl_serde_deserialize_for_ident_not_null_origin_token_stream

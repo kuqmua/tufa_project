@@ -198,7 +198,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     }
                 }
             };
-            let maybe_impl_is_empty_for_ident_origin_token_stream: &dyn quote::ToTokens = match (&postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
+            let maybe_impl_is_string_empty_for_ident_origin_token_stream: &dyn quote::ToTokens = match (&postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
                 (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart) => match &postgresql_json_type_handle {
                     postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI16
@@ -211,8 +211,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF32
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveF64
                     | postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveBool => &proc_macro2_token_stream_new,
-                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &postgresql_crud_macros_common::generate_impl_crate_is_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &postgresql_crud_macros_common::generate_impl_crate_is_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdStringString => &postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeHandle::UuidUuid => &postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
                 },
                 (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart) => match &postgresql_json_type_handle {
                     postgresql_crud_macros_common::PostgresqlJsonTypeHandle::StdPrimitiveI8
@@ -286,7 +286,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             quote::quote! {
                 #ident_origin_token_stream
                 #maybe_impl_schemars_json_schema_for_ident_origin_token_stream
-                #maybe_impl_is_empty_for_ident_origin_token_stream
+                #maybe_impl_is_string_empty_for_ident_origin_token_stream
                 #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream
                 #impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream
