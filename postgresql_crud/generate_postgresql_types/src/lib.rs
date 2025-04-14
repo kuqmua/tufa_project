@@ -494,8 +494,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
         fn all_variants() -> std::vec::Vec<Self> {
-            let mut acc = vec![];
-            Self::into_array().into_iter().for_each(|postgresql_type_pattern_type| {
+            Self::into_array().into_iter().fold(vec![], |mut acc, postgresql_type_pattern_type| {
                 match &postgresql_type_pattern_type {
                     Self::Standart => {
                         acc.push(postgresql_type_pattern_type);
@@ -561,8 +560,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         });
                     },
                 }
-            });
-            acc
+                acc
+            })
         }
     }
     //todo
