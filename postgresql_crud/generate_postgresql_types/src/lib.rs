@@ -2900,7 +2900,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         dimension2_not_null_or_nullable,
                     } => {
                         let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]});
-                        let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![dimension2_type]});
+                        let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension2_type]});
                         not_null_or_nullable.maybe_some_wrap(dimension1_type)
                     },
                     PostgresqlTypePatternType::ArrayDimension3 {
@@ -2909,8 +2909,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         dimension3_not_null_or_nullable,
                     } => {
                         let dimension3_type = dimension3_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]});
-                        let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![dimension3_type]});
-                        let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![dimension2_type]});
+                        let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension3_type]});
+                        let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension2_type]});
                         not_null_or_nullable.maybe_some_wrap(dimension1_type)
                     },
                     PostgresqlTypePatternType::ArrayDimension4 {
@@ -2920,9 +2920,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         dimension4_not_null_or_nullable,
                     } => {
                         let dimension4_type = dimension4_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]});
-                        let dimension3_type = dimension3_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![dimension4_type]});
-                        let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![dimension3_type]});
-                        let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![dimension2_type]});
+                        let dimension3_type = dimension3_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension4_type]});
+                        let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension3_type]});
+                        let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension2_type]});
                         not_null_or_nullable.maybe_some_wrap(dimension1_type)
                     },
                 };
