@@ -684,7 +684,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => true,
                         PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => true,
                         PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => true,
-                        PostgresqlType::SqlxTypesDecimalAsNumeric => false,
+                        PostgresqlType::SqlxTypesDecimalAsNumeric => true,
                         PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
                         PostgresqlType::StdPrimitiveBoolAsBool => false,
                         PostgresqlType::StdStringStringAsCharN => false,
@@ -1194,59 +1194,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 pub struct #ident_origin_upper_camel_case(pub #field_type_handle);
             }
         };
-        //todo is it not correct for arrays?
-        let maybe_impl_is_string_empty_for_ident_origin_token_stream = {
-            let impl_is_string_empty_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(
-                &ident_origin_upper_camel_case
-            );
-            match &not_null_or_nullable {
-                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
-                    PostgresqlType::StdPrimitiveI16AsInt2 => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdPrimitiveI64AsInt8 => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdPrimitiveF32AsFloat4 => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdPrimitiveF64AsFloat8 => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesDecimalAsNumeric => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesBigDecimalAsNumeric => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdPrimitiveBoolAsBool => proc_macro2::TokenStream::new(),
-                    PostgresqlType::StdStringStringAsCharN => impl_is_string_empty_for_ident_origin_token_stream,
-                    PostgresqlType::StdStringStringAsVarchar => impl_is_string_empty_for_ident_origin_token_stream,
-                    PostgresqlType::StdStringStringAsText => impl_is_string_empty_for_ident_origin_token_stream,
-                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesTimeTimeAsTime => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesTimeDateAsDate => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => impl_is_string_empty_for_ident_origin_token_stream,
-                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => impl_is_string_empty_for_ident_origin_token_stream,
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => impl_is_string_empty_for_ident_origin_token_stream,
-                    PostgresqlType::SqlxTypesBitVecAsBit => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesBitVecAsVarbit => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => proc_macro2::TokenStream::new(),
-                },
-                postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
-            }
-        };
 
         let sqlx_types_time_primitive_date_time_as_timestamp = PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp;
         let sqlx_types_time_date_as_date = PostgresqlType::SqlxTypesTimeDateAsDate;
@@ -1291,6 +1238,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
 
         let (
+            maybe_impl_is_string_empty_for_ident_origin_token_stream,
             maybe_impl_try_new_for_ident_not_null_origin_token_stream,
             maybe_impl_serde_serialize_for_ident_not_null_origin_token_stream,
             maybe_impl_serde_deserialize_for_ident_not_null_origin_token_stream
@@ -1347,7 +1295,58 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let generate_std_collections_bound_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {std::collections::Bound<#type_token_stream>}
             };
-
+            let maybe_impl_is_string_empty_for_ident_origin_token_stream = {
+                let impl_is_string_empty_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(
+                    &ident_origin_upper_camel_case
+                );
+                match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
+                        PostgresqlType::StdPrimitiveI16AsInt2 => proc_macro2::TokenStream::new(),
+                        PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
+                        PostgresqlType::StdPrimitiveI64AsInt8 => proc_macro2::TokenStream::new(),
+                        PostgresqlType::StdPrimitiveF32AsFloat4 => proc_macro2::TokenStream::new(),
+                        PostgresqlType::StdPrimitiveF64AsFloat8 => proc_macro2::TokenStream::new(),
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
+                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesDecimalAsNumeric => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => proc_macro2::TokenStream::new(),
+                        PostgresqlType::StdPrimitiveBoolAsBool => proc_macro2::TokenStream::new(),
+                        PostgresqlType::StdStringStringAsCharN => impl_is_string_empty_for_ident_origin_token_stream,
+                        PostgresqlType::StdStringStringAsVarchar => impl_is_string_empty_for_ident_origin_token_stream,
+                        PostgresqlType::StdStringStringAsText => impl_is_string_empty_for_ident_origin_token_stream,
+                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesTimeDateAsDate => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => impl_is_string_empty_for_ident_origin_token_stream,
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => impl_is_string_empty_for_ident_origin_token_stream,
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => impl_is_string_empty_for_ident_origin_token_stream,
+                        PostgresqlType::SqlxTypesBitVecAsBit => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxTypesBitVecAsVarbit => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => proc_macro2::TokenStream::new(),
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                }
+            };
             let maybe_impl_try_new_for_ident_not_null_origin_token_stream = match &postgresql_type {
                 PostgresqlType::StdPrimitiveI16AsInt2 => proc_macro2::TokenStream::new(),
                 PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
@@ -2787,6 +2786,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 }
             };
             (
+                maybe_impl_is_string_empty_for_ident_origin_token_stream,
                 maybe_impl_try_new_for_ident_not_null_origin_token_stream,
                 maybe_impl_serde_serialize_for_ident_not_null_origin_token_stream,
                 maybe_impl_serde_deserialize_for_ident_not_null_origin_token_stream
@@ -2794,6 +2794,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         }
         else {
             (
+                proc_macro2::TokenStream::new(),
                 proc_macro2::TokenStream::new(),
                 proc_macro2::TokenStream::new(),
                 proc_macro2::TokenStream::new()
