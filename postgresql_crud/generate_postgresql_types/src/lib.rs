@@ -674,17 +674,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlTypePatternType::ArrayDimension1 {
                     dimension1_not_null_or_nullable,
                 } => match &dimension1_not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &element.postgresql_type {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => match &element.postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2 => true,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => true,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => true,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => true,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => true,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => true,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => true,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => true,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => true,
-                        PostgresqlType::SqlxTypesDecimalAsNumeric => true,
+                        PostgresqlType::StdPrimitiveI32AsInt4 => false,
+                        PostgresqlType::StdPrimitiveI64AsInt8 => false,
+                        PostgresqlType::StdPrimitiveF32AsFloat4 => false,
+                        PostgresqlType::StdPrimitiveF64AsFloat8 => false,
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
+                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => false,
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
+                        PostgresqlType::SqlxTypesDecimalAsNumeric => false,
                         PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
                         PostgresqlType::StdPrimitiveBoolAsBool => false,
                         PostgresqlType::StdStringStringAsCharN => false,
@@ -718,7 +719,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
                     },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
                 },
                 PostgresqlTypePatternType::ArrayDimension2 {
                     dimension1_not_null_or_nullable,
@@ -2894,26 +2894,26 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlTypePatternType::ArrayDimension1 {
                         dimension1_not_null_or_nullable,
                     } => {
-                        let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]});
-                        not_null_or_nullable.maybe_some_wrap(dimension1_type)
+                        let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream});
+                        not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension1_type]})
                     },
                     PostgresqlTypePatternType::ArrayDimension2 {
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable,
                     } => {
-                        let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]});
+                        let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream});
                         let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension2_type]});
-                        not_null_or_nullable.maybe_some_wrap(dimension1_type)
+                        not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension1_type]})
                     },
                     PostgresqlTypePatternType::ArrayDimension3 {
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable,
                         dimension3_not_null_or_nullable,
                     } => {
-                        let dimension3_type = dimension3_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]});
+                        let dimension3_type = dimension3_not_null_or_nullable.maybe_some_wrap(quote::quote!{#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream});
                         let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension3_type]});
                         let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension2_type]});
-                        not_null_or_nullable.maybe_some_wrap(dimension1_type)
+                        not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension1_type]})
                     },
                     PostgresqlTypePatternType::ArrayDimension4 {
                         dimension1_not_null_or_nullable,
@@ -2921,11 +2921,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         dimension3_not_null_or_nullable,
                         dimension4_not_null_or_nullable,
                     } => {
-                        let dimension4_type = dimension4_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]});
+                        let dimension4_type = dimension4_not_null_or_nullable.maybe_some_wrap(quote::quote!{#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream});
                         let dimension3_type = dimension3_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension4_type]});
                         let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension3_type]});
                         let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension2_type]});
-                        not_null_or_nullable.maybe_some_wrap(dimension1_type)
+                        not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension1_type]})
                     },
                 };
                 quote::quote! {Self(#content_token_stream)}
@@ -3682,7 +3682,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             #impl_postgresql_type_for_ident_token_stream
         };
         // if let (
-        //     // PostgresqlType::StdPrimitiveI16AsInt2,
+        //     PostgresqlType::StdPrimitiveI16AsInt2,
         //     // PostgresqlType::StdPrimitiveI32AsInt4,
         //     // PostgresqlType::StdPrimitiveI64AsInt8,
         //     // PostgresqlType::StdPrimitiveF32AsFloat4,
@@ -3690,7 +3690,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     // PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql,
         //     // PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql,
         //     // PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql,
-        //     PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney,
+        //     // PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney,
         //     // PostgresqlType::SqlxTypesDecimalAsNumeric,
         //     // PostgresqlType::SqlxTypesBigDecimalAsNumeric,
         //     // PostgresqlType::StdPrimitiveBoolAsBool,
@@ -3753,8 +3753,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     &postgresql_type_pattern_type
         // ) {
         //     let d1 = match &dimension1_not_null_or_nullable {
-        //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
-        //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
+        //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => false,
+        //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
         //     };
         //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
