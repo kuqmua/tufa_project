@@ -997,7 +997,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 dimension2_not_null_or_nullable,
             } => &{
                 let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
-                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(dimension2_type);
+                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                 not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
             },
             PostgresqlTypePatternType::ArrayDimension3 {
@@ -1006,8 +1006,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 dimension3_not_null_or_nullable,
             } => &{
                 let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
-                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(dimension3_type);
-                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(dimension2_type);
+                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
+                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                 not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
             },
             PostgresqlTypePatternType::ArrayDimension4 {
@@ -1017,9 +1017,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 dimension4_not_null_or_nullable,
             } => &{
                 let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
-                let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(dimension4_type);
-                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(dimension3_type);
-                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(dimension2_type);
+                let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension4_type>});
+                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
+                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                 not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
             },
         };
