@@ -621,47 +621,47 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     .filter(|element|{
         let postgresql_type_filter = match &element.postgresql_type {
             PostgresqlType::StdPrimitiveI16AsInt2 => true,
-            PostgresqlType::StdPrimitiveI32AsInt4 => false,
-            PostgresqlType::StdPrimitiveI64AsInt8 => false,
-            PostgresqlType::StdPrimitiveF32AsFloat4 => false,
-            PostgresqlType::StdPrimitiveF64AsFloat8 => false,
-            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
-            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
+            PostgresqlType::StdPrimitiveI32AsInt4 => true,
+            PostgresqlType::StdPrimitiveI64AsInt8 => true,
+            PostgresqlType::StdPrimitiveF32AsFloat4 => true,
+            PostgresqlType::StdPrimitiveF64AsFloat8 => true,
+            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => true,
+            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => true,
             PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => true,
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
-            PostgresqlType::SqlxTypesDecimalAsNumeric => false,
-            PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
-            PostgresqlType::StdPrimitiveBoolAsBool => false,
-            PostgresqlType::StdStringStringAsCharN => false,
-            PostgresqlType::StdStringStringAsVarchar => false,
-            PostgresqlType::StdStringStringAsText => false,
-            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => false,
-            PostgresqlType::SqlxTypesTimeTimeAsTime => false,
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => false,
-            PostgresqlType::SqlxTypesTimeDateAsDate => false,
-            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => false,
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => false,
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => false,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => false,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => false,
-            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => false,
-            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
-            PostgresqlType::SqlxTypesBitVecAsBit => false,
-            PostgresqlType::SqlxTypesBitVecAsVarbit => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => true,
+            PostgresqlType::SqlxTypesDecimalAsNumeric => true,
+            PostgresqlType::SqlxTypesBigDecimalAsNumeric => true,
+            PostgresqlType::StdPrimitiveBoolAsBool => true,
+            PostgresqlType::StdStringStringAsCharN => true,
+            PostgresqlType::StdStringStringAsVarchar => true,
+            PostgresqlType::StdStringStringAsText => true,
+            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => true,
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => true,
+            PostgresqlType::SqlxTypesTimeTimeAsTime => true,
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => true,
+            PostgresqlType::SqlxTypesTimeDateAsDate => true,
+            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => true,
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => true,
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => true,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => true,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => true,
+            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => true,
+            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => true,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => true,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => true,
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => true,
+            PostgresqlType::SqlxTypesBitVecAsBit => true,
+            PostgresqlType::SqlxTypesBitVecAsVarbit => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => true,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => true,
         };
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
@@ -676,12 +676,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 } => match &dimension1_not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &element.postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2 => true,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => false,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => false,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => false,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => false,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
+                        PostgresqlType::StdPrimitiveI32AsInt4 => true,
+                        PostgresqlType::StdPrimitiveI64AsInt8 => true,
+                        PostgresqlType::StdPrimitiveF32AsFloat4 => true,
+                        PostgresqlType::StdPrimitiveF64AsFloat8 => true,
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => true,
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => true,
                         PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => true,
                         PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
                         PostgresqlType::SqlxTypesDecimalAsNumeric => false,
@@ -3665,24 +3665,122 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             #ident_update_token_stream
             #impl_postgresql_type_for_ident_token_stream
         };
-        // if let (
-        //     // PostgresqlType::StdPrimitiveI16AsInt2,
-        //     PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql,
-        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     PostgresqlTypePatternType::Standart
-        //     // PostgresqlTypePatternType::ArrayDimension1 {
-        //     //     dimension1_not_null_or_nullable
-        //     // }
-        // ) = (
-        //     &postgresql_type,
-        //     &not_null_or_nullable,
-        //     &postgresql_type_pattern_type
-        // ) {
-        //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        //         "PostgresqlTypeTokens",
-        //         &generated,
-        //     );
-        // }
+        if let (
+            // PostgresqlType::StdPrimitiveI16AsInt2,
+            // PostgresqlType::StdPrimitiveI32AsInt4,
+            // PostgresqlType::StdPrimitiveI64AsInt8,
+            // PostgresqlType::StdPrimitiveF32AsFloat4,
+            // PostgresqlType::StdPrimitiveF64AsFloat8,
+            // PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql,
+            // PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql,
+            // PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql,
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney,
+            // PostgresqlType::SqlxTypesDecimalAsNumeric,
+            // PostgresqlType::SqlxTypesBigDecimalAsNumeric,
+            // PostgresqlType::StdPrimitiveBoolAsBool,
+            // PostgresqlType::StdStringStringAsCharN,
+            // PostgresqlType::StdStringStringAsVarchar,
+            // PostgresqlType::StdStringStringAsText,
+            // PostgresqlType::StdVecVecStdPrimitiveU8AsBytea,
+            // PostgresqlType::SqlxTypesChronoNaiveTimeAsTime,
+            // PostgresqlType::SqlxTypesTimeTimeAsTime,
+            // PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval,
+            // PostgresqlType::SqlxTypesTimeDateAsDate,
+            // PostgresqlType::SqlxTypesChronoNaiveDateAsDate,
+            // PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp,
+            // PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp,
+            // PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
+            // PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz,
+            // PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql,
+            // PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient,
+            // PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet,
+            // PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr,
+            // PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr,
+            // PostgresqlType::SqlxTypesBitVecAsBit,
+            // PostgresqlType::SqlxTypesBitVecAsVarbit,
+            // PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
+            // PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
+            // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange,
+            // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange,
+            // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange,
+            // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
+            // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
+            // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange,
+            // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
+            // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange,
+
+            postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+            // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+
+            // PostgresqlTypePatternType::Standart,
+            PostgresqlTypePatternType::ArrayDimension1 {
+                dimension1_not_null_or_nullable,
+            },
+            // PostgresqlTypePatternType::ArrayDimension2 {
+            //     dimension1_not_null_or_nullable,
+            //     dimension2_not_null_or_nullable,
+            // },
+            // PostgresqlTypePatternType::ArrayDimension3 {
+            //     dimension1_not_null_or_nullable,
+            //     dimension2_not_null_or_nullable,
+            //     dimension3_not_null_or_nullable,
+            // },
+            // PostgresqlTypePatternType::ArrayDimension4 {
+            //     dimension1_not_null_or_nullable,
+            //     dimension2_not_null_or_nullable,
+            //     dimension3_not_null_or_nullable,
+            //     dimension4_not_null_or_nullable,
+            // }
+        ) = (
+            &postgresql_type,
+            &not_null_or_nullable,
+            &postgresql_type_pattern_type
+        ) {
+            // let d1 = match &dimension1_not_null_or_nullable {
+            //     postgresql_crud_macros_common::NotNullOrNullable::NotNull => false,
+            //     postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
+            // };
+            // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+            // };
+            // let d3 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+            // };
+            // let d4 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+            // };
+            // if d {
+                macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+                    "PostgresqlTypeTokens",
+                    &generated,
+                );
+            // }
+        }
         postgresql_type_array.push(generated);
     });
     //this need only for better development experience
