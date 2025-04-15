@@ -570,6 +570,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_type_pattern_type: PostgresqlTypePatternType,
     }
+    #[derive(Debug)]
+    enum PostgresqlTypeRecordTryFromError {
+        Todo
+    }
+    impl std::convert::TryFrom<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)> for PostgresqlTypeRecord {
+        type Error = PostgresqlTypeRecordTryFromError;
+        fn try_from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)) -> Result<Self, Self::Error> {
+            Ok(Self {
+                postgresql_type: value.0,
+                not_null_or_nullable: value.1,
+                postgresql_type_pattern_type: value.2,
+            })
+        }
+    }
     impl PostgresqlTypeRecord {
         fn all() -> std::vec::Vec<Self> {
             let mut acc = vec![];
