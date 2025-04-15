@@ -681,196 +681,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
                 } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => match &element.postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => true,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => false,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => false,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => false,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => false,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => false,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
-                        PostgresqlType::SqlxTypesDecimalAsNumeric => false,
-                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
-                        PostgresqlType::StdPrimitiveBoolAsBool => false,
-                        PostgresqlType::StdStringStringAsCharN => false,
-                        PostgresqlType::StdStringStringAsVarchar => false,
-                        PostgresqlType::StdStringStringAsText => false,
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => false,
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => false,
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => false,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => false,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => false,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => false,
-                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => false,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => false,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => false,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => false,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
-                        PostgresqlType::SqlxTypesBitVecAsBit => false,
-                        PostgresqlType::SqlxTypesBitVecAsVarbit => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
-                    },
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => match &element.postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => true,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => false,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => false,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => false,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => false,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => false,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
-                        PostgresqlType::SqlxTypesDecimalAsNumeric => false,
-                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
-                        PostgresqlType::StdPrimitiveBoolAsBool => false,
-                        PostgresqlType::StdStringStringAsCharN => false,
-                        PostgresqlType::StdStringStringAsVarchar => false,
-                        PostgresqlType::StdStringStringAsText => false,
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => false,
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => false,
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => false,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => false,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => false,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => false,
-                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => false,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => false,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => false,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => false,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
-                        PostgresqlType::SqlxTypesBitVecAsBit => false,
-                        PostgresqlType::SqlxTypesBitVecAsVarbit => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
-                    },
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => match &element.postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => true,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => false,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => false,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => false,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => false,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => false,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
-                        PostgresqlType::SqlxTypesDecimalAsNumeric => false,
-                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
-                        PostgresqlType::StdPrimitiveBoolAsBool => false,
-                        PostgresqlType::StdStringStringAsCharN => false,
-                        PostgresqlType::StdStringStringAsVarchar => false,
-                        PostgresqlType::StdStringStringAsText => false,
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => false,
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => false,
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => false,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => false,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => false,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => false,
-                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => false,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => false,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => false,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => false,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
-                        PostgresqlType::SqlxTypesBitVecAsBit => false,
-                        PostgresqlType::SqlxTypesBitVecAsVarbit => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
-                    },
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => match &element.postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => true,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => false,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => false,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => false,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => false,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => false,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
-                        PostgresqlType::SqlxTypesDecimalAsNumeric => false,
-                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
-                        PostgresqlType::StdPrimitiveBoolAsBool => false,
-                        PostgresqlType::StdStringStringAsCharN => false,
-                        PostgresqlType::StdStringStringAsVarchar => false,
-                        PostgresqlType::StdStringStringAsText => false,
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => false,
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => false,
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => false,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => false,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => false,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => false,
-                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => false,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => false,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => false,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => false,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
-                        PostgresqlType::SqlxTypesBitVecAsBit => false,
-                        PostgresqlType::SqlxTypesBitVecAsVarbit => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
-                    },
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
                 },
                 PostgresqlTypePatternType::ArrayDimension3 {
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
                     dimension3_not_null_or_nullable,
                 } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
                 },
                 PostgresqlTypePatternType::ArrayDimension4 {
                     dimension1_not_null_or_nullable,
@@ -878,32 +706,109 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension3_not_null_or_nullable,
                     dimension4_not_null_or_nullable,
                 } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
                 }
             }
         };
-        postgresql_type_filter && not_null_or_nullable_filter && postgresql_type_pattern_type_filter
+        let can_be_nullable = {
+            use postgresql_crud_macros_common::NotNullOrNullable;
+            match &element.postgresql_type_pattern_type {
+                PostgresqlTypePatternType::Standart => true,
+                PostgresqlTypePatternType::ArrayDimension1 {
+                    dimension1_not_null_or_nullable,
+                } => {
+                    let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
+                    let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
+                    if element_not_null_or_nullable || d1 {
+                        match &element.postgresql_type.can_be_nullable() {
+                            CanBeNullable::True => true,
+                            CanBeNullable ::False => false,
+                        }
+                    }
+                    else {
+                        true
+                    }
+                },
+                PostgresqlTypePatternType::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                } => {
+                    let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
+                    let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
+                    let d2 = if let NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {true} else {false};
+                    if element_not_null_or_nullable || d1 || d2 {
+                        match &element.postgresql_type.can_be_nullable() {
+                            CanBeNullable::True => true,
+                            CanBeNullable ::False => false,
+                        }
+                    }
+                    else {
+                        true
+                    }
+                },
+                PostgresqlTypePatternType::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                } => {
+                    let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
+                    let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
+                    let d2 = if let NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {true} else {false};
+                    let d3 = if let NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {true} else {false};
+                    if element_not_null_or_nullable || d1 || d2 || d3 {
+                        match &element.postgresql_type.can_be_nullable() {
+                            CanBeNullable::True => true,
+                            CanBeNullable ::False => false,
+                        }
+                    }
+                    else {
+                        true
+                    }
+                },
+                PostgresqlTypePatternType::ArrayDimension4 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                } => {
+                    let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
+                    let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
+                    let d2 = if let NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {true} else {false};
+                    let d3 = if let NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {true} else {false};
+                    let d4 = if let NotNullOrNullable::Nullable = &dimension4_not_null_or_nullable {true} else {false};
+                    if element_not_null_or_nullable || d1 || d2 || d3 || d4 {
+                        match &element.postgresql_type.can_be_nullable() {
+                            CanBeNullable::True => true,
+                            CanBeNullable ::False => false,
+                        }
+                    }
+                    else {
+                        true
+                    }
+                }
+            }
+        };
+        postgresql_type_filter && not_null_or_nullable_filter && postgresql_type_pattern_type_filter && can_be_nullable
     })
     .for_each(|element|{
         // println!("{element:#?}");
         let postgresql_type = &element.postgresql_type;
         let not_null_or_nullable = &element.not_null_or_nullable;
-        let not_null_or_nullable_rust = not_null_or_nullable.rust();
         let rust_type_name = RustTypeName::from(postgresql_type);
         let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
         let postgresql_type_pattern_type = &element.postgresql_type_pattern_type;
@@ -1095,147 +1000,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 },
             }
         };
-        let ident: &dyn quote::ToTokens = {
-            let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
-            let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
-            match (&postgresql_type_pattern_type, &not_null_or_nullable) {
-                (
-                    PostgresqlTypePatternType::Standart,
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
-                ) => &ident_not_null_upper_camel_case,
-                (
-                    PostgresqlTypePatternType::Standart,
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
-                ) => &{
-                    format!("{not_null_or_nullable_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{postgresql_type_name}")
-                    .parse::<proc_macro2::TokenStream>().unwrap()
-                },
-                (
-                    PostgresqlTypePatternType::ArrayDimension1 {
-                        dimension1_not_null_or_nullable,
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
-                ) => &{
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{postgresql_type_name}")
-                    .parse::<proc_macro2::TokenStream>().unwrap()
-                },
-                (
-                    PostgresqlTypePatternType::ArrayDimension1 {
-                        dimension1_not_null_or_nullable,
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
-                ) => &{
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{postgresql_type_name}")
-                    .parse::<proc_macro2::TokenStream>().unwrap()
-                },
-                (
-                    PostgresqlTypePatternType::ArrayDimension2 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
-                ) => &{
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    let d2 = dimension2_not_null_or_nullable;
-                    let d2_rust = dimension2_not_null_or_nullable.rust();
-                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{postgresql_type_name}")
-                    .parse::<proc_macro2::TokenStream>().unwrap()
-                },
-                (
-                    PostgresqlTypePatternType::ArrayDimension2 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
-                ) => &{
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension2_not_null_or_nullable.rust();
-                    let d2 = dimension2_not_null_or_nullable;
-                    let d2_rust = dimension2_not_null_or_nullable.rust();
-                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{postgresql_type_name}")
-                    .parse::<proc_macro2::TokenStream>().unwrap()
-                },
-                (
-                    PostgresqlTypePatternType::ArrayDimension3 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
-                ) => &{
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    let d2 = dimension2_not_null_or_nullable;
-                    let d2_rust = dimension2_not_null_or_nullable.rust();
-                    let d3 = dimension3_not_null_or_nullable;
-                    let d3_rust = dimension3_not_null_or_nullable.rust();
-                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{postgresql_type_name}")
-                    .parse::<proc_macro2::TokenStream>().unwrap()
-                },
-                (
-                    PostgresqlTypePatternType::ArrayDimension3 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
-                ) => &{
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    let d2 = dimension2_not_null_or_nullable;
-                    let d2_rust = dimension2_not_null_or_nullable.rust();
-                    let d3 = dimension3_not_null_or_nullable;
-                    let d3_rust = dimension3_not_null_or_nullable.rust();
-                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{postgresql_type_name}")
-                    .parse::<proc_macro2::TokenStream>().unwrap()
-                },
-                (
-                    PostgresqlTypePatternType::ArrayDimension4 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                        dimension4_not_null_or_nullable,
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull
-                ) => &{
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    let d2 = dimension2_not_null_or_nullable;
-                    let d2_rust = dimension2_not_null_or_nullable.rust();
-                    let d3 = dimension3_not_null_or_nullable;
-                    let d3_rust = dimension3_not_null_or_nullable.rust();
-                    let d4 = dimension4_not_null_or_nullable;
-                    let d4_rust = dimension4_not_null_or_nullable.rust();
-                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{vec_of_upper_camel_case}{d4_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{array_of_upper_camel_case}{d4}{postgresql_type_name}")
-                    .parse::<proc_macro2::TokenStream>().unwrap()
-                },
-                (
-                    PostgresqlTypePatternType::ArrayDimension4 {
-                        dimension1_not_null_or_nullable,
-                        dimension2_not_null_or_nullable,
-                        dimension3_not_null_or_nullable,
-                        dimension4_not_null_or_nullable,
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable
-                ) => &{
-                    let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension1_not_null_or_nullable.rust();
-                    let d2 = dimension2_not_null_or_nullable;
-                    let d2_rust = dimension2_not_null_or_nullable.rust();
-                    let d3 = dimension3_not_null_or_nullable;
-                    let d3_rust = dimension3_not_null_or_nullable.rust();
-                    let d4 = dimension4_not_null_or_nullable;
-                    let d4_rust = dimension4_not_null_or_nullable.rust();
-                    format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{vec_of_upper_camel_case}{d4_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{array_of_upper_camel_case}{d4}{postgresql_type_name}")
-                    .parse::<proc_macro2::TokenStream>().unwrap()
-                },
-            }
-        };
+        let ident: &dyn quote::ToTokens = &generate_ident(&postgresql_type_pattern_type, &not_null_or_nullable);
         postgresql_crud_table_rust_struct_fields_token_stream.push({
             let field_ident = format!("column_{}", uuid::Uuid::new_v4()).replace("-", "_").parse::<proc_macro2::TokenStream>().unwrap();
             quote::quote!{
@@ -1252,53 +1017,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
         let field_type = postgresql_type.field_type_token_stream();
-        //todo reuse struct ident instead
         //todo make inner types private and generate new/try_new methonds just to not construct every single time wrappers
-        let field_type_handle: &dyn quote::ToTokens = match &postgresql_type_pattern_type {
-            PostgresqlTypePatternType::Standart => match &not_null_or_nullable {
-                postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
-                postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_not_null_origin_upper_camel_case)
-            },
-            PostgresqlTypePatternType::ArrayDimension1 {
-                dimension1_not_null_or_nullable,
-            } => &{
-                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
-                not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
-            },
-            PostgresqlTypePatternType::ArrayDimension2 {
-                dimension1_not_null_or_nullable,
-                dimension2_not_null_or_nullable,
-            } => &{
-                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
-                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension2_type));
-                not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
-            },
-            PostgresqlTypePatternType::ArrayDimension3 {
-                dimension1_not_null_or_nullable,
-                dimension2_not_null_or_nullable,
-                dimension3_not_null_or_nullable,
-            } => &{
-                let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
-                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension3_type));
-                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension2_type));
-                not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
-            },
-            PostgresqlTypePatternType::ArrayDimension4 {
-                dimension1_not_null_or_nullable,
-                dimension2_not_null_or_nullable,
-                dimension3_not_null_or_nullable,
-                dimension4_not_null_or_nullable,
-            } => &{
-                let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#ident_not_null_origin_upper_camel_case});
-                let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension4_type));
-                let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension3_type));
-                let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension2_type));
-                not_null_or_nullable.maybe_option_wrap(postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&dimension1_type))
-            },
-        };
-        // println!("{}", quote::quote!{#field_type_handle});
-        
-        let field_type_handle_x: &dyn quote::ToTokens = {
+        let field_type_handle: &dyn quote::ToTokens = {
             use postgresql_crud_macros_common::NotNullOrNullable;
             let generate_current_ident_origin = |current_postgresql_type_pattern_type: &PostgresqlTypePatternType, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
                 let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
@@ -1428,13 +1148,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 },
             }
         };
-        let one = quote::quote!{#field_type_handle}.to_string();
-        let two = quote::quote!{#field_type_handle_x}.to_string();
-        if one != two {
-            // println!("++++++{one}");
-            // println!("------{two}");
-        }
-        // println!("{}", quote::quote!{#field_type_handle_x});
+        // println!("{}", quote::quote!{#field_type_handle});
 
         let generate_typical_query_bind_token_stream = |content_token_stream: &dyn quote::ToTokens|{
             match &not_null_or_nullable {
@@ -3324,42 +3038,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
                         },
-                        PostgresqlTypePatternType::ArrayDimension1 {
-                            dimension1_not_null_or_nullable,
-                        } => {
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream});
-                            not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension1_type]})
-                        },
-                        PostgresqlTypePatternType::ArrayDimension2 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                        } => {
-                            let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream});
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension2_type]});
-                            not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension1_type]})
-                        },
-                        PostgresqlTypePatternType::ArrayDimension3 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                        } => {
-                            let dimension3_type = dimension3_not_null_or_nullable.maybe_some_wrap(quote::quote!{#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream});
-                            let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension3_type]});
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension2_type]});
-                            not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension1_type]})
-                        },
-                        PostgresqlTypePatternType::ArrayDimension4 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                            dimension4_not_null_or_nullable,
-                        } => {
-                            let dimension4_type = dimension4_not_null_or_nullable.maybe_some_wrap(quote::quote!{#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream});
-                            let dimension3_type = dimension3_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension4_type]});
-                            let dimension2_type = dimension2_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension3_type]});
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension2_type]});
-                            not_null_or_nullable.maybe_some_wrap(quote::quote!{vec![#dimension1_type]})
-                        },
+                        PostgresqlTypePatternType::ArrayDimension1 {..} |
+                        PostgresqlTypePatternType::ArrayDimension2 {..} |
+                        PostgresqlTypePatternType::ArrayDimension3 {..} |
+                        PostgresqlTypePatternType::ArrayDimension4 {..} => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
+                        }
                     };
                     quote::quote! {Self(#content_token_stream)}
                 }
@@ -4107,14 +3792,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             #impl_postgresql_type_for_ident_token_stream
         };
         // if let (
-        //     PostgresqlType::StdPrimitiveI16AsInt2,
+        //     // PostgresqlType::StdPrimitiveI16AsInt2,
         //     // PostgresqlType::StdPrimitiveI32AsInt4,
         //     // PostgresqlType::StdPrimitiveI64AsInt8,
         //     // PostgresqlType::StdPrimitiveF32AsFloat4,
         //     // PostgresqlType::StdPrimitiveF64AsFloat8,
         //     // PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql,
         //     // PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql,
-        //     // PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql,
+        //     PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql,
         //     // PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney,
         //     // PostgresqlType::SqlxTypesDecimalAsNumeric,
         //     // PostgresqlType::SqlxTypesBigDecimalAsNumeric,
@@ -4154,13 +3839,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     // PostgresqlTypePatternType::Standart,
-        //     // PostgresqlTypePatternType::ArrayDimension1 {
-        //     //     dimension1_not_null_or_nullable,
-        //     // },
-        //     PostgresqlTypePatternType::ArrayDimension2 {
+        //     PostgresqlTypePatternType::ArrayDimension1 {
         //         dimension1_not_null_or_nullable,
-        //         dimension2_not_null_or_nullable,
         //     },
+        //     // PostgresqlTypePatternType::ArrayDimension2 {
+        //     //     dimension1_not_null_or_nullable,
+        //     //     dimension2_not_null_or_nullable,
+        //     // },
         //     // PostgresqlTypePatternType::ArrayDimension3 {
         //     //     dimension1_not_null_or_nullable,
         //     //     dimension2_not_null_or_nullable,
@@ -4178,16 +3863,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     &postgresql_type_pattern_type
         // ) {
         //     use postgresql_crud_macros_common::NotNullOrNullable;
-        //     // let d1 = match &dimension1_not_null_or_nullable {
-        //     //     NotNullOrNullable::NotNull => false,
-        //     //     NotNullOrNullable::Nullable => false,
-        //     // };
-        //     let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-        //         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
-        //         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-        //         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-        //         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     let d1 = match &dimension1_not_null_or_nullable {
+        //         NotNullOrNullable::NotNull => false,
+        //         NotNullOrNullable::Nullable => true,
         //     };
+        //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     // };
         //     // let d3 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
@@ -4216,7 +3901,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
         //     // };
-        //     if d2 {
+        //     if d1 {
         //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //             "PostgresqlTypeTokens",
         //             &generated,
