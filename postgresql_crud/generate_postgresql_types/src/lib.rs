@@ -564,24 +564,412 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     //     )
     // );
 
-    #[derive(Debug, PartialEq, serde::Deserialize)]
+    #[derive(Debug, PartialEq)]
     struct PostgresqlTypeRecord {
         postgresql_type: PostgresqlType,
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_type_pattern_type: PostgresqlTypePatternType,
     }
+    const _: () = {
+        #[allow(unused_extern_crates, clippy::useless_attribute)]
+        extern crate serde as _serde;
+        #[automatically_derived]
+        impl<'de> _serde::Deserialize<'de> for PostgresqlTypeRecord {
+            fn deserialize<__D>(
+                __deserializer: __D,
+            ) -> _serde::__private::Result<Self, __D::Error>
+            where
+                __D: _serde::Deserializer<'de>,
+            {
+                #[allow(non_camel_case_types)]
+                #[doc(hidden)]
+                enum __Field {
+                    __field0,
+                    __field1,
+                    __field2,
+                    __ignore,
+                }
+                #[doc(hidden)]
+                struct __FieldVisitor;
+                #[automatically_derived]
+                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                    type Value = __Field;
+                    fn expecting(
+                        &self,
+                        __formatter: &mut _serde::__private::Formatter,
+                    ) -> _serde::__private::fmt::Result {
+                        _serde::__private::Formatter::write_str(
+                            __formatter,
+                            "field identifier",
+                        )
+                    }
+                    fn visit_u64<__E>(
+                        self,
+                        __value: u64,
+                    ) -> _serde::__private::Result<Self::Value, __E>
+                    where
+                        __E: _serde::de::Error,
+                    {
+                        match __value {
+                            0u64 => _serde::__private::Ok(__Field::__field0),
+                            1u64 => _serde::__private::Ok(__Field::__field1),
+                            2u64 => _serde::__private::Ok(__Field::__field2),
+                            _ => _serde::__private::Ok(__Field::__ignore),
+                        }
+                    }
+                    fn visit_str<__E>(
+                        self,
+                        __value: &str,
+                    ) -> _serde::__private::Result<Self::Value, __E>
+                    where
+                        __E: _serde::de::Error,
+                    {
+                        match __value {
+                            "postgresql_type" => _serde::__private::Ok(__Field::__field0),
+                            "not_null_or_nullable" => {
+                                _serde::__private::Ok(__Field::__field1)
+                            }
+                            "postgresql_type_pattern_type" => {
+                                _serde::__private::Ok(__Field::__field2)
+                            }
+                            _ => _serde::__private::Ok(__Field::__ignore),
+                        }
+                    }
+                    fn visit_bytes<__E>(
+                        self,
+                        __value: &[u8],
+                    ) -> _serde::__private::Result<Self::Value, __E>
+                    where
+                        __E: _serde::de::Error,
+                    {
+                        match __value {
+                            b"postgresql_type" => _serde::__private::Ok(__Field::__field0),
+                            b"not_null_or_nullable" => {
+                                _serde::__private::Ok(__Field::__field1)
+                            }
+                            b"postgresql_type_pattern_type" => {
+                                _serde::__private::Ok(__Field::__field2)
+                            }
+                            _ => _serde::__private::Ok(__Field::__ignore),
+                        }
+                    }
+                }
+                #[automatically_derived]
+                impl<'de> _serde::Deserialize<'de> for __Field {
+                    #[inline]
+                    fn deserialize<__D>(
+                        __deserializer: __D,
+                    ) -> _serde::__private::Result<Self, __D::Error>
+                    where
+                        __D: _serde::Deserializer<'de>,
+                    {
+                        _serde::Deserializer::deserialize_identifier(
+                            __deserializer,
+                            __FieldVisitor,
+                        )
+                    }
+                }
+                #[doc(hidden)]
+                struct __Visitor<'de> {
+                    marker: _serde::__private::PhantomData<PostgresqlTypeRecord>,
+                    lifetime: _serde::__private::PhantomData<&'de ()>,
+                }
+                #[automatically_derived]
+                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                    type Value = PostgresqlTypeRecord;
+                    fn expecting(
+                        &self,
+                        __formatter: &mut _serde::__private::Formatter,
+                    ) -> _serde::__private::fmt::Result {
+                        _serde::__private::Formatter::write_str(
+                            __formatter,
+                            "struct PostgresqlTypeRecord",
+                        )
+                    }
+                    #[inline]
+                    fn visit_seq<__A>(
+                        self,
+                        mut __seq: __A,
+                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                    where
+                        __A: _serde::de::SeqAccess<'de>,
+                    {
+                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                            PostgresqlType,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        0usize,
+                                        &"struct PostgresqlTypeRecord with 3 elements",
+                                    ),
+                                );
+                            }
+                        };
+                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                            postgresql_crud_macros_common::NotNullOrNullable,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        1usize,
+                                        &"struct PostgresqlTypeRecord with 3 elements",
+                                    ),
+                                );
+                            }
+                        };
+                        let __field2 = match _serde::de::SeqAccess::next_element::<
+                            PostgresqlTypePatternType,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        2usize,
+                                        &"struct PostgresqlTypeRecord with 3 elements",
+                                    ),
+                                );
+                            }
+                        };
+                        match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
+                            Ok(value) => serde::__private::Ok(value),
+                            Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                        }
+                    }
+                    #[inline]
+                    fn visit_map<__A>(
+                        self,
+                        mut __map: __A,
+                    ) -> _serde::__private::Result<Self::Value, __A::Error>
+                    where
+                        __A: _serde::de::MapAccess<'de>,
+                    {
+                        let mut __field0: _serde::__private::Option<PostgresqlType> = _serde::__private::None;
+                        let mut __field1: _serde::__private::Option<
+                            postgresql_crud_macros_common::NotNullOrNullable,
+                        > = _serde::__private::None;
+                        let mut __field2: _serde::__private::Option<
+                            PostgresqlTypePatternType,
+                        > = _serde::__private::None;
+                        while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                            __Field,
+                        >(&mut __map)? {
+                            match __key {
+                                __Field::__field0 => {
+                                    if _serde::__private::Option::is_some(&__field0) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field(
+                                                "postgresql_type",
+                                            ),
+                                        );
+                                    }
+                                    __field0 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
+                                            PostgresqlType,
+                                        >(&mut __map)?,
+                                    );
+                                }
+                                __Field::__field1 => {
+                                    if _serde::__private::Option::is_some(&__field1) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field(
+                                                "not_null_or_nullable",
+                                            ),
+                                        );
+                                    }
+                                    __field1 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
+                                            postgresql_crud_macros_common::NotNullOrNullable,
+                                        >(&mut __map)?,
+                                    );
+                                }
+                                __Field::__field2 => {
+                                    if _serde::__private::Option::is_some(&__field2) {
+                                        return _serde::__private::Err(
+                                            <__A::Error as _serde::de::Error>::duplicate_field(
+                                                "postgresql_type_pattern_type",
+                                            ),
+                                        );
+                                    }
+                                    __field2 = _serde::__private::Some(
+                                        _serde::de::MapAccess::next_value::<
+                                            PostgresqlTypePatternType,
+                                        >(&mut __map)?,
+                                    );
+                                }
+                                _ => {
+                                    let _ = _serde::de::MapAccess::next_value::<
+                                        _serde::de::IgnoredAny,
+                                    >(&mut __map)?;
+                                }
+                            }
+                        }
+                        let __field0 = match __field0 {
+                            _serde::__private::Some(__field0) => __field0,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field("postgresql_type")?
+                            }
+                        };
+                        let __field1 = match __field1 {
+                            _serde::__private::Some(__field1) => __field1,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field("not_null_or_nullable")?
+                            }
+                        };
+                        let __field2 = match __field2 {
+                            _serde::__private::Some(__field2) => __field2,
+                            _serde::__private::None => {
+                                _serde::__private::de::missing_field(
+                                    "postgresql_type_pattern_type",
+                                )?
+                            }
+                        };
+                        match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
+                            Ok(value) => serde::__private::Ok(value),
+                            Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                        }
+                    }
+                }
+                #[doc(hidden)]
+                const FIELDS: &'static [&'static str] = &[
+                    "postgresql_type",
+                    "not_null_or_nullable",
+                    "postgresql_type_pattern_type",
+                ];
+                _serde::Deserializer::deserialize_struct(
+                    __deserializer,
+                    "PostgresqlTypeRecord",
+                    FIELDS,
+                    __Visitor {
+                        marker: _serde::__private::PhantomData::<PostgresqlTypeRecord>,
+                        lifetime: _serde::__private::PhantomData,
+                    },
+                )
+            }
+        }
+    };
     #[derive(Debug)]
     enum PostgresqlTypeRecordTryFromError {
-        Todo
+        CantSupportNullable {
+            value: std::string::String
+        },
     }
     impl std::convert::TryFrom<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)> for PostgresqlTypeRecord {
         type Error = PostgresqlTypeRecordTryFromError;
         fn try_from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)) -> Result<Self, Self::Error> {
-            Ok(Self {
-                postgresql_type: value.0,
-                not_null_or_nullable: value.1,
-                postgresql_type_pattern_type: value.2,
-            })
+            match &value.0.can_be_nullable() {
+                CanBeNullable::True => Ok(Self {
+                    postgresql_type: value.0,
+                    not_null_or_nullable: value.1,
+                    postgresql_type_pattern_type: value.2,
+                }),
+                CanBeNullable::False => {
+                    if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &value.1 {
+                        return Err(Self::Error::CantSupportNullable{
+                            value: format!("{value:#?}")
+                        });
+                    }
+                    match &value.2 {
+                        PostgresqlTypePatternType::Standart => Ok(Self {
+                            postgresql_type: value.0,
+                            not_null_or_nullable: value.1,
+                            postgresql_type_pattern_type: value.2,
+                        }),
+                        PostgresqlTypePatternType::ArrayDimension1 {
+                            dimension1_not_null_or_nullable,
+                        } => match &dimension1_not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => Ok(Self {
+                                postgresql_type: value.0,
+                                not_null_or_nullable: value.1,
+                                postgresql_type_pattern_type: value.2,
+                            }),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => Err(Self::Error::CantSupportNullable{
+                                value: format!("{value:#?}")
+                            })
+                        },
+                        PostgresqlTypePatternType::ArrayDimension2 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                        } => {
+                            if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
+                                return Err(Self::Error::CantSupportNullable{
+                                    value: format!("{value:#?}")
+                                });
+                            }
+                            if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {
+                                return Err(Self::Error::CantSupportNullable{
+                                    value: format!("{value:#?}")
+                                });
+                            }
+                            Ok(Self {
+                                postgresql_type: value.0,
+                                not_null_or_nullable: value.1,
+                                postgresql_type_pattern_type: value.2,
+                            })
+                        },
+                        PostgresqlTypePatternType::ArrayDimension3 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                            dimension3_not_null_or_nullable,
+                        } => {
+                            if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
+                                return Err(Self::Error::CantSupportNullable{
+                                    value: format!("{value:#?}")
+                                });
+                            }
+                            if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {
+                                return Err(Self::Error::CantSupportNullable{
+                                    value: format!("{value:#?}")
+                                });
+                            }
+                            if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {
+                                return Err(Self::Error::CantSupportNullable{
+                                    value: format!("{value:#?}")
+                                });
+                            }
+                            Ok(Self {
+                                postgresql_type: value.0,
+                                not_null_or_nullable: value.1,
+                                postgresql_type_pattern_type: value.2,
+                            })
+                        },
+                        PostgresqlTypePatternType::ArrayDimension4 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                            dimension3_not_null_or_nullable,
+                            dimension4_not_null_or_nullable,
+                        } => {
+                            if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
+                                return Err(Self::Error::CantSupportNullable{
+                                    value: format!("{value:#?}")
+                                });
+                            }
+                            if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {
+                                return Err(Self::Error::CantSupportNullable{
+                                    value: format!("{value:#?}")
+                                });
+                            }
+                            if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {
+                                return Err(Self::Error::CantSupportNullable{
+                                    value: format!("{value:#?}")
+                                });
+                            }
+                            if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension4_not_null_or_nullable {
+                                return Err(Self::Error::CantSupportNullable{
+                                    value: format!("{value:#?}")
+                                });
+                            }
+                            Ok(Self {
+                                postgresql_type: value.0,
+                                not_null_or_nullable: value.1,
+                                postgresql_type_pattern_type: value.2,
+                            })
+                        },
+                    }
+                }
+            }
         }
     }
     impl PostgresqlTypeRecord {
@@ -615,66 +1003,68 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     let mut postgresql_crud_table_rust_struct_fields_token_stream = vec![];
     let mut postgresql_type_array = vec![];
-    // {
-    //     let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
-    //     .expect("failed to get Config for generate_postgresql_type");
-    //     let mut acc = vec![];
-    //     for element in &vec {
-    //         if acc.contains(&element) {
-    //             panic!("not unique postgersql type provided: {element:#?}");
-    //         }
-    //         else {
-    //             acc.push(&element);
-    //         }
-    //     }
-    //     vec
-    // }
-    PostgresqlTypeRecord::all()
+    //todo make it parallel with rayon
+    //todo make a function to generate all json variants for config
+    {
+        let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
+        .expect("failed to get Config for generate_postgresql_type");
+        let mut acc = vec![];
+        for element in &vec {
+            if acc.contains(&element) {
+                panic!("not unique postgersql type provided: {element:#?}");
+            }
+            else {
+                acc.push(&element);
+            }
+        }
+        vec
+    }
+    // PostgresqlTypeRecord::all()
     .into_iter()
     .filter(|element|{
         let postgresql_type_filter = match &element.postgresql_type {
             PostgresqlType::StdPrimitiveI16AsInt2 => true,
-            PostgresqlType::StdPrimitiveI32AsInt4 => true,
-            PostgresqlType::StdPrimitiveI64AsInt8 => true,
-            PostgresqlType::StdPrimitiveF32AsFloat4 => true,
-            PostgresqlType::StdPrimitiveF64AsFloat8 => true,
-            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => true,
-            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => true,
+            PostgresqlType::StdPrimitiveI32AsInt4 => false,
+            PostgresqlType::StdPrimitiveI64AsInt8 => false,
+            PostgresqlType::StdPrimitiveF32AsFloat4 => false,
+            PostgresqlType::StdPrimitiveF64AsFloat8 => false,
+            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
+            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
             PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => true,
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => true,
-            PostgresqlType::SqlxTypesDecimalAsNumeric => true,
-            PostgresqlType::SqlxTypesBigDecimalAsNumeric => true,
-            PostgresqlType::StdPrimitiveBoolAsBool => true,
-            PostgresqlType::StdStringStringAsCharN => true,
-            PostgresqlType::StdStringStringAsVarchar => true,
-            PostgresqlType::StdStringStringAsText => true,
-            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => true,
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => true,
-            PostgresqlType::SqlxTypesTimeTimeAsTime => true,
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => true,
-            PostgresqlType::SqlxTypesTimeDateAsDate => true,
-            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => true,
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => true,
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => true,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => true,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => true,
-            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => true,
-            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => true,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => true,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => true,
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => true,
-            PostgresqlType::SqlxTypesBitVecAsBit => true,
-            PostgresqlType::SqlxTypesBitVecAsVarbit => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => true,
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
+            PostgresqlType::SqlxTypesDecimalAsNumeric => false,
+            PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
+            PostgresqlType::StdPrimitiveBoolAsBool => false,
+            PostgresqlType::StdStringStringAsCharN => false,
+            PostgresqlType::StdStringStringAsVarchar => false,
+            PostgresqlType::StdStringStringAsText => false,
+            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => false,
+            PostgresqlType::SqlxTypesTimeTimeAsTime => false,
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => false,
+            PostgresqlType::SqlxTypesTimeDateAsDate => false,
+            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => false,
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => false,
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => false,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => false,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => false,
+            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => false,
+            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
+            PostgresqlType::SqlxTypesBitVecAsBit => false,
+            PostgresqlType::SqlxTypesBitVecAsVarbit => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
         };
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
@@ -695,8 +1085,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension2_not_null_or_nullable,
                 } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
                 },
                 PostgresqlTypePatternType::ArrayDimension3 {
@@ -705,12 +1095,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension3_not_null_or_nullable,
                 } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
                 },
                 PostgresqlTypePatternType::ArrayDimension4 {
@@ -720,20 +1110,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     dimension4_not_null_or_nullable,
                 } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
                 }
             }
@@ -829,9 +1219,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
         let postgresql_type_pattern_type = &element.postgresql_type_pattern_type;
         let array_dimensions_number = postgresql_type_pattern_type.array_dimensions_number();
-        if let (CanBeNullable::False, postgresql_crud_macros_common::NotNullOrNullable::Nullable) = (&postgresql_type.can_be_nullable(), &not_null_or_nullable) {
-            panic!("type cannot be nullable")//todo maybe rewrite it somehow better?
-        }
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
         let column_snake_case = naming::ColumnSnakeCase;
