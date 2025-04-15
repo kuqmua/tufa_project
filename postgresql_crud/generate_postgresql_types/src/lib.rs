@@ -586,14 +586,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     });
                 }
             });
+            //postgresql cannot autogenerate all elements in array
             PostgresqlType::into_array().into_iter().for_each(|postgresql_type| {
                 if let CanBeNullable::False = &postgresql_type.can_be_nullable() {
-                    PostgresqlTypePatternType::all_variants().into_iter().for_each(|postgresql_type_pattern_type| {
-                        acc.push(PostgresqlTypeRecord {
-                            postgresql_type: postgresql_type.clone(),
-                            not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                            postgresql_type_pattern_type: postgresql_type_pattern_type,
-                        });
+                    acc.push(PostgresqlTypeRecord {
+                        postgresql_type: postgresql_type,
+                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                        postgresql_type_pattern_type: PostgresqlTypePatternType::Standart,
                     });
                 }
             });
@@ -725,85 +724,88 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 }
             }
         };
-        let can_be_nullable = {
-            use postgresql_crud_macros_common::NotNullOrNullable;
-            match &element.postgresql_type_pattern_type {
-                PostgresqlTypePatternType::Standart => true,
-                PostgresqlTypePatternType::ArrayDimension1 {
-                    dimension1_not_null_or_nullable,
-                } => {
-                    let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
-                    let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
-                    if element_not_null_or_nullable || d1 {
-                        match &element.postgresql_type.can_be_nullable() {
-                            CanBeNullable::True => true,
-                            CanBeNullable ::False => false,
-                        }
-                    }
-                    else {
-                        true
-                    }
-                },
-                PostgresqlTypePatternType::ArrayDimension2 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                } => {
-                    let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
-                    let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
-                    let d2 = if let NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {true} else {false};
-                    if element_not_null_or_nullable || d1 || d2 {
-                        match &element.postgresql_type.can_be_nullable() {
-                            CanBeNullable::True => true,
-                            CanBeNullable ::False => false,
-                        }
-                    }
-                    else {
-                        true
-                    }
-                },
-                PostgresqlTypePatternType::ArrayDimension3 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                } => {
-                    let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
-                    let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
-                    let d2 = if let NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {true} else {false};
-                    let d3 = if let NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {true} else {false};
-                    if element_not_null_or_nullable || d1 || d2 || d3 {
-                        match &element.postgresql_type.can_be_nullable() {
-                            CanBeNullable::True => true,
-                            CanBeNullable ::False => false,
-                        }
-                    }
-                    else {
-                        true
-                    }
-                },
-                PostgresqlTypePatternType::ArrayDimension4 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable,
-                } => {
-                    let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
-                    let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
-                    let d2 = if let NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {true} else {false};
-                    let d3 = if let NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {true} else {false};
-                    let d4 = if let NotNullOrNullable::Nullable = &dimension4_not_null_or_nullable {true} else {false};
-                    if element_not_null_or_nullable || d1 || d2 || d3 || d4 {
-                        match &element.postgresql_type.can_be_nullable() {
-                            CanBeNullable::True => true,
-                            CanBeNullable ::False => false,
-                        }
-                    }
-                    else {
-                        true
-                    }
-                }
-            }
-        };
-        postgresql_type_filter && not_null_or_nullable_filter && postgresql_type_pattern_type_filter && can_be_nullable
+        // let can_be_nullable = {
+        //     use postgresql_crud_macros_common::NotNullOrNullable;
+        //     match &element.postgresql_type_pattern_type {
+        //         PostgresqlTypePatternType::Standart => true,
+        //         PostgresqlTypePatternType::ArrayDimension1 {
+        //             dimension1_not_null_or_nullable,
+        //         } => {
+        //             let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
+        //             let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
+        //             if element_not_null_or_nullable || d1 {
+        //                 match &element.postgresql_type.can_be_nullable() {
+        //                     CanBeNullable::True => true,
+        //                     CanBeNullable ::False => false,
+        //                 }
+        //             }
+        //             else {
+        //                 true
+        //             }
+        //         },
+        //         PostgresqlTypePatternType::ArrayDimension2 {
+        //             dimension1_not_null_or_nullable,
+        //             dimension2_not_null_or_nullable,
+        //         } => {
+        //             let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
+        //             let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
+        //             let d2 = if let NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {true} else {false};
+        //             if element_not_null_or_nullable || d1 || d2 {
+        //                 match &element.postgresql_type.can_be_nullable() {
+        //                     CanBeNullable::True => true,
+        //                     CanBeNullable ::False => false,
+        //                 }
+        //             }
+        //             else {
+        //                 true
+        //             }
+        //         },
+        //         PostgresqlTypePatternType::ArrayDimension3 {
+        //             dimension1_not_null_or_nullable,
+        //             dimension2_not_null_or_nullable,
+        //             dimension3_not_null_or_nullable,
+        //         } => {
+        //             let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
+        //             let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
+        //             let d2 = if let NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {true} else {false};
+        //             let d3 = if let NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {true} else {false};
+        //             if element_not_null_or_nullable || d1 || d2 || d3 {
+        //                 match &element.postgresql_type.can_be_nullable() {
+        //                     CanBeNullable::True => true,
+        //                     CanBeNullable ::False => false,
+        //                 }
+        //             }
+        //             else {
+        //                 true
+        //             }
+        //         },
+        //         PostgresqlTypePatternType::ArrayDimension4 {
+        //             dimension1_not_null_or_nullable,
+        //             dimension2_not_null_or_nullable,
+        //             dimension3_not_null_or_nullable,
+        //             dimension4_not_null_or_nullable,
+        //         } => {
+        //             let element_not_null_or_nullable = if let NotNullOrNullable::Nullable = &element.not_null_or_nullable {true} else {false};
+        //             let d1 = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {true} else {false};
+        //             let d2 = if let NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {true} else {false};
+        //             let d3 = if let NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {true} else {false};
+        //             let d4 = if let NotNullOrNullable::Nullable = &dimension4_not_null_or_nullable {true} else {false};
+        //             if element_not_null_or_nullable || d1 || d2 || d3 || d4 {
+        //                 match &element.postgresql_type.can_be_nullable() {
+        //                     CanBeNullable::True => true,
+        //                     CanBeNullable ::False => false,
+        //                 }
+        //             }
+        //             else {
+        //                 true
+        //             }
+        //         }
+        //     }
+        // };
+        // if !can_be_nullable {
+        //     println!("{element:#?}");
+        // }
+        postgresql_type_filter && not_null_or_nullable_filter && postgresql_type_pattern_type_filter
     })
     .for_each(|element|{
         // println!("{element:#?}");
