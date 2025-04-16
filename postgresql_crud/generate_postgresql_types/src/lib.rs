@@ -1187,8 +1187,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             format!("{not_null_rust}{rust_type_name}{as_upper_camel_case}{not_null}{postgresql_type_name}")
             .parse::<proc_macro2::TokenStream>().unwrap()
         };
-        //todo rename - cuurent name work only if Standart type
-        let ident_not_null_upper_camel_case = generate_ident_not_null_token_stream(&postgresql_type);
+        let ident_standart_not_null_upper_camel_case = generate_ident_not_null_token_stream(&postgresql_type);
         let generate_ident = |postgresql_type_pattern_type: &PostgresqlTypePatternType, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
@@ -1197,7 +1196,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 (
                     PostgresqlTypePatternType::Standart,
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull
-                ) => quote::quote!{#ident_not_null_upper_camel_case},
+                ) => quote::quote!{#ident_standart_not_null_upper_camel_case},
                 (
                     PostgresqlTypePatternType::Standart,
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable
@@ -1338,7 +1337,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 pub struct #ident;
             }
         };
-        let ident_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_not_null_upper_camel_case);
+        let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
         let field_type = postgresql_type.field_type_token_stream();
@@ -1358,7 +1357,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             match &postgresql_type_pattern_type {
                 PostgresqlTypePatternType::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_not_null_origin_upper_camel_case)
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case)
                 },
                 PostgresqlTypePatternType::ArrayDimension1 {
                     dimension1_not_null_or_nullable,
@@ -1711,9 +1710,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
             let (
                 maybe_impl_is_string_empty_for_ident_origin_token_stream,
-                maybe_impl_try_new_for_ident_not_null_origin_token_stream,
-                maybe_impl_serde_serialize_for_ident_not_null_origin_token_stream,
-                maybe_impl_serde_deserialize_for_ident_not_null_origin_token_stream
+                maybe_impl_try_new_for_ident_standart_not_null_origin_token_stream,
+                maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream,
+                maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream
             ) = if let (
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                 PostgresqlTypePatternType::Standart
@@ -1756,7 +1755,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         (0..self.get_index_starting_with_one()).collect()
                     }
                 }
-                let ident_not_null_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_not_null_upper_camel_case);
+                let ident_standart_not_null_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_standart_not_null_upper_camel_case);
                 let generate_match_std_collections_bound_token_stream = |match_token_stream: &dyn quote::ToTokens, init_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {match #match_token_stream {
                         std::collections::Bound::Included(#value_snake_case) => std::collections::Bound::Included(#init_token_stream),
@@ -1819,7 +1818,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                     }
                 };
-                let maybe_impl_try_new_for_ident_not_null_origin_token_stream = match &postgresql_type {
+                let maybe_impl_try_new_for_ident_standart_not_null_origin_token_stream = match &postgresql_type {
                     PostgresqlType::StdPrimitiveI16AsInt2 => proc_macro2::TokenStream::new(),
                     PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
                     PostgresqlType::StdPrimitiveI64AsInt8 => proc_macro2::TokenStream::new(),
@@ -1867,7 +1866,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 code_occurence: error_occurence_lib::code_occurence!(),
                             };
                             quote::quote! {
-                                impl #ident_not_null_origin_upper_camel_case {
+                                impl #ident_standart_not_null_origin_upper_camel_case {
                                     fn try_new(
                                         #year_snake_case: std::primitive::i32,
                                         #month_snake_case: #time_month_token_stream,
@@ -1930,14 +1929,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => proc_macro2::TokenStream::new(),
                 };
-                let maybe_impl_serde_serialize_for_ident_not_null_origin_token_stream = {
-                    let generate_impl_serde_serialize_for_ident_not_null_origin_tokens = |content_token_stream: &dyn quote::ToTokens| {
+                let maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream = {
+                    let generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {
                             const _: () = {
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
                                 extern crate serde as _serde;
                                 #[automatically_derived]
-                                impl _serde::Serialize for #ident_not_null_origin_upper_camel_case {
+                                impl _serde::Serialize for #ident_standart_not_null_origin_upper_camel_case {
                                     fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
                                     where
                                         __S: _serde::Serializer,
@@ -1949,7 +1948,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     let generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_not_null_double_quotes_token_stream, &#self_dot_zero_token_stream #value_token_stream)}
+                        quote::quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_standart_not_null_double_quotes_token_stream, &#self_dot_zero_token_stream #value_token_stream)}
                     };
                     let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber| {
                         let parameter_number_token_stream = {
@@ -1957,7 +1956,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             quote::quote! {#(#value)*}
                         };
                         quote::quote! {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_not_null_double_quotes_token_stream, false as std::primitive::usize #parameter_number_token_stream)?;
+                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_double_quotes_token_stream, false as std::primitive::usize #parameter_number_token_stream)?;
                         }
                     };
                     let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Two);
@@ -1995,12 +1994,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_ser_serialize_struct_end_token_stream
                         }
                     };
-                    let impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
-                    let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.to_string()}));
-                    let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&quote::quote! {
+                    let impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
+                    let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.to_string()}));
+                    let impl_serde_serialize_for_sqlx_types_bit_vec_token_stream = generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&quote::quote! {
                         _serde::Serializer::serialize_newtype_struct(
                             __serializer,
-                            #ident_not_null_double_quotes_token_stream,
+                            #ident_standart_not_null_double_quotes_token_stream,
                             &#self_dot_zero_token_stream.iter().collect::<#std_vec_vec_std_primitive_bool_token_stream>(),
                         )
                     });
@@ -2013,9 +2012,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
                         PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
                         PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.0})),
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.0})),
                         PostgresqlType::SqlxTypesDecimalAsNumeric => proc_macro2::TokenStream::new(),
-                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&{
+                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                             let digits_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::DigitsSnakeCase, &quote::quote! {&#crate_postgresql_type_postgresql_type_num_bigint_big_int_token_stream(bigint)});
                             let scale_serialize_field_token_stream = generate_serialize_field_token_stream(&naming::ScaleSnakeCase, &quote::quote! {&exponent});
                             quote::quote! {
@@ -2033,7 +2032,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxTypesTimeTimeAsTime => proc_macro2::TokenStream::new(),
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&{
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                             let generate_serialize_field_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value});
                             let months_serialize_field_token_stream = generate_serialize_field_token_stream(&months_snake_case);
                             let days_serialize_field_token_stream = generate_serialize_field_token_stream(&days_snake_case);
@@ -2046,7 +2045,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #serde_ser_serialize_struct_end_token_stream
                             }
                         }),
-                        PostgresqlType::SqlxTypesTimeDateAsDate => generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&{
+                        PostgresqlType::SqlxTypesTimeDateAsDate => generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                             let generate_self_zero_tokens_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value()});
                             let year_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&year_snake_case);
                             let month_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&month_snake_case);
@@ -2068,35 +2067,35 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => proc_macro2::TokenStream::new(),
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.bytes()})),
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.bytes()})),
                         PostgresqlType::SqlxTypesBitVecAsBit => impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
                         PostgresqlType::SqlxTypesBitVecAsVarbit => impl_serde_serialize_for_sqlx_types_bit_vec_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => {
-                            generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(&sqlx_types_big_decimal_as_not_null_numeric_origin_upper_camel_case_token_stream, true))
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(&sqlx_types_big_decimal_as_not_null_numeric_origin_upper_camel_case_token_stream, true))
                         }
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => {
-                            generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(&sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream, false))
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(&sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream, false))
                         }
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => {
-                            generate_impl_serde_serialize_for_ident_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(&sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream, false))
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(&sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream, false))
                         }
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                     }
                 };
-                let maybe_impl_serde_deserialize_for_ident_not_null_origin_token_stream = {
+                let maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream = {
                     let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&postgresql_type);
                     let postgresql_type_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
 
                     let struct_visitor_token_stream = quote::quote! {
                         #[doc(hidden)]
                         struct __Visitor<'de> {
-                            marker: serde::__private::PhantomData<#ident_not_null_origin_upper_camel_case>,
+                            marker: serde::__private::PhantomData<#ident_standart_not_null_origin_upper_camel_case>,
                             lifetime: serde::__private::PhantomData<&'de ()>,
                         }
                     };
@@ -2111,7 +2110,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             quote::quote! {
                                 _serde::Deserializer::deserialize_struct(
                                     __deserializer,
-                                    #ident_not_null_double_quotes_token_stream,
+                                    #ident_standart_not_null_double_quotes_token_stream,
                                     FIELDS,
                                     #content_token_stream
                                 )
@@ -2120,7 +2119,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         (
                             generate_serde_deserializer_deserialize_struct_visitor_token_stream(&quote::quote! {
                                 __Visitor {
-                                    marker: _serde::__private::PhantomData::<#ident_not_null_origin_upper_camel_case>,
+                                    marker: _serde::__private::PhantomData::<#ident_standart_not_null_origin_upper_camel_case>,
                                     lifetime: _serde::__private::PhantomData,
                                 }
                             }),
@@ -2131,9 +2130,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let serde_deserializer_deserialize_newtype_struct_token_stream = quote::quote! {
                         _serde::Deserializer::deserialize_newtype_struct(
                             __deserializer,
-                            #ident_not_null_double_quotes_token_stream,
+                            #ident_standart_not_null_double_quotes_token_stream,
                             __Visitor {
-                                marker: serde::__private::PhantomData::<#ident_not_null_origin_upper_camel_case>,
+                                marker: serde::__private::PhantomData::<#ident_standart_not_null_origin_upper_camel_case>,
                                 lifetime: serde::__private::PhantomData,
                             },
                         )
@@ -2145,7 +2144,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #[allow(unused_extern_crates, clippy::useless_attribute)]
                                 extern crate serde as _serde;
                                 #[automatically_derived]
-                                impl<'de> _serde::Deserialize<'de> for #ident_not_null_origin_upper_camel_case {
+                                impl<'de> _serde::Deserialize<'de> for #ident_standart_not_null_origin_upper_camel_case {
                                     fn deserialize<__D>(
                                         __deserializer: __D,
                                     ) -> _serde::__private::Result<Self, __D::Error>
@@ -2205,7 +2204,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {serde::__private::Ok(#content_token_stream)}
                     };
-                    let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_not_null_origin_upper_camel_case(#content_token_stream)});
+                    let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_standart_not_null_origin_upper_camel_case(#content_token_stream)});
 
                     let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #sqlx_types_uuid_uuid_field_type_token_stream::try_parse(&#field_0_token_stream) {
                         Ok(value) => value,
@@ -2298,7 +2297,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_primitive_i32_token_stream, &time_month_token_stream, &std_primitive_u8_token_stream]);
                         quote::quote! {
                             #fields_initialization_token_stream
-                            match #ident_not_null_origin_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
+                            match #ident_standart_not_null_origin_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
                                 Ok(value) => _serde::__private::Ok(value),
                                 Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                             }
@@ -2765,7 +2764,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
 
                         let match_postgresql_type_try_new_field0_field1_field2_token_stream = quote::quote! {
-                            match #ident_not_null_origin_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
+                            match #ident_standart_not_null_origin_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
                                 Ok(value) => _serde::__private::Ok(value),
                                 Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
                             }
@@ -2842,7 +2841,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let serde_private_ok_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&serde_private_ok_token_stream);
                                 quote::quote! {
                                     #[inline]
-                                    fn visit_map<V>(self, mut map: V) -> Result<#ident_not_null_origin_upper_camel_case, V::Error>
+                                    fn visit_map<V>(self, mut map: V) -> Result<#ident_standart_not_null_origin_upper_camel_case, V::Error>
                                     where
                                         V: serde::de::MapAccess<'de>,
                                     {
@@ -2983,7 +2982,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let generate_impl_serde_de_visitor_for_visitor_token_stream = |first_token_stream: &dyn quote::ToTokens, second_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                    type Value = #ident_not_null_origin_upper_camel_case;
+                                    type Value = #ident_standart_not_null_origin_upper_camel_case;
                                     #fn_expecting_struct_ident_double_quotes_token_stream
                                     #first_token_stream
                                     #second_token_stream
@@ -3081,7 +3080,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(
                                 &postgresql_type_visitor_upper_camel_case,
                                 &quote::quote! {
-                                    type Value = #ident_not_null_origin_upper_camel_case;
+                                    type Value = #ident_standart_not_null_origin_upper_camel_case;
                                     #fn_expecting_struct_ident_double_quotes_token_stream
                                     #first_token_stream
                                     #second_token_stream
@@ -3259,9 +3258,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 (
                     maybe_impl_is_string_empty_for_ident_origin_token_stream,
-                    maybe_impl_try_new_for_ident_not_null_origin_token_stream,
-                    maybe_impl_serde_serialize_for_ident_not_null_origin_token_stream,
-                    maybe_impl_serde_deserialize_for_ident_not_null_origin_token_stream
+                    maybe_impl_try_new_for_ident_standart_not_null_origin_token_stream,
+                    maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream,
+                    maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream
                 )
             }
             else {
@@ -3449,7 +3448,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let (
                 maybe_impl_postgresql_type_where_filter_for_ident_origin_if_can_be_primary_key_token_stream,
-                maybe_impl_postgresql_type_primary_key_for_ident_not_null_if_can_be_primary_key_token_stream
+                maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream
             ) = if let (
                 CanBePrimaryKey::True,
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull,
@@ -3462,7 +3461,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 (
                     postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
                         &quote::quote! {<'a>},
-                        &ident_not_null_origin_upper_camel_case,
+                        &ident_standart_not_null_origin_upper_camel_case,
                         &proc_macro2::TokenStream::new(),
                         &{
                             let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
@@ -3481,8 +3480,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &postgresql_crud_macros_common_import_path_crate,
                     ),
                     quote::quote!{
-                        impl crate::PostgresqlTypePrimaryKey for #ident_not_null_upper_camel_case {
-                            type PrimaryKey = #ident_not_null_origin_upper_camel_case;
+                        impl crate::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
+                            type PrimaryKey = #ident_standart_not_null_origin_upper_camel_case;
                         }
                     }
                 )
@@ -3641,9 +3640,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             quote::quote! {
                 #ident_origin_token_stream
                 #maybe_impl_is_string_empty_for_ident_origin_token_stream
-                #maybe_impl_try_new_for_ident_not_null_origin_token_stream
-                #maybe_impl_serde_serialize_for_ident_not_null_origin_token_stream
-                #maybe_impl_serde_deserialize_for_ident_not_null_origin_token_stream
+                #maybe_impl_try_new_for_ident_standart_not_null_origin_token_stream
+                #maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream
+                #maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream
                 #impl_std_fmt_display_for_ident_origin_token_stream
                 #impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream
                 #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream
@@ -3652,7 +3651,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #impl_sqlx_decode_sqlx_postgres_for_ident_origin_token_stream
                 #impl_sqlx_postgres_pg_has_array_type_for_ident_origin_token_stream
                 #maybe_impl_postgresql_type_where_filter_for_ident_origin_if_can_be_primary_key_token_stream
-                #maybe_impl_postgresql_type_primary_key_for_ident_not_null_if_can_be_primary_key_token_stream
+                #maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream
                 #impl_create_table_column_query_part_for_ident_origin_token_stream
             }
         };
@@ -3805,7 +3804,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     variants,
                     |is_relevant_only_for_not_null: std::primitive::bool| {
                         if is_relevant_only_for_not_null {
-                            &ident_not_null_origin_upper_camel_case
+                            &ident_standart_not_null_origin_upper_camel_case
                         } else {
                             &ident_origin_upper_camel_case
                         }
