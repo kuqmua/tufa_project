@@ -1327,7 +1327,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
         let field_type = postgresql_type.field_type_token_stream();
-        //todo make inner types private and generate new/try_new methonds just to not construct every single time wrappers
         let field_type_handle: &dyn quote::ToTokens = {
             use postgresql_crud_macros_common::NotNullOrNullable;
             let generate_current_ident_origin = |current_postgresql_type_pattern_type: &PostgresqlTypePatternType, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
@@ -1652,6 +1651,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     pub struct #ident_origin_upper_camel_case(pub #field_type_handle);
                 }
             };
+            //todo make inner types private and generate new/try_new methonds just to not construct every single time wrappers
+
             let sqlx_types_time_primitive_date_time_as_timestamp = PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp;
             let sqlx_types_time_date_as_date = PostgresqlType::SqlxTypesTimeDateAsDate;
             let sqlx_types_big_decimal_as_numeric = PostgresqlType::SqlxTypesBigDecimalAsNumeric;
