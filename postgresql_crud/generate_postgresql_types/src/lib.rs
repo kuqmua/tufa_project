@@ -1868,7 +1868,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &postgresql_type_pattern_type
             ) {
                 let sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                    //todo maybe optimize? its string -> tokens -> tokens. it can be jsut string -> tokens
                     &generate_ident_not_null_token_stream(&sqlx_types_time_primitive_date_time_as_timestamp)
                 );
                 let sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
@@ -1877,6 +1876,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let sqlx_types_big_decimal_as_not_null_numeric_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
                     &generate_ident_not_null_token_stream(&sqlx_types_big_decimal_as_numeric)
                 );
+                
                 let self_dot_zero_token_stream = quote::quote! {#self_snake_case.0};
                 enum ParameterNumber {
                     One,
