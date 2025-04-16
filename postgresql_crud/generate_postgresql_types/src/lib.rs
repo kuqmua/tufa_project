@@ -1648,10 +1648,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         #maybe_derive_serde_serialize_token_stream
                         #maybe_derive_serde_deserialize_token_stream
                     )]
-                    pub struct #ident_origin_upper_camel_case(pub #field_type_handle);
+                    pub struct #ident_origin_upper_camel_case(#field_type_handle);
                 }
             };
             //todo make inner types private and generate new/try_new methonds just to not construct every single time wrappers
+            let impl_new_or_try_new_token_stream = {
+                quote::quote!{
+
+                }
+            };
 
             let sqlx_types_time_primitive_date_time_as_timestamp = PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp;
             let sqlx_types_time_date_as_date = PostgresqlType::SqlxTypesTimeDateAsDate;
@@ -3653,6 +3658,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             quote::quote! {
                 #ident_origin_token_stream
+                #impl_new_or_try_new_token_stream
                 #maybe_impl_is_string_empty_for_ident_origin_token_stream
                 #maybe_impl_try_new_for_ident_standart_not_null_origin_token_stream
                 #maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream
