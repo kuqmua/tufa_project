@@ -3862,19 +3862,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             True,
             False
         }
-        enum ImplDeserialize {
-            True,
-            False
-        }
-        let generate_pub_struct_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, impl_default: ImplDefault, impl_deserialize: ImplDeserialize| {
+        let generate_pub_struct_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, impl_default: ImplDefault| {
             let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
             let maybe_impl_default_token_stream: &dyn quote::ToTokens = match &impl_default {
                 ImplDefault::True => &quote::quote! {Default,},
                 ImplDefault::False => &proc_macro2_token_stream_new
-            };
-            let maybe_impl_serde_deserialize_token_stream: &dyn quote::ToTokens = match &impl_deserialize {
-                ImplDeserialize::True => &quote::quote! {serde::Deserialize,},
-                ImplDeserialize::False => &proc_macro2_token_stream_new
             };
             quote::quote! {
                 #[derive(
@@ -3883,7 +3875,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     Clone,
                     PartialEq,
                     serde::Serialize,
-                    #maybe_impl_serde_deserialize_token_stream
+                    serde::Deserialize,
                 )]
                 pub struct #ident_token_stream #content_token_stream
             }
@@ -3896,7 +3888,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_token_stream = {
             let ident_create_token_stream = {
-                let ident_create_token_stream = generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, ImplDefault::False, ImplDeserialize::True);
+                let ident_create_token_stream = generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, ImplDefault::False);
                 let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream =
                     postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {Self(#core_default_default_default_token_stream)});
                 quote::quote! {
@@ -3974,7 +3966,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 },
                 ImplDefault::True,
-                ImplDeserialize::True
             );
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_select_upper_camel_case,
