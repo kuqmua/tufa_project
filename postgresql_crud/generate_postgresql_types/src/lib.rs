@@ -1965,8 +1965,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_ser_serialize_struct_end_token_stream
                         }
                     };
-                    let generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25 = |type_token_stream: &dyn quote::ToTokens, is_need_to_be_cloned: std::primitive::bool| {
-                        let maybe_clone_token_stream: &dyn quote::ToTokens = if is_need_to_be_cloned { &quote::quote! {.clone()} } else { &proc_macro2_token_stream_new };
+                    enum IsNeedToBeCloned {
+                        True,
+                        False
+                    }
+                    let generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25 = |type_token_stream: &dyn quote::ToTokens, is_need_to_be_cloned: IsNeedToBeCloned| {
+                        let maybe_clone_token_stream: &dyn quote::ToTokens = match &is_need_to_be_cloned {
+                            IsNeedToBeCloned::True => &quote::quote! {.clone()},
+                            IsNeedToBeCloned::False => &proc_macro2_token_stream_new
+                        };
                         let generate_self_zero_match_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens| {
                             let token_stream = generate_match_std_collections_bound_token_stream(&quote::quote! {#self_dot_zero_token_stream.#value_token_stream #maybe_clone_token_stream}, &quote::quote! {#type_token_stream(#value_snake_case)});
                             quote::quote! {&#token_stream}
@@ -2060,15 +2067,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => {
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(&sqlx_types_big_decimal_as_not_null_numeric_origin_upper_camel_case_token_stream, true))
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
+                                &sqlx_types_big_decimal_as_not_null_numeric_origin_upper_camel_case_token_stream,
+                                IsNeedToBeCloned::True
+                            ))
                         }
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => {
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(&sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream, false))
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
+                                &sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream,
+                                IsNeedToBeCloned::False
+                            ))
                         }
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => {
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(&sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream, false))
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(
+                                &sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream,
+                                IsNeedToBeCloned::False
+                            ))
                         }
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
@@ -3652,11 +3668,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #impl_create_table_column_query_part_for_ident_origin_token_stream
             }
         };
-        //todo enums instead of bool
-        fn generate_pub_struct_tokens_token_stream(ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, impl_default: std::primitive::bool, impl_deserialize: std::primitive::bool) -> proc_macro2::TokenStream {
+        enum ImplDefault {
+            True,
+            False
+        }
+        enum ImplDeserialize {
+            True,
+            False
+        }
+        let generate_pub_struct_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens, impl_default: ImplDefault, impl_deserialize: ImplDeserialize| {
             let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
-            let maybe_impl_default_token_stream: &dyn quote::ToTokens = if impl_default { &quote::quote! {Default,} } else { &proc_macro2_token_stream_new };
-            let maybe_impl_serde_deserialize_token_stream: &dyn quote::ToTokens = if impl_deserialize { &quote::quote! {serde::Deserialize,} } else { &proc_macro2_token_stream_new };
+            let maybe_impl_default_token_stream: &dyn quote::ToTokens = match &impl_default {
+                ImplDefault::True => &quote::quote! {Default,},
+                ImplDefault::False => &proc_macro2_token_stream_new
+            };
+            let maybe_impl_serde_deserialize_token_stream: &dyn quote::ToTokens = match &impl_deserialize {
+                ImplDeserialize::True => &quote::quote! {serde::Deserialize,},
+                ImplDeserialize::False => &proc_macro2_token_stream_new
+            };
             quote::quote! {
                 #[derive(
                     Debug,
@@ -3668,7 +3697,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 )]
                 pub struct #ident_token_stream #content_token_stream
             }
-        }
+        };
         let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
         let ident_table_type_declaration_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(
             &ident_table_type_declaration_upper_camel_case,
@@ -3677,7 +3706,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_token_stream = {
             let ident_create_token_stream = {
-                let ident_create_token_stream = generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, false, true);
+                let ident_create_token_stream = generate_pub_struct_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {(());}, ImplDefault::False, ImplDeserialize::True);
                 let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream =
                     postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_create_upper_camel_case, &quote::quote! {Self(#core_default_default_default_token_stream)});
                 quote::quote! {
@@ -3754,8 +3783,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }}
                     }
                 },
-                true,
-                true
+                ImplDefault::True,
+                ImplDeserialize::True
             );
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_select_upper_camel_case,
