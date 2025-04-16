@@ -1328,13 +1328,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
         let field_type = postgresql_type.field_type_token_stream();
+        let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern_type: &PostgresqlTypePatternType, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+            naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
+                &current_postgresql_type_pattern_type,
+                &current_not_null_or_nullable
+            ))
+        };
         let field_type_handle: &dyn quote::ToTokens = {
             use postgresql_crud_macros_common::NotNullOrNullable;
             let generate_current_ident_origin = |current_postgresql_type_pattern_type: &PostgresqlTypePatternType, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
-                let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
+                let value = generate_current_ident_origin_non_wrapping(
                     &current_postgresql_type_pattern_type,
                     &current_not_null_or_nullable
-                ));
+                );
                 match &not_null_or_nullable {
                     NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
                     NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value)
@@ -1699,25 +1705,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         },
                     }
                 };
-                //todo can be reused
-                let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern_type: &PostgresqlTypePatternType, current_not_null_or_nullable: &NotNullOrNullable|{
-                    naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
-                        &current_postgresql_type_pattern_type,
-                        &current_not_null_or_nullable
-                    ))
-                };
                 let current_child_type_token_stream: &dyn quote::ToTokens = {
                     use postgresql_crud_macros_common::NotNullOrNullable;
-                    // let generate_current_ident_origin = |current_postgresql_type_pattern_type: &PostgresqlTypePatternType, current_not_null_or_nullable: &NotNullOrNullable|{
-                    //     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
-                    //         &current_postgresql_type_pattern_type,
-                    //         &current_not_null_or_nullable
-                    //     ));
-                    //     match &not_null_or_nullable {
-                    //         NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
-                    //         NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value)
-                    //     }
-                    // };
                     match &postgresql_type_pattern_type {
                         PostgresqlTypePatternType::Standart => match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => &field_type,
