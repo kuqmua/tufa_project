@@ -836,64 +836,50 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     };
-    #[derive(Debug)]
-    enum PostgresqlTypeRecordTryFromError {
-        CantSupportNullable {
-            value: std::string::String
-        },
-    }
-    impl std::convert::TryFrom<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)> for PostgresqlTypeRecord {
-        type Error = PostgresqlTypeRecordTryFromError;
-        fn try_from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)) -> Result<Self, Self::Error> {
+    impl std::convert::From<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)> for PostgresqlTypeRecord {
+        fn from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)) -> Self {
+            let error_message = "cant support nullable variants: ";
             match &value.0.can_be_nullable() {
-                CanBeNullable::True => Ok(Self {
+                CanBeNullable::True => Self {
                     postgresql_type: value.0,
                     not_null_or_nullable: value.1,
                     postgresql_type_pattern_type: value.2,
-                }),
+                },
                 CanBeNullable::False => {
                     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &value.1 {
-                        return Err(Self::Error::CantSupportNullable{
-                            value: format!("{value:#?}")
-                        });
+                        panic!("{error_message}{value:#?}");
                     }
                     match &value.2 {
-                        PostgresqlTypePatternType::Standart => Ok(Self {
+                        PostgresqlTypePatternType::Standart => Self {
                             postgresql_type: value.0,
                             not_null_or_nullable: value.1,
                             postgresql_type_pattern_type: value.2,
-                        }),
+                        },
                         PostgresqlTypePatternType::ArrayDimension1 {
                             dimension1_not_null_or_nullable,
                         } => match &dimension1_not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => Ok(Self {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => Self {
                                 postgresql_type: value.0,
                                 not_null_or_nullable: value.1,
                                 postgresql_type_pattern_type: value.2,
-                            }),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => Err(Self::Error::CantSupportNullable{
-                                value: format!("{value:#?}")
-                            })
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => panic!("{error_message}{value:#?}")
                         },
                         PostgresqlTypePatternType::ArrayDimension2 {
                             dimension1_not_null_or_nullable,
                             dimension2_not_null_or_nullable,
                         } => {
                             if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
-                                return Err(Self::Error::CantSupportNullable{
-                                    value: format!("{value:#?}")
-                                });
+                                panic!("{error_message}{value:#?}");
                             }
                             if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {
-                                return Err(Self::Error::CantSupportNullable{
-                                    value: format!("{value:#?}")
-                                });
+                                panic!("{error_message}{value:#?}");
                             }
-                            Ok(Self {
+                            Self {
                                 postgresql_type: value.0,
                                 not_null_or_nullable: value.1,
                                 postgresql_type_pattern_type: value.2,
-                            })
+                            }
                         },
                         PostgresqlTypePatternType::ArrayDimension3 {
                             dimension1_not_null_or_nullable,
@@ -901,25 +887,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             dimension3_not_null_or_nullable,
                         } => {
                             if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
-                                return Err(Self::Error::CantSupportNullable{
-                                    value: format!("{value:#?}")
-                                });
+                                panic!("{error_message}{value:#?}");
                             }
                             if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {
-                                return Err(Self::Error::CantSupportNullable{
-                                    value: format!("{value:#?}")
-                                });
+                                panic!("{error_message}{value:#?}");
                             }
                             if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {
-                                return Err(Self::Error::CantSupportNullable{
-                                    value: format!("{value:#?}")
-                                });
+                                panic!("{error_message}{value:#?}");
                             }
-                            Ok(Self {
+                            Self {
                                 postgresql_type: value.0,
                                 not_null_or_nullable: value.1,
                                 postgresql_type_pattern_type: value.2,
-                            })
+                            }
                         },
                         PostgresqlTypePatternType::ArrayDimension4 {
                             dimension1_not_null_or_nullable,
@@ -928,30 +908,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             dimension4_not_null_or_nullable,
                         } => {
                             if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
-                                return Err(Self::Error::CantSupportNullable{
-                                    value: format!("{value:#?}")
-                                });
+                                panic!("{error_message}{value:#?}");
                             }
                             if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {
-                                return Err(Self::Error::CantSupportNullable{
-                                    value: format!("{value:#?}")
-                                });
+                                panic!("{error_message}{value:#?}");
                             }
                             if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {
-                                return Err(Self::Error::CantSupportNullable{
-                                    value: format!("{value:#?}")
-                                });
+                                panic!("{error_message}{value:#?}");
                             }
                             if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension4_not_null_or_nullable {
-                                return Err(Self::Error::CantSupportNullable{
-                                    value: format!("{value:#?}")
-                                });
+                                panic!("{error_message}{value:#?}");
                             }
-                            Ok(Self {
+                            Self {
                                 postgresql_type: value.0,
                                 not_null_or_nullable: value.1,
                                 postgresql_type_pattern_type: value.2,
-                            })
+                            }
                         },
                     }
                 }
