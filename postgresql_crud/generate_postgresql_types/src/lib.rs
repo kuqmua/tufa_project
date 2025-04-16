@@ -550,20 +550,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             })
         }
     }
-    //todo
-    // can i create a postgresql column array of not null int?
-    // No, PostgreSQL does not natively support enforcing NOT NULL on individual elements of an array column.
-    // Use a CHECK constraint to validate elements
-    // CREATE TABLE my_table (
-    //     my_column INTEGER[] NOT NULL,
-    //     CONSTRAINT no_nulls_in_array CHECK (
-    //         NOT EXISTS (
-    //             SELECT 1 FROM unnest(my_column) AS x(val)
-    //             WHERE val IS NULL
-    //         )
-    //     )
-    // );
-
     #[derive(Debug, PartialEq, serde::Serialize)]
     struct PostgresqlTypeRecord {
         postgresql_type: PostgresqlType,
@@ -3595,7 +3581,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlTypePatternType::ArrayDimension3 {..} |
                             PostgresqlTypePatternType::ArrayDimension4 {..} => std::iter::repeat("[]").take(array_dimensions_number).collect::<String>()
                         };
-                        //todo
+                        //todo add additional checks coz postgreql does not support not null elements of array with keyword "not null"
+                        // can i create a postgresql column array of not null int?
+                        // No, PostgreSQL does not natively support enforcing NOT NULL on individual elements of an array column.
+                        // Use a CHECK constraint to validate elements
+                        // CREATE TABLE my_table (
+                        //     my_column INTEGER[] NOT NULL,
+                        //     CONSTRAINT no_nulls_in_array CHECK (
+                        //         NOT EXISTS (
+                        //             SELECT 1 FROM unnest(my_column) AS x(val)
+                        //             WHERE val IS NULL
+                        //         )
+                        //     )
+                        // );
                         let maybe_constraint_part = match &postgresql_type_pattern_type {
                             PostgresqlTypePatternType::Standart => "".to_string(),
                             PostgresqlTypePatternType::ArrayDimension1 {..} => "".to_string(),
@@ -3607,7 +3605,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let column_postgresql_query_type = format!("{{column}} {postgresql_query_type}{maybe_array_part}{maybe_constraint_part}");
                         let column_postgresql_query_type_not_null = format!("{{column}} {postgresql_query_type}{maybe_array_part} not null{maybe_constraint_part}");
                         let space_additional_parameter = " {}";
-                        //todo add additional checks coz postgreql does not support not null elements of array with keyword "not null"
                         match (&not_null_or_nullable, &can_be_primary_key) {
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, CanBePrimaryKey::False) => {
                                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&column_postgresql_query_type_not_null.to_string());
