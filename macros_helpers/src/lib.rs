@@ -13,6 +13,7 @@ pub mod get_macro_attribute;
 pub mod pagination_start_end_initialization_token_stream;
 pub mod status_code;
 pub mod wrap_derive;
+pub mod write_string_into_file;
 pub mod write_token_stream_into_file;
 
 pub use generate_impl_error_occurence_lib_to_std_string_string_token_stream::generate_impl_error_occurence_lib_to_std_string_string_token_stream;

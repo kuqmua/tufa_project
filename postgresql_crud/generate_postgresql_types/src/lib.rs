@@ -171,7 +171,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     }
-    #[derive(Debug, Clone, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlType {
         StdPrimitiveI16AsInt2,
         StdPrimitiveI32AsInt4,
@@ -461,7 +461,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlTypeRange to proc_macro2::TokenStream")).to_tokens(tokens)
         }
     }
-    #[derive(Debug, PartialEq, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlTypePatternType {
         Standart,
         ArrayDimension1 {
@@ -564,7 +564,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     //     )
     // );
 
-    #[derive(Debug, PartialEq)]
+    #[derive(Debug, PartialEq, serde::Serialize)]
     struct PostgresqlTypeRecord {
         postgresql_type: PostgresqlType,
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
@@ -1001,28 +1001,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             acc
         }
     }
-    use rayon::iter::ParallelIterator;
-    use rayon::iter::IntoParallelRefIterator;
-    let (
-        postgresql_crud_table_rust_struct_fields_token_stream,
-        postgresql_type_array
-    ) = 
-    //todo make a function to generate all json variants for config
-    // {
-    //     let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
-    //     .expect("failed to get Config for generate_postgresql_type");
-    //     let mut acc = vec![];
-    //     for element in &vec {
-    //         if acc.contains(&element) {
-    //             panic!("not unique postgersql type provided: {element:#?}");
-    //         }
-    //         else {
-    //             acc.push(&element);
-    //         }
-    //     }
-    //     vec
-    // }
-    PostgresqlTypeRecord::all()
+    let postgresql_type_record_vec = 
+    // PostgresqlTypeRecord::all()
+    {
+        let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
+        .expect("failed to get Config for generate_postgresql_type");
+        let mut acc = vec![];
+        for element in &vec {
+            if acc.contains(&element) {
+                panic!("not unique postgersql type provided: {element:#?}");
+            }
+            else {
+                acc.push(&element);
+            }
+        }
+        vec
+    }
     .into_iter()
     .filter(|element|{
         let postgresql_type_filter = match &element.postgresql_type {
@@ -1133,7 +1127,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
         postgresql_type_filter && not_null_or_nullable_filter && postgresql_type_pattern_type_filter
     })
-    .collect::<std::vec::Vec<PostgresqlTypeRecord>>()
+    .collect::<std::vec::Vec<PostgresqlTypeRecord>>();
+    // macros_helpers::write_string_into_file::write_string_into_file(
+    //     "GeneratePostgresqlTypesJsonVariants",
+    //     &serde_json::to_string(&postgresql_type_record_vec).unwrap(),
+    // );
+    use rayon::iter::ParallelIterator;
+    use rayon::iter::IntoParallelRefIterator;
+    let (
+        postgresql_crud_table_rust_struct_fields_token_stream,
+        postgresql_type_array
+    ) = postgresql_type_record_vec
     .par_iter()
     .map(|element|{
         // println!("{element:#?}");
