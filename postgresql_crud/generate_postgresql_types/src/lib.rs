@@ -1032,7 +1032,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlTypePatternType::ArrayDimension1 {
                     dimension1_not_null_or_nullable,
                 } => match &dimension1_not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => false,
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
                 },
                 PostgresqlTypePatternType::ArrayDimension2 {
