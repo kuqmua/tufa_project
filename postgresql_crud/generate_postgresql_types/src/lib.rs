@@ -1007,47 +1007,47 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     .filter(|element|{
         let postgresql_type_filter = match &element.postgresql_type {
             PostgresqlType::StdPrimitiveI16AsInt2 => true,
-            PostgresqlType::StdPrimitiveI32AsInt4 => true,
-            PostgresqlType::StdPrimitiveI64AsInt8 => true,
-            PostgresqlType::StdPrimitiveF32AsFloat4 => true,
-            PostgresqlType::StdPrimitiveF64AsFloat8 => true,
-            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => true,
-            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => true,
+            PostgresqlType::StdPrimitiveI32AsInt4 => false,
+            PostgresqlType::StdPrimitiveI64AsInt8 => false,
+            PostgresqlType::StdPrimitiveF32AsFloat4 => false,
+            PostgresqlType::StdPrimitiveF64AsFloat8 => false,
+            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
+            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
             PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => true,
-            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => true,
-            PostgresqlType::SqlxTypesDecimalAsNumeric => true,
-            PostgresqlType::SqlxTypesBigDecimalAsNumeric => true,
-            PostgresqlType::StdPrimitiveBoolAsBool => true,
-            PostgresqlType::StdStringStringAsCharN => true,
-            PostgresqlType::StdStringStringAsVarchar => true,
-            PostgresqlType::StdStringStringAsText => true,
-            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => true,
-            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => true,
-            PostgresqlType::SqlxTypesTimeTimeAsTime => true,
-            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => true,
-            PostgresqlType::SqlxTypesTimeDateAsDate => true,
-            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => true,
-            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => true,
-            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => true,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => true,
-            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => true,
-            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => true,
-            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => true,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => true,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => true,
-            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => true,
-            PostgresqlType::SqlxTypesBitVecAsBit => true,
-            PostgresqlType::SqlxTypesBitVecAsVarbit => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => true,
+            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
+            PostgresqlType::SqlxTypesDecimalAsNumeric => false,
+            PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
+            PostgresqlType::StdPrimitiveBoolAsBool => false,
+            PostgresqlType::StdStringStringAsCharN => false,
+            PostgresqlType::StdStringStringAsVarchar => false,
+            PostgresqlType::StdStringStringAsText => false,
+            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
+            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => false,
+            PostgresqlType::SqlxTypesTimeTimeAsTime => false,
+            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => false,
+            PostgresqlType::SqlxTypesTimeDateAsDate => false,
+            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => false,
+            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => false,
+            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => false,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => false,
+            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => false,
+            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => false,
+            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,
+            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
+            PostgresqlType::SqlxTypesBitVecAsBit => false,
+            PostgresqlType::SqlxTypesBitVecAsVarbit => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
         };
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
@@ -1124,7 +1124,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         postgresql_crud_table_rust_struct_fields_token_stream,
         postgresql_type_array
     ) = postgresql_type_record_vec
-    .par_iter()
+    // .par_iter()
+    .into_iter()//just for console prints ordering
     .map(|element|{
         // println!("{element:#?}");
         let postgresql_type = &element.postgresql_type;
@@ -1671,7 +1672,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             dimension2_not_null_or_nullable,
                         } => &{
                             let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(dimension2_type);
+                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                             not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
                         },
                         PostgresqlTypePatternType::ArrayDimension3 {
@@ -1680,8 +1681,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             dimension3_not_null_or_nullable,
                         } => &{
                             let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
-                            let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(dimension3_type);
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(dimension2_type);
+                            let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
+                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                             not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
                         },
                         PostgresqlTypePatternType::ArrayDimension4 {
@@ -1691,20 +1692,178 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             dimension4_not_null_or_nullable,
                         } => &{
                             let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
-                            let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(dimension4_type);
-                            let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(dimension3_type);
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(dimension2_type);
+                            let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension4_type>});
+                            let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
+                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                             not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
                         },
                     }
                 };
-                // println!("{}", quote::quote!{#type_token_stream});
-                quote::quote!{
-                    // impl #ident_origin_upper_camel_case {
-                    //     pub fn new(value: #type_token_stream) -> Self {
-
+                //todo can be reused
+                let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern_type: &PostgresqlTypePatternType, current_not_null_or_nullable: &NotNullOrNullable|{
+                    naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
+                        &current_postgresql_type_pattern_type,
+                        &current_not_null_or_nullable
+                    ))
+                };
+                let current_child_type_token_stream: &dyn quote::ToTokens = {
+                    use postgresql_crud_macros_common::NotNullOrNullable;
+                    // let generate_current_ident_origin = |current_postgresql_type_pattern_type: &PostgresqlTypePatternType, current_not_null_or_nullable: &NotNullOrNullable|{
+                    //     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
+                    //         &current_postgresql_type_pattern_type,
+                    //         &current_not_null_or_nullable
+                    //     ));
+                    //     match &not_null_or_nullable {
+                    //         NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
+                    //         NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value)
                     //     }
-                    // }
+                    // };
+                    match &postgresql_type_pattern_type {
+                        PostgresqlTypePatternType::Standart => match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => &field_type,
+                            NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case)
+                        },
+                        PostgresqlTypePatternType::ArrayDimension1 {
+                            dimension1_not_null_or_nullable,
+                        } => &{
+                            let (
+                                current_postgresql_type_pattern_type,
+                                current_not_null_or_nullable,
+                            ): (
+                                &PostgresqlTypePatternType,
+                                &NotNullOrNullable,
+                            ) = match &not_null_or_nullable {
+                                NotNullOrNullable::NotNull => (
+                                    &PostgresqlTypePatternType::Standart,
+                                    &dimension1_not_null_or_nullable,
+                                ),
+                                NotNullOrNullable::Nullable => (
+                                    &postgresql_type_pattern_type,
+                                    &NotNullOrNullable::NotNull,
+                                )
+                            };
+                            generate_current_ident_origin_non_wrapping(
+                                &current_postgresql_type_pattern_type,
+                                &current_not_null_or_nullable
+                            )
+                        },
+                        PostgresqlTypePatternType::ArrayDimension2 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                        } => &{
+                            let (
+                                current_postgresql_type_pattern_type,
+                                current_not_null_or_nullable,
+                            ): (
+                                &PostgresqlTypePatternType,
+                                &NotNullOrNullable,
+                            ) = match &not_null_or_nullable {
+                                NotNullOrNullable::NotNull => (
+                                    &PostgresqlTypePatternType::ArrayDimension1 {
+                                        dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                    },
+                                    &dimension1_not_null_or_nullable,
+                                ),
+                                NotNullOrNullable::Nullable => (
+                                    &postgresql_type_pattern_type,
+                                    &NotNullOrNullable::NotNull,
+                                )
+                            };
+                            generate_current_ident_origin_non_wrapping(
+                                &current_postgresql_type_pattern_type,
+                                &current_not_null_or_nullable
+                            )
+                        },
+                        PostgresqlTypePatternType::ArrayDimension3 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                            dimension3_not_null_or_nullable,
+                        } => &{
+                            let (
+                                current_postgresql_type_pattern_type,
+                                current_not_null_or_nullable,
+                            ): (
+                                &PostgresqlTypePatternType,
+                                &NotNullOrNullable,
+                            ) = match &not_null_or_nullable {
+                                NotNullOrNullable::NotNull => (
+                                    &PostgresqlTypePatternType::ArrayDimension2 {
+                                        dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                        dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                    },
+                                    &dimension1_not_null_or_nullable,
+                                ),
+                                NotNullOrNullable::Nullable => (
+                                    &postgresql_type_pattern_type,
+                                    &NotNullOrNullable::NotNull,
+                                )
+                            };
+                            generate_current_ident_origin_non_wrapping(
+                                &current_postgresql_type_pattern_type,
+                                &current_not_null_or_nullable
+                            )
+                        },
+                        PostgresqlTypePatternType::ArrayDimension4 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                            dimension3_not_null_or_nullable,
+                            dimension4_not_null_or_nullable,
+                        } => &{
+                            let (
+                                current_postgresql_type_pattern_type,
+                                current_not_null_or_nullable,
+                            ): (
+                                &PostgresqlTypePatternType,
+                                &NotNullOrNullable,
+                            ) = match &not_null_or_nullable {
+                                NotNullOrNullable::NotNull => (
+                                    &PostgresqlTypePatternType::ArrayDimension3 {
+                                        dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                        dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                        dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
+                                    },
+                                    &dimension1_not_null_or_nullable,
+                                ),
+                                NotNullOrNullable::Nullable => (
+                                    &postgresql_type_pattern_type,
+                                    &NotNullOrNullable::NotNull,
+                                )
+                            };
+                            generate_current_ident_origin_non_wrapping(
+                                &current_postgresql_type_pattern_type,
+                                &current_not_null_or_nullable
+                            )
+                        },
+                    }
+                };
+                use postgresql_crud_macros_common::NotNullOrNullable;//todo move
+                let content_token_stream = {
+                    let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens|{
+                        quote::quote!{match value {
+                            Some(value) => Some(#type_token_stream::new(value)),
+                            None => None 
+                        }}
+                    };
+                    match &postgresql_type_pattern_type {
+                        PostgresqlTypePatternType::Standart => match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => quote::quote!{value},
+                            NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case)
+                        },
+                        PostgresqlTypePatternType::ArrayDimension1{..} |
+                        PostgresqlTypePatternType::ArrayDimension2{..} |
+                        PostgresqlTypePatternType::ArrayDimension3{..} |
+                        PostgresqlTypePatternType::ArrayDimension4{..} => match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => quote::quote!{value.into_iter().map(|element|#current_child_type_token_stream::new(element)).collect()},
+                            NotNullOrNullable::Nullable => generate_match_option_token_stream(&current_child_type_token_stream)
+                        },
+                    }
+                };
+                quote::quote!{
+                    impl #ident_origin_upper_camel_case {
+                        pub fn new(value: #type_token_stream) -> Self {
+                            Self(#content_token_stream)
+                        }
+                    }
                 }
             };
 
