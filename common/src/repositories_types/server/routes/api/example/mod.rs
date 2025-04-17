@@ -151,44 +151,44 @@ pub struct Example {
     //////////////////////////////////
     pub column_e0cc33dd_631d_4668_9f85_2513797bb77c: postgresql_crud::postgresql_type::StdStringStringAsNotNullCharN,
     pub column_35684b65_4796_4ab6_b427_f73e4cb980ae: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullCharN,
-    pub column_dc776076_6b69_4405_949b_df562ed341a0: postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableCharN,
-    pub column_53cc5dda_99cd_477a_a6e3_e084945632b8: postgresql_crud::postgresql_type::OptionStdStringStringAsNullableCharN,
-    pub column_f2275c9b_201a_4e9e_982e_cda2783ff274: postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullCharN,
-    pub column_ac205134_1d51_49be_a159_0081419f6217: postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableCharN,
+    // pub column_dc776076_6b69_4405_949b_df562ed341a0: postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableCharN,
+    // pub column_53cc5dda_99cd_477a_a6e3_e084945632b8: postgresql_crud::postgresql_type::OptionStdStringStringAsNullableCharN,
+    // pub column_f2275c9b_201a_4e9e_982e_cda2783ff274: postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullCharN,
+    // pub column_ac205134_1d51_49be_a159_0081419f6217: postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableCharN,
 
-    pub column_ded0a0e3_fb62_4347_bd46_b87877287bd8: postgresql_crud::postgresql_type::StdStringStringAsNotNullVarchar,
-    pub column_c3bde33d_99cd_4101_91bd_158274c93154: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullVarchar,
-    pub column_ddb50a18_7980_4022_809f_351e18fbef3e: postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableVarchar,
-    pub column_1123e44a_58b5_4f59_a97e_4e68825ba72f: postgresql_crud::postgresql_type::OptionStdStringStringAsNullableVarchar,
-    pub column_4272770e_ef96_40da_adee_430f796de1e4: postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullVarchar,
-    pub column_5d2a3139_0b0a_4e76_92ec_ba3c60ef2fa0: postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableVarchar,
+    // pub column_ded0a0e3_fb62_4347_bd46_b87877287bd8: postgresql_crud::postgresql_type::StdStringStringAsNotNullVarchar,
+    // pub column_c3bde33d_99cd_4101_91bd_158274c93154: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullVarchar,
+    // pub column_ddb50a18_7980_4022_809f_351e18fbef3e: postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableVarchar,
+    // pub column_1123e44a_58b5_4f59_a97e_4e68825ba72f: postgresql_crud::postgresql_type::OptionStdStringStringAsNullableVarchar,
+    // pub column_4272770e_ef96_40da_adee_430f796de1e4: postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullVarchar,
+    // pub column_5d2a3139_0b0a_4e76_92ec_ba3c60ef2fa0: postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableVarchar,
 
-    pub column_2552676e_3c3e_4bdd_9179_300d75ff3aff: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullInet,
-    pub column_5eecd30d_723a_4eb9_951c_acdcb57e6f03: postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullInet,
-    pub column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableInet,
-    pub column_764635c6_7deb_46ce_8e38_733efbff7f7d: postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableInet,
-    pub column_4ba20f95_59ec_47d3_822e_9eff25d99346: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullInet,
-    pub column_ee5e4925_7214_4518_baf4_f911f57167be: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableInet,
+    // pub column_2552676e_3c3e_4bdd_9179_300d75ff3aff: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullInet,
+    // pub column_5eecd30d_723a_4eb9_951c_acdcb57e6f03: postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullInet,
+    // pub column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableInet,
+    // pub column_764635c6_7deb_46ce_8e38_733efbff7f7d: postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableInet,
+    // pub column_4ba20f95_59ec_47d3_822e_9eff25d99346: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullInet,
+    // pub column_ee5e4925_7214_4518_baf4_f911f57167be: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableInet,
 
-    pub column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullCidr,
-    pub column_63caedf0_e522_47ae_91c5_7245a84ff39e: postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullCidr,
-    pub column_6ade8e84_1d2a_46e5_912b_3845c96b4000: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableCidr,
-    pub column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5: postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableCidr,
-    pub column_e246a414_a6f1_4857_989b_775d9a05530a: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullCidr,
-    pub column_d7e0c542_a58b_49e0_9622_2d74a557130f: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableCidr,
+    // pub column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullCidr,
+    // pub column_63caedf0_e522_47ae_91c5_7245a84ff39e: postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullCidr,
+    // pub column_6ade8e84_1d2a_46e5_912b_3845c96b4000: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableCidr,
+    // pub column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5: postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableCidr,
+    // pub column_e246a414_a6f1_4857_989b_775d9a05530a: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullCidr,
+    // pub column_d7e0c542_a58b_49e0_9622_2d74a557130f: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableCidr,
 
-    pub column_3adc399c_5054_49ce_bfe0_f21e5c519743: postgresql_crud::postgresql_type::SqlxTypesBitVecAsNotNullBit,
-    pub column_4b4dfd97_86e0_4446_b8eb_d85a00e75875: postgresql_crud::postgresql_type::VecOfSqlxTypesBitVecAsNotNullArrayOfNotNullBit,
-    pub column_d9778506_631d_4bfc_a5b1_b1c90c8a2a16: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesBitVecAsNotNullArrayOfNullableBit,
-    pub column_7df25f90_b3e4_4ddb_8e58_18d42139404d: postgresql_crud::postgresql_type::OptionSqlxTypesBitVecAsNullableBit,
-    pub column_b108c4a8_1118_4417_9eaa_8f04f4f6d7a5: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesBitVecAsNullableArrayOfNotNullBit,
-    pub column_8a3c5fb8_0286_4b59_a8d7_32b7ed208113: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesBitVecAsNullableArrayOfNullableBit,
-    pub column_215aac33_a576_41eb_bd40_9b55d3fdfd3d: postgresql_crud::postgresql_type::SqlxTypesBitVecAsNotNullVarbit,
-    pub column_a402df4c_5f0b_4531_ba7b_0f208da3d6ca: postgresql_crud::postgresql_type::VecOfSqlxTypesBitVecAsNotNullArrayOfNotNullVarbit,
-    pub column_bc40fb23_0b29_4e94_ac3d_2b9f0cdaa265: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesBitVecAsNotNullArrayOfNullableVarbit,
-    pub column_ee315820_f3ff_42ce_b023_45bbb20b823a: postgresql_crud::postgresql_type::OptionSqlxTypesBitVecAsNullableVarbit,
-    pub column_03404ca9_a596_4e8c_a481_d57ef93adf10: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesBitVecAsNullableArrayOfNotNullVarbit,
-    pub column_86301c58_8b56_4d28_a91f_30b84539c9a7: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesBitVecAsNullableArrayOfNullableVarbit,
+    // pub column_3adc399c_5054_49ce_bfe0_f21e5c519743: postgresql_crud::postgresql_type::SqlxTypesBitVecAsNotNullBit,
+    // pub column_4b4dfd97_86e0_4446_b8eb_d85a00e75875: postgresql_crud::postgresql_type::VecOfSqlxTypesBitVecAsNotNullArrayOfNotNullBit,
+    // pub column_d9778506_631d_4bfc_a5b1_b1c90c8a2a16: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesBitVecAsNotNullArrayOfNullableBit,
+    // pub column_7df25f90_b3e4_4ddb_8e58_18d42139404d: postgresql_crud::postgresql_type::OptionSqlxTypesBitVecAsNullableBit,
+    // pub column_b108c4a8_1118_4417_9eaa_8f04f4f6d7a5: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesBitVecAsNullableArrayOfNotNullBit,
+    // pub column_8a3c5fb8_0286_4b59_a8d7_32b7ed208113: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesBitVecAsNullableArrayOfNullableBit,
+    // pub column_215aac33_a576_41eb_bd40_9b55d3fdfd3d: postgresql_crud::postgresql_type::SqlxTypesBitVecAsNotNullVarbit,
+    // pub column_a402df4c_5f0b_4531_ba7b_0f208da3d6ca: postgresql_crud::postgresql_type::VecOfSqlxTypesBitVecAsNotNullArrayOfNotNullVarbit,
+    // pub column_bc40fb23_0b29_4e94_ac3d_2b9f0cdaa265: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesBitVecAsNotNullArrayOfNullableVarbit,
+    // pub column_ee315820_f3ff_42ce_b023_45bbb20b823a: postgresql_crud::postgresql_type::OptionSqlxTypesBitVecAsNullableVarbit,
+    // pub column_03404ca9_a596_4e8c_a481_d57ef93adf10: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesBitVecAsNullableArrayOfNotNullVarbit,
+    // pub column_86301c58_8b56_4d28_a91f_30b84539c9a7: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesBitVecAsNullableArrayOfNullableVarbit,
 }
 //todo enum tree support
 //todo generate wrapper type for all possible json type
@@ -456,7 +456,9 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
     println!("{create_extension_if_not_exists_uuid_ossp_query_stringified}");
     let _ = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(pool).await.unwrap();
     let create_table_if_not_exists_query_stringified = format!(
-        "create table if not exists example ({},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})",
+        // "create table if not exists example ({},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})",
+        // "create table if not exists example ({},{},{},{},{},{},{},{},{})",
+        "create table if not exists example ({},{},{},{},{})",
         <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"column_6e88acb0_c566_4fef_8a09_66a41338cf36", true),
         <postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2 as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"vec", false),
         <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"column_40d64ae4_a646_4394_bfce_3894bdfced87", false),
@@ -472,164 +474,173 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
             false,
             postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
         ),
-        <postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_dc776076_6b69_4405_949b_df562ed341a0",
-            false,
-             postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionStdStringStringAsNullableCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_53cc5dda_99cd_477a_a6e3_e084945632b8",
-            false,
-             postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_f2275c9b_201a_4e9e_982e_cda2783ff274",
-            false,
-             postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_ac205134_1d51_49be_a159_0081419f6217",
-            false,
-             postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::StdStringStringAsNotNullVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_ded0a0e3_fb62_4347_bd46_b87877287bd8",
-            false,
-            postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_c3bde33d_99cd_4101_91bd_158274c93154",
-            false,
-            postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_ddb50a18_7980_4022_809f_351e18fbef3e",
-            false,
-            postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionStdStringStringAsNullableVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_1123e44a_58b5_4f59_a97e_4e68825ba72f",
-            false,
-            postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_4272770e_ef96_40da_adee_430f796de1e4",
-            false,
-            postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_5d2a3139_0b0a_4e76_92ec_ba3c60ef2fa0",
-            false,
-            postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_2552676e_3c3e_4bdd_9179_300d75ff3aff",
-            false,
-        ),
-        <postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_5eecd30d_723a_4eb9_951c_acdcb57e6f03",
-            false
-        ),
-        <postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b",
-            false
-        ),
-        <postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_764635c6_7deb_46ce_8e38_733efbff7f7d",
-            false
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_4ba20f95_59ec_47d3_822e_9eff25d99346",
-            false
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_ee5e4925_7214_4518_baf4_f911f57167be",
-            false
-        ),
-        <postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe",
-            false
-        ),
-        <postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_63caedf0_e522_47ae_91c5_7245a84ff39e",
-            false
-        ),
-        <postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_6ade8e84_1d2a_46e5_912b_3845c96b4000",
-            false
-        ),
-        <postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5",
-            false
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_e246a414_a6f1_4857_989b_775d9a05530a",
-            false
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_d7e0c542_a58b_49e0_9622_2d74a557130f",
-            false
-        ),
-        <postgresql_crud::postgresql_type::SqlxTypesBitVecAsNotNullBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_3adc399c_5054_49ce_bfe0_f21e5c519743",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::VecOfSqlxTypesBitVecAsNotNullArrayOfNotNullBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_4b4dfd97_86e0_4446_b8eb_d85a00e75875",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::VecOfOptionSqlxTypesBitVecAsNotNullArrayOfNullableBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_d9778506_631d_4bfc_a5b1_b1c90c8a2a16",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionSqlxTypesBitVecAsNullableBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_7df25f90_b3e4_4ddb_8e58_18d42139404d",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfSqlxTypesBitVecAsNullableArrayOfNotNullBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_b108c4a8_1118_4417_9eaa_8f04f4f6d7a5",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesBitVecAsNullableArrayOfNullableBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_8a3c5fb8_0286_4b59_a8d7_32b7ed208113",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::SqlxTypesBitVecAsNotNullVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_215aac33_a576_41eb_bd40_9b55d3fdfd3d",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::VecOfSqlxTypesBitVecAsNotNullArrayOfNotNullVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_a402df4c_5f0b_4531_ba7b_0f208da3d6ca",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::VecOfOptionSqlxTypesBitVecAsNotNullArrayOfNullableVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_bc40fb23_0b29_4e94_ac3d_2b9f0cdaa265",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionSqlxTypesBitVecAsNullableVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_ee315820_f3ff_42ce_b023_45bbb20b823a",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfSqlxTypesBitVecAsNullableArrayOfNotNullVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_03404ca9_a596_4e8c_a481_d57ef93adf10",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesBitVecAsNullableArrayOfNullableVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_86301c58_8b56_4d28_a91f_30b84539c9a7",
-            false,
-            postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
-        )
+        // <postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_dc776076_6b69_4405_949b_df562ed341a0",
+        //     false,
+        //      postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionStdStringStringAsNullableCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_53cc5dda_99cd_477a_a6e3_e084945632b8",
+        //     false,
+        //      postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_f2275c9b_201a_4e9e_982e_cda2783ff274",
+        //     false,
+        //      postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_ac205134_1d51_49be_a159_0081419f6217",
+        //     false,
+        //      postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
+        // ),
+
+
+
+
+
+
+
+
+
+        // <postgresql_crud::postgresql_type::StdStringStringAsNotNullVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_ded0a0e3_fb62_4347_bd46_b87877287bd8",
+        //     false,
+        //     postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_c3bde33d_99cd_4101_91bd_158274c93154",
+        //     false,
+        //     postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_ddb50a18_7980_4022_809f_351e18fbef3e",
+        //     false,
+        //     postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionStdStringStringAsNullableVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_1123e44a_58b5_4f59_a97e_4e68825ba72f",
+        //     false,
+        //     postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_4272770e_ef96_40da_adee_430f796de1e4",
+        //     false,
+        //     postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableVarchar as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_5d2a3139_0b0a_4e76_92ec_ba3c60ef2fa0",
+        //     false,
+        //     postgresql_crud::postgresql_type::StdStringStringAsVarcharLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_2552676e_3c3e_4bdd_9179_300d75ff3aff",
+        //     false,
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_5eecd30d_723a_4eb9_951c_acdcb57e6f03",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_764635c6_7deb_46ce_8e38_733efbff7f7d",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_4ba20f95_59ec_47d3_822e_9eff25d99346",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableInet as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_ee5e4925_7214_4518_baf4_f911f57167be",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_63caedf0_e522_47ae_91c5_7245a84ff39e",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_6ade8e84_1d2a_46e5_912b_3845c96b4000",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_e246a414_a6f1_4857_989b_775d9a05530a",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableCidr as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_d7e0c542_a58b_49e0_9622_2d74a557130f",
+        //     false
+        // ),
+        // <postgresql_crud::postgresql_type::SqlxTypesBitVecAsNotNullBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_3adc399c_5054_49ce_bfe0_f21e5c519743",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfSqlxTypesBitVecAsNotNullArrayOfNotNullBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_4b4dfd97_86e0_4446_b8eb_d85a00e75875",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfOptionSqlxTypesBitVecAsNotNullArrayOfNullableBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_d9778506_631d_4bfc_a5b1_b1c90c8a2a16",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionSqlxTypesBitVecAsNullableBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_7df25f90_b3e4_4ddb_8e58_18d42139404d",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfSqlxTypesBitVecAsNullableArrayOfNotNullBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_b108c4a8_1118_4417_9eaa_8f04f4f6d7a5",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesBitVecAsNullableArrayOfNullableBit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_8a3c5fb8_0286_4b59_a8d7_32b7ed208113",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsBitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::SqlxTypesBitVecAsNotNullVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_215aac33_a576_41eb_bd40_9b55d3fdfd3d",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfSqlxTypesBitVecAsNotNullArrayOfNotNullVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_a402df4c_5f0b_4531_ba7b_0f208da3d6ca",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfOptionSqlxTypesBitVecAsNotNullArrayOfNullableVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_bc40fb23_0b29_4e94_ac3d_2b9f0cdaa265",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionSqlxTypesBitVecAsNullableVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_ee315820_f3ff_42ce_b023_45bbb20b823a",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfSqlxTypesBitVecAsNullableArrayOfNotNullVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_03404ca9_a596_4e8c_a481_d57ef93adf10",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesBitVecAsNullableArrayOfNullableVarbit as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_86301c58_8b56_4d28_a91f_30b84539c9a7",
+        //     false,
+        //     postgresql_crud::postgresql_type::SqlxTypesBitVecAsVarbitLength::try_from(1).unwrap()
+        // )
     );
     println!("{create_table_if_not_exists_query_stringified}");
     let _ = sqlx::query(&create_table_if_not_exists_query_stringified).execute(pool).await.unwrap();
