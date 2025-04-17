@@ -1086,12 +1086,19 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &postgresql_crud_macros_common::IsQueryBindMutable::True,
                 &query_bind_content_token_stream,
             );
-            quote::quote! {
+            let generated = quote::quote! {
                 #struct_token_stream
                 #maybe_try_new_logic_token_stream
                 #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                 #impl_postgresql_type_where_filter_token_stream
-            }
+            };
+            // if let postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual = &filter {
+            //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            //         "GeneratePostgresqlTypeWhereElementFilter",
+            //         &generated,
+            //     );
+            // }
+            generated
         };
         let filter_array_token_stream = postgresql_crud_macros_common::PostgresqlTypeFilter::into_array().map(|element|generate_filters_token_stream(&element));
         // let _token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlTypeFilter::);
@@ -1957,10 +1964,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         };
         let filter_array_token_stream = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::into_array().map(|element|generate_filters_token_stream(&element));
         // let _token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::);
-        quote::quote! {
+        let generated = quote::quote! {
             #(#filter_array_token_stream)*
             // #_token_stream
-        }
+        };
+        // if let postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual = &filter {
+        //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //         "GeneratePostgresqlTypeWhereElementFilter",
+        //         &generated,
+        //     );
+        // }
+        generated
     };
     let generated = quote::quote!{
         #postgresql_type_token_stream

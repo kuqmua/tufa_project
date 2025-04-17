@@ -1023,7 +1023,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
-            postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
+            postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
         };
         let postgresql_type_pattern_type_filter = {
             use postgresql_crud_macros_common::NotNullOrNullable;
@@ -1032,7 +1032,50 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlTypePatternType::ArrayDimension1 {
                     dimension1_not_null_or_nullable,
                 } => match &dimension1_not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => false,
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &element.postgresql_type {
+                        PostgresqlType::StdPrimitiveI16AsInt2 => true,
+                        PostgresqlType::StdPrimitiveI32AsInt4 => false,
+                        PostgresqlType::StdPrimitiveI64AsInt8 => false,
+                        PostgresqlType::StdPrimitiveF32AsFloat4 => false,
+                        PostgresqlType::StdPrimitiveF64AsFloat8 => false,
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
+                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => false,
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
+                        PostgresqlType::SqlxTypesDecimalAsNumeric => false,
+                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
+                        PostgresqlType::StdPrimitiveBoolAsBool => false,
+                        PostgresqlType::StdStringStringAsCharN => false,
+                        PostgresqlType::StdStringStringAsVarchar => false,
+                        PostgresqlType::StdStringStringAsText => false,
+                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => false,
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => false,
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => false,
+                        PostgresqlType::SqlxTypesTimeDateAsDate => false,
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => false,
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => false,
+                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => false,
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => false,
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => false,
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => false,
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
+                        PostgresqlType::SqlxTypesBitVecAsBit => false,
+                        PostgresqlType::SqlxTypesBitVecAsVarbit => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => false,
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
+                    },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
                 },
                 PostgresqlTypePatternType::ArrayDimension2 {
@@ -4020,6 +4063,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
             let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before;
             // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
+            let length_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual;
+            let length_more_than = postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan;
 
             let where_element_number_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &in_handle]);
             let where_element_sqlx_postgres_types_pg_money_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &in_handle]);
@@ -4155,7 +4200,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
                 },
                 //todo more filters for arrays
-                PostgresqlTypePatternType::ArrayDimension1 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
+                PostgresqlTypePatternType::ArrayDimension1 {..} => generate_ident_where_element_token_stream(&vec![&equal, &length_equal]),
                 PostgresqlTypePatternType::ArrayDimension2 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
                 PostgresqlTypePatternType::ArrayDimension3 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
                 PostgresqlTypePatternType::ArrayDimension4 {..} => generate_ident_where_element_token_stream(&vec![&equal]),

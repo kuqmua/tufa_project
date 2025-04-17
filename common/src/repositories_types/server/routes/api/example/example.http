@@ -88,12 +88,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "vec": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # }
+      # ,
       {
-        "Equal": {
+        "LengthEqual": {
           "logical_operator": "Or",
-          "value": [
-            0
-          ]
+          "value": 0
         }
       }
     ]
@@ -209,20 +216,21 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           "offset": 0
         }
       }
-    },
-    {
-      "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
-    },
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
-    {
-      "object_animal_as_jsonb_not_null": [
-        {
-          "std_primitive_i8": null
-        }
-      ]
     }
+    # ,
+    # {
+    #   "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
+    # },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
+    # {
+    #   "object_animal_as_jsonb_not_null": [
+    #     {
+    #       "std_primitive_i8": null
+    #     }
+    #   ]
+    # }
   ],
   "order_by": {
     "column": {
@@ -235,6 +243,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "offset": 0
   }
 }
+
 ###
 
 GET http://127.0.0.1:8080/example/read_many_payload_example HTTP/1.1

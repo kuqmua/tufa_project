@@ -1801,6 +1801,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     true => &primary_key_inner_type_token_stream,
     //     false => &primary_key_inner_type_token_stream,
     // };
+    //todo check if vec is not empty
     let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
         quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_select_upper_camel_case>}
     };
