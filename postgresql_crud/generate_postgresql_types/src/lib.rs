@@ -4063,7 +4063,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
             let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before;
             // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
-            let length_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual;
+            let array_length_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne;
             let length_more_than = postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan;
 
             let where_element_number_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &in_handle]);
@@ -4200,7 +4200,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
                 },
                 //todo more filters for arrays
-                PostgresqlTypePatternType::ArrayDimension1 {..} => generate_ident_where_element_token_stream(&vec![&equal, &length_equal]),
+                PostgresqlTypePatternType::ArrayDimension1 {..} => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one]),
                 PostgresqlTypePatternType::ArrayDimension2 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
                 PostgresqlTypePatternType::ArrayDimension3 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
                 PostgresqlTypePatternType::ArrayDimension4 {..} => generate_ident_where_element_token_stream(&vec![&equal]),

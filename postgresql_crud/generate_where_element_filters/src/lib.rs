@@ -538,7 +538,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             In,
             CaseSensitiveRegularExpression,
             CaseInsensitiveRegularExpression,
-            LengthEqual,
+            ArrayLengthDimensionOne,
             LengthMoreThan,
             RangeLength,
         }
@@ -559,7 +559,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual => Ok(Self::LengthEqual),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne => Ok(Self::ArrayLengthDimensionOne),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan => Ok(Self::LengthMoreThan),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange => Err(()),
@@ -729,11 +729,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_query_part_zero_value_token_stream(&quote::quote!{"{}({} > current_time)"}),
                     &quote::quote!{#query_snake_case},
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
-                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) = ${})"}),
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(array_length({}, 1) = ${})"}),
                     &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan => (
@@ -982,7 +982,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote!{+ crate::IsStringEmpty}),
                             &vec![&value_t_field]
                         ),
-                        PostgresqlTypeFilterInitializedWithTryNew::LengthEqual => (
+                        PostgresqlTypeFilterInitializedWithTryNew::ArrayLengthDimensionOne => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote!{
                                 LengthIsNegative {

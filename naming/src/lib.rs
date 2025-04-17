@@ -533,7 +533,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["not", "null"],
     ["nullable"],
     ["vec", "of"],
-    ["array", "of"]
+    ["array", "of"],
+    ["array", "length", "dimension", "one"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
