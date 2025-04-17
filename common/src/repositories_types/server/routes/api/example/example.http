@@ -39,7 +39,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 [
   {
     "vec": [
-      0,2,3
+      0,2,3,4,5
     ],
     "column_40d64ae4_a646_4394_bfce_3894bdfced87": 0,
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
@@ -97,10 +97,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   }
       # }
       # ,
+      # {
+      #   "ArrayLengthDimensionOne": {
+      #     "logical_operator": "Or",
+      #     "value": 3
+      #   }
+      # }
+      # ,
       {
-        "ArrayLengthDimensionOne": {
+        "ArrayLengthMoreThanDimensionOne": {
           "logical_operator": "Or",
-          "value": 3
+          "value": 4
         }
       }
     ]
@@ -212,7 +219,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "vec": {
         "dimension1_pagination": {
-          "limit": 3,
+          "limit": 30,
           "offset": 0
         }
       }

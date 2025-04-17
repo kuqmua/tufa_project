@@ -539,7 +539,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             CaseSensitiveRegularExpression,
             CaseInsensitiveRegularExpression,
             ArrayLengthDimensionOne,
-            LengthMoreThan,
+            ArrayLengthMoreThanDimensionOne,
             RangeLength,
         }
         impl std::convert::TryFrom<&postgresql_crud_macros_common::PostgresqlTypeFilter> for PostgresqlTypeFilterInitializedWithTryNew {
@@ -560,7 +560,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne => Ok(Self::ArrayLengthDimensionOne),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan => Ok(Self::LengthMoreThan),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne => Ok(Self::ArrayLengthMoreThanDimensionOne),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange => Err(()),
@@ -736,11 +736,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_query_part_one_value_token_stream(&quote::quote!{"{}(array_length({}, 1) = ${})"}),
                     &query_bind_one_value_token_stream
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::LengthMoreThan => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
-                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(length({}) > ${})"}),
+                    &generate_query_part_one_value_token_stream(&quote::quote!{"{}(array_length({}, 1) > ${})"}),
                     &query_bind_one_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => (
@@ -1007,7 +1007,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None,
                             &vec![&value_std_primitive_i32_field]
                         ),
-                        PostgresqlTypeFilterInitializedWithTryNew::LengthMoreThan => (
+                        PostgresqlTypeFilterInitializedWithTryNew::ArrayLengthMoreThanDimensionOne => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote!{
                                 LengthIsNegative {
