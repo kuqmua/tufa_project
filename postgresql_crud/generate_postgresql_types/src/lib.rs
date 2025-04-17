@@ -3763,22 +3763,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // PostgresqlTypePatternType::ArrayDimension4 {..} 
                             => std::iter::repeat("[]").take(array_dimensions_number).collect::<String>()
                         };
-                        //todo add additional checks coz postgreql does not support not null elements of array with keyword "not null"
-                        // can i create a postgresql column array of not null int?
-                        // No, PostgreSQL does not natively support enforcing NOT NULL on individual elements of an array column.
-                        // Use a CHECK constraint to validate elements
-                        // CREATE TABLE my_table (
-                        //     my_column INTEGER[] NOT NULL,
-                        //     CONSTRAINT no_nulls_in_array CHECK (
-                        //         NOT EXISTS (
-                        //             SELECT 1 FROM unnest(my_column) AS x(val)
-                        //             WHERE val IS NULL
-                        //         )
-                        //     )
-                        // );
                         let maybe_constraint_part = match &postgresql_type_pattern_type {
                             PostgresqlTypePatternType::Standart => "".to_string(),
-                            PostgresqlTypePatternType::ArrayDimension1 {..} => "".to_string(),
+                            PostgresqlTypePatternType::ArrayDimension1 {
+                                dimension1_not_null_or_nullable
+                            } => match &dimension1_not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => ",check (array_position({column},null) is null)".to_string(),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => "".to_string(),
+                            },
+                            // if nested array with be supported in sqlx in the future than add additional checks using created in db functions coz postgreql does not support not null elements of array with keyword "not null"
                             // PostgresqlTypePatternType::ArrayDimension2 {..} => "".to_string(),
                             // PostgresqlTypePatternType::ArrayDimension3 {..} => "".to_string(),
                             // PostgresqlTypePatternType::ArrayDimension4 {..} => "".to_string(),
