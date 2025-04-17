@@ -36,18 +36,7 @@ POST http://127.0.0.1:8080/example/create_many HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
-[
-  {
-    "vec": [
-      0,2,3,4,5
-    ],
-    "column_40d64ae4_a646_4394_bfce_3894bdfced87": 0,
-    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
-    "object_animal_as_jsonb_not_null": {
-      "std_primitive_i8": 0
-    }
-  }
-]
+
 
 ###
  
@@ -262,32 +251,8 @@ POST http://127.0.0.1:8080/example/read_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
-{
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
-  "select": [
-    {
-      "vec": {
-        "dimension1_pagination": {
-          "limit": 3,
-          "offset": 0
-        }
-      }
-    },
-    {
-      "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
-    },
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
-    {
-      "object_animal_as_jsonb_not_null": [
-        {
-          "std_primitive_i8": null
-        }
-      ]
-    }
-  ]
-}
+
+
 
 ###
 
