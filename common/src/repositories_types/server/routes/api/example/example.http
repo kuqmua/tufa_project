@@ -36,7 +36,123 @@ POST http://127.0.0.1:8080/example/create_many HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
-
+[
+  {
+    "vec": [
+      0
+    ],
+    "column_40d64ae4_a646_4394_bfce_3894bdfced87": 0,
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
+    "column_e0cc33dd_631d_4668_9f85_2513797bb77c": "",
+    "column_35684b65_4796_4ab6_b427_f73e4cb980ae": [
+      ""
+    ],
+    "column_dc776076_6b69_4405_949b_df562ed341a0": [
+      ""
+    ],
+    "column_53cc5dda_99cd_477a_a6e3_e084945632b8": "",
+    "column_f2275c9b_201a_4e9e_982e_cda2783ff274": [
+      ""
+    ],
+    "column_ac205134_1d51_49be_a159_0081419f6217": [
+      ""
+    ],
+    "column_ded0a0e3_fb62_4347_bd46_b87877287bd8": "",
+    "column_c3bde33d_99cd_4101_91bd_158274c93154": [
+      ""
+    ],
+    "column_ddb50a18_7980_4022_809f_351e18fbef3e": [
+      ""
+    ],
+    "column_1123e44a_58b5_4f59_a97e_4e68825ba72f": "",
+    "column_4272770e_ef96_40da_adee_430f796de1e4": [
+      ""
+    ],
+    "column_5d2a3139_0b0a_4e76_92ec_ba3c60ef2fa0": [
+      ""
+    ],
+    "column_2552676e_3c3e_4bdd_9179_300d75ff3aff": "0.0.0.0/0",
+    "column_5eecd30d_723a_4eb9_951c_acdcb57e6f03": [
+      "0.0.0.0/0"
+    ],
+    "column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b": [
+      "0.0.0.0/0"
+    ],
+    "column_764635c6_7deb_46ce_8e38_733efbff7f7d": "0.0.0.0/0",
+    "column_4ba20f95_59ec_47d3_822e_9eff25d99346": [
+      "0.0.0.0/0"
+    ],
+    "column_ee5e4925_7214_4518_baf4_f911f57167be": [
+      "0.0.0.0/0"
+    ],
+    "column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe": "0.0.0.0/0",
+    "column_63caedf0_e522_47ae_91c5_7245a84ff39e": [
+      "0.0.0.0/0"
+    ],
+    "column_6ade8e84_1d2a_46e5_912b_3845c96b4000": [
+      "0.0.0.0/0"
+    ],
+    "column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5": "0.0.0.0/0",
+    "column_e246a414_a6f1_4857_989b_775d9a05530a": [
+      "0.0.0.0/0"
+    ],
+    "column_d7e0c542_a58b_49e0_9622_2d74a557130f": [
+      "0.0.0.0/0"
+    ],
+    "column_3adc399c_5054_49ce_bfe0_f21e5c519743": [
+      false
+    ],
+    "column_4b4dfd97_86e0_4446_b8eb_d85a00e75875": [
+      [
+        false
+      ]
+    ],
+    "column_d9778506_631d_4bfc_a5b1_b1c90c8a2a16": [
+      [
+        false
+      ]
+    ],
+    "column_7df25f90_b3e4_4ddb_8e58_18d42139404d": [
+      false
+    ],
+    "column_b108c4a8_1118_4417_9eaa_8f04f4f6d7a5": [
+      [
+        false
+      ]
+    ],
+    "column_8a3c5fb8_0286_4b59_a8d7_32b7ed208113": [
+      [
+        false
+      ]
+    ],
+    "column_215aac33_a576_41eb_bd40_9b55d3fdfd3d": [
+      false
+    ],
+    "column_a402df4c_5f0b_4531_ba7b_0f208da3d6ca": [
+      [
+        false
+      ]
+    ],
+    "column_bc40fb23_0b29_4e94_ac3d_2b9f0cdaa265": [
+      [
+        false
+      ]
+    ],
+    "column_ee315820_f3ff_42ce_b023_45bbb20b823a": [
+      false
+    ],
+    "column_03404ca9_a596_4e8c_a481_d57ef93adf10": [
+      [
+        false
+      ]
+    ],
+    "column_86301c58_8b56_4d28_a91f_30b84539c9a7": [
+      [
+        false
+      ]
+    ]
+  }
+]
 
 ###
  
@@ -56,9 +172,114 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
   ],
   "column_40d64ae4_a646_4394_bfce_3894bdfced87": 0,
   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
-  "object_animal_as_jsonb_not_null": {
-    "std_primitive_i8": 0
-  }
+  "column_e0cc33dd_631d_4668_9f85_2513797bb77c": "",
+  "column_35684b65_4796_4ab6_b427_f73e4cb980ae": [
+    ""
+  ],
+  "column_dc776076_6b69_4405_949b_df562ed341a0": [
+    ""
+  ],
+  "column_53cc5dda_99cd_477a_a6e3_e084945632b8": "",
+  "column_f2275c9b_201a_4e9e_982e_cda2783ff274": [
+    ""
+  ],
+  "column_ac205134_1d51_49be_a159_0081419f6217": [
+    ""
+  ],
+  "column_ded0a0e3_fb62_4347_bd46_b87877287bd8": "",
+  "column_c3bde33d_99cd_4101_91bd_158274c93154": [
+    ""
+  ],
+  "column_ddb50a18_7980_4022_809f_351e18fbef3e": [
+    ""
+  ],
+  "column_1123e44a_58b5_4f59_a97e_4e68825ba72f": "",
+  "column_4272770e_ef96_40da_adee_430f796de1e4": [
+    ""
+  ],
+  "column_5d2a3139_0b0a_4e76_92ec_ba3c60ef2fa0": [
+    ""
+  ],
+  "column_2552676e_3c3e_4bdd_9179_300d75ff3aff": "0.0.0.0/0",
+  "column_5eecd30d_723a_4eb9_951c_acdcb57e6f03": [
+    "0.0.0.0/0"
+  ],
+  "column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b": [
+    "0.0.0.0/0"
+  ],
+  "column_764635c6_7deb_46ce_8e38_733efbff7f7d": "0.0.0.0/0",
+  "column_4ba20f95_59ec_47d3_822e_9eff25d99346": [
+    "0.0.0.0/0"
+  ],
+  "column_ee5e4925_7214_4518_baf4_f911f57167be": [
+    "0.0.0.0/0"
+  ],
+  "column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe": "0.0.0.0/0",
+  "column_63caedf0_e522_47ae_91c5_7245a84ff39e": [
+    "0.0.0.0/0"
+  ],
+  "column_6ade8e84_1d2a_46e5_912b_3845c96b4000": [
+    "0.0.0.0/0"
+  ],
+  "column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5": "0.0.0.0/0",
+  "column_e246a414_a6f1_4857_989b_775d9a05530a": [
+    "0.0.0.0/0"
+  ],
+  "column_d7e0c542_a58b_49e0_9622_2d74a557130f": [
+    "0.0.0.0/0"
+  ],
+  "column_3adc399c_5054_49ce_bfe0_f21e5c519743": [
+    false
+  ],
+  "column_4b4dfd97_86e0_4446_b8eb_d85a00e75875": [
+    [
+      false
+    ]
+  ],
+  "column_d9778506_631d_4bfc_a5b1_b1c90c8a2a16": [
+    [
+      false
+    ]
+  ],
+  "column_7df25f90_b3e4_4ddb_8e58_18d42139404d": [
+    false
+  ],
+  "column_b108c4a8_1118_4417_9eaa_8f04f4f6d7a5": [
+    [
+      false
+    ]
+  ],
+  "column_8a3c5fb8_0286_4b59_a8d7_32b7ed208113": [
+    [
+      false
+    ]
+  ],
+  "column_215aac33_a576_41eb_bd40_9b55d3fdfd3d": [
+    false
+  ],
+  "column_a402df4c_5f0b_4531_ba7b_0f208da3d6ca": [
+    [
+      false
+    ]
+  ],
+  "column_bc40fb23_0b29_4e94_ac3d_2b9f0cdaa265": [
+    [
+      false
+    ]
+  ],
+  "column_ee315820_f3ff_42ce_b023_45bbb20b823a": [
+    false
+  ],
+  "column_03404ca9_a596_4e8c_a481_d57ef93adf10": [
+    [
+      false
+    ]
+  ],
+  "column_86301c58_8b56_4d28_a91f_30b84539c9a7": [
+    [
+      false
+    ]
+  ]
 }
 
 ###
@@ -77,28 +298,27 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "vec": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0
-      #     ]
-      #   }
-      # }
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": [
+            0
+          ]
+        }
+      }
       # ,
       # {
       #   "ArrayLengthDimensionOne": {
       #     "logical_operator": "Or",
-      #     "value": 3
+      #     "value": 0
+      #   }
+      # },
+      # {
+      #   "ArrayLengthMoreThanDimensionOne": {
+      #     "logical_operator": "Or",
+      #     "value": 0
       #   }
       # }
-      # ,
-      {
-        "ArrayLengthMoreThanDimensionOne": {
-          "logical_operator": "Or",
-          "value": 4
-        }
-      }
     ]
   },
   # "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
@@ -165,41 +385,806 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "object_animal_as_jsonb_not_null": {
+  # "column_e0cc33dd_631d_4668_9f85_2513797bb77c": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
-  #       "StdPrimitiveI8": {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_35684b65_4796_4ab6_b427_f73e4cb980ae": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
   #         "logical_operator": "Or",
   #         "value": [
-  #           {
-  #             "Equal": {
-  #               "logical_operator": "Or",
-  #               "value": 0
-  #             }
-  #           },
-  #           {
-  #             "GreaterThan": {
-  #               "logical_operator": "Or",
-  #               "value": 0
-  #             }
-  #           },
-  #           {
-  #             "Between": {
-  #               "logical_operator": "Or",
-  #               "start": 0,
-  #               "end": 0
-  #             }
-  #           },
-  #           {
-  #             "In": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 0
-  #               ]
-  #             }
-  #           }
+  #           ""
   #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_dc776076_6b69_4405_949b_df562ed341a0": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           ""
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_53cc5dda_99cd_477a_a6e3_e084945632b8": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_f2275c9b_201a_4e9e_982e_cda2783ff274": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           ""
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_ac205134_1d51_49be_a159_0081419f6217": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           ""
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_ded0a0e3_fb62_4347_bd46_b87877287bd8": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_c3bde33d_99cd_4101_91bd_158274c93154": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           ""
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_ddb50a18_7980_4022_809f_351e18fbef3e": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           ""
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_1123e44a_58b5_4f59_a97e_4e68825ba72f": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseSensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     },
+  #     {
+  #       "CaseInsensitiveRegularExpression": {
+  #         "logical_operator": "Or",
+  #         "value": ""
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_4272770e_ef96_40da_adee_430f796de1e4": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           ""
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_5d2a3139_0b0a_4e76_92ec_ba3c60ef2fa0": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           ""
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_2552676e_3c3e_4bdd_9179_300d75ff3aff": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_5eecd30d_723a_4eb9_951c_acdcb57e6f03": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_764635c6_7deb_46ce_8e38_733efbff7f7d": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_4ba20f95_59ec_47d3_822e_9eff25d99346": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_ee5e4925_7214_4518_baf4_f911f57167be": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_63caedf0_e522_47ae_91c5_7245a84ff39e": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_6ade8e84_1d2a_46e5_912b_3845c96b4000": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_e246a414_a6f1_4857_989b_775d9a05530a": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_d7e0c542_a58b_49e0_9622_2d74a557130f": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_3adc399c_5054_49ce_bfe0_f21e5c519743": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           false
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_4b4dfd97_86e0_4446_b8eb_d85a00e75875": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           [
+  #             false
+  #           ]
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_d9778506_631d_4bfc_a5b1_b1c90c8a2a16": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           [
+  #             false
+  #           ]
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_7df25f90_b3e4_4ddb_8e58_18d42139404d": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           false
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_b108c4a8_1118_4417_9eaa_8f04f4f6d7a5": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           [
+  #             false
+  #           ]
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_8a3c5fb8_0286_4b59_a8d7_32b7ed208113": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           [
+  #             false
+  #           ]
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_215aac33_a576_41eb_bd40_9b55d3fdfd3d": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           false
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_a402df4c_5f0b_4531_ba7b_0f208da3d6ca": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           [
+  #             false
+  #           ]
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_bc40fb23_0b29_4e94_ac3d_2b9f0cdaa265": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           [
+  #             false
+  #           ]
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_ee315820_f3ff_42ce_b023_45bbb20b823a": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           false
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_03404ca9_a596_4e8c_a481_d57ef93adf10": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           [
+  #             false
+  #           ]
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_86301c58_8b56_4d28_a91f_30b84539c9a7": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           [
+  #             false
+  #           ]
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
   #       }
   #     }
   #   ]
@@ -208,7 +1193,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "vec": {
         "dimension1_pagination": {
-          "limit": 30,
+          "limit": 3,
           "offset": 0
         }
       }
@@ -220,11 +1205,232 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
     },
     {
-      "object_animal_as_jsonb_not_null": [
-        {
-          "std_primitive_i8": null
+      "column_e0cc33dd_631d_4668_9f85_2513797bb77c": null
+    },
+    {
+      "column_35684b65_4796_4ab6_b427_f73e4cb980ae": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
         }
-      ]
+      }
+    },
+    {
+      "column_dc776076_6b69_4405_949b_df562ed341a0": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_53cc5dda_99cd_477a_a6e3_e084945632b8": null
+    },
+    {
+      "column_f2275c9b_201a_4e9e_982e_cda2783ff274": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ac205134_1d51_49be_a159_0081419f6217": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ded0a0e3_fb62_4347_bd46_b87877287bd8": null
+    },
+    {
+      "column_c3bde33d_99cd_4101_91bd_158274c93154": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ddb50a18_7980_4022_809f_351e18fbef3e": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_1123e44a_58b5_4f59_a97e_4e68825ba72f": null
+    },
+    {
+      "column_4272770e_ef96_40da_adee_430f796de1e4": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_5d2a3139_0b0a_4e76_92ec_ba3c60ef2fa0": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_2552676e_3c3e_4bdd_9179_300d75ff3aff": null
+    },
+    {
+      "column_5eecd30d_723a_4eb9_951c_acdcb57e6f03": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_764635c6_7deb_46ce_8e38_733efbff7f7d": null
+    },
+    {
+      "column_4ba20f95_59ec_47d3_822e_9eff25d99346": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ee5e4925_7214_4518_baf4_f911f57167be": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe": null
+    },
+    {
+      "column_63caedf0_e522_47ae_91c5_7245a84ff39e": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_6ade8e84_1d2a_46e5_912b_3845c96b4000": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5": null
+    },
+    {
+      "column_e246a414_a6f1_4857_989b_775d9a05530a": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_d7e0c542_a58b_49e0_9622_2d74a557130f": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_3adc399c_5054_49ce_bfe0_f21e5c519743": null
+    },
+    {
+      "column_4b4dfd97_86e0_4446_b8eb_d85a00e75875": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_d9778506_631d_4bfc_a5b1_b1c90c8a2a16": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_7df25f90_b3e4_4ddb_8e58_18d42139404d": null
+    },
+    {
+      "column_b108c4a8_1118_4417_9eaa_8f04f4f6d7a5": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_8a3c5fb8_0286_4b59_a8d7_32b7ed208113": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_215aac33_a576_41eb_bd40_9b55d3fdfd3d": null
+    },
+    {
+      "column_a402df4c_5f0b_4531_ba7b_0f208da3d6ca": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_bc40fb23_0b29_4e94_ac3d_2b9f0cdaa265": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ee315820_f3ff_42ce_b023_45bbb20b823a": null
+    },
+    {
+      "column_03404ca9_a596_4e8c_a481_d57ef93adf10": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_86301c58_8b56_4d28_a91f_30b84539c9a7": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
     }
   ],
   "order_by": {
@@ -251,8 +1457,253 @@ POST http://127.0.0.1:8080/example/read_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
-
-
+{
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
+  "select": [
+    {
+      "vec": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
+    },
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
+    {
+      "column_e0cc33dd_631d_4668_9f85_2513797bb77c": null
+    },
+    {
+      "column_35684b65_4796_4ab6_b427_f73e4cb980ae": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_dc776076_6b69_4405_949b_df562ed341a0": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_53cc5dda_99cd_477a_a6e3_e084945632b8": null
+    },
+    {
+      "column_f2275c9b_201a_4e9e_982e_cda2783ff274": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ac205134_1d51_49be_a159_0081419f6217": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ded0a0e3_fb62_4347_bd46_b87877287bd8": null
+    },
+    {
+      "column_c3bde33d_99cd_4101_91bd_158274c93154": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ddb50a18_7980_4022_809f_351e18fbef3e": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_1123e44a_58b5_4f59_a97e_4e68825ba72f": null
+    },
+    {
+      "column_4272770e_ef96_40da_adee_430f796de1e4": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_5d2a3139_0b0a_4e76_92ec_ba3c60ef2fa0": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_2552676e_3c3e_4bdd_9179_300d75ff3aff": null
+    },
+    {
+      "column_5eecd30d_723a_4eb9_951c_acdcb57e6f03": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_764635c6_7deb_46ce_8e38_733efbff7f7d": null
+    },
+    {
+      "column_4ba20f95_59ec_47d3_822e_9eff25d99346": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ee5e4925_7214_4518_baf4_f911f57167be": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe": null
+    },
+    {
+      "column_63caedf0_e522_47ae_91c5_7245a84ff39e": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_6ade8e84_1d2a_46e5_912b_3845c96b4000": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5": null
+    },
+    {
+      "column_e246a414_a6f1_4857_989b_775d9a05530a": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_d7e0c542_a58b_49e0_9622_2d74a557130f": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_3adc399c_5054_49ce_bfe0_f21e5c519743": null
+    },
+    {
+      "column_4b4dfd97_86e0_4446_b8eb_d85a00e75875": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_d9778506_631d_4bfc_a5b1_b1c90c8a2a16": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_7df25f90_b3e4_4ddb_8e58_18d42139404d": null
+    },
+    {
+      "column_b108c4a8_1118_4417_9eaa_8f04f4f6d7a5": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_8a3c5fb8_0286_4b59_a8d7_32b7ed208113": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_215aac33_a576_41eb_bd40_9b55d3fdfd3d": null
+    },
+    {
+      "column_a402df4c_5f0b_4531_ba7b_0f208da3d6ca": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_bc40fb23_0b29_4e94_ac3d_2b9f0cdaa265": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ee315820_f3ff_42ce_b023_45bbb20b823a": null
+    },
+    {
+      "column_03404ca9_a596_4e8c_a481_d57ef93adf10": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_86301c58_8b56_4d28_a91f_30b84539c9a7": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    }
+  ]
+}
 
 ###
 
