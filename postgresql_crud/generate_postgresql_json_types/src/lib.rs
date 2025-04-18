@@ -302,15 +302,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     ) = postgresql_json_type_record_vec
     .par_iter()
     // .into_iter()//just for console prints ordering
-    .map(|postgresql_json_type_record|{
-        let postgresql_json_type = &postgresql_json_type_record.postgresql_json_type;
-        let postgresql_json_type_pattern = &postgresql_json_type_record.postgresql_json_type_pattern;
-        let not_null_or_nullable = &postgresql_json_type_record.not_null_or_nullable;
+    .map(|element|{
+        let postgresql_json_type = &element.postgresql_json_type;
+        let postgresql_json_type_pattern = &element.postgresql_json_type_pattern;
+        let not_null_or_nullable = &element.not_null_or_nullable;
 
-        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &postgresql_json_type_record.postgresql_json_type_ident_wrapper();
+        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &element.postgresql_json_type_ident_wrapper();
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
-        let field_type = &postgresql_json_type_record.field_type();
+        let field_type = &element.field_type();
 
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
         let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
@@ -551,7 +551,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_origin_upper_camel_case,
                 &{
-                    let content_token_stream = postgresql_json_type_record.initialization_token_stream();
+                    let content_token_stream = element.initialization_token_stream();
                     quote::quote! {
                         Self(#content_token_stream)
                     }
@@ -667,9 +667,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 }
             }
-            let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&postgresql_json_type_record.postgresql_json_type);
+            let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&element.postgresql_json_type);
 
-            let is_vec_element_type = postgresql_json_type_record.is_vec_element_type();
+            let is_vec_element_type = element.is_vec_element_type();
             let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal];
             let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = {
                 let mut vec: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_filters_variants.clone();
@@ -685,7 +685,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             //this is for not nullable\not optionable filters like GreaterThan, Regular expression, etc.
             let postgresql_json_type_ident_wrapper_relevant_only_for_not_null = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&PostgresqlJsonTypeRecord {
-                postgresql_json_type: postgresql_json_type_record.postgresql_json_type.clone(),
+                postgresql_json_type: element.postgresql_json_type.clone(),
                 not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                 postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,//todo
             }
@@ -773,7 +773,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &postgresql_crud_macros_common::IsQueryBindMutable::False,
                 )
             };
-            match &postgresql_json_type_record.postgresql_json_type_pattern {
+            match &element.postgresql_json_type_pattern {
                 PostgresqlJsonTypePattern::Standart => match &postgresql_json_type_specific {
                     PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_number_token_stream,
                     PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_bool_token_stream,
