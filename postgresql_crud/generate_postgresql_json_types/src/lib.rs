@@ -296,7 +296,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     // );
     use rayon::iter::ParallelIterator;
     use rayon::iter::IntoParallelRefIterator;
-    let postgresql_json_type_array = postgresql_json_type_record_vec
+    let (
+        postgresql_crud_json_object_rust_struct_fields_token_stream,
+        postgresql_json_type_array
+    ) = postgresql_json_type_record_vec
     .par_iter()
     // .into_iter()//just for console prints ordering
     .map(|postgresql_json_type_record|{
@@ -880,9 +883,33 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         //     println!("-------");
         //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file("GeneratePostgresqlJsonTypes", &generated);
         // }
-        generated.to_string()
+        (
+            {
+                let field_ident = format!("column_{}", uuid::Uuid::new_v4()).replace("-", "_").parse::<proc_macro2::TokenStream>().unwrap();
+                quote::quote!{
+                    pub #field_ident: postgresql_crud::postgresql_json_type:: #ident,
+                }.to_string()
+            },
+            generated.to_string()
+        )
     })
-    .collect::<std::vec::Vec<String>>();
+    .collect::<(std::vec::Vec<String>, std::vec::Vec<String>)>();
+    if false {
+        let postgresql_crud_json_object_rust_struct_fields_token_stream = postgresql_crud_json_object_rust_struct_fields_token_stream
+        .into_iter()
+        .map(|element|{
+            element.parse::<proc_macro2::TokenStream>().unwrap()
+        })
+        .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            "PostgresqlJsonTypeTokensExampleStruct",
+            &quote::quote!{
+                struct Example {
+                    #(#postgresql_crud_json_object_rust_struct_fields_token_stream)*
+                }
+            },
+        );
+    }
     let generated = {
         let postgresql_json_type_array = postgresql_json_type_array
         .into_iter()
@@ -892,10 +919,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#postgresql_json_type_array)*}
     };
-    // if ident == "" {
-    //     println!("{generated}");
-    //     println!("-------");
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file("GeneratePostgresqlJsonTypes", &generated);
-    // }
+    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     "PostgresqlJsonTypeTokens",
+    //     &generated,
+    // );
     generated.into()
 }
