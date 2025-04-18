@@ -169,6 +169,7 @@ pub fn generate_std_vec_vec_tokens_declaration_token_stream(type_token_stream: &
     quote::quote! {std::vec::Vec<#type_token_stream>}
 }
 
+//todo maybe reuse if sqlx maintainers would support nexted arrays in the future versions
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonTypePattern {
     Standart,
@@ -196,20 +197,6 @@ impl PostgresqlJsonTypePattern {
         match &self {
             PostgresqlJsonTypePattern::Standart => std::string::String::default(),
             PostgresqlJsonTypePattern::ArrayDimension1 {..} => naming::VecUpperCamelCase.to_string(),
-        }
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-pub enum PostgresqlJsonTypePatternIsOptional {
-    True,
-    False,
-}
-impl PostgresqlJsonTypePatternIsOptional {
-    fn prefix_stringified(&self) -> std::string::String {
-        match &self {
-            Self::True => std::string::String::from("StdOptionOption"),
-            Self::False => std::string::String::default(),
         }
     }
 }
