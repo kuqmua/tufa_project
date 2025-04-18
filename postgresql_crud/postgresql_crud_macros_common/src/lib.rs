@@ -280,11 +280,11 @@ impl quote::ToTokens for PostgresqlJsonTypeHandle {
 }
 
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct PostgresqlJsonTypeVariant {
+pub struct PostgresqlJsonTypeRecord {
     pub postgresql_json_type_handle: PostgresqlJsonTypeHandle,
     pub postgresql_json_type_pattern: PostgresqlJsonTypePattern,
 }
-impl PostgresqlJsonTypeVariant {
+impl PostgresqlJsonTypeRecord {
     pub fn all_variants() -> std::vec::Vec<Self> {
         let mut acc = vec![];
         for postgresql_json_type_handle in PostgresqlJsonTypeHandle::into_array() {
