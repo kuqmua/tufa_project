@@ -290,9 +290,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         postgresql_type_filter && not_null_or_nullable_filter && postgresql_type_pattern_filter
     })
     .collect::<std::vec::Vec<PostgresqlJsonTypeRecord>>();
-
+    // macros_helpers::write_string_into_file::write_string_into_file(
+    //     "GeneratePostgresqlJsonTypesJsonVariants",
+    //     &serde_json::to_string(&postgresql_json_type_record_vec).unwrap(),
+    // );
+    use rayon::iter::ParallelIterator;
+    use rayon::iter::IntoParallelRefIterator;
     let postgresql_json_type_array = postgresql_json_type_record_vec
-    .into_iter()
+    .par_iter()
+    // .into_iter()//just for console prints ordering
     .map(|postgresql_json_type_record|{
         let postgresql_json_type = &postgresql_json_type_record.postgresql_json_type;
         let postgresql_json_type_pattern = &postgresql_json_type_record.postgresql_json_type_pattern;
