@@ -531,9 +531,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                 }
             }
-            if fields.len() > 100 {
-                panic!("explicitly not supporting number of columns more than 100 so its less possibility to cause stack overflow or build process exit");
-            }
+            // if fields.len() > 100 {
+            //     panic!("explicitly not supporting number of columns more than 100 so its less possibility to cause stack overflow or build process exit");
+            // }
             (option_primary_key_field.unwrap_or_else(|| panic!("primary_key_field is None")), fields, fields_without_primary_key)
         } else {
             panic!("supports only syn::Fields::Named");
