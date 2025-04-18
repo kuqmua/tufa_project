@@ -169,38 +169,6 @@ pub fn generate_std_vec_vec_tokens_declaration_token_stream(type_token_stream: &
     quote::quote! {std::vec::Vec<#type_token_stream>}
 }
 
-//todo maybe reuse if sqlx maintainers would support nexted arrays in the future versions
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-pub enum PostgresqlJsonTypePattern {
-    Standart,
-    ArrayDimension1 {
-        dimension1_not_null_or_nullable: NotNullOrNullable,
-    },
-    // ArrayDimension2 {
-    //     dimension1_not_null_or_nullable: NotNullOrNullable,
-    //     dimension2_not_null_or_nullable: NotNullOrNullable,
-    // },
-    // ArrayDimension3 {
-    //     dimension1_not_null_or_nullable: NotNullOrNullable,
-    //     dimension2_not_null_or_nullable: NotNullOrNullable,
-    //     dimension3_not_null_or_nullable: NotNullOrNullable,
-    // },
-    // ArrayDimension4 {
-    //     dimension1_not_null_or_nullable: NotNullOrNullable,
-    //     dimension2_not_null_or_nullable: NotNullOrNullable,
-    //     dimension3_not_null_or_nullable: NotNullOrNullable,
-    //     dimension4_not_null_or_nullable: NotNullOrNullable,
-    // },
-}
-impl PostgresqlJsonTypePattern {
-    pub fn prefix_stringified(&self) -> std::string::String {
-        match &self {
-            PostgresqlJsonTypePattern::Standart => std::string::String::default(),
-            PostgresqlJsonTypePattern::ArrayDimension1 {..} => naming::VecUpperCamelCase.to_string(),
-        }
-    }
-}
-
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonType {
     StdPrimitiveI8,
