@@ -282,6 +282,7 @@ impl quote::ToTokens for PostgresqlJsonType {
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct PostgresqlJsonTypeRecord {
     pub postgresql_json_type: PostgresqlJsonType,
+    pub not_null_or_nullable: NotNullOrNullable,
     pub postgresql_json_type_pattern: PostgresqlJsonTypePattern,
 }
 impl PostgresqlJsonTypeRecord {
@@ -291,6 +292,7 @@ impl PostgresqlJsonTypeRecord {
             for postgresql_json_type_pattern in PostgresqlJsonTypePattern::all_variants() {
                 acc.push(Self {
                     postgresql_json_type: postgresql_json_type.clone(),
+                    not_null_or_nullable: NotNullOrNullable::NotNull,//todo
                     postgresql_json_type_pattern: postgresql_json_type_pattern,
                 });
             }

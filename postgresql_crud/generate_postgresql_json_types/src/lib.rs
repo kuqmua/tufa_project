@@ -384,6 +384,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             //this is for not nullable\not optionable filters like GreaterThan, Regular expression, etc.
             let postgresql_json_type_ident_wrapper_relevant_only_for_not_null = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&postgresql_crud_macros_common::PostgresqlJsonTypeRecord {
                 postgresql_json_type: postgresql_json_type_record.postgresql_json_type.clone(),
+                not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,//todo
                 postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
                     postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
                     postgresql_json_type_pattern_type: postgresql_json_type_record.postgresql_json_type_pattern.postgresql_json_type_pattern_type.clone(),
@@ -590,6 +591,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     [
         postgresql_crud_macros_common::PostgresqlJsonTypeRecord {
             postgresql_json_type: postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI8,
+            not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
             postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
                 postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,
@@ -597,6 +599,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
         },
         postgresql_crud_macros_common::PostgresqlJsonTypeRecord {
             postgresql_json_type: postgresql_crud_macros_common::PostgresqlJsonType::UuidUuid,
+            not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
             postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
                 postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,
