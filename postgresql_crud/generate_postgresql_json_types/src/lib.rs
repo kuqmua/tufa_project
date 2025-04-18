@@ -77,6 +77,62 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 Self::ArrayDimension1 {..} => naming::VecUpperCamelCase.to_string(),
             }
         }
+        fn all_variants() -> std::vec::Vec<Self> {
+            Self::into_array().into_iter().fold(vec![], |mut acc, postgresql_type_pattern| {
+                match &postgresql_type_pattern {
+                    Self::Standart => {
+                        acc.push(postgresql_type_pattern);
+                    },
+                    Self::ArrayDimension1 {..} => {
+                        postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension1_not_null_or_nullable| {
+                            acc.push(Self::ArrayDimension1 {
+                                dimension1_not_null_or_nullable,
+                             });
+                        });
+                    },
+                    // Self::ArrayDimension2 {..} => {
+                    //     postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension1_not_null_or_nullable| {
+                    //         postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension2_not_null_or_nullable| {
+                    //             acc.push(Self::ArrayDimension2 {
+                    //                 dimension1_not_null_or_nullable,
+                    //                 dimension2_not_null_or_nullable,
+                    //              });
+                    //         });
+                    //     });
+                    // },
+                    // Self::ArrayDimension3 {..} => {
+                    //     postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension1_not_null_or_nullable| {
+                    //         postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension2_not_null_or_nullable| {
+                    //             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension3_not_null_or_nullable| {
+                    //                 acc.push(Self::ArrayDimension3 {
+                    //                     dimension1_not_null_or_nullable,
+                    //                     dimension2_not_null_or_nullable,
+                    //                     dimension3_not_null_or_nullable,
+                    //                 });
+                    //             });
+                    //         });
+                    //     });
+                    // },
+                    // Self::ArrayDimension4 {..} => {
+                    //     postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension1_not_null_or_nullable| {
+                    //         postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension2_not_null_or_nullable| {
+                    //             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension3_not_null_or_nullable| {
+                    //                 postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|dimension4_not_null_or_nullable| {
+                    //                     acc.push(Self::ArrayDimension4 {
+                    //                         dimension1_not_null_or_nullable,
+                    //                         dimension2_not_null_or_nullable,
+                    //                         dimension3_not_null_or_nullable,
+                    //                         dimension4_not_null_or_nullable,
+                    //                     });
+                    //                 });
+                    //             });
+                    //         });
+                    //     });
+                    // },
+                }
+                acc
+            })
+        }
     }
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
     pub struct PostgresqlJsonTypeRecord {
@@ -85,18 +141,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         pub postgresql_json_type_pattern: PostgresqlJsonTypePattern,
     }
     impl PostgresqlJsonTypeRecord {
-        //todo its not all variants
         pub fn all() -> std::vec::Vec<Self> {
             let mut acc = vec![];
-            for postgresql_json_type in PostgresqlJsonType::into_array() {
-                for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
-                    acc.push(Self {
-                        postgresql_json_type: postgresql_json_type.clone(),
-                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,//todo
-                        postgresql_json_type_pattern
+            PostgresqlJsonType::into_array().into_iter().for_each(|postgresql_json_type| {
+                postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
+                    PostgresqlJsonTypePattern::all_variants().into_iter().for_each(|postgresql_json_type_pattern| {
+                        acc.push(PostgresqlJsonTypeRecord {
+                            postgresql_json_type: postgresql_json_type.clone(),
+                            not_null_or_nullable: not_null_or_nullable.clone(),
+                            postgresql_json_type_pattern,
+                        });
                     });
-                }
-            }
+                });
+            });
             acc
         }
         pub fn is_vec_element_type(&self) -> std::primitive::bool {
@@ -170,28 +227,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
         pub fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
             self.handle_initialization_token_stream(false)
-        }
-
-        pub fn wrapper_field_type(&self) -> proc_macro2::TokenStream {
-            self.handle_field_type(true)
-        }
-        pub fn wrapper_non_optional_field_type(&self) -> proc_macro2::TokenStream {
-            let postgresql_json_type = &self.postgresql_json_type;
-            match &self.postgresql_json_type_pattern {
-                PostgresqlJsonTypePattern::Standart => quote::quote! {#postgresql_json_type},
-                PostgresqlJsonTypePattern::ArrayDimension1 {..} => quote::quote! {std::vec::Vec<#postgresql_json_type>},
-            }
-        }
-        pub fn wrapper_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-            self.handle_initialization_token_stream(true)
-        }
-        pub fn wrapper_non_optional_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-            let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-            match &self.postgresql_json_type_pattern {
-                PostgresqlJsonTypePattern::Standart => quote::quote! {#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream},
-                PostgresqlJsonTypePattern::ArrayDimension1 {..} => quote::quote! {vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
-            }
         }
     }
 
