@@ -169,54 +169,6 @@ pub fn generate_std_vec_vec_tokens_declaration_token_stream(type_token_stream: &
     quote::quote! {std::vec::Vec<#type_token_stream>}
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-pub enum PostgresqlJsonType {
-    StdPrimitiveI8,
-    StdPrimitiveI16,
-    StdPrimitiveI32,
-    StdPrimitiveI64,
-    StdPrimitiveU8,
-    StdPrimitiveU16,
-    StdPrimitiveU32,
-    StdPrimitiveU64,
-    StdPrimitiveF32,
-    StdPrimitiveF64,
-    StdPrimitiveBool,
-    StdStringString,
-    UuidUuid,
-}
-impl PostgresqlJsonType {
-    pub fn full_type_path_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        match &self {
-            Self::StdPrimitiveI8
-            | Self::StdPrimitiveI16
-            | Self::StdPrimitiveI32
-            | Self::StdPrimitiveI64
-            | Self::StdPrimitiveU8
-            | Self::StdPrimitiveU16
-            | Self::StdPrimitiveU32
-            | Self::StdPrimitiveU64
-            | Self::StdPrimitiveF32
-            | Self::StdPrimitiveF64
-            | Self::StdPrimitiveBool
-            | Self::StdStringString => {
-                let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
-                quote::quote! {#core_default_default_default_token_stream}
-            }
-            Self::UuidUuid => quote::quote! {
-                uuid::Uuid::new_v4()
-            },
-        }
-    }
-}
-impl quote::ToTokens for PostgresqlJsonType {
-    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonType to proc_macro2::TokenStream")).to_tokens(tokens)
-    }
-}
-
-
-
 pub fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> (proc_macro2::TokenStream, proc_macro2::TokenStream, proc_macro2::TokenStream) {
     let struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_struct_ident_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case);
     let struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream = generate_struct_ident_with_number_elements_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case, length);
