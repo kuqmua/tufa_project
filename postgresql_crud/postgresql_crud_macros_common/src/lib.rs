@@ -214,7 +214,7 @@ impl PostgresqlJsonTypePattern {
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-pub enum PostgresqlJsonTypeHandle {
+pub enum PostgresqlJsonType {
     StdPrimitiveI8,
     StdPrimitiveI16,
     StdPrimitiveI32,
@@ -229,7 +229,7 @@ pub enum PostgresqlJsonTypeHandle {
     StdStringString,
     UuidUuid,
 }
-impl PostgresqlJsonTypeHandle {
+impl PostgresqlJsonType {
     fn field_type_stringified(&self) -> &'static std::primitive::str {
         match &self {
             Self::StdPrimitiveI8 => "std::primitive::i8",
@@ -248,7 +248,7 @@ impl PostgresqlJsonTypeHandle {
         }
     }
     fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
-        self.field_type_stringified().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
+        self.field_type_stringified().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonType to proc_macro2::TokenStream"))
     }
     fn full_type_path_initialization_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
@@ -273,24 +273,24 @@ impl PostgresqlJsonTypeHandle {
         }
     }
 }
-impl quote::ToTokens for PostgresqlJsonTypeHandle {
+impl quote::ToTokens for PostgresqlJsonType {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream")).to_tokens(tokens)
+        self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonType to proc_macro2::TokenStream")).to_tokens(tokens)
     }
 }
 
 #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct PostgresqlJsonTypeRecord {
-    pub postgresql_json_type_handle: PostgresqlJsonTypeHandle,
+    pub postgresql_json_type: PostgresqlJsonType,
     pub postgresql_json_type_pattern: PostgresqlJsonTypePattern,
 }
 impl PostgresqlJsonTypeRecord {
     pub fn all_variants() -> std::vec::Vec<Self> {
         let mut acc = vec![];
-        for postgresql_json_type_handle in PostgresqlJsonTypeHandle::into_array() {
+        for postgresql_json_type in PostgresqlJsonType::into_array() {
             for postgresql_json_type_pattern in PostgresqlJsonTypePattern::all_variants() {
                 acc.push(Self {
-                    postgresql_json_type_handle: postgresql_json_type_handle.clone(),
+                    postgresql_json_type: postgresql_json_type.clone(),
                     postgresql_json_type_pattern: postgresql_json_type_pattern,
                 });
             }
@@ -305,35 +305,35 @@ impl PostgresqlJsonTypeRecord {
         }
     }
     pub fn postgresql_json_type_ident_wrapper(&self) -> proc_macro2::TokenStream {
-        format!("{}{}", self.postgresql_json_type_pattern.prefix_stringified(), self.postgresql_json_type_handle).parse::<proc_macro2::TokenStream>().unwrap()
+        format!("{}{}", self.postgresql_json_type_pattern.prefix_stringified(), self.postgresql_json_type).parse::<proc_macro2::TokenStream>().unwrap()
     }
 
     pub fn handle_field_type(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &self.postgresql_json_type_handle;
+        let postgresql_json_type = &self.postgresql_json_type;
         match (&self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
             (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::Standart) => {
                 if is_wrapper {
-                    quote::quote! {#postgresql_json_type_handle}
+                    quote::quote! {#postgresql_json_type}
                 } else {
-                    postgresql_json_type_handle.field_type_token_stream()
+                    postgresql_json_type.field_type_token_stream()
                 }
             }
-            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::Standart) => quote::quote! {std::option::Option<#postgresql_json_type_handle>},
-            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::VecStandart) => quote::quote! {std::vec::Vec<#postgresql_json_type_handle>},
+            (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::Standart) => quote::quote! {std::option::Option<#postgresql_json_type>},
+            (PostgresqlJsonTypePatternIsOptional::False, PostgresqlJsonTypePatternType::VecStandart) => quote::quote! {std::vec::Vec<#postgresql_json_type>},
 
             (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::VecStandart) => {
                 // let value = {
-                //     format!("{}{postgresql_json_type_handle}", &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type.prefix_stringified())
+                //     format!("{}{postgresql_json_type}", &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type.prefix_stringified())
                 //     .parse::<proc_macro2::TokenStream>()
-                //     .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonTypeHandle to proc_macro2::TokenStream"))
+                //     .unwrap_or_else(|_| panic!("failed to parse PostgresqlJsonType to proc_macro2::TokenStream"))
                 // };
                 // quote::quote!{std::option::Option<#value>}
-                quote::quote! {std::option::Option<std::vec::Vec<#postgresql_json_type_handle>>}
+                quote::quote! {std::option::Option<std::vec::Vec<#postgresql_json_type>>}
             }
         }
     }
     pub fn handle_initialization_token_stream(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &self.postgresql_json_type_handle;
+        let postgresql_json_type = &self.postgresql_json_type;
         let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
             token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
         match (&self.postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
@@ -341,7 +341,7 @@ impl PostgresqlJsonTypeRecord {
                 if is_wrapper {
                     quote::quote! {#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}
                 } else {
-                    postgresql_json_type_handle.full_type_path_initialization_token_stream()
+                    postgresql_json_type.full_type_path_initialization_token_stream()
                 }
             }
             (PostgresqlJsonTypePatternIsOptional::True, PostgresqlJsonTypePatternType::Standart) => quote::quote! {Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
@@ -363,10 +363,10 @@ impl PostgresqlJsonTypeRecord {
         self.handle_field_type(true)
     }
     pub fn wrapper_non_optional_field_type(&self) -> proc_macro2::TokenStream {
-        let postgresql_json_type_handle = &self.postgresql_json_type_handle;
+        let postgresql_json_type = &self.postgresql_json_type;
         match &self.postgresql_json_type_pattern.postgresql_json_type_pattern_type {
-            PostgresqlJsonTypePatternType::Standart => quote::quote! {#postgresql_json_type_handle},
-            PostgresqlJsonTypePatternType::VecStandart => quote::quote! {std::vec::Vec<#postgresql_json_type_handle>},
+            PostgresqlJsonTypePatternType::Standart => quote::quote! {#postgresql_json_type},
+            PostgresqlJsonTypePatternType::VecStandart => quote::quote! {std::vec::Vec<#postgresql_json_type>},
         }
     }
     pub fn wrapper_initialization_token_stream(&self) -> proc_macro2::TokenStream {
