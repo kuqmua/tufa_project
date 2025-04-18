@@ -27,7 +27,7 @@ impl NotNullOrNullable {
         }
     }
     //json
-    fn prefix_stringified(&self) -> std::string::String {
+    pub fn prefix_stringified(&self) -> std::string::String {
         match &self {
             Self::NotNull => std::string::String::default(),
             Self::Nullable => std::string::String::from("StdOptionOption"),
@@ -218,7 +218,7 @@ pub enum PostgresqlJsonType {
     UuidUuid,
 }
 impl PostgresqlJsonType {
-    fn full_type_path_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+    pub fn full_type_path_initialization_token_stream(&self) -> proc_macro2::TokenStream {
         match &self {
             Self::StdPrimitiveI8
             | Self::StdPrimitiveI16
@@ -247,123 +247,7 @@ impl quote::ToTokens for PostgresqlJsonType {
     }
 }
 
-#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct PostgresqlJsonTypeRecord {
-    pub postgresql_json_type: PostgresqlJsonType,
-    pub not_null_or_nullable: NotNullOrNullable,
-    pub postgresql_json_type_pattern: PostgresqlJsonTypePattern,
-}
-impl PostgresqlJsonTypeRecord {
-    //todo its not all variants
-    pub fn all() -> std::vec::Vec<Self> {
-        let mut acc = vec![];
-        for postgresql_json_type in PostgresqlJsonType::into_array() {
-            for postgresql_json_type_pattern in PostgresqlJsonTypePattern::into_array() {
-                acc.push(Self {
-                    postgresql_json_type: postgresql_json_type.clone(),
-                    not_null_or_nullable: NotNullOrNullable::NotNull,//todo
-                    postgresql_json_type_pattern
-                });
-            }
-        }
-        acc
-    }
-    pub fn is_vec_element_type(&self) -> std::primitive::bool {
-        match &self.postgresql_json_type_pattern {
-            PostgresqlJsonTypePattern::Standart => false,
-            //todo maybe wrong
-            PostgresqlJsonTypePattern::ArrayDimension1 {..} => true,
-        }
-    }
-    pub fn postgresql_json_type_ident_wrapper(&self) -> proc_macro2::TokenStream {
-        format!(
-            "{}{}{}", 
-            &self.not_null_or_nullable.prefix_stringified(),
-            &self.postgresql_json_type_pattern.prefix_stringified(),
-            self.postgresql_json_type
-        ).parse::<proc_macro2::TokenStream>().unwrap()
-    }
 
-    pub fn handle_field_type(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
-        let postgresql_json_type = &self.postgresql_json_type;
-        match (&self.not_null_or_nullable, &self.postgresql_json_type_pattern) {
-            (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) => {
-                if is_wrapper {
-                    quote::quote! {#postgresql_json_type}
-                } else {
-                    match &postgresql_json_type {
-                        PostgresqlJsonType::StdPrimitiveI8 => quote::quote!{std::primitive::i8},
-                        PostgresqlJsonType::StdPrimitiveI16 => quote::quote!{std::primitive::i16},
-                        PostgresqlJsonType::StdPrimitiveI32 => quote::quote!{std::primitive::i32},
-                        PostgresqlJsonType::StdPrimitiveI64 => quote::quote!{std::primitive::i64},
-                        PostgresqlJsonType::StdPrimitiveU8 => quote::quote!{std::primitive::u8},
-                        PostgresqlJsonType::StdPrimitiveU16 => quote::quote!{std::primitive::u16},
-                        PostgresqlJsonType::StdPrimitiveU32 => quote::quote!{std::primitive::u32},
-                        PostgresqlJsonType::StdPrimitiveU64 => quote::quote!{std::primitive::u64},
-                        PostgresqlJsonType::StdPrimitiveF32 => quote::quote!{std::primitive::f32},
-                        PostgresqlJsonType::StdPrimitiveF64 => quote::quote!{std::primitive::f64},
-                        PostgresqlJsonType::StdPrimitiveBool => quote::quote!{std::primitive::bool},
-                        PostgresqlJsonType::StdStringString => quote::quote!{std::string::String},
-                        PostgresqlJsonType::UuidUuid => quote::quote!{uuid::Uuid},
-                    }
-                }
-            }
-            (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::Standart) => quote::quote! {std::option::Option<#postgresql_json_type>},
-            (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 {..}) => quote::quote! {std::vec::Vec<#postgresql_json_type>},
-            (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 {..}) => {
-                quote::quote! {std::option::Option<std::vec::Vec<#postgresql_json_type>>}
-            }
-        }
-    }
-    pub fn handle_initialization_token_stream(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
-        let postgresql_json_type = &self.postgresql_json_type;
-        let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-            token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-        match (&self.not_null_or_nullable, &self.postgresql_json_type_pattern) {
-            (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) => {
-                if is_wrapper {
-                    quote::quote! {#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}
-                } else {
-                    postgresql_json_type.full_type_path_initialization_token_stream()
-                }
-            }
-            (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::Standart) => quote::quote! {Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
-            (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 {..}) => quote::quote! {vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
-            (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 {..}) => {
-                quote::quote! {Some(vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])}
-                // quote::quote!{Some(#default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
-            }
-        }
-    }
-    pub fn field_type(&self) -> proc_macro2::TokenStream {
-        self.handle_field_type(false)
-    }
-    pub fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        self.handle_initialization_token_stream(false)
-    }
-
-    pub fn wrapper_field_type(&self) -> proc_macro2::TokenStream {
-        self.handle_field_type(true)
-    }
-    pub fn wrapper_non_optional_field_type(&self) -> proc_macro2::TokenStream {
-        let postgresql_json_type = &self.postgresql_json_type;
-        match &self.postgresql_json_type_pattern {
-            PostgresqlJsonTypePattern::Standart => quote::quote! {#postgresql_json_type},
-            PostgresqlJsonTypePattern::ArrayDimension1 {..} => quote::quote! {std::vec::Vec<#postgresql_json_type>},
-        }
-    }
-    pub fn wrapper_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        self.handle_initialization_token_stream(true)
-    }
-    pub fn wrapper_non_optional_initialization_token_stream(&self) -> proc_macro2::TokenStream {
-        let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-            token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-        match &self.postgresql_json_type_pattern {
-            PostgresqlJsonTypePattern::Standart => quote::quote! {#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream},
-            PostgresqlJsonTypePattern::ArrayDimension1 {..} => quote::quote! {vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]},
-        }
-    }
-}
 
 pub fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> (proc_macro2::TokenStream, proc_macro2::TokenStream, proc_macro2::TokenStream) {
     let struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_struct_ident_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case);
