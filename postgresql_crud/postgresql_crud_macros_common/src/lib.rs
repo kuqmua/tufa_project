@@ -284,6 +284,7 @@ pub struct PostgresqlJsonTypeRecord {
     pub postgresql_json_type: PostgresqlJsonType,
     pub not_null_or_nullable: NotNullOrNullable,
     pub postgresql_json_type_pattern: PostgresqlJsonTypePattern,
+    pub postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType,
 }
 impl PostgresqlJsonTypeRecord {
     pub fn all_variants() -> std::vec::Vec<Self> {
@@ -294,6 +295,7 @@ impl PostgresqlJsonTypeRecord {
                     postgresql_json_type: postgresql_json_type.clone(),
                     not_null_or_nullable: NotNullOrNullable::NotNull,//todo
                     postgresql_json_type_pattern: postgresql_json_type_pattern,
+                    postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType::Standart//todo,
                 });
             }
         }

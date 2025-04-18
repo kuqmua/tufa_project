@@ -389,6 +389,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
                     postgresql_json_type_pattern_type: postgresql_json_type_record.postgresql_json_type_pattern.postgresql_json_type_pattern_type.clone(),
                 },
+                postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,//todo
             }
             .postgresql_json_type_ident_wrapper());
             let generate_where_element_variants_types_generic_token_stream =
@@ -591,19 +592,21 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     [
         postgresql_crud_macros_common::PostgresqlJsonTypeRecord {
             postgresql_json_type: postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI8,
-            not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+            not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,//todo
             postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
                 postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,
             },
+            postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,//todo
         },
         postgresql_crud_macros_common::PostgresqlJsonTypeRecord {
             postgresql_json_type: postgresql_crud_macros_common::PostgresqlJsonType::UuidUuid,
-            not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+            not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,//todo
             postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
                 postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,
             },
+            postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,//todo
         },
     ]
     .into_iter()
