@@ -162,7 +162,7 @@ pub fn generate_std_vec_vec_tokens_declaration_token_stream(type_token_stream: &
     quote::quote! {std::vec::Vec<#type_token_stream>}
 }
 
-#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonTypePatternType {
     Standart,
     VecStandart,
@@ -176,7 +176,7 @@ impl PostgresqlJsonTypePatternType {
     }
 }
 
-#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonTypePatternIsOptional {
     True,
     False,
@@ -190,7 +190,7 @@ impl PostgresqlJsonTypePatternIsOptional {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct PostgresqlJsonTypePattern {
     pub postgresql_json_type_pattern_is_optional: PostgresqlJsonTypePatternIsOptional,
     pub postgresql_json_type_pattern_type: PostgresqlJsonTypePatternType,
@@ -213,7 +213,7 @@ impl PostgresqlJsonTypePattern {
     }
 }
 
-#[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonTypeHandle {
     StdPrimitiveI8,
     StdPrimitiveI16,
@@ -279,6 +279,7 @@ impl quote::ToTokens for PostgresqlJsonTypeHandle {
     }
 }
 
+#[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
 pub struct PostgresqlJsonTypeVariant {
     pub postgresql_json_type_handle: PostgresqlJsonTypeHandle,
     pub postgresql_json_type_pattern: PostgresqlJsonTypePattern,
