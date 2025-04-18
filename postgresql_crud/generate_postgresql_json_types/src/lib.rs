@@ -4,6 +4,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
     fn generate_postgresql_json_type_token_stream(postgresql_json_type_record: &postgresql_crud_macros_common::PostgresqlJsonTypeRecord) -> proc_macro2::TokenStream {
         let postgresql_json_type = &postgresql_json_type_record.postgresql_json_type;
         let postgresql_json_type_pattern = &postgresql_json_type_record.postgresql_json_type_pattern;
+        let not_null_or_nullable = &postgresql_json_type_record.not_null_or_nullable;
 
         let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &postgresql_json_type_record.postgresql_json_type_ident_wrapper();
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
@@ -92,8 +93,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                 reference: &none_upper_camel_case,
                 extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
             };
-            match (&postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
-                (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart) => match &postgresql_json_type {
+            match (&not_null_or_nullable, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
+                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart) => match &postgresql_json_type {
                     postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI8 => SchemarsJsonSchema::Impl(schema_object_token_stream_integer),
                     postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI16 => SchemarsJsonSchema::Impl(schema_object_token_stream_integer),
                     postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI32 => SchemarsJsonSchema::Impl(schema_object_token_stream_integer),
@@ -121,9 +122,9 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                         extensions: &extensions_8dbfea73_88f6_41db_b095_61f59b1002fd_token_stream,
                     }),
                 },
-                (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart)
-                | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::VecStandart)
-                | (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::VecStandart) => SchemarsJsonSchema::Derive
+                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart)
+                | (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::VecStandart)
+                | (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::VecStandart) => SchemarsJsonSchema::Derive
             }
         };
 
@@ -198,8 +199,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     }
                 }
             };
-            let maybe_impl_is_string_empty_for_ident_origin_token_stream: &dyn quote::ToTokens = match (&postgresql_json_type_pattern.postgresql_json_type_pattern_is_optional, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
-                (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart) => match &postgresql_json_type {
+            let maybe_impl_is_string_empty_for_ident_origin_token_stream: &dyn quote::ToTokens = match (&not_null_or_nullable, &postgresql_json_type_pattern.postgresql_json_type_pattern_type) {
+                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart) => match &postgresql_json_type {
                     postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI8
                     | postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI16
                     | postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI32
@@ -214,7 +215,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonType::StdStringString => &postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
                     postgresql_crud_macros_common::PostgresqlJsonType::UuidUuid => &postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
                 },
-                (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart) => match &postgresql_json_type {
+                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart) => match &postgresql_json_type {
                     postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI8
                     | postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI16
                     | postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI32
@@ -229,7 +230,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     | postgresql_crud_macros_common::PostgresqlJsonType::StdStringString
                     | postgresql_crud_macros_common::PostgresqlJsonType::UuidUuid => &proc_macro2_token_stream_new,
                 },
-                (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::VecStandart) => match &postgresql_json_type {
+                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::VecStandart) => match &postgresql_json_type {
                     postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI8
                     | postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI16
                     | postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI32
@@ -244,7 +245,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
                     | postgresql_crud_macros_common::PostgresqlJsonType::StdStringString
                     | postgresql_crud_macros_common::PostgresqlJsonType::UuidUuid => &proc_macro2_token_stream_new,
                 },
-                (postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::True, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::VecStandart) => &proc_macro2_token_stream_new,
+                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::PostgresqlJsonTypePatternType::VecStandart) => &proc_macro2_token_stream_new,
             };
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_origin_upper_camel_case,
@@ -384,9 +385,8 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             //this is for not nullable\not optionable filters like GreaterThan, Regular expression, etc.
             let postgresql_json_type_ident_wrapper_relevant_only_for_not_null = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&postgresql_crud_macros_common::PostgresqlJsonTypeRecord {
                 postgresql_json_type: postgresql_json_type_record.postgresql_json_type.clone(),
-                not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,//todo
+                not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                 postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-                    postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
                     postgresql_json_type_pattern_type: postgresql_json_type_record.postgresql_json_type_pattern.postgresql_json_type_pattern_type.clone(),
                 },
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,//todo
@@ -594,7 +594,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             postgresql_json_type: postgresql_crud_macros_common::PostgresqlJsonType::StdPrimitiveI8,
             not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,//todo
             postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,
             },
             postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,//todo
@@ -603,7 +602,6 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             postgresql_json_type: postgresql_crud_macros_common::PostgresqlJsonType::UuidUuid,
             not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,//todo
             postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern {
-                postgresql_json_type_pattern_is_optional: postgresql_crud_macros_common::PostgresqlJsonTypePatternIsOptional::False,
                 postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,
             },
             postgresql_json_type_pattern_type: postgresql_crud_macros_common::PostgresqlJsonTypePatternType::Standart,//todo
