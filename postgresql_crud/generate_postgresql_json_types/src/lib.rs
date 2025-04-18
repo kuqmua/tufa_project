@@ -291,7 +291,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     })
     .collect::<std::vec::Vec<PostgresqlJsonTypeRecord>>();
 
-    fn generate_postgresql_json_type_token_stream(postgresql_json_type_record: &PostgresqlJsonTypeRecord) -> proc_macro2::TokenStream {
+    let postgresql_json_type_array = postgresql_json_type_record_vec
+    .into_iter()
+    .map(|postgresql_json_type_record|{
         let postgresql_json_type = &postgresql_json_type_record.postgresql_json_type;
         let postgresql_json_type_pattern = &postgresql_json_type_record.postgresql_json_type_pattern;
         let not_null_or_nullable = &postgresql_json_type_record.not_null_or_nullable;
@@ -872,26 +874,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         //     println!("-------");
         //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file("GeneratePostgresqlJsonTypes", &generated);
         // }
-        generated
-    }
-    let variants_token_stream = 
-    // PostgresqlJsonTypeRecord::all_variants()
-    [
-        PostgresqlJsonTypeRecord {
-            postgresql_json_type: PostgresqlJsonType::StdPrimitiveI8,
-            not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
-        },
-        PostgresqlJsonTypeRecord {
-            postgresql_json_type: PostgresqlJsonType::UuidUuid,
-            not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
-        },
-    ]
-    .into_iter()
-    .map(|element| generate_postgresql_json_type_token_stream(&element));
-    let generated = quote::quote! {
-        #(#variants_token_stream)*
+        generated.to_string()
+    })
+    .collect::<std::vec::Vec<String>>();
+    let generated = {
+        let postgresql_json_type_array = postgresql_json_type_array
+        .into_iter()
+        .map(|element|{
+            element.parse::<proc_macro2::TokenStream>().unwrap()
+        })
+        .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+        quote::quote! {#(#postgresql_json_type_array)*}
     };
     // if ident == "" {
     //     println!("{generated}");
