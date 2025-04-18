@@ -906,21 +906,21 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         }
     }
     let postgresql_type_record_vec = 
-    PostgresqlTypeRecord::all()
-    // {
-    //     let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
-    //     .expect("failed to get Config for generate_postgresql_type");
-    //     let mut acc = vec![];
-    //     for element in &vec {
-    //         if acc.contains(&element) {
-    //             panic!("not unique postgersql type provided: {element:#?}");
-    //         }
-    //         else {
-    //             acc.push(&element);
-    //         }
-    //     }
-    //     vec
-    // }
+    // PostgresqlTypeRecord::all()
+    {
+        let vec = serde_json::from_str::<std::vec::Vec<PostgresqlTypeRecord>>(&input_token_stream.to_string())
+        .expect("failed to get Config for generate_postgresql_type");
+        let mut acc = vec![];
+        for element in &vec {
+            if acc.contains(&element) {
+                panic!("not unique postgersql type provided: {element:#?}");
+            }
+            else {
+                acc.push(&element);
+            }
+        }
+        vec
+    }
     .into_iter()
     .filter(|element|{
         let postgresql_type_filter = match &element.postgresql_type {
