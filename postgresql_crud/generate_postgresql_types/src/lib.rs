@@ -878,31 +878,31 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     impl PostgresqlTypeRecord {
         fn all() -> std::vec::Vec<Self> {
-            let mut acc = vec![];
-            PostgresqlType::into_array().into_iter().for_each(|postgresql_type| {
-                if let CanBeNullable::True = &postgresql_type.can_be_nullable() {
-                    postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                        PostgresqlTypePattern::all_variants().into_iter().for_each(|postgresql_type_pattern| {
+            PostgresqlType::into_array().into_iter().fold(vec![], |mut acc, postgresql_type| {
+                postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
+                    match &postgresql_type.can_be_nullable() {
+                        CanBeNullable::True => {
+                            postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
+                                PostgresqlTypePattern::all_variants().into_iter().for_each(|postgresql_type_pattern| {
+                                    acc.push(PostgresqlTypeRecord {
+                                        postgresql_type: postgresql_type.clone(),
+                                        not_null_or_nullable,
+                                        postgresql_type_pattern,
+                                    });
+                                });
+                            });
+                        },
+                        CanBeNullable::False => {
                             acc.push(PostgresqlTypeRecord {
                                 postgresql_type: postgresql_type.clone(),
-                                not_null_or_nullable,
-                                postgresql_type_pattern,
+                                not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                postgresql_type_pattern: PostgresqlTypePattern::Standart,
                             });
-                        });
-                    });
-                }
-            });
-            //postgresql cannot autogenerate all elements in array
-            PostgresqlType::into_array().into_iter().for_each(|postgresql_type| {
-                if let CanBeNullable::False = &postgresql_type.can_be_nullable() {
-                    acc.push(PostgresqlTypeRecord {
-                        postgresql_type: postgresql_type,
-                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                        postgresql_type_pattern: PostgresqlTypePattern::Standart,
-                    });
-                }
-            });
-            acc
+                        }
+                    }
+                });
+                acc
+            })
         }
     }
     let postgresql_type_record_vec = 
