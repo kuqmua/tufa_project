@@ -1038,9 +1038,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         // println!("{element:#?}");
         let postgresql_type = &element.postgresql_type;
         let not_null_or_nullable = &element.not_null_or_nullable;
+        let postgresql_type_pattern = &element.postgresql_type_pattern;
+
         let rust_type_name = RustTypeName::from(postgresql_type);
         let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
-        let postgresql_type_pattern = &element.postgresql_type_pattern;
         let array_dimensions_number = postgresql_type_pattern.array_dimensions_number();
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
