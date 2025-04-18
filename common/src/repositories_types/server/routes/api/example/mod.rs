@@ -148,21 +148,6 @@ pub struct Example {
     // ///////////////////////////
     // // pub vec_std_primitive_i16_as_postgresql_int2_array_not_null: postgresql_crud::postgresql_type::VecStdPrimitiveI16AsInt2ArrayNotNull,
     // //63max
-    //////////////////////////////////
-
-    // pub column_2552676e_3c3e_4bdd_9179_300d75ff3aff: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullInet,
-    // pub column_5eecd30d_723a_4eb9_951c_acdcb57e6f03: postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullInet,
-    // pub column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableInet,
-    // pub column_764635c6_7deb_46ce_8e38_733efbff7f7d: postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableInet,
-    // pub column_4ba20f95_59ec_47d3_822e_9eff25d99346: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullInet,
-    // pub column_ee5e4925_7214_4518_baf4_f911f57167be: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableInet,
-
-    // pub column_eab2a5d0_084a_4fef_9d40_1fe2e00ccebe: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullCidr,
-    // pub column_63caedf0_e522_47ae_91c5_7245a84ff39e: postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullCidr,
-    // pub column_6ade8e84_1d2a_46e5_912b_3845c96b4000: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableCidr,
-    // pub column_18f5e425_da9f_476d_a7e5_d2c66cfb3ad5: postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableCidr,
-    // pub column_e246a414_a6f1_4857_989b_775d9a05530a: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullCidr,
-    // pub column_d7e0c542_a58b_49e0_9622_2d74a557130f: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableCidr,
 }
 //todo enum tree support
 //todo generate wrapper type for all possible json type

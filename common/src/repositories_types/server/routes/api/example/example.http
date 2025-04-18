@@ -178,6 +178,44 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     },
     {
       "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
+    {
+      "column_2552676e_3c3e_4bdd_9179_300d75ff3aff": null
+    },
+    {
+      "column_5eecd30d_723a_4eb9_951c_acdcb57e6f03": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_764635c6_7deb_46ce_8e38_733efbff7f7d": null
+    },
+    {
+      "column_4ba20f95_59ec_47d3_822e_9eff25d99346": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
+    },
+    {
+      "column_ee5e4925_7214_4518_baf4_f911f57167be": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
+        }
+      }
     }
   ]
 }
@@ -199,6 +237,32 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
     "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
       "value": 0
+    },
+    "column_2552676e_3c3e_4bdd_9179_300d75ff3aff": {
+      "value": "0.0.0.0/0"
+    },
+    "column_5eecd30d_723a_4eb9_951c_acdcb57e6f03": {
+      "value": [
+        "0.0.0.0/0"
+      ]
+    },
+    "column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b": {
+      "value": [
+        "0.0.0.0/0"
+      ]
+    },
+    "column_764635c6_7deb_46ce_8e38_733efbff7f7d": {
+      "value": "0.0.0.0/0"
+    },
+    "column_4ba20f95_59ec_47d3_822e_9eff25d99346": {
+      "value": [
+        "0.0.0.0/0"
+      ]
+    },
+    "column_ee5e4925_7214_4518_baf4_f911f57167be": {
+      "value": [
+        "0.0.0.0/0"
+      ]
     }
   }
 ]
@@ -219,6 +283,32 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
   "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
     "value": 0
+  },
+  "column_2552676e_3c3e_4bdd_9179_300d75ff3aff": {
+    "value": "0.0.0.0/0"
+  },
+  "column_5eecd30d_723a_4eb9_951c_acdcb57e6f03": {
+    "value": [
+      "0.0.0.0/0"
+    ]
+  },
+  "column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b": {
+    "value": [
+      "0.0.0.0/0"
+    ]
+  },
+  "column_764635c6_7deb_46ce_8e38_733efbff7f7d": {
+    "value": "0.0.0.0/0"
+  },
+  "column_4ba20f95_59ec_47d3_822e_9eff25d99346": {
+    "value": [
+      "0.0.0.0/0"
+    ]
+  },
+  "column_ee5e4925_7214_4518_baf4_f911f57167be": {
+    "value": [
+      "0.0.0.0/0"
+    ]
   }
 }
 
@@ -300,6 +390,128 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   #       }
   #     }
   #   ]
+  # },
+  # "column_2552676e_3c3e_4bdd_9179_300d75ff3aff": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_5eecd30d_723a_4eb9_951c_acdcb57e6f03": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_f98dbbfd_3db8_4a16_9e8d_fbcba53ade2b": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_764635c6_7deb_46ce_8e38_733efbff7f7d": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": "0.0.0.0/0"
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_4ba20f95_59ec_47d3_822e_9eff25d99346": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
+  # },
+  # "column_ee5e4925_7214_4518_baf4_f911f57167be": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           "0.0.0.0/0"
+  #         ]
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "ArrayLengthMoreThanDimensionOne": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     }
+  #   ]
   # }
 }
 
@@ -316,7 +528,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 0
 }
 
 ###

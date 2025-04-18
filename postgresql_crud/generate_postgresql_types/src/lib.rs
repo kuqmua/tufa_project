@@ -67,7 +67,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Self::SqlxTypesUuidUuid,
                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Self::SqlxTypesUuidUuid,
                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Self::SqlxTypesIpnetworkIpNetwork,
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => Self::SqlxTypesIpnetworkIpNetwork,
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::SqlxTypesMacAddressMacAddress,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64,
@@ -105,7 +104,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         UuidV4InitializedByPostgresql,
         UuidInitializedByClient,
         Inet,
-        Cidr,
         MacAddr,
         Int4Range,
         Int8Range,
@@ -143,7 +141,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Self::UuidV4InitializedByPostgresql,
                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Self::UuidInitializedByClient,
                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Self::Inet,
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => Self::Cidr,
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::MacAddr,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::Int4Range,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::Int8Range,
@@ -186,7 +183,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql,
         SqlxTypesUuidUuidAsUuidInitializedByClient,
         SqlxTypesIpnetworkIpNetworkAsInet,
-        SqlxTypesIpnetworkIpNetworkAsCidr,
         SqlxTypesMacAddressMacAddressAsMacAddr,
         SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
         SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
@@ -232,7 +228,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => CanBeNullable::False,
                 Self::SqlxTypesUuidUuidAsUuidInitializedByClient => CanBeNullable::True,
                 Self::SqlxTypesIpnetworkIpNetworkAsInet => CanBeNullable::True,
-                Self::SqlxTypesIpnetworkIpNetworkAsCidr => CanBeNullable::True,
                 Self::SqlxTypesMacAddressMacAddressAsMacAddr => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => CanBeNullable::True,
@@ -325,7 +320,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => sqlx_types_uuid_uuid_stringified,
                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => sqlx_types_uuid_uuid_stringified,
                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => sqlx_types_ipnetwork_ip_network_stringified,
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => sqlx_types_ipnetwork_ip_network_stringified,
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => sqlx_types_mac_address_mac_address_stringified,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => sqlx_postgres_types_pg_range_std_primitive_i32_stringified,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => sqlx_postgres_types_pg_range_std_primitive_i64_stringified,
@@ -406,7 +400,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Err(()),
                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Err(()),
                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Err(()),
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => Err(()),
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Ok(Self::StdPrimitiveI32AsInt4),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Ok(Self::StdPrimitiveI64AsInt8),
@@ -962,7 +955,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             PostgresqlType::SqlxTypesDecimalAsNumeric => false,
             PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
             PostgresqlType::StdPrimitiveBoolAsBool => false,
-
             PostgresqlType::StdStringStringAsText => false,
             PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
             PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => false,
@@ -976,10 +968,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => false,
             PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => false,
             PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
-
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,//here
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,//here
-
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
             PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
@@ -994,7 +983,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
-            postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
+            postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
         };
         let postgresql_type_pattern_type_filter = match &element.postgresql_type_pattern_type {
             PostgresqlTypePatternType::Standart => true,
@@ -1002,7 +991,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 dimension1_not_null_or_nullable,
             } => match &dimension1_not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
-                postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
             },
             // PostgresqlTypePatternType::ArrayDimension2 {
             //     dimension1_not_null_or_nullable,
@@ -1467,7 +1456,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
-                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
@@ -1508,7 +1496,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => serde_serialize_comma_token_stream,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => serde_serialize_comma_token_stream,
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
@@ -1548,7 +1535,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => serde_deserialize_comma_token_stream,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => serde_deserialize_comma_token_stream,
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
@@ -1899,7 +1885,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => impl_is_string_empty_for_ident_origin_token_stream,
                             PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => impl_is_string_empty_for_ident_origin_token_stream,
                             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
-                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => impl_is_string_empty_for_ident_origin_token_stream,
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
@@ -2009,7 +1994,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
@@ -2157,7 +2141,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream,
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.bytes()})),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream,
@@ -3275,7 +3258,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream,
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream,
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => proc_macro2::TokenStream::new(),
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => generate_impl_serde_deserialize_for_tokens_token_stream(&{
                             quote::quote! {
                                 #struct_visitor_token_stream
@@ -3401,7 +3383,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     | PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz
                                     | PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql
                                     | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &core_default_default_default_token_stream,
-                                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet | PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => &quote::quote! {
+                                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => &quote::quote! {
                                         sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_token_stream).unwrap())
                                     },
                                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => &core_default_default_default_token_stream,
@@ -3492,7 +3474,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => CanBePrimaryKey::True,
                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => CanBePrimaryKey::False,
                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => CanBePrimaryKey::False,
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => CanBePrimaryKey::False,
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => CanBePrimaryKey::False,
@@ -3579,7 +3560,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => &proc_macro2_token_stream_new,
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &proc_macro2_token_stream_new,
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &proc_macro2_token_stream_new,
@@ -3620,7 +3600,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => "uuid",
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => "uuid",
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => "inet",
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => "cidr",
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => "macaddr",
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => "int4range",
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => "int8range",
@@ -3772,7 +3751,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => ident_create_token_stream,
                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => alias_token_stream,
                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => alias_token_stream,
-                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => alias_token_stream,
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => alias_token_stream,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => alias_token_stream,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => alias_token_stream,
@@ -4010,7 +3988,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => where_element_sqlx_types_uuid_uuid_token_stream,
                     PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => where_element_sqlx_types_uuid_uuid_token_stream,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => where_element_sqlx_types_mac_address_mac_address_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
@@ -4086,7 +4063,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => uuid_generate_v4_initialized_by_postgresql,
                     PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => typical,
                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => typical,
-                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => typical,
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => typical,
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => typical,
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => typical,
@@ -4187,7 +4163,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     // PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql,
         //     // PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient,
         //     // PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet,
-        //     // PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr,
         //     // PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr,
         //     // PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
         //     // PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
@@ -4266,12 +4241,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
         //     // };
-        //     if d1 {
+        //     // if d1 {
         //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //             "PostgresqlTypeTokens",
         //             &generated,
         //         );
-        //     }
+        //     // }
         // }
         (
             {
