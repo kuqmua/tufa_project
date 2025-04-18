@@ -48,7 +48,7 @@
     // }
 }]
 pub struct Example {
-    pub vec: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
+    // pub vec: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
 
     pub column_40d64ae4_a646_4394_bfce_3894bdfced87: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
     // pub column_ebe9a28a_eef0_4b1d_a706_8a9c363db7ab: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
@@ -149,8 +149,8 @@ pub struct Example {
     // // pub vec_std_primitive_i16_as_postgresql_int2_array_not_null: postgresql_crud::postgresql_type::VecStdPrimitiveI16AsInt2ArrayNotNull,
     // //63max
     //////////////////////////////////
-    pub column_e0cc33dd_631d_4668_9f85_2513797bb77c: postgresql_crud::postgresql_type::StdStringStringAsNotNullCharN,
-    pub column_35684b65_4796_4ab6_b427_f73e4cb980ae: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullCharN,
+    // pub column_e0cc33dd_631d_4668_9f85_2513797bb77c: postgresql_crud::postgresql_type::StdStringStringAsNotNullCharN,
+    // pub column_35684b65_4796_4ab6_b427_f73e4cb980ae: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullCharN,
     // pub column_dc776076_6b69_4405_949b_df562ed341a0: postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableCharN,
     // pub column_53cc5dda_99cd_477a_a6e3_e084945632b8: postgresql_crud::postgresql_type::OptionStdStringStringAsNullableCharN,
     // pub column_f2275c9b_201a_4e9e_982e_cda2783ff274: postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullCharN,
@@ -458,22 +458,23 @@ pub async fn create_table_if_not_exists(pool: &sqlx::Pool<sqlx::Postgres>) {
     let create_table_if_not_exists_query_stringified = format!(
         // "create table if not exists example ({},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{},{})",
         // "create table if not exists example ({},{},{},{},{},{},{},{},{})",
-        "create table if not exists example ({},{},{},{},{})",
+        // "create table if not exists example ({},{},{},{},{})",
+        "create table if not exists example ({},{})",
         <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"column_6e88acb0_c566_4fef_8a09_66a41338cf36", true),
-        <postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2 as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"vec", false),
+        // <postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2 as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"vec", false),
         <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&"column_40d64ae4_a646_4394_bfce_3894bdfced87", false),
 
 
-        <postgresql_crud::postgresql_type::StdStringStringAsNotNullCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_e0cc33dd_631d_4668_9f85_2513797bb77c",
-            false,
-            postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
-        ),
-        <postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
-            &"column_35684b65_4796_4ab6_b427_f73e4cb980ae",
-            false,
-            postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
-        ),
+        // <postgresql_crud::postgresql_type::StdStringStringAsNotNullCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_e0cc33dd_631d_4668_9f85_2513797bb77c",
+        //     false,
+        //     postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
+        // ),
+        // <postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
+        //     &"column_35684b65_4796_4ab6_b427_f73e4cb980ae",
+        //     false,
+        //     postgresql_crud::postgresql_type::StdStringStringAsCharNLength::try_from(1).unwrap()
+        // ),
         // <postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableCharN as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(
         //     &"column_dc776076_6b69_4405_949b_df562ed341a0",
         //     false,

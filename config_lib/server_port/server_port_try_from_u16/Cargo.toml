@@ -8,7 +8,7 @@ version = "0.1.0"
 proc-macro = true
 
 [dependencies]
-proc-macro2 = {version = "=1.0.81"}
+proc-macro2 = {version = "=1.0.95"}
 quote = {version = "=1.0.36"}
 generate_quotes = {path = "../../../generate_quotes"}
 server_port_common = {path = "../server_port_common"}

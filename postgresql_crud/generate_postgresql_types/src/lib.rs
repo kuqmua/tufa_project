@@ -837,9 +837,60 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     };
+    //todo maybe impl try from to reuse not only in deserialize, but inside .all()
     impl std::convert::From<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)> for PostgresqlTypeRecord {
         fn from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePatternType)) -> Self {
             let error_message = "cant support nullable variants: ";
+            // match &value.0 {
+            //     PostgresqlType::StdPrimitiveI16AsInt2 => (),
+            //     PostgresqlType::StdPrimitiveI32AsInt4 => (),
+            //     PostgresqlType::StdPrimitiveI64AsInt8 => (),
+            //     PostgresqlType::StdPrimitiveF32AsFloat4 => (),
+            //     PostgresqlType::StdPrimitiveF64AsFloat8 => (),
+            //     PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => (),
+            //     PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => (),
+            //     PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => (),
+            //     PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => (),
+            //     PostgresqlType::SqlxTypesDecimalAsNumeric => (),
+            //     PostgresqlType::SqlxTypesBigDecimalAsNumeric => (),
+            //     PostgresqlType::StdPrimitiveBoolAsBool => (),
+            //     PostgresqlType::StdStringStringAsCharN => match &value.2 {
+            //         PostgresqlTypePatternType::Standart => (),
+            //         PostgresqlTypePatternType::ArrayDimension1 {..} => panic!("sqlx does not support decode vec<String> into CHAR[]. intead it decode into TEXT[] {value:#?}"),
+            //         // PostgresqlTypePatternType::ArrayDimension2 {..} => todo!(),
+            //         // PostgresqlTypePatternType::ArrayDimension3 {..} => todo!(),
+            //         // PostgresqlTypePatternType::ArrayDimension4 {..} => todo!(),
+            //     },
+            //     PostgresqlType::StdStringStringAsVarchar => (),
+            //     PostgresqlType::StdStringStringAsText => (),
+            //     PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => (),
+            //     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => (),
+            //     PostgresqlType::SqlxTypesTimeTimeAsTime => (),
+            //     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => (),
+            //     PostgresqlType::SqlxTypesTimeDateAsDate => (),
+            //     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => (),
+            //     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => (),
+            //     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => (),
+            //     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => (),
+            //     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => (),
+            //     PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => (),
+            //     PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => (),
+            //     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => (),
+            //     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => (),
+            //     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => (),
+            //     PostgresqlType::SqlxTypesBitVecAsBit => (),
+            //     PostgresqlType::SqlxTypesBitVecAsVarbit => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesDecimalAsNumRange => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => (),
+            //     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => (),
+            // }
             match &value.0.can_be_nullable() {
                 CanBeNullable::True => Self {
                     postgresql_type: value.0,
@@ -993,8 +1044,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             PostgresqlType::StdPrimitiveBoolAsBool => false,
 
 
-            PostgresqlType::StdStringStringAsCharN => true,
-            PostgresqlType::StdStringStringAsVarchar => true,
+            PostgresqlType::StdStringStringAsCharN => false,//here
+            PostgresqlType::StdStringStringAsVarchar => false,//here
 
 
             PostgresqlType::StdStringStringAsText => false,
@@ -1012,15 +1063,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => false,
 
 
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => true,
-            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => true,
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,//here
+            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsCidr => false,//here
 
 
             PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
 
 
-            PostgresqlType::SqlxTypesBitVecAsBit => true,
-            PostgresqlType::SqlxTypesBitVecAsVarbit => true,
+            PostgresqlType::SqlxTypesBitVecAsBit => false,//here
+            PostgresqlType::SqlxTypesBitVecAsVarbit => false,//here
 
 
             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
@@ -1036,7 +1087,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
-            postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
+            postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
         };
         let postgresql_type_pattern_type_filter = {
             use postgresql_crud_macros_common::NotNullOrNullable;
@@ -1045,8 +1096,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlTypePatternType::ArrayDimension1 {
                     dimension1_not_null_or_nullable,
                 } => match &dimension1_not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => false,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => false,
                 },
                 // PostgresqlTypePatternType::ArrayDimension2 {
                 //     dimension1_not_null_or_nullable,
@@ -3556,7 +3607,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let self_snake_case = naming::SelfSnakeCase;
                 quote::quote! {
                     impl sqlx::Encode<'_, sqlx::Postgres> for #ident_origin_upper_camel_case {
-                        fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                        fn encode_by_ref(&#self_snake_case, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
                             sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&#self_snake_case.0, buf)
                         }
                     }
@@ -4318,12 +4369,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     // PostgresqlType::StdPrimitiveF64AsFloat8,
         //     // PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql,
         //     // PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql,
-        //     PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql,
+        //     // PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql,
         //     // PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney,
         //     // PostgresqlType::SqlxTypesDecimalAsNumeric,
         //     // PostgresqlType::SqlxTypesBigDecimalAsNumeric,
         //     // PostgresqlType::StdPrimitiveBoolAsBool,
-        //     // PostgresqlType::StdStringStringAsCharN,
+        //     PostgresqlType::StdStringStringAsCharN,
         //     // PostgresqlType::StdStringStringAsVarchar,
         //     // PostgresqlType::StdStringStringAsText,
         //     // PostgresqlType::StdVecVecStdPrimitiveU8AsBytea,
@@ -4357,10 +4408,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
         //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     // PostgresqlTypePatternType::Standart,
-        //     PostgresqlTypePatternType::ArrayDimension1 {
-        //         dimension1_not_null_or_nullable,
-        //     },
+        //     PostgresqlTypePatternType::Standart,
+        //     // PostgresqlTypePatternType::ArrayDimension1 {
+        //     //     dimension1_not_null_or_nullable,
+        //     // },
         //     //// PostgresqlTypePatternType::ArrayDimension2 {
         //     ////     dimension1_not_null_or_nullable,
         //     ////     dimension2_not_null_or_nullable,
@@ -4382,10 +4433,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     &postgresql_type_pattern_type
         // ) {
         //     use postgresql_crud_macros_common::NotNullOrNullable;
-        //     let d1 = match &dimension1_not_null_or_nullable {
-        //         NotNullOrNullable::NotNull => false,
-        //         NotNullOrNullable::Nullable => true,
-        //     };
+        //     // let d1 = match &dimension1_not_null_or_nullable {
+        //     //     NotNullOrNullable::NotNull => true,
+        //     //     NotNullOrNullable::Nullable => false,
+        //     // };
         //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
@@ -4420,12 +4471,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
         //     // };
-        //     if d1 {
+        //     // if d1 {
         //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //             "PostgresqlTypeTokens",
         //             &generated,
         //         );
-        //     }
+        //     // }
         // }
         (
             {

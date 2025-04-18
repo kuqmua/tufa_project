@@ -277,7 +277,7 @@ pub fn generate_postgresql_json_types(_input_token_stream: proc_macro::TokenStre
             let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = {
                 quote::quote!{
                     impl sqlx::Encode<'_, sqlx::Postgres> for #ident_origin_upper_camel_case {
-                        fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> sqlx::encode::IsNull {
+                        fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
                             sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(self.0), buf)
                         }
                     }

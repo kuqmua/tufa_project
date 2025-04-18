@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-proc-macro2 = {version = "=1.0.81"}
+proc-macro2 = {version = "=1.0.95"}
 quote = {version = "=1.0.36"}
 convert_case = {version = "=0.6.0"}
 constants = {path = "../../constants"}

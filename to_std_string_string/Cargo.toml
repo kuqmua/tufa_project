@@ -11,7 +11,7 @@ reqwest = {version = "=0.11.17", default-features = false, features = ["json", "
 http-body = {version = "=1.0.0"}
 axum = {version = "=0.7.4", features = ["macros"]}
 time = {version = "=0.3.36", features = ["serde"]}
-sqlx = {version = "=0.7.3", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
 serde_json = {version = "=1.0"}
 http = {version = "=0.2.9"}
 

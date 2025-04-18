@@ -6,7 +6,7 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-proc-macro2 = {version = "=1.0.81"}
+proc-macro2 = {version = "=1.0.95"}
 constants = {path = "../constants"}
 
 [lints]

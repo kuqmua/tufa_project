@@ -9,9 +9,9 @@ edition = "2024"
 proc-macro = true
 
 [dependencies]
-proc-macro2 = {version = "=1.0.81"}
+proc-macro2 = {version = "=1.0.95"}
 quote = {version = "=1.0.36"}
-syn = {version = "=2.0.60"}
+syn = {version = "=2.0.100"}
 strum = {version = "=0.24.1"}
 strum_macros = {version = "=0.24.3"}
 postgresql_crud_macros_common = {path = "../postgresql_crud_macros_common"}

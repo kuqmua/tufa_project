@@ -26,7 +26,7 @@ serde_json = {version = "=1.0"}
 thiserror = {version = "=1.0.48"}
 tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
 # uuid = {version = "=0.8", features = ["v4", "serde"]}
-sqlx = {version = "=0.7.3", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
 # valuable = {version = "=0.1.0", features = ["default", "std", "alloc", "derive", "valuable-derive"]}#maybe not all features needed
 # validator = {version = "=0.16.0"}
 tracing = {version = "=0.1", features = ["log", "valuable"]}

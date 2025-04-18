@@ -10,7 +10,7 @@ proc-macro = true
 [dependencies]
 convert_case = {version = "=0.6.0"}
 quote = {version = "=1.0.36"}
-syn = {version = "=2.0.60"}
+syn = {version = "=2.0.100"}
 macros_helpers = {path = "../macros_helpers"}
 generate_quotes = {path = "../generate_quotes"}
 

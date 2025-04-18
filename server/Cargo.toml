@@ -42,7 +42,7 @@ num_cpus = {version = "=1.15.0"}
 # serde_json = {version = "=1.0"}
 # serde_urlencoded = {version = "=0.7.1"}
 # sha2 = {version = "=0.10"}
-sqlx = {version = "=0.7.3", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
 # strum = {version = "=0.24.1"}
 # strum_macros = {version = "=0.24.3"}
 # thiserror = {version = "=1.0.48"}

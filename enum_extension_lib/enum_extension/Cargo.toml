@@ -9,7 +9,7 @@ proc-macro = true
 
 [dependencies]
 quote = {version = "=1.0.36"}
-syn = {version = "=2.0.60"}
+syn = {version = "=2.0.100"}
 panic_location = {path = "../../panic_location"}
 
 [lints]
