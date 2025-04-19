@@ -1139,7 +1139,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 }
             };
-
             let maybe_impl_schemars_json_schema_for_ident_origin_token_stream: &dyn quote::ToTokens = match &schemars_json_schema {
                 SchemarsJsonSchema::Derive => &proc_macro2_token_stream_new,
                 SchemarsJsonSchema::Impl(schema_object_token_stream) => &{
@@ -1186,8 +1185,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 }
             };
-            let maybe_impl_is_string_empty_for_ident_origin_token_stream: &dyn quote::ToTokens = match (&not_null_or_nullable, &postgresql_json_type_pattern) {
-                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) => match &postgresql_json_type {
+            let (
+                maybe_impl_is_string_empty_for_ident_origin_token_stream,
+                maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream,
+                maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream
+            ) = if let (
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                PostgresqlJsonTypePattern::Standart
+            ) = (
+                &not_null_or_nullable,
+                &postgresql_json_type_pattern
+            ) {
+                let maybe_impl_is_string_empty_for_ident_origin_token_stream = match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
@@ -1198,11 +1207,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
-                    | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => &proc_macro2_token_stream_new,
-                    PostgresqlJsonType::StdStringStringAsJsonbString => &postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
-                    PostgresqlJsonType::UuidUuidAsJsonbString => &postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
-                },
-                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::Standart) => match &postgresql_json_type {
+                    | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => proc_macro2::TokenStream::new(),
+                    PostgresqlJsonType::StdStringStringAsJsonbString => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
+                    PostgresqlJsonType::UuidUuidAsJsonbString => postgresql_crud_macros_common::generate_impl_crate_is_string_empty_for_ident_token_stream(&ident_origin_upper_camel_case),
+                };
+                let maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream = match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
@@ -1215,9 +1224,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean
                     | PostgresqlJsonType::StdStringStringAsJsonbString
-                    | PostgresqlJsonType::UuidUuidAsJsonbString => &proc_macro2_token_stream_new,
-                },
-                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 {..}) => match &postgresql_json_type {
+                    | PostgresqlJsonType::UuidUuidAsJsonbString => proc_macro2::TokenStream::new(),
+                };
+                let maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream = match &postgresql_json_type {
                     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
@@ -1230,10 +1239,22 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber
                     | PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean
                     | PostgresqlJsonType::StdStringStringAsJsonbString
-                    | PostgresqlJsonType::UuidUuidAsJsonbString => &proc_macro2_token_stream_new,
-                },
-                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 {..}) => &proc_macro2_token_stream_new,
+                    | PostgresqlJsonType::UuidUuidAsJsonbString => proc_macro2::TokenStream::new(),
+                };
+                (
+                    maybe_impl_is_string_empty_for_ident_origin_token_stream,
+                    maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream,
+                    maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream,
+                )
+            }
+            else {
+                (
+                    proc_macro2::TokenStream::new(),
+                    proc_macro2::TokenStream::new(),
+                    proc_macro2::TokenStream::new(),
+                )
             };
+
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_origin_upper_camel_case,
                 &{
@@ -1275,9 +1296,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 #ident_origin_token_stream
                 #impl_new_for_ident_origin_token_stream
 
-
                 #maybe_impl_schemars_json_schema_for_ident_origin_token_stream
                 #maybe_impl_is_string_empty_for_ident_origin_token_stream
+                #maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream
+                #maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream
+
                 #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream
                 #impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream
