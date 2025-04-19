@@ -1084,7 +1084,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             .parse::<proc_macro2::TokenStream>().unwrap()
         };
         let ident_standart_not_null_upper_camel_case = generate_ident_not_null_token_stream(&postgresql_type);
-        let generate_ident = |postgresql_type_pattern: &PostgresqlTypePattern, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+        let generate_ident_token_stream = |postgresql_type_pattern: &PostgresqlTypePattern, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
             let not_null_or_nullable_rust = not_null_or_nullable.rust();
@@ -1226,7 +1226,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 // },
             }
         };
-        let ident: &dyn quote::ToTokens = &generate_ident(&postgresql_type_pattern, &not_null_or_nullable);
+        let ident = &generate_ident_token_stream(&postgresql_type_pattern, &not_null_or_nullable);
         let ident_token_stream = {
             quote::quote! {
                 #[derive(Debug)]
@@ -1238,7 +1238,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
         let field_type = postgresql_type.field_type_token_stream();
         let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
-            naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident(
+            naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
                 &current_postgresql_type_pattern,
                 &current_not_null_or_nullable
             ))
