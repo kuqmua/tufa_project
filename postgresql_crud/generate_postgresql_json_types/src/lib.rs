@@ -79,7 +79,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         UuidUuidAsJsonbString,
     }
     impl PostgresqlJsonType {
-        pub fn full_type_path_initialization_token_stream(&self) -> proc_macro2::TokenStream {
+        fn full_type_path_initialization_token_stream(&self) -> proc_macro2::TokenStream {
             match &self {
                 Self::StdPrimitiveI8AsJsonbNumber
                 | Self::StdPrimitiveI16AsJsonbNumber
@@ -99,6 +99,23 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 Self::UuidUuidAsJsonbString => quote::quote! {
                     uuid::Uuid::new_v4()
                 },
+            }
+        }
+        fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
+            match &self {
+                Self::StdPrimitiveI8AsJsonbNumber => quote::quote!{std::primitive::i8},
+                Self::StdPrimitiveI16AsJsonbNumber => quote::quote!{std::primitive::i16},
+                Self::StdPrimitiveI32AsJsonbNumber => quote::quote!{std::primitive::i32},
+                Self::StdPrimitiveI64AsJsonbNumber => quote::quote!{std::primitive::i64},
+                Self::StdPrimitiveU8AsJsonbNumber => quote::quote!{std::primitive::u8},
+                Self::StdPrimitiveU16AsJsonbNumber => quote::quote!{std::primitive::u16},
+                Self::StdPrimitiveU32AsJsonbNumber => quote::quote!{std::primitive::u32},
+                Self::StdPrimitiveU64AsJsonbNumber => quote::quote!{std::primitive::u64},
+                Self::StdPrimitiveF32AsJsonbNumber => quote::quote!{std::primitive::f32},
+                Self::StdPrimitiveF64AsJsonbNumber => quote::quote!{std::primitive::f64},
+                Self::StdPrimitiveBoolAsJsonbBoolean => quote::quote!{std::primitive::bool},
+                Self::StdStringStringAsJsonbString => quote::quote!{std::string::String},
+                Self::UuidUuidAsJsonbString => quote::quote!{uuid::uuid},
             }
         }
     }
@@ -602,7 +619,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         // let field_type = postgresql_json_type.field_type_token_stream();
         let field_type = &element.field_type();
 
-        let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
         let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
         let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote!{
             Some(Box::new(schemars::schema::Metadata {
