@@ -1043,7 +1043,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let rust_type_name = RustTypeName::from(postgresql_type);
         let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
         let array_dimensions_number = postgresql_type_pattern.array_dimensions_number();
-        
+
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
         let column_snake_case = naming::ColumnSnakeCase;
@@ -1071,8 +1071,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-
-        let crate_query_part_error_named_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_token_stream();
 
         let postgresql_crud_macros_common_import_path_crate = postgresql_crud_macros_common::ImportPath::Crate;
         
@@ -3939,6 +3937,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let typical_query_part_token_stream = {
                 let acc_snake_case = naming::AccSnakeCase;
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("${{{increment_snake_case}}}"));
+                let crate_query_part_error_named_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_token_stream();
                 quote::quote! {
                     let mut #acc_snake_case = std::string::String::default();
                     match #increment_snake_case.checked_add(1) {
