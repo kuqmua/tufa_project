@@ -115,7 +115,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 Self::StdPrimitiveF64AsJsonbNumber => quote::quote!{std::primitive::f64},
                 Self::StdPrimitiveBoolAsJsonbBoolean => quote::quote!{std::primitive::bool},
                 Self::StdStringStringAsJsonbString => quote::quote!{std::string::String},
-                Self::UuidUuidAsJsonbString => quote::quote!{uuid::uuid},
+                Self::UuidUuidAsJsonbString => quote::quote!{uuid::Uuid},
             }
         }
     }
@@ -297,9 +297,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     quote::quote! {Some(vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])}
                 }
             }
-        }
-        pub fn field_type(&self) -> proc_macro2::TokenStream {
-            self.handle_field_type(false)
         }
         pub fn initialization_token_stream(&self) -> proc_macro2::TokenStream {
             self.handle_initialization_token_stream(false)
@@ -611,13 +608,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
+        let field_type = postgresql_json_type.field_type_token_stream();
 
 
 
 
-
-        // let field_type = postgresql_json_type.field_type_token_stream();
-        let field_type = &element.field_type();
+        
 
         let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
         let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote!{
