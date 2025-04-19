@@ -864,6 +864,80 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
 
             let ident_origin_token_stream = {
+                let serde_serialize_comma_token_stream = quote::quote! {serde::Serialize,};
+                let serde_deserialize_comma_token_stream = quote::quote! {serde::Deserialize,};
+                let (
+                    maybe_derive_partial_ord_token_stream,
+                    maybe_derive_serde_serialize_token_stream,
+                    maybe_derive_serde_deserialize_token_stream
+                ) = if let (
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                    PostgresqlJsonTypePattern::Standart
+                ) = (
+                    &not_null_or_nullable,
+                    &postgresql_json_type_pattern
+                ) {
+                    let maybe_derive_partial_ord_token_stream = {
+                        let partial_ord_comma_token_stream = quote::quote! {PartialOrd,};
+                        match &postgresql_json_type {
+                            PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::StdStringStringAsJsonbString => partial_ord_comma_token_stream,
+                            PostgresqlJsonType::UuidUuidAsJsonbString => partial_ord_comma_token_stream,
+                        }
+                    };
+                    let maybe_derive_serde_serialize_token_stream = match &postgresql_json_type {
+                        PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::StdStringStringAsJsonbString => serde_serialize_comma_token_stream,
+                        PostgresqlJsonType::UuidUuidAsJsonbString => serde_serialize_comma_token_stream,
+                    };
+                    let maybe_derive_serde_deserialize_token_stream = match &postgresql_json_type {
+                        PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::StdStringStringAsJsonbString => serde_deserialize_comma_token_stream,
+                        PostgresqlJsonType::UuidUuidAsJsonbString => serde_deserialize_comma_token_stream,
+                    };
+                    (
+                        maybe_derive_partial_ord_token_stream,
+                        maybe_derive_serde_serialize_token_stream,
+                        maybe_derive_serde_deserialize_token_stream
+                    )
+                }
+                else {
+                    (
+                        proc_macro2::TokenStream::new(),
+                        serde_serialize_comma_token_stream,
+                        serde_deserialize_comma_token_stream
+                    )
+                };
                 let maybe_derive_schemars_json_schema_token_stream: &dyn quote::ToTokens = match &schemars_json_schema {
                     SchemarsJsonSchema::Derive => &quote::quote! {schemars::JsonSchema,},
                     SchemarsJsonSchema::Impl(_) => &proc_macro2_token_stream_new,
@@ -873,14 +947,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         Debug,
                         Clone,
                         PartialEq,
-                        PartialOrd,
+                        #maybe_derive_partial_ord_token_stream
                         Default,
-                        serde::Serialize,
-                        serde::Deserialize,
+                        #maybe_derive_serde_serialize_token_stream
+                        #maybe_derive_serde_deserialize_token_stream
                         utoipa::ToSchema,
                         #maybe_derive_schemars_json_schema_token_stream
                     )]
-                    pub struct #ident_origin_upper_camel_case(pub #field_type);
+                    pub struct #ident_origin_upper_camel_case(#field_type_handle);
                 }
             };
             let maybe_impl_schemars_json_schema_for_ident_origin_token_stream: &dyn quote::ToTokens = match &schemars_json_schema {
