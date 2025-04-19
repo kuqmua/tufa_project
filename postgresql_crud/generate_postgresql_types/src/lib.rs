@@ -1043,6 +1043,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let rust_type_name = RustTypeName::from(postgresql_type);
         let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
         let array_dimensions_number = postgresql_type_pattern.array_dimensions_number();
+        
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
         let column_snake_case = naming::ColumnSnakeCase;
