@@ -1243,15 +1243,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             ))
         };
         let field_type_handle: &dyn quote::ToTokens = {
-            use postgresql_crud_macros_common::NotNullOrNullable;
             let generate_current_ident_origin = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
                 let value = generate_current_ident_origin_non_wrapping(
                     &current_postgresql_type_pattern,
                     &current_not_null_or_nullable
                 );
                 match &not_null_or_nullable {
-                    NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
-                    NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value)
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value)
                 }
             };
             match &postgresql_type_pattern {
@@ -1267,15 +1266,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         current_not_null_or_nullable,
                     ): (
                         &PostgresqlTypePattern,
-                        &NotNullOrNullable,
+                        &postgresql_crud_macros_common::NotNullOrNullable,
                     ) = match &not_null_or_nullable {
-                        NotNullOrNullable::NotNull => (
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
                             &PostgresqlTypePattern::Standart,
                             &dimension1_not_null_or_nullable,
                         ),
-                        NotNullOrNullable::Nullable => (
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
                             &postgresql_type_pattern,
-                            &NotNullOrNullable::NotNull,
+                            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                         )
                     };
                     generate_current_ident_origin(
@@ -1292,17 +1291,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 //         current_not_null_or_nullable,
                 //     ): (
                 //         &PostgresqlTypePattern,
-                //         &NotNullOrNullable,
+                //         &postgresql_crud_macros_common::NotNullOrNullable,
                 //     ) = match &not_null_or_nullable {
-                //         NotNullOrNullable::NotNull => (
+                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
                 //             &PostgresqlTypePattern::ArrayDimension1 {
                 //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
                 //             },
                 //             &dimension1_not_null_or_nullable,
                 //         ),
-                //         NotNullOrNullable::Nullable => (
+                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
                 //             &postgresql_type_pattern,
-                //             &NotNullOrNullable::NotNull,
+                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                 //         )
                 //     };
                 //     generate_current_ident_origin(
@@ -1320,18 +1319,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 //         current_not_null_or_nullable,
                 //     ): (
                 //         &PostgresqlTypePattern,
-                //         &NotNullOrNullable,
+                //         &postgresql_crud_macros_common::NotNullOrNullable,
                 //     ) = match &not_null_or_nullable {
-                //         NotNullOrNullable::NotNull => (
+                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
                 //             &PostgresqlTypePattern::ArrayDimension2 {
                 //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
                 //                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
                 //             },
                 //             &dimension1_not_null_or_nullable,
                 //         ),
-                //         NotNullOrNullable::Nullable => (
+                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
                 //             &postgresql_type_pattern,
-                //             &NotNullOrNullable::NotNull,
+                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                 //         )
                 //     };
                 //     generate_current_ident_origin(
@@ -1350,9 +1349,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 //         current_not_null_or_nullable,
                 //     ): (
                 //         &PostgresqlTypePattern,
-                //         &NotNullOrNullable,
+                //         &postgresql_crud_macros_common::NotNullOrNullable,
                 //     ) = match &not_null_or_nullable {
-                //         NotNullOrNullable::NotNull => (
+                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
                 //             &PostgresqlTypePattern::ArrayDimension3 {
                 //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
                 //                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
@@ -1360,9 +1359,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 //             },
                 //             &dimension1_not_null_or_nullable,
                 //         ),
-                //         NotNullOrNullable::Nullable => (
+                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
                 //             &postgresql_type_pattern,
-                //             &NotNullOrNullable::NotNull,
+                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                 //         )
                 //     };
                 //     generate_current_ident_origin(

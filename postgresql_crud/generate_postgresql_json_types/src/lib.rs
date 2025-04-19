@@ -609,11 +609,145 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
         let field_type = postgresql_json_type.field_type_token_stream();
+        let generate_current_ident_origin_non_wrapping = |current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+            naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                &current_postgresql_json_type_pattern,
+                &current_not_null_or_nullable
+            ))
+        };
+        let field_type_handle: &dyn quote::ToTokens = {
+            let generate_current_ident_origin = |current_postgresql_json_type_pattern: &PostgresqlJsonTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+                let value = generate_current_ident_origin_non_wrapping(
+                    &current_postgresql_json_type_pattern,
+                    &current_not_null_or_nullable
+                );
+                match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value)
+                }
+            };
+            match &postgresql_json_type_pattern {
+                PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case)
+                },
+                PostgresqlJsonTypePattern::ArrayDimension1 {
+                    dimension1_not_null_or_nullable,
+                } => &{
+                    let (
+                        current_postgresql_json_type_pattern,
+                        current_not_null_or_nullable,
+                    ): (
+                        &PostgresqlJsonTypePattern,
+                        &postgresql_crud_macros_common::NotNullOrNullable,
+                    ) = match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                            &PostgresqlJsonTypePattern::Standart,
+                            &dimension1_not_null_or_nullable,
+                        ),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
+                            &postgresql_json_type_pattern,
+                            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                        )
+                    };
+                    generate_current_ident_origin(
+                        &current_postgresql_json_type_pattern,
+                        &current_not_null_or_nullable
+                    )
+                },
+                // PostgresqlJsonTypePattern::ArrayDimension2 {
+                //     dimension1_not_null_or_nullable,
+                //     dimension2_not_null_or_nullable,
+                // } => &{
+                //     let (
+                //         current_postgresql_json_type_pattern,
+                //         current_not_null_or_nullable,
+                //     ): (
+                //         &PostgresqlJsonTypePattern,
+                //         &postgresql_crud_macros_common::NotNullOrNullable,
+                //     ) = match &not_null_or_nullable {
+                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                //             &PostgresqlJsonTypePattern::ArrayDimension1 {
+                //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                //             },
+                //             &dimension1_not_null_or_nullable,
+                //         ),
+                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
+                //             &postgresql_type_pattern,
+                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                //         )
+                //     };
+                //     generate_current_ident_origin(
+                //         &current_postgresql_json_type_pattern,
+                //         &current_not_null_or_nullable
+                //     )
+                // },
+                // PostgresqlJsonTypePattern::ArrayDimension3 {
+                //     dimension1_not_null_or_nullable,
+                //     dimension2_not_null_or_nullable,
+                //     dimension3_not_null_or_nullable,
+                // } => &{
+                //     let (
+                //         current_postgresql_json_type_pattern,
+                //         current_not_null_or_nullable,
+                //     ): (
+                //         &PostgresqlJsonTypePattern,
+                //         &postgresql_crud_macros_common::NotNullOrNullable,
+                //     ) = match &not_null_or_nullable {
+                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                //             &PostgresqlJsonTypePattern::ArrayDimension2 {
+                //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                //                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                //             },
+                //             &dimension1_not_null_or_nullable,
+                //         ),
+                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
+                //             &postgresql_type_pattern,
+                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                //         )
+                //     };
+                //     generate_current_ident_origin(
+                //         &current_postgresql_json_type_pattern,
+                //         &current_not_null_or_nullable
+                //     )
+                // },
+                // PostgresqlJsonTypePattern::ArrayDimension4 {
+                //     dimension1_not_null_or_nullable,
+                //     dimension2_not_null_or_nullable,
+                //     dimension3_not_null_or_nullable,
+                //     dimension4_not_null_or_nullable,
+                // } => &{
+                //     let (
+                //         current_postgresql_json_type_pattern,
+                //         current_not_null_or_nullable,
+                //     ): (
+                //         &PostgresqlJsonTypePattern,
+                //         &postgresql_crud_macros_common::NotNullOrNullable,
+                //     ) = match &not_null_or_nullable {
+                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                //             &PostgresqlJsonTypePattern::ArrayDimension3 {
+                //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                //                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                //                 dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
+                //             },
+                //             &dimension1_not_null_or_nullable,
+                //         ),
+                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
+                //             &postgresql_type_pattern,
+                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                //         )
+                //     };
+                //     generate_current_ident_origin(
+                //         &current_postgresql_json_type_pattern,
+                //         &current_not_null_or_nullable
+                //     )
+                // },
+            }
+        };
+        // println!("{}", quote::quote!{#field_type_handle});
 
 
 
-
-        
 
         let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
         let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote!{
