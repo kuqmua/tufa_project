@@ -2330,14 +2330,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream
                         }
                     });
+
+                    let match_postgresql_type_try_new_field0_field1_field2_token_stream = quote::quote! {
+                        match #ident_standart_not_null_origin_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
+                            Ok(value) => _serde::__private::Ok(value),
+                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
+                        }
+                    };
                     let fn_visit_seq_sqlx_types_time_date_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_primitive_i32_token_stream, &time_month_token_stream, &std_primitive_u8_token_stream]);
                         quote::quote! {
                             #fields_initialization_token_stream
-                            match #ident_standart_not_null_origin_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
-                                Ok(value) => _serde::__private::Ok(value),
-                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                            }
+                            #match_postgresql_type_try_new_field0_field1_field2_token_stream
                         }
                     });
 
@@ -2774,12 +2778,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             )
                         };
 
-                        let match_postgresql_type_try_new_field0_field1_field2_token_stream = quote::quote! {
-                            match #ident_standart_not_null_origin_upper_camel_case::try_new(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
-                                Ok(value) => _serde::__private::Ok(value),
-                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}")))
-                            }
-                        };
                         let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                         let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
                         (
