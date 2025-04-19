@@ -231,15 +231,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 PostgresqlJsonTypePattern::ArrayDimension1 {..} => true,
             }
         }
-        pub fn postgresql_json_type_ident_wrapper(&self) -> proc_macro2::TokenStream {
-            format!(
-                "{}{}{}", 
-                &self.not_null_or_nullable.prefix_stringified(),
-                &self.postgresql_json_type_pattern.prefix_stringified(),
-                self.postgresql_json_type
-            ).parse::<proc_macro2::TokenStream>().unwrap()
-        }
-
         pub fn handle_field_type(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
             let postgresql_json_type = &self.postgresql_json_type;
             match (&self.not_null_or_nullable, &self.postgresql_json_type_pattern) {
@@ -567,13 +558,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 // },
             }
         };
-        let ident_x = &generate_ident_token_stream(&postgresql_json_type_pattern, &not_null_or_nullable);
+        let ident = &generate_ident_token_stream(&postgresql_json_type_pattern, &not_null_or_nullable);
 
-
-
-
-        let ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens = &element.postgresql_json_type_ident_wrapper();
-
+        let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
         let field_type = &element.field_type();
@@ -949,16 +936,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
                 vec
             };
-            //this is for not nullable\not optionable filters like GreaterThan, Regular expression, etc.
-            let postgresql_json_type_ident_wrapper_relevant_only_for_not_null = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&PostgresqlJsonTypeRecord {
-                postgresql_json_type: element.postgresql_json_type.clone(),
-                not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,//todo
-            }
-            .postgresql_json_type_ident_wrapper());
+
             let generate_where_element_variants_types_generic_token_stream =
                 |is_relevant_only_for_not_null: std::primitive::bool| -> &dyn naming::StdFmtDisplayPlusQuoteToTokens { if is_relevant_only_for_not_null { 
-                    &postgresql_json_type_ident_wrapper_relevant_only_for_not_null
+                    &ident_standart_not_null_origin_upper_camel_case
                 } else {
                     &ident_origin_upper_camel_case
                 }

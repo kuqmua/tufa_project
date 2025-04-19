@@ -66,7 +66,7 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
         postgresql_crud_path_postgresql_json_type_uuid_uuid_read_token_stream,
         postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream
     ) = {
-        let postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream = quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type:: UuidUuidAsJsonbString};
+        let postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream = quote::quote!{#postgresql_crud_path_token_stream postgresql_json_type:: UuidUuidAsNotNullJsonbString};
         (
             postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream.clone(),
             generate_type_as_crud_postgresql_json_type_token_stream(
