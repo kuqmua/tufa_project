@@ -1304,7 +1304,24 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let ident_select_token_stream = {
                 let content_token_stream = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => quote::quote! {;},
-                    PostgresqlJsonTypePattern::ArrayDimension1 {..} => quote::quote! {{ pagination: crate::pagination::Pagination }},
+                    PostgresqlJsonTypePattern::ArrayDimension1 {..} 
+                    // |
+                    // PostgresqlJsonTypePattern::ArrayDimension2 {..} |
+                    // PostgresqlJsonTypePattern::ArrayDimension3 {..} |
+                    // PostgresqlJsonTypePattern::ArrayDimension4 {..} 
+                    => {
+                        let mut arguments_token_stream = vec![];
+                        for element in 1..=array_dimensions_number {
+                            let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
+                            .parse::<proc_macro2::TokenStream>().unwrap();
+                            arguments_token_stream.push(quote::quote! {
+                                #dimension_number_pagination_token_stream: crate::Pagination
+                            });
+                        }
+                        quote::quote! {{
+                            #(#arguments_token_stream),*
+                        }}
+                    }
                 };
                 quote::quote! {
                     #[derive(
@@ -1321,24 +1338,30 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_select_token_stream =
-                postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &{
-                    let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-                    match &postgresql_json_type_pattern {
-                        PostgresqlJsonTypePattern::Standart => {
-                            let core_default_default_default = token_patterns::CoreDefaultDefaultDefault;
-                            quote::quote! {
-                                #core_default_default_default
+                postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    &ident_select_upper_camel_case,
+                    &match &postgresql_json_type_pattern {
+                        PostgresqlJsonTypePattern::Standart => quote::quote! {#core_default_default_default_token_stream},
+                        PostgresqlJsonTypePattern::ArrayDimension1 {..} 
+                        // |
+                        // PostgresqlJsonTypePattern::ArrayDimension2 {..} |
+                        // PostgresqlJsonTypePattern::ArrayDimension3 {..} |
+                        // PostgresqlJsonTypePattern::ArrayDimension4 {..}
+                        => {
+                            let mut arguments_token_stream = vec![];
+                            for element in 1..=array_dimensions_number {
+                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
+                                .parse::<proc_macro2::TokenStream>().unwrap();
+                                arguments_token_stream.push(quote::quote! {
+                                    #dimension_number_pagination_token_stream: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                });
                             }
-                        }
-                        PostgresqlJsonTypePattern::ArrayDimension1 {..} => {
-                            quote::quote! {
-                                Self {
-                                    pagination: #crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                }
-                            }
+                            quote::quote! {Self {
+                                #(#arguments_token_stream),*
+                            }}
                         }
                     }
-                });
+                );
             quote::quote! {
                 #ident_select_token_stream
                 #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_select_token_stream
@@ -1514,9 +1537,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             &{
                 let value_snake_case = naming::ValueSnakeCase;
                 let postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream = |format_handle_token_stream: &dyn quote::ToTokens| {
-                    let pagination_start_end_initialization_token_stream = macros_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&value_snake_case);
+                    // let pagination_start_end_initialization_token_stream = macros_helpers::pagination_start_end_initialization_token_stream::pagination_start_end_initialization_token_stream(&value_snake_case);
                     quote::quote! {
-                        #pagination_start_end_initialization_token_stream
+                        let start = #value_snake_case.dimension1_pagination.start();
+                        let end = #value_snake_case.dimension1_pagination.end();
                         format!(#format_handle_token_stream)
                     }
                 };
@@ -1590,13 +1614,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         //     // PostgresqlJsonType::StdStringStringAsJsonbString,
         //     // PostgresqlJsonType::UuidUuidAsJsonbString,
 
-        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     PostgresqlJsonTypePattern::Standart,
-        //     // PostgresqlJsonTypePattern::ArrayDimension1 {
-        //     //     dimension1_not_null_or_nullable,
-        //     // },
+        //     // PostgresqlJsonTypePattern::Standart,
+        //     PostgresqlJsonTypePattern::ArrayDimension1 {
+        //         dimension1_not_null_or_nullable,
+        //     },
         //     //// PostgresqlJsonTypePattern::ArrayDimension2 {
         //     ////     dimension1_not_null_or_nullable,
         //     ////     dimension2_not_null_or_nullable,
@@ -1618,10 +1642,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         //     &postgresql_json_type_pattern
         // ) {
         //     use postgresql_crud_macros_common::NotNullOrNullable;
-        //     // let d1 = match &dimension1_not_null_or_nullable {
-        //     //     NotNullOrNullable::NotNull => true,
-        //     //     NotNullOrNullable::Nullable => false,
-        //     // };
+        //     let d1 = match &dimension1_not_null_or_nullable {
+        //         NotNullOrNullable::NotNull => true,
+        //         NotNullOrNullable::Nullable => false,
+        //     };
         //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
@@ -1656,12 +1680,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
         //     // };
-        //     // if d1 {
+        //     if d1 {
         //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //             "PostgresqlJsonTypeTokens",
         //             &generated,
         //         );
-        //     // }
+        //     }
         // }
         (
             {
