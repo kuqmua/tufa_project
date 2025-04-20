@@ -2,6 +2,11 @@ mod filters;
 
 pub use filters::*;
 
+pub enum DeriveOrImpl {
+    Derive,
+    Impl(proc_macro2::TokenStream)
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum NotNullOrNullable {
     NotNull,
