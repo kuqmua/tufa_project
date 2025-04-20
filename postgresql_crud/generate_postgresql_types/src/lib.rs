@@ -3088,10 +3088,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 postgresql_crud_macros_common::DeriveOrImpl::Derive => proc_macro2::TokenStream::new(),
                 postgresql_crud_macros_common::DeriveOrImpl::Impl(value) => value
             };
-            let impl_std_fmt_display_for_ident_origin_token_stream =
-                macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{self:?}")});
-            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream =
-                macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {self.to_string()});
+            let impl_std_fmt_display_for_ident_origin_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
+                &proc_macro2::TokenStream::new(),
+                &ident_origin_upper_camel_case,
+                &proc_macro2::TokenStream::new(),
+                &quote::quote! {write!(formatter, "{self:?}")}
+            );
+            let impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                &proc_macro2::TokenStream::new(),
+                &ident_origin_upper_camel_case,
+                &proc_macro2::TokenStream::new(),
+                &quote::quote! {self.to_string()}
+            );
 
             let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = quote::quote! {
                 #sqlx_types_time_date_as_date_field_type_token_stream::from_ordinal_date(
