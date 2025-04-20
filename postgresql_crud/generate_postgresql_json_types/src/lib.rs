@@ -920,33 +920,35 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
 
             let ident_origin_token_stream = {
-                let maybe_derive_partial_ord_token_stream = if let (
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                    PostgresqlJsonTypePattern::Standart
-                ) = (
-                    &not_null_or_nullable,
-                    &postgresql_json_type_pattern
-                ) {
-                    let partial_ord_comma_token_stream = quote::quote! {PartialOrd,};
-                    match &postgresql_json_type {
-                        PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::StdStringStringAsJsonbString => partial_ord_comma_token_stream,
-                        PostgresqlJsonType::UuidUuidAsJsonbString => partial_ord_comma_token_stream,
-                    }
-                }
-                else {
-                    proc_macro2::TokenStream::new()
-                };
+                // let maybe_derive_partial_ord_token_stream = {
+                //     let partial_ord_comma_token_stream = quote::quote! {};
+                //     if let (
+                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                //         PostgresqlJsonTypePattern::Standart
+                //     ) = (
+                //         &not_null_or_nullable,
+                //         &postgresql_json_type_pattern
+                //     ) {
+                //         match &postgresql_json_type {
+                //             PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::StdStringStringAsJsonbString => partial_ord_comma_token_stream,
+                //             PostgresqlJsonType::UuidUuidAsJsonbString => partial_ord_comma_token_stream,
+                //         }
+                //     }
+                //     else {
+                //         proc_macro2::TokenStream::new()
+                //     }
+                // };
                 let maybe_derive_serde_serialize_token_stream = match &serde_serialize {
                     postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Serialize,},
                     postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new()
@@ -964,7 +966,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         Debug,
                         Clone,
                         PartialEq,
-                        #maybe_derive_partial_ord_token_stream
+                        PartialOrd,
                         Default,
                         #maybe_derive_serde_serialize_token_stream
                         #maybe_derive_serde_deserialize_token_stream
@@ -1276,7 +1278,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 quote::quote!{
                     impl sqlx::Encode<'_, sqlx::Postgres> for #ident_origin_upper_camel_case {
                         fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-                            sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(self.0), buf)
+                            sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(self.0.clone()), buf)//todo maybe remove .clone()?
                         }
                     }
                 }
@@ -1573,10 +1575,93 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             #ident_where_element_token_stream
             #impl_crate_postgresql_json_type_for_ident_token_stream
         };
-        // if ident == "" {
-        //     println!("{generated}");
-        //     println!("-------");
-        //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file("GeneratePostgresqlJsonTypes", &generated);
+        // if let (
+        //     PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber,
+        //     // PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean,
+        //     // PostgresqlJsonType::StdStringStringAsJsonbString,
+        //     // PostgresqlJsonType::UuidUuidAsJsonbString,
+
+        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+
+        //     PostgresqlJsonTypePattern::Standart,
+        //     // PostgresqlJsonTypePattern::ArrayDimension1 {
+        //     //     dimension1_not_null_or_nullable,
+        //     // },
+        //     //// PostgresqlJsonTypePattern::ArrayDimension2 {
+        //     ////     dimension1_not_null_or_nullable,
+        //     ////     dimension2_not_null_or_nullable,
+        //     //// },
+        //     //// PostgresqlJsonTypePattern::ArrayDimension3 {
+        //     ////     dimension1_not_null_or_nullable,
+        //     ////     dimension2_not_null_or_nullable,
+        //     ////     dimension3_not_null_or_nullable,
+        //     //// },
+        //     //// PostgresqlJsonTypePattern::ArrayDimension4 {
+        //     ////     dimension1_not_null_or_nullable,
+        //     ////     dimension2_not_null_or_nullable,
+        //     ////     dimension3_not_null_or_nullable,
+        //     ////     dimension4_not_null_or_nullable,
+        //     //// }
+        // ) = (
+        //     &postgresql_json_type,
+        //     &not_null_or_nullable,
+        //     &postgresql_json_type_pattern
+        // ) {
+        //     use postgresql_crud_macros_common::NotNullOrNullable;
+        //     // let d1 = match &dimension1_not_null_or_nullable {
+        //     //     NotNullOrNullable::NotNull => true,
+        //     //     NotNullOrNullable::Nullable => false,
+        //     // };
+        //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     // };
+        //     // let d3 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     // };
+        //     // let d4 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     // };
+        //     // if d1 {
+        //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //             "PostgresqlJsonTypeTokens",
+        //             &generated,
+        //         );
+        //     // }
         // }
         (
             {

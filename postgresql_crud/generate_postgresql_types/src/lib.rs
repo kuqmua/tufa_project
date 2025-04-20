@@ -2774,7 +2774,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         };
         let ident_origin_token_stream = {
             let ident_origin_token_stream = {
-                let serde_deserialize_comma_token_stream = quote::quote! {serde::Deserialize,};
                 let maybe_derive_partial_ord_token_stream = if let (
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                     PostgresqlTypePattern::Standart
@@ -3894,7 +3893,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             #impl_postgresql_type_for_ident_token_stream
         };
         // if let (
-        //     // PostgresqlType::StdPrimitiveI16AsInt2,
+        //     PostgresqlType::StdPrimitiveI16AsInt2,
         //     // PostgresqlType::StdPrimitiveI32AsInt4,
         //     // PostgresqlType::StdPrimitiveI64AsInt8,
         //     // PostgresqlType::StdPrimitiveF32AsFloat4,
@@ -3933,10 +3932,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
         //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     // PostgresqlTypePattern::Standart,
-        //     PostgresqlTypePattern::ArrayDimension1 {
-        //         dimension1_not_null_or_nullable,
-        //     },
+        //     PostgresqlTypePattern::Standart,
+        //     // PostgresqlTypePattern::ArrayDimension1 {
+        //     //     dimension1_not_null_or_nullable,
+        //     // },
         //     //// PostgresqlTypePattern::ArrayDimension2 {
         //     ////     dimension1_not_null_or_nullable,
         //     ////     dimension2_not_null_or_nullable,
@@ -3958,10 +3957,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         //     &postgresql_type_pattern
         // ) {
         //     use postgresql_crud_macros_common::NotNullOrNullable;
-        //     let d1 = match &dimension1_not_null_or_nullable {
-        //         NotNullOrNullable::NotNull => true,
-        //         NotNullOrNullable::Nullable => false,
-        //     };
+        //     // let d1 = match &dimension1_not_null_or_nullable {
+        //     //     NotNullOrNullable::NotNull => true,
+        //     //     NotNullOrNullable::Nullable => false,
+        //     // };
         //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
