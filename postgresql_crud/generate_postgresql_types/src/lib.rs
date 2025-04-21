@@ -922,6 +922,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     .into_iter()
     .filter(|element|{
+        use postgresql_crud_macros_common::NotNullOrNullable;
         let postgresql_type_filter = match &element.postgresql_type {
             PostgresqlType::StdPrimitiveI16AsInt2 => true,
             PostgresqlType::StdPrimitiveI32AsInt4 => true,
@@ -960,16 +961,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => true,
         };
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
-            postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
-            postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
+            NotNullOrNullable::NotNull => true,
+            NotNullOrNullable::Nullable => true,
         };
         let postgresql_type_pattern_filter = match &element.postgresql_type_pattern {
             PostgresqlTypePattern::Standart => true,
             PostgresqlTypePattern::ArrayDimension1 {
                 dimension1_not_null_or_nullable,
             } => match &dimension1_not_null_or_nullable {
-                postgresql_crud_macros_common::NotNullOrNullable::NotNull => true,
-                postgresql_crud_macros_common::NotNullOrNullable::Nullable => true,
+                NotNullOrNullable::NotNull => true,
+                NotNullOrNullable::Nullable => true,
             },
             // PostgresqlTypePattern::ArrayDimension2 {
             //     dimension1_not_null_or_nullable,
