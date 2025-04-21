@@ -38,11 +38,16 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "column_40d64ae4_a646_4394_bfce_3894bdfced87": 0,
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "object_animal_as_jsonb_not_null": {
-      "std_primitive_i8_as_not_null_jsonb_number": 0,
-      "option_std_primitive_i8_as_nullable_jsonb_number": null
+      "vec_of_std_primitive_i8_as_not_null_array_of_not_null_number": [
+        0
+      ],
+      "option_vec_of_std_primitive_i8_as_nullable_array_of_not_null_number": null,
+      "vec_of_option_std_primitive_i8_as_not_null_array_of_nullable_jsonb_number": [
+        0, null
+      ],
+      "option_vec_of_option_std_primitive_i8_as_nullable_array_of_nullable_number": null
     }
   }
 ]
@@ -60,11 +65,16 @@ content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
 {
-  "column_40d64ae4_a646_4394_bfce_3894bdfced87": 0,
   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
   "object_animal_as_jsonb_not_null": {
-    "std_primitive_i8_as_not_null_jsonb_number": 0,
-    "option_std_primitive_i8_as_nullable_jsonb_number": null
+    "vec_of_std_primitive_i8_as_not_null_array_of_not_null_number": [
+      0
+    ],
+    "option_vec_of_std_primitive_i8_as_nullable_array_of_not_null_number": null,
+    "vec_of_option_std_primitive_i8_as_not_null_array_of_nullable_jsonb_number": [
+      0,null
+    ],
+    "option_vec_of_option_std_primitive_i8_as_nullable_array_of_nullable_number": null
   }
 }
 
@@ -81,38 +91,6 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  # "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": 0,
-  #         "end": 0
-  #       }
-  #     },
-  #     {
-  #       "In": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
   # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -148,31 +126,28 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
+      {
+        "VecOfStdPrimitiveI8AsNotNullArrayOfNotNullNumber": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": [
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      }
+      # ,
       # {
-      #   "StdPrimitiveI8AsNotNullJsonbNumber": {
+      #   "OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullNumber": {
       #     "logical_operator": "Or",
       #     "value": [
       #       {
       #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "GreaterThan": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "Between": {
-      #           "logical_operator": "Or",
-      #           "start": 0,
-      #           "end": 0
-      #         }
-      #       },
-      #       {
-      #         "In": {
       #           "logical_operator": "Or",
       #           "value": [
       #             0
@@ -182,58 +157,77 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     ]
       #   }
       # },
-      {
-        "OptionStdPrimitiveI8AsNullableJsonbNumber": {
-          "logical_operator": "Or",
-          "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": null
-              }
-            }
-            # ,
-            # {
-            #   "GreaterThan": {
-            #     "logical_operator": "Or",
-            #     "value": 0
-            #   }
-            # },
-            # {
-            #   "Between": {
-            #     "logical_operator": "Or",
-            #     "start": 0,
-            #     "end": 0
-            #   }
-            # },
-            # {
-            #   "In": {
-            #     "logical_operator": "Or",
-            #     "value": [
-            #       0
-            #     ]
-            #   }
-            # }
-          ]
-        }
-      }
+      # {
+      #   "VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableNumber": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # }
     ]
   },
   "select": [
-    {
-      "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
-    },
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "std_primitive_i8_as_not_null_jsonb_number": null
-        },
-        {
-          "option_std_primitive_i8_as_nullable_jsonb_number": null
+          "vec_of_std_primitive_i8_as_not_null_array_of_not_null_number": {
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
         }
+        # ,
+        # {
+        #   "option_vec_of_std_primitive_i8_as_nullable_array_of_not_null_number": {
+        #     "dimension1_pagination": {
+        #       "limit": 3,
+        #       "offset": 0
+        #     }
+        #   }
+        # },
+        # {
+        #   "vec_of_option_std_primitive_i8_as_not_null_array_of_nullable_jsonb_number": {
+        #     "dimension1_pagination": {
+        #       "limit": 3,
+        #       "offset": 0
+        #     }
+        #   }
+        # },
+        # {
+        #   "option_vec_of_option_std_primitive_i8_as_nullable_array_of_nullable_number": {
+        #     "dimension1_pagination": {
+        #       "limit": 3,
+        #       "offset": 0
+        #     }
+        #   }
+        # }
       ]
     }
   ],
