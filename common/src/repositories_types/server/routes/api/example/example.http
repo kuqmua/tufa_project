@@ -40,21 +40,10 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "object_animal_as_jsonb_not_null": {
-      "column_5a865744_9971_4a46_8613_08b059e7e920": [
-        [
-          0,1,null
-        ],
-        null,
-        [
-          0,1,null
-        ]
-      ]
+      "column_63091d77_aa0a_4a75_bf23_2cf733ecac4b": null
     }
   }
 ]
-
-
-
 
 ###
  
@@ -128,21 +117,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "logical_operator": "Or",
     "value": [
       {
-        "Column5A86574499714A46861308B059E7E920": {
+        "Column63091D77Aa0A4A75Bf232Cf733Ecac4B": {
           "logical_operator": "Or",
           "value": [
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-                  [
-                    0,1,null
-                  ],
-                  null,
-                  [
-                    0,1,null
-                  ]
-                ]
+                "value": null
               }
             }
           ]
@@ -151,13 +132,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    # {
-    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    # },
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "column_5a865744_9971_4a46_8613_08b059e7e920": {
+          "column_63091d77_aa0a_4a75_bf23_2cf733ecac4b": {
             "dimension1_pagination": {
               "limit": 3,
               "offset": 0
