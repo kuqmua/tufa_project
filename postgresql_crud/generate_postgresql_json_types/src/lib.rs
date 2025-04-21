@@ -241,13 +241,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 acc
             })
         }
-        pub fn is_vec_element_type(&self) -> std::primitive::bool {
-            match &self.postgresql_json_type_pattern {
-                PostgresqlJsonTypePattern::Standart => false,
-                //todo maybe wrong
-                PostgresqlJsonTypePattern::ArrayDimension1 {..} => true,
-            }
-        }
         pub fn handle_field_type(&self, is_wrapper: std::primitive::bool) -> proc_macro2::TokenStream {
             let postgresql_json_type = &self.postgresql_json_type;
             match (&self.not_null_or_nullable, &self.postgresql_json_type_pattern) {
@@ -813,7 +806,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 min_length: Some(36),
                 pattern: None,
             }))};
-            //todo make more SchemarsJsonSchema -like types
             let schemars_json_schema = if let (
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                 PostgresqlJsonTypePattern::Standart
@@ -1395,13 +1387,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             }
             let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&element.postgresql_json_type);
 
-            let is_vec_element_type = element.is_vec_element_type();
+            let is_vec_element_type = match &postgresql_json_type_pattern {
+                PostgresqlJsonTypePattern::Standart => false,
+                PostgresqlJsonTypePattern::ArrayDimension1 {..} => true,
+            };
             let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal];
             let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = {
                 let mut vec: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_filters_variants.clone();
                 vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual);
                 vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
                 if is_vec_element_type {
+                    //todo reuse analog filters in generate_postgresql_types
                     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual);
                     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray);
                     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray);
