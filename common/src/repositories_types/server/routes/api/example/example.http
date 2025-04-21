@@ -42,12 +42,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "object_animal_as_jsonb_not_null": {
       "vec_of_std_primitive_i8_as_not_null_array_of_not_null_number": [
         0
-      ],
-      "option_vec_of_std_primitive_i8_as_nullable_array_of_not_null_number": null,
-      "vec_of_option_std_primitive_i8_as_not_null_array_of_nullable_jsonb_number": [
-        0, null
-      ],
-      "option_vec_of_option_std_primitive_i8_as_nullable_array_of_nullable_number": null
+      ]
     }
   }
 ]
@@ -64,17 +59,13 @@ POST http://127.0.0.1:8080/example/create_one HTTP/1.1
 content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
+
 {
   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
   "object_animal_as_jsonb_not_null": {
     "vec_of_std_primitive_i8_as_not_null_array_of_not_null_number": [
       0
-    ],
-    "option_vec_of_std_primitive_i8_as_nullable_array_of_not_null_number": null,
-    "vec_of_option_std_primitive_i8_as_not_null_array_of_nullable_jsonb_number": [
-      0,null
-    ],
-    "option_vec_of_option_std_primitive_i8_as_nullable_array_of_nullable_number": null
+    ]
   }
 }
 
@@ -141,58 +132,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           ]
         }
       }
-      # ,
-      # {
-      #   "OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullNumber": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableNumber": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       }
-      #     ]
-      #   }
-      # }
     ]
   },
   "select": [
-    # {
-    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    # },
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
     {
       "object_animal_as_jsonb_not_null": [
         {
@@ -203,31 +148,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             }
           }
         }
-        # ,
-        # {
-        #   "option_vec_of_std_primitive_i8_as_nullable_array_of_not_null_number": {
-        #     "dimension1_pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "vec_of_option_std_primitive_i8_as_not_null_array_of_nullable_jsonb_number": {
-        #     "dimension1_pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "option_vec_of_option_std_primitive_i8_as_nullable_array_of_nullable_number": {
-        #     "dimension1_pagination": {
-        #       "limit": 3,
-        #       "offset": 0
-        #     }
-        #   }
-        # }
       ]
     }
   ],
@@ -256,21 +176,20 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 8,
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
   "select": [
-    {
-      "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
-    },
     {
       "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
     },
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "std_primitive_i8_as_not_null_jsonb_number": null
-        },
-        {
-          "option_std_primitive_i8_as_nullable_jsonb_number": null
+          "vec_of_std_primitive_i8_as_not_null_array_of_not_null_number": {
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
         }
       ]
     }
@@ -292,26 +211,19 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 [
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
-    "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
-      "value": 10
-    },
     "object_animal_as_jsonb_not_null": {
       "value": [
         {
-          "std_primitive_i8_as_not_null_jsonb_number": {
-            "value": 10
-          }
-        },
-        {
-          "option_std_primitive_i8_as_nullable_jsonb_number": {
-            "value": null
+          "vec_of_std_primitive_i8_as_not_null_array_of_not_null_number": {
+            "value": [
+              0
+            ]
           }
         }
       ]
     }
   }
 ]
-
 ###
 
 GET http://127.0.0.1:8080/example/update_many_payload_example HTTP/1.1
@@ -326,19 +238,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
-  "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
-    "value": 0
-  },
   "object_animal_as_jsonb_not_null": {
     "value": [
       {
-        "std_primitive_i8_as_not_null_jsonb_number": {
-          "value": 20
-        }
-      },
-      {
-        "option_std_primitive_i8_as_nullable_jsonb_number": {
-          "value": null
+        "vec_of_std_primitive_i8_as_not_null_array_of_not_null_number": {
+          "value": [
+            0
+          ]
         }
       }
     ]
@@ -358,38 +264,6 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  # "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "start": 0,
-  #         "end": 0
-  #       }
-  #     },
-  #     {
-  #       "In": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
   # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -425,72 +299,18 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "StdPrimitiveI8AsNotNullJsonbNumber": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "Equal": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "GreaterThan": {
-      #           "logical_operator": "Or",
-      #           "value": 0
-      #         }
-      #       },
-      #       {
-      #         "Between": {
-      #           "logical_operator": "Or",
-      #           "start": 0,
-      #           "end": 0
-      #         }
-      #       },
-      #       {
-      #         "In": {
-      #           "logical_operator": "Or",
-      #           "value": [
-      #             0
-      #           ]
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
       {
-        "OptionStdPrimitiveI8AsNullableJsonbNumber": {
+        "VecOfStdPrimitiveI8AsNotNullArrayOfNotNullNumber": {
           "logical_operator": "Or",
           "value": [
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": null
+                "value": [
+                  0
+                ]
               }
             }
-            # ,
-            # {
-            #   "GreaterThan": {
-            #     "logical_operator": "Or",
-            #     "value": 0
-            #   }
-            # },
-            # {
-            #   "Between": {
-            #     "logical_operator": "Or",
-            #     "start": 0,
-            #     "end": 0
-            #   }
-            # },
-            # {
-            #   "In": {
-            #     "logical_operator": "Or",
-            #     "value": [
-            #       0
-            #     ]
-            #   }
-            # }
           ]
         }
       }
@@ -511,8 +331,9 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 10
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 0
 }
+
 ###
  
 GET http://127.0.0.1:8080/example/delete_one_payload_example HTTP/1.1
