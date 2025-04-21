@@ -414,7 +414,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable
                 ) => {
                     let d1 = dimension1_not_null_or_nullable;
-                    let d1_rust = dimension2_not_null_or_nullable.rust();
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
                     let d2 = dimension2_not_null_or_nullable;
                     let d2_rust = dimension2_not_null_or_nullable.rust();
                     format!("{not_null_or_nullable_rust}{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{rust_type_name}{as_upper_camel_case}{not_null_or_nullable}{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{postgresql_json_type_name}")
@@ -1519,23 +1519,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimension2_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
                             "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg((select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}})))"
                         ))),
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimension2_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
-                            "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg((case when jsonb_typeof(outer_elem.value) = 'array' then (select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}}) else null end)) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}})))"
-                        ))),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) |
                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimension2_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
                             "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg((case when jsonb_typeof(outer_elem.value) = 'array' then (select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}}) else null end)) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}})))"
                         ))),
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimension2_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) |
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimension2_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
                             "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') = 'array' then (select jsonb_agg((select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}) else null end))"
                         ))),
 
 
 
-
-
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimension2_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
-                            "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg((select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}})))"
-                        ))),
                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimension2_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
                             "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg((select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}})))"
                         ))),
