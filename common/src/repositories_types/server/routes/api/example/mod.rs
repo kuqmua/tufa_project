@@ -158,7 +158,7 @@ pub struct Animal {
     // pub std_vec_vec_uuid_uuid: postgresql_crud::postgresql_json_type::StdVecVecUuidUuid,
     // pub std_vec_vec_std_vec_vec_uuid_uuid: postgresql_crud::postgresql_json_type::StdVecVecStdVecVecUuidUuid,
     //todo check field max length in postgresql
-    pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
+    pub std_primitive_i8_as_not_null_jsonb_number: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
     // pub std_primitive_i16: postgresql_crud::postgresql_json_type::StdPrimitiveI16,
     // pub std_primitive_i32: postgresql_crud::postgresql_json_type::StdPrimitiveI32,
     // pub std_primitive_i64: postgresql_crud::postgresql_json_type::StdPrimitiveI64,
@@ -170,7 +170,7 @@ pub struct Animal {
     // pub std_primitive_f64: postgresql_crud::postgresql_json_type::StdPrimitiveF64,
     // pub std_primitive_bool: postgresql_crud::postgresql_json_type::StdPrimitiveBool,
     // pub std_string_string: postgresql_crud::postgresql_json_type::StdStringString,
-    // pub std_option_option_std_primitive_i8: postgresql_crud::postgresql_json_type::StdOptionOptionStdPrimitiveI8,
+    pub option_std_primitive_i8_as_nullable_jsonb_number: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
     // pub std_option_option_std_primitive_i16: postgresql_crud::postgresql_json_type::StdOptionOptionStdPrimitiveI16,
     // pub std_option_option_std_primitive_i32: postgresql_crud::postgresql_json_type::StdOptionOptionStdPrimitiveI32,
     // pub std_option_option_std_primitive_i64: postgresql_crud::postgresql_json_type::StdOptionOptionStdPrimitiveI64,

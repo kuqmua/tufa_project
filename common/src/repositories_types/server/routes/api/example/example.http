@@ -41,7 +41,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "column_40d64ae4_a646_4394_bfce_3894bdfced87": 0,
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "object_animal_as_jsonb_not_null": {
-      "std_primitive_i8": 0
+      "std_primitive_i8_as_not_null_jsonb_number": 0,
+      "option_std_primitive_i8_as_nullable_jsonb_number": null
     }
   }
 ]
@@ -62,7 +63,8 @@ commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
   "column_40d64ae4_a646_4394_bfce_3894bdfced87": 0,
   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
   "object_animal_as_jsonb_not_null": {
-    "std_primitive_i8": 0
+    "std_primitive_i8_as_not_null_jsonb_number": 0,
+    "option_std_primitive_i8_as_nullable_jsonb_number": null
   }
 }
 
@@ -146,14 +148,48 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "StdPrimitiveI8AsNotNullJsonbNumber": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
       {
-        "StdPrimitiveI8": {
+        "OptionStdPrimitiveI8AsNullableJsonbNumber": {
           "logical_operator": "Or",
           "value": [
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": 0
+                "value": null
               }
             }
             # ,
@@ -193,7 +229,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "std_primitive_i8": null
+          "std_primitive_i8_as_not_null_jsonb_number": null
+        },
+        {
+          "option_std_primitive_i8_as_nullable_jsonb_number": null
         }
       ]
     }
@@ -223,7 +262,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 8,
   "select": [
     {
       "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
@@ -234,7 +273,10 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "std_primitive_i8": null
+          "std_primitive_i8_as_not_null_jsonb_number": null
+        },
+        {
+          "option_std_primitive_i8_as_nullable_jsonb_number": null
         }
       ]
     }
@@ -257,13 +299,18 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
     "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
-      "value": 0
+      "value": 10
     },
     "object_animal_as_jsonb_not_null": {
       "value": [
         {
-          "std_primitive_i8": {
-            "value": 0
+          "std_primitive_i8_as_not_null_jsonb_number": {
+            "value": 10
+          }
+        },
+        {
+          "option_std_primitive_i8_as_nullable_jsonb_number": {
+            "value": null
           }
         }
       ]
@@ -291,8 +338,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "object_animal_as_jsonb_not_null": {
     "value": [
       {
-        "std_primitive_i8": {
-          "value": 0
+        "std_primitive_i8_as_not_null_jsonb_number": {
+          "value": 20
+        }
+      },
+      {
+        "option_std_primitive_i8_as_nullable_jsonb_number": {
+          "value": null
         }
       }
     ]
@@ -379,14 +431,48 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "object_animal_as_jsonb_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "StdPrimitiveI8AsNotNullJsonbNumber": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
       {
-        "StdPrimitiveI8": {
+        "OptionStdPrimitiveI8AsNullableJsonbNumber": {
           "logical_operator": "Or",
           "value": [
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": 0
+                "value": null
               }
             }
             # ,
@@ -431,9 +517,8 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 0
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 10
 }
-
 ###
  
 GET http://127.0.0.1:8080/example/delete_one_payload_example HTTP/1.1
