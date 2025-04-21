@@ -40,7 +40,46 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "object_animal_as_jsonb_not_null": {
-      "column_bb28187d_28b8_420a_910b_a32e6e85ae53": null
+      "column_44c2ce88_d547_4049_b726_2db012c19c35": [
+        [
+          0
+        ]
+      ],
+      "column_8bba92dc_d58d_480e_9906_9a0f1f89b099": [
+        [
+          0
+        ]
+      ],
+      "column_37632743_5dbd_4e31_b01b_d18c0f34c4d9": [
+        [
+          0
+        ]
+      ],
+      "column_0513fac3_9889_4b8f_8e3e_f6d43a7395b4": [
+        [
+          0
+        ]
+      ],
+      "column_8812301b_9ac9_43bf_b505_07119e24c271": [
+        [
+          0
+        ]
+      ],
+      "column_69ef09d3_b32c_4816_b4b5_222d92708776": [
+        [
+          0
+        ]
+      ],
+      "column_d98bf62a_1c3c_4897_8c40_a69441d59eac": [
+        [
+          0
+        ]
+      ],
+      "column_bb28187d_28b8_420a_910b_a32e6e85ae53": [
+        [
+          0
+        ]
+      ]
     }
   }
 ]
@@ -117,7 +156,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "logical_operator": "Or",
     "value": [
       {
-        "ColumnBb28187D28B8420A910BA32E6E85Ae53": {
+        "Column44C2Ce88D5474049B7262Db012C19C35": {
           "logical_operator": "Or",
           "value": [
             {
@@ -125,15 +164,134 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "logical_operator": "Or",
                 "value": [
                   [
-                    0,null
-                  ],
-                  null
+                    0
+                  ]
                 ]
               }
             }
           ]
         }
       }
+      # ,
+      # {
+      #   "Column8Bba92DcD58D480E99069A0F1F89B099": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             [
+      #               0
+      #             ]
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "Column376327435Dbd4E31B01BD18C0F34C4D9": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             [
+      #               0
+      #             ]
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "Column0513Fac398894B8F8E3EF6D43A7395B4": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             [
+      #               0
+      #             ]
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "Column8812301B9Ac943BfB50507119E24C271": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             [
+      #               0
+      #             ]
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "Column69Ef09D3B32C4816B4B5222D92708776": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             [
+      #               0
+      #             ]
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "ColumnD98Bf62A1C3C48978C40A69441D59Eac": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             [
+      #               0
+      #             ]
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "ColumnBb28187D28B8420A910BA32E6E85Ae53": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             [
+      #               0
+      #             ]
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # }
     ]
   },
   "select": [
@@ -142,6 +300,90 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     },
     {
       "object_animal_as_jsonb_not_null": [
+        {
+          "column_44c2ce88_d547_4049_b726_2db012c19c35": {
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            },
+            "dimension2_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "column_8bba92dc_d58d_480e_9906_9a0f1f89b099": {
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            },
+            "dimension2_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "column_37632743_5dbd_4e31_b01b_d18c0f34c4d9": {
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            },
+            "dimension2_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "column_0513fac3_9889_4b8f_8e3e_f6d43a7395b4": {
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            },
+            "dimension2_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "column_8812301b_9ac9_43bf_b505_07119e24c271": {
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            },
+            "dimension2_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "column_69ef09d3_b32c_4816_b4b5_222d92708776": {
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            },
+            "dimension2_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "column_d98bf62a_1c3c_4897_8c40_a69441d59eac": {
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            },
+            "dimension2_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        },
         {
           "column_bb28187d_28b8_420a_910b_a32e6e85ae53": {
             "dimension1_pagination": {
