@@ -40,7 +40,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "object_animal_as_jsonb_not_null": {
-      "column_69ef09d3_b32c_4816_b4b5_222d92708776": null
+      "column_d98bf62a_1c3c_4897_8c40_a69441d59eac": null
     }
   }
 ]
@@ -117,17 +117,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "logical_operator": "Or",
     "value": [
       {
-        "Column69Ef09D3B32C4816B4B5222D92708776": {
+        "ColumnD98Bf62A1C3C48978C40A69441D59Eac": {
           "logical_operator": "Or",
           "value": [
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-                  [
-                    0,null
-                  ]
-                ]
+                "value": null
               }
             }
           ]
@@ -136,13 +132,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    # {
-    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    # },
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "column_69ef09d3_b32c_4816_b4b5_222d92708776": {
+          "column_d98bf62a_1c3c_4897_8c40_a69441d59eac": {
             "dimension1_pagination": {
               "limit": 3,
               "offset": 0
