@@ -237,8 +237,8 @@ pub struct Animal {
     // pub column_0513fac3_9889_4b8f_8e3e_f6d43a7395b4: postgresql_crud::postgresql_json_type::VecOfOptionVecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableArrayOfNullableJsonbNumber,
     // pub column_8812301b_9ac9_43bf_b505_07119e24c271: postgresql_crud::postgresql_json_type::OptionVecOfVecOfStdPrimitiveI8AsNullableArrayOfNotNullArrayOfNotNullJsonbNumber,
     // pub column_69ef09d3_b32c_4816_b4b5_222d92708776: postgresql_crud::postgresql_json_type::OptionVecOfVecOfOptionStdPrimitiveI8AsNullableArrayOfNotNullArrayOfNullableJsonbNumber,//here
-    pub column_d98bf62a_1c3c_4897_8c40_a69441d59eac: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfStdPrimitiveI8AsNullableArrayOfNullableArrayOfNotNullJsonbNumber,
-    // pub column_bb28187d_28b8_420a_910b_a32e6e85ae53: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableJsonbNumber,
+    // pub column_d98bf62a_1c3c_4897_8c40_a69441d59eac: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfStdPrimitiveI8AsNullableArrayOfNullableArrayOfNotNullJsonbNumber,
+    pub column_bb28187d_28b8_420a_910b_a32e6e85ae53: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableJsonbNumber,
 
 
 
