@@ -1483,27 +1483,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 };
                 let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
-                // match &postgresql_json_type_pattern {
-                //     PostgresqlJsonTypePattern::Standart => {
-                //         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}', jsonb_build_object('value', {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'))"));
-                //         quote::quote! {
-                //             format!(#format_handle_token_stream)
-                //         }
-                //     }
-                //     PostgresqlJsonTypePattern::ArrayDimension1 {..} => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
-                //         "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg(value) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})))"
-                //     ))),
-                //     PostgresqlJsonTypePattern::ArrayDimension2 {..} => todo!(),
-                //     // PostgresqlJsonTypePattern::StdVecVecStdOptionOptionStandart => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(
-                //     //     &generate_quotes::double_quotes_token_stream(
-                //     //         &format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value', case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') = 'array' then (select jsonb_agg(value) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}}) else null end))")
-                //     //     )
-                //     // ),
-                //     // PostgresqlJsonTypePattern::StdVecVecVecStandart => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
-                //     //     "jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg(value) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}})))"
-                //     // ))),
-                // }
-                ///////////
                 use postgresql_crud_macros_common::NotNullOrNullable;
                 match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => {
@@ -1523,14 +1502,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         ))),
                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}', jsonb_build_object('value',case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') = 'array' then (select jsonb_agg(value) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}}) else null end))"
                         ))),
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_start_end_token_stream(&generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}', jsonb_build_object('value',case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') = 'array' then (select jsonb_agg(value) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}')) with ordinality where ordinality between {{start}} and {{end}}) else null end))"
+                        ))),
                     },
                     PostgresqlJsonTypePattern::ArrayDimension2 {
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable,
                     } => todo!(),
                 }
-                ///////////
             },
             &ident_where_element_upper_camel_case,
             &ident_origin_upper_camel_case,
