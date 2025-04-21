@@ -1519,28 +1519,46 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension2_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimension2_token_stream(&generate_quotes::double_quotes_token_stream(&format!(
+// jsonb_build_object(
+//   '{{field_ident}}', 
+//   jsonb_build_object(
+//     'value', 
+//     (
+//       select 
+//         jsonb_agg(value) 
+//       from 
+//         jsonb_array_elements(
+//           (
+//             select 
+//               {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}'
+//           )
+//         ) with ordinality 
+//       where 
+//         ordinality between {{dimension1_start}} 
+//         and {{dimension1_end}}
+//     )
+//   )
+// )
                             "
 jsonb_build_object(
-  '{{field_ident}}', 
+  '{{field_ident}}',
   jsonb_build_object(
-    'value', 
+    'value',
     (
-      select 
-        jsonb_agg(value) 
-      from 
-        jsonb_array_elements(
-          (
-            select 
-              {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}'
-          )
-        ) with ordinality 
-      where 
-        ordinality between {{dimension1_start}} 
-        and {{dimension1_end}}
+      SELECT jsonb_agg(
+        (
+          SELECT jsonb_agg(inner_elem.value)
+          FROM jsonb_array_elements(outer_elem.value) WITH ORDINALITY AS inner_elem(value, inner_ord)
+          WHERE inner_ord BETWEEN {{dimension2_start}} AND {{dimension2_end}}
+        )
+      )
+      FROM jsonb_array_elements(
+        {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}'
+      ) WITH ORDINALITY AS outer_elem(value, outer_ord)
+      WHERE outer_ord BETWEEN {{dimension1_start}} AND {{dimension1_end}}
     )
   )
 )
-
                             "
                         ))),
                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
