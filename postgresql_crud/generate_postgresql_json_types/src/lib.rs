@@ -1477,6 +1477,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let value_snake_case = naming::ValueSnakeCase;
                 let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
                 use postgresql_crud_macros_common::NotNullOrNullable;
+                let postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimensions_token_stream = |
+                    format_handle: &std::primitive::str,
+                    dimensions: std::primitive::usize,
+                | {
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format_handle);
+                    quote::quote! {
+                        // let dimension1_start = #value_snake_case.dimension1_pagination.start();
+                        // let dimension1_end = #value_snake_case.dimension1_pagination.end();
+                        format!(#format_handle_token_stream)
+                    }
+                };
                 let postgresql_query_part_field_to_read_for_ident_with_limit_offset_dimension1_token_stream = |format_handle: &std::primitive::str| {
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format_handle);
                     quote::quote! {
