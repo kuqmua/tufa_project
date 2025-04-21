@@ -161,29 +161,29 @@ impl crate::PostgresqlJsonType for VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNu
         let dimension2_start = value.dimension2_pagination.start();
         let dimension2_end = value.dimension2_pagination.end();
         format!(
-            "
+"
+
 jsonb_build_object(
-  '{field_ident}', 
+  'vec_of_vec_of_std_primitive_i8_as_not_null_array_of_not_null_array_of_not_null_number', 
   jsonb_build_object(
     'value', 
     (
-      select 
-        jsonb_agg(value) 
-      from 
-        jsonb_array_elements(
-          (
-            select 
-              {column_name_and_maybe_field_getter} -> '{field_ident}'
-          )
-        ) with ordinality 
-      where 
-        ordinality between {dimension1_start} 
-        and {dimension1_end}
+      SELECT jsonb_agg(
+        (
+          SELECT jsonb_agg(inner_elem.value)
+          FROM jsonb_array_elements(outer_elem.value) WITH ORDINALITY AS inner_elem(value, inner_ord)
+          WHERE inner_ord BETWEEN {dimension2_start} AND {dimension2_end}
+        )
+      )
+      FROM jsonb_array_elements(
+        object_animal_as_jsonb_not_null -> 'vec_of_vec_of_std_primitive_i8_as_not_null_array_of_not_null_array_of_not_null_number'
+      ) WITH ORDINALITY AS outer_elem(value, outer_ord)
+      WHERE outer_ord BETWEEN {dimension1_start} AND {dimension1_end}
     )
   )
 )
 
-                            "
+"
         )
     }
     type WhereElement = VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumberWhereElement;

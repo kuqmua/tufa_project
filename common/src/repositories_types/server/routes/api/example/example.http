@@ -146,19 +146,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
     {
       "object_animal_as_jsonb_not_null": [
         {
           "vec_of_vec_of_std_primitive_i8_as_not_null_array_of_not_null_array_of_not_null_number": {
             "dimension1_pagination": {
-              "limit": 2,
+              "limit": 1,
               "offset": 0
             },
             "dimension2_pagination": {
-              "limit": 2,
+              "limit": 1,
               "offset": 0
             }
           }
@@ -173,7 +173,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "order": "asc"
   },
   "pagination": {
-    "limit": 3,
+    "limit": 1,
     "offset": 0
   }
 }
