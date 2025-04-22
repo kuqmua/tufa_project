@@ -36,11 +36,46 @@ POST http://127.0.0.1:8080/example/create_many HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
+
 [
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "object_animal_as_jsonb_not_null": {
-      "column_68fe00c5_c2d4_4aa0_a1b0_c168b0a4cc8a": null
+      "column_7b656ca6_3a32_4105_96a1_d5756973dd0d": [
+  [
+    [
+      0,1,null
+    ],
+    [
+      0,1,null
+    ],
+    [
+      0,1,null
+    ]
+  ],
+  [
+    [
+      0,1,null
+    ],
+    [
+      0,1,null
+    ],
+    [
+      0,1,null
+    ]
+  ],
+  [
+    [
+      0,1,null
+    ],
+    [
+      0,1,null
+    ],
+    [
+      0,1,null
+    ]
+  ]
+]
     }
   }
 ]
@@ -117,7 +152,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "logical_operator": "Or",
     "value": [
       {
-        "Column68Fe00C5C2D44Aa0A1B0C168B0A4Cc8A": {
+        "Column7B656Ca63A32410596A1D5756973Dd0D": {
           "logical_operator": "Or",
           "value": [
             {
@@ -126,35 +161,35 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "value": [
   [
     [
-      0,1,2
+      0,1,null
     ],
     [
-      0,1,2
+      0,1,null
     ],
     [
-      0,1,2
+      0,1,null
     ]
   ],
   [
     [
-      0,1,2
+      0,1,null
     ],
     [
-      0,1,2
+      0,1,null
     ],
     [
-      0,1,2
+      0,1,null
     ]
   ],
   [
     [
-      0,1,2
+      0,1,null
     ],
     [
-      0,1,2
+      0,1,null
     ],
     [
-      0,1,2
+      0,1,null
     ]
   ]
 ]
@@ -172,7 +207,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "column_68fe00c5_c2d4_4aa0_a1b0_c168b0a4cc8a": {
+          "column_7b656ca6_3a32_4105_96a1_d5756973dd0d": {
             "dimension1_pagination": {
               "limit": 3,
               "offset": 0
