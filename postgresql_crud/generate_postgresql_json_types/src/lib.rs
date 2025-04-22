@@ -1471,34 +1471,58 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             &{
                 let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
                 use postgresql_crud_macros_common::NotNullOrNullable;
-                let generate_case_when_jsonb_typeof_array_then_else_null_end = |content: &std::primitive::str|{
-                    format!("case when jsonb_typeof({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}')='array' then ({content}) else null end")
+                let column_name_and_maybe_field_getter_field_ident = format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'");
+                let generate_case_when_jsonb_typeof_array_then_else_null_end = |typeof_content: &std::primitive::str, content: &std::primitive::str, |{
+                    format!("case when jsonb_typeof({typeof_content})='array' then ({content}) else null end")
                 };
+                let dimension1_not_not_not_null = format!("select jsonb_agg(value) from jsonb_array_elements((select {column_name_and_maybe_field_getter_field_ident})) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}");
                 let format_handle = match &postgresql_json_type_pattern {
-                    PostgresqlJsonTypePattern::Standart => format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'"),
+                    PostgresqlJsonTypePattern::Standart => column_name_and_maybe_field_getter_field_ident,
                     PostgresqlJsonTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) |
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => format!("select jsonb_agg(value) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}"
-                        ),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => dimension1_not_not_not_null,
                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) |
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(&format!("select jsonb_agg(value) from jsonb_array_elements((select {{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}")),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(
+                            &column_name_and_maybe_field_getter_field_ident,
+                            &dimension1_not_not_not_null
+                        ),
                     },
                     PostgresqlJsonTypePattern::ArrayDimension2 {
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) |
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => format!("select jsonb_agg((select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}"
-                        ),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            format!("select jsonb_agg((select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({column_name_and_maybe_field_getter_field_ident}) with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}")
+                        },
                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) |
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => format!("select jsonb_agg((case when jsonb_typeof(outer_elem.value)='array' then (select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}}) else null end)) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}"
-                        ),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            let d1_case_when_jsonb_typeof_array_then_else_null_end = generate_case_when_jsonb_typeof_array_then_else_null_end(
+                                &"outer_elem.value",
+                                &format!("select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}}")
+                            );
+                            format!("select jsonb_agg({d1_case_when_jsonb_typeof_array_then_else_null_end}) from jsonb_array_elements({column_name_and_maybe_field_getter_field_ident}) with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}")
+                        },
                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) |
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(&format!("select jsonb_agg((select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}")),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            generate_case_when_jsonb_typeof_array_then_else_null_end(
+                                &column_name_and_maybe_field_getter_field_ident,
+                                &format!("select jsonb_agg((select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({column_name_and_maybe_field_getter_field_ident}) with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}")
+                            )
+                        },
                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) |
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(&format!("select jsonb_agg(case when jsonb_typeof(outer_elem.value)='array' then (select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}}) else null end) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}') with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}")),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            let d1_case_when_jsonb_typeof_array_then_else_null_end = generate_case_when_jsonb_typeof_array_then_else_null_end(
+                                &"outer_elem.value",
+                                &format!("select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}}")
+                            );
+                            generate_case_when_jsonb_typeof_array_then_else_null_end(
+                                &column_name_and_maybe_field_getter_field_ident,
+                                &format!("select jsonb_agg({d1_case_when_jsonb_typeof_array_then_else_null_end}) from jsonb_array_elements({column_name_and_maybe_field_getter_field_ident}) with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}")
+                            )
+                        },
                     },
                 };
                 let maybe_dimensions_start_end_initialization = {
