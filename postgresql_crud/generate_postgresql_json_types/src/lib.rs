@@ -107,6 +107,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         // },
     }
     impl PostgresqlJsonTypePattern {
+        //maybe use enum with display impl instead? convert to enum then display
         fn array_dimensions_number(&self) -> std::primitive::usize {
             match &self {
                 PostgresqlJsonTypePattern::Standart => 0,
@@ -1446,6 +1447,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             }
         };
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+        let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize|{
+            format!("dimension{dimensions_number}")
+        };
+        let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize|{
+            format!("{}_start", generate_dimension_number_stringified(dimensions_number))
+        };
+        let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize|{
+            format!("{}_end", generate_dimension_number_stringified(dimensions_number))
+        };
         let impl_crate_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
             &postgresql_crud_macros_common::ImportPath::Crate,
             &ident,
@@ -1475,13 +1485,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let generate_case_when_jsonb_typeof_array_then_else_null_end = |typeof_content: &std::primitive::str, content: &std::primitive::str, |{
                     format!("case when jsonb_typeof({typeof_content})='array' then ({content}) else null end")
                 };
+                let generate_jsonb_agg = |
+                    jsonb_agg_content: &std::primitive::str,
+                    jsonb_array_elements_content: &std::primitive::str,
+                    ordinality_content: &std::primitive::str,
+                    dimensions_number: std::primitive::usize,
+                |{
+                    let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
+                    let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
+                    format!("select jsonb_agg({jsonb_agg_content}) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}")
+                };
                 //last child dimension value does not matter - null or type - works both good
                 let format_handle = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => column_name_and_maybe_field_getter_field_ident,
                     PostgresqlJsonTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable: _,
                     } => {
-                        let dimension1_query_part = format!("select jsonb_agg(value) from jsonb_array_elements((select {column_name_and_maybe_field_getter_field_ident})) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}");
+                        let dimension1_query_part = generate_jsonb_agg(
+                            &"value",
+                            &format!("select {column_name_and_maybe_field_getter_field_ident}"),
+                            &"where ordinality",
+                            1
+                        );
                         match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => dimension1_query_part,
                             NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end(
@@ -1494,13 +1519,23 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable: _,
                     } => {
-                        let dimension1_query_part = format!("select jsonb_agg(inner_elem.value) from jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) where inner_ord between {{dimension2_start}} and {{dimension2_end}}");
+                        let dimension1_query_part = generate_jsonb_agg(
+                            &"inner_elem.value",
+                            &"outer_elem.value",
+                            &"as inner_elem(value, inner_ord) where inner_ord",
+                            2
+                        );
                         let d1_case_when_jsonb_typeof_array_then_else_null_end = generate_case_when_jsonb_typeof_array_then_else_null_end(
                             &"outer_elem.value",
                             &dimension1_query_part
                         );
                         let generate_select_jsonb_agg = |content: &std::primitive::str|{
-                            format!("select jsonb_agg(({content})) from jsonb_array_elements({column_name_and_maybe_field_getter_field_ident}) with ordinality as outer_elem(value, outer_ord) where outer_ord between {{dimension1_start}} and {{dimension1_end}}")
+                            generate_jsonb_agg(
+                                &format!("({content})"),
+                                &format!("{column_name_and_maybe_field_getter_field_ident}"),
+                                &"as outer_elem(value, outer_ord) where outer_ord",
+                                1
+                            )
                         };
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_select_jsonb_agg(&dimension1_query_part),
@@ -1529,10 +1564,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let maybe_dimensions_start_end_initialization = {
                     let mut acc = vec![];
                     for element in 1..=postgresql_json_type_pattern.array_dimensions_number() {
-                        let dimension_number_stringified = format!("dimension{element}");
-                        let dimension_number_start_token_stream = format!("{dimension_number_stringified}_start").parse::<proc_macro2::TokenStream>().unwrap();
-                        let dimension_number_end_token_stream = format!("{dimension_number_stringified}_end").parse::<proc_macro2::TokenStream>().unwrap();
-                        let dimension_number_pagination_token_stream = format!("{dimension_number_stringified}_pagination").parse::<proc_macro2::TokenStream>().unwrap();
+                        let dimension_number_start_token_stream = generate_dimension_number_start_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
+                        let dimension_number_end_token_stream = generate_dimension_number_end_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
+                        let dimension_number_pagination_token_stream = format!("{}_pagination", generate_dimension_number_stringified(element)).parse::<proc_macro2::TokenStream>().unwrap();
                         acc.push(quote::quote!{
                             let #dimension_number_start_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.start();
                             let #dimension_number_end_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.end();
