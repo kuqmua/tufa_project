@@ -259,7 +259,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
-                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
@@ -1571,13 +1571,61 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     } => {
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => format!("select jsonb_agg((select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as d1_elem(value, d1_ord) where d1_ord between {{dimension1_start}} and {{dimension1_end}}"),
-
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => format!("select jsonb_agg(select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then (select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}}) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}}) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as d1_elem(value, d1_ord) where d1_ord between {{dimension1_start}} and {{dimension1_end}}"),
 
 
-                            
 
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => format!("select jsonb_agg((select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as d1_elem(value, d1_ord) where d1_ord between {{dimension1_start}} and {{dimension1_end}}"),
+                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                                let f = format!("
+(
+
+select 
+  jsonb_agg(
+    (
+      case when jsonb_typeof(d1_elem.value)= 'array' then (
+      (
+
+      select 
+        jsonb_agg(
+          (
+            select 
+              jsonb_agg(d3_elem.value) 
+            from 
+              jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) 
+            where 
+              d3_ord between {{dimension3_start}} 
+              and {{dimension3_end}}
+          )
+        ) 
+      from 
+        jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) 
+      where 
+        d2_ord between {{dimension2_start}} 
+        and {{dimension2_end}}
+      
+                            )
+
+
+      ) else null end
+    )
+  ) 
+from 
+  jsonb_array_elements(
+    {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}'
+  ) with ordinality as d1_elem(value, d1_ord) 
+where 
+  d1_ord between {{dimension1_start}} 
+  and {{dimension1_end}}
+
+
+                        )
+                            ");
+                            f
+                            },
+
+
+
+
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => format!("select jsonb_agg((select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as d1_elem(value, d1_ord) where d1_ord between {{dimension1_start}} and {{dimension1_end}}"),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => format!("select jsonb_agg((select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as d1_elem(value, d1_ord) where d1_ord between {{dimension1_start}} and {{dimension1_end}}"),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => format!("select jsonb_agg((select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as d1_elem(value, d1_ord) where d1_ord between {{dimension1_start}} and {{dimension1_end}}"),
@@ -1713,18 +1761,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     // PostgresqlJsonTypePattern::Standart,
-        //     PostgresqlJsonTypePattern::ArrayDimension1 {
-        //         dimension1_not_null_or_nullable,
-        //     },
+        //     // PostgresqlJsonTypePattern::ArrayDimension1 {
+        //     //     dimension1_not_null_or_nullable,
+        //     // },
         //     // PostgresqlJsonTypePattern::ArrayDimension2 {
         //     //     dimension1_not_null_or_nullable,
         //     //     dimension2_not_null_or_nullable,
         //     // },
-        //     // PostgresqlJsonTypePattern::ArrayDimension3 {
-        //     //     dimension1_not_null_or_nullable,
-        //     //     dimension2_not_null_or_nullable,
-        //     //     dimension3_not_null_or_nullable,
-        //     // },
+        //     PostgresqlJsonTypePattern::ArrayDimension3 {
+        //         dimension1_not_null_or_nullable,
+        //         dimension2_not_null_or_nullable,
+        //         dimension3_not_null_or_nullable,
+        //     },
         //     // PostgresqlJsonTypePattern::ArrayDimension4 {
         //     //     dimension1_not_null_or_nullable,
         //     //     dimension2_not_null_or_nullable,
@@ -1737,26 +1785,26 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         //     &postgresql_json_type_pattern
         // ) {
         //     use postgresql_crud_macros_common::NotNullOrNullable;
-        //     let d1 = match &dimension1_not_null_or_nullable {
-        //         NotNullOrNullable::NotNull => true,
-        //         NotNullOrNullable::Nullable => false,
-        //     };
+        //     // let d1 = match &dimension1_not_null_or_nullable {
+        //     //     NotNullOrNullable::NotNull => true,
+        //     //     NotNullOrNullable::Nullable => false,
+        //     // };
         //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
         //     // };
-        //     // let d3 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-        //     // };
+        //     let d3 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+        //         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+        //         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     };
         //     // let d4 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
@@ -1775,7 +1823,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
         //     // };
-        //     if d1 {
+        //     if d3 {
         //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //             "PostgresqlJsonTypeTokens",
         //             &generated,
