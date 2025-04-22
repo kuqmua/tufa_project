@@ -1519,21 +1519,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable: _,
                     } => {
+                        let inner_elem = "inner_elem";
+                        let outer_elem = "outer_elem";
+                        let inner_ord = "inner_ord";
+                        let outer_ord = "outer_ord";
+                        let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str|{
+                            format!("as {first_content}(value, {second_content}) where {second_content}")
+                        };
                         let dimension1_query_part = generate_jsonb_agg(
-                            &"inner_elem.value",
-                            &"outer_elem.value",
-                            &"as inner_elem(value, inner_ord) where inner_ord",
+                            &format!("{inner_elem}.value"),
+                            &format!("{outer_elem}.value"),
+                            &generate_as_value_where(&inner_elem, &inner_ord),
                             2
                         );
                         let d1_case_when_jsonb_typeof_array_then_else_null_end = generate_case_when_jsonb_typeof_array_then_else_null_end(
-                            &"outer_elem.value",
+                            &format!("{outer_elem}.value"),
                             &dimension1_query_part
                         );
                         let generate_select_jsonb_agg = |content: &std::primitive::str|{
                             generate_jsonb_agg(
                                 &format!("({content})"),
                                 &format!("{column_name_and_maybe_field_getter_field_ident}"),
-                                &"as outer_elem(value, outer_ord) where outer_ord",
+                                &generate_as_value_where(&outer_elem, &outer_ord),
                                 1
                             )
                         };
