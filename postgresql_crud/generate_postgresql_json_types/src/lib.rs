@@ -1526,28 +1526,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable: _,
                     } => {
-                        let inner_elem = "inner_elem";
-                        let outer_elem = "outer_elem";
-                        let inner_ord = "inner_ord";
-                        let outer_ord = "outer_ord";
+                        let d1_elem = "d1_elem";
+                        let d1_ord = "d1_ord";
+                        let d2_elem = "d2_elem";
+                        let d2_ord = "d2_ord";
                         let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str|{
                             format!("as {first_content}(value, {second_content}) where {second_content}")
                         };
                         let dimension1_query_part = generate_jsonb_agg(
-                            &format!("{inner_elem}.value"),
-                            &format!("{outer_elem}.value"),
-                            &generate_as_value_where(&inner_elem, &inner_ord),
+                            &format!("{d2_elem}.value"),
+                            &format!("{d1_elem}.value"),
+                            &generate_as_value_where(&d2_elem, &d2_ord),
                             2
                         );
                         let d1_case_when_jsonb_typeof_array_then_else_null_end = generate_case_when_jsonb_typeof_array_then_else_null_end(
-                            &format!("{outer_elem}.value"),
+                            &format!("{d1_elem}.value"),
                             &dimension1_query_part
                         );
                         let generate_select_jsonb_agg = |content: &std::primitive::str|{
                             generate_jsonb_agg(
                                 &format!("({content})"),
                                 &format!("{column_name_and_maybe_field_getter_field_ident}"),
-                                &generate_as_value_where(&outer_elem, &outer_ord),
+                                &generate_as_value_where(&d1_elem, &d1_ord),
                                 1
                             )
                         };
@@ -1570,32 +1570,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension3_not_null_or_nullable: _,
                     } => {
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => format!("
-                            
-(
-  select 
-    jsonb_agg(
-      (
-        select 
-          jsonb_agg(inner_elem.value) 
-        from 
-          jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) 
-        where 
-          inner_ord between {{dimension2_start}} 
-          and {{dimension2_end}}
-      )
-    ) 
-  from 
-    jsonb_array_elements(
-      {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}'
-    ) with ordinality as outer_elem(value, outer_ord) 
-  where 
-    outer_ord between {{dimension1_start}} 
-    and {{dimension1_end}}
-)
-
-                            
-                            "),
+                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => format!("select jsonb_agg((select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as d1_elem(value, d1_ord) where d1_ord between {{dimension1_start}} and {{dimension1_end}}"),
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => format!(""),
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => format!(""),
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => format!(""),
@@ -1606,6 +1581,38 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     },
                 };
+//   select 
+//     jsonb_agg(
+//       (
+//         select 
+//           jsonb_agg(
+//             (
+//                 select 
+//                 jsonb_agg(
+//                     d3_elem.value
+//                 ) 
+//                 from 
+//                   jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) 
+//                 where 
+//                   d3_ord between {{dimension3_start}} 
+//                   and {{dimension3_end}}
+//             )
+//           ) 
+//         from 
+//           jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) 
+//         where 
+//           d2_ord between {{dimension2_start}} 
+//           and {{dimension2_end}}
+//       )
+//     ) 
+//   from 
+//     jsonb_array_elements(
+//       {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}'
+//     ) with ordinality as d1_elem(value, d1_ord) 
+//   where 
+//     d1_ord between {{dimension1_start}} 
+//     and {{dimension1_end}}
+
                 let maybe_dimensions_start_end_initialization = {
                     let mut acc = vec![];
                     for element in 1..=postgresql_json_type_pattern.array_dimensions_number() {
