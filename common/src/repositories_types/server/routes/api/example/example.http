@@ -40,21 +40,38 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "object_animal_as_jsonb_not_null": {
-      "column_77ff96cc_736f_4670_8481_796ce55aabcc": [
+      "column_65901692_843e_42aa_9d5b_e168a0fd840f": [
         [
           [
-            0,1,2
+            0,1,null
           ],
           [
-            0,1,2
+            0,1,null
+          ],
+          [
+            0,1,null
           ]
         ],
         [
           [
-            0,1,2
+            0,1,null
           ],
           [
-            0,1,2
+            0,1,null
+          ],
+          [
+            0,1,null
+          ]
+        ],
+        [
+          [
+            0,1,null
+          ],
+          [
+            0,1,null
+          ],
+          [
+            0,1,null
           ]
         ]
       ]
@@ -134,7 +151,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "logical_operator": "Or",
     "value": [
       {
-        "Column77Ff96Cc736F46708481796Ce55Aabcc": {
+        "Column65901692843E42Aa9D5BE168A0Fd840F": {
           "logical_operator": "Or",
           "value": [
             {
@@ -143,18 +160,35 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "value": [
                   [
                     [
-                      0,1,2
+                      0,1,null
                     ],
                     [
-                      0,1,2
+                      0,1,null
+                    ],
+                    [
+                      0,1,null
                     ]
                   ],
                   [
                     [
-                      0,1,2
+                      0,1,null
                     ],
                     [
-                      0,1,2
+                      0,1,null
+                    ],
+                    [
+                      0,1,null
+                    ]
+                  ],
+                  [
+                    [
+                      0,1,null
+                    ],
+                    [
+                      0,1,null
+                    ],
+                    [
+                      0,1,null
                     ]
                   ]
                 ]
@@ -172,7 +206,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "column_77ff96cc_736f_4670_8481_796ce55aabcc": {
+          "column_65901692_843e_42aa_9d5b_e168a0fd840f": {
             "dimension1_pagination": {
               "limit": 3,
               "offset": 0
