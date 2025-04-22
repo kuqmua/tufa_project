@@ -130,41 +130,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-  [
-    [
-      0,1,2
-    ],
-    [
-      0,1,2
-    ],
-    [
-      0,1,2
-    ]
-  ],
-  [
-    [
-      0,1,2
-    ],
-    [
-      0,1,2
-    ],
-    [
-      0,1,2
-    ]
-  ],
-  [
-    [
-      0,1,2
-    ],
-    [
-      0,1,2
-    ],
-    [
-      0,1,2
-    ]
-  ]
-]
+                "value": null
               }
             }
           ]
@@ -177,59 +143,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ]
-  ],
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ]
-  ],
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ]
-  ]
-]
+                "value": null
               }
             }
           ]
@@ -242,47 +156,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-  [
-    [
-      0,
-      1,
-      2
-    ],
-    [
-      0,
-      1,
-      2
-    ],
-    null
-  ],
-  [
-    [
-      0,
-      1,
-      2
-    ],
-    [
-      0,
-      1,
-      2
-    ],
-    null
-  ],
-  [
-    [
-      0,
-      1,
-      2
-    ],
-    [
-      0,
-      1,
-      2
-    ],
-    null
-  ]
-]
+                "value": null
               }
             }
           ]
@@ -295,47 +169,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    null
-  ],
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    null
-  ],
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    null
-  ]
-]
+                "value": null
               }
             }
           ]
@@ -348,43 +182,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-  [
-    [
-      0,
-      1,
-      2
-    ],
-    [
-      0,
-      1,
-      2
-    ],
-    [
-      0,
-      1,
-      2
-    ]
-  ],
-  [
-    [
-      0,
-      1,
-      2
-    ],
-    [
-      0,
-      1,
-      2
-    ],
-    [
-      0,
-      1,
-      2
-    ]
-  ],
-  null
-]
+                "value": null
               }
             }
           ]
@@ -397,43 +195,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ]
-  ],
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ]
-  ],
-  null
-]
+                "value": null
               }
             }
           ]
@@ -446,35 +208,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-  [
-    [
-      0,
-      1,
-      2
-    ],
-    [
-      0,
-      1,
-      2
-    ],
-    null
-  ],
-  [
-    [
-      0,
-      1,
-      2
-    ],
-    [
-      0,
-      1,
-      2
-    ],
-    null
-  ],
-  null
-]
+                "value": null
               }
             }
           ]
@@ -487,35 +221,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "Equal": {
                 "logical_operator": "Or",
-                "value": [
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    null
-  ],
-  [
-    [
-      0,
-      1,
-      null
-    ],
-    [
-      0,
-      1,
-      null
-    ],
-    null
-  ],
-  null
-]
+                "value": null
               }
             }
           ]
