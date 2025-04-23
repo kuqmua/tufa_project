@@ -1524,6 +1524,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         &content
                     )
                 };
+                let generate_case_when_jsonb_typeof_array_then_else_null_end_d3 = |content: &std::primitive::str|{
+                    generate_case_when_jsonb_typeof_array_then_else_null_end(
+                        &format!("{d3_elem}.value"),
+                        &content
+                    )
+                };
                 let generate_jsonb_agg = |
                     jsonb_agg_content: &std::primitive::str,
                     jsonb_array_elements_content: &std::primitive::str,
@@ -1559,6 +1565,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         &"d2_elem.value",
                         &generate_as_value_where(&d3_elem, &d3_ord),
                         3
+                    )
+                };
+                let generate_jsonb_agg_d4 = |jsonb_agg_content: &std::primitive::str|{
+                    generate_jsonb_agg(
+                        &jsonb_agg_content,
+                        &"d3_elem.value",
+                        &generate_as_value_where(&d4_elem, &d4_ord),
+                        4
                     )
                 };
                 //last child dimension value does not matter - null or type - works both good
@@ -1674,14 +1688,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let not_null_not_null_not_null_not_null = generate_jsonb_agg_d1(
                             &generate_jsonb_agg_d2(
                                 &generate_jsonb_agg_d3(
-                                    &format!("(select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})")
+                                    &generate_jsonb_agg_d4(
+                                        &format!("{d4_elem}.value")
+                                    )
                                 )
                             )
                         );
                         let not_null_not_null_not_null_nullable = generate_jsonb_agg_d1(
                             &generate_jsonb_agg_d2(
                                 &generate_jsonb_agg_d3(
-                                    &format!("case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end")
+                                    &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
+                                        &generate_jsonb_agg_d4(
+                                            &format!("{d4_elem}.value")
+                                        )
+                                    )
                                 )
                             )
                         );
@@ -1689,7 +1709,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             &generate_jsonb_agg_d2(
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                     &generate_jsonb_agg_d3(
-                                        &format!("(select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})")
+                                        &generate_jsonb_agg_d4(
+                                            &format!("{d4_elem}.value")
+                                        )
                                     )
                                 )
                             )
@@ -1698,7 +1720,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             &generate_jsonb_agg_d2(
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                     &generate_jsonb_agg_d3(
-                                        &format!("case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end")
+                                        &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
+                                            &generate_jsonb_agg_d4(
+                                                &format!("{d4_elem}.value")
+                                            )
+                                        )
                                     )
                                 )
                             )
@@ -1707,7 +1733,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
                                     &generate_jsonb_agg_d3(
-                                        &format!("(select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})")
+                                        &generate_jsonb_agg_d4(
+                                            &format!("{d4_elem}.value")
+                                        )
                                     )
                                 )
                             )
@@ -1716,7 +1744,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
                                     &generate_jsonb_agg_d3(
-                                        &format!("case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end")
+                                        &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
+                                            &generate_jsonb_agg_d4(
+                                                &format!("{d4_elem}.value")
+                                            )
+                                        )
                                     )
                                 )
                             )
@@ -1726,7 +1758,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &generate_jsonb_agg_d2(
                                     &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                         &generate_jsonb_agg_d3(
-                                            &format!("(select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})")
+                                            &generate_jsonb_agg_d4(
+                                                &format!("{d4_elem}.value")
+                                            )
                                         )
                                     )
                                 )
@@ -1737,7 +1771,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &generate_jsonb_agg_d2(
                                     &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                         &generate_jsonb_agg_d3(
-                                            &format!("case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end")
+                                            &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
+                                                &generate_jsonb_agg_d4(
+                                                    &format!("{d4_elem}.value")
+                                                )
+                                            )
                                         )
                                     )
                                 )
