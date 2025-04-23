@@ -1519,16 +1519,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str|{
                     format!("as {first_content}(value, {second_content}) where {second_content}")
                 };
-                let as_d1_elem_value_d1_ord_where_d1_ord = generate_as_value_where(&d1_elem, &d1_ord);
                 let generate_jsonb_agg_d1 = |jsonb_agg_content: &std::primitive::str|{
                     generate_jsonb_agg(
                         &jsonb_agg_content,
                         &column_name_and_maybe_field_getter_field_ident,
-                        &as_d1_elem_value_d1_ord_where_d1_ord,
+                        &generate_as_value_where(&d1_elem, &d1_ord),
                         1
                     )
                 };
-
                 //last child dimension value does not matter - null or type - works both good
                 let format_handle = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => column_name_and_maybe_field_getter_field_ident,
