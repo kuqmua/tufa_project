@@ -1621,10 +1621,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension2_not_null_or_nullable,
                         dimension3_not_null_or_nullable: _,
                     } => {
+                        let d3_elem_value = format!("{d3_elem}.value");
                         let not_null_not_null_not_null = generate_jsonb_agg_d1(
                             &generate_jsonb_agg_d2(
                                 &generate_jsonb_agg_d3(
-                                    &format!("{d3_elem}.value")
+                                    &d3_elem_value
                                 )
                             )
                         );
@@ -1632,7 +1633,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             &generate_jsonb_agg_d2(
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                     &generate_jsonb_agg_d3(
-                                        &format!("{d3_elem}.value")
+                                        &d3_elem_value
                                     )
                                 )
                             )
@@ -1641,7 +1642,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
                                     &generate_jsonb_agg_d3(
-                                        &format!("{d3_elem}.value")
+                                        &d3_elem_value
                                     )
                                 )
                             )
@@ -1651,7 +1652,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &generate_jsonb_agg_d2(
                                     &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                         &generate_jsonb_agg_d3(
-                                            &format!("{d3_elem}.value")
+                                            &d3_elem_value
                                         )
                                     )
                                 )
@@ -1682,11 +1683,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension3_not_null_or_nullable,
                         dimension4_not_null_or_nullable: _,
                     } => {
+                        let d4_elem_value = format!("{d4_elem}.value");
                         let not_null_not_null_not_null_not_null = generate_jsonb_agg_d1(
                             &generate_jsonb_agg_d2(
                                 &generate_jsonb_agg_d3(
                                     &generate_jsonb_agg_d4(
-                                        &format!("{d4_elem}.value")
+                                        &d4_elem_value
                                     )
                                 )
                             )
@@ -1696,7 +1698,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &generate_jsonb_agg_d3(
                                     &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
                                         &generate_jsonb_agg_d4(
-                                            &format!("{d4_elem}.value")
+                                            &d4_elem_value
                                         )
                                     )
                                 )
@@ -1707,7 +1709,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                     &generate_jsonb_agg_d3(
                                         &generate_jsonb_agg_d4(
-                                            &format!("{d4_elem}.value")
+                                            &d4_elem_value
                                         )
                                     )
                                 )
@@ -1719,7 +1721,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &generate_jsonb_agg_d3(
                                         &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
                                             &generate_jsonb_agg_d4(
-                                                &format!("{d4_elem}.value")
+                                                &d4_elem_value
                                             )
                                         )
                                     )
@@ -1731,7 +1733,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &generate_jsonb_agg_d2(
                                     &generate_jsonb_agg_d3(
                                         &generate_jsonb_agg_d4(
-                                            &format!("{d4_elem}.value")
+                                            &d4_elem_value
                                         )
                                     )
                                 )
@@ -1743,7 +1745,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &generate_jsonb_agg_d3(
                                         &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
                                             &generate_jsonb_agg_d4(
-                                                &format!("{d4_elem}.value")
+                                                &d4_elem_value
                                             )
                                         )
                                     )
@@ -1756,7 +1758,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                         &generate_jsonb_agg_d3(
                                             &generate_jsonb_agg_d4(
-                                                &format!("{d4_elem}.value")
+                                                &d4_elem_value
                                             )
                                         )
                                     )
@@ -1770,7 +1772,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         &generate_jsonb_agg_d3(
                                             &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
                                                 &generate_jsonb_agg_d4(
-                                                    &format!("{d4_elem}.value")
+                                                    &d4_elem_value
                                                 )
                                             )
                                         )
