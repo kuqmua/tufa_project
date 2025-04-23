@@ -1529,7 +1529,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     )
                 };
 
-
                 //last child dimension value does not matter - null or type - works both good
                 let format_handle = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => column_name_and_maybe_field_getter_field_ident,
