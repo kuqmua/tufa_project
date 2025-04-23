@@ -1518,6 +1518,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         &content
                     )
                 };
+                let generate_case_when_jsonb_typeof_array_then_else_null_end_d2 = |content: &std::primitive::str|{
+                    generate_case_when_jsonb_typeof_array_then_else_null_end(
+                        &format!("{d2_elem}.value"),
+                        &content
+                    )
+                };
                 let generate_jsonb_agg = |
                     jsonb_agg_content: &std::primitive::str,
                     jsonb_array_elements_content: &std::primitive::str,
@@ -1545,6 +1551,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         &"d1_elem.value",
                         &generate_as_value_where(&d2_elem, &d2_ord),
                         2
+                    )
+                };
+                let generate_jsonb_agg_d3 = |jsonb_agg_content: &std::primitive::str|{
+                    generate_jsonb_agg(
+                        &jsonb_agg_content,
+                        &"d2_elem.value",
+                        &generate_as_value_where(&d3_elem, &d3_ord),
+                        3
                     )
                 };
                 //last child dimension value does not matter - null or type - works both good
@@ -1598,12 +1612,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     } => {
                         let not_null_not_null_not_null = generate_jsonb_agg_d1(
                             &generate_jsonb_agg_d2(
-                                &format!("(select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})")
+                                &generate_jsonb_agg_d3(
+                                    &format!("{d3_elem}.value")
+                                )
                             )
                         );
                         let not_null_not_null_nullable = generate_jsonb_agg_d1(
                             &generate_jsonb_agg_d2(
-                                &format!("case when jsonb_typeof(d2_elem.value)='array' then (select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}}) else null end")
+                                &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
+                                    &generate_jsonb_agg_d3(
+                                        &format!("{d3_elem}.value")
+                                    )
+                                )
                             )
                         );
                         let not_null_nullable_not_null = generate_jsonb_agg_d1(
