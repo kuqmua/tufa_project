@@ -231,7 +231,16 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::postgresql_json_type::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::postgresql_json_type::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
 
+    pub column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
+    pub column_1495baea_b926_4e20_a223_5b7a1f06c211: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
 
+
+
+    pub column_efd0c71f_6c3c_4409_8419_4f0e1b42e7cf: postgresql_crud::postgresql_json_type::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
+    pub column_1c62748d_ec9d_4136_8a0d_ae708141edd5: postgresql_crud::postgresql_json_type::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
+
+    pub column_6cf8b1cc_ba6d_4c89_bd4c_91019cce4d67: postgresql_crud::postgresql_json_type::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
+    pub column_2d73bb3f_b732_487c_819b_d9cd6dfec894: postgresql_crud::postgresql_json_type::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber,
 
 
 
@@ -246,8 +255,6 @@ pub struct Animal {
     
     pub column_d98bf62a_1c3c_4897_8c40_a69441d59eac: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfStdPrimitiveI8AsNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     pub column_bb28187d_28b8_420a_910b_a32e6e85ae53: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableJsonbNumber,
-
-
 
 
 
@@ -274,9 +281,6 @@ pub struct Animal {
 
     pub column_6394bdd4_46da_4775_a942_b81beee1d819: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     pub column_7fdf3066_43b0_4133_8dc9_292eb5811e28: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
-
-
-
 
 
     
