@@ -1606,15 +1606,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let generate_select_jsonb_agg = |content: &std::primitive::str|{
                             generate_jsonb_agg_d1(&format!("({content})"))
                         };
-                        match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_select_jsonb_agg(&dimension1_query_part),
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_select_jsonb_agg(&d1_case_when_jsonb_typeof_array_then_else_null_end),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
-                                &generate_select_jsonb_agg(&dimension1_query_part)
-                            ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
-                                &generate_select_jsonb_agg(&d1_case_when_jsonb_typeof_array_then_else_null_end)
-                            ),
+                        let content = match &dimension1_not_null_or_nullable {
+                            NotNullOrNullable::NotNull => generate_select_jsonb_agg(&dimension1_query_part),
+                            NotNullOrNullable::Nullable => generate_select_jsonb_agg(&d1_case_when_jsonb_typeof_array_then_else_null_end),
+                        };
+                        match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => content,
+                            NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(&content),
                         }
                     },
                     PostgresqlJsonTypePattern::ArrayDimension3 {
