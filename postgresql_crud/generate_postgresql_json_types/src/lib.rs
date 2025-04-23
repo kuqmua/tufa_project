@@ -1596,8 +1596,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable: _,
                     } => {
+                        let d2_elem_value = format!("{d2_elem}.value");
                         let dimension1_query_part = generate_jsonb_agg_d2(
-                            &format!("{d2_elem}.value"),
+                            &d2_elem_value,
                         );
                         let d1_case_when_jsonb_typeof_array_then_else_null_end = generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                             &dimension1_query_part
