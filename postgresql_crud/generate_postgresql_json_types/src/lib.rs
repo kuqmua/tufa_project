@@ -1516,8 +1516,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let d3_ord = "d3_ord";
                 let d4_elem = "d4_elem";
                 let d4_ord = "d4_ord";
+                let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str|{
+                    format!("as {first_content}(value, {second_content}) where {second_content}")
+                };
+                let as_d1_elem_value_d1_ord_where_d1_ord = generate_as_value_where(&d1_elem, &d1_ord);
+                let generate_jsonb_agg_d1 = |jsonb_agg_content: &std::primitive::str|{
+                    generate_jsonb_agg(
+                        &jsonb_agg_content,
+                        &column_name_and_maybe_field_getter_field_ident,
+                        &as_d1_elem_value_d1_ord_where_d1_ord,
+                        1
+                    )
+                };
 
-                let as_d1_elem_value_d1_ord_where_d1_ord = "as d1_elem(value, d1_ord) where d1_ord";
+
                 //last child dimension value does not matter - null or type - works both good
                 let format_handle = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => column_name_and_maybe_field_getter_field_ident,
@@ -1542,9 +1554,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable: _,
                     } => {
-                        let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str|{
-                            format!("as {first_content}(value, {second_content}) where {second_content}")
-                        };
                         let dimension1_query_part = generate_jsonb_agg(
                             &format!("{d2_elem}.value"),
                             &format!("{d1_elem}.value"),
@@ -1556,12 +1565,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             &dimension1_query_part
                         );
                         let generate_select_jsonb_agg = |content: &std::primitive::str|{
-                            generate_jsonb_agg(
-                                &format!("({content})"),
-                                &format!("{column_name_and_maybe_field_getter_field_ident}"),
-                                &generate_as_value_where(&d1_elem, &d1_ord),
-                                1
-                            )
+                            generate_jsonb_agg_d1(&format!("({content})"))
                         };
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_select_jsonb_agg(&dimension1_query_part),
@@ -1581,29 +1585,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension2_not_null_or_nullable,
                         dimension3_not_null_or_nullable: _,
                     } => {
-                        let not_null_not_null_not_null = generate_jsonb_agg(
-                            &format!("(select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_not_null_not_null = generate_jsonb_agg_d1(
+                            &format!("(select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})")
                         );
-                        let not_null_not_null_nullable = generate_jsonb_agg(
-                            &format!("(select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then (select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}}) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_not_null_nullable = generate_jsonb_agg_d1(
+                            &format!("(select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then (select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}}) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})")
                         );
-                        let not_null_nullable_not_null = generate_jsonb_agg(
-                            &format!("(case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end)"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_nullable_not_null = generate_jsonb_agg_d1(
+                            &format!("(case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end)")
                         );
-                        let not_null_nullable_nullable = generate_jsonb_agg(
-                            &format!("(case when jsonb_typeof(d1_elem.value)='array' then (select jsonb_agg((case when jsonb_typeof(d2_elem.value)='array' then (select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}}) else null end)) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}}) else null end)"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_nullable_nullable = generate_jsonb_agg_d1(
+                            &format!("(case when jsonb_typeof(d1_elem.value)='array' then (select jsonb_agg((case when jsonb_typeof(d2_elem.value)='array' then (select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}}) else null end)) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}}) else null end)")
                         );
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => not_null_not_null_not_null,
@@ -1634,53 +1626,29 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension3_not_null_or_nullable,
                         dimension4_not_null_or_nullable: _,
                     } => {
-                        let not_null_not_null_not_null_not_null = generate_jsonb_agg(
-                            &format!("(select jsonb_agg((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_not_null_not_null_not_null = generate_jsonb_agg_d1(
+                            &format!("(select jsonb_agg((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})")
                         );
-                        let not_null_not_null_not_null_nullable = generate_jsonb_agg(
-                            &format!("(select jsonb_agg((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_not_null_not_null_nullable = generate_jsonb_agg_d1(
+                            &format!("(select jsonb_agg((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})")
                         );
-                        let not_null_not_null_nullable_not_null = generate_jsonb_agg(
-                            &format!("(select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_not_null_nullable_not_null = generate_jsonb_agg_d1(
+                            &format!("(select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})")
                         );
-                        let not_null_not_null_nullable_nullable = generate_jsonb_agg(
-                            &format!("(select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_not_null_nullable_nullable = generate_jsonb_agg_d1(
+                            &format!("(select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})")
                         );
-                        let not_null_nullable_not_null_not_null = generate_jsonb_agg(
-                            &format!("case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_nullable_not_null_not_null = generate_jsonb_agg_d1(
+                            &format!("case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end")
                         );
-                        let not_null_nullable_not_null_nullable = generate_jsonb_agg(
-                            &format!("case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_nullable_not_null_nullable = generate_jsonb_agg_d1(
+                            &format!("case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end")
                         );
-                        let not_null_nullable_nullable_not_null = generate_jsonb_agg(
-                            &format!("case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_nullable_nullable_not_null = generate_jsonb_agg_d1(
+                            &format!("case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end")
                         );
-                        let not_null_nullable_nullable_nullable = generate_jsonb_agg(
-                            &format!("case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end"),
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &as_d1_elem_value_d1_ord_where_d1_ord,
-                            1
+                        let not_null_nullable_nullable_nullable = generate_jsonb_agg_d1(
+                            &format!("case when jsonb_typeof(d1_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) else null end")
                         );
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => not_null_not_null_not_null_not_null,
