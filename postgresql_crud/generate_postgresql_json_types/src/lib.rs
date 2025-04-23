@@ -1508,6 +1508,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
                     format!("select jsonb_agg({jsonb_agg_content}) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}")
                 };
+                let d1_elem = "d1_elem";
+                let d1_ord = "d1_ord";
+                let d2_elem = "d2_elem";
+                let d2_ord = "d2_ord";
+                let d3_elem = "d3_elem";
+                let d3_ord = "d3_ord";
+                let d4_elem = "d4_elem";
+                let d4_ord = "d4_ord";
                 //last child dimension value does not matter - null or type - works both good
                 let format_handle = match &postgresql_json_type_pattern {
                     PostgresqlJsonTypePattern::Standart => column_name_and_maybe_field_getter_field_ident,
@@ -1532,10 +1540,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable: _,
                     } => {
-                        let d1_elem = "d1_elem";
-                        let d1_ord = "d1_ord";
-                        let d2_elem = "d2_elem";
-                        let d2_ord = "d2_ord";
                         let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str|{
                             format!("as {first_content}(value, {second_content}) where {second_content}")
                         };
