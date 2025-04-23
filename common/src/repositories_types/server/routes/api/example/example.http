@@ -40,7 +40,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "object_animal_as_jsonb_not_null": {
-      "column_63e4b1cb_5c0d_4a2a_8e6c_f3326f9acff2": [
+      "column_2c8d98ca_7f88_49b5_81cc_22a7d5cade07": [
   [
     [
       [
@@ -49,7 +49,9 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       [
         0,1,2
       ],
-      null
+      [
+        0,1,2
+      ]
     ],
     [
       [
@@ -58,9 +60,21 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       [
         0,1,2
       ],
-      null
+      [
+        0,1,2
+      ]
     ],
-    null
+    [
+      [
+        0,1,2
+      ],
+      [
+        0,1,2
+      ],
+      [
+        0,1,2
+      ]
+    ]
   ],
   [
     [
@@ -70,7 +84,9 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       [
         0,1,2
       ],
-      null
+      [
+        0,1,2
+      ]
     ],
     [
       [
@@ -79,31 +95,23 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       [
         0,1,2
       ],
-      null
+      [
+        0,1,2
+      ]
     ],
-    null
+    [
+      [
+        0,1,2
+      ],
+      [
+        0,1,2
+      ],
+      [
+        0,1,2
+      ]
+    ]
   ],
-  [
-    [
-      [
-        0,1,2
-      ],
-      [
-        0,1,2
-      ],
-      null
-    ],
-    [
-      [
-        0,1,2
-      ],
-      [
-        0,1,2
-      ],
-      null
-    ],
-    null
-  ]
+  null
 ]
     }
   }
@@ -172,7 +180,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "logical_operator": "Or",
     "value": [
       {
-        "Column63E4B1Cb5C0D4A2A8E6CF3326F9Acff2": {
+        "Column2C8D98Ca7F8849B581Cc22A7D5Cade07": {
           "logical_operator": "Or",
           "value": [
             {
@@ -187,7 +195,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       [
         0,1,2
       ],
-      null
+      [
+        0,1,2
+      ]
     ],
     [
       [
@@ -196,9 +206,21 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       [
         0,1,2
       ],
-      null
+      [
+        0,1,2
+      ]
     ],
-    null
+    [
+      [
+        0,1,2
+      ],
+      [
+        0,1,2
+      ],
+      [
+        0,1,2
+      ]
+    ]
   ],
   [
     [
@@ -208,7 +230,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       [
         0,1,2
       ],
-      null
+      [
+        0,1,2
+      ]
     ],
     [
       [
@@ -217,31 +241,23 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       [
         0,1,2
       ],
-      null
+      [
+        0,1,2
+      ]
     ],
-    null
+    [
+      [
+        0,1,2
+      ],
+      [
+        0,1,2
+      ],
+      [
+        0,1,2
+      ]
+    ]
   ],
-  [
-    [
-      [
-        0,1,2
-      ],
-      [
-        0,1,2
-      ],
-      null
-    ],
-    [
-      [
-        0,1,2
-      ],
-      [
-        0,1,2
-      ],
-      null
-    ],
-    null
-  ]
+  null
 ]
               }
             }
@@ -251,13 +267,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
     {
       "object_animal_as_jsonb_not_null": [
         {
-          "column_63e4b1cb_5c0d_4a2a_8e6c_f3326f9acff2": {
+          "column_2c8d98ca_7f88_49b5_81cc_22a7d5cade07": {
             "dimension1_pagination": {
               "limit": 3,
               "offset": 0
