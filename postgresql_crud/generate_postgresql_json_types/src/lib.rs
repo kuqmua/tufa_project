@@ -1495,8 +1495,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
                 use postgresql_crud_macros_common::NotNullOrNullable;
                 let column_name_and_maybe_field_getter_field_ident = format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'");
-                let generate_case_when_jsonb_typeof_array_then_else_null_end = |typeof_content: &std::primitive::str, content: &std::primitive::str, |{
+                let d1_elem = "d1_elem";
+                let d1_ord = "d1_ord";
+                let d2_elem = "d2_elem";
+                let d2_ord = "d2_ord";
+                let d3_elem = "d3_elem";
+                let d3_ord = "d3_ord";
+                let d4_elem = "d4_elem";
+                let d4_ord = "d4_ord";
+                let generate_case_when_jsonb_typeof_array_then_else_null_end = |typeof_content: &std::primitive::str, content: &std::primitive::str|{
                     format!("case when jsonb_typeof({typeof_content})='array' then ({content}) else null end")
+                };
+                let generate_case_when_jsonb_typeof_array_then_else_null_end_origin = |content: &std::primitive::str|{
+                    generate_case_when_jsonb_typeof_array_then_else_null_end(
+                        &column_name_and_maybe_field_getter_field_ident,
+                        &content
+                    )
+                };
+                let generate_case_when_jsonb_typeof_array_then_else_null_end_d1 = |content: &std::primitive::str|{
+                    generate_case_when_jsonb_typeof_array_then_else_null_end(
+                        &format!("{d1_elem}.value"),
+                        &content
+                    )
                 };
                 let generate_jsonb_agg = |
                     jsonb_agg_content: &std::primitive::str,
@@ -1508,14 +1528,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
                     format!("select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}")
                 };
-                let d1_elem = "d1_elem";
-                let d1_ord = "d1_ord";
-                let d2_elem = "d2_elem";
-                let d2_ord = "d2_ord";
-                let d3_elem = "d3_elem";
-                let d3_ord = "d3_ord";
-                let d4_elem = "d4_elem";
-                let d4_ord = "d4_ord";
                 let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str|{
                     format!("as {first_content}(value, {second_content}) where {second_content}")
                 };
@@ -1549,10 +1561,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         );
                         match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => dimension1_query_part,
-                            NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
-                                &dimension1_query_part
-                            ),
+                            NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(&dimension1_query_part),
                         }
                     },
                     PostgresqlJsonTypePattern::ArrayDimension2 {
@@ -1565,8 +1574,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             &generate_as_value_where(&d2_elem, &d2_ord),
                             2
                         );
-                        let d1_case_when_jsonb_typeof_array_then_else_null_end = generate_case_when_jsonb_typeof_array_then_else_null_end(
-                            &format!("{d1_elem}.value"),
+                        let d1_case_when_jsonb_typeof_array_then_else_null_end = generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                             &dimension1_query_part
                         );
                         let generate_select_jsonb_agg = |content: &std::primitive::str|{
@@ -1575,13 +1583,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_select_jsonb_agg(&dimension1_query_part),
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_select_jsonb_agg(&d1_case_when_jsonb_typeof_array_then_else_null_end),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
-                                &generate_select_jsonb_agg(&dimension1_query_part),
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
+                                &generate_select_jsonb_agg(&dimension1_query_part)
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
-                                &generate_select_jsonb_agg(&d1_case_when_jsonb_typeof_array_then_else_null_end),
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
+                                &generate_select_jsonb_agg(&d1_case_when_jsonb_typeof_array_then_else_null_end)
                             ),
                         }
                     },
@@ -1601,16 +1607,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             )
                         );
                         let not_null_nullable_not_null = generate_jsonb_agg_d1(
-                            &generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &"d1_elem.value",
+                            &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
                                     &format!("(select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})")
                                 )
                             )
                         );
                         let not_null_nullable_nullable = generate_jsonb_agg_d1(
-                            &generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &"d1_elem.value",
+                            &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
                                     &format!("(case when jsonb_typeof(d2_elem.value)='array' then (select jsonb_agg(d3_elem.value) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}}) else null end)")
                                 )
@@ -1621,20 +1625,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_not_null_nullable,
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => not_null_nullable_not_null,
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => not_null_nullable_nullable,
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_not_null_not_null
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_not_null_nullable,
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_nullable_not_null
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_nullable_nullable
                             ),
                         }
@@ -1666,32 +1666,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             )
                         );
                         let not_null_nullable_not_null_not_null = generate_jsonb_agg_d1(
-                            &generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &"d1_elem.value",
+                            &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
                                     &format!("(select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})")
                                 )
                             )
                         );
                         let not_null_nullable_not_null_nullable = generate_jsonb_agg_d1(
-                            &generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &"d1_elem.value",
+                            &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
                                     &format!("(select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})")
                                 )
                             )
                         );
                         let not_null_nullable_nullable_not_null = generate_jsonb_agg_d1(
-                            &generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &"d1_elem.value",
+                            &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
                                     &format!("case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end")
                                 )
                             )
                         );
                         let not_null_nullable_nullable_nullable = generate_jsonb_agg_d1(
-                            &generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &"d1_elem.value",
+                            &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
                                     &format!("case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end")
                                 )
@@ -1706,36 +1702,28 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_nullable_not_null_nullable,
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => not_null_nullable_nullable_not_null,
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => not_null_nullable_nullable_nullable,
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_not_null_not_null_not_null
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_not_null_not_null_nullable
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_not_null_nullable_not_null
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_not_null_nullable_nullable
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_nullable_not_null_not_null
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_nullable_not_null_nullable
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_nullable_nullable_not_null
                             ),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                &column_name_and_maybe_field_getter_field_ident,
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(
                                 &not_null_nullable_nullable_nullable
                             ),
                         }
