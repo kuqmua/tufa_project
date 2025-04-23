@@ -1676,65 +1676,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     }
                 };
-//   select 
-//     jsonb_agg(
-//       (
-//         select 
-//           jsonb_agg(
-//             (
-//                 select 
-//                 jsonb_agg(
-//                     d3_elem.value
-//                 ) 
-//                 from 
-//                   jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) 
-//                 where 
-//                   d3_ord between {{dimension3_start}} 
-//                   and {{dimension3_end}}
-//             )
-//           ) 
-//         from 
-//           jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) 
-//         where 
-//           d2_ord between {{dimension2_start}} 
-//           and {{dimension2_end}}
-//       )
-//     ) 
-//   from 
-//     jsonb_array_elements(
-//       {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}'
-//     ) with ordinality as d1_elem(value, d1_ord) 
-//   where 
-//     d1_ord between {{dimension1_start}} 
-//     and {{dimension1_end}}
-
-////////////////////////////////////////
-
-// (
-//   select 
-//     jsonb_agg(
-//       (
-//         case when jsonb_typeof(outer_elem.value)= 'array' then (
-//           select 
-//             jsonb_agg(inner_elem.value) 
-//           from 
-//             jsonb_array_elements(outer_elem.value) with ordinality as inner_elem(value, inner_ord) 
-//           where 
-//             inner_ord between {{dimension2_start}} 
-//             and {{dimension2_end}}
-//         ) else null end
-//       )
-//     ) 
-//   from 
-//     jsonb_array_elements(
-//       {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}'
-//     ) with ordinality as outer_elem(value, outer_ord) 
-//   where 
-//     outer_ord between {{dimension1_start}} 
-//     and {{dimension1_end}}
-// )
-
-
                 let maybe_dimensions_start_end_initialization = {
                     let mut acc = vec![];
                     for element in 1..=postgresql_json_type_pattern.array_dimensions_number() {
