@@ -1724,15 +1724,22 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let not_null_nullable_nullable_not_null = generate_jsonb_agg_d1(
                             &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
-                                    //todo
-                                    &format!("case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end")
+                                    &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
+                                        &generate_jsonb_agg_d3(
+                                            &format!("(select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})")
+                                        )
+                                    )
                                 )
                             )
                         );
                         let not_null_nullable_nullable_nullable = generate_jsonb_agg_d1(
                             &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                 &generate_jsonb_agg_d2(
-                                    &format!("case when jsonb_typeof(d2_elem.value)='array' then ((select jsonb_agg(case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) else null end")
+                                    &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
+                                        &generate_jsonb_agg_d3(
+                                            &format!("case when jsonb_typeof(d3_elem.value)='array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end")
+                                        )
+                                    )
                                 )
                             )
                         );
