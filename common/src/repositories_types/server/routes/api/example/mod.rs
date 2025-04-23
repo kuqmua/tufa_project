@@ -264,7 +264,7 @@ pub struct Animal {
 
     pub column_b96fb4ef_a529_4a55_98fa_13ab10d3db99: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfVecOfStdPrimitiveI8AsNullableArrayOfNullableArrayOfNotNullArrayOfNotNullJsonbNumber,
     pub column_9d7eb71d_210b_4c02_a549_d938779169cb: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableArrayOfNotNullArrayOfNullableJsonbNumber,
-    
+
     pub column_6394bdd4_46da_4775_a942_b81beee1d819: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbNumber,
     pub column_7fdf3066_43b0_4133_8dc9_292eb5811e28: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbNumber,
 
@@ -272,7 +272,7 @@ pub struct Animal {
 
 
 
-
+    
     pub column_ec61abdc_69d9_44f1_8259_67274abae152: postgresql_crud::postgresql_json_type::VecOfVecOfVecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullJsonbNumber,
     pub column_cd4f2bdf_1087_4dc5_bddf_92b6751f743f: postgresql_crud::postgresql_json_type::VecOfVecOfVecOfVecOfOptionStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullArrayOfNullableJsonbNumber,
 
