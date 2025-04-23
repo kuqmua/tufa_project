@@ -1610,7 +1610,49 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     } => {
                         let not_null_not_null_not_null_not_null = format!("select jsonb_agg((select jsonb_agg((select jsonb_agg((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as d1_elem(value, d1_ord) where d1_ord between {{dimension1_start}} and {{dimension1_end}}");
                         let not_null_not_null_not_null_nullable = format!("select jsonb_agg((select jsonb_agg((select jsonb_agg(case when jsonb_typeof(d3_elem.value)= 'array' then ((select jsonb_agg(d4_elem.value) from jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) where d4_ord between {{dimension4_start}} and {{dimension4_end}})) else null end) from jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) where d3_ord between {{dimension3_start}} and {{dimension3_end}})) from jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) where d2_ord between {{dimension2_start}} and {{dimension2_end}})) from jsonb_array_elements({{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}') with ordinality as d1_elem(value, d1_ord) where d1_ord between {{dimension1_start}} and {{dimension1_end}}");
-                        let not_null_not_null_nullable_not_null = format!("");
+                        let not_null_not_null_nullable_not_null = format!("select 
+  jsonb_agg(
+    (
+      select 
+        jsonb_agg(
+          case when jsonb_typeof(d2_elem.value)= 'array' then (
+            (
+                select 
+                  jsonb_agg(
+                    (
+                      select 
+                        jsonb_agg(d4_elem.value) 
+                      from 
+                        jsonb_array_elements(d3_elem.value) with ordinality as d4_elem(value, d4_ord) 
+                      where 
+                        d4_ord between {{dimension4_start}} 
+                        and {{dimension4_end}}
+                    )
+                  ) 
+                from 
+                  jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) 
+                where 
+                  d3_ord between {{dimension3_start}} 
+                  and {{dimension3_end}}
+            )
+          )
+          else null end
+        ) 
+      from 
+        jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) 
+      where 
+        d2_ord between {{dimension2_start}} 
+        and {{dimension2_end}}
+    )
+  ) 
+from 
+  jsonb_array_elements(
+    {{{column_name_and_maybe_field_getter_snake_case}}} -> '{{field_ident}}'
+  ) with ordinality as d1_elem(value, d1_ord) 
+where 
+  d1_ord between {{dimension1_start}} 
+  and {{dimension1_end}}
+");
                         let not_null_not_null_nullable_nullable = format!("");
                         let not_null_nullable_not_null_not_null = format!("");
                         let not_null_nullable_not_null_nullable = format!("");
@@ -1619,12 +1661,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) |
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_not_null_not_null_not_null,
-
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) |
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => not_null_not_null_not_null_nullable,
 
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) |
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_not_null_nullable_not_null,
+
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) |
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => not_null_not_null_nullable_nullable,
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) |
