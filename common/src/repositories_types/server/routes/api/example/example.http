@@ -1695,19 +1695,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         {
           "column_b41f35cd_638e_4e46_999d_b760403ee543": {
             "dimension1_pagination": {
-              "limit": 3,
+              "limit": 1,
               "offset": 0
             },
             "dimension2_pagination": {
-              "limit": 3,
+              "limit": 1,
               "offset": 0
             },
             "dimension3_pagination": {
-              "limit": 3,
+              "limit": 1,
               "offset": 0
             },
             "dimension4_pagination": {
-              "limit": 3,
+              "limit": 1,
               "offset": 0
             }
           }

@@ -1646,147 +1646,90 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             &ident_select_upper_camel_case,
             &ident_origin_upper_camel_case,
             &{
-                let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
-                use postgresql_crud_macros_common::NotNullOrNullable;
-                let column_name_and_maybe_field_getter_field_ident = format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{{field_ident}}'");
-                let d1_elem = "d1_elem";
-                let d1_ord = "d1_ord";
-                let d2_elem = "d2_elem";
-                let d2_ord = "d2_ord";
-                let d3_elem = "d3_elem";
-                let d3_ord = "d3_ord";
-                let d4_elem = "d4_elem";
-                let d4_ord = "d4_ord";
-                let generate_case_when_jsonb_typeof_array_then_else_null_end = |typeof_content: &std::primitive::str, content: &std::primitive::str|{
-                    format!("case when jsonb_typeof({typeof_content})='array' then ({content}) else null end")
-                };
-                let generate_case_when_jsonb_typeof_array_then_else_null_end_origin = |content: &std::primitive::str|{
-                    generate_case_when_jsonb_typeof_array_then_else_null_end(
-                        &column_name_and_maybe_field_getter_field_ident,
-                        &content
-                    )
-                };
-                let generate_case_when_jsonb_typeof_array_then_else_null_end_d1 = |content: &std::primitive::str|{
-                    generate_case_when_jsonb_typeof_array_then_else_null_end(
-                        &format!("{d1_elem}.value"),
-                        &content
-                    )
-                };
-                let generate_case_when_jsonb_typeof_array_then_else_null_end_d2 = |content: &std::primitive::str|{
-                    generate_case_when_jsonb_typeof_array_then_else_null_end(
-                        &format!("{d2_elem}.value"),
-                        &content
-                    )
-                };
-                let generate_case_when_jsonb_typeof_array_then_else_null_end_d3 = |content: &std::primitive::str|{
-                    generate_case_when_jsonb_typeof_array_then_else_null_end(
-                        &format!("{d3_elem}.value"),
-                        &content
-                    )
-                };
-                let generate_jsonb_agg = |
-                    jsonb_agg_content: &std::primitive::str,
-                    jsonb_array_elements_content: &std::primitive::str,
-                    ordinality_content: &std::primitive::str,
-                    dimensions_number: std::primitive::usize,
-                |{
-                    let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
-                    let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
-                    format!("select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}")
-                };
-                let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str|{
-                    format!("as {first_content}(value, {second_content}) where {second_content}")
-                };
-                let generate_jsonb_agg_d1 = |jsonb_agg_content: &std::primitive::str|{
-                    generate_jsonb_agg(
-                        &jsonb_agg_content,
-                        &column_name_and_maybe_field_getter_field_ident,
-                        &generate_as_value_where(&d1_elem, &d1_ord),
-                        1
-                    )
-                };
-                let generate_jsonb_agg_d2 = |jsonb_agg_content: &std::primitive::str|{
-                    generate_jsonb_agg(
-                        &jsonb_agg_content,
-                        &"d1_elem.value",
-                        &generate_as_value_where(&d2_elem, &d2_ord),
-                        2
-                    )
-                };
-                let generate_jsonb_agg_d3 = |jsonb_agg_content: &std::primitive::str|{
-                    generate_jsonb_agg(
-                        &jsonb_agg_content,
-                        &"d2_elem.value",
-                        &generate_as_value_where(&d3_elem, &d3_ord),
-                        3
-                    )
-                };
-                let generate_jsonb_agg_d4 = |jsonb_agg_content: &std::primitive::str|{
-                    generate_jsonb_agg(
-                        &jsonb_agg_content,
-                        &"d3_elem.value",
-                        &generate_as_value_where(&d4_elem, &d4_ord),
-                        4
-                    )
-                };
-                //last child dimension value does not matter - null or type - works both good
                 let format_handle = {
+                    //last child dimension value does not matter - null or type - works both good
+                    use postgresql_crud_macros_common::NotNullOrNullable;
+                    let column_name_and_maybe_field_getter_field_ident = format!(
+                        "{{{}}}->'{{field_ident}}'",
+                        naming::ColumnNameAndMaybeFieldGetterSnakeCase
+                    );
+                    let generate_case_when_jsonb_typeof_array_then_else_null_end = |typeof_content: &std::primitive::str, content: &std::primitive::str|{
+                        format!("case when jsonb_typeof({typeof_content})='array' then ({content}) else null end")
+                    };
                     let format_handle = match ArrayDimension::try_from(postgresql_json_type_pattern) {
-                        Ok(array_dimension) => match ArrayDimensionSelectPattern::try_from(&array_dimension) {
-                            //Dimension1 does not fit into pattern. its only for 2+ dimensions
-                            Ok(array_dimension_select_pattern) => {
-                                let generate_d_number_elem = |content: std::primitive::usize|{
-                                    format!("d{content}_elem")
-                                };
-                                let generate_d_number_ord = |content: std::primitive::usize|{
-                                    format!("d{content}_elem")
-                                };
-                                let generate_dot_value = |content: &std::primitive::str|{
-                                    format!("{content}.value")
-                                };
-                                let one = 1;
-                                generate_jsonb_agg(
-                                    &{
-                                        let mut current_usize_value = array_dimension_select_pattern.to_usize();
-                                        array_dimension_select_pattern.select_array()
-                                        .into_iter()
-                                        .fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, not_null_or_nullable| {
-                                            let current_usize_value_minus_one = current_usize_value - one;
-                                            let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
-                                            let value = generate_jsonb_agg(
-                                                &acc,
-                                                &d_usize_minus_one_elem_value,
-                                                &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)),
-                                                current_usize_value
-                                            );
-                                            acc = match &not_null_or_nullable {
-                                                NotNullOrNullable::NotNull => value,
-                                                NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end(
+                        Ok(array_dimension) => {
+                            let generate_jsonb_agg = |
+                                jsonb_agg_content: &std::primitive::str,
+                                jsonb_array_elements_content: &std::primitive::str,
+                                ordinality_content: &std::primitive::str,
+                                dimensions_number: std::primitive::usize,
+                            |{
+                                let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
+                                let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
+                                format!("select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}")
+                            };
+                            match ArrayDimensionSelectPattern::try_from(&array_dimension) {
+                                //Dimension1 does not fit into pattern. its only for 2+ dimensions
+                                Ok(array_dimension_select_pattern) => {
+                                    let generate_d_number_elem = |content: std::primitive::usize|{
+                                        format!("d{content}_elem")
+                                    };
+                                    let generate_d_number_ord = |content: std::primitive::usize|{
+                                        format!("d{content}_elem")
+                                    };
+                                    let generate_dot_value = |content: &std::primitive::str|{
+                                        format!("{content}.value")
+                                    };
+                                    let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str|{
+                                        format!("as {first_content}(value, {second_content}) where {second_content}")
+                                    };
+                                    let one = 1;
+                                    generate_jsonb_agg(
+                                        &{
+                                            let mut current_usize_value = array_dimension_select_pattern.to_usize();
+                                            array_dimension_select_pattern.select_array()
+                                            .into_iter()
+                                            .fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, not_null_or_nullable| {
+                                                let current_usize_value_minus_one = current_usize_value - one;
+                                                let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
+                                                let value = generate_jsonb_agg(
+                                                    &acc,
                                                     &d_usize_minus_one_elem_value,
-                                                    &value
-                                                )
-                                            };
-                                            current_usize_value = current_usize_value_minus_one;
-                                            acc
-                                        })
-                                    },
-                                    &column_name_and_maybe_field_getter_field_ident,
-                                    &generate_as_value_where(&generate_d_number_elem(one), &generate_d_number_ord(one)),
-                                    one
+                                                    &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)),
+                                                    current_usize_value
+                                                );
+                                                acc = match &not_null_or_nullable {
+                                                    NotNullOrNullable::NotNull => value,
+                                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end(
+                                                        &d_usize_minus_one_elem_value,
+                                                        &value
+                                                    )
+                                                };
+                                                current_usize_value = current_usize_value_minus_one;
+                                                acc
+                                            })
+                                        },
+                                        &column_name_and_maybe_field_getter_field_ident,
+                                        &generate_as_value_where(&generate_d_number_elem(one), &generate_d_number_ord(one)),
+                                        one
+                                    )
+                                },
+                                Err(_) => generate_jsonb_agg(
+                                    &"value",
+                                    &format!("select {column_name_and_maybe_field_getter_field_ident}"),
+                                    &"where ordinality",
+                                    1
                                 )
-                            },
-                            Err(_) => generate_jsonb_agg(
-                                &"value",
-                                &format!("select {column_name_and_maybe_field_getter_field_ident}"),
-                                &"where ordinality",
-                                1
-                            )
+                            }
                         },
                         Err(_) => column_name_and_maybe_field_getter_field_ident.clone(),
                     };
                     match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => format_handle,
-                        NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_origin(&format_handle),
+                        NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end(
+                            &column_name_and_maybe_field_getter_field_ident,
+                            &format_handle
+                        )
                     }
                 };
                 let maybe_dimensions_start_end_initialization = {
