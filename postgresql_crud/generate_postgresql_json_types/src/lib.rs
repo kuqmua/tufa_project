@@ -1592,14 +1592,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension2_not_null_or_nullable: _,
                         } => {
                             let d2_elem_value = format!("{d2_elem}.value");
-                            let dimension1_query_part = generate_jsonb_agg_d2(
-                                &d2_elem_value,
-                            );
-                            let d2 = match &dimension1_not_null_or_nullable {
-                                NotNullOrNullable::NotNull => dimension1_query_part,
-                                NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
-                                    &dimension1_query_part
-                                ),
+                            let d2 = {
+                                let jsonb_agg_d2 = generate_jsonb_agg_d2(&d2_elem_value);
+                                match &dimension1_not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => jsonb_agg_d2,
+                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
+                                        &jsonb_agg_d2
+                                    ),
+                                }
                             };
                             generate_jsonb_agg_d1(&d2)
                         },
