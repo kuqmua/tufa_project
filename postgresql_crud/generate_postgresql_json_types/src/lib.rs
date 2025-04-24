@@ -193,6 +193,22 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 Self::ArrayDimension4{..} => 4
             }
         }
+        // fn select_array(&self) -> std::vec::Vec<postgresql_crud_macros_common::NotNullOrNullable> {
+        //     match &self {
+        //         Self::ArrayDimension1{
+        //             dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        //         } => vec![],
+        //         Self::ArrayDimension2{
+
+        //         } => vec![],
+        //         Self::ArrayDimension3{
+
+        //         } => vec![],
+        //         Self::ArrayDimension4{
+
+        //         } => vec![],
+        //     }
+        // }
     }
     impl std::convert::TryFrom<&PostgresqlJsonTypePattern> for ArrayDimension {
         type Error = ();
@@ -221,6 +237,86 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
                 }),
                 PostgresqlJsonTypePattern::ArrayDimension4 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                } => Ok(Self::ArrayDimension4 {
+                    dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
+                    dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                    dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                    dimension4_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
+                }),
+            }
+        }
+    }
+    pub enum ArrayDimensionSelectPattern {
+        ArrayDimension2 {
+            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        },
+        ArrayDimension3 {
+            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        },
+        ArrayDimension4 {
+            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+            dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        },
+    }
+    impl ArrayDimensionSelectPattern{
+        fn select_array<'a> (&'a self) -> std::vec::Vec<&'a postgresql_crud_macros_common::NotNullOrNullable> {
+            match &self {
+                Self::ArrayDimension2{
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable: _,
+                } => vec![&dimension1_not_null_or_nullable],
+                Self::ArrayDimension3{
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable: _,
+                } => vec![
+                    &dimension2_not_null_or_nullable,
+                    &dimension1_not_null_or_nullable
+                ],
+                Self::ArrayDimension4{
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable: _,
+                } => vec![
+                    &dimension3_not_null_or_nullable,
+                    &dimension2_not_null_or_nullable,
+                    &dimension1_not_null_or_nullable
+                ],
+            }
+        }
+    }
+    impl std::convert::TryFrom<&ArrayDimension> for ArrayDimensionSelectPattern {
+        type Error = ();
+        fn try_from(value: &ArrayDimension) -> Result<Self, Self::Error> {
+            match &value {
+                ArrayDimension::ArrayDimension1 {..} => Err(()),
+                ArrayDimension::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                } => Ok(Self::ArrayDimension2 {
+                    dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
+                    dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                }),
+                ArrayDimension::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                } => Ok(Self::ArrayDimension3 {
+                    dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
+                    dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                    dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                }),
+                ArrayDimension::ArrayDimension4 {
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
                     dimension3_not_null_or_nullable,
