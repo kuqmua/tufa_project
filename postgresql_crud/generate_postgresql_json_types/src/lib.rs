@@ -1636,112 +1636,34 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension4_not_null_or_nullable: _,
                         } => {
                             let d4_elem_value = format!("{d4_elem}.value");
-                            let not_null_not_null_not_null = generate_jsonb_agg_d1(
-                                &generate_jsonb_agg_d2(
-                                    &generate_jsonb_agg_d3(
-                                        &generate_jsonb_agg_d4(
-                                            &d4_elem_value
-                                        )
-                                    )
-                                )
-                            );
-                            let not_null_not_null_nullable = generate_jsonb_agg_d1(
-                                &generate_jsonb_agg_d2(
-                                    &generate_jsonb_agg_d3(
-                                        &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
-                                            &generate_jsonb_agg_d4(
-                                                &d4_elem_value
-                                            )
-                                        )
-                                    )
-                                )
-                            );
-                            let not_null_nullable_not_null = generate_jsonb_agg_d1(
-                                &generate_jsonb_agg_d2(
-                                    &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
-                                        &generate_jsonb_agg_d3(
-                                            &generate_jsonb_agg_d4(
-                                                &d4_elem_value
-                                            )
-                                        )
-                                    )
-                                )
-                            );
-                            let not_null_nullable_nullable = generate_jsonb_agg_d1(
-                                &generate_jsonb_agg_d2(
-                                    &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
-                                        &generate_jsonb_agg_d3(
-                                            &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
-                                                &generate_jsonb_agg_d4(
-                                                    &d4_elem_value
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            );
-                            let nullable_not_null_not_null = generate_jsonb_agg_d1(
-                                &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
-                                    &generate_jsonb_agg_d2(
-                                        &generate_jsonb_agg_d3(
-                                            &generate_jsonb_agg_d4(
-                                                &d4_elem_value
-                                            )
-                                        )
-                                    )
-                                )
-                            );
-                            let nullable_not_null_nullable = generate_jsonb_agg_d1(
-                                &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
-                                    &generate_jsonb_agg_d2(
-                                        &generate_jsonb_agg_d3(
-                                            &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
-                                                &generate_jsonb_agg_d4(
-                                                    &d4_elem_value
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            );
-                            let nullable_nullable_not_null = generate_jsonb_agg_d1(
-                                &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
-                                    &generate_jsonb_agg_d2(
-                                        &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
-                                            &generate_jsonb_agg_d3(
-                                                &generate_jsonb_agg_d4(
-                                                    &d4_elem_value
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            );
-                            let nullable_nullable_nullable = generate_jsonb_agg_d1(
-                                &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
-                                    &generate_jsonb_agg_d2(
-                                        &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
-                                            &generate_jsonb_agg_d3(
-                                                &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
-                                                    &generate_jsonb_agg_d4(
-                                                        &d4_elem_value
-                                                    )
-                                                )
-                                            )
-                                        )
-                                    )
-                                )
-                            );
-                            match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => not_null_not_null_not_null,
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_not_null_nullable,
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => not_null_nullable_not_null,
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => not_null_nullable_nullable,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => nullable_not_null_not_null,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => nullable_not_null_nullable,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => nullable_nullable_not_null,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => nullable_nullable_nullable,
-                            }
+                            let d4 = {
+                                let jsonb_agg_d4 = generate_jsonb_agg_d4(&d4_elem_value);
+                                match &dimension3_not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => jsonb_agg_d4,
+                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
+                                        &jsonb_agg_d4
+                                    ),
+                                }
+                            };
+                            let d3 = {
+                                let jsonb_agg_d3 = generate_jsonb_agg_d3(&d4);
+                                match &dimension2_not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => jsonb_agg_d3,
+                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
+                                        &jsonb_agg_d3
+                                    ),
+                                }
+                            };
+                            let d2 = {
+                                let jsonb_agg_d2 = generate_jsonb_agg_d2(&d3);
+                                match &dimension1_not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => jsonb_agg_d2,
+                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
+                                        &jsonb_agg_d2
+                                    ),
+                                }
+                            };
+                            generate_jsonb_agg_d1(&d2)
                         }
                     };
                     match &not_null_or_nullable {
