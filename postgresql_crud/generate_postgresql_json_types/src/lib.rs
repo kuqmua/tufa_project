@@ -107,16 +107,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         },
     }
     impl PostgresqlJsonTypePattern {
-        //maybe use enum with display impl instead? convert to enum then display
-        fn array_dimensions_number(&self) -> std::primitive::usize {
-            match &self {
-                PostgresqlJsonTypePattern::Standart => 0,
-                PostgresqlJsonTypePattern::ArrayDimension1 { .. } => 1,
-                PostgresqlJsonTypePattern::ArrayDimension2 { .. } => 2,
-                PostgresqlJsonTypePattern::ArrayDimension3 { .. } => 3,
-                PostgresqlJsonTypePattern::ArrayDimension4 { .. } => 4,
-            }
-        }
         fn all_variants() -> std::vec::Vec<Self> {
             Self::into_array().into_iter().fold(vec![], |mut acc, postgresql_json_type_pattern| {
                 match &postgresql_json_type_pattern {
@@ -172,6 +162,34 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
                 acc
             })
+        }
+    }
+    pub enum ArrayDimension {
+        D1,
+        D2,
+        D3,
+        D4,
+    }
+    impl ArrayDimension {
+        fn to_usize(&self) -> std::primitive::usize {
+            match &self {
+                Self::D1 => 1,
+                Self::D2 => 2,
+                Self::D3 => 3,
+                Self::D4 => 4
+            }
+        }
+    }
+    impl std::convert::TryFrom<&PostgresqlJsonTypePattern> for ArrayDimension {
+        type Error = ();
+        fn try_from(value: &PostgresqlJsonTypePattern) -> Result<Self, Self::Error> {
+            match &value {
+                PostgresqlJsonTypePattern::Standart => Err(()),
+                PostgresqlJsonTypePattern::ArrayDimension1 { .. } => Ok(Self::D1),
+                PostgresqlJsonTypePattern::ArrayDimension2 { .. } => Ok(Self::D2),
+                PostgresqlJsonTypePattern::ArrayDimension3 { .. } => Ok(Self::D3),
+                PostgresqlJsonTypePattern::ArrayDimension4 { .. } => Ok(Self::D4),
+            }
         }
     }
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -313,7 +331,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
 
         let rust_type_name = RustTypeName::from(postgresql_json_type);
         let postgresql_json_type_name = PostgresqlJsonTypeName::from(postgresql_json_type);
-        let array_dimensions_number = postgresql_json_type_pattern.array_dimensions_number();
 
         let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
@@ -1234,15 +1251,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
         let ident_select_token_stream = {
             let ident_select_token_stream = {
-                let content_token_stream = match &postgresql_json_type_pattern {
-                    PostgresqlJsonTypePattern::Standart => quote::quote! {;},
-                    PostgresqlJsonTypePattern::ArrayDimension1 {..}
-                    | PostgresqlJsonTypePattern::ArrayDimension2 {..}
-                    | PostgresqlJsonTypePattern::ArrayDimension3 {..}
-                    | PostgresqlJsonTypePattern::ArrayDimension4 {..}
-                    => {
+                let content_token_stream = match ArrayDimension::try_from(postgresql_json_type_pattern) {
+                    Ok(array_dimension) => {
                         let mut arguments_token_stream = vec![];
-                        for element in 1..=array_dimensions_number {
+                        for element in 1..=array_dimension.to_usize() {
                             let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
                             .parse::<proc_macro2::TokenStream>().unwrap();
                             arguments_token_stream.push(quote::quote! {
@@ -1252,7 +1264,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         quote::quote! {{
                             #(#arguments_token_stream),*
                         }}
-                    }
+                    },
+                    Err(_) => quote::quote! {;}
                 };
                 quote::quote! {
                     #[derive(
@@ -1271,15 +1284,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_json_type_ident_select_token_stream =
                 postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident_select_upper_camel_case,
-                    &match &postgresql_json_type_pattern {
-                        PostgresqlJsonTypePattern::Standart => quote::quote! {#core_default_default_default_token_stream},
-                        PostgresqlJsonTypePattern::ArrayDimension1 {..}
-                        | PostgresqlJsonTypePattern::ArrayDimension2 {..}
-                        | PostgresqlJsonTypePattern::ArrayDimension3 {..}
-                        | PostgresqlJsonTypePattern::ArrayDimension4 {..}
-                        => {
+                    &match ArrayDimension::try_from(postgresql_json_type_pattern) {
+                        Ok(array_dimension) => {
                             let mut arguments_token_stream = vec![];
-                            for element in 1..=array_dimensions_number {
+                            for element in 1..=array_dimension.to_usize() {
                                 let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
                                 .parse::<proc_macro2::TokenStream>().unwrap();
                                 arguments_token_stream.push(quote::quote! {
@@ -1289,7 +1297,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             quote::quote! {Self {
                                 #(#arguments_token_stream),*
                             }}
-                        }
+                        },
+                        Err(_) => quote::quote! {#core_default_default_default_token_stream}
                     }
                 );
             quote::quote! {
@@ -1673,14 +1682,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 };
                 let maybe_dimensions_start_end_initialization = {
                     let mut acc = vec![];
-                    for element in 1..=postgresql_json_type_pattern.array_dimensions_number() {
-                        let dimension_number_start_token_stream = generate_dimension_number_start_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
-                        let dimension_number_end_token_stream = generate_dimension_number_end_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
-                        let dimension_number_pagination_token_stream = format!("{}_pagination", generate_dimension_number_stringified(element)).parse::<proc_macro2::TokenStream>().unwrap();
-                        acc.push(quote::quote!{
-                            let #dimension_number_start_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.start();
-                            let #dimension_number_end_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.end();
-                        });
+                    if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
+                        for element in 1..=array_dimension.to_usize() {
+                            let dimension_number_start_token_stream = generate_dimension_number_start_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
+                            let dimension_number_end_token_stream = generate_dimension_number_end_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
+                            let dimension_number_pagination_token_stream = format!("{}_pagination", generate_dimension_number_stringified(element)).parse::<proc_macro2::TokenStream>().unwrap();
+                            acc.push(quote::quote!{
+                                let #dimension_number_start_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.start();
+                                let #dimension_number_end_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.end();
+                            });
+                        }
                     }
                     acc
                 };
