@@ -1595,16 +1595,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             let dimension1_query_part = generate_jsonb_agg_d2(
                                 &d2_elem_value,
                             );
-                            let d1_case_when_jsonb_typeof_array_then_else_null_end = generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
-                                &dimension1_query_part
-                            );
-                            let generate_select_jsonb_agg = |content: &std::primitive::str|{
-                                generate_jsonb_agg_d1(&format!("({content})"))
-                            };
-                            match &dimension1_not_null_or_nullable {
-                                NotNullOrNullable::NotNull => generate_select_jsonb_agg(&dimension1_query_part),
-                                NotNullOrNullable::Nullable => generate_select_jsonb_agg(&d1_case_when_jsonb_typeof_array_then_else_null_end),
-                            }
+                            generate_jsonb_agg_d1(&match &dimension1_not_null_or_nullable {
+                                NotNullOrNullable::NotNull => dimension1_query_part,
+                                NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
+                                    &dimension1_query_part
+                                ),
+                            })
                         },
                         PostgresqlJsonTypePattern::ArrayDimension3 {
                             dimension1_not_null_or_nullable,
@@ -1612,14 +1608,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension3_not_null_or_nullable: _,
                         } => {
                             let d3_elem_value = format!("{d3_elem}.value");
-                            let not_null_not_null_not_null = generate_jsonb_agg_d1(
+                            let not_null_not_null = generate_jsonb_agg_d1(
                                 &generate_jsonb_agg_d2(
                                     &generate_jsonb_agg_d3(
                                         &d3_elem_value
                                     )
                                 )
                             );
-                            let not_null_not_null_nullable = generate_jsonb_agg_d1(
+                            let not_null_nullable = generate_jsonb_agg_d1(
                                 &generate_jsonb_agg_d2(
                                     &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                         &generate_jsonb_agg_d3(
@@ -1628,7 +1624,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 )
                             );
-                            let not_null_nullable_not_null = generate_jsonb_agg_d1(
+                            let nullable_not_null = generate_jsonb_agg_d1(
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                     &generate_jsonb_agg_d2(
                                         &generate_jsonb_agg_d3(
@@ -1637,7 +1633,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 )
                             );
-                            let not_null_nullable_nullable = generate_jsonb_agg_d1(
+                            let nullable_nullable = generate_jsonb_agg_d1(
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                     &generate_jsonb_agg_d2(
                                         &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
@@ -1649,10 +1645,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 )
                             );
                             match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => not_null_not_null_not_null,
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_not_null_nullable,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => not_null_nullable_not_null,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => not_null_nullable_nullable,
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => not_null_not_null,
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_nullable,
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => nullable_not_null,
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => nullable_nullable,
                             }
                         },
                         PostgresqlJsonTypePattern::ArrayDimension4 {
@@ -1662,7 +1658,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension4_not_null_or_nullable: _,
                         } => {
                             let d4_elem_value = format!("{d4_elem}.value");
-                            let not_null_not_null_not_null_not_null = generate_jsonb_agg_d1(
+                            let not_null_not_null_not_null = generate_jsonb_agg_d1(
                                 &generate_jsonb_agg_d2(
                                     &generate_jsonb_agg_d3(
                                         &generate_jsonb_agg_d4(
@@ -1671,7 +1667,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 )
                             );
-                            let not_null_not_null_not_null_nullable = generate_jsonb_agg_d1(
+                            let not_null_not_null_nullable = generate_jsonb_agg_d1(
                                 &generate_jsonb_agg_d2(
                                     &generate_jsonb_agg_d3(
                                         &generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
@@ -1682,7 +1678,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 )
                             );
-                            let not_null_not_null_nullable_not_null = generate_jsonb_agg_d1(
+                            let not_null_nullable_not_null = generate_jsonb_agg_d1(
                                 &generate_jsonb_agg_d2(
                                     &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                         &generate_jsonb_agg_d3(
@@ -1693,7 +1689,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 )
                             );
-                            let not_null_not_null_nullable_nullable = generate_jsonb_agg_d1(
+                            let not_null_nullable_nullable = generate_jsonb_agg_d1(
                                 &generate_jsonb_agg_d2(
                                     &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
                                         &generate_jsonb_agg_d3(
@@ -1706,7 +1702,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 )
                             );
-                            let not_null_nullable_not_null_not_null = generate_jsonb_agg_d1(
+                            let nullable_not_null_not_null = generate_jsonb_agg_d1(
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                     &generate_jsonb_agg_d2(
                                         &generate_jsonb_agg_d3(
@@ -1717,7 +1713,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 )
                             );
-                            let not_null_nullable_not_null_nullable = generate_jsonb_agg_d1(
+                            let nullable_not_null_nullable = generate_jsonb_agg_d1(
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                     &generate_jsonb_agg_d2(
                                         &generate_jsonb_agg_d3(
@@ -1730,7 +1726,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 )
                             );
-                            let not_null_nullable_nullable_not_null = generate_jsonb_agg_d1(
+                            let nullable_nullable_not_null = generate_jsonb_agg_d1(
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                     &generate_jsonb_agg_d2(
                                         &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
@@ -1743,7 +1739,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 )
                             );
-                            let not_null_nullable_nullable_nullable = generate_jsonb_agg_d1(
+                            let nullable_nullable_nullable = generate_jsonb_agg_d1(
                                 &generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
                                     &generate_jsonb_agg_d2(
                                         &generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
@@ -1759,14 +1755,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 )
                             );
                             match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => not_null_not_null_not_null_not_null,
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_not_null_not_null_nullable,
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => not_null_not_null_nullable_not_null,
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => not_null_not_null_nullable_nullable,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => not_null_nullable_not_null_not_null,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_nullable_not_null_nullable,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => not_null_nullable_nullable_not_null,
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => not_null_nullable_nullable_nullable,
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => not_null_not_null_not_null,
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => not_null_not_null_nullable,
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => not_null_nullable_not_null,
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => not_null_nullable_nullable,
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => nullable_not_null_not_null,
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => nullable_not_null_nullable,
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => nullable_nullable_not_null,
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => nullable_nullable_nullable,
                             }
                         }
                     };
