@@ -1628,94 +1628,96 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 };
                 //last child dimension value does not matter - null or type - works both good
                 let format_handle = {
-                    let format_handle = match &postgresql_json_type_pattern {
-                        PostgresqlJsonTypePattern::Standart => column_name_and_maybe_field_getter_field_ident.clone(),
-                        PostgresqlJsonTypePattern::ArrayDimension1 {
-                            dimension1_not_null_or_nullable: _,
-                        } => generate_jsonb_agg(
-                            &"value",
-                            &format!("select {column_name_and_maybe_field_getter_field_ident}"),
-                            &"where ordinality",
-                            1
-                        ),
-                        PostgresqlJsonTypePattern::ArrayDimension2 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable: _,
-                        } => {
-                            let d2_elem_value = format!("{d2_elem}.value");
-                            let d2 = {
-                                let value = generate_jsonb_agg_d2(&d2_elem_value);
-                                match &dimension1_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => value,
-                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
-                                        &value
-                                    ),
-                                }
-                            };
-                            generate_jsonb_agg_d1(&d2)
+                    let format_handle = match ArrayDimension::try_from(postgresql_json_type_pattern) {
+                        Ok(array_dimension) => match &array_dimension {
+                            ArrayDimension::ArrayDimension1 {
+                                dimension1_not_null_or_nullable: _,
+                            } => generate_jsonb_agg(
+                                &"value",
+                                &format!("select {column_name_and_maybe_field_getter_field_ident}"),
+                                &"where ordinality",
+                                1
+                            ),
+                            ArrayDimension::ArrayDimension2 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable: _,
+                            } => {
+                                let d2_elem_value = format!("{d2_elem}.value");
+                                let d2 = {
+                                    let value = generate_jsonb_agg_d2(&d2_elem_value);
+                                    match &dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => value,
+                                        NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
+                                            &value
+                                        ),
+                                    }
+                                };
+                                generate_jsonb_agg_d1(&d2)
+                            },
+                            ArrayDimension::ArrayDimension3 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable: _,
+                            } => {
+                                let d3_elem_value = format!("{d3_elem}.value");
+                                let d3 = {
+                                    let value = generate_jsonb_agg_d3(&d3_elem_value);
+                                    match &dimension2_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => value,
+                                        NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
+                                            &value
+                                        ),
+                                    }
+                                };
+                                let d2 = {
+                                    let value = generate_jsonb_agg_d2(&d3);
+                                    match &dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => value,
+                                        NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
+                                            &value
+                                        ),
+                                    }
+                                };
+                                generate_jsonb_agg_d1(&d2)
+                            },
+                            ArrayDimension::ArrayDimension4 {
+                                dimension1_not_null_or_nullable,
+                                dimension2_not_null_or_nullable,
+                                dimension3_not_null_or_nullable,
+                                dimension4_not_null_or_nullable: _,
+                            } => {
+                                let d4_elem_value = format!("{d4_elem}.value");
+                                let d4 = {
+                                    let value = generate_jsonb_agg_d4(&d4_elem_value);
+                                    match &dimension3_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => value,
+                                        NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
+                                            &value
+                                        ),
+                                    }
+                                };
+                                let d3 = {
+                                    let value = generate_jsonb_agg_d3(&d4);
+                                    match &dimension2_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => value,
+                                        NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
+                                            &value
+                                        ),
+                                    }
+                                };
+                                let d2 = {
+                                    let value = generate_jsonb_agg_d2(&d3);
+                                    match &dimension1_not_null_or_nullable {
+                                        NotNullOrNullable::NotNull => value,
+                                        NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
+                                            &value
+                                        ),
+                                    }
+                                };
+                                generate_jsonb_agg_d1(&d2)
+                            }
                         },
-                        PostgresqlJsonTypePattern::ArrayDimension3 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable: _,
-                        } => {
-                            let d3_elem_value = format!("{d3_elem}.value");
-                            let d3 = {
-                                let value = generate_jsonb_agg_d3(&d3_elem_value);
-                                match &dimension2_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => value,
-                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
-                                        &value
-                                    ),
-                                }
-                            };
-                            let d2 = {
-                                let value = generate_jsonb_agg_d2(&d3);
-                                match &dimension1_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => value,
-                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
-                                        &value
-                                    ),
-                                }
-                            };
-                            generate_jsonb_agg_d1(&d2)
-                        },
-                        PostgresqlJsonTypePattern::ArrayDimension4 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                            dimension4_not_null_or_nullable: _,
-                        } => {
-                            let d4_elem_value = format!("{d4_elem}.value");
-                            let d4 = {
-                                let value = generate_jsonb_agg_d4(&d4_elem_value);
-                                match &dimension3_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => value,
-                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d3(
-                                        &value
-                                    ),
-                                }
-                            };
-                            let d3 = {
-                                let value = generate_jsonb_agg_d3(&d4);
-                                match &dimension2_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => value,
-                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d2(
-                                        &value
-                                    ),
-                                }
-                            };
-                            let d2 = {
-                                let value = generate_jsonb_agg_d2(&d3);
-                                match &dimension1_not_null_or_nullable {
-                                    NotNullOrNullable::NotNull => value,
-                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end_d1(
-                                        &value
-                                    ),
-                                }
-                            };
-                            generate_jsonb_agg_d1(&d2)
-                        }
+                        Err(_) => column_name_and_maybe_field_getter_field_ident.clone(),
                     };
                     match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => format_handle,
