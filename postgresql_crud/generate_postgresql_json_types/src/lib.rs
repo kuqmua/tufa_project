@@ -1692,7 +1692,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         ),
                                     }
                                 };
-                                generate_jsonb_agg_d1(&acc)
+                                generate_jsonb_agg(
+                                    &acc,
+                                    &column_name_and_maybe_field_getter_field_ident,
+                                    &generate_as_value_where(&"d1_elem", &"d1_ord"),
+                                    1
+                                )
                             },
                             ArrayDimension::ArrayDimension4 {
                                 dimension1_not_null_or_nullable,
@@ -1729,7 +1734,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         ),
                                     }
                                 };
-                                generate_jsonb_agg_d1(&acc)
+                                generate_jsonb_agg(
+                                    &acc,
+                                    &column_name_and_maybe_field_getter_field_ident,
+                                    &generate_as_value_where(&"d1_elem", &"d1_ord"),
+                                    1
+                                )
                             }
                         },
                         Err(_) => column_name_and_maybe_field_getter_field_ident.clone(),
