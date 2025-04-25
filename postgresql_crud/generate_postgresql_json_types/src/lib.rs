@@ -112,7 +112,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
         else {
             let vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonTypeRecord>>(&input_token_stream.to_string())
-            .expect("failed to get Config for generate_postgresql_json_object_type");
+            .expect("failed to get Config for generate_postgresql_json_types");
             let mut acc = vec![];
             for element in &vec {
                 if acc.contains(&element) {

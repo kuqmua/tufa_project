@@ -19,10 +19,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         panic!("does work only on structs!");
     };
 
-    let postgresql_json_object_type_pattern_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-        &syn_derive_input.attrs,
-        &"postgresql_crud::postgresql_json_object_type_pattern".to_string()
-    );
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
     struct PostgresqlJsonObjectTypeRecord {
         pub not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
@@ -41,7 +37,30 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             })
         }
     }
-
+    let postgresql_json_object_type_record_vec = {
+        if true {
+            PostgresqlJsonObjectTypeRecord::all()
+        }
+        else {
+            let vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonObjectTypeRecord>>(
+                &macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+                    &syn_derive_input.attrs,
+                    &"postgresql_crud::postgresql_json_object_type_pattern".to_string()
+                ).to_string()
+            )
+            .expect("failed to get Config for generate_postgresql_json_object_type");
+            let mut acc = vec![];
+            for element in &vec {
+                if acc.contains(&element) {
+                    panic!("not unique postgersql type provided: {element:#?}");
+                }
+                else {
+                    acc.push(&element);
+                }
+            }
+            vec
+        }
+    };
 
 
     let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
