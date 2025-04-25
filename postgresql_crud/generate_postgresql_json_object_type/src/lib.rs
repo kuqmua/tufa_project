@@ -23,6 +23,26 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         &syn_derive_input.attrs,
         &"postgresql_crud::postgresql_json_object_type_pattern".to_string()
     );
+    #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+    struct PostgresqlJsonObjectTypeRecord {
+        pub not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        pub postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern,
+    }
+    impl PostgresqlJsonObjectTypeRecord {
+        fn all() -> std::vec::Vec<Self> {
+            postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::all_variants().into_iter().for_each(|postgresql_json_type_pattern| {
+                    acc.push(PostgresqlJsonObjectTypeRecord {
+                        not_null_or_nullable: not_null_or_nullable.clone(),
+                        postgresql_json_type_pattern,
+                    });
+                });
+                acc
+            })
+        }
+    }
+
+
 
     let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
     // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
