@@ -2447,7 +2447,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 };
                 // let value_snake_case = naming::ValueSnakeCase;
-                let postgresql_json_type_token_stream = postgresql_crud_macros_common::generate_postgresql_json_object_type_token_stream(
+                let postgresql_json_type_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
                     &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                     &tokens_upper_camel_case,
                     &tokens_create_upper_camel_case,

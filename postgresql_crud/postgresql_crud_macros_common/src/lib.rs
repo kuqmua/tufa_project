@@ -481,7 +481,7 @@ impl quote::ToTokens for IsUpdateQueryBindMutable {
         }
     }
 }
-pub fn generate_postgresql_json_object_type_token_stream(
+pub fn generate_postgresql_json_type_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     create_type_token_stream: &dyn quote::ToTokens,

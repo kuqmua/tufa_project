@@ -206,7 +206,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     })
     .collect::<std::vec::Vec<PostgresqlJsonTypeRecord>>();
     // macros_helpers::write_string_into_file::write_string_into_file(
-    //     "GeneratePostgresqlJsonObjectTypesJsonVariants",
+    //     "GeneratePostgresqlJsonTypesJsonVariants",
     //     &serde_json::to_string(&postgresql_json_type_record_vec).unwrap(),
     // );
     use rayon::iter::ParallelIterator;
@@ -1280,7 +1280,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize|{
             format!("{}_end", generate_dimension_number_stringified(dimensions_number))
         };
-        let impl_crate_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_object_type_token_stream(
+        let impl_crate_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
             &postgresql_crud_macros_common::ImportPath::Crate,
             &ident,
             &ident_origin_upper_camel_case,
