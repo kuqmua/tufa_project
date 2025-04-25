@@ -405,6 +405,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             self.to_string().parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("failed to parse PostgresqlTypeRange to proc_macro2::TokenStream")).to_tokens(tokens)
         }
     }
+    // todo reuse it(move to postgresql_macros_common) if sqlx devs will add nested array support
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
     enum PostgresqlTypePattern {
         Standart,
@@ -438,7 +439,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 // PostgresqlTypePattern::ArrayDimension4 { .. } => 4,
             }
         }
-        fn all_variants() -> std::vec::Vec<Self> {
+        fn all() -> std::vec::Vec<Self> {
             Self::into_array().into_iter().fold(vec![], |mut acc, postgresql_type_pattern| {
                 match &postgresql_type_pattern {
                     Self::Standart => {
@@ -881,13 +882,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
                     match &postgresql_type.can_be_nullable() {
                         CanBeNullable::True => {
-                            postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                                PostgresqlTypePattern::all_variants().into_iter().for_each(|postgresql_type_pattern| {
-                                    acc.push(PostgresqlTypeRecord {
-                                        postgresql_type: postgresql_type.clone(),
-                                        not_null_or_nullable,
-                                        postgresql_type_pattern,
-                                    });
+                            PostgresqlTypePattern::all().into_iter().for_each(|postgresql_type_pattern| {
+                                acc.push(PostgresqlTypeRecord {
+                                    postgresql_type: postgresql_type.clone(),
+                                    not_null_or_nullable,
+                                    postgresql_type_pattern,
                                 });
                             });
                         },
