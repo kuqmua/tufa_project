@@ -60,7 +60,76 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
             vec
         }
-    };
+    }
+    .into_iter()
+    .filter(|element|{
+        use postgresql_crud_macros_common::NotNullOrNullable;
+        let not_null_or_nullable_filter = match &element.not_null_or_nullable {
+            NotNullOrNullable::NotNull => true,
+            NotNullOrNullable::Nullable => true,
+        };
+        let postgresql_json_type_pattern_filter = match &element.postgresql_json_type_pattern {
+            postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => true,
+            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
+                dimension1_not_null_or_nullable,
+            } => match &dimension1_not_null_or_nullable {
+                NotNullOrNullable::NotNull => true,
+                NotNullOrNullable::Nullable => true,
+            },
+            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
+                dimension1_not_null_or_nullable,
+                dimension2_not_null_or_nullable,
+            } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+            },
+            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
+                dimension1_not_null_or_nullable,
+                dimension2_not_null_or_nullable,
+                dimension3_not_null_or_nullable,
+            } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+            },
+            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
+                dimension1_not_null_or_nullable,
+                dimension2_not_null_or_nullable,
+                dimension3_not_null_or_nullable,
+                dimension4_not_null_or_nullable,
+            } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => true,
+            }
+        };
+        not_null_or_nullable_filter && postgresql_json_type_pattern_filter
+    })
+    .collect::<std::vec::Vec<PostgresqlJsonObjectTypeRecord>>();
+    // macros_helpers::write_string_into_file::write_string_into_file(
+    //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
+    //     &serde_json::to_string(&postgresql_json_type_record_vec).unwrap(),
+    // );
 
 
     let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
