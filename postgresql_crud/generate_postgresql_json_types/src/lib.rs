@@ -249,12 +249,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
             let not_null_or_nullable_rust = not_null_or_nullable.rust();
             let (rust_part, postgresql_part) = match &postgresql_json_type_pattern {
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => {
-                    (
-                        format!("{rust_type_name}"),
-                        format!("{postgresql_json_type_name}")
-                    )
-                },
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => (
+                    format!("{rust_type_name}"),
+                    format!("{postgresql_json_type_name}")
+                ),
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                     dimension1_not_null_or_nullable,
                 } => {
