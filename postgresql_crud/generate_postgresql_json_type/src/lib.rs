@@ -1,9 +1,13 @@
 //todo maybe in many few dimantional array error message would be wrong. test it
 //todo generate authorization rights enum for json fields
+#[proc_macro_attribute]
+pub fn postgresql_json_type_pattern(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+    item
+}
 #[proc_macro_derive(GeneratePostgresqlJsonType)]
-pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn generate_postgresql_json_type(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
         if let syn::Fields::Named(fields_named) = &data_struct.fields {
@@ -14,6 +18,12 @@ pub fn generate_postgresql_json_type(input: proc_macro::TokenStream) -> proc_mac
     } else {
         panic!("does work only on structs!");
     };
+
+    let postgresql_json_type_pattern_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+        &syn_derive_input.attrs,
+        &"postgresql_crud::postgresql_json_type_pattern".to_string()
+    );
+
     let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
     // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
 

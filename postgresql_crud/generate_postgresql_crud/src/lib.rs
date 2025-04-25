@@ -2287,14 +2287,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let generate_try_operation_route_logic_token_stream = |operation: &Operation,
-                                                           common_additional_route_logic_token_stream: &dyn quote::ToTokens,
-                                                           parameters_logic_token_stream: &dyn quote::ToTokens,
-                                                           expected_updated_primary_keys_token_stream: &dyn quote::ToTokens,
-                                                           query_string_token_stream: &dyn quote::ToTokens,
-                                                           binded_query_token_stream: &dyn quote::ToTokens,
-                                                           postgresql_logic_token_stream: &dyn quote::ToTokens|
-     -> proc_macro2::TokenStream {
+    let generate_try_operation_route_logic_token_stream = |
+        operation: &Operation,
+        common_additional_route_logic_token_stream: &dyn quote::ToTokens,
+        parameters_logic_token_stream: &dyn quote::ToTokens,
+        expected_updated_primary_keys_token_stream: &dyn quote::ToTokens,
+        query_string_token_stream: &dyn quote::ToTokens,
+        binded_query_token_stream: &dyn quote::ToTokens,
+        postgresql_logic_token_stream: &dyn quote::ToTokens
+    | -> proc_macro2::TokenStream {
         let try_operation_route_logic_snake_case = naming::parameter::TrySelfRouteLogicSnakeCase::from_display(operation);
         let request_snake_case = naming::RequestSnakeCase;
         let app_state_snake_case = naming::AppStateSnakeCase;
@@ -2350,7 +2351,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #request_parts_preparation_token_stream
                 #additional_validators_token_stream
                 #parameters_logic_token_stream
-                println!("{:#?}", #parameters_snake_case);
+                // println!("{:#?}", #parameters_snake_case);
                 #expected_updated_primary_keys_token_stream
                 let #query_string_snake_case = #query_string_token_stream;
                 println!("{}", #query_string_snake_case);

@@ -32,6 +32,7 @@ pub use generate_postgresql_crud::update_one_additional_route_logic;
 
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 pub use generate_postgresql_json_type::GeneratePostgresqlJsonType;
+pub use generate_postgresql_json_type::postgresql_json_type_pattern;
 pub use generate_postgresql_json_types::generate_postgresql_json_types;
 pub use generate_postgresql_types::generate_postgresql_types;
 
