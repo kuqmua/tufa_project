@@ -31,8 +31,8 @@ pub use generate_postgresql_crud::update_many_additional_route_logic;
 pub use generate_postgresql_crud::update_one_additional_route_logic;
 
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
-pub use generate_postgresql_json_type::GeneratePostgresqlJsonType;
-pub use generate_postgresql_json_type::postgresql_json_type_pattern;
+pub use generate_postgresql_json_object_type::GeneratePostgresqlJsonObjectType;
+pub use generate_postgresql_json_object_type::postgresql_json_object_type_pattern;
 pub use generate_postgresql_json_types::generate_postgresql_json_types;
 pub use generate_postgresql_types::generate_postgresql_types;
 
@@ -90,8 +90,8 @@ pub trait PostgresqlJsonType {
     fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
-pub trait GeneratePostgresqlJsonTypeToRead {
-    fn generate_postgresql_json_type_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
+pub trait GeneratePostgresqlJsonObjectTypeToRead {
+    fn generate_postgresql_json_object_type_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
     where
         Self: Sized;
 }

@@ -1,5 +1,5 @@
 [package]
-name = "generate_postgresql_json_type"
+name = "generate_postgresql_json_object_type"
 version = "0.1.0"
 edition = "2024"
 

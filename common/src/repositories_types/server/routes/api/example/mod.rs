@@ -151,8 +151,8 @@ pub struct Example {
 }
 //todo enum tree support
 //todo generate wrapper type for all possible json type
-#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonType)]
-#[postgresql_crud::postgresql_json_type_pattern{
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
+#[postgresql_crud::postgresql_json_object_type_pattern{
     println!("kekw");
 }]
 pub struct Animal {
@@ -354,7 +354,7 @@ pub struct Animal {
 //     serde::Deserialize,
 //     utoipa::ToSchema,
 //     schemars::JsonSchema,
-//     postgresql_crud::GeneratePostgresqlJsonType
+//     postgresql_crud::GeneratePostgresqlJsonObjectType
 // )] //user type must implement utoipa::ToSchema trait
 // pub struct Doggie {
 //     pub std_primitive_i8: postgresql_crud::postgresql_json_type::StdPrimitiveI8,

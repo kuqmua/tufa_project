@@ -1,11 +1,11 @@
 //todo maybe in many few dimantional array error message would be wrong. test it
 //todo generate authorization rights enum for json fields
 #[proc_macro_attribute]
-pub fn postgresql_json_type_pattern(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
+pub fn postgresql_json_object_type_pattern(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
     item
 }
-#[proc_macro_derive(GeneratePostgresqlJsonType)]
-pub fn generate_postgresql_json_type(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
+#[proc_macro_derive(GeneratePostgresqlJsonObjectType)]
+pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
@@ -19,9 +19,9 @@ pub fn generate_postgresql_json_type(input_token_stream: proc_macro::TokenStream
         panic!("does work only on structs!");
     };
 
-    let postgresql_json_type_pattern_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+    let postgresql_json_object_type_pattern_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
         &syn_derive_input.attrs,
-        &"postgresql_crud::postgresql_json_type_pattern".to_string()
+        &"postgresql_crud::postgresql_json_object_type_pattern".to_string()
     );
 
     let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
@@ -2408,7 +2408,7 @@ pub fn generate_postgresql_json_type(input_token_stream: proc_macro::TokenStream
                     }
                 };
                 // let value_snake_case = naming::ValueSnakeCase;
-                let postgresql_json_type_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
+                let postgresql_json_type_token_stream = postgresql_crud_macros_common::generate_postgresql_json_object_type_token_stream(
                     &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                     &tokens_upper_camel_case,
                     &tokens_create_upper_camel_case,
@@ -3050,8 +3050,8 @@ pub fn generate_postgresql_json_type(input_token_stream: proc_macro::TokenStream
                         //         PostgresqlType::JsonbNotNull => generate_ok_try_generate_create_token_stream(true),
                         //         PostgresqlType::JsonbNullable => {
                         //             // let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-                        //             // let postgresql_crud_postgresql_json_type_try_generate_postgresql_json_type_to_create_error_named_token_stream = quote::quote!{
-                        //             //     postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
+                        //             // let postgresql_crud_postgresql_json_type_try_generate_postgresql_json_object_type_to_create_error_named_token_stream = quote::quote!{
+                        //             //     postgresql_crud::PostgresqlJsonTypeTryGeneratePostgresqlJsonObjectTypeToCreateErrorNamed
                         //             // };
                         //             let ok_as_json_type_token_stream = generate_ok_try_generate_create_token_stream(false);
                         //             quote::quote! {
@@ -3063,10 +3063,10 @@ pub fn generate_postgresql_json_type(input_token_stream: proc_macro::TokenStream
                         //                             Ok(format!("${increment}"))
                         //                         }
                         //                         None =>
-                        //                         //- Err(#postgresql_crud_postgresql_json_type_try_generate_postgresql_json_type_to_create_error_named_token_stream::#checked_add_upper_camel_case {
+                        //                         //- Err(#postgresql_crud_postgresql_json_type_try_generate_postgresql_json_object_type_to_create_error_named_token_stream::#checked_add_upper_camel_case {
                         //                         //-     code_occurence: error_occurence_lib::code_occurence!()
                         //                         //- })
-                        //                         todo!() //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
+                        //                         todo!() //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonObjectTypeToCreateErrorNamed
                         //                         ,
                         //                     }
                         //                 }
@@ -3132,7 +3132,7 @@ pub fn generate_postgresql_json_type(input_token_stream: proc_macro::TokenStream
                             // let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
                             // let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
                             // let increment_snake_case = naming::IncrementSnakeCase;
-                            // let generate_ok_try_generate_postgresql_json_type_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool| {
+                            // let generate_ok_try_generate_postgresql_json_object_type_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool| {
                             //     let first_argument_token_stream: &dyn quote::ToTokens = if is_postgresql_type_self_to_update_zero { &quote::quote! {&#value_snake_case} } else { &value_snake_case };
                             //     //todo proper error handling - remove .unwrap()
                             //     quote::quote! {
@@ -3146,18 +3146,18 @@ pub fn generate_postgresql_json_type(input_token_stream: proc_macro::TokenStream
                             //     }
                             // };
                             // match &postgresql_type {
-                            //     PostgresqlType::JsonbNotNull => generate_ok_try_generate_postgresql_json_type_to_update_token_stream(true),
+                            //     PostgresqlType::JsonbNotNull => generate_ok_try_generate_postgresql_json_object_type_to_update_token_stream(true),
                             //     PostgresqlType::JsonbNullable => {
-                            //         let ok_try_generate_postgresql_json_type_to_update_token_stream = generate_ok_try_generate_postgresql_json_type_to_update_token_stream(false);
+                            //         let ok_try_generate_postgresql_json_object_type_to_update_token_stream = generate_ok_try_generate_postgresql_json_object_type_to_update_token_stream(false);
                             //         quote::quote! {
                             //             match &#value_snake_case.0 {
-                            //                 Some(#value_snake_case) => #ok_try_generate_postgresql_json_type_to_update_token_stream,
+                            //                 Some(#value_snake_case) => #ok_try_generate_postgresql_json_object_type_to_update_token_stream,
                             //                 None => match increment.checked_add(1) {
                             //                     Some(#value_snake_case) => {
                             //                         *increment = #value_snake_case;
                             //                         Ok(format!("${increment}"))
                             //                     },
-                            //                     //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonTypeToCreateErrorNamed
+                            //                     //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonObjectTypeToCreateErrorNamed
                             //                     None => Err(postgersql_crud::QueryPartErrorNamed::#checked_add_upper_camel_case {
                             //                         code_occurence: error_occurence_lib::code_occurence!()
                             //                     })
@@ -3244,7 +3244,7 @@ pub fn generate_postgresql_json_type(input_token_stream: proc_macro::TokenStream
     };
     // if ident == "" {
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "GeneratePostgresqlJsonType",
+    //     "GeneratePostgresqlJsonObjectType",
     //     &generated,
     // );
     //     // quote::quote!{}.into()
