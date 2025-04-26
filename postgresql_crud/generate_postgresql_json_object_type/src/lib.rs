@@ -153,11 +153,87 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             panic!("does work only on structs!");
         };
 
-        let ident = {
-            let ident = &syn_derive_input.ident;
-            ident
+        let syn_derive_input_ident = &syn_derive_input.ident;
+        let jsonb_object_upper_camel_case = naming::JsonbObjectUpperCamelCase;
+
+        let ident_standart_not_null_upper_camel_case = {
+            let not_null = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
+            let not_null_rust = not_null.rust();
+            format!("{not_null_rust}{syn_derive_input_ident}{as_upper_camel_case}{not_null}{jsonb_object_upper_camel_case}")
+            .parse::<proc_macro2::TokenStream>().unwrap()
         };
-        
+        let generate_ident_token_stream = |postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+            let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
+            let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
+            let not_null_or_nullable_rust = not_null_or_nullable.rust();
+            let (rust_part, postgresql_part) = match &postgresql_json_type_pattern {
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => (
+                    format!("{syn_derive_input_ident}"),
+                    format!("{jsonb_object_upper_camel_case}")
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
+                    dimension1_not_null_or_nullable,
+                } => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    (
+                        format!("{vec_of_upper_camel_case}{d1_rust}{syn_derive_input_ident}"),
+                        format!("{array_of_upper_camel_case}{d1}{jsonb_object_upper_camel_case}")
+                    )
+                },
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                } => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    let d2 = dimension2_not_null_or_nullable;
+                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                    (
+                        format!("{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{syn_derive_input_ident}"),
+                        format!("{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{jsonb_object_upper_camel_case}")
+                    )
+                },
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                } => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    let d2 = dimension2_not_null_or_nullable;
+                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                    let d3 = dimension3_not_null_or_nullable;
+                    let d3_rust = dimension3_not_null_or_nullable.rust();
+                    (
+                        format!("{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{syn_derive_input_ident}"),
+                        format!("{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{jsonb_object_upper_camel_case}")
+                    )
+                },
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                } => {
+                    let d1 = dimension1_not_null_or_nullable;
+                    let d1_rust = dimension1_not_null_or_nullable.rust();
+                    let d2 = dimension2_not_null_or_nullable;
+                    let d2_rust = dimension2_not_null_or_nullable.rust();
+                    let d3 = dimension3_not_null_or_nullable;
+                    let d3_rust = dimension3_not_null_or_nullable.rust();
+                    let d4 = dimension4_not_null_or_nullable;
+                    let d4_rust = dimension4_not_null_or_nullable.rust();
+                    (
+                        format!("{vec_of_upper_camel_case}{d1_rust}{vec_of_upper_camel_case}{d2_rust}{vec_of_upper_camel_case}{d3_rust}{vec_of_upper_camel_case}{d4_rust}{syn_derive_input_ident}"),
+                        format!("{array_of_upper_camel_case}{d1}{array_of_upper_camel_case}{d2}{array_of_upper_camel_case}{d3}{array_of_upper_camel_case}{d4}{jsonb_object_upper_camel_case}")
+                    )
+                },
+            };
+            format!("{not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{not_null_or_nullable}{postgresql_part}")
+            .parse::<proc_macro2::TokenStream>().unwrap()
+        };
+        let ident = &generate_ident_token_stream(&postgresql_json_type_pattern, &not_null_or_nullable);
 
         let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
         // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
@@ -1466,7 +1542,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             }))
                                         });
                                         let id_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                                            generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&syn::Ident::new(&naming::IdSnakeCase.to_string(), ident.span()));
+                                            generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&syn::Ident::new(&naming::IdSnakeCase.to_string(), proc_macro2::Span::call_site()));
                                         quote::quote! {
                                             #id_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                             #(#fields_token_stream),*
