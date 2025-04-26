@@ -3286,7 +3286,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         };
                         let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_type_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
                             &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
-                            &tokens_as_type_upper_camel_case,
+                            &tokens_upper_camel_case,
                             &tokens_as_type_table_type_declaration_upper_camel_case,
                             &tokens_as_type_create_upper_camel_case,
                             // &{
