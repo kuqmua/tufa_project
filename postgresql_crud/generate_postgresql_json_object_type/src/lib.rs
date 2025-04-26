@@ -7,22 +7,10 @@ pub fn postgresql_json_object_type_pattern(_attr: proc_macro::TokenStream, item:
 #[proc_macro_derive(GeneratePostgresqlJsonObjectType)]
 pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-    let ident = &syn_derive_input.ident;
-    let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
-        if let syn::Fields::Named(fields_named) = &data_struct.fields {
-            fields_named.named.iter().collect::<std::vec::Vec<&syn::Field>>()
-        } else {
-            panic!("supports only syn::Fields::Named");
-        }
-    } else {
-        panic!("does work only on structs!");
-    };
-
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
     struct PostgresqlJsonObjectTypeRecord {
-        pub not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        pub postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern,
+        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern,
     }
     impl PostgresqlJsonObjectTypeRecord {
         fn all() -> std::vec::Vec<Self> {
@@ -44,7 +32,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         else {
             let vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonObjectTypeRecord>>(
                 &macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-                    &syn_derive_input.attrs,
+                    &{
+                        let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream.clone()).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+                        syn_derive_input.attrs
+                    },
                     &"postgresql_crud::postgresql_json_object_type_pattern".to_string()
                 ).to_string()
             )
@@ -130,12 +121,27 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
     //     &serde_json::to_string(&postgresql_json_type_record_vec).unwrap(),
     // );
-    // use rayon::iter::ParallelIterator;
-    // use rayon::iter::IntoParallelRefIterator;
+    use rayon::iter::ParallelIterator;
+    use rayon::iter::IntoParallelRefIterator;
     let postgresql_json_object_type_array = postgresql_json_object_type_record_vec
-    // .par_iter()
-    .into_iter()//just for console prints ordering
-    .map(|element|{
+    .into_iter().map(|element|(element, input_token_stream.to_string())).collect::<std::vec::Vec<(PostgresqlJsonObjectTypeRecord, std::string::String)>>()
+    .par_iter()
+    // .into_iter()//just for console prints ordering
+    .map(|(element, input_token_stream_stringified)|{
+        let syn_derive_input: syn::DeriveInput = syn::parse(
+            <proc_macro::TokenStream as std::str::FromStr>::from_str(&input_token_stream_stringified).unwrap()
+        ).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+        let ident = &syn_derive_input.ident;
+        let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
+            if let syn::Fields::Named(fields_named) = &data_struct.fields {
+                fields_named.named.iter().collect::<std::vec::Vec<&syn::Field>>()
+            } else {
+                panic!("supports only syn::Fields::Named");
+            }
+        } else {
+            panic!("does work only on structs!");
+        };
+
         let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
         // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
 
