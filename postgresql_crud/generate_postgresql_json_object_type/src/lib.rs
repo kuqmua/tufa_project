@@ -143,11 +143,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let syn_derive_input: syn::DeriveInput = syn::parse(
             <proc_macro::TokenStream as std::str::FromStr>::from_str(&input_token_stream_stringified).unwrap()
         ).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-        let ident = {
-            let ident = &syn_derive_input.ident;
-            ident
-        };
-
         let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
             if let syn::Fields::Named(fields_named) = &data_struct.fields {
                 fields_named.named.iter().collect::<std::vec::Vec<&syn::Field>>()
@@ -157,6 +152,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         } else {
             panic!("does work only on structs!");
         };
+
+        let ident = {
+            let ident = &syn_derive_input.ident;
+            ident
+        };
+        
 
         let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
         // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);

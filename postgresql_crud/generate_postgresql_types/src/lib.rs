@@ -1076,7 +1076,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
         let postgresql_crud_macros_common_import_path_crate = postgresql_crud_macros_common::ImportPath::Crate;
         
-        let generate_ident_not_null_token_stream = |postgresql_type: &PostgresqlType|{
+        let generate_ident_standart_not_null_token_stream = |postgresql_type: &PostgresqlType|{
             let rust_type_name = RustTypeName::from(postgresql_type);
             let postgresql_type_name = PostgresqlTypeName::from(postgresql_type);
             let not_null = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
@@ -1084,7 +1084,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             format!("{not_null_rust}{rust_type_name}{as_upper_camel_case}{not_null}{postgresql_type_name}")
             .parse::<proc_macro2::TokenStream>().unwrap()
         };
-        let ident_standart_not_null_upper_camel_case = generate_ident_not_null_token_stream(&postgresql_type);
+        let ident_standart_not_null_upper_camel_case = generate_ident_standart_not_null_token_stream(&postgresql_type);
         let generate_ident_token_stream = |postgresql_type_pattern: &PostgresqlTypePattern, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
@@ -1371,13 +1371,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             &postgresql_type_pattern
         ) {
             let sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                &generate_ident_not_null_token_stream(&sqlx_types_time_primitive_date_time_as_timestamp)
+                &generate_ident_standart_not_null_token_stream(&sqlx_types_time_primitive_date_time_as_timestamp)
             );
             let sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                &generate_ident_not_null_token_stream(&sqlx_types_time_date_as_date)
+                &generate_ident_standart_not_null_token_stream(&sqlx_types_time_date_as_date)
             );
             let sqlx_types_big_decimal_as_not_null_numeric_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                &generate_ident_not_null_token_stream(&sqlx_types_big_decimal_as_numeric)
+                &generate_ident_standart_not_null_token_stream(&sqlx_types_big_decimal_as_numeric)
             );
 
             let self_dot_zero_token_stream = quote::quote! {#self_snake_case.0};
