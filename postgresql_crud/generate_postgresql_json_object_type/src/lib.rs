@@ -130,8 +130,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
     //     &serde_json::to_string(&postgresql_json_type_record_vec).unwrap(),
     // );
+    use rayon::iter::ParallelIterator;
+    use rayon::iter::IntoParallelRefIterator;
+    let postgresql_json_object_type_array = postgresql_json_object_type_record_vec
+    .par_iter()
+    // .into_iter()//just for console prints ordering
+    .map(|element|{
+
+        (
+            "".to_string(),
+            "".to_string(),
+            "".to_string()
+        )
+    });
 
 
+
+
+
+
+
+
+
+    
     let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
     // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
 
