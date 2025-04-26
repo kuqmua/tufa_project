@@ -2641,7 +2641,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     };
                     // let value_snake_case = naming::ValueSnakeCase;
-                    let postgresql_json_type_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
+                    let postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
                         &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                         &ident,
                         &tokens_create_upper_camel_case,
@@ -2908,7 +2908,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #where_element_token_stream
                         #read_token_stream
                         #update_token_stream
-                        #postgresql_json_type_token_stream
+                        #postgresql_json_type_for_ident_token_stream
                     }
                 };
                 let maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream = if need_to_generate_postgresql_crud_logic {
@@ -3289,7 +3289,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_as_type_update_token_stream
                             }
                         };
-                        let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_type_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
+                        let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
                             &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                             &ident,
                             &tokens_as_type_table_type_declaration_upper_camel_case,
@@ -3447,7 +3447,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                             &common_update_query_bind_token_stream
                         );
-                        // println!("{impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_type_token_stream}");
+                        // println!("{impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_ident_token_stream}");
                         quote::quote! {
                             #tokens_as_type_tokens_stream
                             #tokens_as_type_table_type_declaration_token_stream
@@ -3456,7 +3456,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #tokens_as_type_where_element_token_stream
                             #tokens_as_type_read_token_stream
                             #tokens_as_type_update_token_stream
-                            #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_type_token_stream
+                            #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_ident_token_stream
                         }
                     };
                     let postgresql_json_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_tokens_as_jsonb_not_null_token_stream =
