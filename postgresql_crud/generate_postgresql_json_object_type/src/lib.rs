@@ -136,23 +136,38 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     .par_iter()
     // .into_iter()//just for console prints ordering
     .map(|element|{
-
-        (
-            "".to_string(),
-            "".to_string(),
-            "".to_string()
-        )
-    });
+///////////////////////////////////////////////////////////////
 
 
 
 
+///////////////////////////////////////////////////////////////
+        "".to_string()
+    })
+    .collect::<std::vec::Vec<String>>();
+    let generated = {
+        let postgresql_json_object_type_array = postgresql_json_object_type_array
+        .into_iter()
+        .map(|element|{
+            element.parse::<proc_macro2::TokenStream>().unwrap()
+        })
+        .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+        quote::quote! {#(#postgresql_json_object_type_array)*}
+    };
+    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+    //     "PostgresqlJsonObjectTypeTokens",
+    //     &generated,
+    // );
+    // generated.into()
 
 
 
 
 
-    
+
+
+
+
     let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
     // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
 
