@@ -133,7 +133,7 @@ pub struct Example {
     // pub column_8384082c_21de_4a21_95e9_a398644d8ea1: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
     // //todo rename like postgresql types: NotNull prefix, not postfix
-    pub object_animal_as_jsonb_not_null: ObjectAnimalAsNotNullJsonbObject,
+    pub animal_as_not_null_jsonb_object: AnimalAsNotNullJsonbObject,
     // // pub object_animal_as_jsonb_nullable: OptionObjectAnimalAsJsonbNullable,
 
     // // pub option_object_animal_as_jsonb_not_null: StdOptionOptionObjectAnimalAsJsonbNotNull,
