@@ -235,12 +235,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 
-        let ident_standart_not_null_upper_camel_case = {
-            let not_null = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
-            let not_null_rust = not_null.rust();
-            format!("{not_null_rust}{rust_type_name}{as_upper_camel_case}{not_null}{postgresql_json_type_name}")
-            .parse::<proc_macro2::TokenStream>().unwrap()
-        };
+        // let ident_standart_not_null_upper_camel_case = {
+        //     let not_null = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
+        //     let not_null_rust = not_null.rust();
+        //     format!("{not_null_rust}{rust_type_name}{as_upper_camel_case}{not_null}{postgresql_json_type_name}")
+        //     .parse::<proc_macro2::TokenStream>().unwrap()
+        // };
         let generate_ident_token_stream = |postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
@@ -313,6 +313,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             .parse::<proc_macro2::TokenStream>().unwrap()
         };
         let ident = &generate_ident_token_stream(&postgresql_json_type_pattern, &not_null_or_nullable);
+        let ident_standart_not_null_upper_camel_case = &generate_ident_token_stream(
+            &postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
+            &postgresql_crud_macros_common::NotNullOrNullable::NotNull
+        );
+
+
         let ident_token_stream = quote::quote! {
             #[derive(Debug)]
             pub struct #ident;

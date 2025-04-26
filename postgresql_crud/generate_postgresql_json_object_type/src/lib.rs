@@ -155,17 +155,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
         let syn_derive_input_ident = &syn_derive_input.ident;
 
-        let jsonb_object_upper_camel_case = naming::JsonbObjectUpperCamelCase;
-        let with_id_upper_camel_case = naming::WithIdUpperCamelCase;
-        // let ident_standart_not_null_upper_camel_case = {
-        //     let not_null = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
-        //     let not_null_rust = not_null.rust();
-        //     format!("{not_null_rust}{syn_derive_input_ident}{as_upper_camel_case}{not_null}{jsonb_object_upper_camel_case}")
-        //     .parse::<proc_macro2::TokenStream>().unwrap()
-        // };
         let generate_ident_token_stream = |postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
+            let jsonb_object_upper_camel_case = naming::JsonbObjectUpperCamelCase;
+            let with_id_upper_camel_case = naming::WithIdUpperCamelCase;
             let not_null_or_nullable_rust = not_null_or_nullable.rust();
             let (rust_part, postgresql_part) = match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => (
