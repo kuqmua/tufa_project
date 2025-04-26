@@ -63,7 +63,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
     }
     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-    pub enum PostgresqlJsonType {
+    enum PostgresqlJsonType {
         StdPrimitiveI8AsJsonbNumber,
         StdPrimitiveI16AsJsonbNumber,
         StdPrimitiveI32AsJsonbNumber,
@@ -84,10 +84,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
     }
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
-    pub struct PostgresqlJsonTypeRecord {
-        pub postgresql_json_type: PostgresqlJsonType,
-        pub not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        pub postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern,
+    struct PostgresqlJsonTypeRecord {
+        postgresql_json_type: PostgresqlJsonType,
+        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+        postgresql_json_type_pattern: postgresql_crud_macros_common::PostgresqlJsonTypePattern,
     }
     impl PostgresqlJsonTypeRecord {
         fn all() -> std::vec::Vec<Self> {
@@ -220,8 +220,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     .map(|element|{
         // println!("{element:#?}");
         let postgresql_json_type = &element.postgresql_json_type;
-        let postgresql_json_type_pattern = &element.postgresql_json_type_pattern;
         let not_null_or_nullable = &element.not_null_or_nullable;
+        let postgresql_json_type_pattern = &element.postgresql_json_type_pattern;
 
         let rust_type_name = RustTypeName::from(postgresql_json_type);
         let postgresql_json_type_name = PostgresqlJsonTypeName::from(postgresql_json_type);

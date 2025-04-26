@@ -128,10 +128,26 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     .par_iter()
     // .into_iter()//just for console prints ordering
     .map(|(element, input_token_stream_stringified)|{
+        let not_null_or_nullable = &element.not_null_or_nullable;
+        let postgresql_json_type_pattern = &element.postgresql_json_type_pattern;
+
+        let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
+
+        let value_snake_case = naming::ValueSnakeCase;
+        let as_upper_camel_case = naming::AsUpperCamelCase;
+        let none_upper_camel_case = naming::NoneUpperCamelCase;
+
+        let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
+        let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+
         let syn_derive_input: syn::DeriveInput = syn::parse(
             <proc_macro::TokenStream as std::str::FromStr>::from_str(&input_token_stream_stringified).unwrap()
         ).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-        let ident = &syn_derive_input.ident;
+        let ident = {
+            let ident = &syn_derive_input.ident;
+            ident
+        };
+
         let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
             if let syn::Fields::Named(fields_named) = &data_struct.fields {
                 fields_named.named.iter().collect::<std::vec::Vec<&syn::Field>>()
