@@ -436,7 +436,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             });
             quote::quote! {#(#fields_token_stream),*}
         };
-        let ident_token_stream = {
+        let ident_token_stream = quote::quote! {
+            #[derive(Debug)]
+            pub struct #ident;
+        };
+
+        let ident_origin_token_stream = {
             // let content_token_stream = {
             //     let generate_current_ident = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern|{
             //         let value = generate_ident_token_stream(
@@ -576,6 +581,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 pub struct #ident;
             }
         };
+
+
+
+
         let common_token_stream = {
             let read_token_stream = {
                 let (ident_select_token_stream, ident_with_id_select_token_stream) = {
