@@ -663,12 +663,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     }
         // };
         let postgresql_type_traits_token_stream = {
-            enum PostgresqlJsonType {
-                Object,
-                StdOptionOptionObject,
-                StdVecVecObjectWithId,
-                StdOptionOptionStdVecVecObjectWithId,
-            }
             let generate_postgresql_type_traits_token_stream = |postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern, need_to_generate_postgresql_crud_logic: bool| {
                 let tokens_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
                 let tokens_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
