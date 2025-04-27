@@ -157,7 +157,8 @@ pub struct Example {
 #[postgresql_crud::postgresql_json_object_type_pattern{[
     {
         "not_null_or_nullable": "NotNull",
-        "postgresql_json_type_pattern": "Standart"
+        "postgresql_json_type_pattern": "Standart",
+        "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"//todo make it PostgresqlType. PostgresqlTypeAndPostgresqlJsonType now just for testing
     }
 ]}]
 pub struct Animal {
