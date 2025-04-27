@@ -155,7 +155,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
         let syn_derive_input_ident = &syn_derive_input.ident;
 
-        let generate_ident_token_stream = |postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern, not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+        let generate_ident_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern|{
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
             let jsonb_object_upper_camel_case = naming::JsonbObjectUpperCamelCase;
@@ -228,17 +228,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             format!("{not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{not_null_or_nullable}{postgresql_part}")
             .parse::<proc_macro2::TokenStream>().unwrap()
         };
-        let ident = &generate_ident_token_stream(&postgresql_json_type_pattern, &not_null_or_nullable);
+        let ident = &generate_ident_token_stream(&not_null_or_nullable, &postgresql_json_type_pattern);
         let ident_standart_not_null_upper_camel_case = &generate_ident_token_stream(
+            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
             &postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
-            &postgresql_crud_macros_common::NotNullOrNullable::NotNull
         );
-        // match &postgresql_json_type {
-        //     PostgresqlJsonType::Object => &naming::parameter::ObjectSelfUpperCamelCase::from_tokens(&ident),
-        //     PostgresqlJsonType::StdOptionOptionObject => &naming::parameter::StdOptionOptionObjectSelfUpperCamelCase::from_tokens(&ident),
-        //     PostgresqlJsonType::StdVecVecObjectWithId => &naming::parameter::StdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
-        //     PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfUpperCamelCase::from_tokens(&ident),
-        // };
 
         let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
         // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
