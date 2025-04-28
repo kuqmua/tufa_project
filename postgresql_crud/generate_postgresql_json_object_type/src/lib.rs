@@ -799,6 +799,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_create_table_column_query_part_for_ident_create_token_stream
             }
         };
+        //todo make it create struct method
         let create_query_part_token_stream = match &postgresql_json_type_pattern {
             postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -904,6 +905,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 dimension4_not_null_or_nullable: _,
             } => todo!()
         };
+        //todo make it create struct method
         let create_query_bind_token_stream = match &postgresql_json_type_pattern {
             postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -1056,6 +1058,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
             }
         };
+        //todo make it select struct method
         let generate_select_query_part_token_stream = |postgresql_type_or_json_type: &postgresql_crud_macros_common::PostgresqlTypeOrJsonType|{
             let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
             let generate_acc_push_str_variant_logic_token_stream =
@@ -2693,6 +2696,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
             }
         };
+        //todo make it update struct method
         let update_query_part_token_stream = match &postgresql_json_type_pattern {
             postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -2872,6 +2876,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 dimension4_not_null_or_nullable: _,
             } => todo!()
         };
+        //todo make it update struct method
         let update_query_bind_token_stream = match &postgresql_json_type_pattern {
             postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
