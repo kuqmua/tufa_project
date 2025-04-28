@@ -3409,10 +3409,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     true,
                     &ident_postgresql_type_table_type_declaration_upper_camel_case,
                     &{
-                        // let type_token_stream = match &postgresql_type {
-                        //     PostgresqlType::JsonbNotNull => quote::quote! {#tokens_table_type_declaration_upper_camel_case},
-                        //     PostgresqlType::JsonbNullable => quote::quote! {std::option::Option<#tokens_table_type_declaration_upper_camel_case>},
-                        // };
                         match &postgresql_json_type_pattern {
                             postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#fields_declaration_3e60c916_a7e9_44af_a69d_0db54fa0c2f0_token_stream},
