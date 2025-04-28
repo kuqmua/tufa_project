@@ -704,8 +704,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream)
         };
-        
-        let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
+
         // let object_with_id_ident_token_stream = {
         //     let object_with_id_ident_token_stream = generate_supported_generics_template_struct_token_stream(
         //         true,
@@ -1274,7 +1273,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let column_name_and_maybe_field_getter_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                 &format!("{{{}}}->'{{{field_ident_snake_case}}}'", naming::ColumnNameAndMaybeFieldGetterSnakeCase)
             );
-            let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_for_error_message_snake_case}}}.{{{field_ident_snake_case}}}"));
+            let column_name_and_maybe_field_getter_for_error_message_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                &format!("{{{}}}.{{{field_ident_snake_case}}}", naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase)
+            );
             let (if_postgresql_type_is_true_format_handle_double_quotes_token_stream, if_postgresql_type_is_false_format_handle_double_quotes_token_stream) = {
                 let wrap_into_jsonb_build_object_field_ident = |value: &dyn std::fmt::Display| format!("jsonb_build_object('{{{field_ident_snake_case}}}', {value})");
                 let wrap_into_jsonb_build_object_value = |value: &dyn std::fmt::Display| format!("jsonb_build_object('{value_snake_case}',{value})");
