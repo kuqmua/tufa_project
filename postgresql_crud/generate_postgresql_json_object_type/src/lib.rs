@@ -4055,7 +4055,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             //todo return it later
             // #object_with_id_ident_token_stream
 
-            #maybe_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream
+            // #maybe_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream //todo
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
         };
         // if let (

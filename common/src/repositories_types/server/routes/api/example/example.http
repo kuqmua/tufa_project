@@ -216,30 +216,11 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 [
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
-    "object_animal_as_jsonb_not_null": {
+    "animal_as_not_null_jsonb_object": {
       "value": [
         {
-          "vec_of_std_primitive_i8_as_not_null_array_of_not_null_number": {
-            "value": [
-              0,2
-            ]
-          }
-        },
-        {
-          "option_vec_of_std_primitive_i8_as_nullable_array_of_not_null_number": {
-            "value": null
-          }
-        },
-        {
-          "vec_of_option_std_primitive_i8_as_not_null_array_of_nullable_jsonb_number": {
-            "value": [
-              0,null
-            ]
-          }
-        },
-        {
-          "option_vec_of_option_std_primitive_i8_as_nullable_array_of_nullable_number": {
-            "value": null
+          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+            "value": 0
           }
         }
       ]
