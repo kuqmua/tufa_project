@@ -349,6 +349,8 @@ pub struct Animal {
 
     // pub std_vec_vec_object_with_id: StdVecVecObjectWithIdDoggie,
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
+
+    pub doggie_as_not_null_jsonb_object: DoggieAsNotNullJsonbObject,
 }
 // /////////////////////////////////////////
 // #[derive(
@@ -379,3 +381,16 @@ mod tests {
     }
 }
 //////////////////
+#[derive(Debug
+    , postgresql_crud::GeneratePostgresqlJsonObjectType
+)]
+#[postgresql_crud::postgresql_json_object_type_pattern{[
+    {
+        "not_null_or_nullable": "NotNull",
+        "postgresql_json_type_pattern": "Standart",
+        "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"//todo make it PostgresqlType. PostgresqlTypeAndPostgresqlJsonType now just for testing
+    }
+]}]
+pub struct Doggie {
+    pub column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
+}

@@ -368,21 +368,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let increments_snake_case = naming::IncrementsSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-        // let (checked_add_variant_declaration_token_stream, checked_add_variant_initialization_token_stream) = {
-        //     let code_occurence_snake_case = naming::CodeOccurenceSnakeCase;
-        //     (
-        //         quote::quote! {
-        //             #checked_add_upper_camel_case {
-        //                 #code_occurence_snake_case: error_occurence_lib::code_occurence::CodeOccurence,
-        //             }
-        //         },
-        //         quote::quote! {
-        //             #checked_add_upper_camel_case {
-        //                 #code_occurence_snake_case: error_occurence_lib::code_occurence!()
-        //             }
-        //         }
-        //     )
-        // };
 
         let postgresql_crud_wrap_into_jsonb_build_object_token_stream = {
             let wrap_into_jsonb_build_object_snake_case = naming::WrapIntoJsonbBuildObjectSnakeCase;
