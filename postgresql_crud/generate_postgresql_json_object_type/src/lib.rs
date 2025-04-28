@@ -2702,7 +2702,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     } => todo!()
                 }
             };
-            let tokens_update_token_stream = {
+            let ident_update_token_stream = {
                 let self_type_content_token_stream = match &postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {pub postgresql_crud::UniqueVec<#ident_update_element_upper_camel_case>},
@@ -2735,7 +2735,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     pub struct #ident_update_upper_camel_case(#self_type_content_token_stream);
                 }
             };
-            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_update_token_stream =
+            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_update_upper_camel_case, &proc_macro2::TokenStream::new(), &{
                     let value = match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -2768,8 +2768,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 });
             quote::quote! {
                 #std_vec_vec_object_with_id_or_std_option_option_std_vec_vec_object_with_id_ident_token_stream
-                #tokens_update_token_stream
-                #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_update_token_stream
+                #ident_update_token_stream
+                #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
             }
         };
         let update_query_part_token_stream = match &postgresql_json_type_pattern {
@@ -3049,7 +3049,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             } => todo!()
         };
 
-        let impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = {
+        let impl_postgresql_crud_postgresql_json_type_for_ident_token_stream = {
             let postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                 &ident,
@@ -3552,7 +3552,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
         };
         let (
-            maybe_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream,
+            maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream,
             maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
         ) = match &trait_gen {
             TraitGen::PostgresqlType => (
@@ -3560,11 +3560,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
             ),
             TraitGen::PostgresqlTypeAndPostgresqlJsonType => (
-                impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream,
+                impl_postgresql_crud_postgresql_json_type_for_ident_token_stream,
                 impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
             ),
             TraitGen::PostgresqlJsonType => (
-                impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream,
+                impl_postgresql_crud_postgresql_json_type_for_ident_token_stream,
                 proc_macro2::TokenStream::new(),
             ),
         };
@@ -3582,7 +3582,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             //todo return it later
             // #object_with_id_ident_token_stream
 
-            #maybe_impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream
+            #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
         };
         // if let (
