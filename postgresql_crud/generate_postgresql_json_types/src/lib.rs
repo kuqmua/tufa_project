@@ -1460,20 +1460,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
         //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     // PostgresqlJsonTypePattern::Standart,
-        //     // PostgresqlJsonTypePattern::ArrayDimension1 {
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
         //     //     dimension1_not_null_or_nullable,
         //     // },
-        //     // PostgresqlJsonTypePattern::ArrayDimension2 {
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
         //     //     dimension1_not_null_or_nullable,
         //     //     dimension2_not_null_or_nullable,
         //     // },
-        //     PostgresqlJsonTypePattern::ArrayDimension3 {
+        //     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
         //         dimension1_not_null_or_nullable,
         //         dimension2_not_null_or_nullable,
         //         dimension3_not_null_or_nullable,
         //     },
-        //     // PostgresqlJsonTypePattern::ArrayDimension4 {
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
         //     //     dimension1_not_null_or_nullable,
         //     //     dimension2_not_null_or_nullable,
         //     //     dimension3_not_null_or_nullable,
