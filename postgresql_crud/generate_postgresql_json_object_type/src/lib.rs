@@ -3508,18 +3508,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_postgresql_type_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident_postgresql_type_upper_camel_case);
             let ident_postgresql_type_select_token_stream = {
                 let ident_postgresql_type_select_token_stream = {
-                    //todo
-                    let type_token_stream = quote::quote! {
-                        postgresql_crud::UniqueVec<#ident_select_without_id_upper_camel_case>
+                    //todo not trivial to write api for get by id, select fields in last child dimension object and iumpl pagination api at the same time
+                    // quote::quote! {postgresql_crud::UniqueVec<#ident_select_without_id_upper_camel_case>}
+                    // quote::quote! {postgresql_crud::UniqueVec<#ident_select_with_id_upper_camel_case>}
+                    let content_token_stream = match postgresql_crud_macros_common::ArrayDimension::try_from(postgresql_json_type_pattern) {
+                        Ok(array_dimension) => {
+                            let mut arguments_token_stream = vec![];
+                            for element in 1..=array_dimension.to_usize() {
+                                let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
+                                .parse::<proc_macro2::TokenStream>().unwrap();
+                                arguments_token_stream.push(quote::quote! {
+                                    #dimension_number_pagination_token_stream: crate::Pagination
+                                });
+                            }
+                            quote::quote! {{
+                                #(#arguments_token_stream),*
+                            }}
+                        },
+                        Err(_) => quote::quote! {(pub postgresql_crud::UniqueVec<#ident_select_without_id_upper_camel_case>);}
                     };
-                    // match &postgresql_type {
-                    //     PostgresqlType::JsonbNotNull => quote::quote! {
-                    //         postgresql_crud::UniqueVec<#ident_select_without_id_upper_camel_case>
-                    //     },
-                    //     PostgresqlType::JsonbNullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                    //         &quote::quote!{postgresql_crud::UniqueVec<#ident_select_without_id_upper_camel_case>}
-                    //     ),
-                    // };
                     quote::quote! {
                         #[derive(
                             Debug,
@@ -3529,7 +3536,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             serde::Deserialize,
                             schemars::JsonSchema,
                         )]
-                        pub struct #ident_postgresql_type_select_upper_camel_case(#type_token_stream);
+                        pub struct #ident_postgresql_type_select_upper_camel_case #content_token_stream
                     }
                 };
                 let sqlx_types_json_tokens_select_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(
