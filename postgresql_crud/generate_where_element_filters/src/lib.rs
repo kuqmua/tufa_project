@@ -295,13 +295,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }
             });
             let field_names_double_quotes_token_stream = fields.iter().map(|element| generate_quotes::double_quotes_token_stream(&element.field_name));
-            let try_new_token_stream = quote::quote! {
-                match #ident::try_new(#enum_field_fields_token_stream) {
-                    Ok(value) => _serde::__private::Ok(value),
-                    Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                }
-            };
-
+            let try_new_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(&ident, &enum_field_fields_token_stream);
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]

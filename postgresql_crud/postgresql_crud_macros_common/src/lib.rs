@@ -871,3 +871,14 @@ pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(ident: &dyn qu
         }
     }
 }
+
+pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    quote::quote! {
+        match #ident::try_new(#initialization_token_stream) {
+            Ok(value) => serde::__private::Ok(value),
+            Err(error) => {
+                return Err(serde::de::Error::custom(format!("{error:?}")));
+            }
+        }
+    }
+}
