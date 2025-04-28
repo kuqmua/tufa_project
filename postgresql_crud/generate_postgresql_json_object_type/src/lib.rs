@@ -3470,38 +3470,21 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_postgresql_type_create_upper_camel_case,
                     &proc_macro2::TokenStream::new(),
                     &{
-                        // let value = match &postgresql_type {
-                        //     PostgresqlType::JsonbNotNull => quote::quote! {(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
-                        //     PostgresqlType::JsonbNullable => quote::quote! {(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))},
-                        // };
-                        let value = match &postgresql_json_type_pattern {
+                        let content_token_stream = match &postgresql_json_type_pattern {
                             postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_fields_token_stream},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))},
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_fields_token_stream},
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{(Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))},
                             },
-                            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-                                dimension1_not_null_or_nullable: _,
-                            } => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {(vec![#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {(Some(vec![#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream]))},
-                            },
-                            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
-                                dimension1_not_null_or_nullable: _,
-                                dimension2_not_null_or_nullable: _,
-                            } => todo!(),
-                            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
-                                dimension1_not_null_or_nullable: _,
-                                dimension2_not_null_or_nullable: _,
-                                dimension3_not_null_or_nullable: _,
-                            } => todo!(),
-                            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
-                                dimension1_not_null_or_nullable: _,
-                                dimension2_not_null_or_nullable: _,
-                                dimension3_not_null_or_nullable: _,
-                                dimension4_not_null_or_nullable: _,
-                            } => todo!()
+                            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {..}
+                            | postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {..}
+                            | postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {..}
+                            | postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {..}
+                            => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{(vec![#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])},
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{(Some(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))},
+                            }
                         };
-                        quote::quote! {Self #value}
+                        quote::quote! {Self #content_token_stream}
                     }
                 );
                 quote::quote! {
