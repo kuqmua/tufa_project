@@ -448,28 +448,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             pub struct #ident;
         };
 
-        let generate_current_ident_origin_non_wrapping = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern|{
-            naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
-                &current_not_null_or_nullable,
-                &current_postgresql_json_type_pattern,
-                StandartWithId::True,
-            ))
-        };
-        let field_type_handle: &dyn quote::ToTokens = {
-            let generate_current_ident_origin = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern|{
-                let value = generate_current_ident_origin_non_wrapping(
+        let generate_field_type_handle = |standart_not_null_fields_initialization_token_stream: &dyn quote::ToTokens, prefix_wrapper: fn(&dyn quote::ToTokens) -> proc_macro2::TokenStream|{
+            let wrap_into_scopes_pub_token_stream = |content: &dyn quote::ToTokens|{
+                quote::quote! {(pub #content);}
+            };
+            let generate_current_ident_prefix = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern|{
+                let value = prefix_wrapper(&generate_ident_token_stream(
                     &current_not_null_or_nullable,
-                    &current_postgresql_json_type_pattern
-                );
-                match &not_null_or_nullable {
+                    &current_postgresql_json_type_pattern,
+                    StandartWithId::True,
+                ));
+                let content = match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value)
-                }
+                };
+                wrap_into_scopes_pub_token_stream(&content)
             };
             match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &quote::quote! {#pub_field_idents_field_types_token_stream},
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_upper_camel_case),
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {#standart_not_null_fields_initialization_token_stream},
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(
+                        &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&prefix_wrapper(ident_standart_not_null_upper_camel_case))
+                    ),
                 },
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                     dimension1_not_null_or_nullable,
@@ -490,7 +490,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &postgresql_json_type_pattern,
                         )
                     };
-                    &generate_current_ident_origin(
+                    generate_current_ident_prefix(
                         &current_not_null_or_nullable,
                         &current_postgresql_json_type_pattern
                     )
@@ -517,7 +517,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &postgresql_json_type_pattern,
                         )
                     };
-                    &generate_current_ident_origin(
+                    generate_current_ident_prefix(
                         &current_not_null_or_nullable,
                         &current_postgresql_json_type_pattern
                     )
@@ -546,7 +546,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &postgresql_json_type_pattern,
                         )
                     };
-                    &generate_current_ident_origin(
+                    generate_current_ident_prefix(
                         &current_not_null_or_nullable,
                         &current_postgresql_json_type_pattern
                     )
@@ -577,27 +577,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &postgresql_json_type_pattern,
                         )
                     };
-                    &generate_current_ident_origin(
+                    generate_current_ident_prefix(
                         &current_not_null_or_nullable,
                         &current_postgresql_json_type_pattern
                     )
                 }
             }
         };
-        let field_type_handle_struct_scopes = {
-            let braces_pub_field_type_handle = quote::quote! {(pub #field_type_handle);};
-            if let postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern {
-                if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable {
-                    quote::quote! {{#field_type_handle}}
-                }
-                else {
-                    braces_pub_field_type_handle
-                }
+        let field_type_handle: &dyn quote::ToTokens = &generate_field_type_handle(
+            &quote::quote!{{#pub_field_idents_field_types_token_stream}},
+            |tokens|{
+                // let content = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&tokens);
+                // quote::quote!{#content}
+                quote::quote!{#tokens}
             }
-            else {
-                braces_pub_field_type_handle
-            }
-        };
+        );
+        println!("{}", quote::quote!{#field_type_handle});
 
         // let ident_origin_token_stream = {
         //     let ident_origin_token_stream = quote::quote! {
