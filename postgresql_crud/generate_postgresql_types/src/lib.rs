@@ -1169,7 +1169,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
-        let field_type = postgresql_type.field_type_token_stream();
+        let field_type_standart_not_null = postgresql_type.field_type_token_stream();
         let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
             naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
                 &postgresql_type,
@@ -1190,7 +1190,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             match &postgresql_type_pattern {
                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case)
                 },
                 PostgresqlTypePattern::ArrayDimension1 {
@@ -2782,20 +2782,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let impl_new_for_ident_origin_token_stream = {
                 let type_token_stream: &dyn quote::ToTokens = match &element.postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{std::option::Option<#field_type>},
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{std::option::Option<#field_type_standart_not_null>},
                     },
                     PostgresqlTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable,
                     } => &{
-                        let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
+                        let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
                         not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
                     },
                     // PostgresqlTypePattern::ArrayDimension2 {
                     //     dimension1_not_null_or_nullable,
                     //     dimension2_not_null_or_nullable,
                     // } => &{
-                    //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
+                    //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
                     //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                     //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
                     // },
@@ -2804,7 +2804,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     //     dimension2_not_null_or_nullable,
                     //     dimension3_not_null_or_nullable,
                     // } => &{
-                    //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
+                    //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
                     //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
                     //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                     //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
@@ -2815,7 +2815,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     //     dimension3_not_null_or_nullable,
                     //     dimension4_not_null_or_nullable,
                     // } => &{
-                    //     let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
+                    //     let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
                     //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension4_type>});
                     //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
                     //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
@@ -3146,7 +3146,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 quote::quote! {
                     impl sqlx::postgres::PgHasArrayType for #ident_origin_upper_camel_case {
                         fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-                            <#field_type as sqlx::postgres::PgHasArrayType>::array_type_info()
+                            <#field_type_standart_not_null as sqlx::postgres::PgHasArrayType>::array_type_info()
                         }
                     }
                 }

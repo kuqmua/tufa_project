@@ -325,7 +325,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
 
-        let field_type = match &postgresql_json_type {
+        let field_type_standart_not_null = match &postgresql_json_type {
             PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => quote::quote!{std::primitive::i8},
             PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => quote::quote!{std::primitive::i16},
             PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => quote::quote!{std::primitive::i32},
@@ -359,7 +359,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case)
                 },
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
@@ -533,9 +533,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             let number_token_stream = quote::quote!{Some(Box::new(schemars::schema::NumberValidation {
                 multiple_of: None,
-                maximum: Some(#field_type ::MAX as std::primitive::f64),
+                maximum: Some(#field_type_standart_not_null ::MAX as std::primitive::f64),
                 exclusive_maximum: None,
-                minimum: Some(#field_type ::MIN as std::primitive::f64),
+                minimum: Some(#field_type_standart_not_null ::MIN as std::primitive::f64),
                 exclusive_minimum: None,
             }))};
             let string_token_stream = quote::quote!{Some(Box::new(schemars::schema::StringValidation {
@@ -708,20 +708,20 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let impl_new_for_ident_origin_token_stream = {
                 let type_token_stream: &dyn quote::ToTokens = match &element.postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type,
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{std::option::Option<#field_type>},
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{std::option::Option<#field_type_standart_not_null>},
                     },
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable,
                     } => &{
-                        let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
+                        let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
                         not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
                     },
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
                         dimension1_not_null_or_nullable,
                         dimension2_not_null_or_nullable,
                     } => &{
-                        let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
+                        let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
                         let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                         not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
                     },
@@ -730,7 +730,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension2_not_null_or_nullable,
                         dimension3_not_null_or_nullable,
                     } => &{
-                        let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
+                        let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
                         let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
                         let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                         not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
@@ -741,7 +741,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         dimension3_not_null_or_nullable,
                         dimension4_not_null_or_nullable,
                     } => &{
-                        let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type});
+                        let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
                         let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension4_type>});
                         let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
                         let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
@@ -1014,7 +1014,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             );
             let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = {
-                let sqlx_types_json_type_field_type_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&field_type);
+                let sqlx_types_json_type_field_type_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&field_type_standart_not_null);
                 quote::quote!{
                     impl sqlx::Type<sqlx::Postgres> for #ident_origin_upper_camel_case {
                         fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
