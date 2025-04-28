@@ -2324,10 +2324,95 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
             }
         };
-
-        let impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = {
-            let where_element_token_stream = {
-                let tokens_where_element_token_stream = {
+        let ident_where_element_token_stream = {
+            let tokens_where_element_token_stream = {
+                let variants_token_stream = vec_syn_field.iter().map(|element| {
+                    let field_ident_stringified = element
+                        .ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                        })
+                        .to_string();
+                    let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                    let field_type_as_json_type_where_element_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                        &element.ty,
+                        &PostgresqlJsonTypeSubtype::WhereElement
+                    );
+                    quote::quote! {
+                        #field_ident_upper_camel_case_token_stream(postgresql_crud::PostgresqlTypeWhere<
+                            #field_type_as_json_type_where_element_token_stream
+                        >)
+                    }
+                });
+                quote::quote! {
+                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+                    pub enum #ident_where_element_upper_camel_case {
+                         #(#variants_token_stream),*
+                    }
+                }
+            };
+            let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_tokens_where_element_token_stream = postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
+                &quote::quote! {<'a>},
+                &ident_where_element_upper_camel_case,
+                &proc_macro2::TokenStream::new(),
+                &{
+                    let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
+                        let field_ident_stringified = element
+                            .ident
+                            .as_ref()
+                            .unwrap_or_else(|| {
+                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                            })
+                            .to_string();
+                        let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}}->'{field_ident_stringified}'"));
+                        quote::quote! {
+                            Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(
+                                value,
+                                increment,
+                                &format!(#format_handle_token_stream),
+                                is_need_to_add_logical_operator,
+                            )
+                        }
+                    });
+                    quote::quote! {
+                        match &self {
+                            #(#query_part_variants_token_stream),*
+                        }
+                    }
+                },
+                &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                &{
+                    let query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
+                        let field_ident_stringified = element
+                            .ident
+                            .as_ref()
+                            .unwrap_or_else(|| {
+                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                            })
+                            .to_string();
+                        let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                        quote::quote! {
+                            Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query)
+                        }
+                    });
+                    quote::quote! {
+                        match self {
+                            #(#query_bind_variants_token_stream),*
+                        }
+                    }
+                },
+                &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+            );
+            let impl_error_occurence_lib_to_std_string_string_for_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                &proc_macro2::TokenStream::new(),
+                &ident_where_element_upper_camel_case,
+                &proc_macro2::TokenStream::new(),
+                &quote::quote! {format!("{self:#?}")}
+            );
+            let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_where_element_token_stream =
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_where_element_upper_camel_case, &{
                     let variants_token_stream = vec_syn_field.iter().map(|element| {
                         let field_ident_stringified = element
                             .ident
@@ -2337,106 +2422,21 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             })
                             .to_string();
                         let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                        let field_type_as_json_type_where_element_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                            &element.ty,
-                            &PostgresqlJsonTypeSubtype::WhereElement
-                        );
                         quote::quote! {
-                            #field_ident_upper_camel_case_token_stream(postgresql_crud::PostgresqlTypeWhere<
-                                #field_type_as_json_type_where_element_token_stream
-                            >)
+                            Self::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                         }
                     });
-                    quote::quote! {
-                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                        pub enum #ident_where_element_upper_camel_case {
-                             #(#variants_token_stream),*
-                        }
-                    }
-                };
-                let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_tokens_where_element_token_stream = postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
-                    &quote::quote! {<'a>},
-                    &ident_where_element_upper_camel_case,
-                    &proc_macro2::TokenStream::new(),
-                    &{
-                        let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
-                            let field_ident_stringified = element
-                                .ident
-                                .as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                })
-                                .to_string();
-                            let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}}->'{field_ident_stringified}'"));
-                            quote::quote! {
-                                Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(
-                                    value,
-                                    increment,
-                                    &format!(#format_handle_token_stream),
-                                    is_need_to_add_logical_operator,
-                                )
-                            }
-                        });
-                        quote::quote! {
-                            match &self {
-                                #(#query_part_variants_token_stream),*
-                            }
-                        }
-                    },
-                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
-                    &{
-                        let query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
-                            let field_ident_stringified = element
-                                .ident
-                                .as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                })
-                                .to_string();
-                            let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                            quote::quote! {
-                                Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query)
-                            }
-                        });
-                        quote::quote! {
-                            match self {
-                                #(#query_bind_variants_token_stream),*
-                            }
-                        }
-                    },
-                    &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
-                );
-                let impl_error_occurence_lib_to_std_string_string_for_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-                    &proc_macro2::TokenStream::new(),
-                    &ident_where_element_upper_camel_case,
-                    &proc_macro2::TokenStream::new(),
-                    &quote::quote! {format!("{self:#?}")}
-                );
-                let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_where_element_token_stream =
-                    postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_where_element_upper_camel_case, &{
-                        let variants_token_stream = vec_syn_field.iter().map(|element| {
-                            let field_ident_stringified = element
-                                .ident
-                                .as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                })
-                                .to_string();
-                            let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                            quote::quote! {
-                                Self::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
-                            }
-                        });
-                        quote::quote! {vec![#(#variants_token_stream),*]}
-                    });
-                quote::quote! {
-                    #tokens_where_element_token_stream
-                    #impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_tokens_where_element_token_stream
-                    #impl_error_occurence_lib_to_std_string_string_for_tokens_where_element_token_stream
-                    #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_where_element_token_stream
-                }
-            };
+                    quote::quote! {vec![#(#variants_token_stream),*]}
+                });
+            quote::quote! {
+                #tokens_where_element_token_stream
+                #impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_tokens_where_element_token_stream
+                #impl_error_occurence_lib_to_std_string_string_for_tokens_where_element_token_stream
+                #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_where_element_token_stream
+            }
+        };
+
+        let impl_postgresql_crud_postgresql_json_type_for_tokens_ident_token_stream = {
             let read_token_stream = generate_common_read_token_stream(&postgresql_json_object_type, &PostgresqlTypeOrJsonTypeHandle::PostgresqlJsonType);
             let generate_ident_json_array_change_token_stream = |struct_ident_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens, struct_ident_try_new_error_named: &dyn quote::ToTokens, is_nullable: std::primitive::bool| {
                 let create_snake_case = naming::CreateSnakeCase;
@@ -3328,7 +3328,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &common_update_query_bind_token_stream,
             );
             quote::quote! {
-                #where_element_token_stream
                 #read_token_stream
                 #update_token_stream
                 #postgresql_json_type_for_ident_token_stream
@@ -3408,115 +3407,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #impl_error_occurence_lib_to_std_string_string_for_ident_postgresql_type_table_type_declaration_token_stream
                     #impl_create_table_column_query_part_for_ident_postgresql_type_table_type_declaration_token_stream
                     #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_postgresql_type_table_type_declaration_token_stream
-                }
-            };
-
-            let ident_postgresql_type_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident_postgresql_type_upper_camel_case);
-            let ident_postgresql_type_where_element_token_stream = {
-                let ident_postgresql_type_where_element_token_stream = {
-                    let variants_token_stream = vec_syn_field.iter().map(|element| {
-                        let field_ident_stringified = element
-                            .ident
-                            .as_ref()
-                            .unwrap_or_else(|| {
-                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                            })
-                            .to_string();
-                        let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                        let field_type_as_json_type_where_element_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                            &element.ty,
-                            &PostgresqlJsonTypeSubtype::WhereElement
-                        );
-                        quote::quote! {
-                            #field_ident_upper_camel_case_token_stream(postgresql_crud::PostgresqlTypeWhere<
-                                #field_type_as_json_type_where_element_token_stream
-                            >)
-                        }
-                    });
-                    quote::quote! {
-                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                        pub enum #ident_postgresql_type_where_element_upper_camel_case {
-                            #(#variants_token_stream),*
-                        }
-                    }
-                };
-                let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_postgresql_type_where_element_token_stream = postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
-                    &quote::quote! {<'a>},
-                    &ident_postgresql_type_where_element_upper_camel_case,
-                    &proc_macro2::TokenStream::new(),
-                    &{
-                        let variants_token_stream = vec_syn_field.iter().map(|element| {
-                            let field_ident_stringified = element
-                                .ident
-                                .as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                })
-                                .to_string();
-                            let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}}->'{field_ident_stringified}'"));
-                            quote::quote! {
-                                Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(
-                                    value,
-                                    increment,
-                                    &format!(#format_handle_token_stream),
-                                    is_need_to_add_logical_operator,
-                                )
-                            }
-                        });
-                        quote::quote! {
-                            match &self {
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    },
-                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
-                    &{
-                        let variants_token_stream = vec_syn_field.iter().map(|element| {
-                            let field_ident_stringified = element
-                                .ident
-                                .as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                })
-                                .to_string();
-                            let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                            quote::quote! {
-                                Self::#field_ident_upper_camel_case_token_stream(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query)
-                            }
-                        });
-                        quote::quote! {
-                            match self {
-                                #(#variants_token_stream),*
-                            }
-                        }
-                    },
-                    &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
-                );
-                let impl_error_occurence_lib_to_std_string_string_for_ident_postgresql_type_where_element_token_stream =
-                    macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_postgresql_type_where_element_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:#?}")});
-                let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_postgresql_type_where_element_token_stream =
-                    postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_postgresql_type_where_element_upper_camel_case, &{
-                        let variants_token_stream = vec_syn_field.iter().map(|element| {
-                            let field_ident_stringified = element
-                                .ident
-                                .as_ref()
-                                .unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                })
-                                .to_string();
-                            let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                            quote::quote! {
-                                Self::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
-                            }
-                        });
-                        quote::quote! {vec![#(#variants_token_stream),*]}
-                    });
-                quote::quote! {
-                    #ident_postgresql_type_where_element_token_stream
-                    #impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_postgresql_type_where_element_token_stream
-                    #impl_error_occurence_lib_to_std_string_string_for_ident_postgresql_type_where_element_token_stream
-                    #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_postgresql_type_where_element_token_stream
                 }
             };
             let ident_postgresql_type_without_id_read_upper_camel_case = naming::parameter::SelfWithoutIdReadUpperCamelCase::from_tokens(&ident_postgresql_type_upper_camel_case);
@@ -3655,7 +3545,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         format!("{value} as {column}")
                     }
                 },
-                &ident_postgresql_type_where_element_upper_camel_case,
+                &ident_where_element_upper_camel_case,
                 // &ident_postgresql_type_read_upper_camel_case,
                 &ident_postgresql_type_without_id_read_upper_camel_case,
                 &ident_postgresql_type_update_upper_camel_case,
@@ -3729,7 +3619,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             // println!("{impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_ident_token_stream}");
             quote::quote! {
                 #ident_postgresql_type_table_type_declaration_token_stream
-                #ident_postgresql_type_where_element_token_stream
                 #ident_postgresql_type_read_token_stream
                 #ident_postgresql_type_update_token_stream
                 #impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_ident_token_stream
@@ -3757,6 +3646,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             // #ident_origin_token_stream
             #ident_create_token_stream
             #ident_select_token_stream
+            #ident_where_element_token_stream
 
             #common_token_stream
 
