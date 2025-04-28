@@ -258,8 +258,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             StandartWithId::False,
         );
         let ident_with_id_standart_not_null_upper_camel_case = naming::parameter::SelfWithIdUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-
-
+        let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
+        let ident_with_id_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_with_id_upper_camel_case);
+        let ident_origin_standart_not_null_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
+        let ident_with_id_origin_standart_not_null_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
 
 
         let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
@@ -448,7 +450,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 StandartWithId::True,
             ))
         };
-
         let field_type_handle: &dyn quote::ToTokens = {
             let generate_current_ident_origin = |current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable, current_postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern|{
                 let value = generate_current_ident_origin_non_wrapping(
@@ -595,8 +596,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
         let ident_origin_token_stream = {
             let ident_origin_token_stream = quote::quote! {
-                #[derive(Debug)]
-                pub struct #ident #field_type_handle_struct_scopes;
+                #[derive(
+                    Debug,
+                    Clone,
+                    PartialEq,
+                    PartialOrd,
+                    Default,
+                    serde::Serialize,
+                    serde::Deserialize,
+                    utoipa::ToSchema,
+                    schemars::JsonSchema,
+                )]
+                pub struct #ident_origin_upper_camel_case #field_type_handle_struct_scopes;
             };
             quote::quote!{
                 #ident_origin_token_stream
