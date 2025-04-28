@@ -277,7 +277,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 10,
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
     "animal_as_not_null_jsonb_object": {
       "value": [
         {
@@ -314,7 +314,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 10,
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
   "animal_as_not_null_jsonb_object": {
     "value": [
       {
@@ -479,7 +479,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 0
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 2
 }
 
 ###
