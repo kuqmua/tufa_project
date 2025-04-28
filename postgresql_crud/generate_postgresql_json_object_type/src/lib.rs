@@ -268,11 +268,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_origin_standart_not_null_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_with_id_origin_standart_not_null_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
 
-
-        let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);
-        // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
-
-        let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
+        
 
         let ident_select_without_id_upper_camel_case = naming::parameter::SelfSelectWithoutIdUpperCamelCase::from_tokens(&ident);
         let ident_select_with_id_upper_camel_case = naming::parameter::SelfSelectWithIdUpperCamelCase::from_tokens(&ident);
@@ -1501,6 +1497,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_element_token_stream
             }
         };
+        let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_read_token_stream = {
             let ident_without_id_or_with_id_read_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_json_object_type {
                 PostgresqlJsonObjectType::WithoutId => &ident_without_id_read_upper_camel_case,
@@ -2148,6 +2145,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let create_snake_case = naming::CreateSnakeCase;
                     let update_snake_case = naming::UpdateSnakeCase;
                     let delete_snake_case = naming::DeleteSnakeCase;
+                    let ident_to_create_with_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithGeneratedIdUpperCamelCase::from_tokens(&ident);//todo rename ToCreate -> Create
+                    // let ident_to_create_without_generated_id_upper_camel_case = naming::parameter::SelfToCreateWithoutGeneratedIdUpperCamelCase::from_tokens(&ident);
                     //todo move this logic into library as type with generic
                     let ident_json_array_change_token_stream = {
                         let serde_skip_serializing_if_vec_is_empty_token_stream = quote::quote! {#[serde(skip_serializing_if = "Vec::is_empty")]};
