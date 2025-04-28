@@ -586,7 +586,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let common_token_stream = {
             let read_token_stream = {
                 let (ident_select_token_stream, ident_with_id_select_token_stream) = {
-                    let generate_template_select_struct_token_stream = |tokens_select_token_stream: &dyn quote::ToTokens, additional_content_token_stream: &dyn quote::ToTokens| {
+                    let generate_template_select_struct_token_stream = |ident: &dyn quote::ToTokens, additional_content_token_stream: &dyn quote::ToTokens| {
                         let variants_token_stream = vec_syn_field.iter().map(|element| {
                             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -604,7 +604,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         });
                         quote::quote! {
                             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                            pub enum #tokens_select_token_stream {
+                            pub enum #ident {
                                 #additional_content_token_stream
                                 #(#variants_token_stream),*
                             }
@@ -1149,7 +1149,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
             let generate_acc_push_str_variant_logic_token_stream =
                 |variant_name_token_stream: &dyn quote::ToTokens, field_ident_double_quotes_token_stream: &dyn quote::ToTokens, column_name_and_maybe_field_getter_token_stream: &dyn quote::ToTokens, element_type: &dyn quote::ToTokens| {
-                    let tokens_select_with_or_without_id_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type_pattern {
+                    let ident_select_with_or_without_id_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => &ident_select_without_id_upper_camel_case,
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                             dimension1_not_null_or_nullable: _,
@@ -1174,7 +1174,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     };
                     let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&element_type);
                     quote::quote! {
-                        #tokens_select_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => #field_type_as_crud_postgresql_json_type_from_field_token_stream #select_query_part_snake_case(
+                        #ident_select_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => #field_type_as_crud_postgresql_json_type_from_field_token_stream #select_query_part_snake_case(
                             &value,
                             #field_ident_double_quotes_token_stream,
                             #column_name_and_maybe_field_getter_token_stream,
@@ -3181,13 +3181,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 //     let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
                 //     let generate_acc_push_str_variant_logic_token_stream =
                 //         |variant_name_token_stream: &dyn quote::ToTokens, field_ident_double_quotes_token_stream: &dyn quote::ToTokens, column_name_and_maybe_field_getter_token_stream: &dyn quote::ToTokens, element_type: &dyn quote::ToTokens| {
-                //             let tokens_select_with_or_without_id_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type {
+                //             let ident_select_with_or_without_id_upper_camel_case_token_stream: &dyn quote::ToTokens = match &postgresql_json_type {
                 //                 PostgresqlJsonType::Object | PostgresqlJsonType::StdOptionOptionObject => &ident_select_without_id_upper_camel_case,
                 //                 PostgresqlJsonType::StdVecVecObjectWithId | PostgresqlJsonType::StdOptionOptionStdVecVecObjectWithId => &ident_select_with_id_upper_camel_case,
                 //             };
                 //             let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&element_type);
                 //             quote::quote! {
-                //                 #tokens_select_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => #field_type_as_crud_postgresql_json_type_from_field_token_stream #select_query_part_snake_case(
+                //                 #ident_select_with_or_without_id_upper_camel_case_token_stream::#variant_name_token_stream(value) => #field_type_as_crud_postgresql_json_type_from_field_token_stream #select_query_part_snake_case(
                 //                     &value,
                 //                     #field_ident_double_quotes_token_stream,
                 //                     #column_name_and_maybe_field_getter_token_stream,
