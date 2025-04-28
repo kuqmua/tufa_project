@@ -357,16 +357,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         };
         let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty);
 
-        let pub_field_idents_field_types_token_stream = {
-            let fields_token_stream = vec_syn_field.iter().map(|element| {
-                let element_ident = element.ident.as_ref().unwrap_or_else(|| {
-                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                });
-                let element_type = &element.ty;
-                quote::quote! {pub #element_ident: #element_type}
-            });
-            quote::quote! {#(#fields_token_stream),*}
-        };
         let ident_token_stream = quote::quote! {
             #[derive(Debug)]
             pub struct #ident;
@@ -509,7 +499,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
         };
         let field_type_handle: &dyn quote::ToTokens = &generate_field_type_handle(
-            &quote::quote!{{#pub_field_idents_field_types_token_stream}},
+            &{
+                let fields_token_stream = vec_syn_field.iter().map(|element| {
+                    let element_ident = element.ident.as_ref().unwrap_or_else(|| {
+                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                    });
+                    let element_type = &element.ty;
+                    quote::quote! {pub #element_ident: #element_type}
+                });
+                quote::quote!{{#(#fields_token_stream),*}}
+            },
             |tokens|{quote::quote!{#tokens}}
         );
 
