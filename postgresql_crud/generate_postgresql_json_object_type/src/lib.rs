@@ -296,7 +296,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             &IsStandartWithId::False,
         );
         // let ident_with_id_standart_not_null_upper_camel_case = naming::parameter::SelfWithIdUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-
+        let ident_token_stream = quote::quote! {
+            #[derive(Debug)]
+            pub struct #ident;
+        };
         #[derive(Debug, strum_macros::Display)]
         enum PostgresqlJsonTypeSubtype {
             Create,
@@ -313,7 +316,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 .to_tokens(tokens)
             }
         }
-        
         let generate_type_as_postgresql_json_type_subtype_token_stream = |
             type_token_stream: &dyn quote::ToTokens,
             postgresql_json_type_subtype: &PostgresqlJsonTypeSubtype
@@ -343,34 +345,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 ),
             )
         };
-
-
-        let ident_token_stream = quote::quote! {
-            #[derive(Debug)]
-            pub struct #ident;
-        };
-
-        let ident_update_with_id_upper_camel_case = naming::parameter::SelfUpdateWithIdUpperCamelCase::from_tokens(&ident);
-        let (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream) = {
-            let generate_jsonb_set_target_snake_case = naming::GenerateJsonbSetTargetSnakeCase;
-            let generate_jsonb_set_target_token_stream = {
-                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{jsonb_set_target_snake_case}}}->'{{value}}'"));
-                quote::quote! {
-                    let #generate_jsonb_set_target_snake_case = |value: &std::primitive::str|{
-                        format!(#format_handle_token_stream)
-                    };
-                }
-            };
-            (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream)
-        };
-
-
         let generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens| {
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
             quote::quote! {<#value_token_stream as #import_path::#postgresql_json_type_upper_camel_case>::}
         };
         let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty);
-        
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_token_stream = {
             let ident_create_token_stream = {
@@ -2007,8 +1986,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_sqlx_type_sqlx_postgres_and_impl_sqlx_decode_sqlx_postgres_token_stream
             }
         };
-
-
+        let (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream) = {
+            let generate_jsonb_set_target_snake_case = naming::GenerateJsonbSetTargetSnakeCase;
+            let generate_jsonb_set_target_token_stream = {
+                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{jsonb_set_target_snake_case}}}->'{{value}}'"));
+                quote::quote! {
+                    let #generate_jsonb_set_target_snake_case = |value: &std::primitive::str|{
+                        format!(#format_handle_token_stream)
+                    };
+                }
+            };
+            (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream)
+        };
+        let ident_update_with_id_upper_camel_case = naming::parameter::SelfUpdateWithIdUpperCamelCase::from_tokens(&ident);
         let ident_update_element_upper_camel_case = naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident);
         let ident_update_element_token_stream = {
             let ident_update_element_token_stream = {
@@ -2080,10 +2070,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //         #ident_update_with_id_token_stream
         //         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_with_id_token_stream
         //     }
-
         // };
-
-
         let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
         let std_option_option_std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case = naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfJsonArrayChangeUpperCamelCase::from_tokens(&ident);
         let ident_update_token_stream = {
