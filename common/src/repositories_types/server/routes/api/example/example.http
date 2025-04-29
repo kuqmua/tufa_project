@@ -282,7 +282,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
       "value": [
         {
           "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-            "value": 0
+            "value": 50
           }
         },
         {
@@ -290,7 +290,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
             "value": [
               {
                 "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                  "value": 0
+                  "value": 60
                 }
               }
             ]
@@ -319,7 +319,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     "value": [
       {
         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-          "value": 0
+          "value": 10
         }
       },
       {
@@ -327,7 +327,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
           "value": [
             {
               "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                "value": 0
+                "value": 20
               }
             }
           ]
