@@ -966,6 +966,33 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 dimension4_not_null_or_nullable: _,
             } => todo!()
         };
+        let impl_ident_create_token_stream = {
+            let std_string_string_token_stream = token_patterns::StdStringString;
+            let reference_mut_std_primitive_u64_token_stream = {
+                let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
+                quote::quote! {&mut #std_primitive_u64_token_stream}
+            };
+            quote::quote!{
+                impl #ident_create_upper_camel_case {
+                    fn #create_query_part_snake_case(
+                        &self,
+                        #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
+                    ) -> Result<#std_string_string_token_stream, postgresql_crud::QueryPartErrorNamed> {
+                        let #value_snake_case = &self;
+                        // #create_query_part_token_stream
+                        todo!()
+                    }
+                    fn #create_query_bind_snake_case(
+                        self,
+                        mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        let #value_snake_case = self;
+                        // #create_query_bind_token_stream
+                        todo!()
+                    }
+                }
+            }
+        };
         let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
         let ident_select_token_stream = {
             let ident_select_token_stream = {
@@ -3426,6 +3453,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #ident_token_stream
             // #ident_origin_token_stream
             #ident_create_token_stream
+            #impl_ident_create_token_stream
             #ident_select_token_stream
             #ident_where_element_token_stream
             #ident_read_token_stream
