@@ -519,6 +519,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
     let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
+    let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
     let reference_mut_std_primitive_u64_token_stream = {
         let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
         quote::quote! {&mut #std_primitive_u64_token_stream}
@@ -547,7 +548,7 @@ pub fn generate_postgresql_json_type_token_stream(
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
-                is_postgresql_type: std::primitive::bool,
+                is_postgresql_type: #std_primitive_bool_token_stream,
             ) -> #std_string_string_token_stream {
                 #select_query_part_token_stream
             }
