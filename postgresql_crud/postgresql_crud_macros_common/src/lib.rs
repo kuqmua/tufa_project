@@ -427,32 +427,11 @@ pub enum ShouldDeriveSchemarsJsonSchema {
     True,
     False,
 }
-impl std::convert::From<&PostgresqlTypeOrJsonType> for ShouldDeriveSchemarsJsonSchema {
-    fn from(value: &PostgresqlTypeOrJsonType) -> Self {
-        match &value {
-            PostgresqlTypeOrJsonType::PostgresqlType => Self::False,
-            PostgresqlTypeOrJsonType::PostgresqlJsonType => Self::True,
-        }
-    }
-}
 impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::True => quote::quote! {, schemars::JsonSchema}.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
-        }
-    }
-}
-
-pub enum PostgresqlTypeOrJsonType {
-    PostgresqlType,
-    PostgresqlJsonType,
-}
-impl std::fmt::Display for PostgresqlTypeOrJsonType {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match &self {
-            Self::PostgresqlType => write!(formatter, "{}", naming::PostgresqlTypeUpperCamelCase),
-            Self::PostgresqlJsonType => write!(formatter, "{}", naming::PostgresqlJsonTypeUpperCamelCase),
         }
     }
 }
