@@ -3420,14 +3420,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 //     quote::quote! {format!("{} as {column}", #format_value_token_stream)}
                 // },
                 &quote::quote!{
-                    let value = {
-                        let field_ident = column;
-                        let column_name_and_maybe_field_getter = column;
-                        let column_name_and_maybe_field_getter_for_error_message = column;
-                        let is_postgresql_type = true;
-                        #select_query_part_token_stream
-                    };
-                    format!("{value} as {column}")
+                    format!(
+                        "{} as {column}",
+                        {
+                            let field_ident = column;
+                            let column_name_and_maybe_field_getter = column;
+                            let column_name_and_maybe_field_getter_for_error_message = column;
+                            let is_postgresql_type = true;
+                            #select_query_part_token_stream
+                        }
+                    )
                 },
                 &ident_where_element_upper_camel_case,
                 &ident_without_id_read_upper_camel_case,
@@ -3524,12 +3526,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         };
         let generated = quote::quote! {
             #ident_token_stream
+            #common_token_stream
             #ident_create_token_stream
             #ident_select_token_stream
             #ident_where_element_token_stream
             #ident_read_token_stream
             #ident_update_token_stream
-            #common_token_stream
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
         };
