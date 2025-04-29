@@ -196,9 +196,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         } else {
             panic!("does work only on structs!");
         };
-
-        
- 
         let is_standart_with_id = IsStandartWithId::False;//todo
         #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum IsStandartWithId {
@@ -321,29 +318,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             postgresql_json_type_subtype: &PostgresqlJsonTypeSubtype
         |{
             quote::quote! {<#type_token_stream as #import_path::PostgresqlJsonType>::#postgresql_json_type_subtype}
-        };
-        let (
-            postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream,
-            postgresql_crud_path_postgresql_json_type_uuid_uuid_select_token_stream,
-            postgresql_crud_path_postgresql_json_type_uuid_uuid_read_token_stream,
-            postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream
-        ) = {
-            let postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream = quote::quote!{#import_path::postgresql_json_type::UuidUuidAsNotNullJsonbString};
-            (
-                postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream.clone(),
-                generate_type_as_postgresql_json_type_subtype_token_stream(
-                    &postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream,
-                    &PostgresqlJsonTypeSubtype::Select
-                ),
-                generate_type_as_postgresql_json_type_subtype_token_stream(
-                    &postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream,
-                    &PostgresqlJsonTypeSubtype::Read
-                ),
-                generate_type_as_postgresql_json_type_subtype_token_stream(
-                    &postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream,
-                    &PostgresqlJsonTypeSubtype::Update
-                ),
-            )
         };
         let generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens| {
             let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
@@ -783,6 +757,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         };
         let create_query_part_token_stream = quote::quote!{#value_snake_case.#create_query_part_snake_case(#increment_snake_case)};
         let create_query_bind_token_stream = quote::quote!{#value_snake_case.#create_query_bind_snake_case(#query_snake_case)};
+        let (
+            postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream,
+            postgresql_crud_path_postgresql_json_type_uuid_uuid_select_token_stream,
+            postgresql_crud_path_postgresql_json_type_uuid_uuid_read_token_stream,
+            postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream
+        ) = {
+            let postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream = quote::quote!{#import_path::postgresql_json_type::UuidUuidAsNotNullJsonbString};
+            (
+                postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream.clone(),
+                generate_type_as_postgresql_json_type_subtype_token_stream(
+                    &postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream,
+                    &PostgresqlJsonTypeSubtype::Select
+                ),
+                generate_type_as_postgresql_json_type_subtype_token_stream(
+                    &postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream,
+                    &PostgresqlJsonTypeSubtype::Read
+                ),
+                generate_type_as_postgresql_json_type_subtype_token_stream(
+                    &postgresql_crud_path_postgresql_json_type_uuid_uuid_token_stream,
+                    &PostgresqlJsonTypeSubtype::Update
+                ),
+            )
+        };
         let generate_ident_select_element_or_ident_with_id_select_element_upper_camel_case = |is_standart_with_id: &IsStandartWithId| {
             let token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                 IsStandartWithId::False => &naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident),
