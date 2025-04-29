@@ -23,6 +23,7 @@ panic_location = {path = "../../panic_location"}
 naming = {path = "../../naming"}
 macros_helpers = {path = "../../macros_helpers"}
 token_patterns = {path = "../../token_patterns"}
+enum_extension_lib = {path = "../../enum_extension_lib"}
 
 [lints]
 workspace = true
