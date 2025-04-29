@@ -553,32 +553,14 @@ pub fn generate_postgresql_json_type_token_stream(
     }
 }
 
-pub enum PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
-    Crate,
-    PostgresqlCrud,
-}
-impl PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
-        match &self {
-            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-        }
-    }
-    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
-        match &self {
-            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-            PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-        }
-    }
-}
 pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
     impl_generic_token_stream: &dyn quote::ToTokens,
-    path_default_but_option_is_always_some_and_vec_always_contains_one_element: &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     ident_generic_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let path_trait_token_stream = path_default_but_option_is_always_some_and_vec_always_contains_one_element.default_but_option_is_always_some_and_vec_always_contains_one_element();
+    let path_trait_token_stream = import_path.default_but_option_is_always_some_and_vec_always_contains_one_element();
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     quote::quote! {
         impl #impl_generic_token_stream #path_trait_token_stream for #ident #ident_generic_token_stream {
@@ -589,11 +571,11 @@ pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_o
     }
 }
 pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-    path_default_but_option_is_always_some_and_vec_always_contains_one_element: &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+    import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let path_trait_token_stream = path_default_but_option_is_always_some_and_vec_always_contains_one_element.all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element();
+    let path_trait_token_stream = import_path.all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element();
     let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::AllEnumVariantsArrayDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
     quote::quote! {
         impl #path_trait_token_stream for #ident {
@@ -610,7 +592,7 @@ pub fn generate_impl_crate_default_but_option_is_always_some_and_vec_always_cont
 ) -> proc_macro2::TokenStream {
     generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
         &proc_macro2::TokenStream::new(),
-        &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate,
+        &ImportPath::Crate,
         ident,
         &proc_macro2::TokenStream::new(),
         content_token_stream
@@ -623,7 +605,7 @@ pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_a
 ) -> proc_macro2::TokenStream {
     generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
         &proc_macro2::TokenStream::new(),
-        &PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud,
+        &ImportPath::PostgresqlCrud,
         ident,
         lifetime_token_stream,
         content_token_stream
@@ -633,10 +615,10 @@ pub fn generate_impl_crate_all_enum_variants_array_default_but_option_is_always_
     ident: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate, ident, content_token_stream)
+    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ImportPath::Crate, ident, content_token_stream)
 }
 pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::PostgresqlCrud, ident, content_token_stream)
+    generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ImportPath::PostgresqlCrud, ident, content_token_stream)
 }
 
 pub enum ImportPath {
@@ -649,6 +631,20 @@ impl quote::ToTokens for ImportPath {
             Self::Crate => quote::quote!{crate},
             Self::PostgresqlCrud => quote::quote!{postgresql_crud},
         }.to_tokens(tokens)
+    }
+}
+impl ImportPath {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
+        match &self {
+            ImportPath::Crate => &token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        }
+    }
+    fn all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element(&self) -> &dyn quote::ToTokens {
+        match &self {
+            ImportPath::Crate => &token_patterns::CrateAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+            ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
+        }
     }
 }
 pub enum IsQueryBindMutable {

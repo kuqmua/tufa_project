@@ -474,7 +474,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ShouldAddDeclarationOfStructIdentGeneric::True => quote::quote!{<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
                 ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new()
             },
-            &postgresql_crud_macros_common::PathDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::Crate,
+            &postgresql_crud_macros_common::ImportPath::Crate,
             &ident,
             match &should_add_declaration_of_struct_ident_generic {
                 ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,

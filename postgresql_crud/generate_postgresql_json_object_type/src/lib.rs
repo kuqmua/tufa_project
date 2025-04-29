@@ -172,6 +172,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
 
         let query_postgres_arguments_token_stream = quote::quote! {sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>};
+        let reference_mut_std_primitive_u64_token_stream = {
+            let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
+            quote::quote! {&mut #std_primitive_u64_token_stream}
+        };
 
         // let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -342,16 +346,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             )
         };
 
-        let generate_field_ident_double_quotes_token_stream = |value: &syn::Field| {
-            generate_quotes::double_quotes_token_stream(&value.ident.as_ref().unwrap_or_else(|| {
-                panic!("{}", naming::FIELD_IDENT_IS_NONE);
-            }))
-        };
-        let generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens| {
-            let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
-            quote::quote! {<#value_token_stream as #postgresql_crud_path_token_stream #postgresql_json_type_upper_camel_case>::}
-        };
-        let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty);
 
         let ident_token_stream = quote::quote! {
             #[derive(Debug)]
@@ -373,11 +367,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         };
 
 
-        let reference_mut_std_primitive_u64_token_stream = {
-            let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
-            quote::quote! {&mut #std_primitive_u64_token_stream}
+        let generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens| {
+            let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
+            quote::quote! {<#value_token_stream as #postgresql_crud_path_token_stream #postgresql_json_type_upper_camel_case>::}
         };
-        
+        let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty);
         
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_token_stream = {
@@ -1374,6 +1368,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_error_occurence_lib_to_std_string_string_for_ident_where_element_token_stream
                 #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_element_token_stream
             }
+        };
+        let generate_field_ident_double_quotes_token_stream = |value: &syn::Field| {
+            generate_quotes::double_quotes_token_stream(&value.ident.as_ref().unwrap_or_else(|| {
+                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+            }))
         };
         let ident_without_id_read_upper_camel_case = naming::parameter::SelfWithoutIdReadUpperCamelCase::from_tokens(&ident);
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
