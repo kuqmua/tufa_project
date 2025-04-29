@@ -1348,11 +1348,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
             }))
         };
-        let ident_without_id_read_upper_camel_case = naming::parameter::SelfWithoutIdReadUpperCamelCase::from_tokens(&ident);
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_read_token_stream = {
             let ident_without_id_or_with_id_read_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_standart_with_id {
-                IsStandartWithId::False => &ident_without_id_read_upper_camel_case,
+                IsStandartWithId::False => &ident_read_upper_camel_case,
                 IsStandartWithId::True => &naming::parameter::SelfWithIdReadUpperCamelCase::from_tokens(&ident)
             };
             let ident_without_id_or_with_id_read_try_from_error_named_upper_camel_case = naming::parameter::SelfWithoutIdReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
@@ -3157,7 +3156,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &create_query_bind_token_stream,
                 &ident_select_upper_camel_case,
                 // &tokens_read_upper_camel_case,
-                &ident_without_id_read_upper_camel_case,
+                &ident_read_upper_camel_case,
                 // &tokens_with_id_read_upper_camel_case,
 
                 // &{
@@ -3390,7 +3389,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     )
                 },
                 &ident_where_element_upper_camel_case,
-                &ident_without_id_read_upper_camel_case,
+                &ident_read_upper_camel_case,
                 &ident_update_upper_camel_case,
                 // &{
                     // //todo remove jsonb_ prefix (coz it can be json, jsonb, json not null, jsonb not null)
