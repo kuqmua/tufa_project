@@ -65,7 +65,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         use postgresql_crud_macros_common::NotNullOrNullable;
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             NotNullOrNullable::NotNull => true,
-            NotNullOrNullable::Nullable => false,
+            NotNullOrNullable::Nullable => true,
         };
         let postgresql_json_type_pattern_filter = match &element.postgresql_json_type_pattern {
             postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => true,
@@ -182,10 +182,21 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 
         let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
-
-        let syn_derive_input: syn::DeriveInput = syn::parse(
-            <proc_macro::TokenStream as std::str::FromStr>::from_str(&input_token_stream_stringified).unwrap()
-        ).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+//         let g = match  
+//         <proc_macro2::TokenStream as std::str::FromStr>::from_str(&input_token_stream_stringified) {
+//             Ok(value) => {
+//                 println!("77777");
+//                 value
+//             },
+//             Err(error) => {
+//                 println!("888");
+//                 panic!("<proc_macro::TokenStream as std::str::FromStr>::from_str(&input_token_stream_stringified) faield, reason: {error:#?}")
+//             },
+//         };
+// println!("@@@@");
+//         let y = g.clone().into();
+// println!("99999");
+        let syn_derive_input: syn::DeriveInput = syn::parse_str(input_token_stream_stringified).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
         let syn_derive_input_ident = &syn_derive_input.ident;
         let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
             if let syn::Fields::Named(fields_named) = &data_struct.fields {
@@ -3610,8 +3621,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
         };
         // if let (
-        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
         //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
@@ -3681,7 +3692,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
         //     // };
         //     // if d1 {
-        //         if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
+        //         if syn_derive_input_ident == "Animal" {//"Animal" // "Doggie"
         //             macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //                 "GeneratePostgresqlJsonObjectType",
         //                 &generated,
