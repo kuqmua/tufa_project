@@ -182,20 +182,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
 
         let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
-//         let g = match  
-//         <proc_macro2::TokenStream as std::str::FromStr>::from_str(&input_token_stream_stringified) {
-//             Ok(value) => {
-//                 println!("77777");
-//                 value
-//             },
-//             Err(error) => {
-//                 println!("888");
-//                 panic!("<proc_macro::TokenStream as std::str::FromStr>::from_str(&input_token_stream_stringified) faield, reason: {error:#?}")
-//             },
-//         };
-// println!("@@@@");
-//         let y = g.clone().into();
-// println!("99999");
+
         let syn_derive_input: syn::DeriveInput = syn::parse_str(input_token_stream_stringified).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
         let syn_derive_input_ident = &syn_derive_input.ident;
         let vec_syn_field = if let syn::Data::Struct(data_struct) = &syn_derive_input.data {
