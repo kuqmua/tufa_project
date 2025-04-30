@@ -44,7 +44,9 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       "doggie_as_not_null_jsonb_object": {
         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0
       },
-      "option_doggie_as_nullable_jsonb_object": null
+      "option_doggie_as_nullable_jsonb_object": {
+        "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 10
+      }
     }
   }
 ]
@@ -206,7 +208,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   {
                     "Equal": {
                       "logical_operator": "Or",
-                      "value": 0
+                      "value": 10
                     }
                   }
                   # ,
@@ -240,14 +242,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
     {
       "animal_as_not_null_jsonb_object": [
-        {
-          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-        },
+        # {
+        #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+        # },
         {
           "doggie_as_not_null_jsonb_object": [
             {
@@ -306,6 +308,13 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
               "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
             }
           ]
+        },
+        {
+          "option_doggie_as_nullable_jsonb_object": [
+            {
+              "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+            }
+          ]
         }
       ]
     }
@@ -331,7 +340,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
       "value": [
         {
           "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-            "value": 50
+            "value": 20
           }
         },
         {
@@ -339,7 +348,18 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
             "value": [
               {
                 "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                  "value": 60
+                  "value": 20
+                }
+              }
+            ]
+          }
+        },
+        {
+          "option_doggie_as_nullable_jsonb_object": {
+            "value": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                  "value": 20
                 }
               }
             ]
@@ -368,7 +388,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     "value": [
       {
         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-          "value": 10
+          "value": 0
         }
       },
       {
@@ -376,7 +396,18 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
           "value": [
             {
               "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                "value": 20
+                "value": 0
+              }
+            }
+          ]
+        }
+      },
+      {
+        "option_doggie_as_nullable_jsonb_object": {
+          "value": [
+            {
+              "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                "value": 0
               }
             }
           ]
@@ -434,42 +465,40 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
   "animal_as_not_null_jsonb_object": {
     "logical_operator": "Or",
     "value": [
-      {
-        "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
-          "logical_operator": "Or",
-          "value": [
-            {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": 0
-              }
-            }
-            # ,
-            # {
-            #   "GreaterThan": {
-            #     "logical_operator": "Or",
-            #     "value": 0
-            #   }
-            # },
-            # {
-            #   "Between": {
-            #     "logical_operator": "Or",
-            #     "start": 0,
-            #     "end": 0
-            #   }
-            # },
-            # {
-            #   "In": {
-            #     "logical_operator": "Or",
-            #     "value": [
-            #       0
-            #     ]
-            #   }
-            # }
-          ]
-        }
-      }
-      # ,
+      # {
+      #   "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
       # {
       #   "DoggieAsNotNullJsonbObject": {
       #     "logical_operator": "Or",
@@ -483,34 +512,77 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       #                 "logical_operator": "Or",
       #                 "value": 0
       #               }
-      #             },
-      #             {
-      #               "GreaterThan": {
-      #                 "logical_operator": "Or",
-      #                 "value": 0
-      #               }
-      #             },
-      #             {
-      #               "Between": {
-      #                 "logical_operator": "Or",
-      #                 "start": 0,
-      #                 "end": 0
-      #               }
-      #             },
-      #             {
-      #               "In": {
-      #                 "logical_operator": "Or",
-      #                 "value": [
-      #                   0
-      #                 ]
-      #               }
       #             }
+      #             # ,
+      #             # {
+      #             #   "GreaterThan": {
+      #             #     "logical_operator": "Or",
+      #             #     "value": 0
+      #             #   }
+      #             # },
+      #             # {
+      #             #   "Between": {
+      #             #     "logical_operator": "Or",
+      #             #     "start": 0,
+      #             #     "end": 0
+      #             #   }
+      #             # },
+      #             # {
+      #             #   "In": {
+      #             #     "logical_operator": "Or",
+      #             #     "value": [
+      #             #       0
+      #             #     ]
+      #             #   }
+      #             # }
       #           ]
       #         }
       #       }
       #     ]
       #   }
-      # }
+      # },
+      {
+        "OptionDoggieAsNullableJsonbObject": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
+                "logical_operator": "Or",
+                "value": [
+                  {
+                    "Equal": {
+                      "logical_operator": "Or",
+                      "value": 0
+                    }
+                  }
+                  # ,
+                  # {
+                  #   "GreaterThan": {
+                  #     "logical_operator": "Or",
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "Between": {
+                  #     "logical_operator": "Or",
+                  #     "start": 0,
+                  #     "end": 0
+                  #   }
+                  # },
+                  # {
+                  #   "In": {
+                  #     "logical_operator": "Or",
+                  #     "value": [
+                  #       0
+                  #     ]
+                  #   }
+                  # }
+                ]
+              }
+            }
+          ]
+        }
+      }
     ]
   }
 }
@@ -528,7 +600,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 3
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 5
 }
 
 ###
