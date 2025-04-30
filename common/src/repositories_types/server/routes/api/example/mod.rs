@@ -771,9 +771,7 @@ impl postgresql_crud::PostgresqlJsonType for OptionAnimalAsNullableJsonbObject {
     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         value.create_query_part(increment)
     }
-    fn create_query_bind(value: Self::Create, 
-        // mut 
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         value.create_query_bind(query)
     }
     type Select = OptionAnimalAsNullableJsonbObjectSelect;
@@ -786,9 +784,7 @@ impl postgresql_crud::PostgresqlJsonType for OptionAnimalAsNullableJsonbObject {
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
     }
-    fn update_query_bind(value: Self::Update, 
-        // mut
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         value.update_query_bind(query)
     }
 }
@@ -798,9 +794,7 @@ impl postgresql_crud::PostgresqlType for OptionAnimalAsNullableJsonbObject {
     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         value.create_query_part(increment)
     }
-    fn create_query_bind(value: Self::Create, 
-        // mut 
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         value.create_query_bind(query)
     }
     type Select = OptionAnimalAsNullableJsonbObjectSelect;
@@ -819,9 +813,7 @@ impl postgresql_crud::PostgresqlType for OptionAnimalAsNullableJsonbObject {
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
     }
-    fn update_query_bind<'a>(value: Self::Update, 
-        // mut 
-        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn update_query_bind<'a>(value: Self::Update, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         value.update_query_bind(query)
     }
 }

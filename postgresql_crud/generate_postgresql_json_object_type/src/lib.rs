@@ -3532,7 +3532,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident,
                 &ident_create_upper_camel_case,
                 &create_query_part_token_stream,
-                &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
+                &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                 &create_query_bind_token_stream,
                 &ident_select_upper_camel_case,
                 &ident_read_upper_camel_case,
@@ -3540,7 +3540,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_where_element_upper_camel_case,
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
-                &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
+                &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream,
             );
             quote::quote! {
@@ -3554,7 +3554,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_create_upper_camel_case,//ident_table_type_declaration
                 &ident_create_upper_camel_case,
                 &create_query_part_token_stream,
-                &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
+                &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                 &create_query_bind_token_stream,
                 &ident_select_upper_camel_case,
                 &quote::quote!{
@@ -3573,7 +3573,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_read_upper_camel_case,
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
-                &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
+                &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream
             );
             quote::quote! {
@@ -3610,8 +3610,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
         };
         // if let (
-        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
         //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
