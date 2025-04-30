@@ -394,3 +394,4 @@ mod tests {
 pub struct Doggie {
     pub column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
 }
+////////////////////////////
