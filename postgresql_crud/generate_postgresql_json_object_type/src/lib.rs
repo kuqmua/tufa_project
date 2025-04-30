@@ -194,7 +194,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         } else {
             panic!("does work only on structs!");
         };
-        let is_standart_with_id = IsStandartWithId::False;//todo
+        let is_standart_with_id = if let postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern {
+            IsStandartWithId::False
+        }
+        else {
+            IsStandartWithId::True
+        };
         #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum IsStandartWithId {
             False,
