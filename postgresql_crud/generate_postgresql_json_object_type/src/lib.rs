@@ -1871,8 +1871,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                         acc
                     };
+                    let maybe_wrap_into_braces_token_stream = |content_token_stream: &dyn quote::ToTokens| {
+                        if vec_syn_field.len() > 1 {
+                            quote::quote!{(#content_token_stream)}
+                        }
+                        else {
+                            quote::quote!{#content_token_stream}
+                        }
+                    };
+                    let left_token_stream = maybe_wrap_into_braces_token_stream(&quote::quote!{#(#nones_token_stream),*});
+                    let right_token_stream = maybe_wrap_into_braces_token_stream(&ident_without_id_or_with_id_read_fields_reference_token_stream);
                     quote::quote! {
-                        if let (#(#nones_token_stream),*) = (#ident_without_id_or_with_id_read_fields_reference_token_stream) {
+                        if let #left_token_stream = #right_token_stream {
                             return Err(#ident_without_id_or_with_id_read_try_from_error_named_upper_camel_case::#all_fields_are_none_upper_camel_case {
                                 code_occurence: error_occurence_lib::code_occurence!()
                             });

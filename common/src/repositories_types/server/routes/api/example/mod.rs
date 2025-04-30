@@ -459,9 +459,7 @@ impl<'a> postgresql_crud::PostgresqlTypeWhereFilter<'a> for OptionDoggieAsNullab
             Self::Column7Bd2F76F276C48558Ee04B6Ce0Ac5015(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, &format!("{column}->'column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015'"), is_need_to_add_logical_operator),
         }
     }
-    fn query_bind(self, 
-        // mut 
-        query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self {
             Self::Column7Bd2F76F276C48558Ee04B6Ce0Ac5015(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
         }
@@ -666,9 +664,7 @@ impl OptionDoggieAsNullableJsonbObjectUpdate {
             None => Ok(std::string::String::from("todo")),
         }
     }
-    fn update_query_bind(self, 
-        // mut 
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+    fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self.0 {
             Some(value) => value.update_query_bind(query),
             None => query,
