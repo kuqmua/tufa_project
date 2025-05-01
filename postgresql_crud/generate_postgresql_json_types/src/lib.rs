@@ -130,7 +130,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         use postgresql_crud_macros_common::NotNullOrNullable;
         let postgresql_type_filter = match &element.postgresql_json_type {
             PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => true,
-            PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => false,
+            PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => true,
             PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => false,
             PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => false,
             PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => false,
