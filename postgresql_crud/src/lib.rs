@@ -869,18 +869,17 @@ where T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter
 {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
-        for element in &self.0 {
-            match element.query_part(increment, column, is_need_to_add_logical_operator) {
+        for (index, element) in self.0.iter().enumerate() {
+            match element.query_part(increment, column, index != 0) {
                 Ok(value) => {
-                    acc.push_str(&value);//todo maybe wrong
+                    acc.push_str(&value);
                 },
                 Err(error) => {
                     return Err(error);
                 },
             }
         }
-        //todo maybe wrong
-        Ok(acc)
+        Ok(format!("({acc})"))
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.0 {

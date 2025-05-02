@@ -2135,7 +2135,10 @@ impl postgresql_crud::PostgresqlJsonType for OptionDoggieAsNullableJsonbObject {
         value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
     }
     // type WhereElement = OptionDoggieAsNullableJsonbObjectWhereElement;
-    type WhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<DoggieAsNotNullJsonbObjectWhereElement>;
+    type WhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<
+        // DoggieAsNotNullJsonbObjectWhereElement
+        <DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::WhereElement
+    >;
     type Read = OptionDoggieAsNullableJsonbObjectRead;
     type Update = OptionDoggieAsNullableJsonbObjectUpdate;
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
@@ -2165,7 +2168,10 @@ impl postgresql_crud::PostgresqlType for OptionDoggieAsNullableJsonbObject {
         })
     }
     // type WhereElement = OptionDoggieAsNullableJsonbObjectWhereElement;
-    type WhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<DoggieAsNotNullJsonbObjectWhereElement>;
+    type WhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<
+        <DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::WhereElement
+        // DoggieAsNotNullJsonbObjectWhereElement
+    >;
     type Read = OptionDoggieAsNullableJsonbObjectRead;
     type Update = OptionDoggieAsNullableJsonbObjectUpdate;
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
