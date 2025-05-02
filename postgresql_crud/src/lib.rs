@@ -105,20 +105,20 @@ where T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter
 //////////////////////////////////////
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub enum NullableJsonObjectSelect<T>
-where T: std::fmt::Debug + PartialEq + Clone + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+where T: std::fmt::Debug + PartialEq + Clone + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 {
-    WithInnerExplicitSelect(UniqueVec<T>),
+    WithInnerExplicitSelect(T),
     WithoutInnerExplicitSelect
 }
 impl<T> std::default::Default for NullableJsonObjectSelect<T>
-where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 {
     fn default() -> Self {
          NullableJsonObjectSelect::WithoutInnerExplicitSelect
     }
 }
 impl<T> sqlx::Type<sqlx::Postgres> for NullableJsonObjectSelect<T>
-where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::Json<NullableJsonObjectSelect<T>> as sqlx::Type<sqlx::Postgres>>::type_info()
@@ -128,7 +128,7 @@ where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> +
     }
 }
 impl<T> sqlx::Decode<'_, sqlx::Postgres> for NullableJsonObjectSelect<T>
-where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <sqlx::types::Json<NullableJsonObjectSelect<T>> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
@@ -138,61 +138,51 @@ where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> +
     }
 }
 impl<T> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NullableJsonObjectSelect<T>
-where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+where T: std::fmt::Debug + PartialEq + Clone + for <'a> serde::Deserialize<'a> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self::WithInnerExplicitSelect(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
     }
 }
 //todo need to impl mannually
-// impl<T> NullableJsonObjectSelect<T>
-// where T: std::fmt::Debug
-//     + PartialEq
-//     + Clone
-//     + for <'a> serde::Deserialize<'a>
-//     + PostgresqlType
-//     + PostgresqlJsonType
-//     + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-// {
-//     fn select_query_part_postgresql_type(
-//         &self,
-//         // field_ident: &std::primitive::str,
-//         // column_name_and_maybe_field_getter: &std::primitive::str,
-//         // column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-//         // is_postgresql_type: std::primitive::bool
-//         column: &std::primitive::str
-//     ) -> std::string::String {
-//         match &self {
-//             Self::WithInnerExplicitSelect(value) => 
-//             // todo!(),
-//             {
-//                 let mut acc = std::string::String::default();
-//                 for element in value.0 {
-//                     acc.push_str(
-//                         <T as PostgresqlType>::select_query_part(&element, column)
-//                         // &PostgresqlType::select_query_part(&element, column)
-//                     );
-//                 }
-//                 acc
-//             },
-//             // value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type),
-//             Self::WithoutInnerExplicitSelect => format!("todo"),
-//         }
-//     }
-//     // fn select_query_part_postgresql_json_type(
-//     //     &self,
-//     //     field_ident: &std::primitive::str,
-//     //     column_name_and_maybe_field_getter: &std::primitive::str,
-//     //     column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-//     //     is_postgresql_type: std::primitive::bool
-//     // ) -> std::string::String {
-//     //     match &self {
-//     //         Self::WithInnerExplicitSelect(value) => todo!(),
-//     //         // value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type),
-//     //         Self::WithoutInnerExplicitSelect => format!("todo"),
-//     //     }
-//     // }
-// }
+impl<T> NullableJsonObjectSelect<T>
+where T: std::fmt::Debug
+    + PartialEq
+    + Clone
+    + for <'a> serde::Deserialize<'a>
+    + PostgresqlJsonType
+    + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+{
+    fn select_query_part(
+        &self,
+        field_ident: &std::primitive::str,
+        column_name_and_maybe_field_getter: &std::primitive::str,
+        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+        is_postgresql_type: std::primitive::bool
+    ) -> std::string::String {
+        // match &self {
+        //     Self::WithInnerExplicitSelect(value) => 
+        //     // todo!(),
+        //     {
+        //         let mut acc = std::string::String::default();
+        //         for element in value {
+        //             acc.push_str(
+        //                 &element.elect_query_part(
+        //                     field_ident,
+        //                     column_name_and_maybe_field_getter,
+        //                     column_name_and_maybe_field_getter_for_error_message,
+        //                     is_postgresql_type
+        //                 )
+        //             );
+        //         }
+        //         acc
+        //     },
+        //     // value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type),
+        //     Self::WithoutInnerExplicitSelect => format!("todo"),
+        // }
+        todo!()
+    }
+}
 ////////////////////////////////////////////
 
 pub trait PostgresqlTypePrimaryKey {
