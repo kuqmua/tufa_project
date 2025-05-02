@@ -448,61 +448,18 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 impl OptionDoggieAsNullableJsonbObjectSelect {
     fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
         match &self {
-            Self::WithInnerExplicitSelect(value) => {
-                value.select_query_part(
-                    field_ident,
-                    column_name_and_maybe_field_getter,
-                    column_name_and_maybe_field_getter_for_error_message,
-                    is_postgresql_type
-                )
-            },
-            // value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type),
-            Self::WithoutInnerExplicitSelect => {
-                //todo optimize?
-                
-                let f = <DoggieAsNotNullJsonbObjectSelectElement as postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element();
-                // .select_query_part(
-                //     field_ident,
-                //     column_name_and_maybe_field_getter,
-                //     column_name_and_maybe_field_getter_for_error_message,
-                //     is_postgresql_type
-                // )
-
-                ///////////////////
-                let mut acc = std::string::String::default();
-                let column_name_and_maybe_field_getter_field_ident = if is_postgresql_type { column_name_and_maybe_field_getter.to_string() } else { format!("{column_name_and_maybe_field_getter}->'{field_ident}'") };
-                let column_name_and_maybe_field_getter_for_error_message_field_ident = format!("{column_name_and_maybe_field_getter_for_error_message}.{field_ident}");
-                for element in f {//self.0.to_vec()
-                    acc.push_str(&format!(
-                        "{}||",
-                        match element {
-                            DoggieAsNotNullJsonbObjectSelectElement::Column7Bd2F76F276C48558Ee04B6Ce0Ac5015(value) => <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_query_part(
-                                &value,
-                                field_ident,
-                                column_name_and_maybe_field_getter,
-                                column_name_and_maybe_field_getter_for_error_message,
-                                is_postgresql_type
-                            ),
-                            DoggieAsNotNullJsonbObjectSelectElement::ColumnF85F2F57F85B4126Be0FCb5830F0475D(value) => <postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_query_part(
-                                &value,
-                                field_ident,
-                                column_name_and_maybe_field_getter,
-                                column_name_and_maybe_field_getter_for_error_message,
-                                is_postgresql_type
-                            ),
-                        }
-                    ));
-                }
-                let _ = acc.pop();
-                let _ = acc.pop();
-                if is_postgresql_type {
-                    format!("{acc}")
-                } else {
-                    format!("jsonb_build_object('{field_ident}', jsonb_build_object('value',{acc}))")
-                }
-                /////////////////////
-                // format!("todo")
-            },//all?
+            Self::WithInnerExplicitSelect(value) => value.select_query_part(
+                field_ident,
+                column_name_and_maybe_field_getter,
+                column_name_and_maybe_field_getter_for_error_message,
+                is_postgresql_type
+            ),
+            Self::WithoutInnerExplicitSelect => DoggieAsNotNullJsonbObjectSelect(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()).select_query_part(
+                field_ident,
+                column_name_and_maybe_field_getter,
+                column_name_and_maybe_field_getter_for_error_message,
+                is_postgresql_type
+            ),
         }
     }
 }
