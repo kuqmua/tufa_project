@@ -419,10 +419,20 @@ impl OptionDoggieAsNullableJsonbObjectCreate {
         query
     }
 }
+
+
+
+
+
+
+
+
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub enum OptionDoggieAsNullableJsonbObjectSelect {
     WithInnerExplicitSelect(DoggieAsNotNullJsonbObjectSelect),
-    WithoutInnerExplicitSelect,//all?
+    WithoutInnerExplicitSelect,
 }
 impl sqlx::Type<sqlx::Postgres> for OptionDoggieAsNullableJsonbObjectSelect {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
@@ -454,7 +464,8 @@ impl OptionDoggieAsNullableJsonbObjectSelect {
                 column_name_and_maybe_field_getter_for_error_message,
                 is_postgresql_type
             ),
-            Self::WithoutInnerExplicitSelect => DoggieAsNotNullJsonbObjectSelect(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()).select_query_part(
+            Self::WithoutInnerExplicitSelect => <DoggieAsNotNullJsonbObjectSelect as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+            .select_query_part(
                 field_ident,
                 column_name_and_maybe_field_getter,
                 column_name_and_maybe_field_getter_for_error_message,
@@ -468,6 +479,15 @@ impl std::default::Default for OptionDoggieAsNullableJsonbObjectSelect {
         OptionDoggieAsNullableJsonbObjectSelect::WithInnerExplicitSelect(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
     }
 }
+
+
+
+
+
+
+
+
+
 #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct OptionDoggieAsNullableJsonbObjectRead {
     #[serde(skip_serializing_if = "Option::is_none")]
