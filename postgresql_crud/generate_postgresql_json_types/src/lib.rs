@@ -1306,9 +1306,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         "{{{}}}->'{{field_ident}}'",
                         naming::ColumnNameAndMaybeFieldGetterSnakeCase
                     );
-                    let generate_case_when_jsonb_typeof_array_then_else_null_end = |typeof_content: &std::primitive::str, content: &std::primitive::str|{
-                        format!("case when jsonb_typeof({typeof_content})='array' then ({content}) else null end")
-                    };
                     let format_handle = match postgresql_crud_macros_common::ArrayDimension::try_from(postgresql_json_type_pattern) {
                         Ok(array_dimension) => {
                             let generate_jsonb_agg = |
@@ -1353,10 +1350,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                                 );
                                                 acc = match &not_null_or_nullable {
                                                     NotNullOrNullable::NotNull => value,
-                                                    NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                                                        &d_usize_minus_one_elem_value,
-                                                        &value
-                                                    )
+                                                    NotNullOrNullable::Nullable => format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='array' then ({value}) else null end")
                                                 };
                                                 current_usize_value = current_usize_value_minus_one;
                                                 acc
@@ -1379,10 +1373,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     };
                     match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => format_handle,
-                        NotNullOrNullable::Nullable => generate_case_when_jsonb_typeof_array_then_else_null_end(
-                            &column_name_and_maybe_field_getter_field_ident,
-                            &format_handle
-                        )
+                        NotNullOrNullable::Nullable => format!("case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident})='null' then null else ({format_handle}) end")
                     }
                 };
                 let maybe_dimensions_start_end_initialization = {
