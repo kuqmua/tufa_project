@@ -65,7 +65,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         use postgresql_crud_macros_common::NotNullOrNullable;
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             NotNullOrNullable::NotNull => true,
-            NotNullOrNullable::Nullable => false,
+            NotNullOrNullable::Nullable => true,
         };
         let postgresql_json_type_pattern_filter = match &element.postgresql_json_type_pattern {
             postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => true,
@@ -1464,34 +1464,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                 quote::quote!{
-                                    // //todo possibly wrong
-                                    // match &self.0 {
-                                    //     Some(#value_snake_case) => #value_snake_case.#select_query_part_snake_case(
-                                    //         field_ident,
-                                    //         column_name_and_maybe_field_getter,
-                                    //         column_name_and_maybe_field_getter_for_error_message,
-                                    //         is_postgresql_type
-                                    //     ),
-                                    //     None => std::string::String::from("todo")//todo
-                                    // }
-
-                                    // match &self {
-                                    //     Self::WithInnerExplicitSelect(value) => 
-                                    //     // todo!(),
-                                    //     {
-                                    //         let mut acc = std::string::String::default();
-                                    //         for element in value.0 {
-                                    //             acc.push_str(
-                                    //                 <T as PostgresqlType>::select_query_part(&element, column)
-                                    //                 // &PostgresqlType::select_query_part(&element, column)
-                                    //             );
-                                    //         }
-                                    //         acc
-                                    //     },
-                                    //     // value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type),
-                                    //     Self::WithoutInnerExplicitSelect => format!("todo"),
-                                    // }
-                                    todo!()
+                                    match &self {
+                                        Self::WithInnerExplicitSelect(value) => value.select_query_part(
+                                            field_ident,
+                                            column_name_and_maybe_field_getter,
+                                            column_name_and_maybe_field_getter_for_error_message,
+                                            is_postgresql_type
+                                        ),
+                                        //todo maybe not actually correct 
+                                        Self::WithoutInnerExplicitSelect => <#ident_select_standart_not_null_upper_camel_case as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                        .select_query_part(
+                                            field_ident,
+                                            column_name_and_maybe_field_getter,
+                                            column_name_and_maybe_field_getter_for_error_message,
+                                            is_postgresql_type
+                                        ),
+                                    }
                                 }
                             },
                         },

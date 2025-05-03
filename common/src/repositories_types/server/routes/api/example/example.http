@@ -380,17 +380,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         # },
         {
           "option_doggie_as_nullable_jsonb_object": 
-          # {
-          #   "WithInnerExplicitSelect": [
-          #     # {
-          #     #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-          #     # },
-          #     {
-          #       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
-          #     }
-          #   ]
-          # }
-          "WithoutInnerExplicitSelect"
+          {
+            "WithInnerExplicitSelect": [
+              # {
+              #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+              # },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
+              }
+            ]
+          }
+          # "WithoutInnerExplicitSelect"
         }
       ]
     }
