@@ -3680,16 +3680,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                //todo possibly wrong
-                                match &self.0 {
-                                    Some(#value_snake_case) => #value_snake_case.#update_query_part_snake_case(
-                                        jsonb_set_accumulator,
-                                        jsonb_set_target,
-                                        jsonb_set_path,
-                                        increment
-                                    ),
-                                    None => Ok(std::string::String::from("todo"))//todo
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
+                                quote::quote!{
+                                    match &self.0 {
+                                        Some(#value_snake_case) => #value_snake_case.#update_query_part_snake_case(
+                                            jsonb_set_accumulator,
+                                            jsonb_set_target,
+                                            jsonb_set_path,
+                                            increment
+                                        ),
+                                        None => {//todo maybe just use null in query instead of binding None as null?
+                                            match #increment_snake_case.checked_add(1) {
+                                                Some(value) => {
+                                                    *#increment_snake_case = value;
+                                                    Ok(format!(#none_format_handle_token_stream))
+                                                },
+                                                None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case {
+                                                    code_occurence: error_occurence_lib::code_occurence!()
+                                                })
+                                            }
+                                        }
+                                    }
                                 }
                             },
                             // {
@@ -3908,10 +3920,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                //todo possibly wrong
                                 match self.0 {
                                     Some(#value_snake_case) => #value_snake_case.#update_query_bind_snake_case(query),
-                                    None => query,//todo
+                                    None => #query_snake_case.bind(sqlx::types::Json(#ident_update_upper_camel_case(None))),//todo maybe not need to bind None. just use null in query?
                                 }
                             },
                             // {
@@ -4128,8 +4139,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
         };
         // if let (
-        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
         //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {

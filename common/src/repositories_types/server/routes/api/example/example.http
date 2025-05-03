@@ -431,18 +431,29 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
           "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
         },
         {
+          "column_1495baea_b926_4e20_a223_5b7a1f06c211": null
+        },
+        {
           "doggie_as_not_null_jsonb_object": [
             {
               "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+            },
+            {
+              "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
             }
           ]
         },
         {
-          "option_doggie_as_nullable_jsonb_object": [
-            {
-              "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-            }
-          ]
+          "option_doggie_as_nullable_jsonb_object": {
+            "WithInnerExplicitSelect": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
+              }
+            ]
+          }
         }
       ]
     }
@@ -468,7 +479,12 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
       "value": [
         {
           "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-            "value": 20
+            "value": 0
+          }
+        },
+        {
+          "column_1495baea_b926_4e20_a223_5b7a1f06c211": {
+            "value": 0
           }
         },
         {
@@ -476,7 +492,12 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
             "value": [
               {
                 "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                  "value": 20
+                  "value": 0
+                }
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                  "value": 0
                 }
               }
             ]
@@ -484,10 +505,17 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
         },
         {
           "option_doggie_as_nullable_jsonb_object": {
-            "value": [
+            "value": 
+            # null
+            [
               {
                 "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                  "value": 20
+                  "value": 44
+                }
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                  "value": 44
                 }
               }
             ]
