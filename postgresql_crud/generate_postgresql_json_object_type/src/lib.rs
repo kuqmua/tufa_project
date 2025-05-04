@@ -337,6 +337,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty);
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_token_stream = {
+            let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let generate_ident_without_or_with_id_create_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let maybe_id_token_stream = match &is_standart_with_id {
@@ -396,13 +397,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &quote::quote! {format!("{self}")}
                 )
             };
-            let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                let maybe_id_token_stream = match &is_standart_with_id {
-                    IsStandartWithId::False => proc_macro2::TokenStream::new(),
-                    IsStandartWithId::True => quote::quote!{
-                        #id_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    }
-                };
+            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream = {
                 let fields_token_stream = vec_syn_field.iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -412,7 +407,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 });
                 quote::quote! {{
-                    #maybe_id_token_stream
                     #(#fields_token_stream),*}
                 }
             };
@@ -439,8 +433,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         //     PostgresqlType::JsonbNullable => &jsonb,
                         // };
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}} {type_stringified} check (jsonb_matches_schema('{{}}', {{column}}))"));
+                        let schema_ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
+                            IsStandartWithId::False => &ident_create_upper_camel_case,
+                            IsStandartWithId::True => &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
+                        };
                         quote::quote! {
-                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_create_upper_camel_case)).unwrap())
+                            format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#schema_ident_token_stream)).unwrap())
                         }
                     }
                 )
@@ -609,9 +607,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let some_token_stream = quote::quote!{(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))};
                     match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream(
-                                &IsStandartWithId::False
-                            ),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                                #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream
+                            },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => some_token_stream,
                         },
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {..}
@@ -1006,9 +1004,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let maybe_ident_with_id_standart_not_null_create_token_stream = match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                        //todo maybe remove useless derive?
+                        let ident_with_id_table_type_declaration_standart_not_null_token_stream = generate_ident_without_or_with_id_create_token_stream(
+                            &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
+                            &generate_ident_without_or_with_id_create_content_token_stream(&IsStandartWithId::True)
+                        );
                         let ident_with_id_create_standart_not_null_token_stream = generate_ident_without_or_with_id_create_token_stream(
                             &ident_with_id_create_standart_not_null_upper_camel_case,
-                            &generate_ident_without_or_with_id_create_content_token_stream(&IsStandartWithId::True)
+                            &generate_ident_without_or_with_id_create_content_token_stream(&IsStandartWithId::False)
                         );
                         let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_std_fmt_display_for_ident_without_or_with_id_create_standart_not_null_token_stream(
                             &IsStandartWithId::True
@@ -1018,9 +1021,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         );
                         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_token_stream(
                             &IsStandartWithId::True,
-                            &generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream(
-                                &IsStandartWithId::True
-                            ),
+                            &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream,
                         );
                         //ident_table_type_declaration shared all tokens with create and its just for table_type_declaration. maybe write explicitly later. create not need this
                         //impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream
@@ -1033,6 +1034,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &standart_not_null_create_query_bind_content_token_stream
                         );
                         quote::quote! {
+                            #ident_with_id_table_type_declaration_standart_not_null_token_stream
                             #ident_with_id_create_standart_not_null_token_stream
                             #impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream
                             #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream

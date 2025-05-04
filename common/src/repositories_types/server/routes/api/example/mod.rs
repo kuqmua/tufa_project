@@ -387,16 +387,16 @@ impl std::fmt::Display for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWi
         write!(formatter, "{:?}", self)
     }
 }
-// impl error_occurence_lib::ToStdStringString for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self}")
-//     }
-// }
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self(vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
-//     }
-// }
+impl error_occurence_lib::ToStdStringString for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self}")
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    }
+}
 // impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
 //     pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
 //         format!(
@@ -434,15 +434,15 @@ impl std::fmt::Display for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWi
 // }
 // impl sqlx::Type<sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
 //     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::Json<std::vec::Vec<DoggieAsNotNullJsonbObjectWithIdSelect>> as sqlx::Type<sqlx::Postgres>>::type_info()
+//         <sqlx::types::Json<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdSelect>> as sqlx::Type<sqlx::Postgres>>::type_info()
 //     }
 //     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::Json<std::vec::Vec<DoggieAsNotNullJsonbObjectWithIdSelect>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//         <sqlx::types::Json<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdSelect>> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
 //     }
 // }
 // impl sqlx::Decode<'_, sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
 //     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match <sqlx::types::Json<std::vec::Vec<DoggieAsNotNullJsonbObjectWithIdSelect>> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+//         match <sqlx::types::Json<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdSelect>> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
 //             Ok(value) => Ok(value.0),
 //             Err(error) => Err(error),
 //         }
