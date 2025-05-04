@@ -333,6 +333,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty);
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_token_stream = {
+            let ident_with_id_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let generate_ident_without_or_with_id_create_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let maybe_id_token_stream = match &is_standart_with_id {
                     IsStandartWithId::False => proc_macro2::TokenStream::new(),
@@ -363,11 +364,27 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #(#value),*
                 }}
             };
-            // let generate_ident_without_or_with_id_create_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+            let generate_ident_without_or_with_id_create_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
+                quote::quote! {
+                    #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+                    pub struct #ident_token_stream #content_token_stream
+                }
+            };
+            let generate_impl_std_fmt_display_for_ident_without_or_with_id_create_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                macros_helpers::generate_impl_std_fmt_display_token_stream(
+                    &proc_macro2::TokenStream::new(),
+                    match &is_standart_with_id {
+                        IsStandartWithId::False => &ident_create_upper_camel_case,
+                        IsStandartWithId::True => &ident_with_id_create_standart_not_null_upper_camel_case,
+                    },
+                    &proc_macro2::TokenStream::new(),
+                    &quote::quote! {write!(formatter, "{:?}", self)}
+                )
+            };
 
-            // };
-            let ident_create_token_stream = {
-                let content_token_stream = {
+            let ident_create_token_stream = generate_ident_without_or_with_id_create_token_stream(
+                &ident_create_upper_camel_case,
+                &{
                     let prefix_wrapper = |tokens: &dyn quote::ToTokens|{
                         let content = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&tokens);
                         quote::quote!{#content}
@@ -514,17 +531,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             )
                         }
                     }
-                };
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                    pub struct #ident_create_upper_camel_case #content_token_stream
                 }
-            };
-            let impl_std_fmt_display_for_ident_create_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
-                &proc_macro2::TokenStream::new(),
-                &ident_create_upper_camel_case,
-                &proc_macro2::TokenStream::new(),
-                &quote::quote! {write!(formatter, "{:?}", self)}
+            );
+            let impl_std_fmt_display_for_ident_create_token_stream = generate_impl_std_fmt_display_for_ident_without_or_with_id_create_standart_not_null_token_stream(
+                &IsStandartWithId::False
             );
             let impl_error_occurence_lib_to_std_string_string_for_ident_create_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
                 &proc_macro2::TokenStream::new(),
@@ -953,19 +963,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let maybe_ident_with_id_standart_not_null_create_token_stream = match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                        let ident_with_id_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-                        let ident_with_id_create_standart_not_null_token_stream = {
-                            let content_token_stream = generate_ident_without_or_with_id_create_content_token_stream(&IsStandartWithId::True);
-                            quote::quote! {
-                                #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                                pub struct #ident_with_id_create_standart_not_null_upper_camel_case #content_token_stream
-                            }
-                        };
-                        let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
-                            &proc_macro2::TokenStream::new(),
+                        let ident_with_id_create_standart_not_null_token_stream = generate_ident_without_or_with_id_create_token_stream(
                             &ident_with_id_create_standart_not_null_upper_camel_case,
-                            &proc_macro2::TokenStream::new(),
-                            &quote::quote! {write!(formatter, "{:?}", self)}
+                            &generate_ident_without_or_with_id_create_content_token_stream(&IsStandartWithId::True)
+                        );
+                        let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_std_fmt_display_for_ident_without_or_with_id_create_standart_not_null_token_stream(
+                            &IsStandartWithId::True
                         );
                         let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
                             &proc_macro2::TokenStream::new(),
