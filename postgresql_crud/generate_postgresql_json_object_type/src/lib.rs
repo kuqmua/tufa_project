@@ -151,7 +151,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
         // let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
-        let id_snake_case = naming::IdSnakeCase;
         let value_snake_case = naming::ValueSnakeCase;
         let as_upper_camel_case = naming::AsUpperCamelCase;
         let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
@@ -199,17 +198,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         } else {
             panic!("does work only on structs!");
         };
+        #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+        enum IsStandartWithId {
+            False,
+            True
+        }
         let is_standart_with_id = if let postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern {
             IsStandartWithId::False
         }
         else {
             IsStandartWithId::True
         };
-        #[derive(Debug, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-        enum IsStandartWithId {
-            False,
-            True
-        }
         let generate_ident_token_stream = |
             not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
             postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern,
@@ -332,6 +331,37 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             quote::quote! {<#value_token_stream as #import_path::#postgresql_json_type_upper_camel_case>::}
         };
         let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty);
+        
+        let generate_ident_without_or_with_id_create_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
+            let maybe_id_token_stream = match &is_standart_with_id {
+                IsStandartWithId::False => proc_macro2::TokenStream::new(),
+                IsStandartWithId::True => {
+                    let type_as_postgresql_json_type_subtype_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                        &quote::quote!{postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString},
+                        &PostgresqlJsonTypeSubtype::Create
+                    );
+                    quote::quote!{
+                        pub #id_snake_case: #type_as_postgresql_json_type_subtype_create_token_stream,
+                    }
+                }
+            };
+            let value = vec_syn_field.iter().map(|element| {
+                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                });
+                let type_as_postgresql_json_type_subtype_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                    &element.ty,
+                    &PostgresqlJsonTypeSubtype::Create
+                );
+                quote::quote! {
+                    pub #field_ident: #type_as_postgresql_json_type_subtype_create_token_stream
+                }
+            });
+            quote::quote!{{
+                #maybe_id_token_stream
+                #(#value),*
+            }}
+        };
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_token_stream = {
             let ident_create_token_stream = {
@@ -361,21 +391,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     };
                     match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let value = vec_syn_field.iter().map(|element| {
-                                    let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    });
-                                    let type_as_postgresql_json_type_subtype_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                                        &element.ty,
-                                        &PostgresqlJsonTypeSubtype::Create
-                                    );
-                                    quote::quote! {
-                                        pub #field_ident: #type_as_postgresql_json_type_subtype_create_token_stream
-                                    }
-                                });
-                                quote::quote!{{#(#value),*}}
-                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_without_or_with_id_create_content_token_stream(&IsStandartWithId::False),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(
                                 &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&prefix_wrapper(ident_standart_not_null_upper_camel_case))
                             ),
@@ -948,56 +964,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                     let ident_with_id_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
                     let ident_with_id_create_standart_not_null_token_stream = {
-                        let content_token_stream = {
-                            let prefix_wrapper = |tokens: &dyn quote::ToTokens|{
-                                let content = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&tokens);
-                                quote::quote!{#content}
-                            };
-                            let wrap_into_scopes_pub_token_stream = |content: &dyn quote::ToTokens|{
-                                quote::quote! {(pub #content);}
-                            };
-                            let generate_current_ident_prefix = |
-                                current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
-                                current_postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern,
-                                is_standart_with_id: &IsStandartWithId,
-                            |{
-                                let value = prefix_wrapper(&generate_ident_token_stream(
-                                    &current_not_null_or_nullable,
-                                    &current_postgresql_json_type_pattern,
-                                    &is_standart_with_id,
-                                ));
-                                let content = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value)
-                                };
-                                wrap_into_scopes_pub_token_stream(&content)
-                            };
-                            let id_token_stream = {
-                                let type_as_postgresql_json_type_subtype_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                                    &quote::quote!{postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString},
-                                    &PostgresqlJsonTypeSubtype::Create
-                                );
-                                quote::quote!{
-                                    pub #id_snake_case: #type_as_postgresql_json_type_subtype_create_token_stream
-                                }
-                            };
-                            let value = vec_syn_field.iter().map(|element| {
-                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                });
-                                let type_as_postgresql_json_type_subtype_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                                    &element.ty,
-                                    &PostgresqlJsonTypeSubtype::Create
-                                );
-                                quote::quote! {
-                                    pub #field_ident: #type_as_postgresql_json_type_subtype_create_token_stream
-                                }
-                            });
-                            quote::quote!{{
-                                #id_token_stream,
-                                #(#value),*
-                            }}
-                        };
+                        let content_token_stream = generate_ident_without_or_with_id_create_content_token_stream(&IsStandartWithId::True);
                         quote::quote! {
                             #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                             pub struct #ident_with_id_create_standart_not_null_upper_camel_case #content_token_stream
