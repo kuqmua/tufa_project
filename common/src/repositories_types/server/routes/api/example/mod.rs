@@ -380,13 +380,13 @@ pub struct Doggie {
 ////////////////////////////
 #[derive(Debug)]
 pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId;
-// #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate(pub std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>);
-// impl std::fmt::Display for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
-//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(formatter, "{:?}", self)
-//     }
-// }
+#[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate(pub std::vec::Vec<DoggieAsNotNullJsonbObjectCreate>);
+impl std::fmt::Display for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self)
+    }
+}
 // impl error_occurence_lib::ToStdStringString for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
 //     fn to_std_string_string(&self) -> std::string::String {
 //         format!("{self}")
