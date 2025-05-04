@@ -299,7 +299,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             &postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
             &IsStandartWithId::False,
         );
-        let ident_with_id_standart_not_null_upper_camel_case = naming::parameter::SelfWithIdUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
+        let ident_with_id_standart_not_null_upper_camel_case = generate_ident_token_stream(
+            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+            &postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
+            &IsStandartWithId::True,
+        );
         let ident_token_stream = quote::quote! {
             #[derive(Debug)]
             pub struct #ident;
@@ -497,7 +501,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             generate_current_ident_prefix(
                                 &current_not_null_or_nullable,
                                 &current_postgresql_json_type_pattern,
-                                &IsStandartWithId::False
+                                &IsStandartWithId::True
                             )
                         },
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
@@ -4306,10 +4310,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
         //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
-        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-        //     //     dimension1_not_null_or_nullable,
-        //     // },
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
+        //     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
+        //         dimension1_not_null_or_nullable,
+        //     },
         //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
         //     //     dimension1_not_null_or_nullable,
         //     //     dimension2_not_null_or_nullable,
@@ -4335,10 +4339,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     &trait_gen,
         // ) {
         //     // use postgresql_crud_macros_common::NotNullOrNullable;
-        //     // let d1 = match &dimension1_not_null_or_nullable {
-        //     //     NotNullOrNullable::NotNull => true,
-        //     //     NotNullOrNullable::Nullable => false,
-        //     // };
+        //     let d1 = match &dimension1_not_null_or_nullable {
+        //         NotNullOrNullable::NotNull => true,
+        //         NotNullOrNullable::Nullable => false,
+        //     };
         //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
@@ -4373,14 +4377,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
         //     // };
-        //     // if d1 {
+        //     if d1 {
         //         if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
         //             macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //                 "GeneratePostgresqlJsonObjectType",
         //                 &generated,
         //             );
         //         }
-        //     // }
+        //     }
         // }
         generated.to_string()
     })
