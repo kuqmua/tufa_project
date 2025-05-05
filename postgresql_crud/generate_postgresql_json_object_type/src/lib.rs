@@ -958,11 +958,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
             );
-            //ident_table_type_declaration shared all tokens with create and its just for table_type_declaration. maybe write explicitly later. create not need this
-            //impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream
-            let impl_create_table_column_query_part_for_ident_create_token_stream = generate_impl_create_table_column_query_part_for_ident_create_token_stream(
-                &IsStandartWithId::False
-            );
             let generate_standart_not_null_create_query_part_content_token_stream = |is_standart_with_id: IsStandartWithId|{
                 let ok_value_token_stream = match &is_standart_with_id {
                     IsStandartWithId::False => quote::quote! {format!("{increments}")},
@@ -1354,9 +1349,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &IsStandartWithId::True,
                             &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream,
                         );
-                        let impl_create_table_column_query_part_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_create_table_column_query_part_for_ident_create_token_stream(
-                            &IsStandartWithId::True
-                        );
                         let impl_ident_with_id_create_standart_not_null_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
                             &IsStandartWithId::True,
                             &generate_standart_not_null_create_query_part_content_token_stream(IsStandartWithId::True),
@@ -1367,7 +1359,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream
                             #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream
                             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream
-                            #impl_create_table_column_query_part_for_ident_with_id_create_standart_not_null_token_stream
                             #impl_ident_with_id_create_standart_not_null_token_stream
                         }
                     },
@@ -1383,7 +1374,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_std_fmt_display_for_ident_create_token_stream
                 #impl_error_occurence_lib_to_std_string_string_for_ident_create_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
-                #impl_create_table_column_query_part_for_ident_create_token_stream//todo remove from create impl - move it table type declaration
                 #impl_ident_create_token_stream
                 #maybe_ident_with_id_standart_not_null_create_token_stream
             }
@@ -4565,7 +4555,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let impl_postgresql_crud_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                 &ident,
-                &ident_create_upper_camel_case,//&ident_table_type_declaration_upper_camel_case,
+                &ident_table_type_declaration_upper_camel_case,
                 &ident_create_upper_camel_case,
                 &create_query_part_token_stream,
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
@@ -4582,7 +4572,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                 &ident,
-                &ident_create_upper_camel_case,//&ident_table_type_declaration_upper_camel_case,
+                &ident_table_type_declaration_upper_camel_case,
                 &ident_create_upper_camel_case,
                 &create_query_part_token_stream,
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
