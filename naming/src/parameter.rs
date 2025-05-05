@@ -361,5 +361,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["self", "select", "element"],
     ["self", "with", "id", "select", "element"],
     ["self", "with", "id", "update", "element"],
-    ["self", "with", "id", "where", "element"]
+    ["self", "with", "id", "where", "element"],
+    ["self", "read", "try", "from", "error", "named"]
 ]);
