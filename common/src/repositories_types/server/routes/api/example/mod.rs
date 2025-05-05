@@ -430,7 +430,7 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
 }
 #[derive(Debug, Clone, Default, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
-    dimension1_pagination: crate::Pagination,
+    dimension1_pagination: postgresql_crud::Pagination,
 }
 // impl sqlx::Type<sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
 //     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {

@@ -1109,7 +1109,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
                         .parse::<proc_macro2::TokenStream>().unwrap();
                         arguments_token_stream.push(quote::quote! {
-                            #dimension_number_pagination_token_stream: crate::Pagination
+                            #dimension_number_pagination_token_stream: postgresql_crud::Pagination
                         });
                     }
                     quote::quote! {
