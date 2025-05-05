@@ -47,11 +47,11 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 30
       },
       "option_doggie_as_nullable_jsonb_object": 
-      null
-      # {
-      #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 20,
-      #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 30
-      # }
+      # null
+      {
+        "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 20,
+        "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 30
+      }
     }
   }
 ]

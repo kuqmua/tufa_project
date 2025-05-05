@@ -1088,8 +1088,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
         let ident_select_token_stream = {
             let ident_select_standart_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
-            let ident_with_id_select_standart_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-            let std_vec_vec_ident_with_id_select_standart_not_null_token_stream = quote::quote!{std::vec::Vec<#ident_with_id_select_standart_not_null_upper_camel_case>};
             let generate_ident_select_element_or_ident_with_id_select_element_upper_camel_case = |is_standart_with_id: &IsStandartWithId| {
                 let token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
                     IsStandartWithId::False => &naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident),
@@ -1169,7 +1167,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                             dimension1_not_null_or_nullable,
                         } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &std_vec_vec_ident_with_id_select_standart_not_null_token_stream,
+                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_select_upper_camel_case,
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
@@ -1255,7 +1253,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         dimension1_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                            Self(#postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                            // Self(#postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                            todo!()
                         },
                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
