@@ -2195,6 +2195,27 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             else {
                 proc_macro2::TokenStream::new()
             };
+            let maybe_ident_with_id_select_token_stream = match &postgresql_json_type_pattern {
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                        
+                        quote::quote! {
+                            // #ident_with_id_select_token_stream
+                            // #impl_sqlx_type_sqlx_postgres_for_ident_with_id_select_token_stream
+                            // #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_select_token_stream
+                            // #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_select_token_stream
+                            // #impl_ident_with_id_select_token_stream
+                            // #impl_default_default_for_ident_with_id_select_token_stream
+                            // #ident_with_id_select_element_token_stream
+                        }
+                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                },
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {..} => proc_macro2::TokenStream::new(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {..} => proc_macro2::TokenStream::new(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {..} => proc_macro2::TokenStream::new(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {..} => proc_macro2::TokenStream::new(),
+            };
             quote::quote! {
                 #ident_select_token_stream
                 #impl_sqlx_type_sqlx_postgres_for_ident_select_token_stream
@@ -2202,7 +2223,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
                 #impl_ident_select_token_stream
                 #maybe_impl_default_default_for_ident_select_token_stream
-                #maybe_ident_select_element_and_ident_with_id_select_element_token_stream
+                #maybe_ident_select_element_and_ident_with_id_select_element_token_stream//todo refactor
+
+                #maybe_ident_with_id_select_token_stream
             }
         };
         let select_query_part_token_stream = quote::quote!{
