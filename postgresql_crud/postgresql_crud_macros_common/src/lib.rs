@@ -463,6 +463,7 @@ impl quote::ToTokens for IsUpdateQueryBindMutable {
 pub fn generate_postgresql_json_type_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
+    table_type_declaration_type_token_stream: &dyn quote::ToTokens,
     create_type_token_stream: &dyn quote::ToTokens,
     create_query_part_token_stream: &dyn quote::ToTokens,
     is_create_query_bind_mutable: &IsCreateQueryBindMutable,
@@ -477,6 +478,7 @@ pub fn generate_postgresql_json_type_token_stream(
     update_query_bind_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
     let path_token_stream = quote::quote!{#import_path ::};
+    let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
     let select_upper_camel_case = naming::SelectUpperCamelCase;
@@ -508,6 +510,7 @@ pub fn generate_postgresql_json_type_token_stream(
     //todo maybe reexport sqlx?
     quote::quote! {
         impl #path_token_stream #postgresql_json_type_upper_camel_case for #ident {
+            type #table_type_declaration_upper_camel_case = #table_type_declaration_type_token_stream;
             type #create_upper_camel_case = #create_type_token_stream;
             fn #create_query_part_snake_case(
                 #value_snake_case: &Self::#create_upper_camel_case,

@@ -310,6 +310,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         };
         #[derive(Debug, strum_macros::Display)]
         enum PostgresqlJsonTypeSubtype {
+            TableTypeDeclaration,
             Create,
             Select,
             WhereElement,
@@ -335,6 +336,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             quote::quote! {<#value_token_stream as #import_path::#postgresql_json_type_upper_camel_case>::}
         };
         let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty);
+        
+        let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
+        
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_create_token_stream = {
             let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
@@ -4230,6 +4234,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                 &ident,
+                &ident_create_upper_camel_case,//&ident_table_type_declaration_upper_camel_case,
                 &ident_create_upper_camel_case,
                 &create_query_part_token_stream,
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
@@ -4251,7 +4256,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                 &ident,
-                &ident_create_upper_camel_case,//ident_table_type_declaration
+                &ident_create_upper_camel_case,//&ident_table_type_declaration_upper_camel_case,
                 &ident_create_upper_camel_case,
                 &create_query_part_token_stream,
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
@@ -4299,6 +4304,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         };
         let generated = quote::quote! {
             #ident_token_stream
+            // #ident_table_type_declaration_token_stream
             #ident_create_token_stream
             #ident_select_token_stream
             #ident_where_element_token_stream
