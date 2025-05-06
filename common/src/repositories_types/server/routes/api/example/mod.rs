@@ -352,7 +352,7 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
 
     pub doggie_as_not_null_jsonb_object: DoggieAsNotNullJsonbObject,
-    // pub option_doggie_as_nullable_jsonb_object: OptionDoggieAsNullableJsonbObject,
+    pub option_doggie_as_nullable_jsonb_object: OptionDoggieAsNullableJsonbObject,
 }
 ///////////////////////////////////////////////////
 #[cfg(test)]
