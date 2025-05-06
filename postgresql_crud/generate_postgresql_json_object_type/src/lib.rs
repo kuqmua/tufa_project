@@ -2219,9 +2219,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                         let ident_with_id_select_element_standart_not_null_upper_camel_case = naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-                        let unique_vec_ident_with_id_select_element_standart_not_null_token_stream = quote::quote!{
-                            #import_path::UniqueVec<#ident_with_id_select_element_standart_not_null_upper_camel_case>
-                        };
                         let ident_with_id_select_token_stream = quote::quote! {
                             #[derive(
                                 Debug,
@@ -2233,10 +2230,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 utoipa::ToSchema,
                                 schemars::JsonSchema,
                             )]
-                            pub struct #ident_with_id_select_standart_not_null_upper_camel_case(pub #unique_vec_ident_with_id_select_element_standart_not_null_token_stream);
+                            pub struct #ident_with_id_select_standart_not_null_upper_camel_case(pub #import_path::UniqueVec<#ident_with_id_select_element_standart_not_null_upper_camel_case>);
                         };
                         let sqlx_type_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(
-                            &unique_vec_ident_with_id_select_element_standart_not_null_token_stream
+                            &ident_with_id_select_standart_not_null_upper_camel_case
                         );
                         let impl_sqlx_type_sqlx_postgres_for_ident_with_id_select_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                             &ident_with_id_select_element_standart_not_null_upper_camel_case,
@@ -2245,7 +2242,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_select_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                             &ident_with_id_select_standart_not_null_upper_camel_case,
                             &sqlx_type_token_stream,
-                            &quote::quote! {Ok(Self(value.0))}
+                            &quote::quote! {Ok(value.0)}
                         );
                         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                             &ident_with_id_select_standart_not_null_upper_camel_case,
@@ -2278,28 +2275,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     };
                                     let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
                                     let value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&value_snake_case);
-                                    let (maybe_id_variant_token_stream, variants_token_stream) = {
-                                        let maybe_id_variant_token_stream = proc_macro2::TokenStream::new();
-                                        let variants_token_stream = vec_syn_field.iter().map(|element| {
-                                            let field_ident_stringified = element
-                                                .ident
-                                                .as_ref()
-                                                .unwrap_or_else(|| {
-                                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                                })
-                                                .to_string();
-                                            generate_acc_push_str_variant_logic_token_stream(
-                                                &naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified),
-                                                &generate_quotes::double_quotes_token_stream(&field_ident_stringified),
-                                                &quote::quote! {&#column_name_and_maybe_field_getter_field_ident_snake_case},
-                                                &{
-                                                    let element_type = &element.ty;
-                                                    quote::quote! {#element_type}
-                                                },
-                                            )
-                                        });
-                                        (maybe_id_variant_token_stream, variants_token_stream)
-                                    };
+                                    let variants_token_stream = vec_syn_field_with_id.iter().map(|element| {
+                                        let field_ident_stringified = element
+                                            .ident
+                                            .as_ref()
+                                            .unwrap_or_else(|| {
+                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                            })
+                                            .to_string();
+                                        generate_acc_push_str_variant_logic_token_stream(
+                                            &naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified),
+                                            &generate_quotes::double_quotes_token_stream(&field_ident_stringified),
+                                            &quote::quote! {&#column_name_and_maybe_field_getter_field_ident_snake_case},
+                                            &{
+                                                let element_type = &element.ty;
+                                                quote::quote! {#element_type}
+                                            },
+                                        )
+                                    });
                                     let self_field_vec_token_stream = quote::quote! {.0.to_vec()};
                                     let maybe_pagination_start_end_initialization_token_stream = proc_macro2::TokenStream::new();
                                     let column_name_and_maybe_field_getter_format_handle_token_stream = generate_quotes::double_quotes_token_stream(
@@ -2331,7 +2324,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             acc.push_str(&format!(
                                                 "{}||",
                                                 match element {
-                                                    #maybe_id_variant_token_stream
                                                     #(#variants_token_stream),*
                                                 }
                                             ));
