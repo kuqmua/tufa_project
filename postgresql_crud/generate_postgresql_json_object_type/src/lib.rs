@@ -2840,7 +2840,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                             let ident_with_id_where_element_token_stream = {
-                                let variants_token_stream = vec_syn_field.iter().map(|element| {
+                                let variants_token_stream = vec_syn_field_with_id.iter().map(|element| {
                                     let field_ident_stringified = element.ident
                                         .as_ref()
                                         .unwrap_or_else(|| {
@@ -2870,7 +2870,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 &ident_with_id_where_element_standart_not_null_upper_camel_case,
                                 &proc_macro2::TokenStream::new(),
                                 &{
-                                    let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
+                                    let query_part_variants_token_stream = vec_syn_field_with_id.iter().map(|element| {
                                         let field_ident_stringified = element
                                             .ident
                                             .as_ref()
@@ -2897,7 +2897,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 },
                                 &postgresql_crud_macros_common::IsQueryBindMutable::True,
                                 &{
-                                    let query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
+                                    let query_bind_variants_token_stream = vec_syn_field_with_id.iter().map(|element| {
                                         let field_ident_stringified = element
                                             .ident
                                             .as_ref()
@@ -2927,7 +2927,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_where_element_token_stream =       postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                                 &ident_with_id_where_element_standart_not_null_upper_camel_case, 
                                 &{
-                                    let variants_token_stream = vec_syn_field.iter().map(|element| {
+                                    let variants_token_stream = vec_syn_field_with_id.iter().map(|element| {
                                         let field_ident_stringified = element
                                             .ident
                                             .as_ref()
