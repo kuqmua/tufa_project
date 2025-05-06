@@ -679,7 +679,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_with_id_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_create_token_stream = {
             let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-            let generate_ident_without_or_with_id_create_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
+            let generate_ident_create_or_ident_with_id_create_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let value = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -693,7 +693,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 });
                 quote::quote!{{
-                    // #maybe_id_token_stream
                     #(#value),*
                 }}
             };
@@ -771,7 +770,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     };
                     match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_without_or_with_id_create_content_token_stream(&IsStandartWithId::False),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_create_or_ident_with_id_create_content_token_stream(&IsStandartWithId::False),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(
                                 &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&prefix_wrapper(ident_standart_not_null_upper_camel_case))
                             ),
@@ -1301,7 +1300,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         //todo maybe remove useless derive?
                         let ident_with_id_create_standart_not_null_token_stream = generate_ident_create_token_stream(
                             &ident_with_id_create_standart_not_null_upper_camel_case,
-                            &generate_ident_without_or_with_id_create_content_token_stream(&IsStandartWithId::False)
+                            &generate_ident_create_or_ident_with_id_create_content_token_stream(&IsStandartWithId::False)
                         );
                         let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_std_fmt_display_for_ident_create_or_ident_with_id_create_token_stream(
                             &ident_with_id_create_standart_not_null_upper_camel_case
