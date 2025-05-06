@@ -386,6 +386,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
         let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_table_type_declaration_token_stream = {
+            //todo reuse with create and table_type_declaration
             let generate_ident_without_or_with_id_table_type_declaration_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -415,13 +416,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             //todo maybe not need
             let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_table_type_declaration_standart_not_null_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                let maybe_id_token_stream = match &is_standart_with_id {
-                    IsStandartWithId::False => proc_macro2::TokenStream::new(),
-                    IsStandartWithId::True => quote::quote!{
-                        #id_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    }
-                };
-                let fields_token_stream = vec_syn_field.iter().map(|element| {
+                let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
@@ -430,8 +425,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 });
                 quote::quote! {{
-                    #maybe_id_token_stream
-                    #(#fields_token_stream),*
+                    #(#content_token_stream),*
                 }}
             };
             let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_table_type_declaration_token_stream = |
