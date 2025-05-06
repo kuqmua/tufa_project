@@ -725,7 +725,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &quote::quote! {format!("{self}")}
                 )
             };
-            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream = {
+            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_or_ident_with_id_create_standart_not_null_content_token_stream = {
                 let fields_token_stream = vec_syn_field.iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -913,7 +913,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
-                                #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream
+                                #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_or_ident_with_id_create_standart_not_null_content_token_stream
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => some_token_stream,
                         },
@@ -1317,7 +1317,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         );
                         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_token_stream(
                             &IsStandartWithId::True,
-                            &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_or_with_id_create_standart_not_null_content_token_stream,
+                            &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_or_ident_with_id_create_standart_not_null_content_token_stream,
                         );
                         let impl_ident_with_id_create_standart_not_null_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
                             &IsStandartWithId::True,
