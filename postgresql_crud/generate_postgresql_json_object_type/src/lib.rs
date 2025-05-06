@@ -202,7 +202,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             attrs: vec![],
             vis: syn::Visibility::Public(syn::token::Pub { span: proc_macro2::Span::call_site() }),
             mutability: syn::FieldMutability::None,
-            ident: Some(syn::Ident::new("id", proc_macro2::Span::call_site())),
+            ident: Some(syn::Ident::new(&id_snake_case.to_string(), proc_macro2::Span::call_site())),
             colon_token: Some(syn::token::Colon { spans: [proc_macro2::Span::call_site()] }),
             ty: syn::Type::Path(syn::TypePath {
                 qself: None,
@@ -387,19 +387,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_table_type_declaration_token_stream = {
             let generate_ident_without_or_with_id_table_type_declaration_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                let maybe_id_token_stream = match &is_standart_with_id {
-                    IsStandartWithId::False => proc_macro2::TokenStream::new(),
-                    IsStandartWithId::True => {
-                        let type_as_postgresql_json_type_subtype_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                            &quote::quote!{postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString},//todo reuse
-                            &PostgresqlJsonTypeSubtype::TableTypeDeclaration
-                        );
-                        quote::quote!{
-                            pub #id_snake_case: #type_as_postgresql_json_type_subtype_table_type_declaration_token_stream,
-                        }
-                    }
-                };
-                let value = vec_syn_field.iter().map(|element| {
+                let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
@@ -411,10 +399,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         pub #field_ident: #type_as_postgresql_json_type_subtype_table_type_declaration_token_stream
                     }
                 });
-                quote::quote!{{
-                    #maybe_id_token_stream
-                    #(#value),*
-                }}
+                quote::quote!{{#(#content_token_stream),*}}
             };
             let generate_ident_without_or_with_id_table_type_declaration_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
                 quote::quote! {
