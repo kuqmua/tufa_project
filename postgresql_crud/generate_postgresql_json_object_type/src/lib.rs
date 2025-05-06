@@ -382,6 +382,33 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             quote::quote! {<#value_token_stream as #import_path::#postgresql_json_type_upper_camel_case>::}
         };
         let generate_field_type_as_crud_postgresql_json_type_from_field_token_stream = |field: &syn::Field| generate_field_type_as_crud_postgresql_json_type_from_to_tokens_token_stream(&field.ty);
+        enum PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate {
+            TableTypeDeclaration,
+            Create,
+        }
+        impl std::convert::From<&PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate> for PostgresqlJsonTypeSubtype {
+            fn from(value: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate) -> Self {
+                // #content_token_stream
+                match &value {
+                    PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate
+                }
+            }
+        }
+        let generate_ident_table_type_declarationor_create_or_ident_with_id_table_type_declaration_or_create_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
+            let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                });
+                let type_as_postgresql_json_type_subtype_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                    &element.ty,
+                    &PostgresqlJsonTypeSubtype::TableTypeDeclaration
+                );
+                quote::quote! {
+                    pub #field_ident: #type_as_postgresql_json_type_subtype_table_type_declaration_token_stream
+                }
+            });
+            quote::quote!{{#(#content_token_stream),*}}
+        };
         
         let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
         let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
