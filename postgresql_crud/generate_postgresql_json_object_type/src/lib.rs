@@ -1211,6 +1211,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_select_standart_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_select_element_standart_not_null_upper_camel_case = naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_select_element_standart_not_null_upper_camel_case = naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let generate_ident_select_or_ident_with_id_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                let ident_select_or_ident_with_id_select_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
+                    IsStandartWithId::False => &ident_select_standart_not_null_upper_camel_case,
+                    IsStandartWithId::True => &ident_with_id_select_standart_not_null_upper_camel_case
+                };
+                let type_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
+                    IsStandartWithId::False => &ident_select_element_standart_not_null_upper_camel_case,
+                    IsStandartWithId::True => &ident_with_id_select_element_standart_not_null_upper_camel_case
+                };
+                quote::quote! {
+                    #[derive(
+                        Debug,
+                        Clone,
+                        Default,
+                        PartialEq,
+                        serde::Serialize,
+                        serde::Deserialize,
+                        utoipa::ToSchema,
+                        schemars::JsonSchema,
+                    )]
+                    pub struct #ident_select_or_ident_with_id_select_upper_camel_case(pub #import_path::UniqueVec<#type_token_stream>);
+                }
+            };
             let ident_select_token_stream = match postgresql_crud_macros_common::ArrayDimension::try_from(postgresql_json_type_pattern) {
                 Ok(array_dimension) => {
                     let mut arguments_token_stream = vec![];
@@ -1238,19 +1261,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 },
                 Err(_) => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            Default,
-                            PartialEq,
-                            serde::Serialize,
-                            serde::Deserialize,
-                            utoipa::ToSchema,
-                            schemars::JsonSchema,
-                        )]
-                        pub struct #ident_select_upper_camel_case(pub #import_path::UniqueVec<#ident_select_element_standart_not_null_upper_camel_case>);
-                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&IsStandartWithId::False),
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                         #[derive(
                             Debug,
@@ -1897,19 +1908,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                         let ident_with_id_select_element_standart_not_null_upper_camel_case = naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-                        let ident_with_id_select_token_stream = quote::quote! {
-                            #[derive(
-                                Debug,
-                                Clone,
-                                Default,
-                                PartialEq,
-                                serde::Serialize,
-                                serde::Deserialize,
-                                utoipa::ToSchema,
-                                schemars::JsonSchema,
-                            )]
-                            pub struct #ident_with_id_select_standart_not_null_upper_camel_case(pub #import_path::UniqueVec<#ident_with_id_select_element_standart_not_null_upper_camel_case>);
-                        };
+                        let ident_with_id_select_token_stream = generate_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&IsStandartWithId::True);
                         let impl_sqlx_type_sqlx_postgres_for_ident_with_id_select_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_with_id_select_element_standart_not_null_upper_camel_case);
                         let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_select_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
                             &ident_with_id_select_standart_not_null_upper_camel_case
