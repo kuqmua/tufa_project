@@ -632,6 +632,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &quote::quote! {Self #content_token_stream}
             )
         };
+        let generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+            macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
+                &proc_macro2::TokenStream::new(),
+                &ident_token_stream,
+                &proc_macro2::TokenStream::new(),
+                &quote::quote! {format!("{self:?}")}
+            )
+        };
         
         let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
         let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
@@ -723,14 +731,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &quote::quote! {write!(formatter, "{:?}", self)}
                 )
             };
-            let generate_impl_error_occurence_lib_to_std_string_string_for_ident_create_or_ident_with_id_create_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-                macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-                    &proc_macro2::TokenStream::new(),
-                    &ident_token_stream,
-                    &proc_macro2::TokenStream::new(),
-                    &quote::quote! {format!("{self}")}
-                )
-            };
 
             let ident_create_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
                 &ident_create_upper_camel_case,
@@ -741,7 +741,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let impl_std_fmt_display_for_ident_create_token_stream = generate_impl_std_fmt_display_for_ident_create_or_ident_with_id_create_token_stream(
                 &ident_create_upper_camel_case
             );
-            let impl_error_occurence_lib_to_std_string_string_for_ident_create_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_ident_create_or_ident_with_id_create_token_stream(
+            let impl_error_occurence_lib_to_std_string_string_for_ident_create_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
                 &ident_create_upper_camel_case
             );
             let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
@@ -1135,7 +1135,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_std_fmt_display_for_ident_create_or_ident_with_id_create_token_stream(
                             &ident_with_id_create_standart_not_null_upper_camel_case
                         );
-                        let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_error_occurence_lib_to_std_string_string_for_ident_create_or_ident_with_id_create_token_stream(
+                        let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
                             &ident_with_id_create_standart_not_null_upper_camel_case
                         );
                         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
@@ -1920,11 +1920,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             }
                         };
-                        let impl_error_occurence_lib_to_std_string_string_for_ident_select_element_or_ident_with_id_select_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-                            &proc_macro2::TokenStream::new(),
-                            &current_ident_select_element_or_ident_with_id_select_element_upper_camel_case,
-                            &proc_macro2::TokenStream::new(),
-                            &quote::quote! {format!("{self:?}")}
+                        let impl_error_occurence_lib_to_std_string_string_for_ident_select_element_or_ident_with_id_select_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
+                            &current_ident_select_element_or_ident_with_id_select_element_upper_camel_case
                         );
                         let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_select_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                             &current_ident_select_element_or_ident_with_id_select_element_upper_camel_case, 
@@ -2135,11 +2132,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                 }
                             };
-                            let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_select_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-                                &proc_macro2::TokenStream::new(),
-                                &ident_with_id_select_element_standart_not_null_upper_camel_case,
-                                &proc_macro2::TokenStream::new(),
-                                &quote::quote! {format!("{self:?}")}
+                            let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_select_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
+                                &ident_with_id_select_element_standart_not_null_upper_camel_case
                             );
                             let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_select_element_token_stream =         postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                                 &ident_with_id_select_element_standart_not_null_upper_camel_case, 
@@ -2499,11 +2493,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                 );
-                let impl_error_occurence_lib_to_std_string_string_for_ident_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-                    &proc_macro2::TokenStream::new(),
-                    &ident_where_element_upper_camel_case,
-                    &proc_macro2::TokenStream::new(),
-                    &quote::quote! {format!("{self:#?}")}
+                let impl_error_occurence_lib_to_std_string_string_for_ident_where_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
+                    &ident_where_element_upper_camel_case
                 );
                 let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident_where_element_upper_camel_case, 
@@ -2667,11 +2658,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 },
                                 &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                             );
-                            let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-                                &proc_macro2::TokenStream::new(),
-                                &ident_with_id_where_element_standart_not_null_upper_camel_case,
-                                &proc_macro2::TokenStream::new(),
-                                &quote::quote! {format!("{self:#?}")}
+                            let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
+                                &ident_with_id_where_element_standart_not_null_upper_camel_case
                             );
                             let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_where_element_token_stream =       postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                                 &ident_with_id_where_element_standart_not_null_upper_camel_case, 
