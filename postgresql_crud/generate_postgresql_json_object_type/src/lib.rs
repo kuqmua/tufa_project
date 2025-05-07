@@ -1894,8 +1894,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_select_element_token_stream
                         }
                     };
-                    let value = IsStandartWithId::into_array().into_iter().map(|element|generate_ident_select_element_or_ident_with_id_select_element_token_stream(&element));
-                    quote::quote! {#(#value)*}
+                    generate_ident_select_element_or_ident_with_id_select_element_token_stream(&IsStandartWithId::False)
                 }
                 else {
                     proc_macro2::TokenStream::new()
@@ -5106,8 +5105,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_or_ident_with_id_update_element_token_stream
                         }
                     };
-                    let value = IsStandartWithId::into_array().into_iter().map(|element|generate_ident_update_element_or_ident_with_id_update_element_token_stream(&element));
-                    quote::quote! {#(#value)*}
+                    generate_ident_update_element_or_ident_with_id_update_element_token_stream(&IsStandartWithId::False)
                 }
                 else {
                     proc_macro2::TokenStream::new()
