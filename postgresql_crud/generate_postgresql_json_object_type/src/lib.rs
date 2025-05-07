@@ -2266,7 +2266,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 True,
                 False
             }
-            let generate_ident_without_id_or_with_id_read_fields_declaration_token_stream = |
+            let generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream = |
                 is_standart_with_id: &IsStandartWithId,
                 should_add_serde_option_is_none_annotation: &ShouldAddSerdeOptionIsNoneAnnotation
             | {
@@ -2293,8 +2293,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #(#content_token_stream),*
                 }
             };
-            let ident_without_id_or_with_id_read_token_stream = {
-                let content_token_stream = generate_ident_without_id_or_with_id_read_fields_declaration_token_stream(
+            let ident_read_or_ident_with_id_read_token_stream = {
+                let content_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                     &is_standart_with_id,
                     &ShouldAddSerdeOptionIsNoneAnnotation::True
                 );
@@ -2306,7 +2306,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
-            let ident_without_id_or_with_id_read_try_from_error_named_token_stream = quote::quote! {
+            let ident_read_or_ident_with_id_read_try_from_error_named_token_stream = quote::quote! {
                 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                 pub enum #ident_read_try_from_error_named_upper_camel_case {
                     #all_fields_are_none_upper_camel_case {
@@ -2314,17 +2314,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 }
             };
-            let impl_try_new_for_ident_without_id_or_with_id_read_try_from_error_named_token_stream = {
-                let ident_without_id_or_with_id_read_fields_declaration_token_stream = generate_ident_without_id_or_with_id_read_fields_declaration_token_stream(
+            let impl_try_new_for_ident_read_or_ident_with_id_read_try_from_error_named_token_stream = {
+                let ident_read_or_ident_with_id_read_fields_declaration_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                     &is_standart_with_id,
                     &ShouldAddSerdeOptionIsNoneAnnotation::False
                 );
-                let (ident_without_id_or_with_id_read_fields_reference_token_stream, ident_without_id_or_with_id_read_fields_token_stream) = {
+                let (ident_read_or_ident_with_id_read_fields_reference_token_stream, ident_read_or_ident_with_id_read_fields_token_stream) = {
                     enum WithReference {
                         True,
                         False
                     }
-                    let generate_ident_without_id_or_with_id_read_fields_token_stream = |with_reference: &WithReference| {
+                    let generate_ident_read_or_ident_with_id_read_fields_token_stream = |with_reference: &WithReference| {
                         let maybe_reference_symbol_token_stream = match &with_reference {
                             WithReference::True => quote::quote! {&},
                             WithReference::False => proc_macro2::TokenStream::new()
@@ -2340,11 +2340,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     };
                     (
-                        generate_ident_without_id_or_with_id_read_fields_token_stream(&WithReference::True),
-                        generate_ident_without_id_or_with_id_read_fields_token_stream(&WithReference::False)
+                        generate_ident_read_or_ident_with_id_read_fields_token_stream(&WithReference::True),
+                        generate_ident_read_or_ident_with_id_read_fields_token_stream(&WithReference::False)
                     )
                 };
-                let ident_without_id_or_with_id_read_check_if_all_fields_are_none_token_stream = {
+                let ident_read_or_ident_with_id_read_check_if_all_fields_are_none_token_stream = {
                     let nones_token_stream = {
                         let range_end = {
                             let vec_syn_field_len = vec_syn_field.len();
@@ -2368,7 +2368,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     };
                     let left_token_stream = maybe_wrap_into_braces_token_stream(&quote::quote!{#(#nones_token_stream),*});
-                    let right_token_stream = maybe_wrap_into_braces_token_stream(&ident_without_id_or_with_id_read_fields_reference_token_stream);
+                    let right_token_stream = maybe_wrap_into_braces_token_stream(&ident_read_or_ident_with_id_read_fields_reference_token_stream);
                     quote::quote! {
                         if let #left_token_stream = #right_token_stream {
                             return Err(#ident_read_try_from_error_named_upper_camel_case::#all_fields_are_none_upper_camel_case {
@@ -2379,14 +2379,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 quote::quote! {
                     impl #ident_read_upper_camel_case {
-                        pub fn try_new(#ident_without_id_or_with_id_read_fields_declaration_token_stream) -> Result<Self, #ident_read_try_from_error_named_upper_camel_case> {
-                            #ident_without_id_or_with_id_read_check_if_all_fields_are_none_token_stream
-                            Ok(Self{#ident_without_id_or_with_id_read_fields_token_stream})
+                        pub fn try_new(#ident_read_or_ident_with_id_read_fields_declaration_token_stream) -> Result<Self, #ident_read_try_from_error_named_upper_camel_case> {
+                            #ident_read_or_ident_with_id_read_check_if_all_fields_are_none_token_stream
+                            Ok(Self{#ident_read_or_ident_with_id_read_fields_token_stream})
                         }
                     }
                 }
             };
-            let impl_serde_deserialize_for_ident_without_id_or_with_id_read_token_stream = {
+            let impl_serde_deserialize_for_ident_read_or_ident_with_id_read_token_stream = {
                 let range_end = {
                     let vec_syn_field_len = vec_syn_field.len();
                     match &is_standart_with_id {
@@ -2623,7 +2623,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #(#fields_array_elements_token_stream),*
                     }
                 };
-                let ident_without_id_or_with_id_read_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_read_upper_camel_case);
+                let ident_read_or_ident_with_id_read_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_read_upper_camel_case);
                 quote::quote! {
                     impl<'de> serde::Deserialize<'de> for #ident_read_upper_camel_case {
                         fn deserialize<__D>(
@@ -2760,7 +2760,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             const FIELDS: &'static [&'static str] = &[#fields_array_elements_token_stream];
                             serde::Deserializer::deserialize_struct(
                                 __deserializer,
-                                #ident_without_id_or_with_id_read_upper_camel_case_double_quotes_token_stream,
+                                #ident_read_or_ident_with_id_read_upper_camel_case_double_quotes_token_stream,
                                 FIELDS,
                                 __Visitor {
                                     marker: serde::__private::PhantomData::<
@@ -2773,7 +2773,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
             };
-            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_id_or_with_id_read_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_or_ident_with_id_read_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_read_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
                 &{
@@ -2813,8 +2813,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     quote::quote! {Self{#content_token_stream}}
                 },
             );
-            let impl_sqlx_type_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_read_upper_camel_case);
-            let impl_sqlx_decode_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
+            let impl_sqlx_type_sqlx_postgres_for_ident_read_or_ident_with_id_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_read_upper_camel_case);
+            let impl_sqlx_decode_sqlx_postgres_for_ident_read_or_ident_with_id_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
                 &ident_read_upper_camel_case
             );
             let maybe_ident_with_id_read_token_stream = match &postgresql_json_type_pattern {
@@ -2823,7 +2823,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let vec_syn_field = &vec_syn_field_with_id;//todo refactor it?
                         let ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
                         let ident_with_id_read_token_stream = {
-                            let content_token_stream = generate_ident_without_id_or_with_id_read_fields_declaration_token_stream(
+                            let content_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                                 &IsStandartWithId::True,
                                 &ShouldAddSerdeOptionIsNoneAnnotation::True
                             );
@@ -2843,7 +2843,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         };
                         let impl_try_new_for_ident_with_id_read_try_from_error_named_token_stream = {
-                            let ident_with_id_read_fields_declaration_token_stream = generate_ident_without_id_or_with_id_read_fields_declaration_token_stream(
+                            let ident_with_id_read_fields_declaration_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                                 &IsStandartWithId::True,
                                 &ShouldAddSerdeOptionIsNoneAnnotation::False
                             );
@@ -3363,13 +3363,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {..} => proc_macro2::TokenStream::new(),
             };
             quote::quote! {
-                #ident_without_id_or_with_id_read_token_stream
-                #ident_without_id_or_with_id_read_try_from_error_named_token_stream
-                #impl_try_new_for_ident_without_id_or_with_id_read_try_from_error_named_token_stream
-                #impl_serde_deserialize_for_ident_without_id_or_with_id_read_token_stream
-                #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_id_or_with_id_read_token_stream
-                #impl_sqlx_type_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream
-                #impl_sqlx_decode_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream
+                #ident_read_or_ident_with_id_read_token_stream
+                #ident_read_or_ident_with_id_read_try_from_error_named_token_stream
+                #impl_try_new_for_ident_read_or_ident_with_id_read_try_from_error_named_token_stream
+                #impl_serde_deserialize_for_ident_read_or_ident_with_id_read_token_stream
+                #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_or_ident_with_id_read_token_stream
+                #impl_sqlx_type_sqlx_postgres_for_ident_read_or_ident_with_id_read_token_stream
+                #impl_sqlx_decode_sqlx_postgres_for_ident_read_or_ident_with_id_read_token_stream
                 #maybe_ident_with_id_read_token_stream
             }
         };
