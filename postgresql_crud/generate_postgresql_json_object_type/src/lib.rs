@@ -1918,6 +1918,52 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
             };
+            let generate_where_filter_query_part_content_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                let query_part_variants_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                    let field_ident_stringified = element
+                        .ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                        })
+                        .to_string();
+                    let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}}->'{field_ident_stringified}'"));
+                    quote::quote! {
+                        Self::#field_ident_upper_camel_case_token_stream(value) => #import_path::PostgresqlTypeWhereFilter::query_part(
+                            value,
+                            increment,
+                            &format!(#format_handle_token_stream),
+                            is_need_to_add_logical_operator,
+                        )
+                    }
+                });
+                quote::quote! {
+                    match &self {
+                        #(#query_part_variants_token_stream),*
+                    }
+                }
+            };
+            let generate_where_filter_query_bind_content_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                let query_bind_variants_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                    let field_ident_stringified = element
+                        .ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                        })
+                        .to_string();
+                    let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                    quote::quote! {
+                        Self::#field_ident_upper_camel_case_token_stream(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query)
+                    }
+                });
+                quote::quote! {
+                    match self {
+                        #(#query_bind_variants_token_stream),*
+                    }
+                }
+            };
             let maybe_impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_where_element_token_stream = {
                 let generate_impl_postgresql_type_where_filter_for_ident_token_stream = |
                     query_part_content_token_stream: &dyn quote::ToTokens,
@@ -1936,52 +1982,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 match &postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                         NotNullOrNullable::NotNull => generate_impl_postgresql_type_where_filter_for_ident_token_stream(
-                            &{
-                                let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
-                                    let field_ident_stringified = element
-                                        .ident
-                                        .as_ref()
-                                        .unwrap_or_else(|| {
-                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                        })
-                                        .to_string();
-                                    let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}}->'{field_ident_stringified}'"));
-                                    quote::quote! {
-                                        Self::#field_ident_upper_camel_case_token_stream(value) => #import_path::PostgresqlTypeWhereFilter::query_part(
-                                            value,
-                                            increment,
-                                            &format!(#format_handle_token_stream),
-                                            is_need_to_add_logical_operator,
-                                        )
-                                    }
-                                });
-                                quote::quote! {
-                                    match &self {
-                                        #(#query_part_variants_token_stream),*
-                                    }
-                                }
-                            },
-                            &{
-                                let query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
-                                    let field_ident_stringified = element
-                                        .ident
-                                        .as_ref()
-                                        .unwrap_or_else(|| {
-                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                        })
-                                        .to_string();
-                                    let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                                    quote::quote! {
-                                        Self::#field_ident_upper_camel_case_token_stream(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query)
-                                    }
-                                });
-                                quote::quote! {
-                                    match self {
-                                        #(#query_bind_variants_token_stream),*
-                                    }
-                                }
-                            }
+                            &generate_where_filter_query_part_content_standart_not_null_token_stream(&IsStandartWithId::False),
+                            &generate_where_filter_query_bind_content_standart_not_null_token_stream(&IsStandartWithId::False),
                         ),
                         NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                     },
@@ -2192,53 +2194,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &quote::quote! {<'a>},
                             &ident_with_id_where_element_standart_not_null_upper_camel_case,
                             &proc_macro2::TokenStream::new(),
-                            &{
-                                let query_part_variants_token_stream = vec_syn_field_with_id.iter().map(|element| {
-                                    let field_ident_stringified = element
-                                        .ident
-                                        .as_ref()
-                                        .unwrap_or_else(|| {
-                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                        })
-                                        .to_string();
-                                    let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}}->'{field_ident_stringified}'"));
-                                    quote::quote! {
-                                        Self::#field_ident_upper_camel_case_token_stream(value) => #import_path::PostgresqlTypeWhereFilter::query_part(
-                                            value,
-                                            increment,
-                                            &format!(#format_handle_token_stream),
-                                            is_need_to_add_logical_operator,
-                                        )
-                                    }
-                                });
-                                quote::quote! {
-                                    match &self {
-                                        #(#query_part_variants_token_stream),*
-                                    }
-                                }
-                            },
+                            &generate_where_filter_query_part_content_standart_not_null_token_stream(&IsStandartWithId::True),
                             &postgresql_crud_macros_common::IsQueryBindMutable::True,
-                            &{
-                                let query_bind_variants_token_stream = vec_syn_field_with_id.iter().map(|element| {
-                                    let field_ident_stringified = element
-                                        .ident
-                                        .as_ref()
-                                        .unwrap_or_else(|| {
-                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                        })
-                                        .to_string();
-                                    let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                                    quote::quote! {
-                                        Self::#field_ident_upper_camel_case_token_stream(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query)
-                                    }
-                                });
-                                quote::quote! {
-                                    match self {
-                                        #(#query_bind_variants_token_stream),*
-                                    }
-                                }
-                            },
+                            &generate_where_filter_query_bind_content_standart_not_null_token_stream(&IsStandartWithId::True),
                             &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                         );
                         let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
