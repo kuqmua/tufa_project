@@ -3395,15 +3395,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
             );
             let sqlx_types_json_ident_without_id_or_with_id_read_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&ident_without_id_or_with_id_read_upper_camel_case);
-            // let std_option_option_sqlx_types_json_ident_without_id_or_with_id_read_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&sqlx_types_json_ident_without_id_or_with_id_read_token_stream);
             let impl_sqlx_type_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                 &ident_without_id_or_with_id_read_upper_camel_case,
-                //todo
                 &sqlx_types_json_ident_without_id_or_with_id_read_token_stream
-                // &match &postgresql_type {
-                //     PostgresqlType::JsonbNotNull => &sqlx_types_json_ident_without_id_or_with_id_read_token_stream,
-                //     PostgresqlType::JsonbNullable => &std_option_option_sqlx_types_json_ident_without_id_or_with_id_read_token_stream,
-                // },
             );
             let impl_sqlx_decode_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream = generate_generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
                 &ident_without_id_or_with_id_read_upper_camel_case,
