@@ -1964,19 +1964,30 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
             };
+            let generate_impl_postgresql_type_where_filter_token_stream = |
+                ident_token_stream: &dyn quote::ToTokens,
+                query_part_content_token_stream: &dyn quote::ToTokens,
+                query_bind_content_token_stream: &dyn quote::ToTokens,
+            |{
+                postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
+                    &quote::quote! {<'a>},
+                    &ident_token_stream,
+                    &proc_macro2::TokenStream::new(),
+                    &query_part_content_token_stream,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                    &query_bind_content_token_stream,
+                    &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                )
+            };
             let maybe_impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_where_element_token_stream = {
                 let generate_impl_postgresql_type_where_filter_for_ident_token_stream = |
                     query_part_content_token_stream: &dyn quote::ToTokens,
                     query_bind_content_token_stream: &dyn quote::ToTokens,
                 |{
-                    postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
-                        &quote::quote! {<'a>},
+                    generate_impl_postgresql_type_where_filter_token_stream(
                         &ident_where_element_upper_camel_case,
-                        &proc_macro2::TokenStream::new(),
                         &query_part_content_token_stream,
-                        &postgresql_crud_macros_common::IsQueryBindMutable::True,
                         &query_bind_content_token_stream,
-                        &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                     )
                 };
                 match &postgresql_json_type_pattern {
@@ -2190,14 +2201,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &ident_with_id_where_element_standart_not_null_upper_camel_case,
                             &generate_ident_where_element_or_ident_with_id_where_element_content_token_stream(&IsStandartWithId::True)
                         );
-                        let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_token_stream = postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
-                            &quote::quote! {<'a>},
+                        let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_token_stream = generate_impl_postgresql_type_where_filter_token_stream(
                             &ident_with_id_where_element_standart_not_null_upper_camel_case,
-                            &proc_macro2::TokenStream::new(),
                             &generate_where_filter_query_part_content_standart_not_null_token_stream(&IsStandartWithId::True),
-                            &postgresql_crud_macros_common::IsQueryBindMutable::True,
                             &generate_where_filter_query_bind_content_standart_not_null_token_stream(&IsStandartWithId::True),
-                            &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
                         );
                         let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
                             &ident_with_id_where_element_standart_not_null_upper_camel_case
