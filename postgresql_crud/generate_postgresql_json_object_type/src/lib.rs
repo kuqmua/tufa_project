@@ -1795,45 +1795,56 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_with_id_where_element_standart_not_null_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_where_element_token_stream = {
             use postgresql_crud_macros_common::NotNullOrNullable;
-            let maybe_ident_where_element_token_stream = {
-                let generate_ident_where_element_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+            let generate_ident_where_element_or_ident_with_id_where_element_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                let variants_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                    let field_ident_stringified = element.ident
+                        .as_ref()
+                        .unwrap_or_else(|| {
+                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                        })
+                        .to_string();
+                    let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                    let field_type_as_json_type_where_element_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                        &element.ty,
+                        &PostgresqlJsonTypeSubtype::WhereElement
+                    );
                     quote::quote! {
-                        #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                        pub enum #ident_where_element_upper_camel_case {
-                             #content_token_stream
-                        }
+                        #field_ident_upper_camel_case_token_stream(#import_path::PostgresqlTypeWhere<
+                            #field_type_as_json_type_where_element_token_stream
+                        >)
                     }
+                });
+                quote::quote!{#(#variants_token_stream),*}
+            };
+            let generate_ident_where_element_token_stream = |
+                ident_token_stream:&dyn quote::ToTokens,
+                content_token_stream: &dyn quote::ToTokens
+            |{
+                quote::quote! {
+                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+                    pub enum #ident_token_stream {
+                         #content_token_stream
+                    }
+                }
+            };
+            let maybe_ident_where_element_token_stream = {
+                let generate_ident_where_element_wrapper_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                    generate_ident_where_element_token_stream(
+                        &ident_where_element_upper_camel_case,
+                        &content_token_stream
+                    )
                 };
                 match &postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        NotNullOrNullable::NotNull => generate_ident_where_element_token_stream(&{
-                            let variants_token_stream = vec_syn_field.iter().map(|element| {
-                                let field_ident_stringified = element
-                                    .ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    })
-                                    .to_string();
-                                let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                                let field_type_as_json_type_where_element_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                                    &element.ty,
-                                    &PostgresqlJsonTypeSubtype::WhereElement
-                                );
-                                quote::quote! {
-                                    #field_ident_upper_camel_case_token_stream(#import_path::PostgresqlTypeWhere<
-                                        #field_type_as_json_type_where_element_token_stream
-                                    >)
-                                }
-                            });
-                            quote::quote! {#(#variants_token_stream),*}
-                        }),
+                        NotNullOrNullable::NotNull => generate_ident_where_element_wrapper_token_stream(
+                            &generate_ident_where_element_or_ident_with_id_where_element_content_token_stream(&IsStandartWithId::False)
+                        ),
                         NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                     },
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_ident_where_element_token_stream(&{
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_ident_where_element_wrapper_token_stream(&{
                             let variants_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident_stringified = element
                                     .ident
@@ -2173,32 +2184,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let maybe_ident_with_id_where_element_token_stream = match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                        let ident_with_id_where_element_token_stream = {
-                            let variants_token_stream = vec_syn_field_with_id.iter().map(|element| {
-                                let field_ident_stringified = element.ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    })
-                                    .to_string();
-                                let field_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                                let field_type_as_json_type_where_element_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                                    &element.ty,
-                                    &PostgresqlJsonTypeSubtype::WhereElement
-                                );
-                                quote::quote! {
-                                    #field_ident_upper_camel_case_token_stream(#import_path::PostgresqlTypeWhere<
-                                        #field_type_as_json_type_where_element_token_stream
-                                    >)
-                                }
-                            });
-                            quote::quote! {
-                                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                                pub enum #ident_with_id_where_element_standart_not_null_upper_camel_case {
-                                     #(#variants_token_stream),*
-                                }
-                            }
-                        };
+                        let ident_with_id_where_element_token_stream =  generate_ident_where_element_token_stream(
+                            &ident_with_id_where_element_standart_not_null_upper_camel_case,
+                            &generate_ident_where_element_or_ident_with_id_where_element_content_token_stream(&IsStandartWithId::True)
+                        );
                         let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_token_stream = postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
                             &quote::quote! {<'a>},
                             &ident_with_id_where_element_standart_not_null_upper_camel_case,
@@ -5021,86 +5010,86 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_token_stream
         };
-        if let (
-            postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        // if let (
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-            postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
-            // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-            //     dimension1_not_null_or_nullable,
-            // },
-            // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
-            //     dimension1_not_null_or_nullable,
-            //     dimension2_not_null_or_nullable,
-            // },
-            // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
-            //     dimension1_not_null_or_nullable,
-            //     dimension2_not_null_or_nullable,
-            //     dimension3_not_null_or_nullable,
-            // },
-            // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
-            //     dimension1_not_null_or_nullable,
-            //     dimension2_not_null_or_nullable,
-            //     dimension3_not_null_or_nullable,
-            //     dimension4_not_null_or_nullable,
-            // },
+        //     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
+        //     //     dimension1_not_null_or_nullable,
+        //     // },
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
+        //     //     dimension1_not_null_or_nullable,
+        //     //     dimension2_not_null_or_nullable,
+        //     // },
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
+        //     //     dimension1_not_null_or_nullable,
+        //     //     dimension2_not_null_or_nullable,
+        //     //     dimension3_not_null_or_nullable,
+        //     // },
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
+        //     //     dimension1_not_null_or_nullable,
+        //     //     dimension2_not_null_or_nullable,
+        //     //     dimension3_not_null_or_nullable,
+        //     //     dimension4_not_null_or_nullable,
+        //     // },
 
-            // TraitGen::PostgresqlType,
-            // TraitGen::PostgresqlJsonType,
-            TraitGen::PostgresqlTypeAndPostgresqlJsonType,
-        ) = (
-            &not_null_or_nullable,
-            &postgresql_json_type_pattern,
-            &trait_gen,
-        ) {
-            // use postgresql_crud_macros_common::NotNullOrNullable;
-            // let d1 = match &dimension1_not_null_or_nullable {
-            //     NotNullOrNullable::NotNull => true,
-            //     NotNullOrNullable::Nullable => false,
-            // };
-            // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-            // };
-            // let d3 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-            // };
-            // let d4 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
-            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
-            // };
-            // if d1 {
-                if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
-                    macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-                        "GeneratePostgresqlJsonObjectType",
-                        &generated,
-                    );
-                }
-            // }
-        }
+        //     // TraitGen::PostgresqlType,
+        //     // TraitGen::PostgresqlJsonType,
+        //     TraitGen::PostgresqlTypeAndPostgresqlJsonType,
+        // ) = (
+        //     &not_null_or_nullable,
+        //     &postgresql_json_type_pattern,
+        //     &trait_gen,
+        // ) {
+        //     // use postgresql_crud_macros_common::NotNullOrNullable;
+        //     // let d1 = match &dimension1_not_null_or_nullable {
+        //     //     NotNullOrNullable::NotNull => true,
+        //     //     NotNullOrNullable::Nullable => false,
+        //     // };
+        //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     // };
+        //     // let d3 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => true,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     // };
+        //     // let d4 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
+        //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
+        //     // };
+        //     // if d1 {
+        //         if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
+        //             macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //                 "GeneratePostgresqlJsonObjectType",
+        //                 &generated,
+        //             );
+        //         }
+        //     // }
+        // }
         generated.to_string()
     })
     .collect::<std::vec::Vec<String>>();
