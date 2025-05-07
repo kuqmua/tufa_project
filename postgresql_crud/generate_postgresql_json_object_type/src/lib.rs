@@ -1198,9 +1198,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 quote::quote!{#token_stream}
             };
             let ident_select_element_or_ident_with_id_select_element_upper_camel_case: &dyn quote::ToTokens = &generate_ident_select_element_or_ident_with_id_select_element_upper_camel_case(&is_standart_with_id);
-            let unique_vec_ident_select_element_or_ident_with_id_select_element_token_stream = quote::quote!{
-                #import_path::UniqueVec<#ident_select_element_or_ident_with_id_select_element_upper_camel_case>
-            };
             let ident_select_token_stream = match postgresql_crud_macros_common::ArrayDimension::try_from(postgresql_json_type_pattern) {
                 Ok(array_dimension) => {
                     let mut arguments_token_stream = vec![];
@@ -1239,7 +1236,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             utoipa::ToSchema,
                             schemars::JsonSchema,
                         )]
-                        pub struct #ident_select_upper_camel_case(pub #unique_vec_ident_select_element_or_ident_with_id_select_element_token_stream);
+                        pub struct #ident_select_upper_camel_case(pub #import_path::UniqueVec<#ident_select_element_or_ident_with_id_select_element_upper_camel_case>);
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                         #[derive(
@@ -1259,38 +1256,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let sqlx_type_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(
-                &{
-                    let content_token_stream: &dyn quote::ToTokens = match &postgresql_json_type_pattern {
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &unique_vec_ident_select_element_or_ident_with_id_select_element_token_stream,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_select_upper_camel_case,
-                        },
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-                            dimension1_not_null_or_nullable,
-                        } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_select_upper_camel_case,
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
-                        },
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
-                            dimension1_not_null_or_nullable: _,
-                            dimension2_not_null_or_nullable: _,
-                        } => todo!(),
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
-                            dimension1_not_null_or_nullable: _,
-                            dimension2_not_null_or_nullable: _,
-                            dimension3_not_null_or_nullable: _,
-                        } => todo!(),
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
-                            dimension1_not_null_or_nullable: _,
-                            dimension2_not_null_or_nullable: _,
-                            dimension3_not_null_or_nullable: _,
-                            dimension4_not_null_or_nullable: _,
-                        } => todo!()
-                    };
-                    content_token_stream
-                }
+                &ident_select_upper_camel_case,
             );
             let impl_sqlx_type_sqlx_postgres_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                 &ident_select_upper_camel_case,
@@ -1299,44 +1265,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let impl_sqlx_decode_sqlx_postgres_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                 &ident_select_upper_camel_case,
                 &sqlx_type_token_stream,
-                &match &postgresql_json_type_pattern {
-                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {Ok(Self(value.0))},
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{Ok(value.0)},
-                    },
-                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-                        dimension1_not_null_or_nullable,
-                    } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{Ok(value.0)},
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
-                    },
-                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
-                        dimension1_not_null_or_nullable: _,
-                        dimension2_not_null_or_nullable: _,
-                    } => todo!(),
-                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
-                        dimension1_not_null_or_nullable: _,
-                        dimension2_not_null_or_nullable: _,
-                        dimension3_not_null_or_nullable: _,
-                    } => todo!(),
-                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
-                        dimension1_not_null_or_nullable: _,
-                        dimension2_not_null_or_nullable: _,
-                        dimension3_not_null_or_nullable: _,
-                        dimension4_not_null_or_nullable: _,
-                    } => todo!()
-                }
-                // &match &postgresql_type {
-                //     PostgresqlType::JsonbNotNull => quote::quote! {Ok(Self(value.0))},
-                //     PostgresqlType::JsonbNullable => quote::quote! {
-                //         match value {
-                //             Some(value) => Ok(Self(Some(value.0))),
-                //             None => Ok(Self(None)),
-                //         }
-                //     },
-                // }
+                &quote::quote! {Ok(value.0)}
             );
             let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &ident_select_upper_camel_case,
