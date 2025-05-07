@@ -2293,18 +2293,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #(#content_token_stream),*
                 }
             };
-            let ident_read_or_ident_with_id_read_token_stream = {
-                let content_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
-                    &is_standart_with_id,
-                    &ShouldAddSerdeOptionIsNoneAnnotation::True
-                );
+            let generate_ident_read_token_stream = |
+                ident_token_stream: &dyn quote::ToTokens,
+                content_token_stream: &dyn quote::ToTokens,
+            |{
                 quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-                    pub struct #ident_read_upper_camel_case {
+                    pub struct #ident_token_stream {
                         #content_token_stream
                     }
                 }
             };
+            let ident_read_or_ident_with_id_read_token_stream = generate_ident_read_token_stream(
+                &ident_read_upper_camel_case,
+                &generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
+                    &is_standart_with_id,
+                    &ShouldAddSerdeOptionIsNoneAnnotation::True
+                )
+            );
             let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
             let ident_read_or_ident_with_id_read_try_from_error_named_token_stream = quote::quote! {
                 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -2822,18 +2828,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                         let vec_syn_field = &vec_syn_field_with_id;//todo refactor it?
                         let ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-                        let ident_with_id_read_token_stream = {
-                            let content_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
+                        let ident_with_id_read_token_stream = generate_ident_read_token_stream(
+                            &ident_with_id_read_standart_not_null_upper_camel_case,
+                            &generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                                 &IsStandartWithId::True,
                                 &ShouldAddSerdeOptionIsNoneAnnotation::True
-                            );
-                            quote::quote! {
-                                #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-                                pub struct #ident_with_id_read_standart_not_null_upper_camel_case {
-                                    #content_token_stream
-                                }
-                            }
-                        };
+                            )
+                        );
                         let ident_with_id_read_try_from_error_named_token_stream = quote::quote! {
                             #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                             pub enum #ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case {
