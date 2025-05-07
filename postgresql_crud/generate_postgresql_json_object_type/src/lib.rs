@@ -2221,146 +2221,36 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_where_element_token_stream
                         }
                     },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                        pub type #ident_with_id_where_element_standart_not_null_upper_camel_case = quote::quote!{postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::WhereElement>};
+                    },
                 },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {..} => proc_macro2::TokenStream::new(),
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {..} => proc_macro2::TokenStream::new(),
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {..} => proc_macro2::TokenStream::new(),
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {..} => proc_macro2::TokenStream::new(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {..} => todo!(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {..} => todo!(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {..} => todo!(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {..} => todo!(),
             };
-            quote::quote! {
+            let typical_token_stream = quote::quote! {
                 #maybe_ident_where_element_token_stream
                 #maybe_impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_where_element_token_stream
                 #maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_element_token_stream
                 #maybe_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_element_token_stream
 
                 #maybe_ident_with_id_where_element_token_stream
-            }
-        };
-        let ident_where_element_trait_token_stream: &dyn quote::ToTokens = {
-            use postgresql_crud_macros_common::NotNullOrNullable;
+            };
             match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                    NotNullOrNullable::NotNull => &ident_where_element_upper_camel_case,
-                    NotNullOrNullable::Nullable => &quote::quote!{postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::WhereElement>},
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => typical_token_stream,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                        quote::quote!{
+                            pub type #ident_where_element_upper_camel_case = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::WhereElement>;
+                        }
+                    },
                 },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-                    dimension1_not_null_or_nullable,
-                } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable,
-                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                }
-            }
-        };
-        let ident_with_id_where_element_standart_not_null_trait_token_stream: &dyn quote::ToTokens = {
-            use postgresql_crud_macros_common::NotNullOrNullable;
-            match &postgresql_json_type_pattern {
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                    NotNullOrNullable::NotNull => &ident_with_id_where_element_standart_not_null_upper_camel_case,
-                    NotNullOrNullable::Nullable => &quote::quote!{postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::WhereElement>},
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-                    dimension1_not_null_or_nullable,
-                } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
-                    dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable,
-                } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => &ident_where_element_upper_camel_case,
-                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => &ident_where_element_upper_camel_case,
-                }
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {..} => todo!(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {..} => todo!(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {..} => todo!(),
+                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {..} => todo!(),
             }
         };
         let generate_field_ident_double_quotes_token_stream = |value: &syn::Field| {
@@ -4874,7 +4764,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_select_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &select_query_part_token_stream,
-                &ident_where_element_trait_token_stream,
+                &ident_where_element_upper_camel_case,
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
@@ -4901,7 +4791,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     )
                 },
-                &ident_where_element_trait_token_stream,
+                &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
@@ -4936,7 +4826,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_with_id_select_standart_not_null_upper_camel_case,
                     &ident_with_id_read_standart_not_null_upper_camel_case,
                     &select_query_part_token_stream,
-                    &ident_with_id_where_element_standart_not_null_trait_token_stream,
+                    &ident_with_id_where_element_standart_not_null_upper_camel_case,
                     &ident_with_id_update_standart_not_null_upper_camel_case,
                     &update_query_part_token_stream,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
