@@ -1173,7 +1173,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         };
         let create_query_part_token_stream = quote::quote!{#value_snake_case.#create_query_part_snake_case(#increment_snake_case)};
         let create_query_bind_token_stream = quote::quote!{#value_snake_case.#create_query_bind_snake_case(#query_snake_case)};
-        let generate_generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream = |ident_token_stream: &dyn quote::ToTokens, type_token_stream: &dyn quote::ToTokens|{
+        let generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream = |ident_token_stream: &dyn quote::ToTokens, type_token_stream: &dyn quote::ToTokens|{
             postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                 &ident_token_stream,
                 &type_token_stream,
@@ -1269,7 +1269,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_select_upper_camel_case,
                 &sqlx_type_token_stream
             );
-            let impl_sqlx_decode_sqlx_postgres_for_ident_select_token_stream = generate_generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
+            let impl_sqlx_decode_sqlx_postgres_for_ident_select_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
                 &ident_select_upper_camel_case,
                 &sqlx_type_token_stream,
             );
@@ -1925,7 +1925,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &ident_with_id_select_element_standart_not_null_upper_camel_case,
                             &sqlx_type_token_stream
                         );
-                        let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_select_token_stream = generate_generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
+                        let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_select_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
                             &ident_with_id_select_standart_not_null_upper_camel_case,
                             &sqlx_type_token_stream,
                         );
@@ -3399,7 +3399,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_without_id_or_with_id_read_upper_camel_case,
                 &sqlx_types_json_ident_without_id_or_with_id_read_token_stream
             );
-            let impl_sqlx_decode_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream = generate_generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
+            let impl_sqlx_decode_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
                 &ident_without_id_or_with_id_read_upper_camel_case,
                 &sqlx_types_json_ident_without_id_or_with_id_read_token_stream,
             );
@@ -3932,7 +3932,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &ident_with_id_read_standart_not_null_upper_camel_case,
                             &sqlx_types_json_ident_with_id_read_token_stream
                         );
-                        let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_token_stream = generate_generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
+                        let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
                             &ident_with_id_read_standart_not_null_upper_camel_case,
                             &sqlx_types_json_ident_with_id_read_token_stream,
                         );
