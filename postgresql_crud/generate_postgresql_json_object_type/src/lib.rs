@@ -2261,12 +2261,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_with_id_read_standart_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_read_token_stream = {
-            //todo remove postfix without_id
-            let ident_without_id_or_with_id_read_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_standart_with_id {
-                IsStandartWithId::False => &ident_read_upper_camel_case,
-                IsStandartWithId::True => &naming::parameter::SelfWithIdReadUpperCamelCase::from_tokens(&ident)
-            };
-            let ident_without_id_or_with_id_read_try_from_error_named_upper_camel_case = naming::parameter::SelfWithoutIdReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
+            let ident_read_try_from_error_named_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
             enum ShouldAddSerdeOptionIsNoneAnnotation {
                 True,
                 False
@@ -2305,7 +2300,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 );
                 quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-                    pub struct #ident_without_id_or_with_id_read_upper_camel_case {
+                    pub struct #ident_read_upper_camel_case {
                         #content_token_stream
                     }
                 }
@@ -2313,7 +2308,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
             let ident_without_id_or_with_id_read_try_from_error_named_token_stream = quote::quote! {
                 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #ident_without_id_or_with_id_read_try_from_error_named_upper_camel_case {
+                pub enum #ident_read_try_from_error_named_upper_camel_case {
                     #all_fields_are_none_upper_camel_case {
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     },
@@ -2376,15 +2371,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let right_token_stream = maybe_wrap_into_braces_token_stream(&ident_without_id_or_with_id_read_fields_reference_token_stream);
                     quote::quote! {
                         if let #left_token_stream = #right_token_stream {
-                            return Err(#ident_without_id_or_with_id_read_try_from_error_named_upper_camel_case::#all_fields_are_none_upper_camel_case {
+                            return Err(#ident_read_try_from_error_named_upper_camel_case::#all_fields_are_none_upper_camel_case {
                                 code_occurence: error_occurence_lib::code_occurence!()
                             });
                         }
                     }
                 };
                 quote::quote! {
-                    impl #ident_without_id_or_with_id_read_upper_camel_case {
-                        pub fn try_new(#ident_without_id_or_with_id_read_fields_declaration_token_stream) -> Result<Self, #ident_without_id_or_with_id_read_try_from_error_named_upper_camel_case> {
+                    impl #ident_read_upper_camel_case {
+                        pub fn try_new(#ident_without_id_or_with_id_read_fields_declaration_token_stream) -> Result<Self, #ident_read_try_from_error_named_upper_camel_case> {
                             #ident_without_id_or_with_id_read_check_if_all_fields_are_none_token_stream
                             Ok(Self{#ident_without_id_or_with_id_read_fields_token_stream})
                         }
@@ -2526,7 +2521,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 };
                 let match_try_new_in_deserialize_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(
-                    &ident_without_id_or_with_id_read_upper_camel_case,
+                    &ident_read_upper_camel_case,
                     &{
                         let fields_token_stream = {
                             let mut acc = vec![];
@@ -2628,9 +2623,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #(#fields_array_elements_token_stream),*
                     }
                 };
-                let ident_without_id_or_with_id_read_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_without_id_or_with_id_read_upper_camel_case);
+                let ident_without_id_or_with_id_read_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_read_upper_camel_case);
                 quote::quote! {
-                    impl<'de> serde::Deserialize<'de> for #ident_without_id_or_with_id_read_upper_camel_case {
+                    impl<'de> serde::Deserialize<'de> for #ident_read_upper_camel_case {
                         fn deserialize<__D>(
                             __deserializer: __D,
                         ) -> serde::__private::Result<Self, __D::Error>
@@ -2710,12 +2705,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #[doc(hidden)]
                             struct __Visitor<'de> {
                                 marker: serde::__private::PhantomData<
-                                    #ident_without_id_or_with_id_read_upper_camel_case,
+                                    #ident_read_upper_camel_case,
                                 >,
                                 lifetime: serde::__private::PhantomData<&'de ()>,
                             }
                             impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = #ident_without_id_or_with_id_read_upper_camel_case;
+                                type Value = #ident_read_upper_camel_case;
                                 fn expecting(
                                     &self,
                                     __formatter: &mut serde::__private::Formatter<'_>,
@@ -2769,7 +2764,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 FIELDS,
                                 __Visitor {
                                     marker: serde::__private::PhantomData::<
-                                        #ident_without_id_or_with_id_read_upper_camel_case,
+                                        #ident_read_upper_camel_case,
                                     >,
                                     lifetime: serde::__private::PhantomData,
                                 },
@@ -2779,7 +2774,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_without_id_or_with_id_read_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                &ident_without_id_or_with_id_read_upper_camel_case,
+                &ident_read_upper_camel_case,
                 &proc_macro2::TokenStream::new(),
                 &{
                     let generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = |field_ident: &syn::Ident| {
@@ -2818,9 +2813,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     quote::quote! {Self{#content_token_stream}}
                 },
             );
-            let impl_sqlx_type_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_without_id_or_with_id_read_upper_camel_case);
+            let impl_sqlx_type_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_read_upper_camel_case);
             let impl_sqlx_decode_sqlx_postgres_for_ident_without_id_or_with_id_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
-                &ident_without_id_or_with_id_read_upper_camel_case
+                &ident_read_upper_camel_case
             );
             let maybe_ident_with_id_read_token_stream = match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
