@@ -2312,14 +2312,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 )
             );
             let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
-            let ident_read_or_ident_with_id_read_try_from_error_named_token_stream = quote::quote! {
-                #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #ident_read_try_from_error_named_upper_camel_case {
-                    #all_fields_are_none_upper_camel_case {
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
+            let generate_ident_read_try_from_error_named_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                quote::quote! {
+                    #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                    pub enum #ident_token_stream {
+                        #all_fields_are_none_upper_camel_case {
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                        },
+                    }
                 }
             };
+            let ident_read_or_ident_with_id_read_try_from_error_named_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_read_try_from_error_named_upper_camel_case);
             let impl_try_new_for_ident_read_or_ident_with_id_read_try_from_error_named_token_stream = {
                 let ident_read_or_ident_with_id_read_fields_declaration_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                     &is_standart_with_id,
@@ -2835,14 +2838,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 &ShouldAddSerdeOptionIsNoneAnnotation::True
                             )
                         );
-                        let ident_with_id_read_try_from_error_named_token_stream = quote::quote! {
-                            #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                            pub enum #ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case {
-                                #all_fields_are_none_upper_camel_case {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            }
-                        };
+                        let ident_with_id_read_try_from_error_named_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case);
                         let impl_try_new_for_ident_with_id_read_try_from_error_named_token_stream = {
                             let ident_with_id_read_fields_declaration_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                                 &IsStandartWithId::True,
