@@ -2262,6 +2262,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_with_id_read_standart_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_read_token_stream = {
             let ident_read_try_from_error_named_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
+            let ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             enum ShouldAddSerdeOptionIsNoneAnnotation {
                 True,
                 False
@@ -2323,22 +2324,26 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let ident_read_or_ident_with_id_read_try_from_error_named_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_read_try_from_error_named_upper_camel_case);
-            let impl_try_new_for_ident_read_or_ident_with_id_read_try_from_error_named_token_stream = {
-                let ident_read_or_ident_with_id_read_fields_declaration_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
+            let generate_impl_try_new_for_ident_read_try_from_error_named_token_stream = |
+                ident_token_stream: &dyn quote::ToTokens,
+                is_standart_with_id: &IsStandartWithId,
+            |{
+                let current_vec_syn_field = get_vec_syn_field(&is_standart_with_id);
+                let fields_declaration_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                     &is_standart_with_id,
                     &ShouldAddSerdeOptionIsNoneAnnotation::False
                 );
-                let (ident_read_or_ident_with_id_read_fields_reference_token_stream, ident_read_or_ident_with_id_read_fields_token_stream) = {
+                let (fields_reference_token_stream, fields_token_stream) = {
                     enum WithReference {
                         True,
                         False
                     }
-                    let generate_ident_read_or_ident_with_id_read_fields_token_stream = |with_reference: &WithReference| {
+                    let generate_fields_token_stream = |with_reference: &WithReference| {
                         let maybe_reference_symbol_token_stream = match &with_reference {
                             WithReference::True => quote::quote! {&},
                             WithReference::False => proc_macro2::TokenStream::new()
                         };
-                        let fields_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                        let fields_token_stream = current_vec_syn_field.iter().map(|element| {
                             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
                             });
@@ -2349,27 +2354,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     };
                     (
-                        generate_ident_read_or_ident_with_id_read_fields_token_stream(&WithReference::True),
-                        generate_ident_read_or_ident_with_id_read_fields_token_stream(&WithReference::False)
+                        generate_fields_token_stream(&WithReference::True),
+                        generate_fields_token_stream(&WithReference::False)
                     )
                 };
-                let ident_read_or_ident_with_id_read_check_if_all_fields_are_none_token_stream = {
+                let ident_read_try_from_error_named_or_ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
+                    IsStandartWithId::False => &ident_read_try_from_error_named_upper_camel_case,
+                    IsStandartWithId::True => &ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case
+                };
+                let check_if_all_fields_are_none_token_stream = {
+                    let current_vec_syn_field_len = current_vec_syn_field.len();
                     let nones_token_stream = {
-                        let range_end = {
-                            let vec_syn_field_len = vec_syn_field.len();
-                            match &is_standart_with_id {
-                                IsStandartWithId::False => vec_syn_field_len,
-                                IsStandartWithId::True => vec_syn_field_len.checked_add(1).unwrap_or_else(|| panic!("vec_syn_field_len + 1 is None(int overflow)"))
-                            }
-                        };
                         let mut acc = vec![];
-                        for _ in 0..range_end {
+                        for _ in 0..current_vec_syn_field_len {
                             acc.push(quote::quote! {None});
                         }
                         acc
                     };
                     let maybe_wrap_into_braces_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                        if vec_syn_field.len() > 1 {
+                        if current_vec_syn_field_len > 1 {
                             quote::quote!{(#content_token_stream)}
                         }
                         else {
@@ -2377,24 +2380,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     };
                     let left_token_stream = maybe_wrap_into_braces_token_stream(&quote::quote!{#(#nones_token_stream),*});
-                    let right_token_stream = maybe_wrap_into_braces_token_stream(&ident_read_or_ident_with_id_read_fields_reference_token_stream);
+                    let right_token_stream = maybe_wrap_into_braces_token_stream(&fields_reference_token_stream);
                     quote::quote! {
                         if let #left_token_stream = #right_token_stream {
-                            return Err(#ident_read_try_from_error_named_upper_camel_case::#all_fields_are_none_upper_camel_case {
+                            return Err(#ident_read_try_from_error_named_or_ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case::#all_fields_are_none_upper_camel_case {
                                 code_occurence: error_occurence_lib::code_occurence!()
                             });
                         }
                     }
                 };
                 quote::quote! {
-                    impl #ident_read_upper_camel_case {
-                        pub fn try_new(#ident_read_or_ident_with_id_read_fields_declaration_token_stream) -> Result<Self, #ident_read_try_from_error_named_upper_camel_case> {
-                            #ident_read_or_ident_with_id_read_check_if_all_fields_are_none_token_stream
-                            Ok(Self{#ident_read_or_ident_with_id_read_fields_token_stream})
+                    impl #ident_token_stream {
+                        pub fn try_new(#fields_declaration_token_stream) -> Result<Self, #ident_read_try_from_error_named_or_ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case> {
+                            #check_if_all_fields_are_none_token_stream
+                            Ok(Self{#fields_token_stream})
                         }
                     }
                 }
             };
+            let impl_try_new_for_ident_read_or_ident_with_id_read_try_from_error_named_token_stream = generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(
+                &ident_read_upper_camel_case,
+                &IsStandartWithId::False,
+            );
             let impl_serde_deserialize_for_ident_read_or_ident_with_id_read_token_stream = {
                 let range_end = {
                     let vec_syn_field_len = vec_syn_field.len();
@@ -2830,7 +2837,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                         let vec_syn_field = &vec_syn_field_with_id;//todo refactor it?
-                        let ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
                         let ident_with_id_read_token_stream = generate_ident_read_token_stream(
                             &ident_with_id_read_standart_not_null_upper_camel_case,
                             &generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
@@ -2839,78 +2845,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             )
                         );
                         let ident_with_id_read_try_from_error_named_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case);
-                        let impl_try_new_for_ident_with_id_read_try_from_error_named_token_stream = {
-                            let ident_with_id_read_fields_declaration_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
-                                &IsStandartWithId::True,
-                                &ShouldAddSerdeOptionIsNoneAnnotation::False
-                            );
-                            let (ident_with_id_read_fields_reference_token_stream, ident_with_id_read_fields_token_stream) = {
-                                enum WithReference {
-                                    True,
-                                    False
-                                }
-                                let generate_ident_with_id_read_fields_token_stream = |with_reference: &WithReference| {
-                                    let maybe_reference_symbol_token_stream = match &with_reference {
-                                        WithReference::True => quote::quote! {&},
-                                        WithReference::False => proc_macro2::TokenStream::new()
-                                    };
-                                    let fields_token_stream = vec_syn_field.iter().map(|element| {
-                                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                        });
-                                        quote::quote! {#maybe_reference_symbol_token_stream #field_ident}
-                                    });
-                                    quote::quote! {
-                                        #(#fields_token_stream),*
-                                    }
-                                };
-                                (
-                                    generate_ident_with_id_read_fields_token_stream(&WithReference::True),
-                                    generate_ident_with_id_read_fields_token_stream(&WithReference::False)
-                                )
-                            };
-                            let ident_with_id_read_check_if_all_fields_are_none_token_stream = {
-                                let nones_token_stream = {
-                                    let range_end = {
-                                        let vec_syn_field_len = vec_syn_field.len();
-                                        match &is_standart_with_id {
-                                            IsStandartWithId::False => vec_syn_field_len,
-                                            IsStandartWithId::True => vec_syn_field_len.checked_add(1).unwrap_or_else(|| panic!("vec_syn_field_len + 1 is None(int overflow)"))
-                                        }
-                                    };
-                                    let mut acc = vec![];
-                                    for _ in 0..range_end {
-                                        acc.push(quote::quote! {None});
-                                    }
-                                    acc
-                                };
-                                let maybe_wrap_into_braces_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                                    if vec_syn_field.len() > 1 {
-                                        quote::quote!{(#content_token_stream)}
-                                    }
-                                    else {
-                                        quote::quote!{#content_token_stream}
-                                    }
-                                };
-                                let left_token_stream = maybe_wrap_into_braces_token_stream(&quote::quote!{#(#nones_token_stream),*});
-                                let right_token_stream = maybe_wrap_into_braces_token_stream(&ident_with_id_read_fields_reference_token_stream);
-                                quote::quote! {
-                                    if let #left_token_stream = #right_token_stream {
-                                        return Err(#ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case::#all_fields_are_none_upper_camel_case {
-                                            code_occurence: error_occurence_lib::code_occurence!()
-                                        });
-                                    }
-                                }
-                            };
-                            quote::quote! {
-                                impl #ident_with_id_read_standart_not_null_upper_camel_case {
-                                    pub fn try_new(#ident_with_id_read_fields_declaration_token_stream) -> Result<Self, #ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case> {
-                                        #ident_with_id_read_check_if_all_fields_are_none_token_stream
-                                        Ok(Self{#ident_with_id_read_fields_token_stream})
-                                    }
-                                }
-                            }
-                        };
+                        let impl_try_new_for_ident_with_id_read_try_from_error_named_token_stream = generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(
+                            &ident_with_id_read_standart_not_null_upper_camel_case,
+                            &IsStandartWithId::True,
+                        );
                         let impl_serde_deserialize_for_ident_with_id_read_token_stream = {
                             let range_end = {
                                 let vec_syn_field_len = vec_syn_field.len();
