@@ -3959,60 +3959,58 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 //     }
                 // },
             );
+            // let generate_
             let maybe_ident_update_element_and_ident_with_id_update_element_token_stream = if let postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern {
                 if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable {
-                    let generate_ident_update_element_or_ident_with_id_update_element_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                        let ident_update_element_or_ident_with_id_update_element_token_stream = {
-                            let variants_token_stream = vec_syn_field.iter().map(|element| {
+                    let ident_update_element_token_stream = {
+                        let variants_token_stream = vec_syn_field.iter().map(|element| {
+                            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                            });
+                            //todo maybe rename type_path to tokens for standart naming convention
+                            let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
+                            let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
+                            let field_type_as_json_type_update_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                                &element.ty,
+                                &PostgresqlJsonTypeSubtype::Update
+                            );
+                            quote::quote! {
+                                #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
+                                #variant_ident_upper_camel_case_token_stream(#import_path::Value<
+                                    #field_type_as_json_type_update_token_stream
+                                >)
+                            }
+                        });
+                        quote::quote! {
+                            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+                            pub enum #ident_update_element_standart_not_null_upper_camel_case {
+                                #(#variants_token_stream),*
+                            }
+                        }
+                    };
+                    let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_update_element_standart_not_null_upper_camel_case,
+                        &{
+                            let elements_token_stream = vec_syn_field.iter().map(|element| {
                                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 });
-                                //todo maybe rename type_path to tokens for standart naming convention
                                 let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                                let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
-                                let field_type_as_json_type_update_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                                    &element.ty,
-                                    &PostgresqlJsonTypeSubtype::Update
-                                );
                                 quote::quote! {
-                                    #[serde(rename(serialize = #field_ident_double_quotes_token_stream, deserialize = #field_ident_double_quotes_token_stream))]
-                                    #variant_ident_upper_camel_case_token_stream(#import_path::Value<
-                                        #field_type_as_json_type_update_token_stream
-                                    >)
+                                    #ident_update_element_standart_not_null_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#import_path::Value {
+                                        value: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                    })
                                 }
                             });
-                            quote::quote! {
-                                #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                                pub enum #ident_update_element_standart_not_null_upper_camel_case {
-                                    #(#variants_token_stream),*
-                                }
-                            }
-                        };
-                        let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_or_ident_with_id_update_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                            &ident_update_element_standart_not_null_upper_camel_case,
-                            &{
-                                let elements_token_stream = vec_syn_field.iter().map(|element| {
-                                    let field_ident = element.ident.as_ref().unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    });
-                                    let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                                    quote::quote! {
-                                        #ident_update_element_standart_not_null_upper_camel_case::#variant_ident_upper_camel_case_token_stream(#import_path::Value {
-                                            value: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                        })
-                                    }
-                                });
-                                quote::quote! {vec![
-                                    #(#elements_token_stream),*
-                                ]}
-                            }
-                        );
-                        quote::quote! {
-                            #ident_update_element_or_ident_with_id_update_element_token_stream
-                            #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_or_ident_with_id_update_element_token_stream
+                            quote::quote! {vec![
+                                #(#elements_token_stream),*
+                            ]}
                         }
-                    };
-                    generate_ident_update_element_or_ident_with_id_update_element_token_stream(&IsStandartWithId::False)
+                    );
+                    quote::quote! {
+                        #ident_update_element_token_stream
+                        #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_element_token_stream
+                    }
                 }
                 else {
                     proc_macro2::TokenStream::new()
