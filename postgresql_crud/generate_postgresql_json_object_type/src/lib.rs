@@ -3450,6 +3450,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 quote::quote! {#import_path::UniqueVec<#type_token_stream>}
             };
+            let generate_ident_update_token_stream = |
+                ident_token_stream: &dyn quote::ToTokens,
+                content_token_stream: &dyn quote::ToTokens,
+            |{
+                quote::quote! {
+                    #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+                    pub struct #ident_token_stream(pub #content_token_stream);
+                }
+            };
             let ident_update_token_stream = {
                 let content_token_stream = match &postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -3480,10 +3489,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         dimension4_not_null_or_nullable: _,
                     } => todo!()
                 };
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                    pub struct #ident_update_upper_camel_case(pub #content_token_stream);
-                }
+                // generate_ident_update_wrapper_token_stream(&content_token_stream)
+                // quote::quote! {
+                //     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+                //     pub struct #ident_update_upper_camel_case(pub #content_token_stream);
+                // }
+                generate_ident_update_token_stream(
+                    &ident_update_upper_camel_case,
+                    &content_token_stream
+                )
             };
             let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream =
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_update_upper_camel_case, &proc_macro2::TokenStream::new(), &{
@@ -4003,13 +4017,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let maybe_ident_with_id_update_token_stream = match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                        let ident_with_id_update_token_stream = {
-                            let content_token_stream = generate_ident_update_standart_not_null_content_token_stream(&IsStandartWithId::True);
-                            quote::quote! {
-                                #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                                pub struct #ident_with_id_update_standart_not_null_upper_camel_case(pub #content_token_stream);
-                            }
-                        };
+                        let ident_with_id_update_token_stream = generate_ident_update_token_stream(
+                            &ident_with_id_update_standart_not_null_upper_camel_case,
+                            &generate_ident_update_standart_not_null_content_token_stream(&IsStandartWithId::True)
+                        );
                         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_update_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                             &ident_with_id_update_standart_not_null_upper_camel_case,
                             &proc_macro2::TokenStream::new(),
