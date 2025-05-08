@@ -2803,7 +2803,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let maybe_ident_with_id_read_token_stream = match &postgresql_json_type_pattern {
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                        let vec_syn_field = &vec_syn_field_with_id;//todo refactor it?
                         let ident_with_id_read_token_stream = generate_ident_read_token_stream(
                             &ident_with_id_read_standart_not_null_upper_camel_case,
                             &generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
