@@ -230,12 +230,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 IsStandartWithId::True => &vec_syn_field_with_id
             }
         };
-        // let is_standart_with_id = if let postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern {
-        //     IsStandartWithId::False
-        // }
-        // else {
-        //     IsStandartWithId::True
-        // };
         let generate_ident_token_stream = |
             not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
             postgresql_json_type_pattern: &postgresql_crud_macros_common::PostgresqlJsonTypePattern,
