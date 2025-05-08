@@ -2770,46 +2770,32 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let impl_serde_deserialize_for_ident_read_or_ident_with_id_read_token_stream = generate_impl_serde_deserialize_for_ident_read_or_ident_with_id_read_token_stream(&IsStandartWithId::False);
-            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_or_ident_with_id_read_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                &ident_read_upper_camel_case,
-                &proc_macro2::TokenStream::new(),
-                &{
-                    let generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = |field_ident: &syn::Ident| {
-                        quote::quote! {
-                            #field_ident: Some(#import_path::Value {
-                                value: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                            })
-                        }
-                    };
-                    let content_token_stream = &match &is_standart_with_id {
-                        IsStandartWithId::False => {
-                            let fields_token_stream = vec_syn_field.iter().map(|element| {
-                                generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(element.ident.as_ref().unwrap_or_else(|| {
-                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                }))
+            let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_or_ident_with_id_read_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    &{
+                        let value: &dyn quote::ToTokens = match &is_standart_with_id {
+                            IsStandartWithId::False => &ident_read_upper_camel_case,
+                            IsStandartWithId::True => &ident_with_id_read_standart_not_null_upper_camel_case
+                        };
+                        value
+                    },
+                    &proc_macro2::TokenStream::new(),
+                    &{
+                        let fields_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                            let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
                             });
-                            quote::quote!{#(#fields_token_stream),*}
-                        },
-                        IsStandartWithId::True => {
-                            let fields_token_stream = {
-                                let fields_token_stream = vec_syn_field.iter().map(|element| {
-                                    generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(element.ident.as_ref().unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    }))
-                                });
-                                let id_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                                    generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&syn::Ident::new(&naming::IdSnakeCase.to_string(), proc_macro2::Span::call_site()));
-                                quote::quote! {
-                                    #id_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                    #(#fields_token_stream),*
-                                }
-                            };
-                            quote::quote!{#fields_token_stream}
-                        }
-                    };
-                    quote::quote! {Self{#content_token_stream}}
-                },
-            );
+                            quote::quote! {
+                                #field_ident: Some(#import_path::Value {
+                                    value: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                })
+                            }
+                        });
+                        quote::quote! {Self{#(#fields_token_stream),*}}
+                    },
+                )
+            };
+            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_or_ident_with_id_read_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_or_ident_with_id_read_token_stream(&IsStandartWithId::False);
             let impl_sqlx_type_sqlx_postgres_for_ident_read_or_ident_with_id_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_read_upper_camel_case);
             let impl_sqlx_decode_sqlx_postgres_for_ident_read_or_ident_with_id_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
                 &ident_read_upper_camel_case
@@ -2828,46 +2814,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let ident_with_id_read_try_from_error_named_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case);
                         let impl_try_new_for_ident_with_id_read_try_from_error_named_token_stream = generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&IsStandartWithId::True);
                         let impl_serde_deserialize_for_ident_with_id_read_token_stream = generate_impl_serde_deserialize_for_ident_read_or_ident_with_id_read_token_stream(&IsStandartWithId::True);
-                        let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_read_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                            &ident_with_id_read_standart_not_null_upper_camel_case,
-                            &proc_macro2::TokenStream::new(),
-                            &{
-                                let generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = |field_ident: &syn::Ident| {
-                                    quote::quote! {
-                                        #field_ident: Some(#import_path::Value {
-                                            value: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                        })
-                                    }
-                                };
-                                let content_token_stream = &match &is_standart_with_id {
-                                    IsStandartWithId::False => {
-                                        let fields_token_stream = vec_syn_field.iter().map(|element| {
-                                            generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(element.ident.as_ref().unwrap_or_else(|| {
-                                                panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                            }))
-                                        });
-                                        quote::quote!{#(#fields_token_stream),*}
-                                    },
-                                    IsStandartWithId::True => {
-                                        let fields_token_stream = {
-                                            let fields_token_stream = vec_syn_field.iter().map(|element| {
-                                                generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(element.ident.as_ref().unwrap_or_else(|| {
-                                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                                }))
-                                            });
-                                            let id_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                                                generate_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&syn::Ident::new(&naming::IdSnakeCase.to_string(), proc_macro2::Span::call_site()));
-                                            quote::quote! {
-                                                #id_field_ident_some_value_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                                #(#fields_token_stream),*
-                                            }
-                                        };
-                                        quote::quote!{#fields_token_stream}
-                                    }
-                                };
-                                quote::quote! {Self{#content_token_stream}}
-                            },
-                        );
+                        let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_read_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_or_ident_with_id_read_token_stream(&IsStandartWithId::True);
                         let impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_with_id_read_standart_not_null_upper_camel_case);
                         let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
                             &ident_with_id_read_standart_not_null_upper_camel_case
