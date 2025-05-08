@@ -3489,11 +3489,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         dimension4_not_null_or_nullable: _,
                     } => todo!()
                 };
-                // generate_ident_update_wrapper_token_stream(&content_token_stream)
-                // quote::quote! {
-                //     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                //     pub struct #ident_update_upper_camel_case(pub #content_token_stream);
-                // }
                 generate_ident_update_token_stream(
                     &ident_update_upper_camel_case,
                     &content_token_stream
