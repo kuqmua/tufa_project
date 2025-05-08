@@ -3584,109 +3584,122 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
             };
+            let generate_update_query_part_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                quote::quote!{
+                    fn #update_query_part_snake_case(
+                        &self,
+                        #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
+                        #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
+                        #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
+                        #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
+                    ) -> Result<#std_string_string_token_stream, #import_path::QueryPartErrorNamed> {
+                        #content_token_stream
+                    }
+                }
+            };
             let impl_ident_update_token_stream = {
-                let update_query_part_token_stream = {
-                    let content_token_stream = match &postgresql_json_type_pattern {
+                let update_query_part_token_stream = generate_update_query_part_token_stream(
+                    &match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_update_query_part_standart_not_null_token_stream(&IsStandartWithId::False),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
-                                quote::quote!{
-                                    match &self.0 {
-                                        Some(#value_snake_case) => #value_snake_case.#update_query_part_snake_case(
-                                            jsonb_set_accumulator,
-                                            jsonb_set_target,
-                                            jsonb_set_path,
-                                            increment
-                                        ),
-                                        None => {//todo maybe just use null in query instead of binding None as null?
-                                            match #increment_snake_case.checked_add(1) {
-                                                Some(value) => {
-                                                    *#increment_snake_case = value;
-                                                    Ok(format!(#none_format_handle_token_stream))
-                                                },
-                                                None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case {
-                                                    code_occurence: error_occurence_lib::code_occurence!()
-                                                })
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_update_query_part_standart_not_null_token_stream(&IsStandartWithId::False),
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
+                                    quote::quote!{
+                                        match &self.0 {
+                                            Some(#value_snake_case) => #value_snake_case.#update_query_part_snake_case(
+                                                jsonb_set_accumulator,
+                                                jsonb_set_target,
+                                                jsonb_set_path,
+                                                increment
+                                            ),
+                                            None => {//todo maybe just use null in query instead of binding None as null?
+                                                match #increment_snake_case.checked_add(1) {
+                                                    Some(value) => {
+                                                        *#increment_snake_case = value;
+                                                        Ok(format!(#none_format_handle_token_stream))
+                                                    },
+                                                    None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case {
+                                                        code_occurence: error_occurence_lib::code_occurence!()
+                                                    })
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            },
-                            // {
-                            //     let std_option_option_object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
-                            //     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{std_option_option_object_acc_snake_case}}})"));
-                            //     let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
-                            //         let field_ident_stringified = element
-                            //             .ident
-                            //             .as_ref()
-                            //             .unwrap_or_else(|| {
-                            //                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                            //             })
-                            //             .to_string();
-                            //         let variant_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                            //         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
-                            //         let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_field_token_stream(element);
-                            //         quote::quote! {
-                            //             #ident_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                            //                 match #field_type_as_crud_postgresql_json_type_from_field_token_stream #update_query_part_snake_case(
-                            //                     &value.value,
-                            //                     &#std_option_option_object_acc_snake_case,
-                            //                     &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
-                            //                     #field_ident_double_quotes_token_stream,
-                            //                     #increment_snake_case,
-                            //                 ) {
-                            //                     Ok(value) => {
-                            //                         #std_option_option_object_acc_snake_case = value;
-                            //                     }
-                            //                     Err(error) => {
-                            //                         return Err(error);
-                            //                     }
-                            //                 }
-                            //             }
-                            //         }
-                            //     });
-                            //     let some_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("case when jsonb_typeof({{{jsonb_set_target_snake_case}}}) = 'object' then ({{{jsonb_set_target_snake_case}}})::jsonb else '{{{{}}}}'::jsonb end"));
-                            //     let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
-                            //     quote::quote! {
-                            //         match &self.0 {
-                            //             Some(value) => {
-                            //                 let mut #std_option_option_object_acc_snake_case = format!(#some_format_handle_token_stream);
-                            //                 #generate_jsonb_set_target_token_stream
-                            //                 for element in value.0.to_vec() {
-                            //                     match element {
-                            //                         #(#query_part_variants_token_stream),*
-                            //                     }
-                            //                 }
-                            //                 if #jsonb_set_accumulator_snake_case.is_empty() && #jsonb_set_path_snake_case.is_empty() {
-                            //                     Ok(#std_option_option_object_acc_snake_case)
-                            //                 }
-                            //                 else {
-                            //                     Ok(format!(#format_handle_token_stream))
-                            //                 }
-                            //             },
-                            //             None => match #increment_snake_case.checked_add(1) {
-                            //                 Some(value) => {
-                            //                     *#increment_snake_case = value;
-                            //                     Ok(format!(#none_format_handle_token_stream))
-                            //                 },
-                            //                 None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case {
-                            //                     code_occurence: error_occurence_lib::code_occurence!()
-                            //                 })
-                            //             }
-                            //         }
-                            //     }
-                            // },
+                                },
+                                // {
+                                //     let std_option_option_object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
+                                //     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{std_option_option_object_acc_snake_case}}})"));
+                                //     let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
+                                //         let field_ident_stringified = element
+                                //             .ident
+                                //             .as_ref()
+                                //             .unwrap_or_else(|| {
+                                //                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                //             })
+                                //             .to_string();
+                                //         let variant_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
+                                //         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
+                                //         let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_field_token_stream(element);
+                                //         quote::quote! {
+                                //             #ident_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
+                                //                 match #field_type_as_crud_postgresql_json_type_from_field_token_stream #update_query_part_snake_case(
+                                //                     &value.value,
+                                //                     &#std_option_option_object_acc_snake_case,
+                                //                     &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
+                                //                     #field_ident_double_quotes_token_stream,
+                                //                     #increment_snake_case,
+                                //                 ) {
+                                //                     Ok(value) => {
+                                //                         #std_option_option_object_acc_snake_case = value;
+                                //                     }
+                                //                     Err(error) => {
+                                //                         return Err(error);
+                                //                     }
+                                //                 }
+                                //             }
+                                //         }
+                                //     });
+                                //     let some_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("case when jsonb_typeof({{{jsonb_set_target_snake_case}}}) = 'object' then ({{{jsonb_set_target_snake_case}}})::jsonb else '{{{{}}}}'::jsonb end"));
+                                //     let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
+                                //     quote::quote! {
+                                //         match &self.0 {
+                                //             Some(value) => {
+                                //                 let mut #std_option_option_object_acc_snake_case = format!(#some_format_handle_token_stream);
+                                //                 #generate_jsonb_set_target_token_stream
+                                //                 for element in value.0.to_vec() {
+                                //                     match element {
+                                //                         #(#query_part_variants_token_stream),*
+                                //                     }
+                                //                 }
+                                //                 if #jsonb_set_accumulator_snake_case.is_empty() && #jsonb_set_path_snake_case.is_empty() {
+                                //                     Ok(#std_option_option_object_acc_snake_case)
+                                //                 }
+                                //                 else {
+                                //                     Ok(format!(#format_handle_token_stream))
+                                //                 }
+                                //             },
+                                //             None => match #increment_snake_case.checked_add(1) {
+                                //                 Some(value) => {
+                                //                     *#increment_snake_case = value;
+                                //                     Ok(format!(#none_format_handle_token_stream))
+                                //                 },
+                                //                 None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case {
+                                //                     code_occurence: error_occurence_lib::code_occurence!()
+                                //                 })
+                                //             }
+                                //         }
+                                //     }
+                                // },
                         },
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-                            dimension1_not_null_or_nullable,
+                                dimension1_not_null_or_nullable,
                         } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                          (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {
-                            todo!()
-                          },
-                          (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
-                          (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
-                          (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                              (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {
+                                todo!()
+                              },
+                              (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                              (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                              (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
                         },
                         // match &not_null_or_nullable {
                         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
@@ -3746,7 +3759,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             dimension3_not_null_or_nullable: _,
                             dimension4_not_null_or_nullable: _,
                         } => todo!()
-                    };
+                    }
                     //postgresql_type
                     // &{
                     //     //todo remove jsonb_ prefix (coz it can be json, jsonb, json not null, jsonb not null)
@@ -3789,18 +3802,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     //         }
                     //     }
                     // },
-                    quote::quote!{
-                        fn #update_query_part_snake_case(
-                            &self,
-                            #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
-                            #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
-                            #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
-                            #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
-                        ) -> Result<#std_string_string_token_stream, #import_path::QueryPartErrorNamed> {
-                            #content_token_stream
-                        }
-                    }
-                };
+                );
                 let update_query_bind_token_stream = {
                     let content_token_stream = match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -4030,20 +4032,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         );
                         let impl_ident_with_id_update_token_stream = {
-                            let update_query_part_token_stream = {
-                                let content_token_stream = generate_update_query_part_standart_not_null_token_stream(&IsStandartWithId::True);
-                                quote::quote!{
-                                    fn #update_query_part_snake_case(
-                                        &self,
-                                        #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
-                                        #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
-                                        #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
-                                        #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
-                                    ) -> Result<#std_string_string_token_stream, #import_path::QueryPartErrorNamed> {
-                                        #content_token_stream
-                                    }
-                                }
-                            };
+                            let update_query_part_token_stream = generate_update_query_part_token_stream(&generate_update_query_part_standart_not_null_token_stream(&IsStandartWithId::True));
                             let update_query_bind_token_stream = {
                                 let content_token_stream = {
                                     let update_query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
