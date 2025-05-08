@@ -3527,7 +3527,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     };
                     quote::quote! {Self #value}
                 });
-            let generate_update_query_part_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
+            let generate_update_query_part_standart_not_null_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{object_acc_snake_case}}})"));
                 let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
@@ -3601,7 +3601,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let update_query_part_token_stream = generate_update_query_part_token_stream(
                     &match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_update_query_part_standart_not_null_token_stream(&IsStandartWithId::False),
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_update_query_part_standart_not_null_content_token_stream(&IsStandartWithId::False),
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
                                     quote::quote!{
@@ -4032,7 +4032,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         );
                         let impl_ident_with_id_update_token_stream = {
-                            let update_query_part_token_stream = generate_update_query_part_token_stream(&generate_update_query_part_standart_not_null_token_stream(&IsStandartWithId::True));
+                            let update_query_part_token_stream = generate_update_query_part_token_stream(&generate_update_query_part_standart_not_null_content_token_stream(&IsStandartWithId::True));
                             let update_query_bind_token_stream = {
                                 let content_token_stream = {
                                     let update_query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
