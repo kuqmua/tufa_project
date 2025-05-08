@@ -3443,18 +3443,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let ident_update_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
                 quote::quote!{std::option::Option<#ident_update_standart_not_null_upper_camel_case>}
             };
+            let generate_ident_update_standart_not_null_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                let type_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
+                    IsStandartWithId::False => &ident_update_element_upper_camel_case,
+                    IsStandartWithId::True => &ident_with_id_update_element_standart_not_null_upper_camel_case
+                };
+                quote::quote! {#import_path::UniqueVec<#type_token_stream>}
+            };
             let ident_update_token_stream = {
-                let self_type_content_token_stream = match &postgresql_json_type_pattern {
+                let content_token_stream = match &postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {pub #import_path::UniqueVec<#ident_update_element_upper_camel_case>},
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {pub #std_option_option_ident_update_standart_not_null_token_stream},
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_standart_not_null_content_token_stream(&IsStandartWithId::False),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {#std_option_option_ident_update_standart_not_null_token_stream},
                     },
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {pub #std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case},
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {#std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case},
                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote! {pub std::option::Option<#std_option_option_std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case>},
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote! {std::option::Option<#std_option_option_std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case>},
                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
                     },
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
@@ -3475,7 +3482,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                    pub struct #ident_update_upper_camel_case(#self_type_content_token_stream);
+                    pub struct #ident_update_upper_camel_case(pub #content_token_stream);
                 }
             };
             let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream =
@@ -3997,10 +4004,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                         let ident_with_id_update_token_stream = {
-                            let self_type_content_token_stream = quote::quote! {pub #import_path::UniqueVec<#ident_with_id_update_element_standart_not_null_upper_camel_case>};
+                            let content_token_stream = generate_ident_update_standart_not_null_content_token_stream(&IsStandartWithId::True);
                             quote::quote! {
                                 #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                                pub struct #ident_with_id_update_standart_not_null_upper_camel_case(#self_type_content_token_stream);
+                                pub struct #ident_with_id_update_standart_not_null_upper_camel_case(pub #content_token_stream);
                             }
                         };
                         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_update_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
