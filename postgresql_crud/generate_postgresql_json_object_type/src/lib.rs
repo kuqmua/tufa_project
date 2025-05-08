@@ -4014,7 +4014,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 )
             };
-            //todo rename
             let maybe_ident_update_element_token_stream = if let postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern {
                 if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable {
                     let ident_update_element_token_stream = generate_ident_update_element_standart_not_null_token_stream(&IsStandartWithId::False);
