@@ -162,6 +162,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let field_ident_snake_case = naming::FieldIdentSnakeCase;
         let id_snake_case = naming::IdSnakeCase;
+        let self_upper_camel_case = naming::SelfUpperCamelCase;
         let id_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&id_snake_case);
         let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
         let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
@@ -1163,21 +1164,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let create_query_part_token_stream = quote::quote!{#value_snake_case.#create_query_part_snake_case(#increment_snake_case)};
         let create_query_bind_token_stream = quote::quote!{#value_snake_case.#create_query_bind_snake_case(#query_snake_case)};
         let generate_sqlx_types_json_type_declaration_wrapper_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-            let sqlx_types_json_type_ident_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(
-                &ident_token_stream,
-            );
             postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
                 &ident_token_stream,
-                &sqlx_types_json_type_ident_token_stream
+                &postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(
+                    &self_upper_camel_case,
+                )
             )
         };
         let generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
-            let sqlx_types_json_type_ident_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(
-                &ident_token_stream,
-            );
             postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
                 &ident_token_stream,
-                &sqlx_types_json_type_ident_token_stream,
+                &postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(
+                    &self_upper_camel_case,
+                ),
                 &quote::quote! {Ok(value.0)}
             )
         };

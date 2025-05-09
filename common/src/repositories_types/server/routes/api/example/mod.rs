@@ -437,6 +437,7 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
 }
 #[derive(Debug, Clone, Default, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
+    //todo
     dimension1_pagination: postgresql_crud::Pagination,
 }
 impl sqlx::Type<sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
@@ -676,40 +677,45 @@ impl sqlx::Decode<'_, sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNu
         }
     }
 }
-// #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub struct StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
-//     #[serde(skip_serializing_if = "Vec::is_empty")]
-//     create: std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>,
-//     #[serde(skip_serializing_if = "Vec::is_empty")]
-//     update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>,
-//     #[serde(skip_serializing_if = "Vec::is_empty")]
-//     delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
-// }
-// #[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-// pub enum StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed {
-//     CreateUpdateDeleteCheckFieldsAreEmpty {
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     NotUniqueIdInJsonUpdateArray {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         error: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     NotUniqueIdInJsonDeleteArray {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         error: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     NotUniqueIdInJsonUpdateAndDeleteArrays {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         error: std::string::String,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
+
+//////////////////////////
+#[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle(pub postgresql_crud::UniqueVec<DoggieAsNotNullJsonbObjectUpdateElement>);
+//////////////////////////v
+#[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
+    // #[serde(skip_serializing_if = "Vec::is_empty")]//here
+    create: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>,//here was std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>
+    // #[serde(skip_serializing_if = "Vec::is_empty")]//here
+    update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdate>,//here 
+    // #[serde(skip_serializing_if = "Vec::is_empty")]//here
+    delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
+}
+#[derive(Debug, serde::Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed {
+    CreateUpdateDeleteCheckFieldsAreEmpty {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueIdInJsonUpdateArray {
+        #[eo_to_std_string_string_serialize_deserialize]
+        error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueIdInJsonDeleteArray {
+        #[eo_to_std_string_string_serialize_deserialize]
+        error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniqueIdInJsonUpdateAndDeleteArrays {
+        #[eo_to_std_string_string_serialize_deserialize]
+        error: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
 // impl StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
 //     pub fn try_new(
-//         create: std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>,
-//         update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>,
+//         create: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>,//here
+//         update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdate>,//here
 //         delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
 //     ) -> Result<Self, StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed> {
 //         if create.is_empty() && update.is_empty() && delete.is_empty() {
