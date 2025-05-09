@@ -353,6 +353,7 @@ pub struct Animal {
 
     pub doggie_as_not_null_jsonb_object: DoggieAsNotNullJsonbObject,
     pub option_doggie_as_nullable_jsonb_object: OptionDoggieAsNullableJsonbObject,
+    pub vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
 }
 ///////////////////////////////////////////////////
 #[cfg(test)]
