@@ -679,15 +679,19 @@ impl sqlx::Decode<'_, sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNu
 }
 
 //////////////////////////
+//here //todo maybe write analog of  postgresql_crud::UniqueVec but with id
 #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle(pub postgresql_crud::UniqueVec<DoggieAsNotNullJsonbObjectUpdateElement>);
+pub struct DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle {
+    pub id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update,//is it update? maybe read?
+    pub update: postgresql_crud::UniqueVec<DoggieAsNotNullJsonbObjectUpdateElement>,
+}
 //////////////////////////v
 #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
     // #[serde(skip_serializing_if = "Vec::is_empty")]//here
-    create: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>,//here was std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>
+    create: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>,//here maybe VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate. was std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>
     // #[serde(skip_serializing_if = "Vec::is_empty")]//here
-    update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdate>,//here 
+    update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>,//here 
     // #[serde(skip_serializing_if = "Vec::is_empty")]//here
     delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
 }
@@ -712,235 +716,235 @@ pub enum StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjec
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-// impl StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
-//     pub fn try_new(
-//         create: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>,//here
-//         update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdate>,//here
-//         delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
-//     ) -> Result<Self, StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed> {
-//         if create.is_empty() && update.is_empty() && delete.is_empty() {
-//             return Err(StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed::CreateUpdateDeleteCheckFieldsAreEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-//         }
-//         {
-//             let update_acc = {
-//                 let mut update_acc = vec![];
-//                 for element in &update {
-//                     let id = &element.id;
-//                     if update_acc.contains(&id) {
-//                         return Err(StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed::NotUniqueIdInJsonUpdateArray {
-//                             error: format!("custom serde error deserializing StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange: not unique id in json update array: {}", id.0),
-//                             code_occurence: error_occurence_lib::code_occurence!(),
-//                         });
-//                     } else {
-//                         update_acc.push(id);
-//                     }
-//                 }
-//                 update_acc
-//             };
-//             let delete_acc = {
-//                 let mut delete_acc = vec![];
-//                 for element in &delete {
-//                     if delete_acc.contains(&element) {
-//                         return Err(StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed::NotUniqueIdInJsonDeleteArray {
-//                             error: format!("custom serde error deserializing StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange: not unique id in json delete array: {}", element.0),
-//                             code_occurence: error_occurence_lib::code_occurence!(),
-//                         });
-//                     } else {
-//                         delete_acc.push(element);
-//                     }
-//                 }
-//                 delete_acc
-//             };
-//             for element in update_acc {
-//                 if delete_acc.contains(&&element) {
-//                     return Err(StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed::NotUniqueIdInJsonUpdateAndDeleteArrays {
-//                         error: format!(
-//                             "custom serde error deserializing StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange: not unique id in json update and delete arrays: {}",
-//                             element.0
-//                         ),
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//             }
-//         }
-//         Ok(Self { create, update, delete })
-//     }
-// }
-// impl<'de> serde::Deserialize<'de> for StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
-//     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-//     where
-//         __D: serde::Deserializer<'de>,
-//     {
-//         #[allow(non_camel_case_types)]
-//         #[doc(hidden)]
-//         enum __Field {
-//             __field0,
-//             __field1,
-//             __field2,
-//             __ignore,
-//         }
-//         #[doc(hidden)]
-//         struct __FieldVisitor;
-//         impl serde::de::Visitor<'_> for __FieldVisitor {
-//             type Value = __Field;
-//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-//                 serde::__private::Formatter::write_str(__formatter, "field identifier")
-//             }
-//             fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-//             where
-//                 __E: serde::de::Error,
-//             {
-//                 match __value {
-//                     0u64 => serde::__private::Ok(__Field::__field0),
-//                     1u64 => serde::__private::Ok(__Field::__field1),
-//                     2u64 => serde::__private::Ok(__Field::__field2),
-//                     _ => serde::__private::Ok(__Field::__ignore),
-//                 }
-//             }
-//             fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
-//             where
-//                 __E: serde::de::Error,
-//             {
-//                 match __value {
-//                     "create" => serde::__private::Ok(__Field::__field0),
-//                     "update" => serde::__private::Ok(__Field::__field1),
-//                     "delete" => serde::__private::Ok(__Field::__field2),
-//                     _ => serde::__private::Ok(__Field::__ignore),
-//                 }
-//             }
-//             fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-//             where
-//                 __E: serde::de::Error,
-//             {
-//                 match __value {
-//                     b"create" => serde::__private::Ok(__Field::__field0),
-//                     b"update" => serde::__private::Ok(__Field::__field1),
-//                     b"delete" => serde::__private::Ok(__Field::__field2),
-//                     _ => serde::__private::Ok(__Field::__ignore),
-//                 }
-//             }
-//         }
-//         impl<'de> serde::Deserialize<'de> for __Field {
-//             #[inline]
-//             fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-//             where
-//                 __D: serde::Deserializer<'de>,
-//             {
-//                 serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-//             }
-//         }
-//         #[doc(hidden)]
-//         struct __Visitor<'de> {
-//             marker: serde::__private::PhantomData<StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange>,
-//             lifetime: serde::__private::PhantomData<&'de ()>,
-//         }
-//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-//             type Value = StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange;
-//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-//                 serde::__private::Formatter::write_str(__formatter, "tuple struct StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange")
-//             }
-//             #[inline]
-//             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-//             where
-//                 __A: serde::de::SeqAccess<'de>,
-//             {
-//                 let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>>(&mut __seq)? {
-//                     serde::__private::Some(__value) => __value,
-//                     serde::__private::None => {
-//                         vec![]
-//                     }
-//                 };
-//                 let __field1 = match serde::de::SeqAccess::next_element::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>>(&mut __seq)? {
-//                     serde::__private::Some(__value) => __value,
-//                     serde::__private::None => {
-//                         vec![]
-//                     }
-//                 };
-//                 let __field2 = match serde::de::SeqAccess::next_element::<std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>>(&mut __seq)? {
-//                     serde::__private::Some(__value) => __value,
-//                     serde::__private::None => {
-//                         vec![]
-//                     }
-//                 };
-//                 match StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange::try_new(__field0, __field1, __field2) {
-//                     Ok(value) => serde::__private::Ok(value),
-//                     Err(error) => {
-//                         return Err(serde::de::Error::custom(format!("{error:?}")));
-//                     }
-//                 }
-//             }
-//             #[inline]
-//             fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
-//             where
-//                 __A: serde::de::MapAccess<'de>,
-//             {
-//                 let mut __field0: serde::__private::Option<std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>> = serde::__private::None;
-//                 let mut __field1: serde::__private::Option<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>> = serde::__private::None;
-//                 let mut __field2: serde::__private::Option<std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>> = serde::__private::None;
-//                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-//                     match __key {
-//                         __Field::__field0 => {
-//                             if serde::__private::Option::is_some(&__field0) {
-//                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("create"));
-//                             }
-//                             __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>>(&mut __map)?);
-//                         }
-//                         __Field::__field1 => {
-//                             if serde::__private::Option::is_some(&__field1) {
-//                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("update"));
-//                             }
-//                             __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>>(&mut __map)?);
-//                         }
-//                         __Field::__field2 => {
-//                             if serde::__private::Option::is_some(&__field2) {
-//                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("delete"));
-//                             }
-//                             __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>>(&mut __map)?);
-//                         }
-//                         _ => {
-//                             let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
-//                         }
-//                     }
-//                 }
-//                 let __field0 = match __field0 {
-//                     serde::__private::Some(__field0) => __field0,
-//                     serde::__private::None => {
-//                         vec![]
-//                     }
-//                 };
-//                 let __field1 = match __field1 {
-//                     serde::__private::Some(__field1) => __field1,
-//                     serde::__private::None => {
-//                         vec![]
-//                     }
-//                 };
-//                 let __field2 = match __field2 {
-//                     serde::__private::Some(__field2) => __field2,
-//                     serde::__private::None => {
-//                         vec![]
-//                     }
-//                 };
-//                 match StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange::try_new(__field0, __field1, __field2) {
-//                     Ok(value) => serde::__private::Ok(value),
-//                     Err(error) => {
-//                         return Err(serde::de::Error::custom(format!("{error:?}")));
-//                     }
-//                 }
-//             }
-//         }
-//         #[doc(hidden)]
-//         const FIELDS: &'static [&'static str] = &["create", "update", "delete"];
-//         serde::Deserializer::deserialize_struct(
-//             __deserializer,
-//             "StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange",
-//             FIELDS,
-//             __Visitor {
-//                 marker: serde::__private::PhantomData::<StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange>,
-//                 lifetime: serde::__private::PhantomData,
-//             },
-//         )
-//     }
-// }
+impl StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
+    pub fn try_new(
+        create: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>,//here
+        update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>,//here
+        delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
+    ) -> Result<Self, StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed> {
+        if create.is_empty() && update.is_empty() && delete.is_empty() {
+            return Err(StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed::CreateUpdateDeleteCheckFieldsAreEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        {
+            let update_acc = {
+                let mut update_acc = vec![];
+                for element in &update {
+                    let id = &element.id;
+                    if update_acc.contains(&id) {
+                        return Err(StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed::NotUniqueIdInJsonUpdateArray {
+                            error: format!("custom serde error deserializing StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange: not unique id in json update array: {}", id),//here was id.0
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    } else {
+                        update_acc.push(id);
+                    }
+                }
+                update_acc
+            };
+            let delete_acc = {
+                let mut delete_acc = vec![];
+                for element in &delete {
+                    if delete_acc.contains(&element) {
+                        return Err(StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed::NotUniqueIdInJsonDeleteArray {
+                            error: format!("custom serde error deserializing StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange: not unique id in json delete array: {}", element),//here was element.0
+                            code_occurence: error_occurence_lib::code_occurence!(),
+                        });
+                    } else {
+                        delete_acc.push(element);
+                    }
+                }
+                delete_acc
+            };
+            for element in update_acc {
+                if delete_acc.contains(&&element) {
+                    return Err(StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChangeTryNewErrorNamed::NotUniqueIdInJsonUpdateAndDeleteArrays {
+                        error: format!(
+                            "custom serde error deserializing StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange: not unique id in json update and delete arrays: {}",
+                            element//here was element.0
+                        ),
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            }
+        }
+        Ok(Self { create, update, delete })
+    }
+}
+impl<'de> serde::Deserialize<'de> for StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
+    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[allow(non_camel_case_types)]
+        #[doc(hidden)]
+        enum __Field {
+            __field0,
+            __field1,
+            __field2,
+            __ignore,
+        }
+        #[doc(hidden)]
+        struct __FieldVisitor;
+        impl serde::de::Visitor<'_> for __FieldVisitor {
+            type Value = __Field;
+            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__formatter, "field identifier")
+            }
+            fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    1u64 => serde::__private::Ok(__Field::__field1),
+                    2u64 => serde::__private::Ok(__Field::__field2),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    "create" => serde::__private::Ok(__Field::__field0),
+                    "update" => serde::__private::Ok(__Field::__field1),
+                    "delete" => serde::__private::Ok(__Field::__field2),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    b"create" => serde::__private::Ok(__Field::__field0),
+                    b"update" => serde::__private::Ok(__Field::__field1),
+                    b"delete" => serde::__private::Ok(__Field::__field2),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+        }
+        impl<'de> serde::Deserialize<'de> for __Field {
+            #[inline]
+            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+            where
+                __D: serde::Deserializer<'de>,
+            {
+                serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+            }
+        }
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange;
+            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__formatter, "tuple struct StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange")
+            }
+            #[inline]
+            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>>(&mut __seq)? {//here was VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        vec![]
+                    }
+                };
+                let __field1 = match serde::de::SeqAccess::next_element::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>>(&mut __seq)? {//here was DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        vec![]
+                    }
+                };
+                let __field2 = match serde::de::SeqAccess::next_element::<std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        vec![]
+                    }
+                };
+                match StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange::try_new(__field0, __field1, __field2) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                    }
+                }
+            }
+            #[inline]
+            fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::MapAccess<'de>,
+            {
+                let mut __field0: serde::__private::Option<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>> = serde::__private::None;//here was VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId
+                let mut __field1: serde::__private::Option<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>> = serde::__private::None;//here was DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement
+                let mut __field2: serde::__private::Option<std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>> = serde::__private::None;
+                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                    match __key {
+                        __Field::__field0 => {
+                            if serde::__private::Option::is_some(&__field0) {
+                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("create"));
+                            }
+                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>>(&mut __map)?);//here was VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId
+                        }
+                        __Field::__field1 => {
+                            if serde::__private::Option::is_some(&__field1) {
+                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("update"));
+                            }
+                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>>(&mut __map)?);//here was DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement 
+                        }
+                        __Field::__field2 => {
+                            if serde::__private::Option::is_some(&__field2) {
+                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("delete"));
+                            }
+                            __field2 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>>(&mut __map)?);
+                        }
+                        _ => {
+                            let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                        }
+                    }
+                }
+                let __field0 = match __field0 {
+                    serde::__private::Some(__field0) => __field0,
+                    serde::__private::None => {
+                        vec![]
+                    }
+                };
+                let __field1 = match __field1 {
+                    serde::__private::Some(__field1) => __field1,
+                    serde::__private::None => {
+                        vec![]
+                    }
+                };
+                let __field2 = match __field2 {
+                    serde::__private::Some(__field2) => __field2,
+                    serde::__private::None => {
+                        vec![]
+                    }
+                };
+                match StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange::try_new(__field0, __field1, __field2) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                    }
+                }
+            }
+        }
+        #[doc(hidden)]
+        const FIELDS: &'static [&'static str] = &["create", "update", "delete"];
+        serde::Deserializer::deserialize_struct(
+            __deserializer,
+            "StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange",
+            FIELDS,
+            __Visitor {
+                marker: serde::__private::PhantomData::<StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
 // impl StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
 //     fn update_query_part(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
 //         let update_query_part_acc = {
