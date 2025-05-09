@@ -380,296 +380,302 @@ pub struct Doggie {
 ////////////////////////////
 #[derive(Debug)]
 pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId;
-// #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration(pub std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdTableTypeDeclaration>);
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self(vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
-//     }
-// }
-// impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration {
-//     pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-//         format!(
-//             "{column} jsonb not null check (jsonb_matches_schema('{}', {column}))",
-//             serde_json::to_string(&schemars::schema_for!(VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration)).unwrap()
-//         )
-//     }
-// }
-// #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate(pub std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>);
-// impl std::fmt::Display for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
-//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(formatter, "{:?}", self)
-//     }
-// }
-// impl error_occurence_lib::ToStdStringString for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         format!("{self:?}")
-//     }
-// }
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self(vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
-//     }
-// }
-// impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
-//     fn create_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         let mut acc = std::string::String::default();
-//         for element in &self.0 {
-//             match element.create_query_part(increment) {
-//                 Ok(value) => {
-//                     acc.push_str(&format!("{value},"));
-//                 }
-//                 Err(error) => {
-//                     return Err(error);
-//                 }
-//             }
-//         }
-//         let _ = acc.pop();
-//         Ok(format!("jsonb_build_array({acc})"))
-//     }
-//     fn create_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         for element in self.0 {
-//             query = element.create_query_bind(query);
-//         }
-//         query
-//     }
-// }
-// #[derive(Debug, Clone, Default, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
-//     dimension1_pagination: postgresql_crud::Pagination,
-// }
-// impl sqlx::Type<sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-//             Ok(value) => Ok(value.0),
-//             Err(error) => Err(error),
-//         }
-//     }
-// }
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         todo!()
-//     }
-// }
-// impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-//         todo!()
-//     }
-// }
-// #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
-//     #[serde(skip_serializing_if = "Option::is_none")]
-//     column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-//     #[serde(skip_serializing_if = "Option::is_none")]
-//     column_f85f2f57_f85b_4126_be0f_cb5830f0475d: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-// }
-// #[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
-// pub enum VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadTryFromErrorNamed {
-//     AllFieldsAreNone { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
-// }
-// impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
-//     pub fn try_new(
-//         column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-//         column_f85f2f57_f85b_4126_be0f_cb5830f0475d: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-//     ) -> Result<Self, VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadTryFromErrorNamed> {
-//         if let (None, None) = (&column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015, &column_f85f2f57_f85b_4126_be0f_cb5830f0475d) {
-//             return Err(VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadTryFromErrorNamed::AllFieldsAreNone { code_occurence: error_occurence_lib::code_occurence!() });
-//         }
-//         Ok(Self {
-//             column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015,
-//             column_f85f2f57_f85b_4126_be0f_cb5830f0475d,
-//         })
-//     }
-// }
-// impl<'de> serde::Deserialize<'de> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
-//     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-//     where
-//         __D: serde::Deserializer<'de>,
-//     {
-//         #[allow(non_camel_case_types)]
-//         #[doc(hidden)]
-//         enum __Field {
-//             __field0,
-//             __field1,
-//             __ignore,
-//         }
-//         #[doc(hidden)]
-//         struct __FieldVisitor;
-//         impl serde::de::Visitor<'_> for __FieldVisitor {
-//             type Value = __Field;
-//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-//                 serde::__private::Formatter::write_str(__formatter, "field identifier")
-//             }
-//             fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-//             where
-//                 __E: serde::de::Error,
-//             {
-//                 match __value {
-//                     0u64 => serde::__private::Ok(__Field::__field0),
-//                     1u64 => serde::__private::Ok(__Field::__field1),
-//                     _ => serde::__private::Ok(__Field::__ignore),
-//                 }
-//             }
-//             fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
-//             where
-//                 __E: serde::de::Error,
-//             {
-//                 match __value {
-//                     "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015" => serde::__private::Ok(__Field::__field0),
-//                     "column_f85f2f57_f85b_4126_be0f_cb5830f0475d" => serde::__private::Ok(__Field::__field1),
-//                     _ => serde::__private::Ok(__Field::__ignore),
-//                 }
-//             }
-//             fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-//             where
-//                 __E: serde::de::Error,
-//             {
-//                 match __value {
-//                     b"column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015" => serde::__private::Ok(__Field::__field0),
-//                     b"column_f85f2f57_f85b_4126_be0f_cb5830f0475d" => serde::__private::Ok(__Field::__field1),
-//                     _ => serde::__private::Ok(__Field::__ignore),
-//                 }
-//             }
-//         }
-//         impl<'de> serde::Deserialize<'de> for __Field {
-//             #[inline]
-//             fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-//             where
-//                 __D: serde::Deserializer<'de>,
-//             {
-//                 serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-//             }
-//         }
-//         #[doc(hidden)]
-//         struct __Visitor<'de> {
-//             marker: serde::__private::PhantomData<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead>,
-//             lifetime: serde::__private::PhantomData<&'de ()>,
-//         }
-//         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-//             type Value = VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead;
-//             fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-//                 serde::__private::Formatter::write_str(__formatter, "struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead")
-//             }
-//             #[inline]
-//             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-//             where
-//                 __A: serde::de::SeqAccess<'de>,
-//             {
-//                 let __field0 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>>(&mut __seq)? {
-//                     serde::__private::Some(__value) => __value,
-//                     serde::__private::None => {
-//                         return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead with 2 elements"));
-//                     }
-//                 };
-//                 let __field1 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>>(&mut __seq)? {
-//                     serde::__private::Some(__value) => __value,
-//                     serde::__private::None => {
-//                         return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead with 2 elements"));
-//                     }
-//                 };
-//                 match VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead::try_new(__field0, __field1) {
-//                     Ok(value) => serde::__private::Ok(value),
-//                     Err(error) => {
-//                         return Err(serde::de::Error::custom(format!("{error:?}")));
-//                     }
-//                 }
-//             }
-//             #[inline]
-//             fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
-//             where
-//                 __A: serde::de::MapAccess<'de>,
-//             {
-//                 let mut __field0: serde::__private::Option<std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>> = serde::__private::None;
-//                 let mut __field1: serde::__private::Option<std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>> = serde::__private::None;
-//                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-//                     match __key {
-//                         __Field::__field0 => {
-//                             if serde::__private::Option::is_some(&__field0) {
-//                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015"));
-//                             }
-//                             __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<
-//                                 std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-//                             >(&mut __map)?);
-//                         }
-//                         __Field::__field1 => {
-//                             if serde::__private::Option::is_some(&__field1) {
-//                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("column_f85f2f57_f85b_4126_be0f_cb5830f0475d"));
-//                             }
-//                             __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<
-//                                 std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-//                             >(&mut __map)?);
-//                         }
-//                         _ => {
-//                             let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
-//                         }
-//                     }
-//                 }
-//                 let __field0 = match __field0 {
-//                     serde::__private::Some(__field0) => __field0,
-//                     serde::__private::None => serde::__private::de::missing_field("column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015")?,
-//                 };
-//                 let __field1 = match __field1 {
-//                     serde::__private::Some(__field1) => __field1,
-//                     serde::__private::None => serde::__private::de::missing_field("column_f85f2f57_f85b_4126_be0f_cb5830f0475d")?,
-//                 };
-//                 match VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead::try_new(__field0, __field1) {
-//                     Ok(value) => serde::__private::Ok(value),
-//                     Err(error) => {
-//                         return Err(serde::de::Error::custom(format!("{error:?}")));
-//                     }
-//                 }
-//             }
-//         }
-//         #[doc(hidden)]
-//         const FIELDS: &'static [&'static str] = &["column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015", "column_f85f2f57_f85b_4126_be0f_cb5830f0475d"];
-//         serde::Deserializer::deserialize_struct(
-//             __deserializer,
-//             "VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead",
-//             FIELDS,
-//             __Visitor {
-//                 marker: serde::__private::PhantomData::<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead>,
-//                 lifetime: serde::__private::PhantomData,
-//             },
-//         )
-//     }
-// }
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self {
-//             column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: Some(postgresql_crud::Value {
-//                 value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//             }),
-//             column_f85f2f57_f85b_4126_be0f_cb5830f0475d: Some(postgresql_crud::Value {
-//                 value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//             }),
-//         }
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-//             Ok(value) => Ok(value.0),
-//             Err(error) => Err(error),
-//         }
-//     }
-// }
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration(pub std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdTableTypeDeclaration>);
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    }
+}
+impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration {
+    pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+        format!(
+            "{column} jsonb not null check (jsonb_matches_schema('{}', {column}))",
+            serde_json::to_string(&schemars::schema_for!(VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration)).unwrap()
+        )
+    }
+}
+#[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate(pub std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>);
+impl std::fmt::Display for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self)
+    }
+}
+impl error_occurence_lib::ToStdStringString for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:?}")
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    }
+}
+impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
+    fn create_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        for element in &self.0 {
+            match element.create_query_part(increment) {
+                Ok(value) => {
+                    acc.push_str(&format!("{value},"));
+                }
+                Err(error) => {
+                    return Err(error);
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(format!("jsonb_build_array({acc})"))
+    }
+    fn create_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.0 {
+            query = element.create_query_bind(query);
+        }
+        query
+    }
+}
+#[derive(Debug, Clone, Default, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
+    dimension1_pagination: postgresql_crud::Pagination,
+}
+impl sqlx::Type<sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(value.0),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        //here
+        Self {
+            dimension1_pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
+}
+impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
+    fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
+        //here
+        let dimension1_start = self.dimension1_pagination.start();
+        let dimension1_end = self.dimension1_pagination.end();
+        format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',(select jsonb_agg((value)) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {dimension1_start} and {dimension1_end})))")
+    }
+}
+#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    column_f85f2f57_f85b_4126_be0f_cb5830f0475d: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadTryFromErrorNamed {
+    AllFieldsAreNone { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
+}
+impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
+    pub fn try_new(
+        column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+        column_f85f2f57_f85b_4126_be0f_cb5830f0475d: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+    ) -> Result<Self, VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadTryFromErrorNamed> {
+        if let (None, None) = (&column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015, &column_f85f2f57_f85b_4126_be0f_cb5830f0475d) {
+            return Err(VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadTryFromErrorNamed::AllFieldsAreNone { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        Ok(Self {
+            column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015,
+            column_f85f2f57_f85b_4126_be0f_cb5830f0475d,
+        })
+    }
+}
+impl<'de> serde::Deserialize<'de> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
+    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[allow(non_camel_case_types)]
+        #[doc(hidden)]
+        enum __Field {
+            __field0,
+            __field1,
+            __ignore,
+        }
+        #[doc(hidden)]
+        struct __FieldVisitor;
+        impl serde::de::Visitor<'_> for __FieldVisitor {
+            type Value = __Field;
+            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__formatter, "field identifier")
+            }
+            fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    1u64 => serde::__private::Ok(__Field::__field1),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015" => serde::__private::Ok(__Field::__field0),
+                    "column_f85f2f57_f85b_4126_be0f_cb5830f0475d" => serde::__private::Ok(__Field::__field1),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    b"column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015" => serde::__private::Ok(__Field::__field0),
+                    b"column_f85f2f57_f85b_4126_be0f_cb5830f0475d" => serde::__private::Ok(__Field::__field1),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+        }
+        impl<'de> serde::Deserialize<'de> for __Field {
+            #[inline]
+            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+            where
+                __D: serde::Deserializer<'de>,
+            {
+                serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+            }
+        }
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead;
+            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__formatter, "struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead")
+            }
+            #[inline]
+            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead with 2 elements"));
+                    }
+                };
+                let __field1 = match serde::de::SeqAccess::next_element::<std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead with 2 elements"));
+                    }
+                };
+                match VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead::try_new(__field0, __field1) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                    }
+                }
+            }
+            #[inline]
+            fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::MapAccess<'de>,
+            {
+                let mut __field0: serde::__private::Option<std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>> = serde::__private::None;
+                let mut __field1: serde::__private::Option<std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>> = serde::__private::None;
+                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                    match __key {
+                        __Field::__field0 => {
+                            if serde::__private::Option::is_some(&__field0) {
+                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015"));
+                            }
+                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<
+                                std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+                            >(&mut __map)?);
+                        }
+                        __Field::__field1 => {
+                            if serde::__private::Option::is_some(&__field1) {
+                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("column_f85f2f57_f85b_4126_be0f_cb5830f0475d"));
+                            }
+                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<
+                                std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+                            >(&mut __map)?);
+                        }
+                        _ => {
+                            let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                        }
+                    }
+                }
+                let __field0 = match __field0 {
+                    serde::__private::Some(__field0) => __field0,
+                    serde::__private::None => serde::__private::de::missing_field("column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015")?,
+                };
+                let __field1 = match __field1 {
+                    serde::__private::Some(__field1) => __field1,
+                    serde::__private::None => serde::__private::de::missing_field("column_f85f2f57_f85b_4126_be0f_cb5830f0475d")?,
+                };
+                match VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead::try_new(__field0, __field1) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => {
+                        return Err(serde::de::Error::custom(format!("{error:?}")));
+                    }
+                }
+            }
+        }
+        #[doc(hidden)]
+        const FIELDS: &'static [&'static str] = &["column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015", "column_f85f2f57_f85b_4126_be0f_cb5830f0475d"];
+        serde::Deserializer::deserialize_struct(
+            __deserializer,
+            "VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead",
+            FIELDS,
+            __Visitor {
+                marker: serde::__private::PhantomData::<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: Some(postgresql_crud::Value {
+                value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            }),
+            column_f85f2f57_f85b_4126_be0f_cb5830f0475d: Some(postgresql_crud::Value {
+                value: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            }),
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(value.0),
+            Err(error) => Err(error),
+        }
+    }
+}
 // #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
 //     #[serde(skip_serializing_if = "Vec::is_empty")]
