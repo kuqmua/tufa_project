@@ -379,34 +379,6 @@ pub struct Doggie {
     pub column_f85f2f57_f85b_4126_be0f_cb5830f0475d: postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber,
 }
 ////////////////////////////
-//add
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
-pub enum VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement {
-    Equal(postgresql_crud::where_element_filters::PostgresqlJsonTypeWhereElementEqual<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration>),
-}
-impl<'a> postgresql_crud::PostgresqlTypeWhereFilter<'a> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement {
-    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        match &self {
-            Self::Equal(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-        }
-    }
-    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        match self {
-            Self::Equal(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
-        }
-    }
-}
-impl error_occurence_lib::ToStdStringString for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement {
-    fn to_std_string_string(&self) -> std::string::String {
-        format!("{self:#?}")
-    }
-}
-impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement {
-    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![Self::Equal(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
-    }
-}
-///////////////////////////////////////////
 #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]//here add Deserialize
 pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead(pub std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdRead>);//here 
 impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
