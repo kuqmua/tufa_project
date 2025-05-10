@@ -388,11 +388,11 @@ pub struct DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle {
 //////////////////////////v
 #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct StdVecVecObjectWithIdVecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdJsonArrayChange {
-    // #[serde(skip_serializing_if = "Vec::is_empty")]//here
+    #[serde(skip_serializing_if = "Vec::is_empty")]//here
     create: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>,//here maybe VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate. was std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>
-    // #[serde(skip_serializing_if = "Vec::is_empty")]//here
+    #[serde(skip_serializing_if = "Vec::is_empty")]//here
     update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>,//here 
-    // #[serde(skip_serializing_if = "Vec::is_empty")]//here
+    #[serde(skip_serializing_if = "Vec::is_empty")]//here
     delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
 }
 #[derive(Debug, serde::Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]

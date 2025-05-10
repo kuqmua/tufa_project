@@ -3835,11 +3835,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             false,
                         ),
                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_ident_json_array_change_token_stream(
-                            &std_option_option_std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case,
-                            &naming::parameter::StdOptionOptionStdVecVecObjectWithIdSelfJsonArrayChangeTryNewErrorNamedUpperCamelCase::from_tokens(&ident),
-                            true,
-                        ),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
                     },
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
@@ -3882,15 +3878,89 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_update_token_stream = {
                 let content_token_stream = match &postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_standart_not_null_content_token_stream(&IsStandartWithId::False),
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {#std_option_option_ident_update_standart_not_null_token_stream},
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            let content_token_stream = generate_ident_update_standart_not_null_content_token_stream(&IsStandartWithId::False);
+                            quote::quote!{(pub #content_token_stream);}
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {(pub #std_option_option_ident_update_standart_not_null_token_stream);},
                     },
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {#std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case},
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            quote::quote!{{
+                                pub #id_snake_case: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update,//todo is it update? maybe read?
+                                pub fields: #ident_update_standart_not_null_upper_camel_case,
+                            }}
+                        },
                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote! {std::option::Option<#std_option_option_std_vec_vec_object_with_id_ident_json_array_change_upper_camel_case>},
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                    },
+                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                    } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                    },
+                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                    } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                    },
+                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                        dimension4_not_null_or_nullable,
+                    } => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                    }
+                };
+                quote::quote! {
+                    #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+                    pub struct #ident_update_upper_camel_case #content_token_stream
+                }
+            };
+            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_update_upper_camel_case, &proc_macro2::TokenStream::new(), &{
+                let value = match &postgresql_json_type_pattern {
+                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))},
+                    },
+                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
+                        dimension1_not_null_or_nullable,
+                    } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
                     },
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
@@ -3909,44 +3979,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         dimension4_not_null_or_nullable: _,
                     } => todo!()
                 };
-                generate_ident_update_token_stream(
-                    &ident_update_upper_camel_case,
-                    &content_token_stream
-                )
-            };
-            let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream =
-                postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_update_upper_camel_case, &proc_macro2::TokenStream::new(), &{
-                    let value = match &postgresql_json_type_pattern {
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))},
-                        },
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-                            dimension1_not_null_or_nullable,
-                        } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)},
-                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote! {(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))},
-                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
-                        },
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
-                            dimension1_not_null_or_nullable: _,
-                            dimension2_not_null_or_nullable: _,
-                        } => todo!(),
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
-                            dimension1_not_null_or_nullable: _,
-                            dimension2_not_null_or_nullable: _,
-                            dimension3_not_null_or_nullable: _,
-                        } => todo!(),
-                        postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
-                            dimension1_not_null_or_nullable: _,
-                            dimension2_not_null_or_nullable: _,
-                            dimension3_not_null_or_nullable: _,
-                            dimension4_not_null_or_nullable: _,
-                        } => todo!()
-                    };
-                    quote::quote! {Self #value}
-                });
+                quote::quote! {Self #value}
+            });
             let generate_update_query_part_standart_not_null_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let object_acc_snake_case = naming::StdOptionOptionObjectAccSnakeCase;
                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',{{{object_acc_snake_case}}})"));
