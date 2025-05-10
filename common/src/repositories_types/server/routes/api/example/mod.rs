@@ -379,6 +379,25 @@ pub struct Doggie {
     pub column_f85f2f57_f85b_4126_be0f_cb5830f0475d: postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber,
 }
 ////////////////////////////
+// {
+//   "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": [
+//     {
+//       "id": "29baca89-9af0-4d61-884a-56b7ab3c9d41",
+//       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 1,
+//       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 9
+//     },
+//     {
+//       "id": "8e64b9f1-dddd-4d20-aafd-1b8d4f53e8ee",
+//       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 5,
+//       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 28
+//     }
+//   ]
+// }
+
+//     column_6e88acb0_c566_4fef_8a09_66a41338cf36: BigSerial
+//     animal_as_not_null_jsonb_object: Jsonb,
+
+
 //here //todo maybe write analog of  postgresql_crud::UniqueVec but with id
 #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle {
