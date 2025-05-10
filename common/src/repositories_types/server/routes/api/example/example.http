@@ -589,23 +589,23 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
           "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
             "value": {
               "create": [
-                {
-                  "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-                  "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-                }
+                # {
+                #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+                #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+                # }
               ],
               "update": [
                 {
-                  "id": "ea4fa99a-723f-4d7c-896b-17eae1629e3c",
+                  "id": "29baca89-9af0-4d61-884a-56b7ab3c9d41",
                   "fields": [
                     {
                       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                        "value": 0
+                        "value": 40
                       }
                     },
                     {
                       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-                        "value": 0
+                        "value": 40
                       }
                     }
                   ]
