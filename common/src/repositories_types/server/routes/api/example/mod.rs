@@ -438,8 +438,8 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate {
 }
 #[derive(Debug, Clone, Default, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
-    //todo
-    dimension1_pagination: postgresql_crud::Pagination,
+    pub doggie_with_id_as_not_null_jsonb_object_with_id_select: DoggieWithIdAsNotNullJsonbObjectWithIdSelect,//here
+    pub dimension1_pagination: postgresql_crud::Pagination,//here pub
 }
 impl sqlx::Type<sqlx::Postgres> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
@@ -461,55 +461,23 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         //here
         Self {
+            doggie_with_id_as_not_null_jsonb_object_with_id_select: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
             dimension1_pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
         }
     }
 }
 impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
     fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
+        let doggie_with_id_as_not_null_jsonb_object_with_id_select_select_query_part = self.doggie_with_id_as_not_null_jsonb_object_with_id_select.select_query_part(
+            field_ident,
+            &"value",
+            &"value",
+            true
+        );//here todo rename is_postgresql_type to is need to wrap into jsonb_build_object field
         //here
         let dimension1_start = self.dimension1_pagination.start();
         let dimension1_end = self.dimension1_pagination.end();
-        format!("
-            jsonb_build_object(
-                '{field_ident}',
-                jsonb_build_object(
-                    'value',
-                    (
-                        select jsonb_agg(
-                            (
-				                jsonb_build_object(
-      				                'column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015',
-                                    jsonb_build_object(
-                                        'value',
-                                    	value -> 'column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015'
-                                    )
-                                )
-                                ||
-                                jsonb_build_object(
-                                    'column_f85f2f57_f85b_4126_be0f_cb5830f0475d',
-                                	jsonb_build_object(
-                                    	'value',
-                                		value -> 'column_f85f2f57_f85b_4126_be0f_cb5830f0475d'
-                                	)
-                                )
-
-                                
-                            )
-                        ) 
-                        from 
-                        jsonb_array_elements(
-                            (
-                                select {column_name_and_maybe_field_getter}->'{field_ident}'
-                            )
-                        )
-                        with ordinality 
-                        where ordinality 
-                        between {dimension1_start} and {dimension1_end}
-                    )
-                )
-            )
-        ")
+        format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',(select jsonb_agg(({doggie_with_id_as_not_null_jsonb_object_with_id_select_select_query_part})) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {dimension1_start} and {dimension1_end})))")
     }
 }
 //////////////////////////////////////////

@@ -394,12 +394,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       "animal_as_not_null_jsonb_object": [
         # {
         #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-        # }
-        # ,
+        # },
         # {
         #   "column_1495baea_b926_4e20_a223_5b7a1f06c211": null
-        # }
-        # ,
+        # },
         # {
         #   "doggie_as_not_null_jsonb_object": [
         #     {
@@ -424,6 +422,17 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         # },
         {
           "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
+            "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
+              {
+                "id": null
+              },
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
+              }
+            ],
             "dimension1_pagination": {
               "limit": 3,
               "offset": 0
@@ -457,54 +466,7 @@ POST http://127.0.0.1:8080/example/read_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
-{
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
-  "select": [
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
-    {
-      "animal_as_not_null_jsonb_object": [
-        {
-          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-        },
-        {
-          "column_1495baea_b926_4e20_a223_5b7a1f06c211": null
-        },
-        {
-          "doggie_as_not_null_jsonb_object": [
-            {
-              "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-            },
-            {
-              "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
-            }
-          ]
-        },
-        {
-          "option_doggie_as_nullable_jsonb_object": {
-            "WithInnerExplicitSelect": [
-              {
-                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-              },
-              {
-                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
-              }
-            ]
-          }
-        },
-        {
-          "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
-            "dimension1_pagination": {
-              "limit": 3,
-              "offset": 0
-            }
-          }
-        }
-      ]
-    }
-  ]
-}
+
 
 ###
 
