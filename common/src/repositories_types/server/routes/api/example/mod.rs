@@ -723,7 +723,8 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
                     //here added
                     match element_handle.fields.update_query_part(
                         &element_acc,
-                        jsonb_set_target,
+                        // jsonb_set_target,
+                        &"elem",
                         jsonb_set_path,
                         increment
                     ) {
@@ -734,6 +735,37 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
                             return Err(error);
                         }
                     }
+                    println!("--------------");
+                    println!("{element_acc}");
+                    // jsonb_set(
+                    //   elem, 
+                    //   '{vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id}', 
+                    //   jsonb_set(
+                    //     case when jsonb_typeof(
+                    //       animal_as_not_null_jsonb_object->'vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id'
+                    //     ) = 'object' then (
+                    //       animal_as_not_null_jsonb_object->'vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id'
+                    //     ):: jsonb else '{}' :: jsonb end, 
+                    //     '{column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015}', 
+                    //     $3
+                    //   )
+                    // )
+                    // INTO
+                    // jsonb_set(
+                    //     elem,
+                    //     '{column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015}',
+                    //     '100'::jsonb
+                    // )
+                    println!("++++++++++++++");
+                    println!("{jsonb_set_target}");
+                    // animal_as_not_null_jsonb_object->'vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id'
+                    println!("{jsonb_set_path}");
+                    // vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id
+
+
+
+                    
+                    println!("--------------");
                     ///////////////
                     update_query_part_acc.push_str(&format!("when elem ->> 'id' = ${id_increment} then {element_acc} "));
                 }
