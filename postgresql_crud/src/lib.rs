@@ -117,7 +117,7 @@ pub trait PostgresqlJsonType {
         column_name_and_maybe_field_getter: &std::primitive::str,
         //todo remove this coz its used properly now
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-        is_postgresql_type: std::primitive::bool,
+        no_need_to_wrap: std::primitive::bool,
     ) -> std::string::String;
     type WhereElement: std::fmt::Debug
         + Clone
@@ -129,7 +129,13 @@ pub trait PostgresqlJsonType {
         + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type Read: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type Update: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn update_query_part(
+        value: &Self::Update,
+        jsonb_set_accumulator: &std::primitive::str,
+        jsonb_set_target: &std::primitive::str,
+        jsonb_set_path: &std::primitive::str,
+        increment: &mut std::primitive::u64,
+    ) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 

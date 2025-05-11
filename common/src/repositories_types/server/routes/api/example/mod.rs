@@ -866,8 +866,8 @@ impl postgresql_crud::PostgresqlJsonType for VecOfDoggieWithIdAsNotNullArrayOfNo
         value.create_query_bind(query)
     }
     type Select = VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect;
-    fn select_query_part(value: &Self::Select, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-        value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
+    fn select_query_part(value: &Self::Select, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, no_need_to_wrap: std::primitive::bool) -> std::string::String {
+        value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, no_need_to_wrap)
     }
     type WhereElement = VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement;
     type Read = VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead;
@@ -894,8 +894,8 @@ impl postgresql_crud::PostgresqlType for VecOfDoggieWithIdAsNotNullArrayOfNotNul
             let field_ident = column;
             let column_name_and_maybe_field_getter = column;
             let column_name_and_maybe_field_getter_for_error_message = column;
-            let is_postgresql_type = true;
-            value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
+            let no_need_to_wrap = true;
+            value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, no_need_to_wrap)
         })
     }
     type WhereElement = VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement;

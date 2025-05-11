@@ -1430,7 +1430,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 quote::quote! {
                     let mut acc = std::string::String::default();
-                    let #column_name_and_maybe_field_getter_field_ident_snake_case = if is_postgresql_type {
+                    let #column_name_and_maybe_field_getter_field_ident_snake_case = if no_need_to_wrap {
                         column_name_and_maybe_field_getter.to_string()
                     } else {
                         format!(#column_name_and_maybe_field_getter_format_handle_token_stream)
@@ -1447,7 +1447,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let _ = acc.pop();
                     let _ = acc.pop();
                     #maybe_pagination_start_end_initialization_token_stream
-                    if is_postgresql_type {
+                    if no_need_to_wrap {
                         format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
                     }
                     else {
@@ -1466,7 +1466,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         field_ident,
                                         column_name_and_maybe_field_getter,
                                         column_name_and_maybe_field_getter_for_error_message,
-                                        is_postgresql_type
+                                        no_need_to_wrap
                                     ),
                                     //todo maybe not actually correct 
                                     Self::WithoutInnerExplicitSelect => <#ident_select_standart_not_null_upper_camel_case as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
@@ -1474,7 +1474,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         field_ident,
                                         column_name_and_maybe_field_getter,
                                         column_name_and_maybe_field_getter_for_error_message,
-                                        is_postgresql_type
+                                        no_need_to_wrap
                                     ),
                                 }
                             },
@@ -1496,7 +1496,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         &"value",
                                         &"value",
                                         true
-                                    );//here todo rename is_postgresql_type to is need to wrap into jsonb_build_object field
+                                    );//here todo rename no_need_to_wrap to is need to wrap into jsonb_build_object field
                                     let dimension1_start = self.dimension1_pagination.start();
                                     let dimension1_end = self.dimension1_pagination.end();
                                     format!(#format_handle_token_stream)
@@ -1655,7 +1655,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     //     };
                     //     quote::quote! {
                     //         let mut acc = std::string::String::default();
-                    //         let #column_name_and_maybe_field_getter_field_ident_snake_case = if is_postgresql_type {
+                    //         let #column_name_and_maybe_field_getter_field_ident_snake_case = if no_need_to_wrap {
                     //             column_name_and_maybe_field_getter.to_string()
                     //         } else {
                     //             format!(#column_name_and_maybe_field_getter_format_handle_token_stream)
@@ -1673,7 +1673,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     //         let _ = acc.pop();
                     //         let _ = acc.pop();
                     //         #maybe_pagination_start_end_initialization_token_stream
-                    //         if is_postgresql_type {
+                    //         if no_need_to_wrap {
                     //             format!(#if_postgresql_type_is_true_format_handle_double_quotes_token_stream)
                     //         }
                     //         else {
@@ -1702,7 +1702,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                             #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                             #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
-                            is_postgresql_type: #std_primitive_bool_token_stream,
+                            no_need_to_wrap: #std_primitive_bool_token_stream,
                         ) -> #std_string_string_token_stream {
                             #content_token_stream
                         }
@@ -1835,7 +1835,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                                         #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                                         #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
-                                        is_postgresql_type: #std_primitive_bool_token_stream,
+                                        no_need_to_wrap: #std_primitive_bool_token_stream,
                                     ) -> #std_string_string_token_stream {
                                         #content_token_stream
                                     }
@@ -1880,7 +1880,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #field_ident_snake_case,
                 #column_name_and_maybe_field_getter_snake_case,
                 #column_name_and_maybe_field_getter_for_error_message_snake_case,
-                is_postgresql_type,
+                no_need_to_wrap,
             )
         };
         let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
@@ -4268,8 +4268,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 //     let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
                 //     let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
                 //     let increment_snake_case = naming::IncrementSnakeCase;
-                //     let generate_ok_try_generate_postgresql_json_object_type_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool| {
-                //         let first_argument_token_stream: &dyn quote::ToTokens = if is_postgresql_type_self_to_update_zero { &quote::quote! {&#value_snake_case} } else { &value_snake_case };
+                //     let generate_ok_try_generate_postgresql_json_object_type_to_update_token_stream = |no_need_to_wrap_self_to_update_zero: std::primitive::bool| {
+                //         let first_argument_token_stream: &dyn quote::ToTokens = if no_need_to_wrap_self_to_update_zero { &quote::quote! {&#value_snake_case} } else { &value_snake_case };
                 //         //todo proper error handling - remove .unwrap()
                 //         quote::quote! {
                 //             Ok(#tokens_as_json_type_token_stream update_query_part(
@@ -4528,7 +4528,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let field_ident = column;
                             let column_name_and_maybe_field_getter = column;
                             let column_name_and_maybe_field_getter_for_error_message = column;
-                            let is_postgresql_type = true;
+                            let no_need_to_wrap = true;
                             #select_query_part_token_stream
                         }
                     )
