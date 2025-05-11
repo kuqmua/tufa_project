@@ -674,9 +674,7 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
         no_need_to_wrap: std::primitive::bool,
     ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         let update_query_part_acc = {
-            let 
-            // mut 
-            element_acc = std::string::String::from("elem");
+            let mut element_acc = std::string::String::from("elem");
             if self.update.is_empty() {
                 element_acc
             } else {
@@ -692,222 +690,73 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
                             return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
                         }
                     };
-                    // for element in element_handle.fields.to_vec() {//here
-                    //     match element {
-                    //         DoggieAsNotNullJsonbObjectUpdateElement::Column7Bd2F76F276C48558Ee04B6Ce0Ac5015(value) => {//here
-                    //             match <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_part(
-                    //                 &value.value,
-                    //                 &element_acc,
-                    //                 &generate_jsonb_set_target("column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015"),
-                    //                 "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015",
-                    //                 increment,
-                    //             ) {
-                    //                 Ok(value) => {
-                    //                     element_acc = value;
-                    //                 }
-                    //                 Err(error) => {
-                    //                     return Err(error);
-                    //                 }
-                    //             }
-                    //         }
-                    //         DoggieAsNotNullJsonbObjectUpdateElement::ColumnF85F2F57F85B4126Be0FCb5830F0475D(value) => {//here
-                    //             match <postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_part(
-                    //                 &value.value,
-                    //                 &element_acc,
-                    //                 &generate_jsonb_set_target("column_f85f2f57_f85b_4126_be0f_cb5830f0475d"),
-                    //                 "column_f85f2f57_f85b_4126_be0f_cb5830f0475d",
-                    //                 increment,
-                    //             ) {
-                    //                 Ok(value) => {
-                    //                     element_acc = value;
-                    //                 }
-                    //                 Err(error) => {
-                    //                     return Err(error);
-                    //                 }
-                    //             }
-                    //         }
-                    //     }
-                    // }
-                    // ///////////////
-                    // //here added
-                    // match element_handle.fields.update_query_part(
-                    //     // &element_acc,
-                    //     &"",
-                    //     // jsonb_set_target,
-                    //     &"elem",
-                    //     // jsonb_set_path,
-                    //     &"",
-                    //     increment,
-                    //     no_need_to_wrap,
-                    // ) {
-                    //     Ok(value) => {
-                    //         element_acc = value;
-                    //     }
-                    //     Err(error) => {
-                    //         return Err(error);
-                    //     }
-                    // }
-                    // println!("--------------");
-                    // println!("{element_acc}");
-                    // // jsonb_set(
-                    // //   elem, 
-                    // //   '{vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id}', 
-                    // //   jsonb_set(
-                    // //     case when jsonb_typeof(
-                    // //       animal_as_not_null_jsonb_object->'vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id'
-                    // //     ) = 'object' then (
-                    // //       animal_as_not_null_jsonb_object->'vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id'
-                    // //     ):: jsonb else '{}' :: jsonb end, 
-                    // //     '{column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015}', 
-                    // //     $3
-                    // //   )
-                    // // )
-
-
-                    // // jsonb_set(case when jsonb_typeof(elem) = 'object' then (elem)::jsonb else '{}'::jsonb end,'{column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015}',$3)
-                    // // INTO
-                    // // jsonb_set(
-                    // //     elem,
-                    // //     '{column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015}',
-                    // //     '100'::jsonb
-                    // // )
-                    // println!("++++++++++++++");
-                    // println!("{jsonb_set_target}");
-                    // // animal_as_not_null_jsonb_object->'vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id'
-                    // println!("{jsonb_set_path}");
-                    // // vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id
-
-
-
-                    
-                    // println!("--------------");
-                    // ///////////////
-                    // update_query_part_acc.push_str(&format!("when elem ->> 'id' = ${id_increment} then {element_acc} "));
+                    //here added
+                    match element_handle.fields.update_query_part(
+                        &"",
+                        &"elem",
+                        &"",
+                        increment,
+                        no_need_to_wrap,
+                    ) {
+                        Ok(value) => {
+                            element_acc = value;
+                        }
+                        Err(error) => {
+                            return Err(error);
+                        }
+                    }
+                    update_query_part_acc.push_str(&format!("when elem ->> 'id' = ${id_increment} then {element_acc} "));
                 }
                 let _ = update_query_part_acc.pop();
                 format!("case {update_query_part_acc} else elem end")
             }
         };
-        // let delete_query_part_acc = {
-        //     let mut delete_query_part_acc = std::string::String::default();
-        //     for _ in &self.delete {
-        //         match increment.checked_add(1) {
-        //             Some(value) => {
-        //                 *increment = value;
-        //                 let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
-        //                 delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
-        //             }
-        //             None => {
-        //                 return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-        //             }
-        //         }
-        //     }
-        //     delete_query_part_acc
-        // };
-        // let create_query_part_acc = {
-        //     let mut create_query_part_acc = std::string::String::default();
-        //     for element in &self.create {
-        //         match element.create_query_part(increment) {
-        //             Ok(value) => {
-        //                 create_query_part_acc.push_str(&format!("{value},"));
-        //             }
-        //             Err(error) => {
-        //                 return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-        //             }
-        //         }
-        //     }
-        //     let _ = create_query_part_acc.pop();
-        //     create_query_part_acc
-        // };
-        // let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
-        // let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
-        
-        
-        
-        
-        // let f = format ! ("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}', case when jsonb_array_length({jsonb_set_target}) = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}), '[]'::jsonb)) end {maybe_jsonb_build_array})");
-        // println!("fffffffffffffffffffff {f}");
-        // println!("rrrrrrrrrrrrrrrrrrrrrr");
-        let f = "
-jsonb_set(
-  case when jsonb_typeof(
-    animal_as_not_null_jsonb_object
-  ) = 'object' then (
-    animal_as_not_null_jsonb_object
-  ):: jsonb else '{}' :: jsonb end, 
-  '{vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id}', 
-  case when jsonb_array_length(
-    animal_as_not_null_jsonb_object -> 'vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id'
-  ) = 0 then '[]' :: jsonb else (
-    select 
-      coalesce(
-        (
-          select 
-            jsonb_agg(
-              case when elem ->> 'id' = $2 then jsonb_set(
-                case when jsonb_typeof(elem) = 'object' then (elem):: jsonb else '{}' :: jsonb end, 
-                '{column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015}', 
-                '75'::jsonb
-              ) else elem end
-            ) 
-          from 
-            jsonb_array_elements(
-              animal_as_not_null_jsonb_object -> 'vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id'
-            ) as elem
-        ), 
-        '[]' :: jsonb
-      )
-  ) end
-)
-        ".to_string();
-        Ok (f)
+        let delete_query_part_acc = {
+            let mut delete_query_part_acc = std::string::String::default();
+            for _ in &self.delete {
+                match increment.checked_add(1) {
+                    Some(value) => {
+                        *increment = value;
+                        let maybe_space_and_space = if delete_query_part_acc.is_empty() { "" } else { " and " };
+                        delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
+                    }
+                    None => {
+                        return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                    }
+                }
+            }
+            delete_query_part_acc
+        };
+        let create_query_part_acc = {
+            let mut create_query_part_acc = std::string::String::default();
+            for element in &self.create {
+                match element.create_query_part(increment) {
+                    Ok(value) => {
+                        create_query_part_acc.push_str(&format!("{value},"));
+                    }
+                    Err(error) => {
+                        return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                    }
+                }
+            }
+            let _ = create_query_part_acc.pop();
+            create_query_part_acc
+        };
+        let maybe_where = if delete_query_part_acc.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
+        let maybe_jsonb_build_array = if create_query_part_acc.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
+        Ok (format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}', case when jsonb_array_length({jsonb_set_target}) = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}), '[]'::jsonb)) end {maybe_jsonb_build_array})"))
     }
-    fn update_query_bind(self, 
-        mut 
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        println!("CALL");
+    fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element_handle in self.update {
-            let f = element_handle.id.0.to_string();
-            println!("### {f}");
-            query = query.bind(element_handle.id.0.to_string());//here //todo use method like into_inner instead of .0
-            
-            // query = query.bind("29baca89-9af0-4d61-884a-56b7ab3c9d41");//here
-            // for element in element_handle.fields.into_vec() {//here
-            //     match element {
-            //         DoggieAsNotNullJsonbObjectUpdateElement::Column7Bd2F76F276C48558Ee04B6Ce0Ac5015(value) => {//here
-            //             query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
-            //         }
-            //         DoggieAsNotNullJsonbObjectUpdateElement::ColumnF85F2F57F85B4126Be0FCb5830F0475D(value) => {//here
-            //             query = <postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
-            //         }
-            //     }
-            // }
-            ///////////////////
-            // println!("{:#?}", &element_handle.fields);
-            // query = element_handle.fields.update_query_bind(query);
-            // for element in element_handle.fields.0.into_vec() {
-            //     // query = element.update_query_bind(query);
-            //     /////////////
-            //     match element {
-            //         DoggieAsNotNullJsonbObjectUpdateElement::Column7Bd2F76F276C48558Ee04B6Ce0Ac5015(value) => {
-            //             println!("111 {:#?}", value.value);
-            //             query = <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
-            //         }
-            //         DoggieAsNotNullJsonbObjectUpdateElement::ColumnF85F2F57F85B4126Be0FCb5830F0475D(value) => {
-            //             println!("222");
-            //             query = <postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::update_query_bind(value.value, query);
-            //         }
-            //     }
-            //     //////////////
-            // }
-            //////////////////
+            query = query.bind(element_handle.id.into_inner().to_string());//here
+            query = element_handle.fields.update_query_bind(query);
         }
-        // for element in self.delete {
-        //     query = query.bind(element.to_string());//here
-        // }
-        // for element in self.create {
-        //     query = element.create_query_bind(query);
-        // }
+        for element in self.delete {
+            query = query.bind(element.into_inner().to_string());//here
+        }
+        for element in self.create {
+            query = element.create_query_bind(query);
+        }
         query
     }
 }

@@ -696,7 +696,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         utoipa::ToSchema,
                         #maybe_derive_schemars_json_schema_token_stream
                     )]
-                    pub struct #ident_origin_upper_camel_case(pub #field_type_handle);//todo temporarily added pub here. maybe remove later
+                    pub struct #ident_origin_upper_camel_case(#field_type_handle);
                 }
             };
             //todo why need new ?
@@ -874,11 +874,30 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }),
                     }
                 };
+                let maybe_into_inner_token_stream = if let (
+                    PostgresqlJsonType::UuidUuidAsJsonbString,
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
+                ) = (
+                    &postgresql_json_type,
+                    &not_null_or_nullable,
+                    &postgresql_json_type_pattern
+                ) {
+                    quote::quote!{
+                        pub fn into_inner(self) -> #type_token_stream {
+                            self.0
+                        }
+                    }
+                }
+                else {
+                    proc_macro2::TokenStream::new()
+                };
                 quote::quote!{
                     impl #ident_origin_upper_camel_case {
                         pub fn new(value: #type_token_stream) -> Self {
                             Self(#content_token_stream)
                         }
+                        #maybe_into_inner_token_stream
                     }
                 }
             };
