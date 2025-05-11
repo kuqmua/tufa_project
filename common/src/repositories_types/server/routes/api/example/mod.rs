@@ -400,9 +400,17 @@ pub struct Doggie {
 
 //here //todo maybe write analog of  postgresql_crud::UniqueVec but with id
 #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle {
+pub struct DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement {
     pub id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update,//is it update? maybe read?
     pub fields: DoggieAsNotNullJsonbObjectUpdate,
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            id: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            fields: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
 }
 //////////////////////////v
 #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
@@ -410,7 +418,7 @@ pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
     #[serde(skip_serializing_if = "Vec::is_empty")]//here
     create: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>,//here maybe VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdCreate. was std::vec::Vec<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId>
     #[serde(skip_serializing_if = "Vec::is_empty")]//here
-    update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>,//here 
+    update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>,//here 
     #[serde(skip_serializing_if = "Vec::is_empty")]//here
     delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
 }
@@ -438,7 +446,7 @@ pub enum VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateTryNewEr
 impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
     pub fn try_new(
         create: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>,//here
-        update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>,//here
+        update: std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>,//here
         delete: std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>,
     ) -> Result<Self, VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdateTryNewErrorNamed> {
         if create.is_empty() && update.is_empty() && delete.is_empty() {
@@ -573,7 +581,7 @@ impl<'de> serde::Deserialize<'de> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJs
                         vec![]
                     }
                 };
-                let __field1 = match serde::de::SeqAccess::next_element::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>>(&mut __seq)? {//here was DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement
+                let __field1 = match serde::de::SeqAccess::next_element::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>>(&mut __seq)? {//here was DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
                         vec![]
@@ -598,7 +606,7 @@ impl<'de> serde::Deserialize<'de> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJs
                 __A: serde::de::MapAccess<'de>,
             {
                 let mut __field0: serde::__private::Option<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>> = serde::__private::None;//here was VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdToCreateWithGeneratedId
-                let mut __field1: serde::__private::Option<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>> = serde::__private::None;//here was DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement
+                let mut __field1: serde::__private::Option<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>> = serde::__private::None;//here was DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement
                 let mut __field2: serde::__private::Option<std::vec::Vec<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Update>> = serde::__private::None;
                 while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
                     match __key {
@@ -612,7 +620,7 @@ impl<'de> serde::Deserialize<'de> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJs
                             if serde::__private::Option::is_some(&__field1) {
                                 return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("update"));
                             }
-                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle>>(&mut __map)?);//here was DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement 
+                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::vec::Vec<DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement>>(&mut __map)?);//here was DoggieWithIdAsNotNullJsonbObjectWithIdUpdateElement 
                         }
                         __Field::__field2 => {
                             if serde::__private::Option::is_some(&__field2) {
@@ -764,14 +772,7 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
             create: vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()],
-            update: vec![
-                // postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                //todo remove 
-                DoggieWithIdAsNotNullJsonbObjectWithIdUpdateHandle {
-                    id: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                    fields: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                }
-            ],
+            update: vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()],
             delete: vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()],
         }
     }
