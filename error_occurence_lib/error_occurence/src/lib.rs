@@ -70,6 +70,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
     };
     let tokens = match supported_enum_variant {
         macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::Named => {
+            //todo maybe impl display was a bad idea. .to_string() casts is dangerous
             let impl_std_fmt_display_handle_content_token_stream = {
                 let variants_token_stream = data_enum.variants.iter().map(|element| {
                     let element_ident = &element.ident;
