@@ -374,7 +374,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "logical_operator": "Or",
                 "value": [
                   {
-                    "id": "29baca89-9af0-4d61-884a-56b7ab3c9d41",
+                    "id": "d66a1c9e-44da-4a40-aab8-d661c8dd2792",
                     "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
                     "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
                   }
@@ -387,39 +387,39 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    # {
-    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    # },
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
     {
       "animal_as_not_null_jsonb_object": [
-        # {
-        #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-        # },
-        # {
-        #   "column_1495baea_b926_4e20_a223_5b7a1f06c211": null
-        # },
-        # {
-        #   "doggie_as_not_null_jsonb_object": [
-        #     {
-        #       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-        #     },
-        #     {
-        #       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
-        #     }
-        #   ]
-        # },
-        # {
-        #   "option_doggie_as_nullable_jsonb_object": {
-        #     "WithInnerExplicitSelect": [
-        #       {
-        #         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
-        #       },
-        #       {
-        #         "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
-        #       }
-        #     ]
-        #   }
-        # },
+        {
+          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+        },
+        {
+          "column_1495baea_b926_4e20_a223_5b7a1f06c211": null
+        },
+        {
+          "doggie_as_not_null_jsonb_object": [
+            {
+              "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+            },
+            {
+              "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
+            }
+          ]
+        },
+        {
+          "option_doggie_as_nullable_jsonb_object": {
+            "WithInnerExplicitSelect": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
+              }
+            ]
+          }
+        },
         {
           "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
             "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
@@ -589,31 +589,30 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
           "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
             "value": {
               "create": [
-                # {
-                #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-                #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-                # }
+                {
+                  "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 10,
+                  "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 10
+                }
               ],
               "update": [
                 {
-                  "id": "29baca89-9af0-4d61-884a-56b7ab3c9d41",
+                  "id": "d66a1c9e-44da-4a40-aab8-d661c8dd2792",
                   "fields": [
                     {
                       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                        "value": 11
+                        "value": 90
                       }
-                    }
-                    ,
+                    },
                     {
                       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-                        "value": 40
+                        "value": 60
                       }
                     }
                   ]
                 }
               ],
               "delete": [
-                "658d9b9a-9841-4654-86e3-846a97c8fcf7"
+                "d0346a84-75da-4762-a8ec-bdda0f4d8eb8"
               ]
             }
           }

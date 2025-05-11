@@ -4684,68 +4684,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         else {
             proc_macro2::TokenStream::new()
         };
-        let generated = 
-        if let (
-            postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
-
-            // postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
-            postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-                dimension1_not_null_or_nullable,
-            },
-            // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
-            //     dimension1_not_null_or_nullable,
-            //     dimension2_not_null_or_nullable,
-            // },
-            // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {
-            //     dimension1_not_null_or_nullable,
-            //     dimension2_not_null_or_nullable,
-            //     dimension3_not_null_or_nullable,
-            // },
-            // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {
-            //     dimension1_not_null_or_nullable,
-            //     dimension2_not_null_or_nullable,
-            //     dimension3_not_null_or_nullable,
-            //     dimension4_not_null_or_nullable,
-            // },
-
-            // TraitGen::PostgresqlType,
-            // TraitGen::PostgresqlJsonType,
-            TraitGen::PostgresqlTypeAndPostgresqlJsonType,
-        ) = (
-            &not_null_or_nullable,
-            &postgresql_json_type_pattern,
-            &trait_gen,
-        ) {
-            quote::quote! {
-                #ident_token_stream
-                #ident_table_type_declaration_token_stream
-                #ident_create_token_stream
-                #ident_select_token_stream
-                #ident_where_element_token_stream
-                #ident_read_token_stream
-                // #ident_update_token_stream
-                // #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
-                // #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
-                // #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_token_stream
-            }
-        }
-        else {
-            quote::quote! {
-                #ident_token_stream
-                #ident_table_type_declaration_token_stream
-                #ident_create_token_stream
-                #ident_select_token_stream
-                #ident_where_element_token_stream
-                #ident_read_token_stream
-                #ident_update_token_stream
-                #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
-                #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
-                #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_token_stream
-            }
+        let generated = quote::quote! {
+            #ident_token_stream
+            #ident_table_type_declaration_token_stream
+            #ident_create_token_stream
+            #ident_select_token_stream
+            #ident_where_element_token_stream
+            #ident_read_token_stream
+            #ident_update_token_stream
+            #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
+            #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
+            #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_token_stream
         };
-
-
         // if let (
         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
         //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
