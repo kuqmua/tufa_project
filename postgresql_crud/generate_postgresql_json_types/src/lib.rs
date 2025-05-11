@@ -696,9 +696,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         utoipa::ToSchema,
                         #maybe_derive_schemars_json_schema_token_stream
                     )]
-                    pub struct #ident_origin_upper_camel_case(#field_type_handle);
+                    pub struct #ident_origin_upper_camel_case(pub #field_type_handle);//todo temporarily added pub here. maybe remove later
                 }
             };
+            //todo why need new ?
             let impl_new_for_ident_origin_token_stream = {
                 let type_token_stream: &dyn quote::ToTokens = match &element.postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
