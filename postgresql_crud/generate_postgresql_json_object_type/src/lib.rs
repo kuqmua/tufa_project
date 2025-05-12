@@ -4243,36 +4243,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             dimension1_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                            let query_part_variants_token_stream = vec_syn_field.iter().map(|element| {
-                                let field_ident_stringified = element
-                                    .ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    })
-                                    .to_string();
-                                let variant_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident_stringified);
-                                let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
-                                let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_field_token_stream(element);
-                                quote::quote! {
-                                    #ident_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                        match #field_type_as_crud_postgresql_json_type_from_field_token_stream #update_query_part_snake_case(
-                                            &value.value,
-                                            &element_acc,
-                                            &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
-                                            #field_ident_double_quotes_token_stream,
-                                            #increment_snake_case,
-                                        ) {
-                                            Ok(value) => {
-                                                element_acc = value;
-                                            }
-                                            Err(error) => {
-                                                return Err(error);
-                                            }
-                                        }
-                                    }
-                                }
-                            });
                             // let ok_format_handle_token_stream = if is_nullable {
                             //     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                             //         "jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}', case when jsonb_typeof({{{jsonb_set_target_snake_case}}}) = 'array' then case when jsonb_array_length({{{jsonb_set_target_snake_case}}}) = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg({{update_query_part_acc}}) from jsonb_array_elements({{{jsonb_set_target_snake_case}}}) as elem {{maybe_where}}), '[]'::jsonb)) end else '[]'::jsonb end {{maybe_jsonb_build_array}})"
@@ -4297,7 +4267,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             };
                             let delete_query_part_acc_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{maybe_space_and_space}}elem->>'{id_snake_case}' <> ${{{increment_snake_case}}}"));
-                            let update_push_str_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("when elem ->> '{id_snake_case}' = ${{id_increment}} then {{element_acc}} "));
                             quote::quote! {
                                 let update_query_part_acc = {
                                     let mut element_acc = std::string::String::from("elem");
@@ -4515,25 +4484,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         dimension1_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                            let update_query_bind_variants_token_stream = vec_syn_field.iter().map(|element| {
-                                let field_ident = element
-                                    .ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    })
-                                    .to_string();
-                                let variant_ident_upper_camel_case_token_stream = naming::AsRefStrToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
-                                let field_type_as_crud_postgresql_json_type_from_field_token_stream = generate_field_type_as_crud_postgresql_json_type_from_field_token_stream(element);
-                                quote::quote! {
-                                    #ident_update_element_upper_camel_case::#variant_ident_upper_camel_case_token_stream(value) => {
-                                        #query_snake_case = #field_type_as_crud_postgresql_json_type_from_field_token_stream #update_query_bind_snake_case(value.value, #query_snake_case);
-                                    }
-                                }
-                            });
                             quote::quote! {
-                                for element_handle in self.#update_snake_case {
-                                    #query_snake_case = element_handle.update_query_bind(#query_snake_case);
+                                for element in self.#update_snake_case {
+                                    #query_snake_case = element.update_query_bind(#query_snake_case);
                                 }
                                 for element in self.delete {
                                     #query_snake_case = element.query_bind_as_postgresql_text(#query_snake_case);
