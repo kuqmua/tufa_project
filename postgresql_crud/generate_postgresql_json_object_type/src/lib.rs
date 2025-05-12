@@ -335,17 +335,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             &postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
             &IsStandartWithId::True,
         );
-        let is_standart_not_null = if let postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern {
-            if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable {
-                true
-            }
-            else {
-                false
-            }
+        let is_standart = if let postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern {
+            true
         }
         else {
             false
         };
+        let is_not_null = if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable {
+            true
+        }
+        else {
+            false
+        };
+        let is_standart_not_null = is_standart && is_not_null;
         let ident_token_stream = {
             let generate_ident_token_stream = |ident: &dyn quote::ToTokens|{
                 quote::quote! {
