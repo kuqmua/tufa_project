@@ -725,6 +725,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_with_id_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_create_token_stream = {
+            let ident_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let generate_impl_std_fmt_display_for_ident_create_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                 macros_helpers::generate_impl_std_fmt_display_token_stream(
                     &proc_macro2::TokenStream::new(),
@@ -836,8 +837,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Ok(#value_snake_case) => Ok(#value_snake_case),
                                         Err(error) => Err(error)
                                     },
-                                    //maybe not use null here and use increment logic
-                                    None => Ok(std::string::String::from("null"))
+                                    None => match increment.checked_add(1) {
+                                        Some(value) => {
+                                            *increment = value;
+                                            Ok(format!("${increment}"))
+                                        },
+                                        None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd {
+                                            code_occurence: error_occurence_lib::code_occurence!()
+                                        }),
+                                    }
                                 }
                             },
                         },
@@ -1061,10 +1069,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#standart_not_null_create_query_bind_content_token_stream},
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                if let Some(#value_snake_case) = self.0 {
-                                    #query_snake_case = #value_snake_case.#create_query_bind_snake_case(#query_snake_case);
+                                match self.0 {
+                                    Some(value) => #value_snake_case.#create_query_bind_snake_case(#query_snake_case),
+                                    None => #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#ident_create_standart_not_null_upper_camel_case>>))
                                 }
-                                #query_snake_case
                             },
                         },
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
