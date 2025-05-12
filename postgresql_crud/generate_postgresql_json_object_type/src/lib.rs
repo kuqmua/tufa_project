@@ -4831,8 +4831,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         // ) {
         //     // use postgresql_crud_macros_common::NotNullOrNullable;
         //     let d1 = match &dimension1_not_null_or_nullable {
-        //         NotNullOrNullable::NotNull => true,
-        //         NotNullOrNullable::Nullable => false,
+        //         NotNullOrNullable::NotNull => false,
+        //         NotNullOrNullable::Nullable => true,
         //     };
         //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
