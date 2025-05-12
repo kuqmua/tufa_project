@@ -202,6 +202,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         } else {
             panic!("does work only on structs!");
         };
+        let postgresql_json_type_snake_case = naming::PostgresqlJsonTypeSnakeCase;
+        let uuid_uuid_as_not_null_jsonb_string_upper_camel_case = naming::UuidUuidAsNotNullJsonbStringUpperCamelCase;
+        let import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream = quote::quote!{#import_path::#postgresql_json_type_snake_case::#uuid_uuid_as_not_null_jsonb_string_upper_camel_case};
         let id_syn_field = syn::Field {
             attrs: vec![],
             vis: syn::Visibility::Public(syn::token::Pub { span: proc_macro2::Span::call_site() }),
@@ -212,7 +215,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 qself: None,
                 path: syn::Path {
                     leading_colon: None,
-                    segments: macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["postgresql_crud", "postgresql_json_type", "UuidUuidAsNotNullJsonbString"]),//todo reuse
+                    segments: macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[import_path.to_path(), &postgresql_json_type_snake_case.to_string(), &uuid_uuid_as_not_null_jsonb_string_upper_camel_case.to_string()]),
                 },
             }),
         };
@@ -1244,7 +1247,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             )
         };
         let postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-            &quote::quote!{#import_path::postgresql_json_type::UuidUuidAsNotNullJsonbString},
+            &import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream,
             &PostgresqlJsonTypeSubtype::Update
         );
         let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);

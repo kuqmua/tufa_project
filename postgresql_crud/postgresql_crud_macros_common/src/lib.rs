@@ -649,6 +649,12 @@ impl ImportPath {
             ImportPath::PostgresqlCrud => &token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
         }
     }
+    pub fn to_path(&self) -> &'static std::primitive::str {
+        match &self {
+            ImportPath::Crate => "crate",
+            ImportPath::PostgresqlCrud => "postgresql_crud",
+        }
+    }
 }
 pub enum IsQueryBindMutable {
     True,
