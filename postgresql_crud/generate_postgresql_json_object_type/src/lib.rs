@@ -4136,7 +4136,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             jsonb_set_path,
                                             increment,
                                         ),
-                                        None => {//todo maybe just use null in query instead of binding None as null?
+                                        None => {
                                             match #increment_snake_case.checked_add(1) {
                                                 Some(value) => {
                                                     *#increment_snake_case = value;
@@ -4406,14 +4406,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
                 //postgresql_type
                 // &{
-                //     //todo remove jsonb_ prefix (coz it can be json, jsonb, json not null, jsonb not null)
                 //     let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
                 //     let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
                 //     let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
                 //     let increment_snake_case = naming::IncrementSnakeCase;
                 //     let generate_ok_try_generate_postgresql_json_object_type_to_update_token_stream = |is_postgresql_type_self_to_update_zero: std::primitive::bool| {
                 //         let first_argument_token_stream: &dyn quote::ToTokens = if is_postgresql_type_self_to_update_zero { &quote::quote! {&#value_snake_case} } else { &value_snake_case };
-                //         //todo proper error handling - remove .unwrap()
                 //         quote::quote! {
                 //             Ok(#tokens_as_json_type_token_stream update_query_part(
                 //                 #first_argument_token_stream,
@@ -4436,7 +4434,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 //                             *increment = #value_snake_case;
                 //                             Ok(format!("${increment}"))
                 //                         },
-                //                         //todo make generic error type instead of PostgresqlJsonTypeTryGeneratePostgresqlJsonObjectTypeToCreateErrorNamed
                 //                         None => Err(postgersql_crud::QueryPartErrorNamed::#checked_add_upper_camel_case {
                 //                             code_occurence: error_occurence_lib::code_occurence!()
                 //                         })
@@ -4452,7 +4449,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                             match self.0 {
                                 Some(#value_snake_case) => #value_snake_case.#update_query_bind_snake_case(query),
-                                None => #query_snake_case.bind(sqlx::types::Json(#ident_update_upper_camel_case(None))),//todo maybe not need to bind None. just use null in query?
+                                None => #query_snake_case.bind(sqlx::types::Json(#ident_update_upper_camel_case(None))),
                             }
                         },
                     },
@@ -4585,7 +4582,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
                         });
-                        //todo maybe rename type_path to tokens for standart naming convention
                         let variant_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&field_ident);
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
                         let field_type_as_json_type_update_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
@@ -4899,4 +4895,3 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     // );
     generated.into()
 }
-//todo impl custom serde::Deserialize for PostgresqlTypeObjectAnimalAsJsonbNotNullWhere
