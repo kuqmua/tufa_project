@@ -600,19 +600,19 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   "fields": [
                     {
                       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                        "value": 33
+                        "value": 44
                       }
                     },
                     {
                       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-                        "value": 22
+                        "value": 11
                       }
                     }
                   ]
                 }
               ],
               "delete": [
-                # "f4567e6e-4e53-4c79-b5c8-990034b878ad",
+                "fdf2b9ac-5638-4ca5-b446-19b717839eb7"
               ]
             }
           }

@@ -4377,7 +4377,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     #query_snake_case = element_handle.update_query_bind(#query_snake_case);
                                 }
                                 for element in self.delete {
-                                    #query_snake_case = #query_snake_case.bind(element.into_inner().to_string());
+                                    #query_snake_case = element.query_bind_as_postgresql_text(#query_snake_case);
                                 }
                                 for element in self.create {
                                     #query_snake_case = element.create_query_bind(#query_snake_case);
@@ -4558,7 +4558,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                             //todo reuse
                             fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                                query = query.bind(self.id.into_inner().to_string());
+                                query = self.id.query_bind_as_postgresql_text(query);
                                 query = self.fields.update_query_bind(query);
                                 query
                             }

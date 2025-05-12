@@ -874,7 +874,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }),
                     }
                 };
-                let maybe_into_inner_token_stream = if let (
+                //need for uuid bind for json object logic
+                let maybe_query_bind_as_postgresql_text_token_stream = if let (
                     PostgresqlJsonType::UuidUuidAsJsonbString,
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
@@ -884,8 +885,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &postgresql_json_type_pattern
                 ) {
                     quote::quote!{
-                        pub fn into_inner(self) -> #type_token_stream {
-                            self.0
+                        pub fn query_bind_as_postgresql_text(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                            query.bind(self.0.to_string())
                         }
                     }
                 }
@@ -897,7 +898,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         pub fn new(value: #type_token_stream) -> Self {
                             Self(#content_token_stream)
                         }
-                        #maybe_into_inner_token_stream
+                        #maybe_query_bind_as_postgresql_text_token_stream
                     }
                 }
             };
