@@ -374,7 +374,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "logical_operator": "Or",
                 "value": [
                   {
-                    "id": "d66a1c9e-44da-4a40-aab8-d661c8dd2792",
+                    "id": "f5a72d99-ea82-4737-b18a-242063c22ce7",
                     "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
                     "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
                   }
@@ -589,14 +589,14 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
           "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
             "value": {
               "create": [
-                {
-                  "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 10,
-                  "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 10
-                }
+                # {
+                #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 10,
+                #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 10
+                # }
               ],
               "update": [
                 {
-                  "id": "d66a1c9e-44da-4a40-aab8-d661c8dd2792",
+                  "id": "f5a72d99-ea82-4737-b18a-242063c22ce7",
                   "fields": [
                     {
                       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
@@ -612,7 +612,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                 }
               ],
               "delete": [
-                "d0346a84-75da-4762-a8ec-bdda0f4d8eb8"
+                # "d0346a84-75da-4762-a8ec-bdda0f4d8eb8"
               ]
             }
           }

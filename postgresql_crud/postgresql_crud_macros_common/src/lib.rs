@@ -543,7 +543,6 @@ pub fn generate_postgresql_json_type_token_stream(
                 #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
                 #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
-                no_need_to_wrap: #std_primitive_bool_token_stream,
             ) -> Result<#std_string_string_token_stream, #path_token_stream QueryPartErrorNamed> {
                 #update_query_part_token_stream
             }

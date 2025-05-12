@@ -3926,7 +3926,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
                                 #field_ident_double_quotes_token_stream,
                                 #increment_snake_case,
-                                no_need_to_wrap,
                             ) {
                                 Ok(value) => {
                                     #object_acc_snake_case = value;
@@ -4005,7 +4004,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
                             #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
                             #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
-                            no_need_to_wrap: std::primitive::bool,
                         ) -> Result<#std_string_string_token_stream, #import_path::QueryPartErrorNamed> {
                             #update_query_part_content_token_stream
                         }
@@ -4033,7 +4031,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             jsonb_set_target,
                                             jsonb_set_path,
                                             increment,
-                                            no_need_to_wrap,
                                         ),
                                         None => {//todo maybe just use null in query instead of binding None as null?
                                             match #increment_snake_case.checked_add(1) {
@@ -4071,7 +4068,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             //                     &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
                             //                     #field_ident_double_quotes_token_stream,
                             //                     #increment_snake_case,
-                            //                     no_need_to_wrap,
                             //                 ) {
                             //                     Ok(value) => {
                             //                         #std_option_option_object_acc_snake_case = value;
@@ -4138,7 +4134,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             &#generate_jsonb_set_target_snake_case(#field_ident_double_quotes_token_stream),
                                             #field_ident_double_quotes_token_stream,
                                             #increment_snake_case,
-                                            no_need_to_wrap,
                                         ) {
                                             Ok(value) => {
                                                 element_acc = value;
@@ -4200,7 +4195,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 &"elem",
                                                 &"",
                                                 increment,
-                                                no_need_to_wrap,
                                             ) {
                                                 Ok(value) => {
                                                     element_acc = value;
@@ -4270,7 +4264,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     //             #jsonb_set_target_snake_case,
                     //             #jsonb_set_path_snake_case,
                     //             #increment_snake_case,
-                    //             no_need_to_wrap,
                     //         ) {
                     //             Ok(value) => Ok(value),
                     //             Err(error) => Err(error)
@@ -4286,7 +4279,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     //                         #jsonb_set_target_snake_case,
                     //                         #jsonb_set_path_snake_case,
                     //                         #increment_snake_case,
-                    //                         no_need_to_wrap,
                     //                     ) {
                     //                         Ok(value) => Ok(value),
                     //                         Err(error) => Err(error)
@@ -4341,7 +4333,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 //                 #jsonb_set_target_snake_case,
                 //                 #jsonb_set_path_snake_case,
                 //                 #increment_snake_case,
-                //                 no_need_to_wrap,
                 //             ).unwrap())
                 //         }
                 //     };
@@ -4577,25 +4568,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #maybe_ident_with_id_update_element_token_stream
             }
         };
-        //todo maybe rewrite as PostgresqlType or PostgresqlJsonType
-        enum NoNeedToWrapOrTrue {
-            NoNeedToWrap,
-            True
-        }
-        let generate_update_query_part_token_stream = |no_need_to_wrap_or_true: &NoNeedToWrapOrTrue|{
-            let no_need_to_wrap_parameter_token_stream = match &no_need_to_wrap_or_true {
-                NoNeedToWrapOrTrue::NoNeedToWrap => quote::quote!{no_need_to_wrap},
-                NoNeedToWrapOrTrue::True => quote::quote!{true}
-            };
-            quote::quote!{
-                #value_snake_case.#update_query_part_snake_case(
-                    #jsonb_set_accumulator_snake_case,
-                    #jsonb_set_target_snake_case,
-                    #jsonb_set_path_snake_case,
-                    #increment_snake_case,
-                    #no_need_to_wrap_parameter_token_stream,
-                )
-            }
+        let update_query_part_token_stream = quote::quote!{
+            #value_snake_case.#update_query_part_snake_case(
+                #jsonb_set_accumulator_snake_case,
+                #jsonb_set_target_snake_case,
+                #jsonb_set_path_snake_case,
+                #increment_snake_case,
+            )
         };
         let update_query_bind_token_stream = quote::quote!{#value_snake_case.#update_query_bind_snake_case(#query_snake_case)};
         let (
@@ -4615,7 +4594,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &select_query_part_token_stream,
                 &ident_where_element_upper_camel_case,
                 &ident_update_upper_camel_case,
-                &generate_update_query_part_token_stream(&NoNeedToWrapOrTrue::NoNeedToWrap),
+                &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream,
             );
@@ -4643,7 +4622,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &ident_update_upper_camel_case,
-                &generate_update_query_part_token_stream(&NoNeedToWrapOrTrue::True),
+                &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream
             );
@@ -4676,7 +4655,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &select_query_part_token_stream,
                 &ident_with_id_where_element_standart_not_null_upper_camel_case,
                 &ident_with_id_update_standart_not_null_upper_camel_case,
-                &generate_update_query_part_token_stream(&NoNeedToWrapOrTrue::NoNeedToWrap),
+                &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream,
             )
