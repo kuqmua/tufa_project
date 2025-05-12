@@ -874,7 +874,7 @@ impl<T> std::convert::Into<Vec<T>> for UniqueVec<T> {
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for UniqueVec<T>
 where T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 {
-    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
         for (index, element) in self.0.iter().enumerate() {
             match element.query_part(increment, column, index != 0) {

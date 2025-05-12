@@ -1461,7 +1461,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
                 let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
-                let value_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&value_snake_case);
                 let variants_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
                     let field_ident_stringified = element
                         .ident
@@ -1510,7 +1509,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         format!("{{{acc_snake_case}}}")
                     };
                     let jsonb_build_object_value_acc_format_handle = wrap_into_jsonb_build_object_value(&acc_format_handle);
-                    let null_snake_case = naming::NullSnakeCase;
                     (acc_format_handle.clone(), wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle))
                 };
                 quote::quote! {
