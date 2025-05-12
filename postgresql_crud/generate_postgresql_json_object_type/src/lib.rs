@@ -1850,7 +1850,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                         impl std::default::Default for #ident_select_upper_camel_case {
                             fn default() -> Self {
-                                #ident_select_upper_camel_case::WithInnerExplicitSelect(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                                Self::WithInnerExplicitSelect(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                             }
                         }
                     },
