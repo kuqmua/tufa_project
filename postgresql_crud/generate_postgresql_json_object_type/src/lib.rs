@@ -3988,14 +3988,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let generate_impl_ident_update_token_stream = |
-                is_standart_with_id: &IsStandartWithId,
+                ident_token_stream: &dyn quote::ToTokens,
                 update_query_part_content_token_stream: &dyn quote::ToTokens,
                 update_query_bind_content_token_stream: &dyn quote::ToTokens,
             |{
-                let ident_token_stream = match &is_standart_with_id {
-                    IsStandartWithId::False => &ident_update_upper_camel_case,
-                    IsStandartWithId::True => &ident_with_id_update_standart_not_null_upper_camel_case
-                };
                 quote::quote!{
                     impl #ident_token_stream {
                         fn #update_query_part_snake_case(
@@ -4018,7 +4014,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
 
             };
             let impl_ident_update_token_stream = generate_impl_ident_update_token_stream(
-                &IsStandartWithId::False,
+                &ident_update_upper_camel_case,
                 &match &postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_update_query_part_standart_not_null_content_token_stream(&IsStandartWithId::False),
@@ -4531,40 +4527,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     }
                 );
-                let impl_ident_with_id_update_element_token_stream = {
-                    quote::quote! {
-                        impl #ident_with_id_update_element_standart_not_null_upper_camel_case {
-                            //todo reuse
-                            fn update_query_part(
-                                &self,
-                                jsonb_set_accumulator: &std::primitive::str,
-                                jsonb_set_target: &std::primitive::str,
-                                jsonb_set_path: &std::primitive::str,
-                                increment: &mut std::primitive::u64
-                            ) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-                                let id_increment = match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        increment.to_string()
-                                    }
-                                    None => {
-                                        return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-                                    }
-                                };
-                                match self.fields.update_query_part(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
-                                    Ok(value) => Ok(format!("when {jsonb_set_target}->>'id' = ${id_increment} then {value} ")),
-                                    Err(error) => Err(error)
-                                }
+                let impl_ident_with_id_update_element_token_stream = generate_impl_ident_update_token_stream(
+                    &ident_with_id_update_element_standart_not_null_upper_camel_case,
+                    &quote::quote!{
+                        let id_increment = match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                increment.to_string()
                             }
-                            //todo reuse
-                            fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                                query = self.id.query_bind_as_postgresql_text(query);
-                                query = self.fields.update_query_bind(query);
-                                query
+                            None => {
+                                return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
                             }
+                        };
+                        match self.fields.#update_query_part_snake_case(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
+                            Ok(value) => Ok(format!("when {jsonb_set_target}->>'id' = ${id_increment} then {value} ")),
+                            Err(error) => Err(error)
                         }
-                    }
-                };
+                    },
+                    &quote::quote!{
+                        query = self.id.query_bind_as_postgresql_text(query);
+                        query = self.fields.#update_query_bind_snake_case(query);
+                        query
+                    },
+                );
                 quote::quote! {
                     #ident_with_id_update_element_token_stream
                     #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_token_stream
