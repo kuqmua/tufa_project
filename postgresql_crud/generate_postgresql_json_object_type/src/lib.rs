@@ -4179,31 +4179,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         let mut update_query_part_acc = std::string::String::default();
                                         #generate_jsonb_set_target_token_stream
                                         for element_handle in &self.#update_snake_case {
-                                            //todo maybe move into ident_with_id_update_element_upper_camel_case
-                                            let id_increment = match #increment_snake_case.checked_add(1) {
-                                                Some(value) => {
-                                                    *#increment_snake_case = value;
-                                                    #increment_snake_case.to_string()
-                                                }
-                                                None => {
-                                                    return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-                                                }
-                                            };
-                                            //here added
-                                            match element_handle.fields.update_query_part(
-                                                &"",
-                                                &"elem",
-                                                &"",
-                                                increment,
-                                            ) {
+                                            match element_handle.update_query_part(&"", &"elem", &"", increment) {
                                                 Ok(value) => {
-                                                    element_acc = value;
+                                                    update_query_part_acc.push_str(&value);
                                                 }
                                                 Err(error) => {
                                                     return Err(error);
                                                 }
                                             }
-                                            update_query_part_acc.push_str(&format!(#update_push_str_format_handle_token_stream));
+                                            
                                         }
                                         let _ = update_query_part_acc.pop();
                                         format!("case {update_query_part_acc} else elem end")
@@ -4390,12 +4374,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             });
                             quote::quote! {
                                 for element_handle in self.#update_snake_case {
-                                    //todo maybe move it into ident_with_id_update_element_upper_camel_case impl
-                                    #query_snake_case = #query_snake_case.bind(element_handle.#id_snake_case.into_inner().to_string());//here
-                                    #query_snake_case = element_handle.fields.update_query_bind(#query_snake_case);
+                                    #query_snake_case = element_handle.update_query_bind(#query_snake_case);
                                 }
                                 for element in self.delete {
-                                    #query_snake_case = #query_snake_case.bind(element.into_inner().to_string());//here
+                                    #query_snake_case = #query_snake_case.bind(element.into_inner().to_string());
                                 }
                                 for element in self.create {
                                     #query_snake_case = element.create_query_bind(#query_snake_case);
@@ -4552,6 +4534,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let impl_ident_with_id_update_element_token_stream = {
                     quote::quote! {
                         impl #ident_with_id_update_element_standart_not_null_upper_camel_case {
+                            //todo reuse
                             fn update_query_part(
                                 &self,
                                 jsonb_set_accumulator: &std::primitive::str,
@@ -4573,6 +4556,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Err(error) => Err(error)
                                 }
                             }
+                            //todo reuse
                             fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                 query = query.bind(self.id.into_inner().to_string());
                                 query = self.fields.update_query_bind(query);
