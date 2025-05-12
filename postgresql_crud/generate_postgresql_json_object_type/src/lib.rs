@@ -3258,13 +3258,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
         };
         let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
-        let ident_update_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_with_id_update_standart_not_null_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-        let ident_with_id_update_element_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_update_token_stream = {
             let ident_update_element_upper_camel_case: &dyn quote::ToTokens = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident);
             let ident_update_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_update_element_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
+            let ident_with_id_update_element_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream) = {
                 let generate_jsonb_set_target_snake_case = naming::GenerateJsonbSetTargetSnakeCase;
                 let generate_jsonb_set_target_token_stream = {
