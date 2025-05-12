@@ -530,7 +530,7 @@ pub fn generate_postgresql_json_type_token_stream(
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
-                no_need_to_wrap: #std_primitive_bool_token_stream,
+                is_postgresql_type: #std_primitive_bool_token_stream,
             ) -> #std_string_string_token_stream {
                 #select_query_part_token_stream
             }

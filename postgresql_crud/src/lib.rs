@@ -117,7 +117,7 @@ pub trait PostgresqlJsonType {
         column_name_and_maybe_field_getter: &std::primitive::str,
         //todo remove this coz its used properly now
         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-        no_need_to_wrap: std::primitive::bool,
+        is_postgresql_type: std::primitive::bool,
     ) -> std::string::String;
     type WhereElement: std::fmt::Debug
         + Clone

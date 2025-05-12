@@ -229,7 +229,7 @@ generate_postgresql_json_types::generate_postgresql_json_types!([
 //         query
 //     }
 //     type Select = VecOfVecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableArrayOfNotNullJsonbNumberSelect;
-//     fn select_query_part(value: &Self::Select, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, no_need_to_wrap: std::primitive::bool) -> std::string::String {
+//     fn select_query_part(value: &Self::Select, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
 //         let dimension1_start = value.dimension1_pagination.start();
 //         let dimension1_end = value.dimension1_pagination.end();
 //         let dimension2_start = value.dimension2_pagination.start();
