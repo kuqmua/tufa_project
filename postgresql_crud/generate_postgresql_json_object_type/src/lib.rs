@@ -3318,16 +3318,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 match &postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => 
-                        generate_ident_update_token_stream(
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_token_stream(
                             &ShouldDeriveSerdeDeserialize::True,
                             &{
                                 let content_token_stream = generate_ident_update_standart_not_null_content_token_stream(&IsStandartWithId::False);
                                 quote::quote!{(pub #content_token_stream);}
                             }
                         ),
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => 
-                        generate_ident_update_token_stream(
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(
                             &ShouldDeriveSerdeDeserialize::True,
                             &quote::quote!{(pub std::option::Option<#ident_update_standart_not_null_upper_camel_case>);},
                         ),
@@ -3335,9 +3333,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => 
-                        generate_ident_update_token_stream(
-                            &ShouldDeriveSerdeDeserialize::True,
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_ident_update_token_stream(
+                            &ShouldDeriveSerdeDeserialize::False,
                             &{
                                 let fields_token_stream = generate_create_update_delete_fields_token_stream(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True);
                                 quote::quote!{{#fields_token_stream}}
@@ -3643,10 +3640,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
                         let tuple_struct_ident_update_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("tuple struct {ident_update_upper_camel_case}"));
-                        let ident_update_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_update_token_stream);
+                        let ident_update_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_update_upper_camel_case);
                         let match_try_new_in_deserialize_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(&ident_update_upper_camel_case, &quote::quote! {__field0, __field1, __field2});
                         quote::quote! {
-                            impl<'de> serde::Deserialize<'de> for #ident_update_token_stream {
+                            impl<'de> serde::Deserialize<'de> for #ident_update_upper_camel_case {
                                 fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
                                 where
                                     __D: serde::Deserializer<'de>,
@@ -4563,7 +4560,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #ident_update_token_stream
                 #maybe_ident_update_try_new_error_named_token_stream
                 #maybe_impl_try_new_for_ident_update_token_stream
-                // #maybe_impl_serde_deserialize_for_ident_update_token_stream
+                #maybe_impl_serde_deserialize_for_ident_update_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
                 #impl_ident_update_token_stream
                 #maybe_ident_with_id_update_token_stream
