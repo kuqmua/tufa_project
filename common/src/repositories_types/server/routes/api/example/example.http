@@ -600,12 +600,12 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                   "fields": [
                     {
                       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                        "value": 55
+                        "value": 22
                       }
                     },
                     {
                       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-                        "value": 77
+                        "value": 22
                       }
                     }
                   ]
