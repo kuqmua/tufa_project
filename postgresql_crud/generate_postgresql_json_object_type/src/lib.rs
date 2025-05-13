@@ -3564,45 +3564,33 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #delete_snake_case: std::vec::Vec<#postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream>,
                 }
             };
-            enum ShouldDeriveSerdeDeserialize {
-                True,
-                False
-            }
-            let generate_ident_update_token_stream = |
-                ident_token_stream: &dyn quote::ToTokens,
-                should_derive_default: &ShouldDeriveDefault,
-                should_derive_serde_deserialize: &ShouldDeriveSerdeDeserialize,
-                content_token_stream: &dyn quote::ToTokens
-            |{
-                let maybe_should_derive_default_token_stream = match &should_derive_default {
-                    ShouldDeriveDefault::True => quote::quote!{Default,},
-                    ShouldDeriveDefault::False => proc_macro2::TokenStream::new()
-                };
-                let maybe_derive_serde_deserialize_token_stream = match &should_derive_serde_deserialize {
-                    ShouldDeriveSerdeDeserialize::True => quote::quote!{serde::Deserialize,},
-                    ShouldDeriveSerdeDeserialize::False => proc_macro2::TokenStream::new()
-                };
-                quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, #maybe_should_derive_default_token_stream serde::Serialize, #maybe_derive_serde_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
-                    pub struct #ident_token_stream #content_token_stream
-                }
-            };
+
             let ident_update_token_stream = {
-                let generate_ident_update_wrapper_token_stream = |
+                enum ShouldDeriveSerdeDeserialize {
+                    True,
+                    False
+                }
+                let generate_ident_update_token_stream = |
                     should_derive_default: &ShouldDeriveDefault,
                     should_derive_serde_deserialize: &ShouldDeriveSerdeDeserialize,
                     content_token_stream: &dyn quote::ToTokens
                 |{
-                    generate_ident_update_token_stream(
-                        &ident_update_upper_camel_case,
-                        should_derive_default,
-                        should_derive_serde_deserialize,
-                        content_token_stream
-                    )
+                    let maybe_should_derive_default_token_stream = match &should_derive_default {
+                        ShouldDeriveDefault::True => quote::quote!{Default,},
+                        ShouldDeriveDefault::False => proc_macro2::TokenStream::new()
+                    };
+                    let maybe_derive_serde_deserialize_token_stream = match &should_derive_serde_deserialize {
+                        ShouldDeriveSerdeDeserialize::True => quote::quote!{serde::Deserialize,},
+                        ShouldDeriveSerdeDeserialize::False => proc_macro2::TokenStream::new()
+                    };
+                    quote::quote! {
+                        #[derive(Debug, Clone, PartialEq, #maybe_should_derive_default_token_stream serde::Serialize, #maybe_derive_serde_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
+                        pub struct #ident_update_upper_camel_case #content_token_stream
+                    }
                 };
                 match &postgresql_json_type_pattern {
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_wrapper_token_stream(
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_token_stream(
                             &ShouldDeriveDefault::True,
                             &ShouldDeriveSerdeDeserialize::True,
                             &{
@@ -3610,7 +3598,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote!{(pub #content_token_stream);}
                             }
                         ),
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_wrapper_token_stream(
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(
                             &ShouldDeriveDefault::False,
                             &ShouldDeriveSerdeDeserialize::True,
                             &quote::quote!{(pub std::option::Option<#ident_update_standart_not_null_upper_camel_case>);},
@@ -3619,7 +3607,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable,
                     } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_ident_update_wrapper_token_stream(
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_ident_update_token_stream(
                             &ShouldDeriveDefault::True,
                             &ShouldDeriveSerdeDeserialize::False,
                             &{
@@ -3627,7 +3615,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote!{{#fields_token_stream}}
                             },
                         ),
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_ident_update_wrapper_token_stream(
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_ident_update_token_stream(
                             &ShouldDeriveDefault::True,
                             &ShouldDeriveSerdeDeserialize::False,
                             &{
