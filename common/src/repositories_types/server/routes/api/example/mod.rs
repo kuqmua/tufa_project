@@ -474,7 +474,13 @@ pub struct Doggie {
 //     }
 // }
 
-pub type OptionDoggieWithIdAsNullableJsonbObjectWithIdWhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<DoggieWithIdAsNotNullJsonbObjectWithIdWhereElement>;
+// pub type OptionDoggieWithIdAsNullableJsonbObjectWithIdWhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<DoggieWithIdAsNotNullJsonbObjectWithIdWhereElement>;
+
+
+
+
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdRead(postgresql_crud::Value<std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdRead>>);
 impl std::default::Default for OptionDoggieWithIdAsNullableJsonbObjectWithIdRead {

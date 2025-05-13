@@ -2138,6 +2138,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         };
         let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
         let ident_with_id_where_element_standart_not_null_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+        let ident_with_id_where_element_standart_nullable_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident_with_id_standart_nullable_upper_camel_case);
         let ident_where_element_token_stream = {
             use postgresql_crud_macros_common::NotNullOrNullable;
             let generate_ident_where_element_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
@@ -2565,40 +2566,32 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
                 }
             };
-            let maybe_ident_with_id_where_element_token_stream = match &postgresql_json_type_pattern {
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                        let ident_with_id_where_element_token_stream =  generate_ident_where_element_token_stream(
-                            &ident_with_id_where_element_standart_not_null_upper_camel_case,
-                            &generate_ident_where_element_content_token_stream(&IsStandartWithId::True)
-                        );
-                        let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_token_stream = generate_impl_postgresql_type_where_filter_token_stream(
-                            &ident_with_id_where_element_standart_not_null_upper_camel_case,
-                            &generate_where_filter_query_part_content_standart_not_null_token_stream(&IsStandartWithId::True),
-                            &generate_where_filter_query_bind_content_standart_not_null_token_stream(&IsStandartWithId::True),
-                        );
-                        let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
-                            &ident_with_id_where_element_standart_not_null_upper_camel_case
-                        );
-                        let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_where_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                            &ident_with_id_where_element_standart_not_null_upper_camel_case,
-                            &generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_content_standart_not_null_where_element(&IsStandartWithId::True)
-                        );
-                        quote::quote! {
-                            #ident_with_id_where_element_token_stream
-                            #impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_token_stream
-                            #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_token_stream
-                            #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_where_element_token_stream
-                        }
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                        pub type #ident_with_id_where_element_standart_not_null_upper_camel_case = quote::quote!{postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::WhereElement>};
-                    },
-                },
-                postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {..}
-                | postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {..}
-                | postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension3 {..}
-                | postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension4 {..} => proc_macro2::TokenStream::new(),
+            let maybe_ident_with_id_where_element_token_stream = if is_standart_not_null {
+                let ident_with_id_where_element_token_stream =  generate_ident_where_element_token_stream(
+                    &ident_with_id_where_element_standart_not_null_upper_camel_case,
+                    &generate_ident_where_element_content_token_stream(&IsStandartWithId::True)
+                );
+                let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_token_stream = generate_impl_postgresql_type_where_filter_token_stream(
+                    &ident_with_id_where_element_standart_not_null_upper_camel_case,
+                    &generate_where_filter_query_part_content_standart_not_null_token_stream(&IsStandartWithId::True),
+                    &generate_where_filter_query_bind_content_standart_not_null_token_stream(&IsStandartWithId::True),
+                );
+                let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
+                    &ident_with_id_where_element_standart_not_null_upper_camel_case
+                );
+                let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_where_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    &ident_with_id_where_element_standart_not_null_upper_camel_case,
+                    &generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_content_standart_not_null_where_element(&IsStandartWithId::True)
+                );
+                quote::quote! {
+                    #ident_with_id_where_element_token_stream
+                    #impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_token_stream
+                    #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_token_stream
+                    #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_where_element_token_stream
+                }
+            }
+            else {
+                proc_macro2::TokenStream::new()
             };
             let typical_token_stream = quote::quote! {
                 #maybe_ident_where_element_token_stream
@@ -2613,6 +2606,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                         quote::quote!{
                             pub type #ident_where_element_upper_camel_case = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::WhereElement>;
+                            pub type #ident_with_id_where_element_standart_nullable_upper_camel_case = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<#ident_with_id_where_element_standart_not_null_upper_camel_case>;
                         }
                     },
                 },
