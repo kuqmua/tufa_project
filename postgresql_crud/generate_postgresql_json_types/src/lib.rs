@@ -93,7 +93,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         fn all() -> std::vec::Vec<Self> {
             PostgresqlJsonType::into_array().into_iter().fold(vec![], |mut acc, postgresql_json_type| {
                 postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable| {
-                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::all_variants().into_iter().for_each(|postgresql_json_type_pattern| {
+                    postgresql_crud_macros_common::PostgresqlJsonTypePattern::all().into_iter().for_each(|postgresql_json_type_pattern| {
                         acc.push(PostgresqlJsonTypeRecord {
                             postgresql_json_type: postgresql_json_type.clone(),
                             not_null_or_nullable: not_null_or_nullable.clone(),

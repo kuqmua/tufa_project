@@ -68,7 +68,7 @@ pub enum PostgresqlJsonTypePattern {
     },
 }
 impl PostgresqlJsonTypePattern {
-    pub fn all_variants() -> std::vec::Vec<Self> {
+    pub fn all() -> std::vec::Vec<Self> {
         Self::into_array().into_iter().fold(vec![], |mut acc, postgresql_json_type_pattern| {
             match &postgresql_json_type_pattern {
                 Self::Standart => {
