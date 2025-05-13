@@ -354,6 +354,7 @@ pub struct Animal {
     pub doggie_as_not_null_jsonb_object: DoggieAsNotNullJsonbObject,
     pub option_doggie_as_nullable_jsonb_object: OptionDoggieAsNullableJsonbObject,
     pub vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    
 }
 ///////////////////////////////////////////////////
 #[cfg(test)]
@@ -379,8 +380,8 @@ pub struct Doggie {
     pub column_f85f2f57_f85b_4126_be0f_cb5830f0475d: postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber,
 }
 ////////////////////////////
-#[derive(Debug)]
-pub struct OptionDoggieWithIdAsNullableJsonbObjectWithId;
+// #[derive(Debug)]
+// pub struct OptionDoggieWithIdAsNullableJsonbObjectWithId;
 #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration(pub std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdTableTypeDeclaration>);
 impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration {

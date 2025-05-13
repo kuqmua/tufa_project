@@ -335,6 +335,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             &postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
             &IsStandartWithId::True,
         );
+        let ident_with_id_standart_nullable_upper_camel_case = generate_ident_token_stream(
+            &postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+            &postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
+            &IsStandartWithId::True,
+        );
         let is_standart = if let postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart = &postgresql_json_type_pattern {
             true
         }
@@ -356,8 +361,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let ident_token_stream = generate_ident_token_stream(&ident);
-            let maybe_ident_with_id_token_stream = if is_standart_not_null {
-                generate_ident_token_stream(&ident_with_id_standart_not_null_upper_camel_case)
+            let maybe_ident_with_id_token_stream = if is_standart {
+                generate_ident_token_stream(&match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_with_id_standart_not_null_upper_camel_case,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_with_id_standart_nullable_upper_camel_case,
+                })
             }
             else {
                 proc_macro2::TokenStream::new()
