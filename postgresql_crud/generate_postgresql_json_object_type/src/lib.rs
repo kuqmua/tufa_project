@@ -695,7 +695,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream(
                 &ident_table_type_declaration_upper_camel_case
             );
-            let maybe_ident_with_id_standart_table_type_declaration_not_null_or_nullable_token_stream = if is_standart {
+            let maybe_ident_with_id_table_type_declaration_standart_not_null_or_nullable_token_stream = if is_standart {
                 let ident_with_id_table_type_declaration_standart_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_with_id_table_type_declaration_standart_nullable_upper_camel_case,
@@ -737,11 +737,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #ident_table_type_declaration_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream
                 #impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream
-                #maybe_ident_with_id_standart_table_type_declaration_not_null_or_nullable_token_stream
+                #maybe_ident_with_id_table_type_declaration_standart_not_null_or_nullable_token_stream
             }
         };
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
         let ident_with_id_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+        let ident_with_id_create_standart_nullable_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_with_id_standart_nullable_upper_camel_case);
         let ident_create_token_stream = {
             let ident_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let generate_impl_std_fmt_display_for_ident_create_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
@@ -818,14 +819,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let generate_create_query_part_and_create_query_bind_token_stream = |
-                is_standart_with_id: &IsStandartWithId,
+                ident_token_stream: &dyn quote::ToTokens,
                 create_query_part_content_token_stream: &dyn quote::ToTokens,
                 create_query_bind_content_token_stream: &dyn quote::ToTokens,
             |{
-                let ident_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
-                    IsStandartWithId::False => &ident_create_upper_camel_case,
-                    IsStandartWithId::True => &ident_with_id_create_standart_not_null_upper_camel_case
-                };
                 quote::quote!{
                     impl #ident_token_stream {
                         fn #create_query_part_snake_case(
@@ -844,7 +841,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let impl_ident_create_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
-                &IsStandartWithId::False,
+                &ident_create_upper_camel_case,
                 &{
                     match &postgresql_json_type_pattern {
                         postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
@@ -860,7 +857,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             *increment = value;
                                             Ok(format!("${increment}"))
                                         },
-                                        None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd {
+                                        None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd {//todo reuse
                                             code_occurence: error_occurence_lib::code_occurence!()
                                         }),
                                     }
@@ -1226,35 +1223,77 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     // },
                 }
             );
-            let maybe_ident_with_id_standart_not_null_create_token_stream = if is_standart_not_null {
-                let ident_with_id_create_standart_not_null_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
-                    &ident_with_id_create_standart_not_null_upper_camel_case,
-                    &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
-                        &IsStandartWithId::False,
-                        &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create,
-                    )
+            let maybe_ident_with_id_create_standart_not_null_token_stream = if is_standart {
+                let ident_with_id_create_standart_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_with_id_create_standart_not_null_upper_camel_case,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_with_id_create_standart_nullable_upper_camel_case,
+                };
+                let ident_with_id_create_standart_not_null_or_nullable_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
+                    &ident_with_id_create_standart_not_null_or_nullable_upper_camel_case,
+                    &match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
+                            &IsStandartWithId::False,
+                            &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create,
+                        ),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                            (pub std::option::Option<#ident_with_id_create_standart_not_null_upper_camel_case>);
+                        },
+                    }
+                    
                 );
-                let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(
-                    &ident_with_id_create_standart_not_null_upper_camel_case
+                let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_or_nullable_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(
+                    &ident_with_id_create_standart_not_null_or_nullable_upper_camel_case
                 );
-                let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
-                    &ident_with_id_create_standart_not_null_upper_camel_case
+                let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_or_nullable_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
+                    &ident_with_id_create_standart_not_null_or_nullable_upper_camel_case
                 );
-                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
-                    &ident_with_id_create_standart_not_null_upper_camel_case,
-                    &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream
+                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_or_nullable_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
+                    &ident_with_id_create_standart_not_null_or_nullable_upper_camel_case,
+                    &match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream},
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                            (Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))
+                        },
+                    }
                 );
-                let impl_ident_with_id_create_standart_not_null_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
-                    &IsStandartWithId::True,
-                    &generate_standart_not_null_create_query_part_content_token_stream(IsStandartWithId::True),
-                    &standart_not_null_create_query_bind_content_token_stream
+                let impl_ident_with_id_create_standart_not_null_or_nullable_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
+                    &ident_with_id_create_standart_not_null_or_nullable_upper_camel_case,
+                    &match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_standart_not_null_create_query_part_content_token_stream(IsStandartWithId::True),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                            match &self.0 {
+                                Some(value) => match <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::create_query_part(value, increment) {
+                                    Ok(value) => Ok(value),
+                                    Err(error) => Err(error)
+                                },
+                                None => match increment.checked_add(1) {
+                                    Some(value) => {
+                                        *increment = value;
+                                        Ok(format!("${increment}"))
+                                    },
+                                    None => Err(postgresql_crud::QueryPartErrorNamed::#checked_add_upper_camel_case {//todo reuse
+                                        code_occurence: error_occurence_lib::code_occurence!()
+                                    }),
+                                }
+                            }
+                        },
+                    },
+                    &match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#standart_not_null_create_query_bind_content_token_stream},
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                            match self.0 {
+                                Some(value) => value.create_query_bind(query),
+                                None => query.bind(sqlx::types::Json(None::<std::option::Option<#ident_with_id_create_standart_not_null_upper_camel_case>>))
+                            }
+                        },
+                    },
                 );
                 quote::quote! {
-                    #ident_with_id_create_standart_not_null_token_stream
-                    #impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream
-                    #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream
-                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream
-                    #impl_ident_with_id_create_standart_not_null_token_stream
+                    #ident_with_id_create_standart_not_null_or_nullable_token_stream
+                    #impl_std_fmt_display_for_ident_with_id_create_standart_not_null_or_nullable_token_stream
+                    #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_or_nullable_token_stream
+                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_or_nullable_token_stream
+                    #impl_ident_with_id_create_standart_not_null_or_nullable_token_stream
                 }
             }
             else {
@@ -1266,7 +1305,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_error_occurence_lib_to_std_string_string_for_ident_create_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream
                 #impl_ident_create_token_stream
-                #maybe_ident_with_id_standart_not_null_create_token_stream
+                #maybe_ident_with_id_create_standart_not_null_token_stream
             }
         };
         let create_query_part_token_stream = quote::quote!{#value_snake_case.#create_query_part_snake_case(#increment_snake_case)};
@@ -5363,7 +5402,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 increment.to_string()
                             }
                             None => {
-                                return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });//todo reuse
                             }
                         };
                         match self.fields.#update_query_part_snake_case(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
