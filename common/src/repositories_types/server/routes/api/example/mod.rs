@@ -382,21 +382,21 @@ pub struct Doggie {
 ////////////////////////////
 // #[derive(Debug)]
 // pub struct OptionDoggieWithIdAsNullableJsonbObjectWithId;
-#[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration(pub std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdTableTypeDeclaration>);
-impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
-    }
-}
-impl OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration {
-    pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
-        format!(
-            "{column} jsonb not null check (jsonb_matches_schema('{}', {column}))",
-            serde_json::to_string(&schemars::schema_for!(OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration)).unwrap()
-        )
-    }
-}
+// #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration(pub std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdTableTypeDeclaration>);
+// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration {
+//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+//         Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+//     }
+// }
+// impl OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration {
+//     pub fn create_table_column_query_part(column: &dyn std::fmt::Display, is_primary_key: std::primitive::bool) -> impl std::fmt::Display {
+//         format!(
+//             "{column} jsonb not null check (jsonb_matches_schema('{}', {column}))",
+//             serde_json::to_string(&schemars::schema_for!(OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration)).unwrap()
+//         )
+//     }
+// }
 #[derive(Debug, Clone, PartialEq, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdCreate(pub std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdCreate>);
 impl std::fmt::Display for OptionDoggieWithIdAsNullableJsonbObjectWithIdCreate {
