@@ -3542,8 +3542,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     PostgresqlJsonObjectTypePattern::Standart,
         //     // PostgresqlJsonObjectTypePattern::Array,
@@ -3556,19 +3556,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     &postgresql_json_object_type_pattern,
         //     &trait_gen,
         // ) {
-        //     // use postgresql_crud_macros_common::NotNullOrNullable;
-        //     // let d1 = match &dimension1_not_null_or_nullable {
-        //     //     NotNullOrNullable::NotNull => false,
-        //     //     NotNullOrNullable::Nullable => true,
-        //     // };
-        //     // if d1 {
-        //         if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
-        //             macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-        //                 "GeneratePostgresqlJsonObjectType",
-        //                 &generated,
-        //             );
-        //         }
-        //     // }
+        //     if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
+        //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //             "GeneratePostgresqlJsonObjectType",
+        //             &generated,
+        //         );
+        //     }
         // }
         generated.to_string()
     })
