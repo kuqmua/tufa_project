@@ -5651,24 +5651,43 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 ),
             }
         };
-        let maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_token_stream = if is_standart_not_null {
-            postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
-                &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
-                &ident_with_id_standart_not_null_upper_camel_case,
-                &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
-                &ident_with_id_create_standart_not_null_upper_camel_case,
-                &create_query_part_token_stream,
-                &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
-                &create_query_bind_token_stream,
-                &ident_with_id_select_standart_not_null_upper_camel_case,
-                &ident_with_id_read_standart_not_null_upper_camel_case,
-                &select_query_part_token_stream,
-                &ident_with_id_where_element_standart_not_null_upper_camel_case,
-                &ident_with_id_update_standart_not_null_upper_camel_case,
-                &update_query_part_token_stream,
-                &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
-                &update_query_bind_token_stream,
-            )
+        let maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_or_nullable_token_stream = if is_standart {
+            match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
+                    &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                    &ident_with_id_standart_not_null_upper_camel_case,
+                    &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
+                    &ident_with_id_create_standart_not_null_upper_camel_case,
+                    &create_query_part_token_stream,
+                    &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
+                    &create_query_bind_token_stream,
+                    &ident_with_id_select_standart_not_null_upper_camel_case,
+                    &ident_with_id_read_standart_not_null_upper_camel_case,
+                    &select_query_part_token_stream,
+                    &ident_with_id_where_element_standart_not_null_upper_camel_case,
+                    &ident_with_id_update_standart_not_null_upper_camel_case,
+                    &update_query_part_token_stream,
+                    &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
+                    &update_query_bind_token_stream,
+                ),
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
+                    &postgresql_crud_macros_common::ImportPath::PostgresqlCrud,
+                    &ident_with_id_standart_nullable_upper_camel_case,
+                    &ident_with_id_table_type_declaration_standart_nullable_upper_camel_case,
+                    &ident_with_id_create_standart_nullable_upper_camel_case,
+                    &create_query_part_token_stream,
+                    &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
+                    &create_query_bind_token_stream,
+                    &ident_with_id_select_standart_nullable_upper_camel_case,
+                    &ident_with_id_read_standart_nullable_upper_camel_case,
+                    &select_query_part_token_stream,
+                    &ident_with_id_where_element_standart_nullable_upper_camel_case,
+                    &ident_with_id_update_standart_nullable_upper_camel_case,
+                    &update_query_part_token_stream,
+                    &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
+                    &update_query_bind_token_stream,
+                ),
+            }
         }
         else {
             proc_macro2::TokenStream::new()
@@ -5683,7 +5702,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #ident_update_token_stream
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
-            #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_token_stream
+            #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_or_nullable_token_stream
         };
         // if let (
         //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
