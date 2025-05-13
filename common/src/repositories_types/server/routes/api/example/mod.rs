@@ -475,44 +475,42 @@ pub struct Doggie {
 // }
 
 // pub type OptionDoggieWithIdAsNullableJsonbObjectWithIdWhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<DoggieWithIdAsNotNullJsonbObjectWithIdWhereElement>;
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdRead(postgresql_crud::Value<std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdRead>>);
+// impl std::default::Default for OptionDoggieWithIdAsNullableJsonbObjectWithIdRead {
+//     fn default() -> Self {
+//         Self(postgresql_crud::Value {
+//             value: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+//         })
+//     }
+// }
+// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionDoggieWithIdAsNullableJsonbObjectWithIdRead {
+//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+//         Self(postgresql_crud::Value {
+//             value: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+//         })
+//     }
+// }
+// impl sqlx::Type<sqlx::Postgres> for OptionDoggieWithIdAsNullableJsonbObjectWithIdRead {
+//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+//         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
+//     }
+//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+//         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+//     }
+// }
+// impl sqlx::Decode<'_, sqlx::Postgres> for OptionDoggieWithIdAsNullableJsonbObjectWithIdRead {
+//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+//         match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+//             Ok(value) => Ok(value.0),
+//             Err(error) => Err(error),
+//         }
+//     }
+// }
 
 
 
 
-
-
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdRead(postgresql_crud::Value<std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdRead>>);
-impl std::default::Default for OptionDoggieWithIdAsNullableJsonbObjectWithIdRead {
-    fn default() -> Self {
-        Self(postgresql_crud::Value {
-            value: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-        })
-    }
-}
-impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionDoggieWithIdAsNullableJsonbObjectWithIdRead {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(postgresql_crud::Value {
-            value: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-        })
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for OptionDoggieWithIdAsNullableJsonbObjectWithIdRead {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for OptionDoggieWithIdAsNullableJsonbObjectWithIdRead {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(value.0),
-            Err(error) => Err(error),
-        }
-    }
-}
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate(pub std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdUpdate>);
 impl std::default::Default for OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate {

@@ -2627,6 +2627,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         }
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_with_id_read_standart_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+        let ident_with_id_read_standart_nullable_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_nullable_upper_camel_case);
         let ident_read_token_stream = {
             let ident_read_standart_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_try_from_error_named_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
@@ -3585,35 +3586,80 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_read_upper_camel_case);
             let impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(&ident_read_upper_camel_case);
-            let maybe_ident_with_id_read_token_stream = if is_standart_not_null {
-                let ident_with_id_read_token_stream = generate_ident_read_token_stream(
-                    &ident_with_id_read_standart_not_null_upper_camel_case,
-                    &{
-                        let content_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
-                            &IsStandartWithId::True,
-                            &ShouldAddSerdeOptionIsNoneAnnotation::True
-                        );
-                        quote::quote!{{#content_token_stream}}
+            let maybe_ident_with_id_read_token_stream = if is_standart {
+                let ident_with_id_read_standart_not_null_or_nullable_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &ident_with_id_read_standart_not_null_upper_camel_case,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &ident_with_id_read_standart_nullable_upper_camel_case,
+                };
+                let ident_with_id_read_standart_not_null_or_nullable_token_stream = generate_ident_read_token_stream(
+                    &ident_with_id_read_standart_not_null_or_nullable_upper_camel_case,
+                    &match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            let content_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
+                                &IsStandartWithId::True,
+                                &ShouldAddSerdeOptionIsNoneAnnotation::True
+                            );
+                            quote::quote!{{#content_token_stream}}
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{(postgresql_crud::Value<std::option::Option<#ident_with_id_read_standart_not_null_upper_camel_case>>);},//todo maybe wrap into Value<> must be in the parent type
                     },
-                    &ShouldDeriveDefault::True,
-                    &ShouldDeriveSerdeDeserialize::False,
+                    &match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => ShouldDeriveDefault::True,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => ShouldDeriveDefault::False,
+                    },
+                    &match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => ShouldDeriveSerdeDeserialize::False,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => ShouldDeriveSerdeDeserialize::True,
+                    }
                 );
-                let ident_with_id_read_try_from_error_named_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case);
-                let impl_try_new_for_ident_with_id_read_try_from_error_named_token_stream = generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&IsStandartWithId::True);
-                let impl_serde_deserialize_for_ident_with_id_read_token_stream = generate_impl_serde_deserialize_for_ident_read_token_stream(&IsStandartWithId::True);
-                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_read_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_token_stream(&IsStandartWithId::True);
-                let impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_with_id_read_standart_not_null_upper_camel_case);
-                let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
-                    &ident_with_id_read_standart_not_null_upper_camel_case
+                let maybe_ident_with_id_read_try_from_error_named_standart_not_null_token_stream = match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_try_from_error_named_token_stream(&ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                };
+                let maybe_impl_try_new_for_ident_with_id_read_try_from_error_named_standart_not_null_token_stream = match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&IsStandartWithId::True),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                };
+                let maybe_impl_serde_deserialize_for_ident_with_id_read_standart_not_null_token_stream = match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_serde_deserialize_for_ident_read_token_stream(&IsStandartWithId::True),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                };
+                let maybe_impl_std_default_default_for_ident_with_id_read_nullable_token_stream = match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_std_default_default_token_stream::generate_std_default_default_token_stream(
+                        &ident_with_id_read_standart_nullable_upper_camel_case,
+                        &quote::quote!{
+                            Self(postgresql_crud::Value {
+                                value: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                            })
+                        }
+                    ),
+                };
+                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_read_standart_not_null_or_nullable_token_stream = match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_token_stream(&IsStandartWithId::True),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                        &ident_with_id_read_standart_nullable_upper_camel_case,
+                        &proc_macro2::TokenStream::new(),
+                        &quote::quote! {
+                            Self(postgresql_crud::Value {
+                                value: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                            })
+                        },
+                    ),
+                };
+                let impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_standart_not_null_or_nullable_token_stream = generate_sqlx_types_json_type_declaration_wrapper_token_stream(&ident_with_id_read_standart_not_null_or_nullable_upper_camel_case);
+                let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_standart_not_null_or_nullable_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(
+                    &ident_with_id_read_standart_not_null_or_nullable_upper_camel_case
                 );
                 quote::quote! {
-                    #ident_with_id_read_token_stream
-                    #ident_with_id_read_try_from_error_named_token_stream
-                    #impl_try_new_for_ident_with_id_read_try_from_error_named_token_stream
-                    #impl_serde_deserialize_for_ident_with_id_read_token_stream
-                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_read_token_stream
-                    #impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_token_stream
-                    #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_token_stream
+                    #ident_with_id_read_standart_not_null_or_nullable_token_stream
+                    #maybe_ident_with_id_read_try_from_error_named_standart_not_null_token_stream
+                    #maybe_impl_try_new_for_ident_with_id_read_try_from_error_named_standart_not_null_token_stream
+                    #maybe_impl_serde_deserialize_for_ident_with_id_read_standart_not_null_token_stream
+                    #maybe_impl_std_default_default_for_ident_with_id_read_nullable_token_stream
+                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_read_standart_not_null_or_nullable_token_stream
+                    #impl_sqlx_type_sqlx_postgres_for_ident_with_id_read_standart_not_null_or_nullable_token_stream
+                    #impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_standart_not_null_or_nullable_token_stream
                 }
             }
             else {
