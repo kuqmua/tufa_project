@@ -36,7 +36,29 @@ POST http://127.0.0.1:8080/example/create_many HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
-
+[
+  {
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
+    "animal_as_not_null_jsonb_object": {
+      "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+      "column_1495baea_b926_4e20_a223_5b7a1f06c211": 0,
+      "doggie_as_not_null_jsonb_object": {
+        "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+        "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+      },
+      "option_doggie_as_nullable_jsonb_object": {
+        "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+        "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+      },
+      "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": [
+        {
+          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+          "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+        }
+      ]
+    }
+  }
+]
 
 ###
  
@@ -64,7 +86,353 @@ POST http://127.0.0.1:8080/example/read_many HTTP/1.1
 content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
-
+{
+  # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  "animal_as_not_null_jsonb_object": {
+    "logical_operator": "Or",
+    "value": [
+      # {
+      #   "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "Column1495BaeaB9264E20A2235B7A1F06C211": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "DoggieAsNotNullJsonbObject": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             {
+      #               "Equal": {
+      #                 "logical_operator": "Or",
+      #                 "value": 0
+      #               }
+      #             },
+      #             {
+      #               "GreaterThan": {
+      #                 "logical_operator": "Or",
+      #                 "value": 0
+      #               }
+      #             },
+      #             {
+      #               "Between": {
+      #                 "logical_operator": "Or",
+      #                 "start": 0,
+      #                 "end": 0
+      #               }
+      #             },
+      #             {
+      #               "In": {
+      #                 "logical_operator": "Or",
+      #                 "value": [
+      #                   0
+      #                 ]
+      #               }
+      #             }
+      #           ]
+      #         }
+      #       },
+      #       {
+      #         "ColumnF85F2F57F85B4126Be0FCb5830F0475D": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             {
+      #               "Equal": {
+      #                 "logical_operator": "Or",
+      #                 "value": 0
+      #               }
+      #             },
+      #             {
+      #               "GreaterThan": {
+      #                 "logical_operator": "Or",
+      #                 "value": 0
+      #               }
+      #             },
+      #             {
+      #               "Between": {
+      #                 "logical_operator": "Or",
+      #                 "start": 0,
+      #                 "end": 0
+      #               }
+      #             },
+      #             {
+      #               "In": {
+      #                 "logical_operator": "Or",
+      #                 "value": [
+      #                   0
+      #                 ]
+      #               }
+      #             }
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "OptionDoggieAsNullableJsonbObject": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Object": [
+      #           {
+      #             "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
+      #               "logical_operator": "Or",
+      #               "value": [
+      #                 {
+      #                   "Equal": {
+      #                     "logical_operator": "Or",
+      #                     "value": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "GreaterThan": {
+      #                     "logical_operator": "Or",
+      #                     "value": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "Between": {
+      #                     "logical_operator": "Or",
+      #                     "start": 0,
+      #                     "end": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "In": {
+      #                     "logical_operator": "Or",
+      #                     "value": [
+      #                       0
+      #                     ]
+      #                   }
+      #                 }
+      #               ]
+      #             }
+      #           },
+      #           {
+      #             "ColumnF85F2F57F85B4126Be0FCb5830F0475D": {
+      #               "logical_operator": "Or",
+      #               "value": [
+      #                 {
+      #                   "Equal": {
+      #                     "logical_operator": "Or",
+      #                     "value": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "GreaterThan": {
+      #                     "logical_operator": "Or",
+      #                     "value": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "Between": {
+      #                     "logical_operator": "Or",
+      #                     "start": 0,
+      #                     "end": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "In": {
+      #                     "logical_operator": "Or",
+      #                     "value": [
+      #                       0
+      #                     ]
+      #                   }
+      #                 }
+      #               ]
+      #             }
+      #           }
+      #         ]
+      #       },
+      #       "Null"
+      #     ]
+      #   }
+      # },
+      {
+        "VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": [
+                  {
+                    "id": "364e4309-95e5-4ebd-9898-c85f11ee043e",
+                    "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+                    "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "select": [
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
+    {
+      "animal_as_not_null_jsonb_object": [
+        {
+          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+        },
+        {
+          "column_1495baea_b926_4e20_a223_5b7a1f06c211": null
+        },
+        {
+          "doggie_as_not_null_jsonb_object": [
+            {
+              "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+            },
+            {
+              "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
+            }
+          ]
+        },
+        {
+          "option_doggie_as_nullable_jsonb_object": {
+            "WithInnerExplicitSelect": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
+              }
+            ]
+          }
+        },
+        {
+          "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
+            "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
+              {
+                "id": null
+              },
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": null
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": null
+              }
+            ],
+            "dimension1_pagination": {
+              "limit": 3,
+              "offset": 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "order_by": {
+    "column": {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
+    "order": "asc"
+  },
+  "pagination": {
+    "limit": 3,
+    "offset": 0
+  }
+}
 
 ###
 
@@ -92,7 +460,89 @@ PATCH http://127.0.0.1:8080/example/update_many HTTP/1.1
 content-type: application/json
 commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
-
+[
+  {
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
+    "animal_as_not_null_jsonb_object": {
+      "value": [
+        {
+          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+            "value": 0
+          }
+        },
+        {
+          "column_1495baea_b926_4e20_a223_5b7a1f06c211": {
+            "value": 0
+          }
+        },
+        {
+          "doggie_as_not_null_jsonb_object": {
+            "value": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                  "value": 0
+                }
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "option_doggie_as_nullable_jsonb_object": {
+            "value": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                  "value": 0
+                }
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
+            "value": {
+              "create": [
+                # {
+                #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+                #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+                # }
+              ],
+              "update": [
+                # {
+                #   "id": "364e4309-95e5-4ebd-9898-c85f11ee043e",
+                #   "fields": [
+                #     {
+                #       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                #         "value": 10
+                #       }
+                #     },
+                #     {
+                #       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                #         "value": 10
+                #       }
+                #     }
+                #   ]
+                # }
+              ],
+              "delete": [
+                "c6ed70ae-b75a-4940-b6bc-22270d18fea1"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  }
+]
 
 ###
 
@@ -120,7 +570,287 @@ DELETE http://127.0.0.1:8080/example/delete_many HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
-
+{
+  # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  "animal_as_not_null_jsonb_object": {
+    "logical_operator": "Or",
+    "value": [
+      # {
+      #   "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "Column1495BaeaB9264E20A2235B7A1F06C211": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "GreaterThan": {
+      #           "logical_operator": "Or",
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "Between": {
+      #           "logical_operator": "Or",
+      #           "start": 0,
+      #           "end": 0
+      #         }
+      #       },
+      #       {
+      #         "In": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "DoggieAsNotNullJsonbObject": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             {
+      #               "Equal": {
+      #                 "logical_operator": "Or",
+      #                 "value": 0
+      #               }
+      #             },
+      #             {
+      #               "GreaterThan": {
+      #                 "logical_operator": "Or",
+      #                 "value": 0
+      #               }
+      #             },
+      #             {
+      #               "Between": {
+      #                 "logical_operator": "Or",
+      #                 "start": 0,
+      #                 "end": 0
+      #               }
+      #             },
+      #             {
+      #               "In": {
+      #                 "logical_operator": "Or",
+      #                 "value": [
+      #                   0
+      #                 ]
+      #               }
+      #             }
+      #           ]
+      #         }
+      #       },
+      #       {
+      #         "ColumnF85F2F57F85B4126Be0FCb5830F0475D": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             {
+      #               "Equal": {
+      #                 "logical_operator": "Or",
+      #                 "value": 0
+      #               }
+      #             },
+      #             {
+      #               "GreaterThan": {
+      #                 "logical_operator": "Or",
+      #                 "value": 0
+      #               }
+      #             },
+      #             {
+      #               "Between": {
+      #                 "logical_operator": "Or",
+      #                 "start": 0,
+      #                 "end": 0
+      #               }
+      #             },
+      #             {
+      #               "In": {
+      #                 "logical_operator": "Or",
+      #                 "value": [
+      #                   0
+      #                 ]
+      #               }
+      #             }
+      #           ]
+      #         }
+      #       }
+      #     ]
+      #   }
+      # },
+      # {
+      #   "OptionDoggieAsNullableJsonbObject": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "Object": [
+      #           {
+      #             "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
+      #               "logical_operator": "Or",
+      #               "value": [
+      #                 {
+      #                   "Equal": {
+      #                     "logical_operator": "Or",
+      #                     "value": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "GreaterThan": {
+      #                     "logical_operator": "Or",
+      #                     "value": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "Between": {
+      #                     "logical_operator": "Or",
+      #                     "start": 0,
+      #                     "end": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "In": {
+      #                     "logical_operator": "Or",
+      #                     "value": [
+      #                       0
+      #                     ]
+      #                   }
+      #                 }
+      #               ]
+      #             }
+      #           },
+      #           {
+      #             "ColumnF85F2F57F85B4126Be0FCb5830F0475D": {
+      #               "logical_operator": "Or",
+      #               "value": [
+      #                 {
+      #                   "Equal": {
+      #                     "logical_operator": "Or",
+      #                     "value": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "GreaterThan": {
+      #                     "logical_operator": "Or",
+      #                     "value": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "Between": {
+      #                     "logical_operator": "Or",
+      #                     "start": 0,
+      #                     "end": 0
+      #                   }
+      #                 },
+      #                 {
+      #                   "In": {
+      #                     "logical_operator": "Or",
+      #                     "value": [
+      #                       0
+      #                     ]
+      #                   }
+      #                 }
+      #               ]
+      #             }
+      #           }
+      #         ]
+      #       },
+      #       "Null"
+      #     ]
+      #   }
+      # },
+      {
+        "VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": [
+                  {
+                    "id": "72e3bed5-07fd-4ea2-b5bf-983152dca484",
+                    "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 6,
+                    "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
 
 ###
  
