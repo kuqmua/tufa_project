@@ -14,6 +14,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         PostgresqlJsonType,
         PostgresqlTypeAndPostgresqlJsonType,
     }
+    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    enum PostgresqlJsonObjectTypePattern {
+        Standart,
+        Array,
+    }
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
     struct PostgresqlJsonObjectTypeRecord {
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
