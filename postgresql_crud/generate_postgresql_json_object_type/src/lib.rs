@@ -4018,11 +4018,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     PostgresqlJsonObjectTypePattern::Standart,
-        //     // PostgresqlJsonObjectTypePattern::Array,
+        //     // PostgresqlJsonObjectTypePattern::Standart,
+        //     PostgresqlJsonObjectTypePattern::Array,
 
         //     // TraitGen::PostgresqlType,
         //     // TraitGen::PostgresqlJsonType,
