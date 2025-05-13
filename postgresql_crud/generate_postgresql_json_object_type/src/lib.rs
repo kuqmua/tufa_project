@@ -5070,9 +5070,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let delete_query_part_acc_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{maybe_space_and_space}}elem->>'{id_snake_case}' <> ${{{increment_snake_case}}}"));
                             quote::quote! {
                                 let update_query_part_acc = {
-                                    let mut element_acc = std::string::String::from("elem");
                                     if self.#update_snake_case.is_empty() {
-                                        element_acc
+                                        std::string::String::from("elem")
                                     } else {
                                         let mut update_query_part_acc = std::string::String::default();
                                         #generate_jsonb_set_target_token_stream
@@ -5705,13 +5704,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_or_nullable_token_stream
         };
         // if let (
-        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
-        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
-        //     //     dimension1_not_null_or_nullable,
-        //     // },
+        //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::Standart,
+        //     postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension1 {
+        //         dimension1_not_null_or_nullable,
+        //     },
         //     // postgresql_crud_macros_common::PostgresqlJsonTypePattern::ArrayDimension2 {
         //     //     dimension1_not_null_or_nullable,
         //     //     dimension2_not_null_or_nullable,
@@ -5737,10 +5736,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     &trait_gen,
         // ) {
         //     // use postgresql_crud_macros_common::NotNullOrNullable;
-        //     // let d1 = match &dimension1_not_null_or_nullable {
-        //     //     NotNullOrNullable::NotNull => false,
-        //     //     NotNullOrNullable::Nullable => true,
-        //     // };
+        //     let d1 = match &dimension1_not_null_or_nullable {
+        //         NotNullOrNullable::NotNull => false,
+        //         NotNullOrNullable::Nullable => true,
+        //     };
         //     // let d2 = match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => false,
@@ -5775,14 +5774,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => false,
         //     //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => false,
         //     // };
-        //     // if d1 {
+        //     if d1 {
         //         if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
         //             macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //                 "GeneratePostgresqlJsonObjectType",
         //                 &generated,
         //             );
         //         }
-        //     // }
+        //     }
         // }
         generated.to_string()
     })
