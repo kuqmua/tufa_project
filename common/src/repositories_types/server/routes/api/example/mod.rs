@@ -511,42 +511,42 @@ pub struct Doggie {
 
 
 
-#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate(pub std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdUpdate>);
-impl std::default::Default for OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate {
-    fn default() -> Self {
-        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
-    }
-}
-impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
-    }
-}
-impl OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate {
-    fn update_query_part(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        match &self.0 {
-            Some(value) => value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment),
-            None => match increment.checked_add(1) {
-                Some(value) => {
-                    *increment = value;
-                    Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
-                }
-                None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-            },
-        }
-    }
-    fn update_query_bind(
-        self,
-        // mut
-        query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
-    ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        match self.0 {
-            Some(value) => value.update_query_bind(query),
-            None => query.bind(sqlx::types::Json(Self(None))),
-        }
-    }
-}
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate(pub std::option::Option<DoggieWithIdAsNotNullJsonbObjectWithIdUpdate>);
+// impl std::default::Default for OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate {
+//     fn default() -> Self {
+//         Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+//     }
+// }
+// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate {
+//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+//         Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+//     }
+// }
+// impl OptionDoggieWithIdAsNullableJsonbObjectWithIdUpdate {
+//     fn update_query_part(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+//         match &self.0 {
+//             Some(value) => value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment),
+//             None => match increment.checked_add(1) {
+//                 Some(value) => {
+//                     *increment = value;
+//                     Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+//                 }
+//                 None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+//             },
+//         }
+//     }
+//     fn update_query_bind(
+//         self,
+//         // mut
+//         query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>,
+//     ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         match self.0 {
+//             Some(value) => value.update_query_bind(query),
+//             None => query.bind(sqlx::types::Json(Self(None))),
+//         }
+//     }
+// }
 impl postgresql_crud::PostgresqlJsonType for OptionDoggieWithIdAsNullableJsonbObjectWithId {
     type TableTypeDeclaration = OptionDoggieWithIdAsNullableJsonbObjectWithIdTableTypeDeclaration;
     type Create = OptionDoggieWithIdAsNullableJsonbObjectWithIdCreate;
