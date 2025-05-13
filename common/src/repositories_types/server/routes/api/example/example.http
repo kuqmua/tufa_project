@@ -354,7 +354,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "logical_operator": "Or",
                 "value": [
                   {
-                    "id": "364e4309-95e5-4ebd-9898-c85f11ee043e",
+                    "id": "902d8347-ee71-43ad-851c-14c0027f127b",
                     "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
                     "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
                   }
@@ -517,24 +517,24 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                 # }
               ],
               "update": [
-                # {
-                #   "id": "364e4309-95e5-4ebd-9898-c85f11ee043e",
-                #   "fields": [
-                #     {
-                #       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                #         "value": 10
-                #       }
-                #     },
-                #     {
-                #       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-                #         "value": 10
-                #       }
-                #     }
-                #   ]
-                # }
+                {
+                  "id": "902d8347-ee71-43ad-851c-14c0027f127b",
+                  "fields": [
+                    {
+                      "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                        "value": 40
+                      }
+                    },
+                    {
+                      "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                        "value": 50
+                      }
+                    }
+                  ]
+                }
               ],
               "delete": [
-                "c6ed70ae-b75a-4940-b6bc-22270d18fea1"
+                # "49c574e1-6574-43ad-a63c-b6cd6327120b"
               ]
             }
           }
