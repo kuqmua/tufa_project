@@ -1144,18 +1144,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
                                 format!(
                                     "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))",
-                                    match &self.0 {
-                                        Some(value) => value.select_query_part(
+                                    {
+                                        let value = match &self.0 {
+                                            Some(value) => value,
+                                            None => &<#ident_select_standart_not_null_upper_camel_case as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                        };
+                                        value.select_query_part(
                                             field_ident,
                                             &column_name_and_maybe_field_getter_field_ident,
                                             column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong - add postfix field_ident or column_name_and_maybe_field_getter_field_ident
                                             true
-                                        ),
-                                        None => <#ident_select_standart_not_null_upper_camel_case as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().select_query_part(
-                                            field_ident,
-                                            &column_name_and_maybe_field_getter_field_ident,
-                                            column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong - add postfix field_ident or column_name_and_maybe_field_getter_field_ident
-                                            true,
                                         )
                                     }
                                 )

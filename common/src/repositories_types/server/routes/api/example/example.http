@@ -266,82 +266,82 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         "OptionDoggieAsNullableJsonbObject": {
           "logical_operator": "Or",
           "value": [
-            # {
-            #   "Object": [
-            #     {
-            #       "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
-            #         "logical_operator": "Or",
-            #         "value": [
-            #           {
-            #             "Equal": {
-            #               "logical_operator": "Or",
-            #               "value": 0
-            #             }
-            #           }
-            #           # ,
-            #           # {
-            #           #   "GreaterThan": {
-            #           #     "logical_operator": "Or",
-            #           #     "value": 0
-            #           #   }
-            #           # },
-            #           # {
-            #           #   "Between": {
-            #           #     "logical_operator": "Or",
-            #           #     "start": 0,
-            #           #     "end": 0
-            #           #   }
-            #           # },
-            #           # {
-            #           #   "In": {
-            #           #     "logical_operator": "Or",
-            #           #     "value": [
-            #           #       0
-            #           #     ]
-            #           #   }
-            #           # }
-            #         ]
-            #       }
-            #     }
-            #     # ,
-            #     # {
-            #     #   "ColumnF85F2F57F85B4126Be0FCb5830F0475D": {
-            #     #     "logical_operator": "Or",
-            #     #     "value": [
-            #     #       {
-            #     #         "Equal": {
-            #     #           "logical_operator": "Or",
-            #     #           "value": 0
-            #     #         }
-            #     #       },
-            #     #       {
-            #     #         "GreaterThan": {
-            #     #           "logical_operator": "Or",
-            #     #           "value": 0
-            #     #         }
-            #     #       },
-            #     #       {
-            #     #         "Between": {
-            #     #           "logical_operator": "Or",
-            #     #           "start": 0,
-            #     #           "end": 0
-            #     #         }
-            #     #       },
-            #     #       {
-            #     #         "In": {
-            #     #           "logical_operator": "Or",
-            #     #           "value": [
-            #     #             0
-            #     #           ]
-            #     #         }
-            #     #       }
-            #     #     ]
-            #     #   }
-            #     # }
-            #   ]
-            # }
+            {
+              "Object": [
+                {
+                  "Column7Bd2F76F276C48558Ee04B6Ce0Ac5015": {
+                    "logical_operator": "Or",
+                    "value": [
+                      {
+                        "Equal": {
+                          "logical_operator": "Or",
+                          "value": 0
+                        }
+                      }
+                      # ,
+                      # {
+                      #   "GreaterThan": {
+                      #     "logical_operator": "Or",
+                      #     "value": 0
+                      #   }
+                      # },
+                      # {
+                      #   "Between": {
+                      #     "logical_operator": "Or",
+                      #     "start": 0,
+                      #     "end": 0
+                      #   }
+                      # },
+                      # {
+                      #   "In": {
+                      #     "logical_operator": "Or",
+                      #     "value": [
+                      #       0
+                      #     ]
+                      #   }
+                      # }
+                    ]
+                  }
+                }
+                # ,
+                # {
+                #   "ColumnF85F2F57F85B4126Be0FCb5830F0475D": {
+                #     "logical_operator": "Or",
+                #     "value": [
+                #       {
+                #         "Equal": {
+                #           "logical_operator": "Or",
+                #           "value": 0
+                #         }
+                #       },
+                #       {
+                #         "GreaterThan": {
+                #           "logical_operator": "Or",
+                #           "value": 0
+                #         }
+                #       },
+                #       {
+                #         "Between": {
+                #           "logical_operator": "Or",
+                #           "start": 0,
+                #           "end": 0
+                #         }
+                #       },
+                #       {
+                #         "In": {
+                #           "logical_operator": "Or",
+                #           "value": [
+                #             0
+                #           ]
+                #         }
+                #       }
+                #     ]
+                #   }
+                # }
+              ]
+            }
             # ,
-            "Null"
+            # "Null"
           ]
         }
       }
