@@ -426,167 +426,156 @@ impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreate {
         }
     }
 }
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub enum OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     WithInnerExplicitSelect(VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect),
-//     WithoutInnerExplicitSelect,
-// }
-// impl sqlx::Type<sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-//             Ok(value) => Ok(value.0),
-//             Err(error) => Err(error),
-//         }
-//     }
-// }
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self::WithInnerExplicitSelect(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
-//     }
-// }
-// impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-//         match &self {
-//             Self::WithInnerExplicitSelect(value) => value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type),
-//             Self::WithoutInnerExplicitSelect => <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().select_query_part(
-//                 field_ident,
-//                 column_name_and_maybe_field_getter,
-//                 column_name_and_maybe_field_getter_for_error_message,
-//                 is_postgresql_type,
-//             ),
-//         }
-//     }
-// }
-// impl std::default::Default for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn default() -> Self {
-//         Self::WithInnerExplicitSelect(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
-//     }
-// }
-// pub type OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdWhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<
-//     // <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::WhereElement
-//     VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement
-// >;
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub struct OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead(postgresql_crud::Value<std::option::Option<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead>>);
-// impl std::default::Default for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead {
-//     fn default() -> Self {
-//         Self(postgresql_crud::Value {
-//             value: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-//         })
-//     }
-// }
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self(postgresql_crud::Value {
-//             value: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-//         })
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-//             Ok(value) => Ok(value.0),
-//             Err(error) => Err(error),
-//         }
-//     }
-// }
-// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub struct OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate(pub std::option::Option<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate>);
-// impl std::default::Default for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate {
-//     fn default() -> Self {
-//         Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
-//     }
-// }
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
-//     }
-// }
-// impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate {
-//     fn update_query_part(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         match &self.0 {
-//             Some(value) => value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment),
-//             None => match increment.checked_add(1) {
-//                 Some(value) => {
-//                     *increment = value;
-//                     Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
-//                 }
-//                 None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-//             },
-//         }
-//     }
-//     fn update_query_bind(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         match self.0 {
-//             Some(value) => value.update_query_bind(query),
-//             None => query.bind(sqlx::types::Json(Self(None))),
-//         }
-//     }
-// }
-// impl postgresql_crud::PostgresqlJsonType for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId {
-//     type TableTypeDeclaration = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration;
-//     type Create = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreate;
-//     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         value.create_query_part(increment)
-//     }
-//     fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         value.create_query_bind(query)
-//     }
-//     type Select = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect;
-//     fn select_query_part(value: &Self::Select, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-//         value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
-//     }
-//     type WhereElement = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdWhereElement;
-//     type Read = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead;
-//     type Update = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate;
-//     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
-//     }
-//     fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         value.update_query_bind(query)
-//     }
-// }
-// impl postgresql_crud::PostgresqlType for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId {
-//     type TableTypeDeclaration = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration;
-//     type Create = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreate;
-//     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         value.create_query_part(increment)
-//     }
-//     fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         value.create_query_bind(query)
-//     }
-//     type Select = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect;
-//     fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String {
-//         format!("{} as {column}", {
-//             let field_ident = column;
-//             let column_name_and_maybe_field_getter = column;
-//             let column_name_and_maybe_field_getter_for_error_message = column;
-//             let is_postgresql_type = true;
-//             value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
-//         })
-//     }
-//     type WhereElement = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdWhereElement;
-//     type Read = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead;
-//     type Update = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate;
-//     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
-//     }
-//     fn update_query_bind<'a>(value: Self::Update, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         value.update_query_bind(query)
-//     }
-// }
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect(pub std::option::Option<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect>);
+impl sqlx::Type<sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(value.0),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl std::default::Default for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    fn default() -> Self {
+        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+    }
+}
+impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
+        let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
+        format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))", {
+            let value = match &self.0 {
+                Some(value) => value,
+                None => &<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            };
+            value.select_query_part(field_ident, &column_name_and_maybe_field_getter_field_ident, column_name_and_maybe_field_getter_for_error_message, true)
+        })
+    }
+}
+pub type OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdWhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement>;
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead(std::option::Option<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead>);
+impl std::default::Default for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead {
+    fn default() -> Self {
+        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(value.0),
+            Err(error) => Err(error),
+        }
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate(pub std::option::Option<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate>);
+impl std::default::Default for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate {
+    fn default() -> Self {
+        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+    }
+}
+impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate {
+    fn update_query_part(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        match &self.0 {
+            Some(value) => value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment),
+            None => match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
+                }
+                None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+            },
+        }
+    }
+    fn update_query_bind(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self.0 {
+            Some(value) => value.update_query_bind(query),
+            None => query.bind(sqlx::types::Json(Self(None))),
+        }
+    }
+}
+impl postgresql_crud::PostgresqlJsonType for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId {
+    type TableTypeDeclaration = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration;
+    type Create = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreate;
+    fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        value.create_query_part(increment)
+    }
+    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        value.create_query_bind(query)
+    }
+    type Select = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect;
+    fn select_query_part(value: &Self::Select, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
+        value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
+    }
+    type WhereElement = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdWhereElement;
+    type Read = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead;
+    type Update = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate;
+    fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
+    }
+    fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        value.update_query_bind(query)
+    }
+}
+impl postgresql_crud::PostgresqlType for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId {
+    type TableTypeDeclaration = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration;
+    type Create = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreate;
+    fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        value.create_query_part(increment)
+    }
+    fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        value.create_query_bind(query)
+    }
+    type Select = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect;
+    fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String {
+        format!("{} as {column}", {
+            let field_ident = column;
+            let column_name_and_maybe_field_getter = column;
+            let column_name_and_maybe_field_getter_for_error_message = column;
+            let is_postgresql_type = true;
+            value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
+        })
+    }
+    type WhereElement = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdWhereElement;
+    type Read = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead;
+    type Update = OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate;
+    fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
+    }
+    fn update_query_bind<'a>(value: Self::Update, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        value.update_query_bind(query)
+    }
+}
