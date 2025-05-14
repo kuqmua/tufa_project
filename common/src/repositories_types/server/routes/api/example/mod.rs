@@ -647,11 +647,7 @@ impl OptionDoggieAsNullableJsonbObjectCreate {
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub enum OptionDoggieAsNullableJsonbObjectSelect {
-    WithInnerExplicitSelect(DoggieAsNotNullJsonbObjectSelect),
-    WithoutInnerExplicitSelect,
-    // Null
-}
+pub struct OptionDoggieAsNullableJsonbObjectSelect(pub std::option::Option<DoggieAsNotNullJsonbObjectSelect>);//here
 impl sqlx::Type<sqlx::Postgres> for OptionDoggieAsNullableJsonbObjectSelect {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
@@ -670,33 +666,35 @@ impl sqlx::Decode<'_, sqlx::Postgres> for OptionDoggieAsNullableJsonbObjectSelec
 }
 impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionDoggieAsNullableJsonbObjectSelect {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self::WithInnerExplicitSelect(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+        //here
+        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
     }
 }
 impl OptionDoggieAsNullableJsonbObjectSelect {
     fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-        //2 select null
-        let value = match &self {
-            Self::WithInnerExplicitSelect(value) => value.select_query_part(
-                field_ident,
-                &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong
-                true
-            ),
-            Self::WithoutInnerExplicitSelect => <DoggieAsNotNullJsonbObjectSelect as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().select_query_part(
-                field_ident,
-                &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
-                column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong
-                true,
-            ),
-            // Self::Null => todo!(),
-        };
-        format!("jsonb_build_object('{field_ident}',jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else ({value}) end))")
+        // format!(
+        //     "jsonb_build_object('{field_ident}',jsonb_build_object('value',{}))",
+        
+        // )
+        match &self.0 {
+            Some(value) => {
+                let value = value.select_query_part(
+                    field_ident,
+                    &format!("{column_name_and_maybe_field_getter}->'{field_ident}'"),
+                    column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong
+                    true
+                );
+                format!("jsonb_build_object('{field_ident}',jsonb_build_object('value', case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then null else ({value}) end))")
+            },
+            None => {
+                format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',{column_name_and_maybe_field_getter}->'{field_ident}'))")
+            }
+        }
     }
 }
 impl std::default::Default for OptionDoggieAsNullableJsonbObjectSelect {
     fn default() -> Self {
-        Self::WithInnerExplicitSelect(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+        Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
     }
 }
 pub type OptionDoggieAsNullableJsonbObjectWhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::WhereElement>;
