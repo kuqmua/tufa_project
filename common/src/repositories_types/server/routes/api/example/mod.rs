@@ -416,43 +416,45 @@ impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdCreate {
         query
     }
 }
-// #[derive(Debug, Clone, Default, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-// pub struct OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     pub doggie_with_id_as_not_null_jsonb_object_with_id_select: DoggieWithIdAsNotNullJsonbObjectWithIdSelect,
-//     pub dimension1_pagination: postgresql_crud::Pagination,
-// }
-// impl sqlx::Type<sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
-//         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-//             Ok(value) => Ok(value.0),
-//             Err(error) => Err(error),
-//         }
-//     }
-// }
-// impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self {
-//             doggie_with_id_as_not_null_jsonb_object_with_id_select: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//             dimension1_pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//         }
-//     }
-// }
-// impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
-//     fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-//         let doggie_with_id_as_not_null_jsonb_object_with_id_select = self.doggie_with_id_as_not_null_jsonb_object_with_id_select.select_query_part(field_ident, &"value", &"value", true);
-//         let dimension1_start = self.dimension1_pagination.start();
-//         let dimension1_end = self.dimension1_pagination.end();
-//         format ! ("jsonb_build_object('{field_ident}',jsonb_build_object('value',(select jsonb_agg(({doggie_with_id_as_not_null_jsonb_object_with_id_select})) from jsonb_array_elements((select {column_name_and_maybe_field_getter}->'{field_ident}')) with ordinality where ordinality between {dimension1_start} and {dimension1_end})))")
-//     }
-// }
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub enum OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    WithInnerExplicitSelect(DoggieWithIdAsNotNullJsonbObjectWithIdSelect),
+    WithoutInnerExplicitSelect,
+}
+impl sqlx::Type<sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(value.0),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self::WithInnerExplicitSelect(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    }
+}
+impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
+    fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
+        match &self {
+            Self::WithInnerExplicitSelect(value) => value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type),
+            Self::WithoutInnerExplicitSelect => <DoggieWithIdAsNotNullJsonbObjectWithIdSelect as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().select_query_part(
+                field_ident,
+                column_name_and_maybe_field_getter,
+                column_name_and_maybe_field_getter_for_error_message,
+                is_postgresql_type,
+            ),
+        }
+    }
+}
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 // pub enum OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdWhereElement {
 //     Equal(postgresql_crud::where_element_filters::PostgresqlJsonTypeWhereElementEqual<OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdTableTypeDeclaration>),
