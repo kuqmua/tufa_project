@@ -602,10 +602,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_standart_not_null_create_query_part_content_token_stream(IsStandartWithId::False),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                 match &self.0 {
-                                    Some(#value_snake_case) => match #value_snake_case.#create_query_part_snake_case(#increment_snake_case) {
-                                        Ok(#value_snake_case) => Ok(#value_snake_case),
-                                        Err(error) => Err(error)
-                                    },
+                                    //todo maybe rewrite like this <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as #import_path::PostgresqlJsonType>::create_query_part(#value_snake_case, #increment_snake_case)
+                                    Some(#value_snake_case) => #value_snake_case.#create_query_part_snake_case(#increment_snake_case),
                                     None => match increment.checked_add(1) {
                                         Some(value) => {
                                             *increment = value;
@@ -4012,8 +4010,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
         //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     PostgresqlJsonObjectTypePattern::Standart,
-        //     // PostgresqlJsonObjectTypePattern::Array,
+        //     // PostgresqlJsonObjectTypePattern::Standart,
+        //     PostgresqlJsonObjectTypePattern::Array,
 
         //     // TraitGen::PostgresqlType,
         //     // TraitGen::PostgresqlJsonType,
