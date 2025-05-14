@@ -70,7 +70,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         use postgresql_crud_macros_common::NotNullOrNullable;
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             NotNullOrNullable::NotNull => true,
-            NotNullOrNullable::Nullable => true,
+            NotNullOrNullable::Nullable => false,
         };
         let postgresql_json_object_type_pattern_filter = match &element.postgresql_json_object_type_pattern {
             PostgresqlJsonObjectTypePattern::Standart => true,
@@ -4021,8 +4021,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
         //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     // PostgresqlJsonObjectTypePattern::Standart,
-        //     PostgresqlJsonObjectTypePattern::Array,
+        //     PostgresqlJsonObjectTypePattern::Standart,
+        //     // PostgresqlJsonObjectTypePattern::Array,
 
         //     // TraitGen::PostgresqlType,
         //     // TraitGen::PostgresqlJsonType,
