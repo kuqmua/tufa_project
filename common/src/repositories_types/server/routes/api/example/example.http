@@ -599,24 +599,24 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                 }
               ],
               "update": [
-                # {
-                #   "id": "c60d2fd8-131f-451c-a5bc-0e7f2dfadfe8",
-                #   "fields": [
-                #     {
-                #       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                #         "value": 0
-                #       }
-                #     },
-                #     {
-                #       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-                #         "value": 0
-                #       }
-                #     }
-                #   ]
-                # }
+                {
+                  "id": "8e0e93e1-5978-4b7e-8685-2702c25d7fff",
+                  "fields": [
+                    {
+                      "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                        "value": 20
+                      }
+                    },
+                    {
+                      "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                        "value": 30
+                      }
+                    }
+                  ]
+                }
               ],
               "delete": [
-                # "82187cd5-8eed-4c72-a2ee-f93f28aa7b29"
+                "ba17371c-8c07-41d1-89bb-a1548610d481"
               ]
             }
             # null

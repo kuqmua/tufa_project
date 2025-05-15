@@ -724,27 +724,12 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate {
     fn update_query_part(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         match &self.0 {
-            Some(value) => {
-                // println!("jsonb_set_accumulator {jsonb_set_accumulator}");
-                // println!("jsonb_set_target {jsonb_set_target}");
-                // println!("jsonb_set_path {jsonb_set_path}");
-                // println!("increment {increment}");
-
-                // jsonb_set_accumulator case when jsonb_typeof(animal_as_not_null_jsonb_object) = 'object' then (animal_as_not_null_jsonb_object)::jsonb else '{}'::jsonb end
-                // jsonb_set_target animal_as_not_null_jsonb_object->'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id'
-                // jsonb_set_path option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id
-                // increment 1
-
-                let f = value.update_query_part(
+            Some(value) => value.update_query_part(
                     jsonb_set_accumulator,
                     jsonb_set_target,
-                    // &format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else {jsonb_set_target} end"),//good but not that good
                     jsonb_set_path,
                     increment
-                );
-                // println!("fffffff {f:#?}");
-                f
-            },
+                ),
             None => match increment.checked_add(1) {
                 Some(value) => {
                     *increment = value;
@@ -1232,18 +1217,6 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 }
 impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
     fn update_query_part(&self, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-        println!("222 jsonb_set_accumulator {jsonb_set_accumulator}");
-        println!("222 jsonb_set_target {jsonb_set_target}");
-        println!("222 jsonb_set_path {jsonb_set_path}");
-        println!("222 increment {increment}");
-        // println!("{}");
-// 222 jsonb_set_accumulator case when jsonb_typeof(animal_as_not_null_jsonb_object) = 'object' then (animal_as_not_null_jsonb_object)::jsonb else '{}'::jsonb end
-// 222 jsonb_set_target animal_as_not_null_jsonb_object->'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id'
-// 222 jsonb_set_path option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id
-// 222 increment 1
-
-        // format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else {jsonb_set_target} end")
-        
         let update_query_part_acc = {
             if self.update.is_empty() {
                 std::string::String::from("elem")
@@ -1264,7 +1237,6 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
                 format!("case {update_query_part_acc} else elem end")
             }
         };
-        println!("222 update_query_part_acc {update_query_part_acc}");
         let delete_query_part_acc = {
             let mut delete_query_part_acc = std::string::String::default();
             for _ in &self.delete {
@@ -1281,7 +1253,6 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
             }
             delete_query_part_acc
         };
-        println!("222 delete_query_part_acc {delete_query_part_acc}");
         let create_query_part_acc = {
             let mut create_query_part_acc = std::string::String::default();
             for element in &self.create {
@@ -1297,103 +1268,15 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdUpdate {
             let _ = create_query_part_acc.pop();
             create_query_part_acc
         };
-        println!("222 create_query_part_acc {create_query_part_acc}");
-
-        let is_self_create_empty = self.create.is_empty();
-        let is_self_update_empty = self.update.is_empty();
-        let is_self_delete_empty = self.delete.is_empty();
-        println!("is_self_create_empty {is_self_create_empty}");
-        println!("is_self_update_empty {is_self_update_empty}");
-        println!("is_self_delete_empty {is_self_delete_empty}");
-
-        // let current_jsonb_set_target = if self.create.is_empty() {
-        //     // format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then null else {jsonb_set_target} end")
-        //     format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then null else {jsonb_set_target} end")
-
-        // }
-        // else {
-        //     // format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else {jsonb_set_target} end")
-        //     format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else {jsonb_set_target} end")
-        // };
         let current_default_initialization = if self.create.is_empty() {
-            // format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then null else {jsonb_set_target} end")
             "'null'::jsonb".to_string()
         }
         else {
-            // format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else {jsonb_set_target} end")
-            // format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else {jsonb_set_target} end")
             "'[]'::jsonb".to_string()
         };
-        // {
-        //     let then_null = format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then null else {jsonb_set_target} end");
-        //     let then_empty_array = format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else {jsonb_set_target} end");
-        //     match (is_self_create_empty, is_self_update_empty, is_self_delete_empty) {
-        //         (true, true, true) => {
-        //             println!("TODO: THIS IS UNREACHABLE");
-        //             //todo different error variant?
-        //             return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd {
-        //                 code_occurence: error_occurence_lib::code_occurence!()
-        //             });
-        //         },
-        //         (true, true, false) => then_null,
-        //         (true, false, true) => then_null,
-        //         (true, false, false) => then_null,
-        //         (false, true, true) => then_empty_array,
-        //         (false, true, false) => then_empty_array,
-        //         (false, false, true) => then_empty_array,
-        //         (false, false, false) => then_empty_array,
-        //     }
-        // };
-
         let maybe_where = if self.delete.is_empty() { std::string::String::default() } else { format!(" where {delete_query_part_acc}") };
         let maybe_jsonb_build_array = if self.create.is_empty() { std::string::String::default() } else { format!(" || jsonb_build_array({create_query_part_acc})") };
-
-
-                // case when jsonb_array_length(
-                //     {current_jsonb_set_target}
-                // ) = 0 
-                // then '[]'::jsonb 
-        let f = format!("
-            jsonb_set(
-                {jsonb_set_accumulator},
-                '{{{jsonb_set_path}}}',
-                case when jsonb_typeof({jsonb_set_target}) = 'null'
-                then 
-                {current_default_initialization}
-                else 
-                (
-                    select coalesce(
-                        (
-                            select jsonb_agg(
-                                {update_query_part_acc}
-                            )
-                            from
-                            jsonb_array_elements(
-                                {jsonb_set_target}
-                            )
-                            as elem 
-                            {maybe_where}
-                        ),
-                    '[]'::jsonb
-                )
-            )
-            end
-            {maybe_jsonb_build_array}
-        )");
-        println!("222 {f}");
-
-// 222 update_query_part_acc elem
-// 222 delete_query_part_acc 
-// 222 create_query_part_acc jsonb_build_object('id', to_jsonb(gen_random_uuid()))||jsonb_build_object('column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015',$2)||jsonb_build_object('column_f85f2f57_f85b_4126_be0f_cb5830f0475d',$3)
-
-// 222 jsonb_set(case when jsonb_typeof(animal_as_not_null_jsonb_object) = 'object' then (animal_as_not_null_jsonb_object)::jsonb else '{}'::jsonb end,'{option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id}', case when jsonb_array_length(animal_as_not_null_jsonb_object->'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id') = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg(elem) from jsonb_array_elements(animal_as_not_null_jsonb_object->'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id') as elem ), '[]'::jsonb)) end  || jsonb_build_array(jsonb_build_object('id', to_jsonb(gen_random_uuid()))||jsonb_build_object('column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015',$2)||jsonb_build_object('column_f85f2f57_f85b_4126_be0f_cb5830f0475d',$3)))
-
-// fffffff Ok(
-//     "jsonb_set(case when jsonb_typeof(animal_as_not_null_jsonb_object) = 'object' then (animal_as_not_null_jsonb_object)::jsonb else '{}'::jsonb end,'{option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id}', case when jsonb_array_length(animal_as_not_null_jsonb_object->'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id') = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg(elem) from jsonb_array_elements(animal_as_not_null_jsonb_object->'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id') as elem ), '[]'::jsonb)) end  || jsonb_build_array(jsonb_build_object('id', to_jsonb(gen_random_uuid()))||jsonb_build_object('column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015',$2)||jsonb_build_object('column_f85f2f57_f85b_4126_be0f_cb5830f0475d',$3)))",
-// )
-// update example set animal_as_not_null_jsonb_object = case when column_6e88acb0_c566_4fef_8a09_66a41338cf36 = $1 then jsonb_set(case when jsonb_typeof(animal_as_not_null_jsonb_object) = 'object' then (animal_as_not_null_jsonb_object)::jsonb else '{}'::jsonb end,'{option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id}', case when jsonb_array_length(animal_as_not_null_jsonb_object->'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id') = 0 then '[]'::jsonb else (select coalesce((select jsonb_agg(elem) from jsonb_array_elements(animal_as_not_null_jsonb_object->'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id') as elem ), '[]'::jsonb)) end  || jsonb_build_array(jsonb_build_object('id', to_jsonb(gen_random_uuid()))||jsonb_build_object('column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015',$2)||jsonb_build_object('column_f85f2f57_f85b_4126_be0f_cb5830f0475d',$3))) else animal_as_not_null_jsonb_object end where column_6e88acb0_c566_4fef_8a09_66a41338cf36 in ($4) returning column_6e88acb0_c566_4fef_8a09_66a41338cf36;
-
-        Ok (f)
+        Ok (format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',case when jsonb_typeof({jsonb_set_target}) = 'null' then {current_default_initialization} else (select coalesce((select jsonb_agg({update_query_part_acc}) from jsonb_array_elements({jsonb_set_target}) as elem {maybe_where}),'[]'::jsonb)) end {maybe_jsonb_build_array})"))
     }
     fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.update {
