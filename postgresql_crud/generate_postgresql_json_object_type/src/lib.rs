@@ -75,7 +75,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let postgresql_json_object_type_pattern_filter = match &element.postgresql_json_object_type_pattern {
             PostgresqlJsonObjectTypePattern::Standart => true,
             PostgresqlJsonObjectTypePattern::Array => match &element.not_null_or_nullable {
-                NotNullOrNullable::NotNull => true,
+                NotNullOrNullable::NotNull => false,
                 NotNullOrNullable::Nullable => false,
             },
         };
@@ -2704,6 +2704,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote! {
                             impl #ident_update_upper_camel_case {
                                 pub fn try_new(#fields_token_stream) -> Result<Self, #ident_update_try_new_error_named_upper_camel_case> {
+                                    //todo wrong. create vec can be empty
                                     if #create_snake_case.is_empty() && #update_snake_case.is_empty() && #delete_snake_case.is_empty() {
                                         return Err(#ident_update_try_new_error_named_upper_camel_case::#create_update_delete_check_fields_are_empty_upper_camel_case {
                                             code_occurence: error_occurence_lib::code_occurence!()
@@ -3644,8 +3645,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     // PostgresqlJsonObjectTypePattern::Standart,
         //     PostgresqlJsonObjectTypePattern::Array,
