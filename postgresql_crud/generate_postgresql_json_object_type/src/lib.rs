@@ -76,7 +76,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             PostgresqlJsonObjectTypePattern::Standart => true,
             PostgresqlJsonObjectTypePattern::Array => match &element.not_null_or_nullable {
                 NotNullOrNullable::NotNull => true,
-                NotNullOrNullable::Nullable => false,
+                NotNullOrNullable::Nullable => true,
             },
         };
         let trait_gen_filter = match &element.trait_gen {

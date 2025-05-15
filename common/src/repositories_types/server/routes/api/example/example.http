@@ -360,7 +360,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #           "logical_operator": "Or",
       #           "value": [
       #             {
-      #               "id": "611c2f9a-18d1-44ee-a6e9-70ce2a46dd4a",
+      #               "id": "fdf5d66b-c5f5-4973-850c-8a12a884d35f",
       #               "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
       #               "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
       #             }
@@ -381,7 +381,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                     "logical_operator": "Or",
                     "value": [
                       {
-                        "id": "d79a6a1b-f047-4fdc-86b2-4e54dacd19f8",
+                        "id": "378e9344-7016-4a61-8308-75e511a00ed8",
                         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
                         "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
                       }
@@ -449,8 +449,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           }
         },
         {
-          "option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id":
-          {
+          "option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id": {
             "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
               {
                 "id": null
@@ -467,7 +466,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
               "offset": 0
             }
           }
-          # null
         }
       ]
     }
@@ -513,84 +511,84 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
     "animal_as_not_null_jsonb_object": {
       "value": [
-        # {
-        #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-        #     "value": 0
-        #   }
-        # },
-        # {
-        #   "column_1495baea_b926_4e20_a223_5b7a1f06c211": {
-        #     "value": 0
-        #   }
-        # },
-        # {
-        #   "doggie_as_not_null_jsonb_object": {
-        #     "value": [
-        #       {
-        #         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-        #           "value": 0
-        #         }
-        #       },
-        #       {
-        #         "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-        #           "value": 0
-        #         }
-        #       }
-        #     ]
-        #   }
-        # },
-        # {
-        #   "option_doggie_as_nullable_jsonb_object": {
-        #     "value": [
-        #       {
-        #         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-        #           "value": 0
-        #         }
-        #       },
-        #       {
-        #         "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-        #           "value": 0
-        #         }
-        #       }
-        #     ]
-        #   }
-        # },
-        # {
-        #   "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
-        #     "value": {
-        #       "create": [
-        #         # {
-        #         #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-        #         #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-        #         # }
-        #       ],
-        #       "update": [
-        #         {
-        #           "id": "43bec7c5-0fca-43d0-b681-d27ab9ca542d",
-        #           "fields": [
-        #             {
-        #               "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-        #                 "value": 20
-        #               }
-        #             },
-        #             {
-        #               "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-        #                 "value": 30
-        #               }
-        #             }
-        #           ]
-        #         }
-        #       ],
-        #       "delete": [
-        #         # "4d6131ba-885f-442a-accd-e3c3e9b9a40a"
-        #       ]
-        #     }
-        #   }
-        # }
-        # ,
+        {
+          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+            "value": 0
+          }
+        },
+        {
+          "column_1495baea_b926_4e20_a223_5b7a1f06c211": {
+            "value": 0
+          }
+        },
+        {
+          "doggie_as_not_null_jsonb_object": {
+            "value": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                  "value": 0
+                }
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "option_doggie_as_nullable_jsonb_object": {
+            "value": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                  "value": 0
+                }
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
+            "value": {
+              "create": [
+                {
+                  "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+                  "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+                }
+              ],
+              "update": [
+                {
+                  "id": "12894f60-2415-4de4-a289-1cf6b280a642",
+                  "fields": [
+                    {
+                      "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                        "value": 0
+                      }
+                    },
+                    {
+                      "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                        "value": 0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "delete": [
+                "82fbdd62-686d-48d3-86c6-076d4e4cfdef"
+              ]
+            }
+          }
+        },
         {
           "option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id": {
             "value": 
+            # null
             {
               "create": [
                 {
@@ -600,26 +598,25 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
               ],
               "update": [
                 {
-                  "id": "8e0e93e1-5978-4b7e-8685-2702c25d7fff",
+                  "id": "378e9344-7016-4a61-8308-75e511a00ed8",
                   "fields": [
                     {
                       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                        "value": 20
+                        "value": 0
                       }
                     },
                     {
                       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-                        "value": 30
+                        "value": 0
                       }
                     }
                   ]
                 }
               ],
               "delete": [
-                "ba17371c-8c07-41d1-89bb-a1548610d481"
+                "6868457c-d12c-4a1f-91c1-a7053ca58641"
               ]
             }
-            # null
           }
         }
       ]
