@@ -57,13 +57,13 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         }
       ],
       "option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id": 
-      # null
-      [
-        {
-          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-          "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-        }
-      ]
+      null
+      # [
+      #   {
+      #     "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+      #     "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+      #   }
+      # ]
     }
   }
 ]
@@ -79,8 +79,6 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 POST http://127.0.0.1:8080/example/create_one HTTP/1.1
 content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
-
-
 
 ###
  
@@ -362,7 +360,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #           "logical_operator": "Or",
       #           "value": [
       #             {
-      #               "id": "56bfa8eb-82ab-4ca2-996d-c4898fa31824",
+      #               "id": "611c2f9a-18d1-44ee-a6e9-70ce2a46dd4a",
       #               "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
       #               "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
       #             }
@@ -383,7 +381,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                     "logical_operator": "Or",
                     "value": [
                       {
-                        "id": "e3788893-f8a9-4262-9b88-aed35b76d525",
+                        "id": "d79a6a1b-f047-4fdc-86b2-4e54dacd19f8",
                         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
                         "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
                       }
@@ -449,10 +447,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
               "offset": 0
             }
           }
-        }
-        ,
+        },
         {
-          "option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id": 
+          "option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id":
           {
             "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
               {
