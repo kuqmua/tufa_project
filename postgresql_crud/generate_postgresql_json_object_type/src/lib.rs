@@ -196,6 +196,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 IsStandartWithId::True => &vec_syn_field_with_id
             }
         };
+        enum IdentPattern {
+            NotNullStandartWithoutId,
+            NotNullStandartWithId,
+            NullableStandartWithoutId,
+            NotNullArrayWithId,
+            NullableArrayWithId,
+        }
         let generate_ident_token_stream = |
             //todo maybe remove posibility of PostgresqlJsonObjectTypePattern::Array + IsStandartWithId::True? it would cause a bug
             not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
