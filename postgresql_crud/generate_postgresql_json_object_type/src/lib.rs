@@ -189,6 +189,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
         };
         let generate_ident_token_stream = |
+            //todo maybe remove posibility of PostgresqlJsonObjectTypePattern::Array + IsStandartWithId::True? it would cause a bug
             not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
             postgresql_json_object_type_pattern: &PostgresqlJsonObjectTypePattern,
             is_standart_with_id: &IsStandartWithId,
@@ -350,11 +351,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     ),
                 },
                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => wrap_into_scopes_pub_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&prefix_wrapper(&generate_ident_token_stream(
-                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                        &PostgresqlJsonObjectTypePattern::Standart,
-                        &IsStandartWithId::True,
-                    )))),
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => wrap_into_scopes_pub_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&prefix_wrapper(
+                        &ident_with_id_standart_not_null_upper_camel_case
+                    ))),
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                         &prefix_wrapper(&ident_with_id_array_not_null_upper_camel_case)
                     )),
@@ -661,11 +660,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 #query_snake_case
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let ident_with_id_create_array_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&generate_ident_token_stream(
-                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                    &PostgresqlJsonObjectTypePattern::Array,
-                                    &IsStandartWithId::True,
-                                ));
+                                let ident_with_id_create_array_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(
+                                    &ident_with_id_array_not_null_upper_camel_case
+                                );
                                 quote::quote! {
                                     match self.0 {
                                         Some(value) => value.create_query_bind(query),
@@ -809,11 +806,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     },
                     NotNullOrNullable::Nullable => {
-                        let ident_with_id_select_array_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&generate_ident_token_stream(
-                            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                            &PostgresqlJsonObjectTypePattern::Array,
-                            &IsStandartWithId::True,
-                        ));
+                        let ident_with_id_select_array_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(
+                            &ident_with_id_array_not_null_upper_camel_case
+                        );
                         quote::quote! {
                             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                             pub struct #ident_select_upper_camel_case(pub std::option::Option<#ident_with_id_select_array_not_null_upper_camel_case>);
@@ -989,11 +984,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                             NotNullOrNullable::Nullable => {
-                                let ident_with_id_select_array_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&generate_ident_token_stream(//todo reuse
-                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                    &PostgresqlJsonObjectTypePattern::Array,
-                                    &IsStandartWithId::True,
-                                ));
+                                let ident_with_id_select_array_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(
+                                    &ident_with_id_array_not_null_upper_camel_case
+                                );
                                 quote::quote!{
                                     format!("case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end", {
                                         let value = match &self.0 {
@@ -1543,11 +1536,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         ),
                         NotNullOrNullable::Nullable => generate_ident_read_wrapper_token_stream(
                             &{
-                                let ident_with_id_read_array_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&generate_ident_token_stream(
-                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                    &PostgresqlJsonObjectTypePattern::Array,
-                                    &IsStandartWithId::True,//todo maybe remove posibility of PostgresqlJsonObjectTypePattern::Array + IsStandartWithId::True? it would cause a bug
-                                ));
+                                let ident_with_id_read_array_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(
+                                    &ident_with_id_array_not_null_upper_camel_case
+                                );
                                 quote::quote!{(std::option::Option<#ident_with_id_read_array_not_null_upper_camel_case>);}
                             },
                             &ShouldDeriveDefault::False,
