@@ -19,6 +19,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         Standart,
         Array,
     }
+    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
+    enum Pattern {
+        NotNullStandartWithoutId,
+        NotNullStandartWithId,
+        NullableStandartWithoutId,
+        NotNullArrayWithId,
+        NullableArrayWithId,
+    }
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
     struct PostgresqlJsonObjectTypeRecord {
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
@@ -193,7 +201,43 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
             postgresql_json_object_type_pattern: &PostgresqlJsonObjectTypePattern,
             is_standart_with_id: &IsStandartWithId,
+
+            // pattern: &Pattern,
         |{
+            // let (
+            //     not_null_or_nullable,
+            //     postgresql_json_object_type_pattern,
+            //     is_standart_with_id,
+            // ) = match &pattern {
+            //     Pattern::NotNullStandartWithoutId => (
+            //         postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+            //         PostgresqlJsonObjectTypePattern::Standart,
+            //         IsStandartWithId::WithoutId,
+            //     ),
+            //     Pattern::NotNullStandartWithId => (
+            //         postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+            //         PostgresqlJsonObjectTypePattern::Standart,
+            //         IsStandartWithId::WithId,
+            //     ),
+            //     Pattern::NullableStandartWithoutId => (
+            //         postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+            //         PostgresqlJsonObjectTypePattern::Standart,
+            //         IsStandartWithId::WithoutId,
+            //     ),
+            //     Pattern::NotNullArrayWithId => (
+            //         postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+            //         PostgresqlJsonObjectTypePattern::Array,
+            //         IsStandartWithId::WithId,
+            //     ),
+            //     Pattern::NullableArrayWithId => (
+            //         postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+            //         PostgresqlJsonObjectTypePattern::Array,
+            //         IsStandartWithId::WithId,
+            //     ),
+            // };
+
+
+
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
             let jsonb_object_upper_camel_case = naming::JsonbObjectUpperCamelCase;
