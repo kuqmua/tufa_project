@@ -164,23 +164,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
     }
     enum ArrayDimension {
-        ArrayDimension1 {
-            dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-        },
+        ArrayDimension1,
         ArrayDimension2 {
             dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
         ArrayDimension3 {
             dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
             dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
         ArrayDimension4 {
             dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
             dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
             dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
     }
     impl ArrayDimension {
@@ -199,36 +194,31 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             match &value {
                 PostgresqlJsonTypePattern::Standart => Err(()),
                 PostgresqlJsonTypePattern::ArrayDimension1 {
-                    dimension1_not_null_or_nullable
-                } => Ok(Self::ArrayDimension1 {
-                    dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone()
-                }),
+                    dimension1_not_null_or_nullable: _,
+                } => Ok(Self::ArrayDimension1),
                 PostgresqlJsonTypePattern::ArrayDimension2 {
                     dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
+                    dimension2_not_null_or_nullable: _,
                 } => Ok(Self::ArrayDimension2 {
                     dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
-                    dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
                 }),
                 PostgresqlJsonTypePattern::ArrayDimension3 {
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
+                    dimension3_not_null_or_nullable: _,
                 } => Ok(Self::ArrayDimension3 {
                     dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
                     dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                    dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
                 }),
                 PostgresqlJsonTypePattern::ArrayDimension4 {
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
                     dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable,
+                    dimension4_not_null_or_nullable: _,
                 } => Ok(Self::ArrayDimension4 {
                     dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
                     dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
                     dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                    dimension4_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
                 }),
             }
         }
@@ -236,18 +226,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     enum ArrayDimensionSelectPattern {
         ArrayDimension2 {
             dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
         ArrayDimension3 {
             dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
             dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
         ArrayDimension4 {
             dimension1_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
             dimension2_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
             dimension3_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
-            dimension4_not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         },
     }
     impl ArrayDimensionSelectPattern{
@@ -262,12 +249,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             match &self {
                 Self::ArrayDimension2{
                     dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable: _,
                 } => vec![&dimension1_not_null_or_nullable],
                 Self::ArrayDimension3{
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable: _,
                 } => vec![
                     &dimension2_not_null_or_nullable,
                     &dimension1_not_null_or_nullable
@@ -276,7 +261,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
                     dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable: _,
                 } => vec![
                     &dimension3_not_null_or_nullable,
                     &dimension2_not_null_or_nullable,
@@ -292,30 +276,24 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 ArrayDimension::ArrayDimension1 {..} => Err(()),
                 ArrayDimension::ArrayDimension2 {
                     dimension1_not_null_or_nullable,
-                    dimension2_not_null_or_nullable,
                 } => Ok(Self::ArrayDimension2 {
                     dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
-                    dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
                 }),
                 ArrayDimension::ArrayDimension3 {
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
-                    dimension3_not_null_or_nullable,
                 } => Ok(Self::ArrayDimension3 {
                     dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
                     dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                    dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
                 }),
                 ArrayDimension::ArrayDimension4 {
                     dimension1_not_null_or_nullable,
                     dimension2_not_null_or_nullable,
                     dimension3_not_null_or_nullable,
-                    dimension4_not_null_or_nullable,
                 } => Ok(Self::ArrayDimension4 {
                     dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
                     dimension2_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
                     dimension3_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                    dimension4_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
                 }),
             }
         }
