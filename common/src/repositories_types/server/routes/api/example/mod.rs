@@ -456,13 +456,15 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 }
 impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdSelect {
     fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-        let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
-        format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))", {
+        format!("case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end", {
             let value = match &self.0 {
                 Some(value) => value,
                 None => &<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
             };
-            value.select_query_part(field_ident, &column_name_and_maybe_field_getter_field_ident, column_name_and_maybe_field_getter_for_error_message, true)
+            value.select_query_part(field_ident, 
+                &column_name_and_maybe_field_getter,
+                column_name_and_maybe_field_getter_for_error_message, true
+            )
         })
     }
 }
@@ -579,170 +581,3 @@ impl postgresql_crud::PostgresqlType for OptionVecOfDoggieWithIdAsNullableArrayO
         value.update_query_bind(query)
     }
 }
-///////////////////////
-// select 
-//   jsonb_build_object(
-//     'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id', 
-//     jsonb_build_object(
-//       'value', 
-//       case when jsonb_typeof(
-//         animal_as_not_null_jsonb_object -> 'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id'
-//       ) = 'null'
-// 	  then
-// 	  null
-// 	  else (
-//         jsonb_build_object(
-//           'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id', 
-//           jsonb_build_object(
-//             'value', 
-//             (
-//               select 
-//                 jsonb_agg(
-//                   (
-//                     jsonb_build_object(
-//                       'id', 
-//                       jsonb_build_object(
-//                         'value', 
-//                         (value -> 'id')
-//                       )
-//                     )|| jsonb_build_object(
-//                       'column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015', 
-//                       jsonb_build_object(
-//                         'value', 
-//                         (
-//                           value -> 'column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015'
-//                         )
-//                       )
-//                     )|| jsonb_build_object(
-//                       'column_f85f2f57_f85b_4126_be0f_cb5830f0475d', 
-//                       jsonb_build_object(
-//                         'value', 
-//                         (
-//                           value -> 'column_f85f2f57_f85b_4126_be0f_cb5830f0475d'
-//                         )
-//                       )
-//                     )
-//                   )
-//                 ) 
-//               from 
-//                 jsonb_array_elements(
-//                   (
-//                     select 
-//                       animal_as_not_null_jsonb_object -> 'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id' -> 'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id'
-//                   )
-//                 ) with ordinality 
-//               where 
-//                 ordinality between 0 
-//                 and 3
-//             )
-//           )
-//         )
-//       ) end
-//     )
-//   ) as animal_as_not_null_jsonb_object 
-// from 
-//   example 
-// where 
-//   (
-//     (
-//       (
-//         (
-//           animal_as_not_null_jsonb_object -> 'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id' = '[
-//                       {
-//                         "id": "ff21dfe9-20b0-480f-91e5-5b91dcb50c8e",
-//                         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-//                         "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-//                       }
-//                     ]'::jsonb
-//         )
-//       )
-//     )
-//   ) 
-// order by 
-//   column_6e88acb0_c566_4fef_8a09_66a41338cf36 asc 
-// limit 
-//   10 offset 0
-
-
-///////////////////////////////////good
-// select 
-//   jsonb_build_object(
-//     'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id', 
-//     jsonb_build_object(
-//       'value', 
-//       case when jsonb_typeof(
-//         animal_as_not_null_jsonb_object -> 'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id'
-//       ) = 'null'
-// 	  then
-// 	  null
-// 	  else (
-
-//             (
-//               select 
-//                 jsonb_agg(
-//                   (
-//                     jsonb_build_object(
-//                       'id', 
-//                       jsonb_build_object(
-//                         'value', 
-//                         (value -> 'id')
-//                       )
-//                     )|| jsonb_build_object(
-//                       'column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015', 
-//                       jsonb_build_object(
-//                         'value', 
-//                         (
-//                           value -> 'column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015'
-//                         )
-//                       )
-//                     )|| jsonb_build_object(
-//                       'column_f85f2f57_f85b_4126_be0f_cb5830f0475d', 
-//                       jsonb_build_object(
-//                         'value', 
-//                         (
-//                           value -> 'column_f85f2f57_f85b_4126_be0f_cb5830f0475d'
-//                         )
-//                       )
-//                     )
-//                   )
-//                 ) 
-//               from 
-//                 jsonb_array_elements(
-//                   (
-//                     select 
-//                       animal_as_not_null_jsonb_object -> 'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id'
-					  
-// -- 					  -> 'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id'
-//                   )
-//                 ) with ordinality 
-//               where 
-//                 ordinality between 0 
-//                 and 3
-//             )
-
-
-//       ) end
-//     )
-//   ) as animal_as_not_null_jsonb_object 
-// from 
-//   example 
-where 
-  (
-    (
-      (
-        (
-          animal_as_not_null_jsonb_object -> 'option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id' = '[
-                      {
-                        "id": "ff21dfe9-20b0-480f-91e5-5b91dcb50c8e",
-                        "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-                        "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-                      }
-                    ]'::jsonb
-        )
-      )
-    )
-  ) 
-order by 
-  column_6e88acb0_c566_4fef_8a09_66a41338cf36 asc 
-limit 
-  10 offset 0
