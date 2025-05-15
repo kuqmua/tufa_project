@@ -738,7 +738,8 @@ impl OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdUpdate {
                 let f = value.update_query_part(
                     jsonb_set_accumulator,
                     // &format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then '{{}}'::jsonb else ({jsonb_set_accumulator}) end"),
-                    jsonb_set_target,
+                    // jsonb_set_target,
+                    &format!("case when jsonb_typeof({jsonb_set_target}) = 'null' then '[]'::jsonb else {jsonb_set_target} end"),
                     jsonb_set_path,
                     increment
                 );

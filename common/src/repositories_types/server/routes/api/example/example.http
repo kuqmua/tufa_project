@@ -595,10 +595,10 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
             "value": 
             {
               "create": [
-                {
-                  "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-                  "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-                }
+                # {
+                #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+                #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+                # }
               ],
               "update": [
                 # {
@@ -618,7 +618,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                 # }
               ],
               "delete": [
-                # "c607262f-6146-413a-996d-ec16df9e65f1"
+                "c607262f-6146-413a-996d-ec16df9e65f1"
               ]
             }
             # null
