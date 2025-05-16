@@ -78,8 +78,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 NotNullOrNullable::Nullable => true,
             },
             PostgresqlJsonObjectTypePattern::Array => match &element.not_null_or_nullable {
-                NotNullOrNullable::NotNull => true,
-                NotNullOrNullable::Nullable => true,
+                NotNullOrNullable::NotNull => false,
+                NotNullOrNullable::Nullable => false,
             },
         };
         let trait_gen_filter = match &element.trait_gen {
@@ -1422,7 +1422,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
             };
             let maybe_ident_with_id_where_element_token_stream = if is_standart_not_null {
-                let ident_with_id_where_element_token_stream =  generate_ident_where_element_token_stream(
+                let ident_with_id_where_element_token_stream = generate_ident_where_element_token_stream(
                     &ident_with_id_where_element_standart_not_null_upper_camel_case,
                     &generate_ident_where_element_content_token_stream(&IsStandartWithId::True)
                 );
@@ -2288,7 +2288,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 }
             };
-            let create_update_delete_check_fields_are_empty_upper_camel_case = naming::CreateUpdateDeleteCheckFieldsAreEmptyUpperCamelCase;
             let not_unique_id_in_json_update_array_upper_camel_case = naming::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
             let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
             let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = naming::NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
@@ -2300,10 +2299,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                         #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
                         pub enum #ident_update_try_new_error_named_upper_camel_case {
-                            //todo this variant was under is_nullable check
-                            #create_update_delete_check_fields_are_empty_upper_camel_case {
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                            },
                             #not_unique_id_in_json_update_array_upper_camel_case {
                                 #[eo_to_std_string_string_serialize_deserialize]
                                 error: std::string::String,
@@ -2400,12 +2395,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote! {
                             impl #ident_update_upper_camel_case {
                                 pub fn try_new(#fields_token_stream) -> Result<Self, #ident_update_try_new_error_named_upper_camel_case> {
-                                    //todo wrong. create vec can be empty
-                                    if #create_snake_case.is_empty() && #update_snake_case.is_empty() && #delete_snake_case.is_empty() {
-                                        return Err(#ident_update_try_new_error_named_upper_camel_case::#create_update_delete_check_fields_are_empty_upper_camel_case {
-                                            code_occurence: error_occurence_lib::code_occurence!()
-                                        });
-                                    }
                                     #check_not_unique_id_token_stream
                                     Ok(Self {
                                         #create_snake_case,
@@ -3118,8 +3107,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     // PostgresqlJsonObjectTypePattern::Standart,
         //     PostgresqlJsonObjectTypePattern::Array,
