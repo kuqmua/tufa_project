@@ -2909,7 +2909,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let ident_with_id_update_element_token_stream = quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                     pub struct #ident_with_id_update_element_standart_not_null_upper_camel_case {
-                        pub #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,//is it update? maybe read?
+                        pub #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
                         pub fields: #ident_update_standart_not_null_upper_camel_case,
                     }
                 };
