@@ -53,18 +53,18 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
       # },
       "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": [
-        {
-          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-          "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-        }
+        # {
+        #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+        #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+        # }
       ],
       "option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id": 
       # null
       [
-        {
-          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-          "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-        }
+        # {
+        #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+        #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+        # }
       ]
     }
   }
@@ -512,85 +512,51 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
     "animal_as_not_null_jsonb_object": {
       "value": [
-        # {
-        #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-        #     "value": 0
-        #   }
-        # },
-        # {
-        #   "column_1495baea_b926_4e20_a223_5b7a1f06c211": {
-        #     "value": 0
-        #   }
-        # },
-        # {
-        #   "doggie_as_not_null_jsonb_object": {
-        #     "value": [
-        #       {
-        #         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-        #           "value": 0
-        #         }
-        #       },
-        #       {
-        #         "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-        #           "value": 0
-        #         }
-        #       }
-        #     ]
-        #   }
-        # },
-        # {
-        #   "option_doggie_as_nullable_jsonb_object": {
-        #     "value": [
-        #       {
-        #         "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-        #           "value": 0
-        #         }
-        #       },
-        #       {
-        #         "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-        #           "value": 0
-        #         }
-        #       }
-        #     ]
-        #   }
-        # },
-        # {
-        #   "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
-        #     "value": {
-        #       "create": [
-        #         {
-        #           "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
-        #           "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
-        #         }
-        #       ],
-        #       "update": [
-        #         {
-        #           "id": "ce367c44-a893-45db-8167-4eb2f7f02e13",
-        #           "fields": [
-        #             {
-        #               "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-        #                 "value": 0
-        #               }
-        #             },
-        #             {
-        #               "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-        #                 "value": 0
-        #               }
-        #             }
-        #           ]
-        #         }
-        #       ],
-        #       "delete": [
-        #         "4ec20a00-d795-4d0c-a9ac-37b2122a6453"
-        #       ]
-        #     }
-        #   }
-        # },
         {
-          "option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id": {
-            "value": 
-            # null
-            {
+          "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+            "value": 0
+          }
+        },
+        {
+          "column_1495baea_b926_4e20_a223_5b7a1f06c211": {
+            "value": 0
+          }
+        },
+        {
+          "doggie_as_not_null_jsonb_object": {
+            "value": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                  "value": 0
+                }
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "option_doggie_as_nullable_jsonb_object": {
+            "value": [
+              {
+                "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                  "value": 0
+                }
+              },
+              {
+                "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
+            "value": {
               "create": [
                 {
                   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
@@ -598,24 +564,58 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                 }
               ],
               "update": [
+                {
+                  "id": "e9a8efe2-0095-4d49-9c8d-2aaec64309d3",
+                  "fields": [
+                    {
+                      "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
+                        "value": 0
+                      }
+                    },
+                    {
+                      "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
+                        "value": 0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "delete": [
+                "471d3a77-2099-4fad-9693-8c1302eaf34a"
+              ]
+            }
+          }
+        },
+        {
+          "option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id": {
+            "value": 
+            # null
+            {
+              "create": [
                 # {
-                #   "id": "03e9051a-bf08-4ca6-a56e-c6e18c3071d6",
+                #   "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": 0,
+                #   "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": 0
+                # }
+              ],
+              "update": [
+                # {
+                #   "id": "d436b920-3f21-47b2-bc73-89bad8d36d34",
                 #   "fields": [
                 #     {
                 #       "column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015": {
-                #         "value": 0
+                #         "value": 20
                 #       }
                 #     },
                 #     {
                 #       "column_f85f2f57_f85b_4126_be0f_cb5830f0475d": {
-                #         "value": 0
+                #         "value": 20
                 #       }
                 #     }
                 #   ]
                 # }
               ],
               "delete": [
-                # "8a2d7bb1-71ac-4bda-9f20-ff9c6ca45835"
+                # "d436b920-3f21-47b2-bc73-89bad8d36d34"
               ]
             }
           }
