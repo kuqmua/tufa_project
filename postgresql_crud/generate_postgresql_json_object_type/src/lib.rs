@@ -476,7 +476,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &quote::quote! {format!("{self:?}")}
             )
         };
-        
+
         let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
         let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_table_type_declaration_token_stream = {
@@ -1040,7 +1040,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             Some(value) => value,
                                             None => &<#ident_with_id_select_array_not_null_upper_camel_case as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                         };
-                                        value.select_query_part(field_ident, 
+                                        value.select_query_part(
+                                            field_ident,
                                             &column_name_and_maybe_field_getter,
                                             column_name_and_maybe_field_getter_for_error_message, true
                                         )
@@ -1099,7 +1100,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_select_element_or_ident_with_id_select_element_upper_camel_case
                 );
                 let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                    &ident_select_element_or_ident_with_id_select_element_upper_camel_case, 
+                    &ident_select_element_or_ident_with_id_select_element_upper_camel_case,
                     &{
                         let vec_content_token_stream = {
                             let elements_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
@@ -1405,7 +1406,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let maybe_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_element_token_stream = match &postgresql_json_object_type_pattern {
                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                     NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                        &ident_where_element_upper_camel_case, 
+                        &ident_where_element_upper_camel_case,
                         &generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_content_standart_not_null_where_element(&IsStandartWithId::False)
                     ),
                     NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
@@ -2295,7 +2296,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let not_unique_id_in_json_update_array_upper_camel_case = naming::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
             let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
             let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = naming::NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
-            
+
             let ident_update_try_new_error_named_upper_camel_case = &naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
             let maybe_ident_update_try_new_error_named_token_stream = match &postgresql_json_object_type_pattern {
                 PostgresqlJsonObjectTypePattern::Standart => proc_macro2::TokenStream::new(),

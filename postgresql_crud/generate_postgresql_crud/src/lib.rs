@@ -553,7 +553,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {#as_postgresql_crud_postgresql_type_postgresql_type_token_stream #tokens}
     };
 
-    let primary_key_field_type_as_primary_key_upper_camel_case = quote::quote!{
+    let primary_key_field_type_as_primary_key_upper_camel_case = quote::quote! {
         <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
     };
     // let contains_generic_json = {
@@ -1179,12 +1179,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let declaration_excluding_primary_key_token_stream = fields_without_primary_key.iter().map(|element| {
             let field_ident = &element.field_ident;
-            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(
-                &{
-                    let element_syn_field_ty = &element.syn_field.ty;
-                    quote::quote!{<#element_syn_field_ty as postgresql_crud::PostgresqlType>::Read}
-                }
-            );
+            let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&{
+                let element_syn_field_ty = &element.syn_field.ty;
+                quote::quote! {<#element_syn_field_ty as postgresql_crud::PostgresqlType>::Read}
+            });
             quote::quote! {
                 let mut #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
             }
@@ -1337,21 +1335,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             generate_quotes::double_quotes_token_stream(&format!("create table if not exists {ident_snake_case_stringified} ({acc})"))
         };
         let serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream = {
-            let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: std::primitive::bool|{
-                let is_primary_key_token_stream: &dyn quote::ToTokens = if is_primary_key {
-                    &naming::TrueSnakeCase
-                }
-                else {
-                    &naming::FalseSnakeCase
-                };
+            let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: std::primitive::bool| {
+                let is_primary_key_token_stream: &dyn quote::ToTokens = if is_primary_key { &naming::TrueSnakeCase } else { &naming::FalseSnakeCase };
                 let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                 //todo reuse create_table_column_query_part token stream
-                quote::quote!{
+                quote::quote! {
                     <#field_type as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
                 }
             };
             let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&primary_key_field.syn_field.ty, &primary_key_field.field_ident, true)];
-            fields_without_primary_key.iter().for_each(|element|{
+            fields_without_primary_key.iter().for_each(|element| {
                 acc.push(generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&element.syn_field.ty, &element.field_ident, false));
             });
             acc
@@ -2287,15 +2280,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let generate_try_operation_route_logic_token_stream = |
-        operation: &Operation,
-        common_additional_route_logic_token_stream: &dyn quote::ToTokens,
-        parameters_logic_token_stream: &dyn quote::ToTokens,
-        expected_updated_primary_keys_token_stream: &dyn quote::ToTokens,
-        query_string_token_stream: &dyn quote::ToTokens,
-        binded_query_token_stream: &dyn quote::ToTokens,
-        postgresql_logic_token_stream: &dyn quote::ToTokens
-    | -> proc_macro2::TokenStream {
+    let generate_try_operation_route_logic_token_stream = |operation: &Operation,
+                                                           common_additional_route_logic_token_stream: &dyn quote::ToTokens,
+                                                           parameters_logic_token_stream: &dyn quote::ToTokens,
+                                                           expected_updated_primary_keys_token_stream: &dyn quote::ToTokens,
+                                                           query_string_token_stream: &dyn quote::ToTokens,
+                                                           binded_query_token_stream: &dyn quote::ToTokens,
+                                                           postgresql_logic_token_stream: &dyn quote::ToTokens|
+     -> proc_macro2::TokenStream {
         let try_operation_route_logic_snake_case = naming::parameter::TrySelfRouteLogicSnakeCase::from_display(operation);
         let request_snake_case = naming::RequestSnakeCase;
         let app_state_snake_case = naming::AppStateSnakeCase;
@@ -2404,14 +2396,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             pub #field_ident: #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
         }
     });
-    let generate_try_operation_token_stream = |
-        operation: &Operation,
-        operation_parameters_lifetime_token_stream: &dyn quote::ToTokens,
-        type_variants_from_request_response_syn_variants: &[syn::Variant],
-        result_ok_type_token_stream: &dyn quote::ToTokens,
-        payload_check_token_stream: &dyn quote::ToTokens,
-        desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &dyn quote::ToTokens
-    | -> proc_macro2::TokenStream {
+    let generate_try_operation_token_stream = |operation: &Operation,
+                                               operation_parameters_lifetime_token_stream: &dyn quote::ToTokens,
+                                               type_variants_from_request_response_syn_variants: &[syn::Variant],
+                                               result_ok_type_token_stream: &dyn quote::ToTokens,
+                                               payload_check_token_stream: &dyn quote::ToTokens,
+                                               desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream: &dyn quote::ToTokens|
+     -> proc_macro2::TokenStream {
         let try_operation_snake_case = naming::parameter::TrySelfSnakeCase::from_display(operation);
         let try_operation_error_named_upper_camel_case = naming::parameter::TrySelfErrorNamedUpperCamelCase::from_display(operation);
         let operation_parameters_upper_camel_case = naming::parameter::SelfParametersUpperCamelCase::from_display(operation);
@@ -2695,9 +2686,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         generate_fetch_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &match operation {
-                    Operation::CreateMany |
-                    Operation::UpdateMany |
-                    Operation::DeleteMany => quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
+                    Operation::CreateMany | Operation::UpdateMany | Operation::DeleteMany => quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
                     _ => panic!("supported only CreateMany, UpdateMany, DeleteMany"),
                 },
                 // &quote::quote! {Some(#primary_key_inner_type_token_stream(#value_snake_case))},
@@ -2711,9 +2700,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         generate_fetch_one_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &match operation {
-                    Operation::CreateOne |
-                    Operation::UpdateOne |
-                    Operation::DeleteOne => quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
+                    Operation::CreateOne | Operation::UpdateOne | Operation::DeleteOne => quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
                     _ => panic!("supported only CreateOne, UpdateOne, DeleteOne"),
                 },
                 // &quote::quote! {#primary_key_inner_type_token_stream(#value_snake_case)},
@@ -4612,10 +4599,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #query_snake_case
                     }
                 };
-                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
-                    &operation,
-                    &generate_create_update_delete_many_fetch_token_stream(&operation),
-                );
+                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_many_fetch_token_stream(&operation));
                 // let swagger_open_api_token_stream = generate_swagger_open_api_token_stream(
                 //     &ident_snake_case_stringified,
                 //     &unique_status_codes,

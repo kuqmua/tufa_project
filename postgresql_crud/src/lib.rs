@@ -60,41 +60,38 @@ pub trait PostgresqlTypeWhereFilter<'a> {
 }
 
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-pub struct NullableJsonObjectPostgresqlTypeWhereFilter<
-    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
->(pub std::option::Option<UniqueVec<T>>);
+pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<UniqueVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
-where T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+where
+    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         match &self.0 {
             Some(value) => value.query_part(increment, column, is_need_to_add_logical_operator),
-            None => Ok(format!("{column} = 'null'")),//todo fix
+            None => Ok(format!("{column} = 'null'")), //todo fix
         }
     }
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self.0 {
             Some(value) => value.query_bind(query),
-            None => query//todo maybe wrong
+            None => query, //todo maybe wrong
         }
     }
 }
-impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPostgresqlTypeWhereFilter<T> 
-where T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+impl<T> error_occurence_lib::ToStdStringString for NullableJsonObjectPostgresqlTypeWhereFilter<T>
+where
+    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn to_std_string_string(&self) -> std::string::String {
         format!("{self:#?}")
     }
 }
 impl<T> crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NullableJsonObjectPostgresqlTypeWhereFilter<T>
-where T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+where
+    T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![
-            Self(Some(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())),
-            Self(None),
-            
-        ]
+        vec![Self(Some(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())), Self(None)]
     }
 }
 
@@ -126,13 +123,7 @@ pub trait PostgresqlJsonType {
         + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type Read: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type Update: std::fmt::Debug + Clone + PartialEq + Default + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    fn update_query_part(
-        value: &Self::Update,
-        jsonb_set_accumulator: &std::primitive::str,
-        jsonb_set_target: &std::primitive::str,
-        jsonb_set_path: &std::primitive::str,
-        increment: &mut std::primitive::u64,
-    ) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+    fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
@@ -494,14 +485,7 @@ pub struct PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     logical_operator: crate::LogicalOperator,
     value: std::vec::Vec<PostgresqlTypeWhereElement>,
 }
-#[derive(
-    Debug,
-    Clone,
-    serde::Serialize,
-    serde::Deserialize,
-    thiserror::Error,
-    error_occurence_lib::ErrorOccurence,
-)]
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
     IsEmpty {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -716,14 +700,7 @@ impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAl
     }
 }
 
-#[derive(
-    Debug,
-    Clone,
-    PartialEq,
-    serde::Serialize,
-    utoipa::ToSchema,
-    schemars::JsonSchema,
-)]
+#[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct UniqueVec<T>(std::vec::Vec<T>);
 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum UniqueVecTryNewErrorNamed<T> {
@@ -765,9 +742,7 @@ const _: () = {
     where
         T: _serde::Deserialize<'de>,
     {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
         {
@@ -785,47 +760,26 @@ const _: () = {
                 T: _serde::Deserialize<'de>,
             {
                 type Value = UniqueVec<T>;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct UniqueVec",
-                    )
+                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__formatter, "tuple struct UniqueVec")
                 }
                 #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
                 where
                     __E: _serde::Deserializer<'de>,
                 {
-                    let __field0: std::vec::Vec<T> = <std::vec::Vec<
-                        T,
-                    > as _serde::Deserialize>::deserialize(__e)?;
+                    let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
                     _serde::__private::Ok(UniqueVec(__field0))
                 }
                 #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
                 where
                     __A: _serde::de::SeqAccess<'de>,
                 {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::vec::Vec<T>,
-                    >(&mut __seq)? {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct UniqueVec with 1 element",
-                                ),
-                            );
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
                         }
                     };
                     match UniqueVec::try_new(__field0) {
@@ -869,7 +823,8 @@ impl<T> std::convert::Into<Vec<T>> for UniqueVec<T> {
     }
 }
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for UniqueVec<T>
-where T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+where
+    T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
@@ -877,10 +832,10 @@ where T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter
             match element.query_part(increment, column, index != 0) {
                 Ok(value) => {
                     acc.push_str(&value);
-                },
+                }
                 Err(error) => {
                     return Err(error);
-                },
+                }
             }
         }
         Ok(format!("({acc})"))

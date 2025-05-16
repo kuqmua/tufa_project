@@ -4,7 +4,7 @@ pub use filters::*;
 
 pub enum DeriveOrImpl {
     Derive,
-    Impl(proc_macro2::TokenStream)
+    Impl(proc_macro2::TokenStream),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -16,19 +16,19 @@ impl NotNullOrNullable {
     pub fn rust(&self) -> &'static dyn std::fmt::Display {
         match &self {
             Self::NotNull => &"",
-            Self::Nullable => &naming::OptionUpperCamelCase
+            Self::Nullable => &naming::OptionUpperCamelCase,
         }
     }
     pub fn maybe_option_wrap(&self, content_token_stream: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
         match &self {
             Self::NotNull => content_token_stream,
-            Self::Nullable => quote::quote!{std::option::Option<#content_token_stream>}
+            Self::Nullable => quote::quote! {std::option::Option<#content_token_stream>},
         }
     }
     pub fn maybe_some_wrap(&self, content_token_stream: proc_macro2::TokenStream) -> proc_macro2::TokenStream {
         match &self {
             Self::NotNull => content_token_stream,
-            Self::Nullable => quote::quote!{Some(#content_token_stream)}
+            Self::Nullable => quote::quote! {Some(#content_token_stream)},
         }
     }
     //json
@@ -51,7 +51,7 @@ pub fn generate_postgresql_type_where_element_token_stream<'a, GenerateGenericTy
     prefix: &dyn quote::ToTokens,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
     is_query_bind_mutable: &IsQueryBindMutable,
-) -> proc_macro2::TokenStream 
+) -> proc_macro2::TokenStream
 where
     GenerateGenericTypeTokenStream: Fn(std::primitive::bool) -> &'a dyn naming::StdFmtDisplayPlusQuoteToTokens,
 {
@@ -69,8 +69,7 @@ where
                 let maybe_generic_token_stream = if element.has_generic() {
                     let type_token_stream = generate_where_element_variants_types_generic_token_stream(element.is_relevant_only_for_not_null());
                     quote::quote! {<#type_token_stream>}
-                }
-                else {
+                } else {
                     proc_macro2::TokenStream::new()
                 };
                 quote::quote! {crate::where_element_filters::#prefix_where_element_self_upper_camel_case #maybe_generic_token_stream}
@@ -85,7 +84,7 @@ where
         }
     };
     let impl_crate_postgresql_type_postgresql_type_where_filter_for_postgresql_type_tokens_where_element_token_stream = impl_postgresql_type_where_filter_for_ident_token_stream(
-        &quote::quote!{<'a>},
+        &quote::quote! {<'a>},
         &ident,
         &proc_macro2::TokenStream::new(),
         &{
@@ -125,18 +124,13 @@ where
         },
         &crate::ImportPath::Crate,
     );
-    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-        &proc_macro2::TokenStream::new(),
-        &ident,
-        &proc_macro2::TokenStream::new(),
-        &quote::quote! {format!("{self:#?}")}
-    );
+    let impl_error_occurence_lib_to_std_string_string_for_postgresql_type_tokens_where_element_token_stream =
+        macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self:#?}")});
     let impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_postgresql_type_tokens_where_element_token_stream =
         crate::generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident, &{
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();
-                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream =
-                    token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+                let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
                 quote::quote! {
                     Self::#element_upper_camel_case(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                 }
@@ -162,7 +156,6 @@ pub fn generate_struct_ident_double_quotes_token_stream(postgresql_type_where_el
 pub fn generate_struct_ident_with_number_elements_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_token_stream(&format!("struct {postgresql_type_ident_where_element_tokens_upper_camel_case} with {length} elements"))
 }
-
 
 pub fn generate_sqlx_types_json_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {sqlx::types::Json<#type_token_stream>}
@@ -200,25 +193,25 @@ impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
 
 pub enum IsCreateQueryBindMutable {
     True,
-    False
+    False,
 }
 impl quote::ToTokens for IsCreateQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::True => naming::MutSnakeCase.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens)
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
         }
     }
 }
 pub enum IsUpdateQueryBindMutable {
     True,
-    False
+    False,
 }
 impl quote::ToTokens for IsUpdateQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::True => naming::MutSnakeCase.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens)
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
         }
     }
 }
@@ -239,7 +232,7 @@ pub fn generate_postgresql_json_type_token_stream(
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
-    let path_token_stream = quote::quote!{#import_path ::};
+    let path_token_stream = quote::quote! {#import_path ::};
     let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
     let create_upper_camel_case = naming::CreateUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
@@ -335,11 +328,7 @@ pub fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_o
         }
     }
 }
-pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-    import_path: &ImportPath,
-    ident: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(import_path: &ImportPath, ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let path_trait_token_stream = import_path.all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element();
     let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_snake_case = naming::AllEnumVariantsArrayDefaultButStdOptionOptionIsAlwaysSomeAndStdVecVecAlwaysContainsOneElementSnakeCase;
     quote::quote! {
@@ -351,35 +340,13 @@ pub fn generate_impl_all_enum_variants_array_default_but_option_is_always_some_a
     }
 }
 
-pub fn generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-    ident: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-        &proc_macro2::TokenStream::new(),
-        &ImportPath::Crate,
-        ident,
-        &proc_macro2::TokenStream::new(),
-        content_token_stream
-    )
+pub fn generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&proc_macro2::TokenStream::new(), &ImportPath::Crate, ident, &proc_macro2::TokenStream::new(), content_token_stream)
 }
-pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-    ident: &dyn quote::ToTokens,
-    lifetime_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
-    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-        &proc_macro2::TokenStream::new(),
-        &ImportPath::PostgresqlCrud,
-        ident,
-        lifetime_token_stream,
-        content_token_stream
-    )
+pub fn generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, lifetime_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&proc_macro2::TokenStream::new(), &ImportPath::PostgresqlCrud, ident, lifetime_token_stream, content_token_stream)
 }
-pub fn generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-    ident: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn generate_impl_crate_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     generate_impl_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ImportPath::Crate, ident, content_token_stream)
 }
 pub fn generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
@@ -393,9 +360,10 @@ pub enum ImportPath {
 impl quote::ToTokens for ImportPath {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
-            Self::Crate => quote::quote!{crate},
-            Self::PostgresqlCrud => quote::quote!{postgresql_crud},
-        }.to_tokens(tokens)
+            Self::Crate => quote::quote! {crate},
+            Self::PostgresqlCrud => quote::quote! {postgresql_crud},
+        }
+        .to_tokens(tokens)
     }
 }
 impl ImportPath {
@@ -420,13 +388,13 @@ impl ImportPath {
 }
 pub enum IsQueryBindMutable {
     True,
-    False
+    False,
 }
 impl quote::ToTokens for IsQueryBindMutable {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
         match &self {
             Self::True => naming::MutSnakeCase.to_tokens(tokens),
-            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens)
+            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
         }
     }
 }
@@ -450,7 +418,7 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     let query_part_snake_case = naming::QueryPartSnakeCase;
     let query_bind_snake_case = naming::QueryBindSnakeCase;
     let postgresql_type_where_filter_upper_camel_case = naming::PostgresqlTypeWhereFilterUpperCamelCase;
-    quote::quote!{
+    quote::quote! {
         impl #impl_generic_token_stream #import_path ::#postgresql_type_where_filter_upper_camel_case<'a> for #ident_token_stream #ident_generic_token_stream {
             fn #query_part_snake_case(
                 &self,
@@ -467,10 +435,7 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     }
 }
 
-pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
-    ident_token_stream: &dyn quote::ToTokens,
-    type_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(ident_token_stream: &dyn quote::ToTokens, type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         impl sqlx::Type<sqlx::Postgres> for #ident_token_stream {
             fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
@@ -482,11 +447,7 @@ pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
         }
     }
 }
-pub fn generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
-    ident_token_stream: &dyn quote::ToTokens,
-    type_token_stream: &dyn quote::ToTokens,
-    ok_value_match_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(ident_token_stream: &dyn quote::ToTokens, type_token_stream: &dyn quote::ToTokens, ok_value_match_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let value_snake_case = naming::ValueSnakeCase;
     quote::quote! {
         impl sqlx::Decode<'_, sqlx::Postgres> for #ident_token_stream {
@@ -583,11 +544,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     }
 }
 
-pub fn generate_create_table_column_query_part_token_stream(
-    ident: &dyn quote::ToTokens,
-    maybe_fixed_length_parameter_token_stream: &dyn quote::ToTokens,
-    content_token_stream: &dyn quote::ToTokens,
-) -> proc_macro2::TokenStream {
+pub fn generate_create_table_column_query_part_token_stream(ident: &dyn quote::ToTokens, maybe_fixed_length_parameter_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     let create_table_column_query_part_snake_case = naming::CreateTableColumnQueryPartSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let is_primary_key_snake_case = naming::IsPrimaryKeySnakeCase;
@@ -606,7 +563,7 @@ pub fn generate_create_table_column_query_part_token_stream(
 }
 
 pub fn crate_query_part_error_named_checked_add_initialization_token_stream() -> proc_macro2::TokenStream {
-    quote::quote!{crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
+    quote::quote! {crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }}
 }
 
 pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(ident: &dyn quote::ToTokens) -> proc_macro2::TokenStream {

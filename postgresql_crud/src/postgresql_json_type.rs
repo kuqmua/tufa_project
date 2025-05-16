@@ -132,9 +132,6 @@ generate_postgresql_json_types::generate_postgresql_json_types!([
     }
 ]);
 
-
-
-
 // #[derive(Debug)]
 // pub struct VecOfVecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableArrayOfNotNullJsonbNumber;
 // #[derive(Debug, Clone, PartialEq, PartialOrd, Default, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
@@ -237,49 +234,46 @@ generate_postgresql_json_types::generate_postgresql_json_types!([
 //         let dimension3_start = value.dimension3_pagination.start();
 //         let dimension3_end = value.dimension3_pagination.end();
 //         format!("
-        
+
 // jsonb_build_object(
-//   '{field_ident}', 
+//   '{field_ident}',
 //   jsonb_build_object(
-//     'value', 
+//     'value',
 //     (
 //       select jsonb_agg(
 //           (
-        
-        
-//           select 
+
+//           select
 //             jsonb_agg(
 //               case when jsonb_typeof(d2_elem.value)= 'array' then (
-//                 select 
-//                   jsonb_agg(d3_elem.value) 
-//                 from 
-//                   jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord) 
-//                 where 
-//                   d3_ord between {dimension3_start} 
+//                 select
+//                   jsonb_agg(d3_elem.value)
+//                 from
+//                   jsonb_array_elements(d2_elem.value) with ordinality as d3_elem(value, d3_ord)
+//                 where
+//                   d3_ord between {dimension3_start}
 //                   and {dimension3_end}
 //               ) else null end
-//             ) 
-//           from 
-//             jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord) 
-//           where 
-//             d2_ord between {dimension2_start} 
+//             )
+//           from
+//             jsonb_array_elements(d1_elem.value) with ordinality as d2_elem(value, d2_ord)
+//           where
+//             d2_ord between {dimension2_start}
 //             and {dimension2_end}
 
-
 //           )
-//       ) 
-//       from 
+//       )
+//       from
 //         jsonb_array_elements(
 //           {column_name_and_maybe_field_getter} -> '{field_ident}'
-//         ) with ordinality as d1_elem(value, d1_ord) 
-//       where 
-//         d1_ord between {dimension1_start} 
+//         ) with ordinality as d1_elem(value, d1_ord)
+//       where
+//         d1_ord between {dimension1_start}
 //         and {dimension1_end}
 //     )
 //   )
 // )
 
-        
 //         ")
 //     }
 //     type WhereElement = VecOfVecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableArrayOfNotNullJsonbNumberWhereElement;

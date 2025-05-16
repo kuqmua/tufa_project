@@ -1,6 +1,4 @@
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlCrud
-)]
+#[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]
 #[postgresql_crud::read_many_additional_error_variants{enum ReadManyAdditionalErrorVariants{}}]
@@ -152,9 +150,7 @@ pub struct Example {
 }
 //todo enum tree support
 //todo generate wrapper type for all possible json type
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
 #[postgresql_crud::postgresql_json_object_type_pattern{[
     {
         "not_null_or_nullable": "NotNull",
@@ -240,7 +236,6 @@ pub struct Animal {
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_f64: postgresql_crud::postgresql_json_type::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveF64,
     // pub std_option_option_std_vec_vec_std_option_option_std_primitive_bool: postgresql_crud::postgresql_json_type::StdOptionOptionStdVecVecStdOptionOptionStdPrimitiveBool,
     // pub std_option_option_std_vec_vec_std_option_option_std_string_string: postgresql_crud::postgresql_json_type::StdOptionOptionStdVecVecStdOptionOptionStdStringString,
-    
     pub column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
     pub column_1495baea_b926_4e20_a223_5b7a1f06c211: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
 
@@ -355,9 +350,7 @@ mod tests {
     }
 }
 //////////////////
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
+#[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
 #[postgresql_crud::postgresql_json_object_type_pattern{[
     {
         "not_null_or_nullable": "NotNull",
