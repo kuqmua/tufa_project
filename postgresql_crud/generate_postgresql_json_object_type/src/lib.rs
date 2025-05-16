@@ -121,7 +121,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let field_ident_snake_case = naming::FieldIdentSnakeCase;
         let id_snake_case = naming::IdSnakeCase;
         let self_upper_camel_case = naming::SelfUpperCamelCase;
-        let id_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&id_snake_case);
         let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
         let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
         let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
@@ -1017,7 +1016,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',(select jsonb_agg(({{{ident_with_id_select_standart_not_null_snake_case}}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}})))"));
+                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_array_length({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_select_standart_not_null_snake_case}}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}) end ))"));
                                 quote::quote!{
                                     let #ident_with_id_select_standart_not_null_snake_case = self.#ident_with_id_select_standart_not_null_snake_case.select_query_part(
                                         field_ident,
@@ -1742,15 +1741,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }));
                         generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&field_name_double_quotes_token_stream, index)
                     });
-                    let maybe_id_field_ident_double_quotes_serde_private_ok_field_token_stream = match &is_standart_with_id {
-                        IsStandartWithId::False => proc_macro2::TokenStream::new(),
-                        IsStandartWithId::True => {
-                            let value_token_stream = generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&id_snake_case_double_quotes_token_stream, 0);
-                            quote::quote! {#value_token_stream,}
-                        }
-                    };
                     quote::quote! {
-                        #maybe_id_field_ident_double_quotes_serde_private_ok_field_token_stream
                         #(#visit_str_value_enum_variants_token_stream),*,
                     }
                 };
@@ -1771,21 +1762,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         };
                         generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&b_field_name_double_quotes_token_stream, index)
                     });
-                    let maybe_b_field_ident_double_quotes_token_stream = match &is_standart_with_id {
-                        IsStandartWithId::False => proc_macro2::TokenStream::new(),
-                        IsStandartWithId::True => {
-                            let value_token_stream = generate_field_ident_double_quotes_serde_private_ok_field_token_stream(
-                                &{
-                                    let value = format!("b{id_snake_case_double_quotes_token_stream}");
-                                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                                },
-                                0,
-                            );
-                            quote::quote! {#value_token_stream,}
-                        }
-                    };
                     quote::quote! {
-                        #maybe_b_field_ident_double_quotes_token_stream
                         #(#visit_bytes_value_enum_variants_token_stream),*,
                     }
                 };
@@ -1908,12 +1885,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 let fields_array_elements_token_stream = {
                     let fields_array_elements_token_stream = current_vec_syn_field.iter().map(|element| generate_field_ident_double_quotes_token_stream(element));
-                    let maybe_id_double_quotes_comma_token_stream = match &is_standart_with_id {
-                        IsStandartWithId::False => proc_macro2::TokenStream::new(),
-                        IsStandartWithId::True => quote::quote! {#id_snake_case_double_quotes_token_stream,}
-                    };
                     quote::quote! {
-                        #maybe_id_double_quotes_comma_token_stream
                         #(#fields_array_elements_token_stream),*
                     }
                 };
@@ -3104,8 +3076,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     // PostgresqlJsonObjectTypePattern::Standart,
         //     PostgresqlJsonObjectTypePattern::Array,
