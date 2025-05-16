@@ -19,14 +19,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         Standart,
         Array,
     }
-    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-    enum Pattern {
-        NotNullStandartWithoutId,
-        NotNullStandartWithId,
-        NullableStandartWithoutId,
-        NotNullArrayWithId,
-        NullableArrayWithId,
-    }
     #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
     struct PostgresqlJsonObjectTypeRecord {
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
@@ -203,90 +195,87 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             NotNullArrayWithId,
             NullableArrayWithId,
         }
-        let generate_ident_token_stream = |
-            //todo maybe remove posibility of PostgresqlJsonObjectTypePattern::Array + IsStandartWithId::True? it would cause a bug
-            not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
-            postgresql_json_object_type_pattern: &PostgresqlJsonObjectTypePattern,
-            is_standart_with_id: &IsStandartWithId,
-
-            // pattern: &Pattern,
-        |{
-            // let (
-            //     not_null_or_nullable,
-            //     postgresql_json_object_type_pattern,
-            //     is_standart_with_id,
-            // ) = match &pattern {
-            //     Pattern::NotNullStandartWithoutId => (
-            //         postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            //         PostgresqlJsonObjectTypePattern::Standart,
-            //         IsStandartWithId::WithoutId,
-            //     ),
-            //     Pattern::NotNullStandartWithId => (
-            //         postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            //         PostgresqlJsonObjectTypePattern::Standart,
-            //         IsStandartWithId::WithId,
-            //     ),
-            //     Pattern::NullableStandartWithoutId => (
-            //         postgresql_crud_macros_common::NotNullOrNullable::Nullable,
-            //         PostgresqlJsonObjectTypePattern::Standart,
-            //         IsStandartWithId::WithoutId,
-            //     ),
-            //     Pattern::NotNullArrayWithId => (
-            //         postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            //         PostgresqlJsonObjectTypePattern::Array,
-            //         IsStandartWithId::WithId,
-            //     ),
-            //     Pattern::NullableArrayWithId => (
-            //         postgresql_crud_macros_common::NotNullOrNullable::Nullable,
-            //         PostgresqlJsonObjectTypePattern::Array,
-            //         IsStandartWithId::WithId,
-            //     ),
-            // };
-
-
-
+        let generate_ident_token_stream = |ident_pattern: &IdentPattern|{
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
             let jsonb_object_upper_camel_case = naming::JsonbObjectUpperCamelCase;
             let with_id_upper_camel_case = naming::WithIdUpperCamelCase;
-            let not_null_or_nullable_rust = not_null_or_nullable.rust();
-            let (rust_part, postgresql_part) = match &postgresql_json_object_type_pattern {
-                PostgresqlJsonObjectTypePattern::Standart => {
-                    let maybe_with_id: &dyn std::fmt::Display  = match &is_standart_with_id {
-                        IsStandartWithId::False => &"",
-                        IsStandartWithId::True => &naming::WithIdUpperCamelCase,
-                    };
+            let syn_derive_input_ident_stringified = syn_derive_input_ident.to_string();
+            let jsonb_object_upper_camel_case_stringified = jsonb_object_upper_camel_case.to_string();
+            let vec_of_syn_derive_input_ident_with_id = format!("{vec_of_upper_camel_case}{syn_derive_input_ident}{with_id_upper_camel_case}");
+            let array_of_not_null_jsonb_object_with_id = format!(
+                "{array_of_upper_camel_case}{}{jsonb_object_upper_camel_case}{with_id_upper_camel_case}",
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull
+            );
+            let (rust_part, postgresql_part, current_not_null_or_nullable) = match &ident_pattern {
+                IdentPattern::NotNullStandartWithoutId => {
                     (
-                        format!("{syn_derive_input_ident}{maybe_with_id}"),
-                        format!("{jsonb_object_upper_camel_case}{maybe_with_id}")
+                        syn_derive_input_ident_stringified,
+                        jsonb_object_upper_camel_case_stringified,
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                     )
                 },
-                PostgresqlJsonObjectTypePattern::Array => {
-                    let not_null = postgresql_crud_macros_common::NotNullOrNullable::NotNull;
+                IdentPattern::NotNullStandartWithId => {
                     (
-                        format!("{vec_of_upper_camel_case}{syn_derive_input_ident}{with_id_upper_camel_case}"),
-                        format!("{array_of_upper_camel_case}{not_null}{jsonb_object_upper_camel_case}{with_id_upper_camel_case}")
+                        format!("{syn_derive_input_ident}{with_id_upper_camel_case}"),
+                        format!("{jsonb_object_upper_camel_case}{with_id_upper_camel_case}"),
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                    )
+                },
+                IdentPattern::NullableStandartWithoutId => {
+                    (
+                        syn_derive_input_ident_stringified,
+                        jsonb_object_upper_camel_case_stringified,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable
+                    )
+                },
+                IdentPattern::NotNullArrayWithId => {
+                    (
+                        vec_of_syn_derive_input_ident_with_id,
+                        array_of_not_null_jsonb_object_with_id,
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull
+                    )
+                },
+                IdentPattern::NullableArrayWithId => {
+                    (
+                        vec_of_syn_derive_input_ident_with_id,
+                        array_of_not_null_jsonb_object_with_id,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable
                     )
                 },
             };
-            format!("{not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{not_null_or_nullable}{postgresql_part}")
+            let current_not_null_or_nullable_rust = current_not_null_or_nullable.rust();
+            format!("{current_not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{current_not_null_or_nullable}{postgresql_part}")
             .parse::<proc_macro2::TokenStream>().unwrap()
         };
-        let ident = &generate_ident_token_stream(&not_null_or_nullable, &postgresql_json_object_type_pattern, &IsStandartWithId::False);
+        let ident = &generate_ident_token_stream(
+            &match (&not_null_or_nullable, &postgresql_json_object_type_pattern) {
+                (
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                    PostgresqlJsonObjectTypePattern::Standart
+                ) => IdentPattern::NotNullStandartWithoutId,
+                (
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                    PostgresqlJsonObjectTypePattern::Array
+                ) => IdentPattern::NotNullArrayWithId,
+                (
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                    PostgresqlJsonObjectTypePattern::Standart
+                ) => IdentPattern::NullableStandartWithoutId,
+                (
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                    PostgresqlJsonObjectTypePattern::Array
+                ) => IdentPattern::NullableArrayWithId,
+            }
+        );
         let ident_standart_not_null_upper_camel_case = &generate_ident_token_stream(
-            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            &PostgresqlJsonObjectTypePattern::Standart,
-            &IsStandartWithId::False,
+            &IdentPattern::NotNullStandartWithoutId
         );
-        let ident_with_id_standart_not_null_upper_camel_case = generate_ident_token_stream(
-            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            &PostgresqlJsonObjectTypePattern::Standart,
-            &IsStandartWithId::True,
+        let ident_with_id_standart_not_null_upper_camel_case = &generate_ident_token_stream(
+            &IdentPattern::NotNullStandartWithId
         );
-        let ident_with_id_array_not_null_upper_camel_case = generate_ident_token_stream(
-            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-            &PostgresqlJsonObjectTypePattern::Array,
-            &IsStandartWithId::True,
+        let ident_with_id_array_not_null_upper_camel_case = &generate_ident_token_stream(
+            &IdentPattern::NotNullArrayWithId
         );
         let is_standart = if let PostgresqlJsonObjectTypePattern::Standart = &postgresql_json_object_type_pattern {
             true
@@ -302,15 +291,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         };
         let is_standart_not_null = is_standart && is_not_null;
         let ident_token_stream = {
-            let generate_ident_token_stream = |ident: &dyn quote::ToTokens|{
+            let generate_struct_ident_token_stream = |ident: &dyn quote::ToTokens|{
                 quote::quote! {
                     #[derive(Debug)]
                     pub struct #ident;
                 }
             };
-            let ident_token_stream = generate_ident_token_stream(&ident);
+            let ident_token_stream = generate_struct_ident_token_stream(&ident);
             let maybe_ident_with_id_standart_not_null_token_stream = if is_standart_not_null {
-                generate_ident_token_stream(&&ident_with_id_standart_not_null_upper_camel_case)
+                generate_struct_ident_token_stream(&&ident_with_id_standart_not_null_upper_camel_case)
             }
             else {
                 proc_macro2::TokenStream::new()
