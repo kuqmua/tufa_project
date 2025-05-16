@@ -104,6 +104,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let postgresql_json_object_type_pattern = &element.postgresql_json_object_type_pattern;
         let trait_gen = &element.trait_gen;
 
+        let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
+
         let create_snake_case = naming::CreateSnakeCase;
         let update_snake_case = naming::UpdateSnakeCase;
         let delete_snake_case = naming::DeleteSnakeCase;
@@ -137,12 +139,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
             quote::quote! {&mut #std_primitive_u64_token_stream}
         };
+        let import_path_query_part_error_named_token_stream = {
+            let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
+            quote::quote!{#import_path::#query_part_error_named_upper_camel_case}
+        };
+        let import_path_query_part_error_named_checked_add_initialization_token_stream = quote::quote!{
+            #import_path_query_part_error_named_token_stream::#checked_add_upper_camel_case {
+                code_occurence: error_occurence_lib::code_occurence!()
+            }
+        };
 
         // let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
         let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
         // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-
-        let import_path = postgresql_crud_macros_common::ImportPath::PostgresqlCrud;
 
         let syn_derive_input: syn::DeriveInput = syn::parse_str(input_token_stream_stringified).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
         let syn_derive_input_ident = &syn_derive_input.ident;
@@ -616,7 +625,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         fn #create_query_part_snake_case(
                             &self,
                             #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
-                        ) -> Result<#std_string_string_token_stream, #import_path::QueryPartErrorNamed> {
+                        ) -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
                             #create_query_part_content_token_stream
                         }
                         fn #create_query_bind_snake_case(
@@ -643,9 +652,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             *increment = value;
                                             Ok(format!("${increment}"))
                                         },
-                                        None => Err(#import_path::QueryPartErrorNamed::CheckedAdd {//todo reuse
-                                            code_occurence: error_occurence_lib::code_occurence!()
-                                        }),
+                                        None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
                                     }
                                 }
                             },
@@ -674,9 +681,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             *increment = value;
                                             Ok(format!("${increment}"))
                                         },
-                                        None => Err(#import_path::QueryPartErrorNamed::CheckedAdd {//todo reuse
-                                            code_occurence: error_occurence_lib::code_occurence!()
-                                        }),
+                                        None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
                                     }
                                 }
                             },
@@ -2721,7 +2726,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
                             #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
                             #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
-                        ) -> Result<#std_string_string_token_stream, #import_path::QueryPartErrorNamed> {
+                        ) -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
                             #update_query_part_content_token_stream
                         }
                         fn #update_query_bind_snake_case(
@@ -2755,9 +2760,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 *#increment_snake_case = value;
                                                 Ok(format!(#none_format_handle_token_stream))
                                             },
-                                            None => Err(#import_path::QueryPartErrorNamed::#checked_add_upper_camel_case {
-                                                code_occurence: error_occurence_lib::code_occurence!()
-                                            })
+                                            None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream)
                                         }
                                     }
                                 }
@@ -2797,7 +2800,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
                                             }
                                             None => {
-                                                return Err(#import_path::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                                return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
                                             }
                                         }
                                     }
@@ -2811,7 +2814,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 create_query_part_acc.push_str(&format!("{value},"));
                                             }
                                             Err(error) => {
-                                                return Err(#import_path::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                                return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
                                             }
                                         }
                                     }
@@ -2831,7 +2834,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         *increment = value;
                                         Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
                                     }
-                                    None => Err(#import_path::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                                    None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
                                 },
                             }
                         },
@@ -2956,7 +2959,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 increment.to_string()
                             }
                             None => {
-                                return Err(#import_path::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });//todo reuse
+                                return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
                             }
                         };
                         match self.fields.#update_query_part_snake_case(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
