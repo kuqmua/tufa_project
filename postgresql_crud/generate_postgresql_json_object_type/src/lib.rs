@@ -641,7 +641,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             *increment = value;
                                             Ok(format!("${increment}"))
                                         },
-                                        None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd {//todo reuse
+                                        None => Err(#import_path::QueryPartErrorNamed::CheckedAdd {//todo reuse
                                             code_occurence: error_occurence_lib::code_occurence!()
                                         }),
                                     }
@@ -672,7 +672,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             *increment = value;
                                             Ok(format!("${increment}"))
                                         },
-                                        None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd {//todo reuse
+                                        None => Err(#import_path::QueryPartErrorNamed::CheckedAdd {//todo reuse
                                             code_occurence: error_occurence_lib::code_occurence!()
                                         }),
                                     }
@@ -841,7 +841,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             )]
                             pub struct #ident_select_upper_camel_case {
                                 pub #ident_with_id_select_standart_not_null_snake_case: #ident_with_id_select_standart_not_null_upper_camel_case,
-                                pub dimension1_pagination: postgresql_crud::Pagination
+                                pub dimension1_pagination: #import_path::Pagination
                             }
                         }
                     },
@@ -996,7 +996,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     {
                                         let value = match &self.0 {
                                             Some(value) => value,
-                                            None => &<#ident_select_standart_not_null_upper_camel_case as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                            None => &<#ident_select_standart_not_null_upper_camel_case as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
                                         };
                                         value.select_query_part(
                                             field_ident,
@@ -1031,7 +1031,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     format!("case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end", {
                                         let value = match &self.0 {
                                             Some(value) => value,
-                                            None => &<#ident_with_id_select_array_not_null_upper_camel_case as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                            None => &<#ident_with_id_select_array_not_null_upper_camel_case as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                         };
                                         value.select_query_part(field_ident, 
                                             &column_name_and_maybe_field_getter,
@@ -1243,13 +1243,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         NotNullOrNullable::NotNull => generate_ident_where_element_wrapper_token_stream(&{
                             //todo additional filters
                             quote::quote! {
-                                Equal(postgresql_crud::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_table_type_declaration_upper_camel_case>)
+                                Equal(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_table_type_declaration_upper_camel_case>)
                             }
                         }),
                         NotNullOrNullable::Nullable => generate_ident_where_element_wrapper_token_stream(&{//todo remove this variant? refactoring enums
                             //todo additional filters
                             quote::quote! {
-                                Equal(postgresql_crud::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_table_type_declaration_upper_camel_case>)
+                                Equal(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_table_type_declaration_upper_camel_case>)
                             }
                         }),
                     }
@@ -1339,24 +1339,24 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         NotNullOrNullable::NotNull => generate_impl_postgresql_type_where_filter_for_ident_token_stream(
                             &quote::quote!{
                                 match &self {
-                                    Self::Equal(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                 }
                             },
                             &quote::quote!{
                                 match self {
-                                    Self::Equal(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
+                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
                                 }
                             },
                         ),
                         NotNullOrNullable::Nullable => generate_impl_postgresql_type_where_filter_for_ident_token_stream(
                             &quote::quote!{
                                 match &self {
-                                    Self::Equal(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                 }
                             },
                             &quote::quote!{
                                 match self {
-                                    Self::Equal(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
+                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
                                 }
                             },
                         ),
@@ -1407,13 +1407,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                         &ident_where_element_upper_camel_case,
                         &quote::quote!{
-                            vec![Self::Equal(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
+                            vec![Self::Equal(#import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
                         }
                     ),
                     NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                         &ident_where_element_upper_camel_case,
                         &quote::quote!{
-                            vec![Self::Equal(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
+                            vec![Self::Equal(#import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
                         }
                     ),
                 },
@@ -1456,13 +1456,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => typical_token_stream,
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{//todo refactor as Option<T>
-                        pub type #ident_where_element_upper_camel_case = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::WhereElement>;
+                        pub type #ident_where_element_upper_camel_case = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlType>::WhereElement>;
                     },
                 },
                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => typical_token_stream,
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                        pub type #ident_where_element_upper_camel_case = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlType>::WhereElement>;
+                        pub type #ident_where_element_upper_camel_case = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_with_id_array_not_null_upper_camel_case as #import_path::PostgresqlType>::WhereElement>;
                     },
                 },
             }
@@ -2809,7 +2809,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 delete_query_part_acc.push_str(&format!("{maybe_space_and_space}elem->>'id' <> ${increment}"));
                                             }
                                             None => {
-                                                return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                                return Err(#import_path::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
                                             }
                                         }
                                     }
@@ -2823,7 +2823,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 create_query_part_acc.push_str(&format!("{value},"));
                                             }
                                             Err(error) => {
-                                                return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                                return Err(#import_path::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
                                             }
                                         }
                                     }
@@ -2849,7 +2849,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         *increment = value;
                                         Ok(format!("jsonb_set({jsonb_set_accumulator},'{{{jsonb_set_path}}}',${increment})"))
                                     }
-                                    None => Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
+                                    None => Err(#import_path::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
                                 },
                             }
                         },
@@ -2947,7 +2947,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 proc_macro2::TokenStream::new()
             };
             let maybe_ident_with_id_update_element_token_stream = if is_standart_not_null {
-                //todo maybe write analog of postgresql_crud::UniqueVec but with id
+                //todo maybe write analog of #import_path::UniqueVec but with id
                 let ident_with_id_update_element_token_stream = quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                     pub struct #ident_with_id_update_element_standart_not_null_upper_camel_case {
@@ -2974,7 +2974,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 increment.to_string()
                             }
                             None => {
-                                return Err(postgresql_crud::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });//todo reuse
+                                return Err(#import_path::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });//todo reuse
                             }
                         };
                         match self.fields.#update_query_part_snake_case(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
