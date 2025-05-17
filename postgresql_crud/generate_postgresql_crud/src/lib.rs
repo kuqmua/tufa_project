@@ -1021,7 +1021,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                     #value_snake_case.push_str(",");
                 }
-                let _ = #value_snake_case.pop();
+                let _: Option<char> = #value_snake_case.pop();
                 #value_snake_case
             }
         }
@@ -1325,7 +1325,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 for _ in &fields {
                     acc.push_str("{},");
                 }
-                let _ = acc.pop();
+                let _: Option<char> = acc.pop();
                 acc
             };
             generate_quotes::double_quotes_token_stream(&format!("create table if not exists {ident_snake_case_stringified} ({acc})"))
@@ -2808,7 +2808,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         // }
                         acc
                     });
-                    let _ = column_names.pop();
+                    let _: Option<char> = column_names.pop();
                     let column_increments_token_stream = fields.iter().map(|element| {
                         let element_field_ident = &element.field_ident;
                         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
@@ -2833,10 +2833,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                 let mut #acc_snake_case = #std_string_string::default();
                                 #(#column_increments_token_stream)*
-                                let _ = #acc_snake_case.pop();
+                                let _: Option<char> = #acc_snake_case.pop();
                                 values.push_str(&format!("({acc}),"));
                             }
-                            let _ = values.pop();
+                            let _: Option<char> = values.pop();
                             format!(#query_token_stream)
                         }
                     }
@@ -3002,7 +3002,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation = Operation::CreateOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_with_row_and_rollback_syn_variants.len() + 1);
+                let mut value = vec![];
                 for element in &common_route_with_row_and_rollback_syn_variants {
                     value.push(*element);
                 }
@@ -3041,7 +3041,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         });
                         acc
                     });
-                    let _ = column_names.pop();
+                    let _: Option<char> = column_names.pop();
                     let mut column_increments = fields.iter().fold(std::string::String::default(), |mut acc, _| {
                         acc.push_str("{}");
                         acc.push_str({
@@ -4019,7 +4019,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             }
                                         }
                                     }
-                                    let _ = #acc_snake_case.pop();
+                                    let _: Option<char> = #acc_snake_case.pop();
                                     #acc_snake_case
                                 }
                             ));
@@ -4030,7 +4030,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let mut #query_snake_case = #std_string_string::#from_snake_case(#query_start_token_stream);
                             #increment_initialization_token_stream
                             #(#fields_named_excluding_primary_key_update_assignment_token_stream)*
-                            let _ = #query_snake_case.pop();
+                            let _: Option<char> = #query_snake_case.pop();
                             #where_primary_key_field_ident_in_primary_keys_returning_primary_key_field_ident_token_stream
                             #query_snake_case
                         }
@@ -4337,7 +4337,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             #increment_initialization_token_stream
                             let mut #query_snake_case = #std_string_string::#from_snake_case(#query_start_token_stream);
                             #(#additional_parameters_modification_token_stream)*
-                            let _ = #query_snake_case.pop();
+                            let _: Option<char> = #query_snake_case.pop();
                             #additional_parameters_primary_key_modification_token_stream
                             #query_snake_case.push_str(&format!(#returning_primary_key_double_quotes_token_stream));
                             #query_snake_case
