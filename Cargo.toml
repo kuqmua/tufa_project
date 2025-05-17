@@ -582,7 +582,7 @@ missing_inline_in_public_items = { level = "allow", priority = 0 }
 missing_panics_doc = { level = "allow", priority = 0 }
 missing_safety_doc = { level = "deny", priority = 0 }
 missing_spin_loop = { level = "deny", priority = 0 }
-missing_trait_methods = { level = "deny", priority = 0 }
+missing_trait_methods = { level = "allow", priority = 0 }
 mistyped_literal_suffixes = { level = "deny", priority = 0 }
 mixed_case_hex_literals = { level = "deny", priority = 0 }
 mixed_read_write_in_expression = { level = "deny", priority = 0 }
