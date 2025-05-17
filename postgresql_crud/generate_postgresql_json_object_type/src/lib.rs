@@ -1253,12 +1253,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 Equal(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_table_type_declaration_upper_camel_case>)
                             }
                         }),
-                        NotNullOrNullable::Nullable => generate_ident_where_element_wrapper_token_stream(&{//todo remove this variant? refactoring enums
-                            //todo additional filters
-                            quote::quote! {
-                                Equal(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_table_type_declaration_upper_camel_case>)
-                            }
-                        }),
+                        NotNullOrNullable::Nullable => proc_macro2::TokenStream::new()
                     }
                 }
             };
@@ -3091,8 +3086,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     // PostgresqlJsonObjectTypePattern::Standart,
         //     PostgresqlJsonObjectTypePattern::Array,
