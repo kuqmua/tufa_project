@@ -46,7 +46,7 @@ fn check_specific_dependency_version_usage() {
             std::io::Read::read_to_string(&mut buf_reader_member, &mut cargo_toml_member_content).unwrap_or_else(|error| panic!("cannot read_to_string from {path_to_cargo_toml_member}{file_error}\"{error}\""));
         }
         let cargo_toml_member_map = cargo_toml_member_content.parse::<toml::Table>().unwrap_or_else(|error| panic!("cannot parse::<toml::Table>() cargo_toml_member_content for {member} {file_error}\"{error}\""));
-        toml_keys.iter().for_each(|toml_key| {
+        for toml_key in toml_keys.iter() {
             let f = if let Some(toml_member_table_map_value) = cargo_toml_member_map.get(*toml_key) {
                 if let toml::Value::Table(toml_member_table_dependencies_map) = toml_member_table_map_value {
                     toml_member_table_dependencies_map
@@ -55,15 +55,10 @@ fn check_specific_dependency_version_usage() {
                             if let toml::Value::Table(crate_value_map) = crate_value {
                                 if let Some(version_value) = crate_value_map.get("version") {
                                     if let toml::Value::String(version) = version_value {
-                                        forbidden_dependency_logic_symbols.iter().for_each(|symbol| {
-                                            if version.contains(*symbol) {
-                                                panic!("{crate_name} version of {member} contains forbidden symbol {symbol}");
-                                            }
-                                        });
-                                        match version.starts_with('=') {
-                                            true => None,
-                                            false => Some(format!("{member} {toml_key} {crate_name} {version}")),
+                                        for symbol in &forbidden_dependency_logic_symbols {
+                                            assert!(!version.contains(*symbol), "{crate_name} version of {member} contains forbidden symbol {symbol}");
                                         }
+                                        if version.starts_with('=') { None } else { Some(format!("{member} {toml_key} {crate_name} {version}")) }
                                     } else {
                                         panic!("{crate_name} version_value is not a toml::Value::String {member}");
                                     }
@@ -81,16 +76,14 @@ fn check_specific_dependency_version_usage() {
             } else {
                 Vec::new()
             };
-            f.into_iter().for_each(|g| {
+            for g in f {
                 acc.push(g);
-            });
-        });
+            }
+        }
         is_logic_executed = true;
         acc
     });
-    if !is_logic_executed {
-        panic!("logic is not executed, please check tokenized crate name(input parameter for check_specific_dependency_version_usage!(HERE)");
-    }
+    assert!(is_logic_executed, "logic is not executed, please check tokenized crate name(input parameter for check_specific_dependency_version_usage!(HERE)");
     if !unspecified_dependencies.is_empty() {
         let mut error_message = std::string::String::from("must use concrete versions with '=' symbol(like \"=1.2.3\") for: ");
         unspecified_dependencies.iter().enumerate().for_each(|(index, unspecified_dependency)| {

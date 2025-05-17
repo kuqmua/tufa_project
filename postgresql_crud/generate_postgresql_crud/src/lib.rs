@@ -3200,7 +3200,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation = Operation::ReadMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 4);
+                let mut value = vec![];
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
@@ -3605,7 +3605,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation = Operation::ReadOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
+                let mut value = vec![];
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
@@ -4249,7 +4249,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation = Operation::UpdateOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 3);
+                let mut value = vec![];
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
@@ -4466,7 +4466,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 7);
+                let mut value = vec![];
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
