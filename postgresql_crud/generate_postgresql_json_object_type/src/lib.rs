@@ -29,7 +29,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
                 PostgresqlJsonObjectTypePattern::into_array().into_iter().for_each(|postgresql_json_object_type_pattern| {
                     acc.push(PostgresqlJsonObjectTypeRecord {
-                        not_null_or_nullable: not_null_or_nullable.clone(),
+                        not_null_or_nullable,
                         postgresql_json_object_type_pattern,
                         trait_gen: TraitGen::PostgresqlTypeAndPostgresqlJsonType,
                     });
