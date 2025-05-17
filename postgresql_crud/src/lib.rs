@@ -799,7 +799,7 @@ const _: () = {
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T>
+            impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone> _serde::de::Visitor<'de> for __Visitor<'de, T>
             where
                 T: _serde::Deserialize<'de>,
             {
