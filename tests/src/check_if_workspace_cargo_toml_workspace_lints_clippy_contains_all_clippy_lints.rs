@@ -2,8 +2,7 @@
 fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lints() {
     let mut file = std::fs::File::open("../Cargo.toml").unwrap();
     let mut contents = String::new();
-    use std::io::Read;
-    let _ = file.read_to_string(&mut contents).unwrap();
+    let _ = std::io::Read::read_to_string(&mut file, &mut contents).unwrap();
     let value = contents.parse::<toml::Table>().unwrap();
     let workspace = &value["workspace"];
     let lints = &workspace["lints"];
