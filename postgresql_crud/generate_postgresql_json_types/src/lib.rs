@@ -37,28 +37,38 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             }
         }
     }
-    #[derive(Debug, strum_macros::Display)]
+    #[derive(Debug)]
     enum PostgresqlJsonTypeName {
-        JsonbNumber,
-        JsonbBoolean,
-        JsonbString,
+        Number,
+        Boolean,
+        String,
+    }
+    impl std::fmt::Display for PostgresqlJsonTypeName {
+        fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+            let value: &dyn std::fmt::Display = match &self {
+                Self::Number => &naming::NumberUpperCamelCase,
+                Self::Boolean => &naming::BooleanUpperCamelCase,
+                Self::String => &naming::StringUpperCamelCase,
+            };
+            write!(f, "{}{value}", naming::JsonbUpperCamelCase)
+        }
     }
     impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypeName {
         fn from(value: &PostgresqlJsonType) -> Self {
             match &value {
-                PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => Self::JsonbNumber,
-                PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => Self::JsonbBoolean,
-                PostgresqlJsonType::StdStringStringAsJsonbString => Self::JsonbString,
-                PostgresqlJsonType::UuidUuidAsJsonbString => Self::JsonbString,
+                PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => Self::Number,
+                PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => Self::Boolean,
+                PostgresqlJsonType::StdStringStringAsJsonbString => Self::String,
+                PostgresqlJsonType::UuidUuidAsJsonbString => Self::String,
             }
         }
     }
