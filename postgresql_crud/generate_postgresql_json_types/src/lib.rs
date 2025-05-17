@@ -908,13 +908,29 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }),
                         }
                     };
-                    //need for uuid bind for json object logic
-                    let maybe_query_bind_as_postgresql_text_token_stream =
-                        if let (PostgresqlJsonType::UuidUuidAsJsonbString, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) = (&postgresql_json_type, &not_null_or_nullable, &postgresql_json_type_pattern) {
-                            quote::quote! {
+                    let maybe_additional_uuid_standart_not_null_impl_token_stream = if let (
+                        PostgresqlJsonType::UuidUuidAsJsonbString,
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                        PostgresqlJsonTypePattern::Standart
+                    ) = (
+                        &postgresql_json_type,
+                        &not_null_or_nullable,
+                        &postgresql_json_type_pattern
+                    ) {
+                            //need for uuid bind for json object logic//need for uuid bind for json object logic
+                            let query_bind_as_postgresql_text_token_stream = quote::quote! {
                                 pub fn query_bind_as_postgresql_text(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                                     query.bind(self.0.to_string())
                                 }
+                            };
+                            let get_inner_token_stream = quote::quote! {
+                                pub fn get_inner<'a>(&'a self) -> &'a #field_type_handle {
+                                    &self.0
+                                }
+                            };
+                            quote::quote!{
+                                #query_bind_as_postgresql_text_token_stream
+                                #get_inner_token_stream
                             }
                         } else {
                             proc_macro2::TokenStream::new()
@@ -924,7 +940,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             pub fn new(value: #type_token_stream) -> Self {
                                 Self(#content_token_stream)
                             }
-                            #maybe_query_bind_as_postgresql_text_token_stream
+                            #maybe_additional_uuid_standart_not_null_impl_token_stream
                         }
                     }
                 };

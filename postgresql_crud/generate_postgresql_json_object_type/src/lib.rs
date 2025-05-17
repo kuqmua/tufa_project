@@ -2314,7 +2314,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                             let #id_snake_case = &element.#id_snake_case;
                                             if update_acc.contains(&#id_snake_case) {
                                                 return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_array_upper_camel_case {
-                                                    error: format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, #id_snake_case),//todo maybe use .into_inner() or .to_inner()
+                                                    error: format!(#not_unique_id_in_json_update_array_double_quotes_token_stream, #id_snake_case.get_inner()),
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 });
                                             } else {
@@ -2335,7 +2335,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         for element in &delete {
                                             if delete_acc.contains(&element) {
                                                 return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_delete_array_upper_camel_case {
-                                                    error: format!(#not_unique_id_in_json_delete_array_double_quotes_token_stream, element),//todo maybe use .into_inner() or .to_inner()
+                                                    error: format!(#not_unique_id_in_json_delete_array_double_quotes_token_stream, element.get_inner()),
                                                     code_occurence: error_occurence_lib::code_occurence!()
                                                 });
                                             } else {
@@ -2354,7 +2354,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     for element in update_acc {
                                         if delete_acc.contains(&&element) {
                                             return Err(#ident_update_try_new_error_named_upper_camel_case::#not_unique_id_in_json_update_and_delete_arrays_upper_camel_case {
-                                                error: format!(#not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream, element),//todo maybe use .into_inner() or .to_inner()
+                                                error: format!(#not_unique_id_in_json_update_and_delete_arrays_double_quotes_token_stream, element.get_inner()),
                                                 code_occurence: error_occurence_lib::code_occurence!()
                                             });
                                         }
