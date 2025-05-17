@@ -235,6 +235,7 @@ static_mut_refs = { level = "deny", priority = 0 } #shared references or mutable
 # unfulfilled_lint_expectations = { level = "deny", priority = 0 } #unfulfilled lint expectation
 # test_unstable_lint = { level = "deny", priority = 0 } #this unstable lint is only for testing
 unpredictable_function_pointer_comparisons = { level = "deny", priority = 0 }
+double_negations = { level = "deny", priority = 0 }
 
 [workspace.lints.clippy]#usage "cargo clippy"
 absolute_paths = { level = "allow", priority = 0 }
@@ -342,7 +343,6 @@ doc_link_with_quotes = { level = "deny", priority = 0 }
 doc_markdown = { level = "deny", priority = 0 }
 double_comparisons = { level = "deny", priority = 0 }
 double_must_use = { level = "deny", priority = 0 }
-double_negations = { level = "deny", priority = 0 }
 double_parens = { level = "deny", priority = 0 }
 drain_collect = { level = "deny", priority = 0 }
 drop_non_drop = { level = "deny", priority = 0 }
