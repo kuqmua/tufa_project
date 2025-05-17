@@ -2905,7 +2905,22 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 proc_macro2::TokenStream::new()
             };
             let maybe_ident_with_id_update_element_token_stream = if is_standart_not_null {
-                //todo maybe write analog of #import_path::UniqueVec but with id
+                //thought it can be reused as struct with generic parameter, but turns out its too painfull
+                // pub trait MyTrait {
+                //     type AdditionalType: PartialEq;
+                // }
+                // pub struct MyStruct;
+                // #[derive(PartialEq)]
+                // pub struct MyStructAdditionalType(String);
+                // impl MyTrait for MyStruct {
+                //     type AdditionalType = MyStructAdditionalType;
+                // }
+                // #[derive(PartialEq)]
+                // pub struct WrapperOfMyTrait<T: MyTrait>(<T as MyTrait>::AdditionalType);
+                // pub type WrapperOfMyTraitAlias = WrapperOfMyTrait<MyStruct>;
+                // #[derive(PartialEq)]
+                // pub struct WrapperOfWrapperOfMyTraitAlias(WrapperOfMyTraitAlias);
+                // // error[E0369]: binary operation `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
                 let ident_with_id_update_element_token_stream = quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                     pub struct #ident_with_id_update_element_standart_not_null_upper_camel_case {
