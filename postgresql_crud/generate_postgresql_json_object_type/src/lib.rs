@@ -27,7 +27,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     impl PostgresqlJsonObjectTypeRecord {
         fn all() -> std::vec::Vec<Self> {
             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
-                for postgresql_json_object_type_pattern in PostgresqlJsonObjectTypePattern::into_array().into_iter() {
+                for postgresql_json_object_type_pattern in PostgresqlJsonObjectTypePattern::into_array() {
                     acc.push(Self {
                         not_null_or_nullable,
                         postgresql_json_object_type_pattern,
