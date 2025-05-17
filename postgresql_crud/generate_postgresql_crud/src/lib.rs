@@ -1701,7 +1701,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         Some(macros_helpers::status_code::StatusCode::InternalServerError500),
         vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming::NoPayloadFieldsPrimaryKeySnakeCase, {
             if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
-                if let Some(last_path_segment) = value.path.segments.last() {
+                value.path.segments.last().map_or_else(|| {
+                    panic!("no last path segment");
+                }, |last_path_segment| {
                     let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                     for element in value.path.segments.iter().rev().skip(1).rev() {
                         handle.push_value(element.clone());
@@ -1714,9 +1716,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         arguments: syn::PathArguments::None,
                     });
                     handle
-                } else {
-                    panic!("no last path segment");
-                }
+                })
             } else {
                 panic!("primary key syn::Type in not syn::Type::Path");
             }

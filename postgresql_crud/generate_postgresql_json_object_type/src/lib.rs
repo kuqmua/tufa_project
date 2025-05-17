@@ -27,13 +27,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     impl PostgresqlJsonObjectTypeRecord {
         fn all() -> std::vec::Vec<Self> {
             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
-                PostgresqlJsonObjectTypePattern::into_array().into_iter().for_each(|postgresql_json_object_type_pattern| {
+                for postgresql_json_object_type_pattern in PostgresqlJsonObjectTypePattern::into_array().into_iter() {
                     acc.push(Self {
                         not_null_or_nullable,
                         postgresql_json_object_type_pattern,
                         trait_gen: TraitGen::PostgresqlTypeAndPostgresqlJsonType,
                     });
-                });
+                }
                 acc
             })
         }
@@ -444,18 +444,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 )
             )
         };
-        let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_content_token_stream = {
-            let some_token_stream = quote::quote!{(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))};
-            match &postgresql_json_object_type_pattern {
-                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream.clone(),
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => some_token_stream,
-                },
-                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{(vec![#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])},
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => some_token_stream,
-                }
-            }
+        let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_content_token_stream: &dyn quote::ToTokens = match &not_null_or_nullable {
+            postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
+                PostgresqlJsonObjectTypePattern::Standart => &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream,
+                PostgresqlJsonObjectTypePattern::Array => &quote::quote!{(vec![#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])}
+            },
+            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{
+                (Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))
+            },
         };
         let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream = |
             ident_token_stream: &dyn quote::ToTokens,
@@ -892,7 +888,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &proc_macro2::TokenStream::new(),
                 &match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_standart_not_null_content_token_stream.clone(),
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_standart_not_null_content_token_stream},
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                             Self(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))
                         },
