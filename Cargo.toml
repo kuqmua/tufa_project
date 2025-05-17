@@ -54,7 +54,7 @@ deprecated_in_future = { level = "deny", priority = 0 } #detects use of items th
 elided_lifetimes_in_paths = { level = "deny", priority = 0 } #hidden lifetime parameters in types are deprecated
 explicit_outlives_requirements = { level = "deny", priority = 0 } #outlives requirements can be inferred
 ffi_unwind_calls = { level = "deny", priority = 0 } #call to foreign functions or function pointers with FFI-unwind ABI
-keyword_idents = { level = "deny", priority = 0 } #detects edition keywords being used as an identifier
+keyword_idents = { level = "deny", priority = -1 } #detects edition keywords being used as an identifier
 let_underscore_drop = { level = "deny", priority = 0 } #non-binding let on a type that implements `Drop`
 macro_use_extern_crate = { level = "deny", priority = 0 } #the `#[macro_use]` attribute is now deprecated in favor of using macros via the module system
 meta_variable_misuse = { level = "deny", priority = 0 } #possible meta_variable misuse at macro definition
@@ -145,7 +145,7 @@ path_statements = { level = "deny", priority = 0 } #path statements with no effe
 private_bounds = { level = "deny", priority = 0 } #private type in secondary interface of an item
 private_interfaces = { level = "deny", priority = 0 } #private type in primary interface of an item
 redundant_semicolons = { level = "deny", priority = 0 } #detects unnecessary trailing semicolons
-refining_impl_trait = { level = "deny", priority = 0 } #impl trait in impl method signature does not match trait method signature
+refining_impl_trait = { level = "deny", priority = -1 } #impl trait in impl method signature does not match trait method signature
 renamed_and_removed_lints = { level = "deny", priority = 0 } #lints that have been renamed or removed
 repr_transparent_external_private_fields = { level = "deny", priority = 0 } #transparent type contains an external ZST that is marked #[non_exhaustive] or contains private fields
 semicolon_in_expressions_from_macros = { level = "deny", priority = 0 } #trailing semicolon in macro body used as expression
@@ -341,7 +341,7 @@ doc_link_with_quotes = { level = "deny", priority = 0 }
 doc_markdown = { level = "deny", priority = 0 }
 double_comparisons = { level = "deny", priority = 0 }
 double_must_use = { level = "deny", priority = 0 }
-double_neg = { level = "deny", priority = 0 }
+double_negations = { level = "deny", priority = 0 }
 double_parens = { level = "deny", priority = 0 }
 drain_collect = { level = "deny", priority = 0 }
 drop_non_drop = { level = "deny", priority = 0 }
@@ -397,7 +397,7 @@ float_arithmetic = { level = "deny", priority = 0 }
 float_cmp = { level = "deny", priority = 0 }
 float_cmp_const = { level = "deny", priority = 0 }
 float_equality_without_abs = { level = "deny", priority = 0 }
-fn_address_comparisons = { level = "deny", priority = 0 }
+unpredictable_function_pointer_comparisons = { level = "deny", priority = 0 }
 fn_params_excessive_bools = { level = "deny", priority = 0 }
 fn_to_numeric_cast = { level = "deny", priority = 0 }
 fn_to_numeric_cast_any = { level = "deny", priority = 0 }
