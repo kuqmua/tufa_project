@@ -279,10 +279,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 type Value = __Field;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                    __f: &mut _serde::__private::Formatter<'_>,
                                 ) -> _serde::__private::fmt::Result {
                                     _serde::__private::Formatter::write_str(
-                                        __formatter,
+                                        __f,
                                         "field identifier",
                                     )
                                 }
@@ -352,10 +352,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 type Value = #ident #maybe_ident_generic_token_stream;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                    __f: &mut _serde::__private::Formatter<'_>,
                                 ) -> _serde::__private::fmt::Result {
                                     _serde::__private::Formatter::write_str(
-                                        __formatter,
+                                        __f,
                                         #struct_ident_double_quotes_token_stream,
                                     )
                                 }

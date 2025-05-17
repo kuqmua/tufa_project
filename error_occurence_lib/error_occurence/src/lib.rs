@@ -222,7 +222,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 });
                 quote::quote! {
                     write!(
-                        formatter,
+                        f,
                         "{}{}",
                         match self {
                             #(#variants_token_stream),*
@@ -361,7 +361,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                 let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream();
                 quote::quote! {
                     write!(
-                        formatter,
+                        f,
                         "{}",
                         #display_formatter_unnamed_token_stream
                     )
@@ -412,7 +412,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
                     let display_formatter_unnamed_token_stream = generate_display_formatter_unnamed_token_stream();
                     quote::quote! {
                         write!(
-                            formatter,
+                            f,
                             "{}",
                             #display_formatter_unnamed_token_stream
                         )

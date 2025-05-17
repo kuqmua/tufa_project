@@ -32,11 +32,11 @@ pub enum EncodeFormat {
     Escape,
 }
 impl std::fmt::Display for EncodeFormat {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match &self {
-            Self::Base64 => write!(formatter, "base64"),
-            Self::Hex => write!(formatter, "hex"),
-            Self::Escape => write!(formatter, "escape"),
+            Self::Base64 => write!(f, "base64"),
+            Self::Hex => write!(f, "hex"),
+            Self::Escape => write!(f, "escape"),
         }
     }
 }
@@ -81,8 +81,8 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeUtcOffset {
         struct __FieldVisitor;
         impl serde::de::Visitor<'_> for __FieldVisitor {
             type Value = __Field;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "field identifier")
+            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__f, "field identifier")
             }
             fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
             where
@@ -134,8 +134,8 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeUtcOffset {
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
             type Value = SqlxTypesTimeUtcOffset;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "struct SqlxTypesTimeUtcOffset")
+            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__f, "struct SqlxTypesTimeUtcOffset")
             }
             #[inline]
             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -263,8 +263,8 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
         struct __FieldVisitor;
         impl serde::de::Visitor<'_> for __FieldVisitor {
             type Value = __Field;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "field identifier")
+            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__f, "field identifier")
             }
             fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
             where
@@ -313,8 +313,8 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
             type Value = NumBigintBigInt;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "struct NumBigintBigInt")
+            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__f, "struct NumBigintBigInt")
             }
             #[inline]
             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -411,8 +411,8 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
             type Value = NumBigintSign;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "tuple struct NumBigintSign")
+            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__f, "tuple struct NumBigintSign")
             }
             #[inline]
             fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>

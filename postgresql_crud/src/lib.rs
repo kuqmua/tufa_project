@@ -230,8 +230,8 @@ impl LogicalOperator {
     }
 }
 impl std::fmt::Display for LogicalOperator {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(formatter, "{self:?}")
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{self:?}")
     }
 }
 impl Default for LogicalOperator {
@@ -253,10 +253,10 @@ pub enum Order {
     Desc,
 }
 impl std::fmt::Display for Order {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            Self::Asc => write!(formatter, "{}", naming::AscUpperCamelCase),
-            Self::Desc => write!(formatter, "{}", naming::DescUpperCamelCase),
+            Self::Asc => write!(f, "{}", naming::AscUpperCamelCase),
+            Self::Desc => write!(f, "{}", naming::DescUpperCamelCase),
         }
     }
 }
@@ -306,8 +306,8 @@ impl<'de> serde::Deserialize<'de> for Pagination {
         struct __FieldVisitor;
         impl serde::de::Visitor<'_> for __FieldVisitor {
             type Value = __Field;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "field identifier")
+            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__f, "field identifier")
             }
             fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
             where
@@ -356,8 +356,8 @@ impl<'de> serde::Deserialize<'de> for Pagination {
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
             type Value = Pagination;
-            fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__formatter, "struct Pagination")
+            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__f, "struct Pagination")
             }
             #[inline]
             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -582,8 +582,8 @@ const _: () = {
             struct __FieldVisitor;
             impl _serde::de::Visitor<'_> for __FieldVisitor {
                 type Value = __Field;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "field identifier")
+                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__f, "field identifier")
                 }
                 fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
                 where
@@ -632,8 +632,8 @@ const _: () = {
             }
             impl<'de, PostgresqlTypeWhereElement: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, PostgresqlTypeWhereElement> {
                 type Value = PostgresqlTypeWhere<PostgresqlTypeWhereElement>;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "struct PostgresqlTypeWhere")
+                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__f, "struct PostgresqlTypeWhere")
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
@@ -804,8 +804,8 @@ const _: () = {
                 T: _serde::Deserialize<'de>,
             {
                 type Value = UniqueVec<T>;
-                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__formatter, "tuple struct UniqueVec")
+                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__f, "tuple struct UniqueVec")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>

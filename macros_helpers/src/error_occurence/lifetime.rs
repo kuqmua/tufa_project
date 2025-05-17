@@ -5,12 +5,12 @@ pub enum Lifetime {
 }
 
 impl std::fmt::Display for crate::error_occurence::lifetime::Lifetime {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             Self::Specified(value) => {
-                write!(formatter, "'{value}")
+                write!(f, "'{value}")
             }
-            Self::NotSpecified => write!(formatter, ""),
+            Self::NotSpecified => write!(f, ""),
         }
     }
 }

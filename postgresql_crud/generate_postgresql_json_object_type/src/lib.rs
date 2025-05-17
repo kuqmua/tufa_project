@@ -28,7 +28,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         fn all() -> std::vec::Vec<Self> {
             postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().fold(vec![], |mut acc, not_null_or_nullable| {
                 PostgresqlJsonObjectTypePattern::into_array().into_iter().for_each(|postgresql_json_object_type_pattern| {
-                    acc.push(PostgresqlJsonObjectTypeRecord {
+                    acc.push(Self {
                         not_null_or_nullable,
                         postgresql_json_object_type_pattern,
                         trait_gen: TraitGen::PostgresqlTypeAndPostgresqlJsonType,
@@ -58,7 +58,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 if acc.contains(&element) {
                     panic!("not unique postgersql type provided: {element:#?}");
                 } else {
-                    acc.push(&element);
+                    acc.push(element);
                 }
             }
             vec
@@ -287,13 +287,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_with_id_array_not_null_upper_camel_case = &generate_ident_token_stream(
             &IdentPattern::NotNullArrayWithId
         );
-        let is_standart = if let PostgresqlJsonObjectTypePattern::Standart = &postgresql_json_object_type_pattern {
+        let is_standart = if matches!(&postgresql_json_object_type_pattern, PostgresqlJsonObjectTypePattern::Standart) {
             true
         }
         else {
             false
         };
-        let is_not_null = if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable {
+        let is_not_null = if matches!(&not_null_or_nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) {
             true
         }
         else {
@@ -333,7 +333,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 self.to_string()
                 .parse::<proc_macro2::TokenStream>()
                 .unwrap()
-                .to_tokens(tokens)
+                .to_tokens(tokens);
             }
         }
         let generate_type_as_postgresql_json_type_subtype_token_stream = |
@@ -363,7 +363,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             is_standart_with_id: &IsStandartWithId,
             postgresql_json_type_subtype_table_type_declaration_or_create: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate,
         |{
-            let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+            let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                 });
@@ -394,7 +394,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
                         &IsStandartWithId::False,
-                        &postgresql_json_type_subtype_table_type_declaration_or_create
+                        postgresql_json_type_subtype_table_type_declaration_or_create
                     ),
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(
                         &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&prefix_wrapper(ident_standart_not_null_upper_camel_case))
@@ -423,7 +423,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream = |
                 is_standart_with_id: &IsStandartWithId
             |{
-                let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
@@ -484,7 +484,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_token_stream,
                     &proc_macro2::TokenStream::new(),
                     &{
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{column}} jsonb not null check (jsonb_matches_schema('{{}}', {{column}}))"));
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_string());
                         quote::quote! {
                             format!(#format_handle_token_stream, serde_json::to_string(&schemars::schema_for!(#ident_token_stream)).unwrap())
                         }
@@ -546,7 +546,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &proc_macro2::TokenStream::new(),
                     &ident_token_stream,
                     &proc_macro2::TokenStream::new(),
-                    &quote::quote! {write!(formatter, "{:?}", self)}
+                    &quote::quote! {write!(f, "{:?}", self)}
                 )
             };
             let ident_create_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
@@ -736,7 +736,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 );
                 let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
                     &ident_with_id_create_standart_not_null_upper_camel_case,
-                    &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream.clone()
+                    &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream
                 );
                 let impl_ident_with_id_create_standart_not_null_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
                     &ident_with_id_create_standart_not_null_upper_camel_case,
@@ -913,7 +913,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let column_name_and_maybe_field_getter_for_error_message_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageFieldIdentSnakeCase;
                 let column_name_and_maybe_field_getter_field_ident_snake_case = naming::ColumnNameAndMaybeFieldGetterFieldIdentSnakeCase;
-                let variants_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                     let field_ident_stringified = element
                         .ident
                         .as_ref()
@@ -961,7 +961,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         format!("{{{acc_snake_case}}}")
                     };
                     let jsonb_build_object_value_acc_format_handle = wrap_into_jsonb_build_object_value(&acc_format_handle);
-                    (acc_format_handle.clone(), wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle))
+                    (acc_format_handle, wrap_into_jsonb_build_object_field_ident(&jsonb_build_object_value_acc_format_handle))
                 };
                 quote::quote! {
                     let mut acc = std::string::String::default();
@@ -1073,7 +1073,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     IsStandartWithId::True => &ident_with_id_select_element_standart_not_null_upper_camel_case
                 };
                 let ident_select_element_or_ident_with_id_select_element_standart_not_null_token_stream = {
-                    let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                    let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                         let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                             panic!("{}", naming::FIELD_IDENT_IS_NONE);
                         });
@@ -1102,7 +1102,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_select_element_or_ident_with_id_select_element_upper_camel_case,
                     &{
                         let vec_content_token_stream = {
-                            let elements_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                            let elements_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                                 let field_ident = &element.ident.as_ref().unwrap_or_else(|| {
                                     panic!("{}", naming::FIELD_IDENT_IS_NONE);
                                 });
@@ -1201,7 +1201,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_where_element_token_stream = {
             use postgresql_crud_macros_common::NotNullOrNullable;
             let generate_ident_where_element_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                let variants_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                     let field_ident_stringified = element.ident
                         .as_ref()
                         .unwrap_or_else(|| {
@@ -1258,7 +1258,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let generate_where_filter_query_part_content_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                let query_part_variants_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                let query_part_variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                     let field_ident_stringified = element
                         .ident
                         .as_ref()
@@ -1284,7 +1284,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let generate_where_filter_query_bind_content_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                let query_bind_variants_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                let query_bind_variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                     let field_ident_stringified = element
                         .ident
                         .as_ref()
@@ -1382,7 +1382,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
             };
             let generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_content_standart_not_null_where_element = |is_standart_with_id: &IsStandartWithId|{
-                let variants_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                     let field_ident_stringified = element
                         .ident
                         .as_ref()
@@ -1489,7 +1489,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 is_standart_with_id: &IsStandartWithId,
                 should_add_serde_option_is_none_annotation: &ShouldAddSerdeOptionIsNoneAnnotation
             | {
-                let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                     let maybe_serde_skip_serializing_if_option_is_none_token_stream = match &should_add_serde_option_is_none_annotation {
                         ShouldAddSerdeOptionIsNoneAnnotation::True => quote::quote! {#[serde(skip_serializing_if = "Option::is_none")]},
                         ShouldAddSerdeOptionIsNoneAnnotation::False => proc_macro2::TokenStream::new()
@@ -1544,8 +1544,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     generate_ident_read_token_stream(
                         &ident_read_upper_camel_case,
                         &content_token_stream,
-                        &should_derive_default,
-                        &should_derive_serde_deserialize,
+                        should_derive_default,
+                        should_derive_serde_deserialize,
                     )
                 };
                 match &postgresql_json_object_type_pattern {
@@ -1612,9 +1612,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     IsStandartWithId::False => &ident_read_upper_camel_case,
                     IsStandartWithId::True => &ident_with_id_read_standart_not_null_upper_camel_case,
                 };
-                let current_vec_syn_field = get_vec_syn_field(&is_standart_with_id);
+                let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                 let fields_declaration_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
-                    &is_standart_with_id,
+                    is_standart_with_id,
                     &ShouldAddSerdeOptionIsNoneAnnotation::False
                 );
                 let (fields_reference_token_stream, fields_token_stream) = {
@@ -1697,7 +1697,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     IsStandartWithId::False => &ident_read_upper_camel_case,
                     IsStandartWithId::True => &ident_with_id_read_standart_not_null_upper_camel_case,
                 };
-                let current_vec_syn_field = get_vec_syn_field(&is_standart_with_id);
+                let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                 let current_vec_syn_field_len = current_vec_syn_field.len();
                 let field_enum_variants_token_stream = {
                     let mut vec = vec![];
@@ -1905,10 +1905,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 type Value = __Field;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter<'_>,
+                                    __f: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
-                                        __formatter,
+                                        __f,
                                         "field identifier",
                                     )
                                 }
@@ -1974,10 +1974,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 type Value = #ident_token_stream;
                                 fn expecting(
                                     &self,
-                                    __formatter: &mut serde::__private::Formatter<'_>,
+                                    __f: &mut serde::__private::Formatter<'_>,
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
-                                        __formatter,
+                                        __f,
                                         #struct_ident_options_double_quotes_token_stream,
                                     )
                                 }
@@ -2068,7 +2068,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     &proc_macro2::TokenStream::new(),
                     &{
-                        let fields_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                        let fields_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                             let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
                             });
@@ -2405,8 +2405,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     struct __FieldVisitor;
                                     impl serde::de::Visitor<'_> for __FieldVisitor {
                                         type Value = __Field;
-                                        fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                            serde::__private::Formatter::write_str(__formatter, "field identifier")
+                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(__f, "field identifier")
                                         }
                                         fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
                                         where
@@ -2458,8 +2458,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     }
                                     impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = #ident_update_upper_camel_case;
-                                        fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                            serde::__private::Formatter::write_str(__formatter, #tuple_struct_ident_update_double_quotes_token_stream)
+                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(__f, #tuple_struct_ident_update_double_quotes_token_stream)
                                         }
                                         #[inline]
                                         fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>

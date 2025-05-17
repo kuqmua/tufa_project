@@ -30,9 +30,9 @@ impl CodeOccurence {
 }
 static SOURCE_PLACE_TYPE: std::sync::OnceLock<app_state::SourcePlaceType> = std::sync::OnceLock::new();
 impl std::fmt::Display for CodeOccurence {
-    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(
-            formatter,
+            f,
             "{} {}",
             &match SOURCE_PLACE_TYPE.get_or_init(app_state::SourcePlaceType::from_env_or_default) {
                 app_state::SourcePlaceType::Source => self

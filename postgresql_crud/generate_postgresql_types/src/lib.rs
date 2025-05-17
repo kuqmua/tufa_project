@@ -396,8 +396,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         }
     }
     impl std::fmt::Display for PostgresqlTypeRange {
-        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(formatter, "{}", naming::parameter::SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(self)))
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "{}", naming::parameter::SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(self)))
         }
     }
     impl quote::ToTokens for PostgresqlTypeRange {
@@ -519,8 +519,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #[automatically_derived]
                 impl _serde::de::Visitor<'_> for __FieldVisitor {
                     type Value = __Field;
-                    fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
-                        _serde::__private::Formatter::write_str(__formatter, "field identifier")
+                    fn expecting(&self, __f: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                        _serde::__private::Formatter::write_str(__f, "field identifier")
                     }
                     fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
                     where
@@ -574,8 +574,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #[automatically_derived]
                 impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                     type Value = PostgresqlTypeRecord;
-                    fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
-                        _serde::__private::Formatter::write_str(__formatter, "struct PostgresqlTypeRecord")
+                    fn expecting(&self, __f: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
+                        _serde::__private::Formatter::write_str(__f, "struct PostgresqlTypeRecord")
                     }
                     #[inline]
                     fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
@@ -1495,8 +1495,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let (fn_expecting_struct_ident_double_quotes_token_stream, fn_expecting_field_identifier_token_stream, fn_expecting_months_or_days_or_microseconds_token_stream, fn_expecting_start_or_end_token_stream) = {
                         let generate_fn_expecting_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
-                                fn expecting(&self, __formatter: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                    serde::__private::Formatter::write_str(__formatter, #content_token_stream)
+                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                    serde::__private::Formatter::write_str(__f, #content_token_stream)
                                 }
                             }
                         };
@@ -2789,7 +2789,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     postgresql_crud_macros_common::DeriveOrImpl::Derive => proc_macro2::TokenStream::new(),
                     postgresql_crud_macros_common::DeriveOrImpl::Impl(value) => value,
                 };
-                let impl_std_fmt_display_for_ident_origin_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{self:?}")});
+                let impl_std_fmt_display_for_ident_origin_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(f, "{self:?}")});
                 let impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream =
                     macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {self.to_string()});
 
