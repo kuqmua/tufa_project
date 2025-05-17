@@ -670,7 +670,7 @@ option_option = { level = "deny", priority = 0 }
 or_fun_call = { level = "deny", priority = 0 }
 or_then_unwrap = { level = "deny", priority = 0 }
 out_of_bounds_indexing = { level = "deny", priority = 0 }
-overflow_check_conditional = { level = "deny", priority = 0 }
+panicking_overflow_checks = { level = "deny", priority = 0 }
 overly_complex_bool_expr = { level = "deny", priority = 0 }
 panic = { level = "allow", priority = 0 }
 panic_in_result_fn = { level = "deny", priority = 0 }
@@ -947,7 +947,7 @@ result_filter_map = { level = "deny", priority = 0 }
 str_split_at_newline = { level = "deny", priority = 0 }
 suspicious_open_options = { level = "deny", priority = 0 }
 test_attr_in_doctest = { level = "deny", priority = 0 }
-thread_local_initializer_can_be_made_const = { level = "deny", priority = 0 }
+missing_const_for_thread_local = { level = "deny", priority = 0 }
 to_string_trait_impl = { level = "deny", priority = 0 }
 unconditional_recursion = { level = "deny", priority = 0 }
 uninhabited_references = { level = "deny", priority = 0 }
