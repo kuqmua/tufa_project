@@ -25,7 +25,7 @@ generate_postgresql_types::generate_postgresql_types!([
     }
 ]);
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
 pub enum EncodeFormat {
     Base64,
     Hex,
@@ -57,7 +57,7 @@ impl serde::Serialize for SqlxTypesTimeUtcOffset {
     where
         __S: serde::Serializer,
     {
-        let mut __serde_state = serde::Serializer::serialize_struct(__serializer, "SqlxTypesTimeUtcOffset", false as usize + 1 + 1 + 1)?;
+        let mut __serde_state = serde::Serializer::serialize_struct(__serializer, "SqlxTypesTimeUtcOffset", usize::from(false) + 1 + 1 + 1)?;
         serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "hours", &self.0.whole_hours())?;
         serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "minutes", &self.0.minutes_past_hour())?;
         serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "seconds", &self.0.seconds_past_minute())?;
@@ -69,7 +69,7 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeUtcOffset {
     where
         __D: serde::Deserializer<'de>,
     {
-        #[allow(non_camel_case_types)]
+        #[expect(non_camel_case_types)]
         #[doc(hidden)]
         enum __Field {
             __field0,
@@ -221,13 +221,13 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeUtcOffset {
             }
         }
         #[doc(hidden)]
-        const FIELDS: &'static [&'static str] = &["hours", "minutes", "seconds"];
+        const FIELDS: &[&str] = &["hours", "minutes", "seconds"];
         serde::Deserializer::deserialize_struct(
             __deserializer,
             "SqlxTypesTimeUtcOffset",
             FIELDS,
             __Visitor {
-                marker: serde::__private::PhantomData::<SqlxTypesTimeUtcOffset>,
+                marker: serde::__private::PhantomData::<Self>,
                 lifetime: serde::__private::PhantomData,
             },
         )
@@ -241,7 +241,7 @@ impl serde::Serialize for NumBigintBigInt {
         __S: serde::Serializer,
     {
         let (sign, digits) = self.0.to_u32_digits();
-        let mut __serde_state = serde::Serializer::serialize_struct(__serializer, "NumBigintBigInt", false as usize + 1 + 1)?;
+        let mut __serde_state = serde::Serializer::serialize_struct(__serializer, "NumBigintBigInt", usize::from(false) + 1 + 1)?;
         serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "sign", &NumBigintSign(sign))?;
         serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "digits", &digits)?;
         serde::ser::SerializeStruct::end(__serde_state)
@@ -252,7 +252,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
     where
         __D: serde::Deserializer<'de>,
     {
-        #[allow(non_camel_case_types)]
+        #[expect(non_camel_case_types)]
         #[doc(hidden)]
         enum __Field {
             __field0,
@@ -369,13 +369,13 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
             }
         }
         #[doc(hidden)]
-        const FIELDS: &'static [&'static str] = &["sign", "digits"];
+        const FIELDS: &[&str] = &["sign", "digits"];
         serde::Deserializer::deserialize_struct(
             __deserializer,
             "NumBigintBigInt",
             FIELDS,
             __Visitor {
-                marker: serde::__private::PhantomData::<NumBigintBigInt>,
+                marker: serde::__private::PhantomData::<Self>,
                 lifetime: serde::__private::PhantomData,
             },
         )
@@ -454,7 +454,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
             __deserializer,
             "NumBigintSign",
             __Visitor {
-                marker: serde::__private::PhantomData::<NumBigintSign>,
+                marker: serde::__private::PhantomData::<Self>,
                 lifetime: serde::__private::PhantomData,
             },
         )

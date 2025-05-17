@@ -59,7 +59,7 @@ pub trait PostgresqlTypeWhereFilter<'a> {
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<UniqueVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
@@ -127,9 +127,9 @@ impl<T: PostgresqlJsonType> ObjectWithIdAsNotNullJsonbObjectWithIdUpdateElement<
         };
         match <T as PostgresqlJsonType>::update_query_part(
             &self.fields,
-            &jsonb_set_accumulator,
-            &jsonb_set_target,
-            &jsonb_set_path,
+            jsonb_set_accumulator,
+            jsonb_set_target,
+            jsonb_set_path,
             increment
         ) {
             Ok(value) => Ok(format!("when {jsonb_set_target}->>'id' = ${id_increment} then {value} ")),
@@ -197,7 +197,7 @@ pub trait AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOn
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self>;
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum QueryPartErrorNamed {
     CheckedAdd { code_occurence: error_occurence_lib::code_occurence::CodeOccurence },
 }
@@ -295,7 +295,7 @@ impl<'de> serde::Deserialize<'de> for Pagination {
     where
         __D: serde::Deserializer<'de>,
     {
-        #[allow(non_camel_case_types)]
+        #[expect(non_camel_case_types)]
         #[doc(hidden)]
         enum __Field {
             __field0,
@@ -422,13 +422,13 @@ impl<'de> serde::Deserialize<'de> for Pagination {
             }
         }
         #[doc(hidden)]
-        const FIELDS: &'static [&'static str] = &["limit", "offset"];
+        const FIELDS: &[&str] = &["limit", "offset"];
         serde::Deserializer::deserialize_struct(
             __deserializer,
             "Pagination",
             FIELDS,
             __Visitor {
-                marker: serde::__private::PhantomData::<Pagination>,
+                marker: serde::__private::PhantomData::<Self>,
                 lifetime: serde::__private::PhantomData,
             },
         )
@@ -468,22 +468,20 @@ impl Pagination {
                     code_occurence: error_occurence_lib::code_occurence!(),
                 })
             }
+        } else if offset.checked_add(limit).is_some() {
+            Ok(Self { limit, offset })
         } else {
-            if offset.checked_add(limit).is_some() {
-                Ok(Self { limit, offset })
-            } else {
-                Err(PaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
-                    limit,
-                    offset,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
+            Err(PaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
+                limit,
+                offset,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
         }
     }
-    pub fn start(&self) -> std::primitive::i64 {
+    pub const fn start(&self) -> std::primitive::i64 {
         self.offset
     }
-    pub fn end(&self) -> std::primitive::i64 {
+    pub const fn end(&self) -> std::primitive::i64 {
         self.offset + self.limit
     }
 }
@@ -528,7 +526,7 @@ pub trait IsStringEmpty {
     fn is_string_empty(&self) -> std::primitive::bool;
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize)]
 pub struct PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
     logical_operator: crate::LogicalOperator,
     value: std::vec::Vec<PostgresqlTypeWhereElement>,
@@ -552,21 +550,20 @@ impl<PostgresqlTypeWhereElement: std::cmp::PartialEq + Clone> PostgresqlTypeWher
         {
             let mut acc = vec![];
             for element in &value {
-                if !acc.contains(&element) {
-                    acc.push(element);
-                } else {
+                if acc.contains(&element) {
                     return Err(PostgresqlTypeWhereTryNewErrorNamed::NotUnique {
                         value: element.clone(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 }
+                acc.push(element);
             }
         }
         Ok(Self { logical_operator, value })
     }
 }
 const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, PostgresqlTypeWhereElement: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
@@ -574,7 +571,7 @@ const _: () = {
         where
             __D: _serde::Deserializer<'de>,
         {
-            #[allow(non_camel_case_types)]
+            #[expect(non_camel_case_types)]
             #[doc(hidden)]
             enum __Field {
                 __field0,
@@ -583,7 +580,7 @@ const _: () = {
             }
             #[doc(hidden)]
             struct __FieldVisitor;
-            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+            impl _serde::de::Visitor<'_> for __FieldVisitor {
                 type Value = __Field;
                 fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__formatter, "field identifier")
@@ -701,7 +698,7 @@ const _: () = {
                 }
             }
             #[doc(hidden)]
-            const FIELDS: &'static [&'static str] = &["logical_operator", "value"];
+            const FIELDS: &[&str] = &["logical_operator", "value"];
             _serde::Deserializer::deserialize_struct(
                 __deserializer,
                 "PostgresqlTypeWhere",
@@ -748,7 +745,7 @@ impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAl
     }
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct UniqueVec<T>(std::vec::Vec<T>);
 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
 pub enum UniqueVecTryNewErrorNamed<T> {
@@ -769,21 +766,20 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
         {
             let mut acc = vec![];
             for element in &value {
-                if !acc.contains(&element) {
-                    acc.push(element);
-                } else {
+                if acc.contains(&element) {
                     return Err(UniqueVecTryNewErrorNamed::NotUnique {
                         value: element.clone(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 }
+                acc.push(element);
             }
         }
         Ok(Self(value))
     }
 }
 const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T>
@@ -840,7 +836,7 @@ const _: () = {
                 __deserializer,
                 "UniqueVec",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<UniqueVec<T>>,
+                    marker: _serde::__private::PhantomData::<Self>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
@@ -858,16 +854,16 @@ impl<T> std::default::Default for UniqueVec<T> {
     }
 }
 impl<T> UniqueVec<T> {
-    pub fn to_vec(&self) -> &std::vec::Vec<T> {
+    pub const fn to_vec(&self) -> &std::vec::Vec<T> {
         &self.0
     }
     pub fn into_vec(self) -> std::vec::Vec<T> {
         self.0
     }
 }
-impl<T> std::convert::Into<Vec<T>> for UniqueVec<T> {
-    fn into(self) -> std::vec::Vec<T> {
-        self.0
+impl<T> std::convert::From<UniqueVec<T>> for Vec<T> {
+    fn from(val: UniqueVec<T>) -> Self {
+        val.0
     }
 }
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for UniqueVec<T>
