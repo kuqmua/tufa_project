@@ -46,7 +46,7 @@ async fn answer(bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command)
         }
         Command::GitInfo => {
             use teloxide::prelude::Requester;
-            bot.send_message(msg.chat.id, { "123message" }).await?
+            bot.send_message(msg.chat.id, "123message").await?
         }
     };
 

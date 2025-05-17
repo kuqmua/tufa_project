@@ -3,12 +3,12 @@ fn check_specific_dependency_version_usage() {
     let cargo_toml = "../Cargo.toml";
     let cannot_open_file = "cannot open ";
     let file_error = " file, error: ";
-    let mut buf_reader = std::io::BufReader::new(std::fs::File::open(cargo_toml).unwrap_or_else(|error| panic!("{cannot_open_file}{cargo_toml}{file_error}\"{e}\"")));
+    let mut buf_reader = std::io::BufReader::new(std::fs::File::open(cargo_toml).unwrap_or_else(|error| panic!("{cannot_open_file}{cargo_toml}{file_error}\"{error}\"")));
     let mut cargo_toml_workspace_content = std::string::String::new();
     {
-        std::io::Read::read_to_string(&mut buf_reader, &mut cargo_toml_workspace_content).unwrap_or_else(|error| panic!("cannot read_to_string from {cargo_toml}{file_error}\"{e}\""));
+        std::io::Read::read_to_string(&mut buf_reader, &mut cargo_toml_workspace_content).unwrap_or_else(|error| panic!("cannot read_to_string from {cargo_toml}{file_error}\"{error}\""));
     }
-    let toml_table_map = cargo_toml_workspace_content.parse::<toml::Table>().unwrap_or_else(|error| panic!("cannot parse::<toml::Table>() cargo_toml_workspace_content, error:\"{e}\""));
+    let toml_table_map = cargo_toml_workspace_content.parse::<toml::Table>().unwrap_or_else(|error| panic!("cannot parse::<toml::Table>() cargo_toml_workspace_content, error:\"{error}\""));
     let toml_table_workspace_members_map_vec = if let Some(toml_table_map_value) = toml_table_map.get("workspace") {
         if let toml::Value::Table(toml_table_workspace_map) = toml_table_map_value {
             if let Some(toml_table_workspace_map_value) = toml_table_workspace_map.get("members") {
