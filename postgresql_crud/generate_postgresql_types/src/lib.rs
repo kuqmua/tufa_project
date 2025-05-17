@@ -517,7 +517,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 #[doc(hidden)]
                 struct __FieldVisitor;
                 #[automatically_derived]
-                impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                impl _serde::de::Visitor<'_> for __FieldVisitor {
                     type Value = __Field;
                     fn expecting(&self, __formatter: &mut _serde::__private::Formatter) -> _serde::__private::fmt::Result {
                         _serde::__private::Formatter::write_str(__formatter, "field identifier")
@@ -657,7 +657,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 }
                 #[doc(hidden)]
-                const FIELDS: &'static [&'static str] = &["postgresql_type", "not_null_or_nullable", "postgresql_type_pattern"];
+                const FIELDS: &[&str] = &["postgresql_type", "not_null_or_nullable", "postgresql_type_pattern"];
                 _serde::Deserializer::deserialize_struct(
                     __deserializer,
                     "PostgresqlTypeRecord",
@@ -797,7 +797,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 if acc.contains(&element) {
                     panic!("not unique postgersql type provided: {element:#?}");
                 } else {
-                    acc.push(&element);
+                    acc.push(element);
                 }
             }
             vec
@@ -1013,9 +1013,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 format!("{not_null_or_nullable_rust}{rust_part}{as_upper_camel_case}{not_null_or_nullable}{postgresql_part}").parse::<proc_macro2::TokenStream>().unwrap()
             };
-            let ident = &generate_ident_token_stream(&postgresql_type, &not_null_or_nullable, &postgresql_type_pattern);
-            let generate_ident_standart_not_null_token_stream = |postgresql_type: &PostgresqlType| generate_ident_token_stream(&postgresql_type, &postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlTypePattern::Standart);
-            let ident_standart_not_null_upper_camel_case = &generate_ident_standart_not_null_token_stream(&postgresql_type);
+            let ident = &generate_ident_token_stream(postgresql_type, not_null_or_nullable, postgresql_type_pattern);
+            let generate_ident_standart_not_null_token_stream = |postgresql_type: &PostgresqlType| generate_ident_token_stream(postgresql_type, &postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlTypePattern::Standart);
+            let ident_standart_not_null_upper_camel_case = &generate_ident_standart_not_null_token_stream(postgresql_type);
             let ident_token_stream = {
                 quote::quote! {
                     #[derive(Debug)]
@@ -1027,11 +1027,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
             let field_type_standart_not_null = postgresql_type.field_type_token_stream();
             let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
-                naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(&postgresql_type, &current_not_null_or_nullable, &current_postgresql_type_pattern))
+                naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(postgresql_type, current_not_null_or_nullable, current_postgresql_type_pattern))
             };
             let field_type_handle: &dyn quote::ToTokens = {
                 let generate_current_ident_origin = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
-                    let value = generate_current_ident_origin_non_wrapping(&current_postgresql_type_pattern, &current_not_null_or_nullable);
+                    let value = generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable);
                     match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value),
@@ -1044,10 +1044,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
                         let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, &dimension1_not_null_or_nullable),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, dimension1_not_null_or_nullable),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
                         };
-                        generate_current_ident_origin(&current_postgresql_type_pattern, &current_not_null_or_nullable)
+                        generate_current_ident_origin(current_postgresql_type_pattern, current_not_null_or_nullable)
                     },
                     // PostgresqlTypePattern::ArrayDimension2 {
                     //     dimension1_not_null_or_nullable,
@@ -2632,10 +2632,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
                                 let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, &dimension1_not_null_or_nullable),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (&postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, dimension1_not_null_or_nullable),
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
                                 };
-                                generate_current_ident_origin_non_wrapping(&current_postgresql_type_pattern, &current_not_null_or_nullable)
+                                generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable)
                             }),
                             // PostgresqlTypePattern::ArrayDimension2{
                             //     dimension1_not_null_or_nullable,
@@ -3057,7 +3057,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         // PostgresqlTypePattern::ArrayDimension2 {..} |
                         // PostgresqlTypePattern::ArrayDimension3 {..} |
                         // PostgresqlTypePattern::ArrayDimension4 {..} 
-                        => std::iter::repeat("[]").take(array_dimensions_number).collect::<String>()
+                        => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>()
                     };
                         let maybe_constraint_part = match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => "".to_string(),
@@ -3507,7 +3507,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     // PostgresqlTypePattern::ArrayDimension4 {..}
                     => {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
-                            let acc = std::iter::repeat("[{}:{}]").take(array_dimensions_number).collect::<String>();
+                            let acc = std::iter::repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
                             format!("{{column}}{acc}")
                         });
                         let arguments_token_stream = {

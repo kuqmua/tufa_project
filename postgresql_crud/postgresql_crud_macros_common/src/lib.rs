@@ -105,7 +105,7 @@ where
                 }
             }
         },
-        &is_query_bind_mutable,
+        is_query_bind_mutable,
         &{
             let variants_token_stream = variants.iter().map(|element| {
                 let element_upper_camel_case = element.upper_camel_case();

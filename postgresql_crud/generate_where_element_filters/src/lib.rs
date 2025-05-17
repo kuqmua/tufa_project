@@ -110,7 +110,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             }
         };
         let enum_ident_try_new_error_named_token_stream = {
-            let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(&should_add_declaration_of_generic_parameter_to_ident_try_new_error_named);
+            let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(should_add_declaration_of_generic_parameter_to_ident_try_new_error_named);
             quote::quote! {
                 #[derive(
                     Debug,
@@ -134,7 +134,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             };
-            let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(&should_add_declaration_of_generic_parameter_to_ident_try_new_error_named);
+            let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(should_add_declaration_of_generic_parameter_to_ident_try_new_error_named);
             quote::quote! {
                 impl #impl_generic_token_stream #ident #ident_generic_token_stream {
                     fn try_new(
@@ -471,7 +471,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             },
             &query_part_content_token_stream,
-            &is_query_bind_mutable,
+            is_query_bind_mutable,
             &query_bind_content_token_stream,
             &postgresql_crud_macros_common::ImportPath::Crate,
         )

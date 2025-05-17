@@ -497,9 +497,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let field_ident_len = field_ident.to_string().len();
                 let max_postgresql_column_length = 63;
                 //todo write runtime check
-                if field_ident_len > max_postgresql_column_length {
-                    panic!("Postgresql truncates column names to {max_postgresql_column_length} characters, this is more: {field_ident} ({field_ident_len} characters)");
-                }
+                assert!((field_ident_len <= max_postgresql_column_length), "Postgresql truncates column names to {max_postgresql_column_length} characters, this is more: {field_ident} ({field_ident_len} characters)");
                 fields.push(SynFieldWrapper {
                     syn_field: element.clone(),
                     field_ident: field_ident.clone(),
@@ -531,9 +529,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                 }
             }
-            if fields.len() > 100 {
-                panic!("explicitly not supporting number of columns more than 100 so its less possibility to cause stack overflow or build process exit");
-            }
+            assert!((fields.len() <= 100), "explicitly not supporting number of columns more than 100 so its less possibility to cause stack overflow or build process exit");
             (option_primary_key_field.unwrap_or_else(|| panic!("primary_key_field is None")), fields, fields_without_primary_key)
         } else {
             panic!("supports only syn::Fields::Named");
@@ -840,10 +836,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         status_code: std::option::Option<macros_helpers::status_code::StatusCode>,
     }
     impl SynVariantWrapper {
-        fn get_syn_variant(&self) -> &syn::Variant {
+        const fn get_syn_variant(&self) -> &syn::Variant {
             &self.variant
         }
-        fn get_option_status_code(&self) -> &std::option::Option<macros_helpers::status_code::StatusCode> {
+        const fn get_option_status_code(&self) -> &std::option::Option<macros_helpers::status_code::StatusCode> {
             &self.status_code
         }
     }
@@ -1124,7 +1120,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
             }
         }
-        fn generate_postgresql_crud_attribute_additional_error_variants(&self) -> GeneratePostgresqlCrudAttribute {
+        const fn generate_postgresql_crud_attribute_additional_error_variants(&self) -> GeneratePostgresqlCrudAttribute {
             match self {
                 Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
                 Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
@@ -1136,7 +1132,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
             }
         }
-        fn generate_postgresql_crud_attribute_additional_route_logic(&self) -> GeneratePostgresqlCrudAttribute {
+        const fn generate_postgresql_crud_attribute_additional_route_logic(&self) -> GeneratePostgresqlCrudAttribute {
             match self {
                 Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic,
                 Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalRouteLogic,
@@ -1326,9 +1322,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let create_table_if_not_exists_double_quotes_token_stream = {
             let acc = {
                 let mut acc = std::string::String::new();
-                fields.iter().for_each(|_| {
+                for _ in &fields {
                     acc.push_str("{},");
-                });
+                }
                 let _ = acc.pop();
                 acc
             };
@@ -1344,9 +1340,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&primary_key_field.syn_field.ty, &primary_key_field.field_ident, true)];
-            fields_without_primary_key.iter().for_each(|element| {
+            for element in &fields_without_primary_key {
                 acc.push(generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&element.syn_field.ty, &element.field_ident, false));
-            });
+            }
             acc
         };
         quote::quote! {
@@ -1491,7 +1487,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (
                 macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoVecToStdStringString,
                 &naming::NonExistingPrimaryKeysSnakeCase,
-                std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated.clone(),
+                std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated,
             ),
             (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
         ],
@@ -1600,7 +1596,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (
                 macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
                 &naming::ResponseTextSnakeCase,
-                std_string_string_syn_punctuated_punctuated.clone(),
+                std_string_string_syn_punctuated_punctuated,
             ),
             (
                 macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
@@ -1762,9 +1758,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let common_route_with_row_and_rollback_syn_variants = {
         let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
-        common_route_syn_variants.iter().for_each(|element| {
+        for element in &common_route_syn_variants {
             value.push(*element);
-        });
+        }
         value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
         value
     };
@@ -1788,10 +1784,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             >
         }
     });
-    let generate_pub_handle_token_stream = |is_pub: bool| match is_pub {
-        true => quote::quote! {pub},
-        false => proc_macro2::TokenStream::new(),
-    };
+    let generate_pub_handle_token_stream = |is_pub: bool| if is_pub { quote::quote! {pub} } else { proc_macro2::TokenStream::new() };
     //todo remove?
     // let generate_primary_key_inner_type_handle_token_stream = |is_original: bool| match is_original {
     //     true => &primary_key_inner_type_token_stream,
@@ -2773,17 +2766,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             Some(macros_helpers::status_code::StatusCode::InternalServerError500),
             vec![
                 (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &expected_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
-                (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &got_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
+                (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &got_length_snake_case, std_primitive_usize_syn_punctuated_punctuated),
                 //todo reuse vec elements
-                (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
+                (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated),
             ],
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 4);
-                common_route_syn_variants.iter().for_each(|element| {
+                for element in &common_route_syn_variants {
                     value.push(*element);
-                });
+                }
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(unexpected_rows_length_syn_variant_wrapper.get_syn_variant());
@@ -2813,7 +2806,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         // let incremented_index = index.checked_add(1).unwrap_or_else(|| panic!("{index} {}", constants::CHECKED_ADD_NONE_OVERFLOW_MESSAGE));
                         acc.push_str(&format!("{}", &element.field_ident));
                         // if incremented_index != fields_without_primary_key_len {
-                        acc.push_str(",");
+                        acc.push(',');
                         // }
                         acc
                     });
@@ -3012,9 +3005,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_with_row_and_rollback_syn_variants.len() + 1);
-                common_route_with_row_and_rollback_syn_variants.iter().for_each(|element| {
+                for element in &common_route_with_row_and_rollback_syn_variants {
                     value.push(*element);
-                });
+                }
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
                 value
             },
@@ -3208,9 +3201,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 4);
-                common_route_syn_variants.iter().for_each(|element| {
+                for element in &common_route_syn_variants {
                     value.push(*element);
-                });
+                }
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
                 value.push(not_unique_column_syn_variant_wrapper.get_syn_variant());
                 // if contains_generic_json {
@@ -3613,9 +3606,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
-                common_route_syn_variants.iter().for_each(|element| {
+                for element in &common_route_syn_variants {
                     value.push(*element);
-                });
+                }
                 value.push(not_unique_column_syn_variant_wrapper.get_syn_variant());
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
                 // if contains_generic_json {
@@ -3876,9 +3869,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 6);
-                common_route_syn_variants.iter().for_each(|element| {
+                for element in &common_route_syn_variants {
                     value.push(*element);
-                });
+                }
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(non_existing_primary_keys_update_syn_variant_wrapper.get_syn_variant());
                 value.push(non_existing_primary_keys_update_and_rollback_syn_variant_wrapper.get_syn_variant());
@@ -4257,9 +4250,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 3);
-                common_route_syn_variants.iter().for_each(|element| {
+                for element in &common_route_syn_variants {
                     value.push(*element);
-                });
+                }
                 value.push(no_payload_fields_primary_key_syn_variant_wrapper.get_syn_variant());
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(checked_add_syn_variant_wrapper.get_syn_variant());
@@ -4474,9 +4467,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 7);
-                common_route_syn_variants.iter().for_each(|element| {
+                for element in &common_route_syn_variants {
                     value.push(*element);
-                });
+                }
                 value.push(no_payload_fields_syn_variant_wrapper.get_syn_variant());
                 value.push(no_primary_keys_syn_variant_wrapper.get_syn_variant());
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
