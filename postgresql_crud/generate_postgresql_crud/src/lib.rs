@@ -3055,7 +3055,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         });
                         acc
                     });
-                    let _ = column_increments.pop();
+                    let _: Option<char> = column_increments.pop();
                     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} ({column_increments}) {returning_primary_key_stringified}"));
                     let query_part_token_stream = fields.iter().map(|element| {
                         let element_field_ident = &element.field_ident;
@@ -3866,7 +3866,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation = Operation::UpdateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 6);
+                let mut value = vec![];
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
