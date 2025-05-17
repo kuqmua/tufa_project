@@ -2229,6 +2229,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         pub struct #ident_update_upper_camel_case #content_token_stream
                     }
                 };
+                let generate_pub_std_option_option_ident_type_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                    quote::quote!{(pub std::option::Option<#ident_token_stream>);}
+                };
                 match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_update_token_stream(
@@ -2242,7 +2245,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(
                             &ShouldDeriveDefault::False,
                             &ShouldDeriveSerdeDeserialize::True,
-                            &quote::quote!{(pub std::option::Option<#ident_update_standart_not_null_upper_camel_case>);},
+                            &generate_pub_std_option_option_ident_type_token_stream(&ident_update_standart_not_null_upper_camel_case),
                         ),
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -2257,10 +2260,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(
                             &ShouldDeriveDefault::False,
                             &ShouldDeriveSerdeDeserialize::True,
-                            &{
-                                let ident_with_id_update_array_not_null_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_with_id_array_not_null_upper_camel_case);
-                                quote::quote!{(pub std::option::Option<#ident_with_id_update_array_not_null_upper_camel_case>);}
-                            },
+                            &generate_pub_std_option_option_ident_type_token_stream(&naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_with_id_array_not_null_upper_camel_case)),
                         ),
                     },
                 }
