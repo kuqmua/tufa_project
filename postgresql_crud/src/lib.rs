@@ -314,8 +314,8 @@ impl<'de> serde::Deserialize<'de> for Pagination {
                 __E: serde::de::Error,
             {
                 match __value {
-                    0u64 => serde::__private::Ok(__Field::__field0),
-                    1u64 => serde::__private::Ok(__Field::__field1),
+                    0_u64 => serde::__private::Ok(__Field::__field0),
+                    1_u64 => serde::__private::Ok(__Field::__field1),
                     _ => serde::__private::Ok(__Field::__ignore),
                 }
             }
@@ -367,13 +367,13 @@ impl<'de> serde::Deserialize<'de> for Pagination {
                 let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct Pagination with 2 elements"));
+                        return serde::__private::Err(serde::de::Error::invalid_length(0_usize, &"struct Pagination with 2 elements"));
                     }
                 };
                 let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct Pagination with 2 elements"));
+                        return serde::__private::Err(serde::de::Error::invalid_length(1_usize, &"struct Pagination with 2 elements"));
                     }
                 };
                 match Pagination::try_new(__field0, __field1) {
@@ -590,8 +590,8 @@ const _: () = {
                     __E: _serde::de::Error,
                 {
                     match __value {
-                        0u64 => _serde::__private::Ok(__Field::__field0),
-                        1u64 => _serde::__private::Ok(__Field::__field1),
+                        0_u64 => _serde::__private::Ok(__Field::__field0),
+                        1_u64 => _serde::__private::Ok(__Field::__field1),
                         _ => _serde::__private::Ok(__Field::__ignore),
                     }
                 }
@@ -643,13 +643,13 @@ const _: () = {
                     let __field0 = match _serde::de::SeqAccess::next_element::<crate::LogicalOperator>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypeWhere with 2 elements"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0_usize, &"struct PostgresqlTypeWhere with 2 elements"));
                         }
                     };
                     let __field1 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<PostgresqlTypeWhereElement>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypeWhere with 2 elements"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(1_usize, &"struct PostgresqlTypeWhere with 2 elements"));
                         }
                     };
                     match PostgresqlTypeWhere::try_new(__field0, __field1) {
@@ -823,7 +823,7 @@ const _: () = {
                     let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0_usize, &"tuple struct UniqueVec with 1 element"));
                         }
                     };
                     match UniqueVec::try_new(__field0) {
