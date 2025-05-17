@@ -43,9 +43,9 @@ fn check_specific_dependency_version_usage() {
         let mut buf_reader_member = std::io::BufReader::new(std::fs::File::open(path_to_cargo_toml_member.clone()).unwrap_or_else(|error| panic!("{cannot_open_file}{path_to_cargo_toml_member}{file_error}\"{error}\"")));
         let mut cargo_toml_member_content = std::string::String::new();
         {
-            std::io::Read::read_to_string(&mut buf_reader_member, &mut cargo_toml_member_content).unwrap_or_else(|error| panic!("cannot read_to_string from {path_to_cargo_toml_member}{file_error}\"{e}\""));
+            std::io::Read::read_to_string(&mut buf_reader_member, &mut cargo_toml_member_content).unwrap_or_else(|error| panic!("cannot read_to_string from {path_to_cargo_toml_member}{file_error}\"{error}\""));
         }
-        let cargo_toml_member_map = cargo_toml_member_content.parse::<toml::Table>().unwrap_or_else(|error| panic!("cannot parse::<toml::Table>() cargo_toml_member_content for {member} {file_error}\"{e}\""));
+        let cargo_toml_member_map = cargo_toml_member_content.parse::<toml::Table>().unwrap_or_else(|error| panic!("cannot parse::<toml::Table>() cargo_toml_member_content for {member} {file_error}\"{error}\""));
         toml_keys.iter().for_each(|toml_key| {
             let f = if let Some(toml_member_table_map_value) = cargo_toml_member_map.get(*toml_key) {
                 if let toml::Value::Table(toml_member_table_dependencies_map) = toml_member_table_map_value {
