@@ -736,7 +736,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 );
                 let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
                     &ident_with_id_create_standart_not_null_upper_camel_case,
-                    &quote::quote!{#impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream}
+                    &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream.clone()
                 );
                 let impl_ident_with_id_create_standart_not_null_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
                     &ident_with_id_create_standart_not_null_upper_camel_case,
