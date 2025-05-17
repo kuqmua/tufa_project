@@ -40,7 +40,7 @@ fn check_specific_dependency_version_usage() {
     let mut is_logic_executed = true;
     let unspecified_dependencies = toml_table_workspace_members_map_vec.iter().fold(Vec::new(), |mut acc, member| {
         let path_to_cargo_toml_member = format!("../{member}/Cargo.toml");
-        let mut buf_reader_member = std::io::BufReader::new(std::fs::File::open(path_to_cargo_toml_member.clone()).unwrap_or_else(|error| panic!("{cannot_open_file}{path_to_cargo_toml_member}{file_error}\"{e}\"")));
+        let mut buf_reader_member = std::io::BufReader::new(std::fs::File::open(path_to_cargo_toml_member.clone()).unwrap_or_else(|error| panic!("{cannot_open_file}{path_to_cargo_toml_member}{file_error}\"{error}\"")));
         let mut cargo_toml_member_content = std::string::String::new();
         {
             std::io::Read::read_to_string(&mut buf_reader_member, &mut cargo_toml_member_content).unwrap_or_else(|error| panic!("cannot read_to_string from {path_to_cargo_toml_member}{file_error}\"{e}\""));

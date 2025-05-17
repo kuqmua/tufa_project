@@ -38,5 +38,5 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
             outdated_lints_in_file.push(element);
         }
     }
-    assert!(outdated_lints_in_file.is_empty(), "this clippy lints are outdated but still in [workspace.lints.clippy]: {outdated_lints_in_file:#?}")
+    assert!(outdated_lints_in_file.is_empty(), "this clippy lints are outdated but still in [workspace.lints.clippy]: {outdated_lints_in_file:#?}");
 }
