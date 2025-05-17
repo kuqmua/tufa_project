@@ -4,8 +4,8 @@ pub enum SuportedEnumVariant {
     Unnamed,
 }
 impl SuportedEnumVariant {
-    pub fn new_or_panic(data_enum: &syn::DataEnum) -> SuportedEnumVariant {
-        let mut all_equal: Option<SuportedEnumVariant> = None;
+    pub fn new_or_panic(data_enum: &syn::DataEnum) -> Self {
+        let mut all_equal: Option<Self> = None;
         assert!(!data_enum.variants.is_empty(), "enum variants are empty");
         let error_message = format!(
             "{} enums where all variants are {}::{} or all variants are {}::{}",
@@ -18,18 +18,18 @@ impl SuportedEnumVariant {
         data_enum.variants.iter().for_each(|variant| match &variant.fields {
             syn::Fields::Named(_) => match &all_equal {
                 Some(supported_variant) => {
-                    assert!(!(*supported_variant == SuportedEnumVariant::Unnamed), "{error_message}");
+                    assert!(!(*supported_variant == Self::Unnamed), "{error_message}");
                 }
                 None => {
-                    all_equal = Some(SuportedEnumVariant::Named);
+                    all_equal = Some(Self::Named);
                 }
             },
             syn::Fields::Unnamed(_) => match &all_equal {
                 Some(supported_variant) => {
-                    assert!(!(*supported_variant == SuportedEnumVariant::Named), "{error_message}");
+                    assert!(!(*supported_variant == Self::Named), "{error_message}");
                 }
                 None => {
-                    all_equal = Some(SuportedEnumVariant::Unnamed);
+                    all_equal = Some(Self::Unnamed);
                 }
             },
             syn::Fields::Unit => panic!("{error_message}"),

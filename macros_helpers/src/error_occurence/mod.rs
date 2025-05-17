@@ -10,7 +10,7 @@ pub mod supported_enum_variant;
 pub mod vec_element_type;
 pub mod vec_lifetime_to_string;
 
-#[allow(clippy::enum_variant_names)]
+#[expect(clippy::enum_variant_names)]
 #[derive(Debug, Clone, Copy)]
 pub enum ErrorOccurenceFieldAttribute {
     EoToStdStringString,
@@ -57,7 +57,7 @@ impl std::convert::From<&syn::Field> for ErrorOccurenceFieldAttribute {
                 let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
                 if let Ok(value) = {
                     use std::str::FromStr;
-                    ErrorOccurenceFieldAttribute::from_str(&first_segment_ident.to_string())
+                    Self::from_str(&first_segment_ident.to_string())
                 } {
                     if option_attribute.is_some() {
                         panic!("two or more supported attributes!");
