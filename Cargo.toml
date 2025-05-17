@@ -234,6 +234,7 @@ static_mut_refs = { level = "deny", priority = 0 } #shared references or mutable
 # non_exhaustive_omitted_patterns = { level = "deny", priority = 0 } #detect when patterns of types marked `non_exhaustive` are missed
 # unfulfilled_lint_expectations = { level = "deny", priority = 0 } #unfulfilled lint expectation
 # test_unstable_lint = { level = "deny", priority = 0 } #this unstable lint is only for testing
+unpredictable_function_pointer_comparisons = { level = "deny", priority = 0 }
 
 [workspace.lints.clippy]#usage "cargo clippy"
 absolute_paths = { level = "allow", priority = 0 }
@@ -397,7 +398,6 @@ float_arithmetic = { level = "deny", priority = 0 }
 float_cmp = { level = "deny", priority = 0 }
 float_cmp_const = { level = "deny", priority = 0 }
 float_equality_without_abs = { level = "deny", priority = 0 }
-unpredictable_function_pointer_comparisons = { level = "deny", priority = 0 }
 fn_params_excessive_bools = { level = "deny", priority = 0 }
 fn_to_numeric_cast = { level = "deny", priority = 0 }
 fn_to_numeric_cast_any = { level = "deny", priority = 0 }
