@@ -600,10 +600,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 return _serde::__private::Err(_serde::de::Error::invalid_length(2usize, &"struct PostgresqlTypeRecord with 3 elements"));
                             }
                         };
-                        match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
-                            Ok(value) => serde::__private::Ok(value),
-                            Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
-                        }
+                        Ok(PostgresqlTypeRecord {
+                            postgresql_type: __field0,
+                            not_null_or_nullable: __field1,
+                            postgresql_type_pattern: __field2,
+                        })
                     }
                     #[inline]
                     fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
@@ -650,10 +651,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             _serde::__private::Some(__field2) => __field2,
                             _serde::__private::None => _serde::__private::de::missing_field("postgresql_type_pattern")?,
                         };
-                        match PostgresqlTypeRecord::try_from((__field0, __field1, __field2)) {
-                            Ok(value) => serde::__private::Ok(value),
-                            Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
-                        }
+                        Ok(PostgresqlTypeRecord {
+                            postgresql_type: __field0,
+                            not_null_or_nullable: __field1,
+                            postgresql_type_pattern: __field2,
+                        })
                     }
                 }
                 #[doc(hidden)]

@@ -7,8 +7,8 @@ version = "0.1.0"
 
 [dependencies]
 log = {version = "=0.4"}
-pretty_env_logger = {version = "=0.4"}
-teloxide = {version = "=0.11", features = ["macros", "auto-send"]}
+# pretty_env_logger = {version = "=0.4"}
+teloxide = {version = "=0.13.0", features = ["macros"]}
 tokio = {version = "=1.29.1", features = ["macros", "rt-multi-thread"]}
 # reqwest = {version = "=0.11.17", default-features = false, features = ["json", "blocking", "rustls-tls", "cookies", "gzip", "brotli", "deflate", "trust-dns", "native-tls", "multipart", "stream", "cookies"]}
 # serde = {version = "=1.0", features = ["derive"]}
