@@ -1112,13 +1112,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
             }
         }
-        const fn desirable_status_code(&self) -> macros_helpers::status_code::StatusCode {
+        const fn desirable_status_code(self) -> macros_helpers::status_code::StatusCode {
             match self {
                 Self::CreateMany | Self::CreateOne => macros_helpers::status_code::StatusCode::Created201,
                 Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
             }
         }
-        const fn generate_postgresql_crud_attribute_additional_error_variants(&self) -> GeneratePostgresqlCrudAttribute {
+        const fn generate_postgresql_crud_attribute_additional_error_variants(self) -> GeneratePostgresqlCrudAttribute {
             match self {
                 Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
                 Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
