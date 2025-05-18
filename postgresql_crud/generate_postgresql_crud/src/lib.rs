@@ -1105,7 +1105,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     }
     // }
     impl Operation {
-        const fn http_method(&self) -> OperationHttpMethod {
+        const fn http_method(self) -> OperationHttpMethod {
             match self {
                 Self::CreateMany | Self::CreateOne | Self::ReadMany | Self::ReadOne => OperationHttpMethod::Post,
                 Self::UpdateMany | Self::UpdateOne => OperationHttpMethod::Patch,
@@ -1144,16 +1144,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     }
     impl std::fmt::Display for Operation {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
             match &self {
-                Self::CreateMany => write!(f, "CreateMany"),
-                Self::CreateOne => write!(f, "CreateOne"),
-                Self::ReadMany => write!(f, "ReadMany"),
-                Self::ReadOne => write!(f, "ReadOne"),
-                Self::UpdateMany => write!(f, "UpdateMany"),
-                Self::UpdateOne => write!(f, "UpdateOne"),
-                Self::DeleteMany => write!(f, "DeleteMany"),
-                Self::DeleteOne => write!(f, "DeleteOne"),
+                Self::CreateMany => write!(formatter, "CreateMany"),
+                Self::CreateOne => write!(formatter, "CreateOne"),
+                Self::ReadMany => write!(formatter, "ReadMany"),
+                Self::ReadOne => write!(formatter, "ReadOne"),
+                Self::UpdateMany => write!(formatter, "UpdateMany"),
+                Self::UpdateOne => write!(formatter, "UpdateOne"),
+                Self::DeleteMany => write!(formatter, "DeleteMany"),
+                Self::DeleteOne => write!(formatter, "DeleteOne"),
             }
         }
     }
