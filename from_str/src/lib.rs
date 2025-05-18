@@ -3,9 +3,7 @@ pub fn from_str(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|_| panic!("let syn_derive_input: syn::DeriveInput = syn::parse(input) failed"));
     let ident = &syn_derive_input.ident;
-    let data_enum = if let syn::Data::Enum(data_enum) = syn_derive_input.data {
-        data_enum
-    } else {
+    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
     };
     let variant_idents = data_enum
