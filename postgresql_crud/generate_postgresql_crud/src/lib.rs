@@ -1745,7 +1745,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_additional_error_variants = generate_additional_error_variants(&syn_derive_input, GeneratePostgresqlCrudAttribute::CommonAdditionalErrorVariants);
     let common_route_syn_variants = {
         let common_additional_error_variants_vec = common_additional_error_variants.iter().collect::<std::vec::Vec<&syn::Variant>>();
-        let mut value = std::vec::Vec::with_capacity(common_additional_error_variants_vec.len() + common_additional_error_variants_vec.len());
+        let mut value = vec![];
         value.push(check_body_size_syn_variant_wrapper.get_syn_variant());
         value.push(postgresql_syn_variant_wrapper.get_syn_variant());
         value.push(serde_json_syn_variant_wrapper.get_syn_variant());
@@ -1755,7 +1755,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value
     };
     let common_route_with_row_and_rollback_syn_variants = {
-        let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 1);
+        let mut value = vec![];
         for element in &common_route_syn_variants {
             value.push(*element);
         }
@@ -2243,7 +2243,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_try_operation_error_named_token_stream = |operation: &Operation, common_http_request_syn_variants: &std::vec::Vec<syn::Variant>| -> proc_macro2::TokenStream {
         let try_operation_error_named_upper_camel_case = naming::parameter::TrySelfErrorNamedUpperCamelCase::from_display(operation);
         let syn_variants = {
-            let mut value = std::vec::Vec::with_capacity(common_http_request_syn_variants.len() + 1);
+            let mut value = vec![];
             for element in common_http_request_syn_variants {
                 value.push(element.clone());
             }
@@ -2771,7 +2771,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
-                let mut value = std::vec::Vec::with_capacity(common_route_syn_variants.len() + 4);
+                let mut value = vec![];
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
