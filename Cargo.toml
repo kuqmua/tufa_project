@@ -699,7 +699,7 @@ pub_use = { level = "allow", priority = 0 }
 pub_with_shorthand = { level = "allow", priority = 0 }
 pub_without_shorthand = { level = "deny", priority = 0 }
 question_mark = { level = "deny", priority = 0 }
-question_mark_used = { level = "deny", priority = 0 }
+question_mark_used = { level = "allow", priority = 0 }
 range_minus_one = { level = "deny", priority = 0 }
 range_plus_one = { level = "deny", priority = 0 }
 range_zip_with_len = { level = "deny", priority = 0 }
