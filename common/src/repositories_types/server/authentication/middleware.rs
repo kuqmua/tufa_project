@@ -2,8 +2,8 @@
 // pub struct UserId(uuid::Uuid);
 
 // impl std::fmt::Display for UserId {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         self.0.fmt(f)
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         self.0.fmt(formatter)
 //     }
 // }
 

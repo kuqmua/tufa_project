@@ -7,7 +7,7 @@ pub enum RequestResult {
 }
 
 impl std::fmt::Display for RequestResult {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{:?}", self)
     }
 }

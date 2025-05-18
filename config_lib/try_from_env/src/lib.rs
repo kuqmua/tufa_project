@@ -49,7 +49,7 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
             let element_ident = &element.ident.as_ref().expect(ident_in_none_stringified);
             let element_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_ident);
             quote::quote! {
-                Self::#element_ident_upper_camel_case_token_stream { #element_ident } => write!(f, "{}", #element_ident)
+                Self::#element_ident_upper_camel_case_token_stream { #element_ident } => write!(formatter, "{}", #element_ident)
             }
         });
         macros_helpers::generate_impl_std_fmt_display_token_stream(
@@ -60,11 +60,11 @@ pub fn try_from_env(input: proc_macro::TokenStream) -> proc_macro::TokenStream {
                 match self {
                     Self::#dotenv_upper_camel_case {
                         #dotenv_snake_case
-                    } => write!(f, "{}", #dotenv_snake_case),
+                    } => write!(formatter, "{}", #dotenv_snake_case),
                     Self::#std_env_var_error_upper_camel_case {
                         #std_env_var_error_snake_case,
                         env_var_name
-                    } => write!(f, "{} {}", #std_env_var_error_snake_case, env_var_name),
+                    } => write!(formatter, "{} {}", #std_env_var_error_snake_case, env_var_name),
                     #(#variants_token_stream),*
                 }
             },

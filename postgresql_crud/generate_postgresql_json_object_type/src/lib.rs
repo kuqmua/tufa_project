@@ -534,7 +534,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &proc_macro2::TokenStream::new(),
                     &ident_token_stream,
                     &proc_macro2::TokenStream::new(),
-                    &quote::quote! {write!(f, "{:?}", self)}
+                    &quote::quote! {write!(formatter, "{:?}", self)}
                 )
             };
             let ident_create_token_stream = generate_ident_table_type_declaration_or_create_token_stream(

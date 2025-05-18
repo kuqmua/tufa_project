@@ -55,8 +55,8 @@ pub fn generate_upper_camel_and_snake_case_stringified_and_token_stream(input_to
             let generate_display_implementation_token_stream = |struct_name_token_stream: &dyn quote::ToTokens, write_content_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {
                     impl std::fmt::Display for #struct_name_token_stream {
-                        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                            write!(f, #write_content_token_stream)
+                        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                            write!(formatter, #write_content_token_stream)
                         }
                     }
                 }
@@ -227,8 +227,8 @@ pub fn generate_self_upper_camel_and_snake_case_stringified_and_token_stream(inp
                         }
                     }
                     impl std::fmt::Display for #struct_ident_token_stream {
-                        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                            write!(f, "{}", self.0)
+                        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+                            write!(formatter, "{}", self.0)
                         }
                     }
                     impl quote::ToTokens for #struct_ident_token_stream {

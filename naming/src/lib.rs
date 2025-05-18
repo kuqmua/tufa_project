@@ -547,8 +547,8 @@ pub struct HashMap;
 #[derive(Debug, Clone, Copy)]
 pub struct HashMapUpperCamelCase;
 impl std::fmt::Display for HashMapUpperCamelCase {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "HashMap")
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "HashMap")
     }
 }
 impl quote::ToTokens for HashMapUpperCamelCase {
@@ -559,8 +559,8 @@ impl quote::ToTokens for HashMapUpperCamelCase {
 #[derive(Debug, Clone, Copy)]
 pub struct HashMapSnakeCase;
 impl std::fmt::Display for HashMapSnakeCase {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "hashmap")
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "hashmap")
     }
 }
 impl quote::ToTokens for HashMapSnakeCase {

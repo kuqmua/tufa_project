@@ -33,9 +33,9 @@ pub struct CircleStyle {
 }
 
 impl fmt::Display for CircleStyle {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(
-            f, 
+            formatter, 
             "stroke: {}; stroke-dasharray: {}; stroke-dashoffset: {}; transform: {}; transform-origin: {}; transition: {}; fill-opacity: {};",
             self.stroke.clone().unwrap_or_else(|| std::string::String::from("")),
             self.stroke_dash_array,

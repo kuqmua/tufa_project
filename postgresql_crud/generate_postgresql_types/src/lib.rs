@@ -396,8 +396,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         }
     }
     impl std::fmt::Display for PostgresqlTypeRange {
-        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            write!(f, "{}", naming::parameter::SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(self)))
+        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(formatter, "{}", naming::parameter::SelfNotNullUpperCamelCase::from_display(&PostgresqlType::from(self)))
         }
     }
     impl quote::ToTokens for PostgresqlTypeRange {
@@ -2789,7 +2789,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     postgresql_crud_macros_common::DeriveOrImpl::Derive => proc_macro2::TokenStream::new(),
                     postgresql_crud_macros_common::DeriveOrImpl::Impl(value) => value,
                 };
-                let impl_std_fmt_display_for_ident_origin_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(f, "{self:?}")});
+                let impl_std_fmt_display_for_ident_origin_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{self:?}")});
                 let impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream =
                     macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {self.to_string()});
 

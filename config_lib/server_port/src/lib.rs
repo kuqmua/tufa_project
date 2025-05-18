@@ -3,8 +3,8 @@ pub use server_port_try_from_u16::server_port_try_from_u16;
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct ServerPort(std::primitive::u16);
 impl std::fmt::Display for ServerPort {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}", self.0)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{}", self.0)
     }
 }
 #[derive(Debug, serde::Serialize, serde::Deserialize)]
@@ -15,8 +15,8 @@ pub struct ServerPortErrorNamed {
     message: std::string::String,
 }
 impl std::fmt::Display for ServerPortErrorNamed {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "server_port_min_value: {}, server_port_max_value: {}, value: {}", self.server_port_min_value, self.server_port_max_value, self.value)
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "server_port_min_value: {}, server_port_max_value: {}, value: {}", self.server_port_min_value, self.server_port_max_value, self.value)
     }
 }
 impl std::error::Error for ServerPortErrorNamed {}

@@ -781,7 +781,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // match self {
                 //     #(#display_variants),*
                 // }
-                write!(f, "{}", serde_json::to_string(&self).unwrap_or_else(|e|format!("cannot serialize into json: {e:?}")))
+                write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e|format!("cannot serialize into json: {e:?}")))
             },
         );
         let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream =
@@ -1091,16 +1091,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         DeleteOne,
     }
     // impl std::fmt::Display for Operation {
-    //     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
     //         match &self {
-    //             Self::CreateMany => write!(f, "CreateMany"),
-    //             Self::CreateOne => write!(f, "CreateOne"),
-    //             Self::ReadMany => write!(f, "ReadMany"),
-    //             Self::ReadOne => write!(f, "ReadOne"),
-    //             Self::UpdateMany => write!(f, "UpdateMany"),
-    //             Self::UpdateOne => write!(f, "UpdateOne"),
-    //             Self::DeleteMany => write!(f, "DeleteMany"),
-    //             Self::DeleteOne => write!(f, "DeleteOne"),
+    //             Self::CreateMany => write!(formatter, "CreateMany"),
+    //             Self::CreateOne => write!(formatter, "CreateOne"),
+    //             Self::ReadMany => write!(formatter, "ReadMany"),
+    //             Self::ReadOne => write!(formatter, "ReadOne"),
+    //             Self::UpdateMany => write!(formatter, "UpdateMany"),
+    //             Self::UpdateOne => write!(formatter, "UpdateOne"),
+    //             Self::DeleteMany => write!(formatter, "DeleteMany"),
+    //             Self::DeleteOne => write!(formatter, "DeleteOne"),
     //         }
     //     }
     // }

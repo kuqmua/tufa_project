@@ -121,7 +121,7 @@ impl Display for StrokeColor {
         self.colors.iter().for_each(|c| {
             gradient.push_str(c);
         });
-        write!(f, "{}", gradient)
+        write!(formatter, "{}", gradient)
     }
 }
 

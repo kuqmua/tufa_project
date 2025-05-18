@@ -111,15 +111,15 @@
 // }
 
 // impl std::fmt::Debug for StoreTokenError {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         error_chain_fmt(self, f)
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         error_chain_fmt(self, formatter)
 //     }
 // }
 
 // impl std::fmt::Display for StoreTokenError {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
 //         write!(
-//             f,
+//             formatter,
 //             "A database failure was encountered while trying to store a subscription token."
 //         )
 //     }
@@ -127,12 +127,12 @@
 
 // pub fn error_chain_fmt(
 //     e: &impl std::error::Error,
-//     f: &mut std::fmt::Formatter<'_>,
+//     formatter: &mut std::fmt::Formatter<'_>,
 // ) -> std::fmt::Result {
-//     writeln!(f, "{}\n", e)?;
+//     writeln!(formatter, "{}\n", e)?;
 //     let mut current = e.source();
 //     while let Some(cause) = current {
-//         writeln!(f, "Caused by:\n\t{}", cause)?;
+//         writeln!(formatter, "Caused by:\n\t{}", cause)?;
 //         current = cause.source();
 //     }
 //     Ok(())

@@ -61,22 +61,22 @@ enum CommandError {
 }
 
 impl std::fmt::Display for CommandError {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
             CommandError::CheckoutDot { path, error } => {
-                write!(f, "git checkout . error: {}, path: {}", error, path)
+                write!(formatter, "git checkout . error: {}, path: {}", error, path)
             }
             CommandError::SubmoduleUpdate { path, error } => {
-                write!(f, "git submodule update error: {}, path: {}", error, path)
+                write!(formatter, "git submodule update error: {}, path: {}", error, path)
             }
             CommandError::CheckoutMain { path, error } => {
-                write!(f, "git checkout main error: {}, path: {}", error, path)
+                write!(formatter, "git checkout main error: {}, path: {}", error, path)
             }
             CommandError::Pull { path, error } => {
-                write!(f, "git pull error: {}, path: {}", error, path)
+                write!(formatter, "git pull error: {}, path: {}", error, path)
             }
             CommandError::CargoBuild { path, error } => {
-                write!(f, "cargo build error: {}, path: {}", error, path)
+                write!(formatter, "cargo build error: {}, path: {}", error, path)
             }
         }
     }

@@ -142,8 +142,8 @@ generate_postgresql_json_types::generate_postgresql_json_types!([
 //     }
 // }
 // impl std::fmt::Display for VecOfVecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableArrayOfNotNullJsonbNumberOrigin {
-//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-//         write!(f, "{self:?}")
+//     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+//         write!(formatter, "{self:?}")
 //     }
 // }
 // impl error_occurence_lib::ToStdStringString for VecOfVecOfOptionVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNullableArrayOfNotNullJsonbNumberOrigin {
