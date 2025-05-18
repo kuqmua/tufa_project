@@ -2029,10 +2029,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_serde_deserialize_for_ident_read_token_stream(&IsStandartWithId::False),
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                 },
-                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
-                },
+                PostgresqlJsonObjectTypePattern::Array => proc_macro2::TokenStream::new(),
             };
             let maybe_impl_impl_std_default_default_for_ident_read_token_stream = match &postgresql_json_object_type_pattern {
                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
