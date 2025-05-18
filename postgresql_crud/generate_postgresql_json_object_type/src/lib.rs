@@ -1325,32 +1325,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         ),
                         NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                     },
-                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                        NotNullOrNullable::NotNull => generate_impl_postgresql_type_where_filter_for_ident_token_stream(
-                            &quote::quote!{
-                                match &self {
-                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                }
-                            },
-                            &quote::quote!{
-                                match self {
-                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                }
-                            },
-                        ),
-                        NotNullOrNullable::Nullable => generate_impl_postgresql_type_where_filter_for_ident_token_stream(
-                            &quote::quote!{
-                                match &self {
-                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                }
-                            },
-                            &quote::quote!{
-                                match self {
-                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                }
-                            },
-                        ),
-                    }
+                    //todo different filters for not_null and nullable
+                    PostgresqlJsonObjectTypePattern::Array => generate_impl_postgresql_type_where_filter_for_ident_token_stream(
+                        &quote::quote!{
+                            match &self {
+                                Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                            }
+                        },
+                        &quote::quote!{
+                            match self {
+                                Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
+                            }
+                        },
+                    )
                 }
             };
             let maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_element_token_stream = match &postgresql_json_object_type_pattern {
