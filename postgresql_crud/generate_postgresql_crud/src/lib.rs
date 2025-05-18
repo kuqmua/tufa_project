@@ -1394,7 +1394,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     );
     let std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated = {
         if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
-            if let Some(last_path_segment) = value.path.segments.last() {
+            value.path.segments.last().map_or_else(|| {
+                panic!("no last path segment");
+            }, |last_path_segment| {
                 let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
                 handle.push_value(syn::PathSegment {
                     ident: proc_macro2::Ident::new("std", proc_macro2::Span::call_site()),
@@ -1435,7 +1437,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         });
                                         handle
                                     },
-                                },
+                                }
                             })));
                             handle
                         },
@@ -1443,9 +1445,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }),
                 });
                 handle
-            } else {
-                panic!("no last path segment");
-            }
+            })
         } else {
             panic!("primary key syn::Type in not syn::Type::Path");
         }
