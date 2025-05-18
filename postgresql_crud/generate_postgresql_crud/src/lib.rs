@@ -2143,9 +2143,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_token_stream = {
                 let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| {
                     let variant_ident = &element.ident;
-                    let fields_named = if let syn::Fields::Named(fields_named) = &element.fields {
-                        fields_named
-                    } else {
+                    let syn::Fields::Named(fields_named) = &element.fields else {
                         panic!("expected fields would be named");
                     };
                     let fields_mapped_into_token_stream = {
