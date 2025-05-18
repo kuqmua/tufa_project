@@ -49,25 +49,34 @@ impl std::str::FromStr for ErrorOccurenceFieldAttribute {
         }
     }
 }
-impl std::convert::From<&syn::Field> for ErrorOccurenceFieldAttribute {
-    fn from(value: &syn::Field) -> Self {
+impl std::convert::TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
+    type Error = std::string::String;
+    fn try_from(value: &syn::Field) -> Result<Self, Self::Error> {
         let mut option_attribute = None;
         for attr in &value.attrs {
             if attr.path().segments.len() == 1 {
-                let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
+                let first_segment_ident = match &attr.path().segments.first() {
+                    Some(value) => &value.ident,
+                    None => {
+                        return Err("no first value in punctuated".to_string());
+                    }
+                };
                 if let Ok(value) = {
                     use std::str::FromStr;
                     Self::from_str(&first_segment_ident.to_string())
                 } {
                     if option_attribute.is_some() {
-                        panic!("two or more supported attributes!");
+                        return Err("two or more supported attributes!".to_string());
                     } else {
                         option_attribute = Some(value);
                     }
                 }
             } //other attributes are not for this proc_macro
         }
-        option_attribute.unwrap_or_else(|| panic!("option attribute {}", naming::IS_NONE_STRINGIFIED))
+        match option_attribute {
+            Some(value) => Ok(value),
+            None => Err("option attribute is None".to_string())
+        }
     }
 }
 impl crate::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
@@ -151,7 +160,7 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
             quote::quote! {#element_type}
         };
         let std_snake_case = naming::StdSnakeCase;
-        let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::from(element) {
+        let element_type_with_serialize_deserialize_token_stream = match crate::error_occurence::ErrorOccurenceFieldAttribute::try_from(element).unwrap() {
             crate::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString => {
                 quote::quote! {
                     #std_string_string
