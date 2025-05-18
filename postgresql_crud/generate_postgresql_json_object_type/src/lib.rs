@@ -1388,20 +1388,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     ),
                     NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                 },
-                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                    NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                        &ident_where_element_upper_camel_case,
-                        &quote::quote!{
-                            vec![Self::Equal(#import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
-                        }
-                    ),
-                    NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                        &ident_where_element_upper_camel_case,
-                        &quote::quote!{
-                            vec![Self::Equal(#import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
-                        }
-                    ),
-                },
+                //todo diffrent filters for not_null and nullable
+                PostgresqlJsonObjectTypePattern::Array => postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                    &ident_where_element_upper_camel_case,
+                    &quote::quote!{
+                        vec![Self::Equal(#import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
+                    }
+                ),
             };
             let maybe_ident_with_id_where_element_token_stream = if is_standart_not_null {
                 let ident_with_id_where_element_token_stream = generate_ident_where_element_token_stream(
