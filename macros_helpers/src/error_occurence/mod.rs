@@ -207,7 +207,8 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                 };
                 match second_segment.arguments {
                     syn::PathArguments::None => (),
-                    _ => panic!("second_segment.arguments != PathArguments::None"),
+                    syn::PathArguments::AngleBracketed(_)
+                    | syn::PathArguments::Parenthesized(_) => panic!("second_segment.arguments != PathArguments::None")
                 }
                 let third_segment = segments.iter().nth(2).expect("no .nth(2) element");
                 {
