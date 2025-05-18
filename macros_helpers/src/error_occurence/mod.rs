@@ -129,9 +129,7 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(value: &
         let hashmap_upper_camel_case = naming::HashMapUpperCamelCase;
         assert!(third_segment.ident == hashmap_upper_camel_case.to_string(), "third_segment.ident != {hashmap_upper_camel_case} {}", third_segment.ident);
     };
-    let args = if let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &third_segment.arguments {
-        args
-    } else {
+    let syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments { args, .. }) = &third_segment.arguments else {
         panic!("third_segment.arguments != syn::PathArguments::AngleBracketed");
     };
     assert!(args.len() == 2, "args.len() != 2");
