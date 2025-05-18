@@ -67,16 +67,12 @@ impl std::convert::TryFrom<&syn::Field> for ErrorOccurenceFieldAttribute {
                 } {
                     if option_attribute.is_some() {
                         return Err("two or more supported attributes!".to_string());
-                    } else {
-                        option_attribute = Some(value);
                     }
+                    option_attribute = Some(value);
                 }
             } //other attributes are not for this proc_macro
         }
-        match option_attribute {
-            Some(value) => Ok(value),
-            None => Err("option attribute is None".to_string())
-        }
+        option_attribute.map_or_else(|| Err("option attribute is None".to_string()), |value| Ok(value))
     }
 }
 impl crate::attribute_ident_stringified::AttributeIdentStringified for ErrorOccurenceFieldAttribute {
