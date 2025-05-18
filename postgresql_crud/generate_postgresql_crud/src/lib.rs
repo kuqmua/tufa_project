@@ -2084,9 +2084,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let generate_error_occurence_variant_token_stream = |error_variant: &syn::Variant| -> proc_macro2::TokenStream {
         let variant_ident = &error_variant.ident;
-        let fields_named = if let syn::Fields::Named(fields_named) = &error_variant.fields {
-            fields_named
-        } else {
+        let syn::Fields::Named(fields_named) = &error_variant.fields else {
             panic!("expected fields would be named");
         };
         let fields_mapped_into_token_stream = fields_named.named.iter().map(|field| {
