@@ -111,7 +111,8 @@ pub fn get_type_path_third_segment_second_argument_check_if_hashmap<'a>(value: &
     assert!(first_segment.ident == std_snake_case.to_string(), "first_segment.ident != {std_snake_case} {}", first_segment.ident);
     match first_segment.arguments {
         syn::PathArguments::None => (),
-        _ => panic!("first_segment.arguments != PathArguments::None"),
+        syn::PathArguments::AngleBracketed(_)
+        | syn::PathArguments::Parenthesized(_) => panic!("first_segment.arguments != PathArguments::None")
     }
     let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
     {
