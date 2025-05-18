@@ -1368,14 +1368,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     ),
                     NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                 },
-                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                    NotNullOrNullable::NotNull => generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
-                        &ident_where_element_upper_camel_case
-                    ),
-                    NotNullOrNullable::Nullable => generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
-                        &ident_where_element_upper_camel_case
-                    ),
-                },
+                PostgresqlJsonObjectTypePattern::Array => generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
+                    &ident_where_element_upper_camel_case
+                ),
             };
             let generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_content_standart_not_null_where_element = |is_standart_with_id: &IsStandartWithId|{
                 let variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
