@@ -1130,7 +1130,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
             }
         }
-        const fn generate_postgresql_crud_attribute_additional_route_logic(&self) -> GeneratePostgresqlCrudAttribute {
+        const fn generate_postgresql_crud_attribute_additional_route_logic(self) -> GeneratePostgresqlCrudAttribute {
             match self {
                 Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic,
                 Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalRouteLogic,
