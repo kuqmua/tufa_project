@@ -27,9 +27,7 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         })
         .collect::<std::vec::Vec<&syn::Ident>>();
     let ident_with_serialize_deserialize_upper_camel_case = naming::parameter::SelfWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
-    let data_enum = if let syn::Data::Enum(data_enum) = syn_derive_input.data {
-        data_enum
-    } else {
+    let syn::Data::Enum(data_enum) = syn_derive_input.data else {
         panic!("{} syn::Data::Enum", naming::SUPPORTS_ONLY_STRINGIFIED);
     };
     let supported_enum_variant = macros_helpers::error_occurence::supported_enum_variant::SuportedEnumVariant::new_or_panic(&data_enum);
