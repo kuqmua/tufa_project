@@ -1968,7 +1968,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             match operation {
                 Operation::UpdateMany => &non_existing_primary_keys_update_and_rollback_syn_variant_wrapper,
                 Operation::DeleteMany => &non_existing_primary_keys_delete_and_rollback_syn_variant_wrapper,
-                _ => panic!("operation is not UpdateMany or DeleteMany"),
+                Operation::CreateMany
+                | Operation::CreateOne
+                | Operation::ReadMany
+                | Operation::ReadOne
+                | Operation::UpdateOne
+                | Operation::DeleteOne => panic!("operation is not UpdateMany or DeleteMany"),
             },
             file!(),
             line!(),
