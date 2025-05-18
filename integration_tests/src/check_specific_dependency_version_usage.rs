@@ -9,24 +9,21 @@ fn check_specific_dependency_version_usage() {
     let toml_table_map = cargo_toml_workspace_content.parse::<toml::Table>().unwrap_or_else(|error| panic!("cannot parse::<toml::Table>() cargo_toml_workspace_content, error:\"{error}\""));
     let toml_table_workspace_members_map_vec = if let Some(toml_table_map_value) = toml_table_map.get("workspace") {
         if let toml::Value::Table(toml_table_workspace_map) = toml_table_map_value {
-            if let Some(toml_table_workspace_map_value) = toml_table_workspace_map.get("members") {
-                if let toml::Value::Array(toml_table_workspace_members_map_vec) = toml_table_workspace_map_value {
-                    toml_table_workspace_members_map_vec
-                        .iter()
-                        .map(|path_value| {
-                            if let toml::Value::String(path) = path_value {
-                                path
-                            } else {
-                                panic!("path is not a toml::Value::String");
-                            }
-                        })
-                        .collect::<Vec<&String>>()
-                } else {
-                    panic!("toml_table_workspace_map is not a toml::Value::Array");
-                }
-            } else {
+            toml_table_workspace_map.get("members").map_or_else(|| {
                 panic!("no members in toml_table_workspace_map");
-            }
+            }, |toml_table_workspace_map_value| if let toml::Value::Array(toml_table_workspace_members_map_vec) = toml_table_workspace_map_value {
+                toml_table_workspace_members_map_vec.iter()
+                .map(|path_value| {
+                    if let toml::Value::String(path) = path_value {
+                        path
+                    } else {
+                        panic!("path is not a toml::Value::String");
+                    }
+                })
+                .collect::<Vec<&String>>()
+            } else {
+                panic!("toml_table_workspace_map is not a toml::Value::Array");
+            })
         } else {
             panic!("toml_table_map_value is not a toml::Value::Table");
         }
