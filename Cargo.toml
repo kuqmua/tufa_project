@@ -520,7 +520,7 @@ manual_instant_elapsed = { level = "deny", priority = 0 }
 manual_is_ascii_check = { level = "deny", priority = 0 }
 manual_is_finite = { level = "deny", priority = 0 }
 manual_is_infinite = { level = "deny", priority = 0 }
-manual_let_else = { level = "deny", priority = 0 }
+manual_let_else = { level = "allow", priority = 0 }
 manual_main_separator_str = { level = "deny", priority = 0 }
 manual_map = { level = "deny", priority = 0 }
 manual_memcpy = { level = "deny", priority = 0 }
