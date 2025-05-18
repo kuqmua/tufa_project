@@ -43,7 +43,7 @@ fn check_specific_dependency_version_usage() {
         let _: usize = std::io::Read::read_to_string(&mut buf_reader_member, &mut cargo_toml_member_content).unwrap_or_else(|error| panic!("cannot read_to_string from {path_to_cargo_toml_member}{file_error}\"{error}\""));
         let cargo_toml_member_map = cargo_toml_member_content.parse::<toml::Table>().unwrap_or_else(|error| panic!("cannot parse::<toml::Table>() cargo_toml_member_content for {member} {file_error}\"{error}\""));
         for toml_key in &toml_keys {
-            let f = if let Some(toml_member_table_map_value) = cargo_toml_member_map.get(*toml_key) {
+            if let Some(toml_member_table_map_value) = cargo_toml_member_map.get(*toml_key) {
                 if let toml::Value::Table(toml_member_table_dependencies_map) = toml_member_table_map_value {
                     toml_member_table_dependencies_map
                         .iter()
@@ -66,14 +66,13 @@ fn check_specific_dependency_version_usage() {
                             }
                         })
                         .collect::<Vec<std::string::String>>()
+                        .into_iter()
+                        .for_each(|element|{
+                            acc.push(element);
+                        });
                 } else {
                     panic!("no {toml_key} in cargo_toml_member_map of {member}");
                 }
-            } else {
-                Vec::new()
-            };
-            for g in f {
-                acc.push(g);
             }
         }
         is_logic_executed = true;
