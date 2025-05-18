@@ -878,7 +878,7 @@ unreachable = { level = "deny", priority = 0 }
 unreadable_literal = { level = "deny", priority = 0 }
 unsafe_derive_deserialize = { level = "deny", priority = 0 }
 unsafe_removed_from_name = { level = "deny", priority = 0 }
-unseparated_literal_suffix = { level = "deny", priority = 0 }
+unseparated_literal_suffix = { level = "allow", priority = 0 }
 unsound_collection_transmute = { level = "deny", priority = 0 }
 unused_async = { level = "deny", priority = 0 }
 unused_enumerate_index = { level = "deny", priority = 0 }
