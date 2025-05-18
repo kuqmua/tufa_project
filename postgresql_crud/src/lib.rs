@@ -563,7 +563,7 @@ impl<PostgresqlTypeWhereElement: std::cmp::PartialEq + Clone> PostgresqlTypeWher
     }
 }
 const _: () = {
-    #[expect(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
     impl<'de, PostgresqlTypeWhereElement: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
@@ -779,10 +779,10 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
     }
 }
 const _: () = {
-    #[expect(unused_extern_crates, clippy::useless_attribute)]
+    #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T>
+    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone> _serde::Deserialize<'de> for UniqueVec<T>
     where
         T: _serde::Deserialize<'de>,
     {
