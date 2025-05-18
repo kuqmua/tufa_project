@@ -6,7 +6,7 @@ edition = "2024"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dev-dependencies]
-quote = {version = "=1.0.36"}
+# quote = {version = "=1.0.36"}
 toml = {version = "=0.7.4"}
 
 [lints]
