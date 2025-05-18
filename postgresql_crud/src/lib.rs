@@ -850,7 +850,7 @@ impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysConta
 }
 impl<T> std::default::Default for UniqueVec<T> {
     fn default() -> Self {
-        Self(::core::default::Default::default())
+        Self(std::vec::Vec::default())
     }
 }
 impl<T> UniqueVec<T> {
