@@ -362,7 +362,7 @@ empty_loop = { level = "deny", priority = 0 }
 empty_structs_with_brackets = { level = "deny", priority = 0 }
 enum_clike_unportable_variant = { level = "deny", priority = 0 }
 enum_glob_use = { level = "deny", priority = 0 }
-enum_variant_names = { level = "deny", priority = 0 }
+enum_variant_names = { level = "allow", priority = 0 }
 eq_op = { level = "deny", priority = 0 }
 equatable_if_let = { level = "deny", priority = 0 }
 erasing_op = { level = "deny", priority = 0 }
