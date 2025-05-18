@@ -22,7 +22,8 @@ pub fn error_occurence(input: proc_macro::TokenStream) -> proc_macro::TokenStrea
         .iter()
         .map(|element| match &element {
             syn::GenericParam::Type(value) => &value.ident,
-            _ => panic!("does support only syn::GenericParam::Type"),
+            syn::GenericParam::Lifetime(_)
+            | syn::GenericParam::Const(_) => panic!("does support only syn::GenericParam::Type"),
         })
         .collect::<std::vec::Vec<&syn::Ident>>();
     let ident_with_serialize_deserialize_upper_camel_case = naming::parameter::SelfWithSerializeDeserializeUpperCamelCase::from_tokens(&ident);
