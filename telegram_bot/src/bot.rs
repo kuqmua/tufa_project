@@ -14,7 +14,7 @@ enum Command {
 #[tokio::main]
 pub async fn start_bot() {
     let bot = teloxide::Bot::from_env();
-    teloxide::repl(bot, |bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command| async move {
+    Box::pin(teloxide::repl(bot, |bot: teloxide::Bot, msg: teloxide::types::Message, cmd: Command| async move {
         log::info!("answer");
         let _unused = match cmd {
             Command::Help => {
@@ -44,6 +44,6 @@ pub async fn start_bot() {
         };
     
         Ok(())
-    })
+    }))
     .await;
 }
