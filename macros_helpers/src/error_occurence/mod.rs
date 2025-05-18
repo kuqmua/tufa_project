@@ -197,7 +197,8 @@ pub fn generate_serialize_deserialize_version_of_named_syn_variant(value: &syn::
                 assert!(first_segment.ident == std_snake_case.to_string(), "first_segment.ident != {std_snake_case} {}", first_segment.ident);
                 match first_segment.arguments {
                     syn::PathArguments::None => (),
-                    _ => panic!("first_segment.arguments != PathArguments::None"),
+                    syn::PathArguments::AngleBracketed(_)
+                    | syn::PathArguments::Parenthesized(_) => panic!("first_segment.arguments != PathArguments::None")
                 }
                 let second_segment = segments.iter().nth(1).expect("no .nth(1) element");
                 {
