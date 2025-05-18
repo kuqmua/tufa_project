@@ -2701,7 +2701,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_sqlx_row_try_get_primary_key_token_stream(
                 &match operation {
                     Operation::CreateOne | Operation::UpdateOne | Operation::DeleteOne => quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
-                    _ => panic!("supported only CreateOne, UpdateOne, DeleteOne"),
+                    Operation::CreateMany
+                    | Operation::ReadMany
+                    | Operation::ReadOne
+                    | Operation::UpdateMany
+                    | Operation::DeleteMany => panic!("supported only CreateOne, UpdateOne, DeleteOne"),
                 },
                 // &quote::quote! {#primary_key_inner_type_token_stream(#value_snake_case)},
                 &value_snake_case,
