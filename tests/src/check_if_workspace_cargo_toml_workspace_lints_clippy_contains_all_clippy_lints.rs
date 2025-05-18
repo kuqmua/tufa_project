@@ -9,7 +9,12 @@ fn check_if_workspace_cargo_toml_workspace_lints_clippy_contains_all_clippy_lint
     let clippy = &lints["clippy"];
     let toml_value_table = match clippy {
         toml::Value::Table(value) => value,
-        _ => panic!("not ok"),
+        toml::Value::String(_)
+        | toml::Value::Integer(_)
+        | toml::Value::Float(_)
+        | toml::Value::Boolean(_)
+        | toml::Value::Datetime(_)
+        | toml::Value::Array(_) => panic!("not ok"),
     };
     let lints_vec_from_file = toml_value_table.keys().collect::<Vec<&String>>();
     let body = reqwest::blocking::get("https://rust-lang.github.io/rust-clippy/master/lints.json").unwrap().text().unwrap();
