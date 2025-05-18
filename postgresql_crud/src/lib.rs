@@ -799,10 +799,7 @@ const _: () = {
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
-            impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone> _serde::de::Visitor<'de> for __Visitor<'de, T>
-            where
-                T: _serde::Deserialize<'de>,
-            {
+            impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
                 type Value = UniqueVec<T>;
                 fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(__f, "tuple struct UniqueVec")

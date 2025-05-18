@@ -47,7 +47,7 @@ impl std::default::Default for EncodeFormat {
 }
 impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for EncodeFormat {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        EncodeFormat::default()
+        Self::default()
     }
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq, utoipa::ToSchema)]
