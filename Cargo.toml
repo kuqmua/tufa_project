@@ -461,7 +461,7 @@ invalid_regex = { level = "deny", priority = 0 }
 invalid_upcast_comparisons = { level = "deny", priority = 0 }
 invisible_characters = { level = "deny", priority = 0 }
 is_digit_ascii_radix = { level = "deny", priority = 0 }
-items_after_statements = { level = "deny", priority = 0 }
+items_after_statements = { level = "allow", priority = 0 }
 items_after_test_module = { level = "deny", priority = 0 }
 iter_cloned_collect = { level = "deny", priority = 0 }
 iter_count = { level = "deny", priority = 0 }
