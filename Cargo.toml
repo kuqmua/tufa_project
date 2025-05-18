@@ -960,5 +960,5 @@ macro_metavars_in_unsafe = { level = "deny", priority = 0 }
 manual_pattern_char_comparison = { level = "deny", priority = 0 }
 needless_character_iteration = { level = "deny", priority = 0 }
 needless_maybe_sized = { level = "deny", priority = 0 }
-renamed_function_params = { level = "deny", priority = 0 }
+renamed_function_params = { level = "allow", priority = 0 }
 while_float = { level = "deny", priority = 0 }
