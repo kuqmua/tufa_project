@@ -64,31 +64,32 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             vec
         }
     }
-    .into_iter()
-    .filter(|element| {
-        use postgresql_crud_macros_common::NotNullOrNullable;
-        let not_null_or_nullable_filter = match &element.not_null_or_nullable {
-            NotNullOrNullable::NotNull => true,
-            NotNullOrNullable::Nullable => true,
-        };
-        let postgresql_json_object_type_pattern_filter = match &element.postgresql_json_object_type_pattern {
-            PostgresqlJsonObjectTypePattern::Standart => match &element.not_null_or_nullable {
-                NotNullOrNullable::NotNull => true,
-                NotNullOrNullable::Nullable => true,
-            },
-            PostgresqlJsonObjectTypePattern::Array => match &element.not_null_or_nullable {
-                NotNullOrNullable::NotNull => true,
-                NotNullOrNullable::Nullable => true,
-            },
-        };
-        let trait_gen_filter = match &element.trait_gen {
-            TraitGen::PostgresqlType => true,
-            TraitGen::PostgresqlJsonType => true,
-            TraitGen::PostgresqlTypeAndPostgresqlJsonType => true,
-        };
-        not_null_or_nullable_filter && postgresql_json_object_type_pattern_filter && trait_gen_filter
-    })
-    .collect::<std::vec::Vec<PostgresqlJsonObjectTypeRecord>>();
+    // .into_iter()
+    // .filter(|element| {
+    //     use postgresql_crud_macros_common::NotNullOrNullable;
+    //     let not_null_or_nullable_filter = match &element.not_null_or_nullable {
+    //         NotNullOrNullable::NotNull => true,
+    //         NotNullOrNullable::Nullable => true,
+    //     };
+    //     let postgresql_json_object_type_pattern_filter = match &element.postgresql_json_object_type_pattern {
+    //         PostgresqlJsonObjectTypePattern::Standart => match &element.not_null_or_nullable {
+    //             NotNullOrNullable::NotNull => true,
+    //             NotNullOrNullable::Nullable => true,
+    //         },
+    //         PostgresqlJsonObjectTypePattern::Array => match &element.not_null_or_nullable {
+    //             NotNullOrNullable::NotNull => true,
+    //             NotNullOrNullable::Nullable => true,
+    //         },
+    //     };
+    //     let trait_gen_filter = match &element.trait_gen {
+    //         TraitGen::PostgresqlType => true,
+    //         TraitGen::PostgresqlJsonType => true,
+    //         TraitGen::PostgresqlTypeAndPostgresqlJsonType => true,
+    //     };
+    //     not_null_or_nullable_filter && postgresql_json_object_type_pattern_filter && trait_gen_filter
+    // })
+    // .collect::<std::vec::Vec<PostgresqlJsonObjectTypeRecord>>()
+    ;
     // macros_helpers::write_string_into_file::write_string_into_file(
     //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
     //     &serde_json::to_string(&postgresql_json_type_record_vec).unwrap(),
