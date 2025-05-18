@@ -42,13 +42,10 @@ impl TryFromStdEnvVarOk for Timezone {
                 return Err(Self::Error::StdPrimitiveI32Parsing { std_primitive_i32_parsing: error });
             }
         };
-        let value = match chrono::FixedOffset::east_opt(value) {
-            Some(value) => value,
-            None => {
-                return Err(Self::Error::ChronoFixedOffset {
-                    chrono_fixed_offset: std::string::String::from("not east"),
-                });
-            }
+        let Some(value) = chrono::FixedOffset::east_opt(value) else {
+            return Err(Self::Error::ChronoFixedOffset {
+                chrono_fixed_offset: std::string::String::from("not east"),
+            });
         };
         Ok(Self(value))
     }
