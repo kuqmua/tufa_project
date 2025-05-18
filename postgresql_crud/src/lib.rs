@@ -491,13 +491,10 @@ impl<'a> crate::PostgresqlTypeWhereFilter<'a> for Pagination {
         match increment.checked_add(1) {
             Some(limit_increment) => {
                 *increment = limit_increment;
-                match increment.checked_add(1) {
-                    Some(offset_increment) => {
-                        *increment = offset_increment;
-                        Ok(format!("limit ${limit_increment} offset ${offset_increment}"))
-                    }
-                    None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-                }
+                increment.checked_add(1).map_or_else(|| Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }), |offset_increment| {
+                    *increment = offset_increment;
+                    Ok(format!("limit ${limit_increment} offset ${offset_increment}"))
+                })
             }
             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
         }
