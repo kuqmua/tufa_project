@@ -89,9 +89,9 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeUtcOffset {
                 __E: serde::de::Error,
             {
                 match __value {
-                    0_u64 => serde::__private::Ok(__Field::__field0),
-                    1_u64 => serde::__private::Ok(__Field::__field1),
-                    2_u64 => serde::__private::Ok(__Field::__field2),
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    1u64 => serde::__private::Ok(__Field::__field1),
+                    2u64 => serde::__private::Ok(__Field::__field2),
                     _ => serde::__private::Ok(__Field::__ignore),
                 }
             }
@@ -145,19 +145,19 @@ impl<'de> serde::Deserialize<'de> for SqlxTypesTimeUtcOffset {
                 let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i8>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0_usize, &"struct SqlxTypesTimeUtcOffset with 3 elements"));
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxTypesTimeUtcOffset with 3 elements"));
                     }
                 };
                 let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i8>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(1_usize, &"struct SqlxTypesTimeUtcOffset with 3 elements"));
+                        return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxTypesTimeUtcOffset with 3 elements"));
                     }
                 };
                 let __field2 = match serde::de::SeqAccess::next_element::<std::primitive::i8>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(2_usize, &"struct SqlxTypesTimeUtcOffset with 3 elements"));
+                        return serde::__private::Err(serde::de::Error::invalid_length(2usize, &"struct SqlxTypesTimeUtcOffset with 3 elements"));
                     }
                 };
                 serde::__private::Ok(SqlxTypesTimeUtcOffset(match sqlx::types::time::UtcOffset::from_hms(__field0, __field1, __field2) {
@@ -271,8 +271,8 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
                 __E: serde::de::Error,
             {
                 match __value {
-                    0_u64 => serde::__private::Ok(__Field::__field0),
-                    1_u64 => serde::__private::Ok(__Field::__field1),
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    1u64 => serde::__private::Ok(__Field::__field1),
                     _ => serde::__private::Ok(__Field::__ignore),
                 }
             }
@@ -323,11 +323,11 @@ impl<'de> serde::Deserialize<'de> for NumBigintBigInt {
             {
                 let __field0 = match serde::de::SeqAccess::next_element::<NumBigintSign>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
-                    serde::__private::None => return serde::__private::Err(serde::de::Error::invalid_length(0_usize, &"struct NumBigintBigInt with 2 elements")),
+                    serde::__private::None => return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct NumBigintBigInt with 2 elements")),
                 };
                 let __field1 = match serde::de::SeqAccess::next_element::<std::vec::Vec<std::primitive::u32>>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
-                    serde::__private::None => return serde::__private::Err(serde::de::Error::invalid_length(1_usize, &"struct NumBigintBigInt with 2 elements")),
+                    serde::__private::None => return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct NumBigintBigInt with 2 elements")),
                 };
                 serde::__private::Ok(NumBigintBigInt(num_bigint::BigInt::new(__field0.0, __field1)))
             }
@@ -437,7 +437,7 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
                 let __field0 = match serde::de::SeqAccess::next_element::<std::string::String>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0_usize, &"tuple struct NumBigintSign with 1 element"));
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"tuple struct NumBigintSign with 1 element"));
                     }
                 };
                 serde::__private::Ok(NumBigintSign(match __field0.as_str() {
