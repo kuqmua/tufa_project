@@ -176,7 +176,7 @@ pub trait PostgresqlJsonType {
 }
 
 pub trait GeneratePostgresqlJsonObjectTypeToRead {
-    fn generate_postgresql_json_object_type_to_read_from_vec(value: &std::vec::Vec<Self>, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
+    fn generate_postgresql_json_object_type_to_read_from_vec(value: &[Self], column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
     where
         Self: Sized;
 }
@@ -241,7 +241,7 @@ impl Default for LogicalOperator {
 }
 impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for LogicalOperator {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        ::core::default::Default::default()
+        Self::default()
     }
 }
 
@@ -267,7 +267,7 @@ impl Default for Order {
 }
 impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Order {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        ::core::default::Default::default()
+        Self::default()
     }
 }
 impl Order {
@@ -482,7 +482,7 @@ impl Pagination {
         self.offset
     }
     pub const fn end(&self) -> std::primitive::i64 {
-        self.offset + self.limit
+        self.offset.checked_add(self.limit).unwrap()
     }
 }
 //for Read in GeneratePostgresqlCrud
