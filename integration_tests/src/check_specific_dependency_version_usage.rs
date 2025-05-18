@@ -46,18 +46,14 @@ fn check_specific_dependency_version_usage() {
                         .iter()
                         .filter_map(|(crate_name, crate_value)| {
                             if let toml::Value::Table(crate_value_map) = crate_value {
-                                if let Some(version_value) = crate_value_map.get("version") {
-                                    if let toml::Value::String(version) = version_value {
-                                        for symbol in &forbidden_dependency_logic_symbols {
-                                            assert!(!version.contains(*symbol), "{crate_name} version of {member} contains forbidden symbol {symbol}");
-                                        }
-                                        if version.starts_with('=') { None } else { Some(format!("{member} {toml_key} {crate_name} {version}")) }
-                                    } else {
-                                        panic!("{crate_name} version_value is not a toml::Value::String {member}");
+                                crate_value_map.get("version").map_or(None, |version_value| if let toml::Value::String(version) = version_value {
+                                    for symbol in &forbidden_dependency_logic_symbols {
+                                        assert!(!version.contains(*symbol), "{crate_name} version of {member} contains forbidden symbol {symbol}");
                                     }
+                                    if version.starts_with('=') { None } else { Some(format!("{member} {toml_key} {crate_name} {version}")) }
                                 } else {
-                                    None
-                                }
+                                    panic!("{crate_name} version_value is not a toml::Value::String {member}");
+                                })
                             } else {
                                 panic!("{crate_name} crate_value is not a toml::Value::Table {member}");
                             }
