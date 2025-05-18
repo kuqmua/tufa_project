@@ -843,31 +843,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &self.status_code
         }
     }
-    let new_syn_variant_wrapper = |variant_name: &dyn std::fmt::Display,
-                                   status_code: std::option::Option<macros_helpers::status_code::StatusCode>,
-                                   fields: std::vec::Vec<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>|
-     -> SynVariantWrapper {
+    let new_syn_variant_wrapper = |
+        variant_name: &dyn std::fmt::Display,
+        status_code: std::option::Option<macros_helpers::status_code::StatusCode>,
+        fields: std::vec::Vec<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>
+    | -> SynVariantWrapper {
         SynVariantWrapper {
             variant: syn::Variant {
-                attrs: match &status_code {
-                    Some(value) => vec![syn::Attribute {
-                        pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
-                        style: syn::AttrStyle::Outer,
-                        bracket_token: syn::token::Bracket::default(),
-                        meta: syn::Meta::Path(syn::Path {
-                            leading_colon: None,
-                            segments: {
-                                let mut handle = syn::punctuated::Punctuated::new();
-                                handle.push(syn::PathSegment {
-                                    ident: proc_macro2::Ident::new(&naming::AsRefStrToSnakeCaseStringified::case(value), proc_macro2::Span::call_site()),
-                                    arguments: syn::PathArguments::None,
-                                });
-                                handle
-                            },
-                        }),
-                    }],
-                    None => vec![],
-                },
+                attrs: status_code.as_ref().map_or_else(|| vec![], |value| vec![syn::Attribute {
+                    pound_token: syn::token::Pound { spans: [proc_macro2::Span::call_site()] },
+                    style: syn::AttrStyle::Outer,
+                    bracket_token: syn::token::Bracket::default(),
+                    meta: syn::Meta::Path(syn::Path {
+                        leading_colon: None,
+                        segments: {
+                            let mut handle = syn::punctuated::Punctuated::new();
+                            handle.push(syn::PathSegment {
+                                ident: proc_macro2::Ident::new(&naming::AsRefStrToSnakeCaseStringified::case(value), proc_macro2::Span::call_site()),
+                                arguments: syn::PathArguments::None,
+                            });
+                            handle
+                        },
+                    }),
+                }]),
                 ident: syn::Ident::new(&variant_name.to_string(), proc_macro2::Span::call_site()),
                 fields: syn::Fields::Named(syn::FieldsNamed {
                     brace_token: syn::token::Brace::default(),
