@@ -7,29 +7,27 @@ fn check_specific_dependency_version_usage() {
     let mut cargo_toml_workspace_content = std::string::String::new();
     let _: usize = std::io::Read::read_to_string(&mut buf_reader, &mut cargo_toml_workspace_content).unwrap_or_else(|error| panic!("cannot read_to_string from {cargo_toml}{file_error}\"{error}\""));
     let toml_table_map = cargo_toml_workspace_content.parse::<toml::Table>().unwrap_or_else(|error| panic!("cannot parse::<toml::Table>() cargo_toml_workspace_content, error:\"{error}\""));
-    let toml_table_workspace_members_map_vec = if let Some(toml_table_map_value) = toml_table_map.get("workspace") {
-        if let toml::Value::Table(toml_table_workspace_map) = toml_table_map_value {
-            toml_table_workspace_map.get("members").map_or_else(|| {
-                panic!("no members in toml_table_workspace_map");
-            }, |toml_table_workspace_map_value| if let toml::Value::Array(toml_table_workspace_members_map_vec) = toml_table_workspace_map_value {
-                toml_table_workspace_members_map_vec.iter()
-                .map(|path_value| {
-                    if let toml::Value::String(path) = path_value {
-                        path
-                    } else {
-                        panic!("path is not a toml::Value::String");
-                    }
-                })
-                .collect::<Vec<&String>>()
-            } else {
-                panic!("toml_table_workspace_map is not a toml::Value::Array");
-            })
-        } else {
-            panic!("toml_table_map_value is not a toml::Value::Table");
-        }
-    } else {
+    let toml_table_workspace_members_map_vec = toml_table_map.get("workspace").map_or_else(|| {
         panic!("no workspace in toml_table_map");
-    };
+    }, |toml_table_map_value| if let toml::Value::Table(toml_table_workspace_map) = toml_table_map_value {
+        toml_table_workspace_map.get("members").map_or_else(|| {
+            panic!("no members in toml_table_workspace_map");
+        }, |toml_table_workspace_map_value| if let toml::Value::Array(toml_table_workspace_members_map_vec) = toml_table_workspace_map_value {
+            toml_table_workspace_members_map_vec.iter()
+            .map(|path_value| {
+                if let toml::Value::String(path) = path_value {
+                    path
+                } else {
+                    panic!("path is not a toml::Value::String");
+                }
+            })
+            .collect::<Vec<&String>>()
+        } else {
+            panic!("toml_table_workspace_map is not a toml::Value::Array");
+        })
+    } else {
+        panic!("toml_table_map_value is not a toml::Value::Table");
+    });
     let forbidden_dependency_logic_symbols = ['>', '<', '*', '~', '^'];
     let toml_keys = ["dependencies", "dev-dependencies", "build-dependencies"];
     let mut is_logic_executed = true;
@@ -46,7 +44,7 @@ fn check_specific_dependency_version_usage() {
                         .iter()
                         .filter_map(|(crate_name, crate_value)| {
                             if let toml::Value::Table(crate_value_map) = crate_value {
-                                crate_value_map.get("version").map_or(None, |version_value| if let toml::Value::String(version) = version_value {
+                                crate_value_map.get("version").and_then(|version_value| if let toml::Value::String(version) = version_value {
                                     for symbol in &forbidden_dependency_logic_symbols {
                                         assert!(!version.contains(*symbol), "{crate_name} version of {member} contains forbidden symbol {symbol}");
                                     }
