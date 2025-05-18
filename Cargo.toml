@@ -663,7 +663,7 @@ op_ref = { level = "deny", priority = 0 }
 option_as_ref_deref = { level = "deny", priority = 0 }
 option_env_unwrap = { level = "deny", priority = 0 }
 option_filter_map = { level = "deny", priority = 0 }
-option_if_let_else = { level = "deny", priority = 0 }
+option_if_let_else = { level = "allow", priority = 0 }
 option_map_or_none = { level = "deny", priority = 0 }
 option_map_unit_fn = { level = "deny", priority = 0 }
 option_option = { level = "deny", priority = 0 }
