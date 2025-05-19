@@ -320,8 +320,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             PostgresqlJsonTypeRecord::all()
         } else {
             use postgresql_crud_macros_common::NotNullOrNullable;
+            let postgresql_json_type_record_vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonTypeRecord>>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_json_types");
             struct PostgresqlJsonTypeRecordHandle {
-                not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+                not_null_or_nullable: NotNullOrNullable,
                 postgresql_json_type_pattern: PostgresqlJsonTypePattern,
             }
             fn generate_vec_handle(postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle) -> std::vec::Vec<PostgresqlJsonTypeRecordHandle> {
@@ -354,7 +355,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             let mut acc = vec![];
                             for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
                                 not_null_or_nullable: NotNullOrNullable::Nullable,
-                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::NotNull
+                                },
                             }) {
                                 acc.push(element);
                             }
@@ -367,7 +370,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             let mut acc = vec![];
                             for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
                                 not_null_or_nullable: NotNullOrNullable::NotNull,
-                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+                                },
                             }) {
                                 acc.push(element);
                             }
@@ -377,28 +382,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         NotNullOrNullable::Nullable => {
                             let mut acc = vec![];
                             for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
-                                not_null_or_nullable: NotNullOrNullable::Nullable,
-                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
-                            }) {
-                                acc.push(element);
-                            }
-                            acc.push(postgresql_json_type_record_handle);
-                            acc
-                        },
-                    },
-                    (
-                        NotNullOrNullable::NotNull,
-                        PostgresqlJsonTypePattern::ArrayDimension2 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                        },
-                    ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                            let mut acc = vec![];
-                            for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
                                 not_null_or_nullable: NotNullOrNullable::NotNull,
                                 postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
-                                    dimension1_not_null_or_nullable: NotNullOrNullable::NotNull
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
                                 },
                             }) {
                                 acc.push(element);
@@ -406,6 +392,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             acc.push(postgresql_json_type_record_handle);
                             acc
                         },
+                    },
+                    (
+                        NotNullOrNullable::NotNull,
+                        PostgresqlJsonTypePattern::ArrayDimension2 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                        },
+                    ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
                         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
                             vec![]
                         },
@@ -620,27 +617,40 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                 }
             }
-            // let postgresql_json_type_record = PostgresqlJsonTypeRecord {
-            //     postgresql_json_type: PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber,
-            //     not_null_or_nullable: NotNullOrNullable::NotNull,
-            //     postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
-            // };
-            let postgresql_json_type_record_handle = PostgresqlJsonTypeRecordHandle {
-                not_null_or_nullable: NotNullOrNullable::NotNull,
-                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
-            };
-            let vec_handle = generate_vec_handle(postgresql_json_type_record_handle);
-
-            let vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonTypeRecord>>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_json_types");
-            let mut acc = vec![];
-            for element in &vec {
-                if acc.contains(&element) {
-                    panic!("not unique postgersql type provided: {element:#?}");
-                } else {
-                    acc.push(element);
+            {
+                let mut acc = vec![];
+                for element in &postgresql_json_type_record_vec {
+                    if acc.contains(&element) {
+                        panic!("not unique postgersql type provided: {element:#?}");
+                    } else {
+                        acc.push(element);
+                    }
                 }
             }
-            vec
+            let vec_just_for_test = postgresql_json_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_json_type_record_element| {
+                generate_vec_handle(PostgresqlJsonTypeRecordHandle {
+                    not_null_or_nullable: postgresql_json_type_record_element.not_null_or_nullable,
+                    postgresql_json_type_pattern: postgresql_json_type_record_element.postgresql_json_type_pattern,
+                }).into_iter().for_each(|postgresql_json_type_record_handle_element|{
+                    acc.push(PostgresqlJsonTypeRecord {
+                        postgresql_json_type: postgresql_json_type_record_element.postgresql_json_type.clone(),
+                        not_null_or_nullable: postgresql_json_type_record_handle_element.not_null_or_nullable,
+                        postgresql_json_type_pattern: postgresql_json_type_record_handle_element.postgresql_json_type_pattern,
+                    });
+                });
+                acc
+            });
+            {
+                let mut acc = vec![];
+                for element in &vec_just_for_test {
+                    if acc.contains(&element) {
+                        panic!("222 not unique postgersql type provided: {element:#?}");
+                    } else {
+                        acc.push(element);
+                    }
+                }
+            }
+            vec_just_for_test
         }
     }
     .into_iter()
