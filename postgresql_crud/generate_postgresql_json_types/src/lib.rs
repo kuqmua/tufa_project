@@ -339,20 +339,52 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         acc
                     },
                     (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => match &dimension1_not_null_or_nullable {
-                        NotNullOrNullable::NotNull => vec![
-                            
-                        ],
-                        NotNullOrNullable::Nullable => vec![
-            
-                        ],
+                        NotNullOrNullable::NotNull => {
+                            let mut acc = vec![];
+                            for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+                            }) {
+                                acc.push(element);
+                            }
+                            acc.push(postgresql_json_type_record_handle);
+                            acc
+                        },
+                        NotNullOrNullable::Nullable => {
+                            let mut acc = vec![];
+                            for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::Nullable,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+                            }) {
+                                acc.push(element);
+                            }
+                            acc.push(postgresql_json_type_record_handle);
+                            acc
+                        },
                     },
                     (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => match &dimension1_not_null_or_nullable {
-                        NotNullOrNullable::NotNull => vec![
-        
-                        ],
-                        NotNullOrNullable::Nullable => vec![
-         
-                        ],
+                        NotNullOrNullable::NotNull => {
+                            let mut acc = vec![];
+                            for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+                            }) {
+                                acc.push(element);
+                            }
+                            acc.push(postgresql_json_type_record_handle);
+                            acc
+                        },
+                        NotNullOrNullable::Nullable => {
+                            let mut acc = vec![];
+                            for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::Nullable,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+                            }) {
+                                acc.push(element);
+                            }
+                            acc.push(postgresql_json_type_record_handle);
+                            acc
+                        },
                     },
                     (
                         NotNullOrNullable::NotNull,
@@ -361,18 +393,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension2_not_null_or_nullable,
                         },
                     ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-         
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-       
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-            
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-       
-                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
                     },
                     (
                         NotNullOrNullable::Nullable,
@@ -381,18 +413,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension2_not_null_or_nullable,
                         },
                     ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-             
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-                    
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-              
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-                   
-                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
                     },
                     (
                         NotNullOrNullable::NotNull,
@@ -402,30 +434,30 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension3_not_null_or_nullable,
                         },
                     ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-              
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-          
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-                    
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-               
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-           
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-               
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-                           
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-            
-                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
                     },
                     (
                         NotNullOrNullable::Nullable,
@@ -435,30 +467,30 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension3_not_null_or_nullable,
                         },
                     ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-        
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-          
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-                 
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-                
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-                  
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-              
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-                 
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-                      
-                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
                     },
                     (
                         NotNullOrNullable::NotNull,
@@ -469,54 +501,54 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension4_not_null_or_nullable,
                         },
                     ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-                     
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-          
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-                   
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-                      
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-                
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-          
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-                   
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-           
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-                   
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-            
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-            
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-                    
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-                  
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-                      
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-                
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-                 
-                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
                     },
                     (
                         NotNullOrNullable::Nullable,
@@ -527,54 +559,54 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension4_not_null_or_nullable,
                         },
                     ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-             
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-                
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-             
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-       
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-                       
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-                       
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-               
-                        ],
-                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-                    
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-                        
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-               
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-             
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-                      
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
-                
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
-                      
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
-                        
-                        ],
-                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
-
-                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => {
+                            vec![]
+                        },
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => {
+                            vec![]
+                        },
                     },
                 }
             }
