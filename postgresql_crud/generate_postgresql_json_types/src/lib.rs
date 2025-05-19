@@ -319,6 +319,276 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         if true {
             PostgresqlJsonTypeRecord::all()
         } else {
+            use postgresql_crud_macros_common::NotNullOrNullable;
+            struct PostgresqlJsonTypeRecordHandle {
+                not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
+                postgresql_json_type_pattern: PostgresqlJsonTypePattern,
+            }
+            fn generate_vec_handle(postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle) -> std::vec::Vec<PostgresqlJsonTypeRecordHandle> {
+                match (&postgresql_json_type_record_handle.not_null_or_nullable, &postgresql_json_type_record_handle.postgresql_json_type_pattern) {
+                    (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) => vec![postgresql_json_type_record_handle],
+                    (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::Standart) => {
+                        let mut acc = vec![];
+                        for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
+                            not_null_or_nullable: NotNullOrNullable::NotNull,
+                            postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+                        }) {
+                            acc.push(element);
+                        }
+                        acc.push(postgresql_json_type_record_handle);
+                        acc
+                    },
+                    (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => match &dimension1_not_null_or_nullable {
+                        NotNullOrNullable::NotNull => vec![
+                            
+                        ],
+                        NotNullOrNullable::Nullable => vec![
+            
+                        ],
+                    },
+                    (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => match &dimension1_not_null_or_nullable {
+                        NotNullOrNullable::NotNull => vec![
+        
+                        ],
+                        NotNullOrNullable::Nullable => vec![
+         
+                        ],
+                    },
+                    (
+                        NotNullOrNullable::NotNull,
+                        PostgresqlJsonTypePattern::ArrayDimension2 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                        },
+                    ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+         
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+       
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+            
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+       
+                        ],
+                    },
+                    (
+                        NotNullOrNullable::Nullable,
+                        PostgresqlJsonTypePattern::ArrayDimension2 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                        },
+                    ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+             
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+                    
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+              
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+                   
+                        ],
+                    },
+                    (
+                        NotNullOrNullable::NotNull,
+                        PostgresqlJsonTypePattern::ArrayDimension3 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                            dimension3_not_null_or_nullable,
+                        },
+                    ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+              
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+          
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+                    
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+               
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+           
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+               
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+                           
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+            
+                        ],
+                    },
+                    (
+                        NotNullOrNullable::Nullable,
+                        PostgresqlJsonTypePattern::ArrayDimension3 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                            dimension3_not_null_or_nullable,
+                        },
+                    ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+        
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+          
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+                 
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+                
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+                  
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+              
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+                 
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+                      
+                        ],
+                    },
+                    (
+                        NotNullOrNullable::NotNull,
+                        PostgresqlJsonTypePattern::ArrayDimension4 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                            dimension3_not_null_or_nullable,
+                            dimension4_not_null_or_nullable,
+                        },
+                    ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+                     
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+          
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+                   
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+                      
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+                
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+          
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+                   
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+           
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+                   
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+            
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+            
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+                    
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+                  
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+                      
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+                
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+                 
+                        ],
+                    },
+                    (
+                        NotNullOrNullable::Nullable,
+                        PostgresqlJsonTypePattern::ArrayDimension4 {
+                            dimension1_not_null_or_nullable,
+                            dimension2_not_null_or_nullable,
+                            dimension3_not_null_or_nullable,
+                            dimension4_not_null_or_nullable,
+                        },
+                    ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+             
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+                
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+             
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+       
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+                       
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+                       
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+               
+                        ],
+                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+                    
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+                        
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+               
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+             
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+                      
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => vec![
+                
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => vec![
+                      
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => vec![
+                        
+                        ],
+                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => vec![
+
+                        ],
+                    },
+                }
+            }
+            // let postgresql_json_type_record = PostgresqlJsonTypeRecord {
+            //     postgresql_json_type: PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber,
+            //     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //     postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+            // };
+            let postgresql_json_type_record_handle = PostgresqlJsonTypeRecordHandle {
+                not_null_or_nullable: NotNullOrNullable::NotNull,
+                postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+            };
+            let vec_handle = generate_vec_handle(postgresql_json_type_record_handle);
+
             let vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonTypeRecord>>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_json_types");
             let mut acc = vec![];
             for element in &vec {
@@ -918,15 +1188,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }),
                         }
                     };
-                    let maybe_additional_uuid_standart_not_null_impl_token_stream = if let (
-                        PostgresqlJsonType::UuidUuidAsJsonbString,
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                        PostgresqlJsonTypePattern::Standart
-                    ) = (
-                        &postgresql_json_type,
-                        &not_null_or_nullable,
-                        &postgresql_json_type_pattern
-                    ) {
+                    let maybe_additional_uuid_standart_not_null_impl_token_stream =
+                        if let (PostgresqlJsonType::UuidUuidAsJsonbString, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) = (&postgresql_json_type, &not_null_or_nullable, &postgresql_json_type_pattern) {
                             //need for uuid bind for json object logic//need for uuid bind for json object logic
                             let query_bind_as_postgresql_text_token_stream = quote::quote! {
                                 pub fn query_bind_as_postgresql_text(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -938,7 +1201,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &self.0
                                 }
                             };
-                            quote::quote!{
+                            quote::quote! {
                                 #query_bind_as_postgresql_text_token_stream
                                 #get_inner_token_stream
                             }
