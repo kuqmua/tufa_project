@@ -1013,7 +1013,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => ParameterIsPostgresqlTypeUsed::False,
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => ParameterIsPostgresqlTypeUsed::True,
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => ParameterIsPostgresqlTypeUsed::False,
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => ParameterIsPostgresqlTypeUsed::True,
                         }
                     },
@@ -1353,7 +1353,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                 }
                             },
-                            postgresql_crud_macros_common::IsQueryBindMutable::True,
+                            postgresql_crud_macros_common::IsQueryBindMutable::False,
                             &quote::quote!{
                                 match self {
                                     Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
@@ -2700,7 +2700,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         std::string::String::from("elem")
                                     } else {
                                         let mut update_query_part_acc = std::string::String::default();
-                                        let generate_jsonb_set_target = |value: &std::primitive::str| format!("{jsonb_set_target}->'{value}'");
                                         for element_handle in &self.update {
                                             match element_handle.update_query_part(&"", &"elem", &"", increment) {
                                                 Ok(value) => {
@@ -2739,7 +2738,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                                 create_query_part_acc.push_str(&format!("{value},"));
                                             }
                                             Err(error) => {
-                                                return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
+                                                return Err(error);
                                             }
                                         }
                                     }
@@ -3054,11 +3053,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     PostgresqlJsonObjectTypePattern::Standart,
-        //     // PostgresqlJsonObjectTypePattern::Array,
+        //     // PostgresqlJsonObjectTypePattern::Standart,
+        //     PostgresqlJsonObjectTypePattern::Array,
 
         //     // TraitGen::PostgresqlType,
         //     TraitGen::PostgresqlJsonType,
