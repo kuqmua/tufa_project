@@ -316,7 +316,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
     }
     let postgresql_json_type_record_vec = {
-        if true {
+        if false {
             PostgresqlJsonTypeRecord::all()
         } else {
             use postgresql_crud_macros_common::NotNullOrNullable;
@@ -650,6 +650,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 }
             }
+            println!("{vec_just_for_test:#?}");
             vec_just_for_test
         }
     }
