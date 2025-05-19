@@ -92,14 +92,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     ;
     // macros_helpers::write_string_into_file::write_string_into_file(
     //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
-    //     &serde_json::to_string(&postgresql_json_type_record_vec).unwrap(),
+    //     &serde_json::to_string(&postgresql_json_object_type_record_vec).unwrap(),
     // );
-    use rayon::iter::IntoParallelRefIterator;
-    use rayon::iter::ParallelIterator;
     let postgresql_json_object_type_array = postgresql_json_object_type_record_vec
     .into_iter().map(|element|(element, input_token_stream.to_string())).collect::<std::vec::Vec<(PostgresqlJsonObjectTypeRecord, std::string::String)>>()
-    .par_iter()
-    // .into_iter()//just for console prints ordering
+    .iter()//just for console prints ordering
     .map(|(element, input_token_stream_stringified)|{
         let not_null_or_nullable = &element.not_null_or_nullable;
         let postgresql_json_object_type_pattern = &element.postgresql_json_object_type_pattern;
