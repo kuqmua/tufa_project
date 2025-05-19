@@ -151,13 +151,13 @@ pub struct Example {
 //todo enum tree support
 //todo generate wrapper type for all possible json type
 #[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
-#[postgresql_crud::postgresql_json_object_type_pattern{[
+#[postgresql_crud::postgresql_json_object_type_pattern{
     {
         "not_null_or_nullable": "NotNull",
         "postgresql_json_object_type_pattern": "Standart",
         "trait_gen": "PostgresqlType"
     }
-]}]
+}]
 pub struct Animal {
     // pub id: postgresql_crud::postgresql_json_type::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
 
@@ -351,31 +351,13 @@ mod tests {
 }
 //////////////////
 #[derive(Debug, postgresql_crud::GeneratePostgresqlJsonObjectType)]
-#[postgresql_crud::postgresql_json_object_type_pattern{[
-    {
-        "not_null_or_nullable": "NotNull",
-        "postgresql_json_object_type_pattern": "Standart",
-        "trait_gen": "PostgresqlJsonType"
-    }
-    ,
-    {
-        "not_null_or_nullable": "Nullable",
-        "postgresql_json_object_type_pattern": "Standart",
-        "trait_gen": "PostgresqlJsonType"
-    }
-    ,
-    {
-        "not_null_or_nullable": "NotNull",
-        "postgresql_json_object_type_pattern": "Array",
-        "trait_gen": "PostgresqlJsonType"
-    }
-    ,
+#[postgresql_crud::postgresql_json_object_type_pattern{
     {
         "not_null_or_nullable": "Nullable",
         "postgresql_json_object_type_pattern": "Array",
         "trait_gen": "PostgresqlJsonType"
     }
-]}]
+}]
 pub struct Doggie {
     pub column_7bd2f76f_276c_4855_8ee0_4b6ce0ac5015: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
     pub column_f85f2f57_f85b_4126_be0f_cb5830f0475d: postgresql_crud::postgresql_json_type::StdPrimitiveI16AsNotNullJsonbNumber,

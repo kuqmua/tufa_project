@@ -7,7 +7,7 @@ pub fn postgresql_json_object_type_pattern(_attr: proc_macro::TokenStream, item:
 #[proc_macro_derive(GeneratePostgresqlJsonObjectType)]
 pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
-    #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
+    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
     enum TraitGen {
         PostgresqlType,
         PostgresqlJsonType,
@@ -43,7 +43,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         if false {
             PostgresqlJsonObjectTypeRecord::all()
         } else {
-            let vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonObjectTypeRecord>>(
+            let postgresql_json_object_type_record = serde_json::from_str::<PostgresqlJsonObjectTypeRecord>(
                 &macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
                     &{
                         let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
@@ -51,18 +51,50 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     &"postgresql_crud::postgresql_json_object_type_pattern".to_string(),
                 )
-                .to_string(),
-            )
-            .expect("failed to get Config for generate_postgresql_json_object_type");
-            let mut acc = vec![];
-            for element in &vec {
-                if acc.contains(&element) {
-                    panic!("not unique postgersql type provided: {element:#?}");
-                } else {
-                    acc.push(element);
-                }
+                .to_string()
+            ).expect("failed to get Config for generate_postgresql_json_object_type");
+            match (&postgresql_json_object_type_record.not_null_or_nullable, &postgresql_json_object_type_record.postgresql_json_object_type_pattern) {
+                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Standart) => vec![postgresql_json_object_type_record],
+                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Standart) => vec![
+                    PostgresqlJsonObjectTypeRecord {
+                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                        postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern::Standart,
+                        trait_gen: postgresql_json_object_type_record.trait_gen.clone(),
+                    },
+                    postgresql_json_object_type_record
+                ],
+                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Array) => vec![
+                    PostgresqlJsonObjectTypeRecord {
+                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                        postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern::Standart,
+                        trait_gen: postgresql_json_object_type_record.trait_gen.clone(),
+                    },
+                    PostgresqlJsonObjectTypeRecord {
+                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                        postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern::Standart,
+                        trait_gen: postgresql_json_object_type_record.trait_gen.clone(),
+                    },
+                    postgresql_json_object_type_record
+                ],
+                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Array) => vec![
+                    PostgresqlJsonObjectTypeRecord {
+                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                        postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern::Standart,
+                        trait_gen: postgresql_json_object_type_record.trait_gen.clone(),
+                    },
+                    PostgresqlJsonObjectTypeRecord {
+                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                        postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern::Standart,
+                        trait_gen: postgresql_json_object_type_record.trait_gen.clone(),
+                    },
+                    PostgresqlJsonObjectTypeRecord {
+                        not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                        postgresql_json_object_type_pattern: PostgresqlJsonObjectTypePattern::Array,
+                        trait_gen: postgresql_json_object_type_record.trait_gen.clone(),
+                    },
+                    postgresql_json_object_type_record
+                ]
             }
-            vec
         }
     }
     // .into_iter()
