@@ -977,9 +977,47 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
             };
+            enum ParameterIsPostgresqlTypeUsed {
+                True,
+                False
+            }
+            impl quote::ToTokens for ParameterIsPostgresqlTypeUsed {
+                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                    match &self {
+                        ParameterIsPostgresqlTypeUsed::True => quote::quote!{is_postgresql_type}.to_tokens(tokens),
+                        ParameterIsPostgresqlTypeUsed::False => quote::quote!{_}.to_tokens(tokens),
+                    }
+                }
+            }
+            let generate_select_query_part_token_stream = |
+                parameter_is_postgresql_type_used: ParameterIsPostgresqlTypeUsed,
+                content_token_stream: &dyn quote::ToTokens
+            |{
+                quote::quote!{
+                    fn #select_query_part_snake_case(
+                        &self,
+                        #field_ident_snake_case: #reference_std_primitive_str_token_stream,
+                        #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
+                        #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
+                        #parameter_is_postgresql_type_used: #std_primitive_bool_token_stream,
+                    ) -> #std_string_string_token_stream {
+                        #content_token_stream
+                    }
+                }
+            };
             let impl_ident_select_token_stream = {
-                let select_query_part_token_stream = {
-                    let content_token_stream = match &postgresql_json_object_type_pattern {
+                let select_query_part_token_stream = generate_select_query_part_token_stream(
+                    match &postgresql_json_object_type_pattern {
+                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => ParameterIsPostgresqlTypeUsed::True,
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => ParameterIsPostgresqlTypeUsed::False,
+                        },
+                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => ParameterIsPostgresqlTypeUsed::True,
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => ParameterIsPostgresqlTypeUsed::True,
+                        }
+                    },
+                    &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&IsStandartWithId::False),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
@@ -1035,19 +1073,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                         }
-                    };
-                    quote::quote!{
-                        fn #select_query_part_snake_case(
-                            &self,
-                            #field_ident_snake_case: #reference_std_primitive_str_token_stream,
-                            #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
-                            #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
-                            is_postgresql_type: #std_primitive_bool_token_stream,
-                        ) -> #std_string_string_token_stream {
-                            #content_token_stream
-                        }
                     }
-                };
+                );
                 quote::quote!{
                     impl #ident_select_upper_camel_case {
                         #select_query_part_token_stream
@@ -1131,20 +1158,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_standart_not_null_content_token_stream
                 );
                 let impl_ident_with_id_select_not_null_token_stream = {
-                    let select_query_part_token_stream = {
-                        let content_token_stream = generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&IsStandartWithId::True);
-                        quote::quote!{
-                            fn #select_query_part_snake_case(
-                                &self,
-                                #field_ident_snake_case: #reference_std_primitive_str_token_stream,
-                                #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
-                                #column_name_and_maybe_field_getter_for_error_message_snake_case: #reference_std_primitive_str_token_stream,
-                                is_postgresql_type: #std_primitive_bool_token_stream,
-                            ) -> #std_string_string_token_stream {
-                                #content_token_stream
-                            }
-                        }
-                    };
+                    let select_query_part_token_stream = generate_select_query_part_token_stream(
+                        ParameterIsPostgresqlTypeUsed::True,
+                        &generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&IsStandartWithId::True)
+                    );
                     quote::quote!{
                         impl #ident_with_id_select_standart_not_null_upper_camel_case {
                             #select_query_part_token_stream
@@ -3037,8 +3054,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     PostgresqlJsonObjectTypePattern::Standart,
         //     // PostgresqlJsonObjectTypePattern::Array,
