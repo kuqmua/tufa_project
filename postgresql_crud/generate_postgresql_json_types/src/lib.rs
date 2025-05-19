@@ -354,7 +354,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             NotNullOrNullable::NotNull => {
                                 let mut acc = vec![];
                                 for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
-                                    not_null_or_nullable: NotNullOrNullable::NotNull,
+                                    not_null_or_nullable: NotNullOrNullable::Nullable,
                                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
                                 }) {
                                     acc.push(element);
