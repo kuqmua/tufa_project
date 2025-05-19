@@ -316,7 +316,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
     }
     let postgresql_json_type_record_vec = {
-        if false {
+        if true {
             PostgresqlJsonTypeRecord::all()
         } else {
             use postgresql_crud_macros_common::NotNullOrNullable;
@@ -412,7 +412,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             },
                         ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
                             (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                vec![]
+                                let mut acc = vec![];
+                                for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
+                                    not_null_or_nullable: NotNullOrNullable::Nullable,
+                                    postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                                        dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+                                    },
+                                }) {
+                                    acc.push(element);
+                                }
+                                acc.push(postgresql_json_type_record_handle);
+                                acc
                             },
                             (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
                                 vec![]
