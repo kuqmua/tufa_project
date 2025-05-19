@@ -470,6 +470,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                 postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(
                     &ident_token_stream,
+                    postgresql_crud_macros_common::IsPrimaryKeyUsed::False,
                     &proc_macro2::TokenStream::new(),
                     &{
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_string());
@@ -1323,7 +1324,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             NotNullOrNullable::NotNull => generate_impl_postgresql_type_where_filter_for_ident_token_stream(
                                 &generate_where_filter_query_part_content_standart_not_null_token_stream(&IsStandartWithId::False),
-                                postgresql_crud_macros_common::IsQueryBindMutable::True,
+                                postgresql_crud_macros_common::IsQueryBindMutable::False,
                                 &generate_where_filter_query_bind_content_standart_not_null_token_stream(&IsStandartWithId::False),
                             ),
                             NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
@@ -1395,7 +1396,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_with_id_where_element_token_stream = generate_impl_postgresql_type_where_filter_token_stream(
                         &ident_with_id_where_element_standart_not_null_upper_camel_case,
                         &generate_where_filter_query_part_content_standart_not_null_token_stream(&IsStandartWithId::True),
-                        postgresql_crud_macros_common::IsQueryBindMutable::True,
+                        postgresql_crud_macros_common::IsQueryBindMutable::False,
                         &generate_where_filter_query_bind_content_standart_not_null_token_stream(&IsStandartWithId::True),
                     );
                     let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_where_element_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
@@ -3036,8 +3037,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
         //     PostgresqlJsonObjectTypePattern::Standart,
         //     // PostgresqlJsonObjectTypePattern::Array,

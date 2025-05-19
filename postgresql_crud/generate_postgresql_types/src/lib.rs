@@ -2977,6 +2977,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                 let impl_create_table_column_query_part_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(
                     &ident_origin_upper_camel_case,
+                    postgresql_crud_macros_common::IsPrimaryKeyUsed::True,
                     &match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2 => &proc_macro2_token_stream_new,
                         PostgresqlType::StdPrimitiveI32AsInt4 => &proc_macro2_token_stream_new,
@@ -3053,14 +3054,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => "tstzrange",
                         };
                         let maybe_array_part = match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => "".to_string(),
-                        PostgresqlTypePattern::ArrayDimension1 {..}
-                        // |
-                        // PostgresqlTypePattern::ArrayDimension2 {..} |
-                        // PostgresqlTypePattern::ArrayDimension3 {..} |
-                        // PostgresqlTypePattern::ArrayDimension4 {..} 
-                        => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>()
-                    };
+                            PostgresqlTypePattern::Standart => "".to_string(),
+                            PostgresqlTypePattern::ArrayDimension1 {..}
+                            // |
+                            // PostgresqlTypePattern::ArrayDimension2 {..} |
+                            // PostgresqlTypePattern::ArrayDimension3 {..} |
+                            // PostgresqlTypePattern::ArrayDimension4 {..} 
+                            => std::iter::repeat_n("[]", array_dimensions_number).collect::<String>()
+                        };
                         let maybe_constraint_part = match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => "".to_string(),
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
