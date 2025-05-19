@@ -39,7 +39,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         }
     }
     let postgresql_json_object_type_record_vec = {
-        if true {
+        if false {
             PostgresqlJsonObjectTypeRecord::all()
         } else {
             let vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonObjectTypeRecord>>(
@@ -605,6 +605,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_create_query_part_and_create_query_bind_token_stream = |
                 ident_token_stream: &dyn quote::ToTokens,
                 create_query_part_content_token_stream: &dyn quote::ToTokens,
+                is_query_bind_mutable: postgresql_crud_macros_common::IsQueryBindMutable,
                 create_query_bind_content_token_stream: &dyn quote::ToTokens,
             |{
                 quote::quote!{
@@ -617,7 +618,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                         fn #create_query_bind_snake_case(
                             self,
-                            mut #query_snake_case: #query_postgres_arguments_token_stream
+                            #is_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
                         ) -> #query_postgres_arguments_token_stream {
                             #create_query_bind_content_token_stream
                         }
@@ -626,86 +627,92 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let impl_ident_create_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
                 &ident_create_upper_camel_case,
-                &{
-                    match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_standart_not_null_create_query_part_content_token_stream(IsStandartWithId::False),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                match &self.0 {
-                                    //todo maybe rewrite like this <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as #import_path::PostgresqlJsonType>::create_query_part(#value_snake_case, #increment_snake_case)
-                                    Some(#value_snake_case) => #value_snake_case.#create_query_part_snake_case(#increment_snake_case),
-                                    None => match increment.checked_add(1) {
-                                        Some(value) => {
-                                            *increment = value;
-                                            Ok(format!("${increment}"))
-                                        },
-                                        None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
-                                    }
-                                }
-                            },
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                let mut acc = std::string::String::default();
-                                for element in &self.0 {
-                                    match element.#create_query_part_snake_case(#increment_snake_case) {
-                                        Ok(#value_snake_case) => {
-                                            acc.push_str(&format!("{value},"));
-                                        },
-                                        Err(error) => {
-                                            return Err(error);
-                                        }
-                                    }
-                                }
-                                let _ = acc.pop();
-                                Ok(format!("jsonb_build_array({acc})"))
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                match &self.0 {
-                                    Some(value) => value.create_query_part(increment),
-                                    None => match increment.checked_add(1) {
-                                        Some(value) => {
-                                            *increment = value;
-                                            Ok(format!("${increment}"))
-                                        },
-                                        None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
-                                    }
-                                }
-                            },
-                        },
-                    }
-                },
-                &{
-                    match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#standart_not_null_create_query_bind_content_token_stream},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                                match self.0 {
-                                    Some(value) => #value_snake_case.#create_query_bind_snake_case(#query_snake_case),
-                                    None => #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#ident_create_standart_not_null_upper_camel_case>>))
-                                }
-                            },
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                for element in self.0 {
-                                    #query_snake_case = element.#create_query_bind_snake_case(#query_snake_case);
-                                }
-                                #query_snake_case
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let ident_with_id_create_array_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(
-                                    &ident_with_id_array_not_null_upper_camel_case
-                                );
-                                quote::quote! {
-                                    match self.0 {
-                                        Some(value) => value.create_query_bind(query),
-                                        None => query.bind(sqlx::types::Json(None::<std::option::Option<#ident_with_id_create_array_not_null_upper_camel_case>>))
-                                    }
+                &match &postgresql_json_object_type_pattern {
+                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_standart_not_null_create_query_part_content_token_stream(IsStandartWithId::False),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                            match &self.0 {
+                                //todo maybe rewrite like this <VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as #import_path::PostgresqlJsonType>::create_query_part(#value_snake_case, #increment_snake_case)
+                                Some(#value_snake_case) => #value_snake_case.#create_query_part_snake_case(#increment_snake_case),
+                                None => match increment.checked_add(1) {
+                                    Some(value) => {
+                                        *increment = value;
+                                        Ok(format!("${increment}"))
+                                    },
+                                    None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
                                 }
                             }
                         },
-                    }
+                    },
+                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                            let mut acc = std::string::String::default();
+                            for element in &self.0 {
+                                match element.#create_query_part_snake_case(#increment_snake_case) {
+                                    Ok(#value_snake_case) => {
+                                        acc.push_str(&format!("{value},"));
+                                    },
+                                    Err(error) => {
+                                        return Err(error);
+                                    }
+                                }
+                            }
+                            let _ = acc.pop();
+                            Ok(format!("jsonb_build_array({acc})"))
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                            match &self.0 {
+                                Some(value) => value.create_query_part(increment),
+                                None => match increment.checked_add(1) {
+                                    Some(value) => {
+                                        *increment = value;
+                                        Ok(format!("${increment}"))
+                                    },
+                                    None => Err(#import_path_query_part_error_named_checked_add_initialization_token_stream),
+                                }
+                            }
+                        },
+                    },
+                },
+                match &postgresql_json_object_type_pattern {
+                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsQueryBindMutable::True,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsQueryBindMutable::False,
+                    },
+                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsQueryBindMutable::True,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsQueryBindMutable::True,
+                    },
+                },
+                &match &postgresql_json_object_type_pattern {
+                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#standart_not_null_create_query_bind_content_token_stream},
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                            match self.0 {
+                                Some(value) => #value_snake_case.#create_query_bind_snake_case(#query_snake_case),
+                                None => #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#ident_create_standart_not_null_upper_camel_case>>))
+                            }
+                        },
+                    },
+                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                            for element in self.0 {
+                                #query_snake_case = element.#create_query_bind_snake_case(#query_snake_case);
+                            }
+                            #query_snake_case
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            let ident_with_id_create_array_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(
+                                &ident_with_id_array_not_null_upper_camel_case
+                            );
+                            quote::quote! {
+                                match self.0 {
+                                    Some(value) => value.create_query_bind(query),
+                                    None => query.bind(sqlx::types::Json(None::<std::option::Option<#ident_with_id_create_array_not_null_upper_camel_case>>))
+                                }
+                            }
+                        }
+                    },
                 }
             );
             let maybe_ident_with_id_create_standart_not_null_token_stream = if is_standart_not_null {
@@ -729,6 +736,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let impl_ident_with_id_create_standart_not_null_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
                     &ident_with_id_create_standart_not_null_upper_camel_case,
                     &generate_standart_not_null_create_query_part_content_token_stream(IsStandartWithId::True),
+                    postgresql_crud_macros_common::IsQueryBindMutable::True,
                     &quote::quote!{#standart_not_null_create_query_bind_content_token_stream},
                 );
                 quote::quote! {
@@ -1414,7 +1422,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_upper_camel_case
                     };
                     quote::quote!{
-                        pub type #ident_where_element_upper_camel_case = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_standart_or_ident_with_id_array_upper_camel_case as #import_path::PostgresqlType>::WhereElement>;
+                        pub type #ident_where_element_upper_camel_case = #import_path::NullableJsonObjectPostgresqlTypeWhereFilter<<#ident_standart_or_ident_with_id_array_upper_camel_case as #import_path::PostgresqlJsonType>::WhereElement>;
                     }
                 },
             }
@@ -2608,6 +2616,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let generate_impl_ident_update_token_stream = |
                 ident_token_stream: &dyn quote::ToTokens,
                 update_query_part_content_token_stream: &dyn quote::ToTokens,
+                is_query_bind_mutable: postgresql_crud_macros_common::IsQueryBindMutable,
                 update_query_bind_content_token_stream: &dyn quote::ToTokens,
             |{
                 quote::quote!{
@@ -2623,7 +2632,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                         fn #update_query_bind_snake_case(
                             self,
-                            mut #query_snake_case: #query_postgres_arguments_token_stream
+                            #is_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
                         ) -> #query_postgres_arguments_token_stream {
                             #update_query_bind_content_token_stream
                         }
@@ -2730,6 +2739,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 },
                             }
                         },
+                    },
+                },
+                match &postgresql_json_object_type_pattern {
+                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsQueryBindMutable::True,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsQueryBindMutable::False,
+                    },
+                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsQueryBindMutable::True,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsQueryBindMutable::True,
                     },
                 },
                 &match &postgresql_json_object_type_pattern {
@@ -2874,6 +2893,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             Err(error) => Err(error)
                         }
                     },
+                    postgresql_crud_macros_common::IsQueryBindMutable::True,
                     &quote::quote!{
                         query = self.id.query_bind_as_postgresql_text(query);
                         query = self.fields.#update_query_bind_snake_case(query);
@@ -3010,15 +3030,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
         };
         // if let (
-        //     // postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-        //     postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+        //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+        //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     // PostgresqlJsonObjectTypePattern::Standart,
-        //     PostgresqlJsonObjectTypePattern::Array,
+        //     PostgresqlJsonObjectTypePattern::Standart,
+        //     // PostgresqlJsonObjectTypePattern::Array,
 
         //     // TraitGen::PostgresqlType,
-        //     // TraitGen::PostgresqlJsonType,
-        //     TraitGen::PostgresqlTypeAndPostgresqlJsonType,
+        //     TraitGen::PostgresqlJsonType,
+        //     // TraitGen::PostgresqlTypeAndPostgresqlJsonType,
         // ) = (
         //     &not_null_or_nullable,
         //     &postgresql_json_object_type_pattern,
