@@ -599,7 +599,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 acc
                             },
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => {
-                                vec![]
+                                let mut acc = vec![];
+                                for element in generate_vec_handle(PostgresqlJsonTypeRecordHandle {
+                                    not_null_or_nullable: NotNullOrNullable::NotNull,
+                                    postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+                                        dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+                                        dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+                                        dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+                                    },
+                                }) {
+                                    acc.push(element);
+                                }
+                                acc.push(postgresql_json_type_record_handle);
+                                acc
                             },
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => {
                                 vec![]
