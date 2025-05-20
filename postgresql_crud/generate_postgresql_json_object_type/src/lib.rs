@@ -3069,6 +3069,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         else {
             proc_macro2::TokenStream::new()
         };
+        //todo impl new or try new without inner wrapper types. (vec<Option<bool>> instead of VecOfOptionBool(OptionBool(Bool)))
         let generated = quote::quote! {
             #ident_token_stream
             #ident_table_type_declaration_token_stream
