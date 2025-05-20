@@ -7,7 +7,7 @@ generate_postgresql_json_types::generate_postgresql_json_types!([
                 "dimension1_not_null_or_nullable": "NotNull",
                 "dimension2_not_null_or_nullable": "Nullable",
                 "dimension3_not_null_or_nullable": "NotNull",
-                "dimension4_not_null_or_nullable": "NotNull"
+                "dimension4_not_null_or_nullable": "Nullable"
             }
         }
     },
