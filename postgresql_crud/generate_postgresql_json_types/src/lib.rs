@@ -352,6 +352,586 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 }
             }
+            // let vec_just_for_test = postgresql_json_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_json_type_record_element| {
+            //     fn generate_vec_handle(postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle) -> std::vec::Vec<PostgresqlJsonTypeRecordHandle> {
+            //         let generate_vec = |current_postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle|{
+            //             let mut acc = vec![];
+            //             for element in generate_vec_handle(current_postgresql_json_type_record_handle) {
+            //                 acc.push(element);
+            //             }
+            //             acc.push(postgresql_json_type_record_handle.clone());
+            //             acc
+            //         };
+            //         match (&postgresql_json_type_record_handle.not_null_or_nullable, &postgresql_json_type_record_handle.postgresql_json_type_pattern) {
+            //             (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) => vec![postgresql_json_type_record_handle],
+            //             (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::Standart) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                 not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                 postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+            //             }),
+            //             (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => match &dimension1_not_null_or_nullable {
+            //                 NotNullOrNullable::NotNull => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
+            //                 }),
+            //                 NotNullOrNullable::Nullable => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull
+            //                     },
+            //                 }),
+            //             },
+            //             (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => match &dimension1_not_null_or_nullable {
+            //                 NotNullOrNullable::NotNull => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 NotNullOrNullable::Nullable => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //             },
+            //             (
+            //                 NotNullOrNullable::NotNull,
+            //                 PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                     dimension1_not_null_or_nullable,
+            //                     dimension2_not_null_or_nullable,
+            //                 },
+            //             ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //             },
+            //             (
+            //                 NotNullOrNullable::Nullable,
+            //                 PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                     dimension1_not_null_or_nullable,
+            //                     dimension2_not_null_or_nullable,
+            //                 },
+            //             ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //             },
+            //             (
+            //                 NotNullOrNullable::NotNull,
+            //                 PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                     dimension1_not_null_or_nullable,
+            //                     dimension2_not_null_or_nullable,
+            //                     dimension3_not_null_or_nullable,
+            //                 },
+            //             ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension2 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //             },
+            //             (
+            //                 NotNullOrNullable::Nullable,
+            //                 PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                     dimension1_not_null_or_nullable,
+            //                     dimension2_not_null_or_nullable,
+            //                     dimension3_not_null_or_nullable,
+            //                 },
+            //             ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //             },
+            //             (
+            //                 NotNullOrNullable::NotNull,
+            //                 PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                     dimension1_not_null_or_nullable,
+            //                     dimension2_not_null_or_nullable,
+            //                     dimension3_not_null_or_nullable,
+            //                     dimension4_not_null_or_nullable,
+            //                 },
+            //             ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension3 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //             },
+            //             (
+            //                 NotNullOrNullable::Nullable,
+            //                 PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                     dimension1_not_null_or_nullable,
+            //                     dimension2_not_null_or_nullable,
+            //                     dimension3_not_null_or_nullable,
+            //                     dimension4_not_null_or_nullable,
+            //                 },
+            //             ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     },
+            //                 }),
+            //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+            //                     not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension4 {
+            //                         dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension2_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension3_not_null_or_nullable: NotNullOrNullable::Nullable,
+            //                         dimension4_not_null_or_nullable: NotNullOrNullable::NotNull,
+            //                     },
+            //                 }),
+            //             },
+            //         }
+            //     }
+            //     generate_vec_handle(PostgresqlJsonTypeRecordHandle {
+            //         not_null_or_nullable: postgresql_json_type_record_element.not_null_or_nullable,
+            //         postgresql_json_type_pattern: postgresql_json_type_record_element.postgresql_json_type_pattern,
+            //     }).into_iter().for_each(|postgresql_json_type_record_handle_element|{
+            //         acc.push(PostgresqlJsonTypeRecord {
+            //             postgresql_json_type: postgresql_json_type_record_element.postgresql_json_type.clone(),
+            //             not_null_or_nullable: postgresql_json_type_record_handle_element.not_null_or_nullable,
+            //             postgresql_json_type_pattern: postgresql_json_type_record_handle_element.postgresql_json_type_pattern,
+            //         });
+            //     });
+            //     acc
+            // });
+            ////
             let vec_just_for_test = postgresql_json_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_json_type_record_element| {
                 fn generate_vec_handle(postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle) -> std::vec::Vec<PostgresqlJsonTypeRecordHandle> {
                     let generate_vec = |current_postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle|{
@@ -370,7 +950,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }),
                         (NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => match &dimension1_not_null_or_nullable {
                             NotNullOrNullable::NotNull => generate_vec(PostgresqlJsonTypeRecordHandle {
-                                not_null_or_nullable: NotNullOrNullable::Nullable,
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
                                 postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
                             }),
                             NotNullOrNullable::Nullable => generate_vec(PostgresqlJsonTypeRecordHandle {
@@ -931,19 +1511,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 });
                 acc
             });
-            {
-                let mut acc = vec![];
-                for element in &vec_just_for_test {
-                    if !acc.contains(&element) {
-                        acc.push(element);
-                    } else {
-                        //todo remove panic and return acc instead of vec_just_for_test
-                        panic!("222 not unique postgersql type provided: {element:#?}");
-                    }
+            ////
+            let mut acc = vec![];
+            for element in vec_just_for_test {
+                if !acc.contains(&element) {
+                    acc.push(element);
                 }
             }
             // println!("{vec_just_for_test:#?}");
-            vec_just_for_test
+            // vec_just_for_test
+            acc
         }
     }
     .into_iter()
