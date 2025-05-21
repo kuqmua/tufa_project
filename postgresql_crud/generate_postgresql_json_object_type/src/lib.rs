@@ -2684,6 +2684,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 }
             };
+            let impl_new_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
+                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_update_upper_camel_case,
+                        &quote::quote!{},
+                        &quote::quote!{},
+                    ),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_update_upper_camel_case,
+                        &quote::quote!{},
+                        &quote::quote!{},
+                    ),
+                },
+                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_update_upper_camel_case,
+                        &quote::quote!{},
+                        &quote::quote!{},
+                    ),
+                },
+            };
+
             let not_unique_id_in_json_update_array_upper_camel_case = naming::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
             let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
             let not_unique_id_in_json_update_and_delete_arrays_upper_camel_case = naming::NotUniqueIdInJsonUpdateAndDeleteArraysUpperCamelCase;
@@ -3322,7 +3345,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             else {
                 proc_macro2::TokenStream::new()
             };
-            let maybe_ident_with_id_update_element_token_stream = if is_standart_not_null {
+            let maybe_ident_with_id_update_element_standart_not_null_token_stream = if is_standart_not_null {
                 //thought it can be reused as struct with generic parameter, but turns out its too painfull
                 // pub trait MyTrait {
                 //     type AdditionalType: PartialEq;
@@ -3339,14 +3362,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 // #[derive(PartialEq)]
                 // pub struct WrapperOfWrapperOfMyTraitAlias(WrapperOfMyTraitAlias);
                 // // error[E0369]: binary operation `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
-                let ident_with_id_update_element_token_stream = quote::quote! {
+                let ident_with_id_update_element_standart_not_null_token_stream = quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                     pub struct #ident_with_id_update_element_standart_not_null_upper_camel_case {
                         pub #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
                         pub fields: #ident_update_standart_not_null_upper_camel_case,
                     }
                 };
-                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+                let impl_new_for_ident_with_id_update_element_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
+                    &ident_with_id_update_element_standart_not_null_upper_camel_case,
+                    &quote::quote!{},
+                    &quote::quote!{},
+                );
+                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_standart_not_null_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident_with_id_update_element_standart_not_null_upper_camel_case,
                     &proc_macro2::TokenStream::new(),
                     &quote::quote! {
@@ -3356,7 +3384,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }
                     }
                 );
-                let impl_ident_with_id_update_element_token_stream = generate_impl_ident_update_token_stream(
+                let impl_ident_with_id_update_element_standart_not_null_token_stream = generate_impl_ident_update_token_stream(
                     &ident_with_id_update_element_standart_not_null_upper_camel_case,
                     &quote::quote!{
                         let id_increment = match increment.checked_add(1) {
@@ -3381,9 +3409,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 );
                 quote::quote! {
-                    #ident_with_id_update_element_token_stream
-                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_token_stream
-                    #impl_ident_with_id_update_element_token_stream
+                    #ident_with_id_update_element_standart_not_null_token_stream
+                    // #impl_new_for_ident_with_id_update_element_standart_not_null_token_stream
+                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_standart_not_null_token_stream
+                    #impl_ident_with_id_update_element_standart_not_null_token_stream
                 }
             }
             else {
@@ -3391,6 +3420,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             quote::quote! {
                 #ident_update_token_stream
+                // #impl_new_for_ident_update_token_stream
                 #maybe_ident_update_try_new_error_named_token_stream
                 #maybe_impl_try_new_for_ident_update_token_stream
                 #maybe_impl_serde_deserialize_for_ident_update_token_stream
@@ -3399,7 +3429,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #impl_ident_update_token_stream
                 #maybe_ident_with_id_update_token_stream
                 #maybe_ident_update_element_token_stream
-                #maybe_ident_with_id_update_element_token_stream
+                #maybe_ident_with_id_update_element_standart_not_null_token_stream
             }
         };
         let update_query_part_token_stream = quote::quote!{
