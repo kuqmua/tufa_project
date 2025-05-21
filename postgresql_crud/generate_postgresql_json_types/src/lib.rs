@@ -979,13 +979,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 },
                             }),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                not_null_or_nullable: NotNullOrNullable::Nullable,
                                 postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
-                                    dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
                                 },
                             }),
                             (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                not_null_or_nullable: NotNullOrNullable::Nullable,
                                 postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
                                     dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
                                 },
