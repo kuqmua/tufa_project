@@ -335,13 +335,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         if false {
             PostgresqlJsonTypeRecord::all()
         } else {
-            use postgresql_crud_macros_common::NotNullOrNullable;
             let postgresql_json_type_record_vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonTypeRecord>>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_json_types");
-            #[derive(Debug, Clone)]
-            struct PostgresqlJsonTypeRecordHandle {
-                not_null_or_nullable: NotNullOrNullable,
-                postgresql_json_type_pattern: PostgresqlJsonTypePattern,
-            }
             {
                 let mut acc = vec![];
                 for element in &postgresql_json_type_record_vec {
@@ -353,6 +347,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             }
             let expanded_postgresql_json_type_record_vec = postgresql_json_type_record_vec.into_iter().fold(vec![], |mut acc, postgresql_json_type_record_element| {
+                use postgresql_crud_macros_common::NotNullOrNullable;
+                #[derive(Clone)]
+                struct PostgresqlJsonTypeRecordHandle {
+                    not_null_or_nullable: NotNullOrNullable,
+                    postgresql_json_type_pattern: PostgresqlJsonTypePattern,
+                }
                 fn generate_postgresql_json_type_record_handle_vec(postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle) -> std::vec::Vec<PostgresqlJsonTypeRecordHandle> {
                     let generate_vec = |current_postgresql_json_type_record_handle: PostgresqlJsonTypeRecordHandle|{
                         let mut acc = vec![];
