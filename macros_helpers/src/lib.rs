@@ -4,6 +4,7 @@ pub mod enum_variants;
 pub mod error_occurence;
 pub mod generate_field_code_occurence_new_token_stream;
 mod generate_impl_error_occurence_lib_to_std_string_string_token_stream;
+pub mod generate_impl_new_for_ident_token_stream;
 pub mod generate_impl_std_convert_from_token_stream;
 pub mod generate_impl_std_convert_try_from_token_stream;
 mod generate_impl_std_fmt_display_token_stream;
