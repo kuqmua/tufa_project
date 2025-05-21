@@ -2005,6 +2005,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 }
             };
+            let maybe_impl_new_for_ident_read_token_stream = match &postgresql_json_object_type_pattern {
+                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_select_upper_camel_case,
+                        &quote::quote!{},
+                        &quote::quote!{},
+                    ),
+                },
+                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_select_upper_camel_case,
+                        &quote::quote!{},
+                        &quote::quote!{},
+                    ),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_select_upper_camel_case,
+                        &quote::quote!{},
+                        &quote::quote!{},
+                    ),
+                },
+            };
             let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
             let generate_ident_read_try_from_error_named_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                 quote::quote! {
@@ -2547,6 +2569,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             quote::quote! {
                 #ident_read_token_stream
+                // #maybe_impl_new_for_ident_read_token_stream
                 #maybe_ident_read_try_from_error_named_token_stream
                 #maybe_impl_try_new_for_ident_read_try_from_error_named_token_stream
                 #maybe_impl_serde_deserialize_for_ident_read_token_stream
