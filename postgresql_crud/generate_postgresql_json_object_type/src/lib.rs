@@ -585,6 +585,61 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration
                     ),
                 );
+                let impl_new_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
+                    &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
+                    &match &postgresql_json_object_type_pattern {
+                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                quote::quote!{
+
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{
+                                
+                                }
+                            },
+                        },
+                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                quote::quote!{
+                                
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{
+                                
+                                }
+                            },
+                        },
+                    },
+                    &match &postgresql_json_object_type_pattern {
+                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                quote::quote!{
+
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{
+                                
+                                }
+                            },
+                        },
+                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                quote::quote!{
+                                
+                                }
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                quote::quote!{
+                                
+                                }
+                            },
+                        },
+                    },
+                );
                 let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
                     &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
                     &quote::quote!{
@@ -596,6 +651,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 );
                 quote::quote! {
                     #ident_with_id_table_type_declaration_standart_not_null_token_stream
+                    // #impl_new_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
                     #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
                     #impl_create_table_column_query_part_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
                 }
