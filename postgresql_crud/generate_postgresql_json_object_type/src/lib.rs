@@ -234,7 +234,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             NotNullArrayWithId,
             NullableArrayWithId,
         }
-        let generate_ident_token_stream = |ident_pattern: &IdentPattern|{
+        let generate_ident_upper_camel_case = |ident_pattern: &IdentPattern|{
             let vec_of_upper_camel_case = naming::VecOfUpperCamelCase;
             let array_of_upper_camel_case = naming::ArrayOfUpperCamelCase;
             let jsonb_object_upper_camel_case = naming::JsonbObjectUpperCamelCase;
@@ -288,7 +288,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             .parse::<proc_macro2::TokenStream>().unwrap()
         };
 
-        let ident = &generate_ident_token_stream(
+        let ident = &generate_ident_upper_camel_case(
             &match (&not_null_or_nullable, &postgresql_json_object_type_pattern) {
                 (
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
@@ -308,13 +308,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 ) => IdentPattern::NullableArrayWithId,
             }
         );
-        let ident_standart_not_null_upper_camel_case = &generate_ident_token_stream(
+        let ident_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(
             &IdentPattern::NotNullStandartWithoutId
         );
-        let ident_with_id_standart_not_null_upper_camel_case = &generate_ident_token_stream(
+        let ident_with_id_standart_not_null_upper_camel_case = &generate_ident_upper_camel_case(
             &IdentPattern::NotNullStandartWithId
         );
-        let ident_with_id_array_not_null_upper_camel_case = &generate_ident_token_stream(
+        let ident_with_id_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(
             &IdentPattern::NotNullArrayWithId
         );
         let is_standart_not_null = matches!(
@@ -515,6 +515,67 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration
                 )
             );
+            let impl_new_for_ident_table_type_declaration_token_stream = {
+                let type_token_stream = match &postgresql_json_object_type_pattern {
+                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            quote::quote!{
+
+                            }
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            quote::quote!{
+                                
+                            }
+                        },
+                    },
+                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            quote::quote!{
+                                
+                            }
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            quote::quote!{
+                                
+                            }
+                        },
+                    },
+                };
+                let content_token_stream = match &postgresql_json_object_type_pattern {
+                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            quote::quote!{
+
+                            }
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            quote::quote!{
+                                
+                            }
+                        },
+                    },
+                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                            quote::quote!{
+                                
+                            }
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            quote::quote!{
+                                
+                            }
+                        },
+                    },
+                };
+                quote::quote!{
+                    impl #ident_table_type_declaration_upper_camel_case {
+                        pub fn new(value: #type_token_stream) -> Self {
+                            #content_token_stream
+                        }
+                    }
+                }
+            };
             let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
                 &ident_table_type_declaration_upper_camel_case,
                 &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_content_token_stream
@@ -550,6 +611,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             quote::quote! {
                 #ident_table_type_declaration_token_stream
+                // #impl_new_for_ident_table_type_declaration_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream
                 #impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream
                 #maybe_ident_with_id_table_type_declaration_standart_not_null_token_stream
