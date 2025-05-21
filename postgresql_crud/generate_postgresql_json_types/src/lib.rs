@@ -965,12 +965,38 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                             },
-                        ) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                            not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
-                            postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
-                                dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                            },
-                        }),
+                        ) => match (&dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::NotNull,
+                                },
+                            }),
+                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+                                },
+                            }),
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+                                },
+                            }),
+                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_vec(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::Nullable,
+                                },
+                            }),
+                        },
+                        // generate_vec(PostgresqlJsonTypeRecordHandle {
+                        //     not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
+                        //     postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                        //         dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                        //     },
+                        // }),
                         (
                             NotNullOrNullable::Nullable,
                             PostgresqlJsonTypePattern::ArrayDimension2 {
