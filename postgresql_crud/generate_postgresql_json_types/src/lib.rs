@@ -953,10 +953,21 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
                             postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
                         }),
-                        (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => generate_vec(PostgresqlJsonTypeRecordHandle {
-                            not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
-                            postgresql_json_type_pattern: PostgresqlJsonTypePattern::Standart,
-                        }),
+                        (NotNullOrNullable::Nullable, PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable }) => match &dimension1_not_null_or_nullable {
+                            NotNullOrNullable::NotNull => generate_vec(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::NotNull
+                                },
+                            }),
+                            NotNullOrNullable::Nullable => generate_vec(PostgresqlJsonTypeRecordHandle {
+                                not_null_or_nullable: NotNullOrNullable::NotNull,
+                                postgresql_json_type_pattern: PostgresqlJsonTypePattern::ArrayDimension1 {
+                                    dimension1_not_null_or_nullable: NotNullOrNullable::Nullable
+                                },
+                            })
+                        },
+                        
                         (
                             NotNullOrNullable::NotNull,
                             PostgresqlJsonTypePattern::ArrayDimension2 {
@@ -1064,6 +1075,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             }
             // println!("{vec_just_for_test:#?}");
             // vec_just_for_test
+            {
+                let mut f = vec![];
+                for element in &acc {
+                    if let PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber = &element.postgresql_json_type {
+                        f.push(element);
+                    }
+                }
+                println!("{f:#?}");
+            }
             acc
         }
     }
