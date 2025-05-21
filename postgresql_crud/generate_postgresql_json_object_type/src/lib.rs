@@ -380,9 +380,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             }
         }
+        enum StructDeclarationOrNewType {
+            StructDeclaration,
+            NewType
+        }
         let generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream = |
             is_standart_with_id: &IsStandartWithId,
             postgresql_json_type_subtype_table_type_declaration_or_create: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate,
+            struct_declaration_or_new_type: &StructDeclarationOrNewType,
         |{
             let content_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                 let field_ident = element.ident.as_ref().unwrap_or_else(|| {
@@ -392,11 +397,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &element.ty,
                     &PostgresqlJsonTypeSubtype::from(postgresql_json_type_subtype_table_type_declaration_or_create)
                 );
+                let maybe_pub_token_stream = match &struct_declaration_or_new_type {
+                    StructDeclarationOrNewType::StructDeclaration => quote::quote! {pub},
+                    StructDeclarationOrNewType::NewType => proc_macro2::TokenStream::new()
+                };
                 quote::quote! {
-                    pub #field_ident: #type_as_postgresql_json_type_subtype_table_type_declaration_token_stream
+                    #maybe_pub_token_stream #field_ident: #type_as_postgresql_json_type_subtype_table_type_declaration_token_stream
                 }
             });
-            quote::quote!{{#(#content_token_stream),*}}
+            let fields_content_token_stream = quote::quote!{#(#content_token_stream),*};
+            match &struct_declaration_or_new_type {
+                StructDeclarationOrNewType::StructDeclaration => quote::quote!{{#fields_content_token_stream}},
+                StructDeclarationOrNewType::NewType => fields_content_token_stream
+            }
         };
         let generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_content_token_stream = |
             postgresql_json_type_subtype_table_type_declaration_or_create: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate
@@ -415,7 +428,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
                         &IsStandartWithId::False,
-                        postgresql_json_type_subtype_table_type_declaration_or_create
+                        postgresql_json_type_subtype_table_type_declaration_or_create,
+                        &StructDeclarationOrNewType::StructDeclaration,
                     ),
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(
                         &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&prefix_wrapper(ident_standart_not_null_upper_camel_case))
@@ -582,7 +596,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
                     &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
                         &IsStandartWithId::True,
-                        &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration
+                        &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration,
+                        &StructDeclarationOrNewType::StructDeclaration,
                     ),
                 );
                 let impl_new_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
@@ -918,6 +933,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
                         &IsStandartWithId::False,
                         &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create,
+                        &StructDeclarationOrNewType::StructDeclaration,
                     )
                 );
                 let impl_new_for_ident_with_id_create_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
