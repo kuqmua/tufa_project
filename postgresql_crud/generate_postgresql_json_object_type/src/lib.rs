@@ -445,7 +445,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
             }
         };
-        ///////
         let generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_new_type_token_stream = |
             postgresql_json_type_subtype_table_type_declaration_or_create: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate
         |{
@@ -477,11 +476,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
             }
         };
-        let f = generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_new_type_token_stream(
-            &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration
-        );
-        println!("{f}");
-        ///////
         let generate_ident_table_type_declaration_or_create_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
             quote::quote! {
                 #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -568,32 +562,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             );
             let impl_new_for_ident_table_type_declaration_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
                 &ident_table_type_declaration_upper_camel_case,
-                &match &postgresql_json_object_type_pattern {
-                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                            quote::quote!{
-
-                            }
-                        },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            quote::quote!{
-                                
-                            }
-                        },
-                    },
-                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                            quote::quote!{
-                                
-                            }
-                        },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            quote::quote!{
-                                
-                            }
-                        },
-                    },
-                },
+                &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_new_type_token_stream(
+                    &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration
+                ),
                 &match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -739,32 +710,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             );
             let impl_new_for_ident_create_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
                 &ident_create_upper_camel_case,
-                &match &postgresql_json_object_type_pattern {
-                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                            quote::quote!{
-
-                            }
-                        },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            quote::quote!{
-                                
-                            }
-                        },
-                    },
-                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                            quote::quote!{
-                                
-                            }
-                        },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            quote::quote!{
-                                
-                            }
-                        },
-                    },
-                },
+                &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_new_type_token_stream(
+                    &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create
+                ),
                 &match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
