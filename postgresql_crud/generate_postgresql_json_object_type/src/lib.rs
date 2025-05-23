@@ -499,7 +499,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => self_value_token_stream,
                         },
-                        PostgresqlJsonObjectTypePattern::Array => self_value_token_stream,
+                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_value_token_stream,
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let ident_not_null_array_with_id_upper_camel_case = generate_ident_upper_camel_case(
+                                    &IdentPattern::NotNullArrayWithId
+                                );
+                                let ident_not_null_array_with_id_postfix_upper_camel_case: &dyn quote::ToTokens = match &postgresql_json_type_subtype_table_type_declaration_or_create {
+                                    PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_not_null_array_with_id_upper_camel_case),
+                                    PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_not_null_array_with_id_upper_camel_case),
+                                };
+                                quote::quote!{Self(
+                                    match #value_snake_case {
+                                        Some(value) => Some(#ident_not_null_array_with_id_postfix_upper_camel_case::new(value)),
+                                        None => None
+                                    }
+
+                                )}
+                            },
+                        }
                     }
                 }
             )
