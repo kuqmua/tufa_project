@@ -445,14 +445,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
             }
         };
-        let generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream = |is_standart_with_id: &IsStandartWithId|{
-            let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
-                element.ident.as_ref().unwrap_or_else(|| {
-                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                })
-            });
-            quote::quote!{Self {#(#content_token_stream),*}}
-        };
         let generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
             macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
                 &proc_macro2::TokenStream::new(),
@@ -483,6 +475,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &postgresql_json_type_subtype_table_type_declaration_or_create
                 )
             );
+            let generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
+                    element.ident.as_ref().unwrap_or_else(|| {
+                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                    })
+                });
+                quote::quote!{Self {#(#content_token_stream),*}}
+            };
             let impl_new_for_ident_table_type_declaration_or_ident_create_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
                 match &postgresql_json_type_subtype_table_type_declaration_or_create {
                     PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &ident_table_type_declaration_upper_camel_case,
