@@ -435,7 +435,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     StructDeclarationOrNewType::NewType => fields_content_token_stream
                 }
             };
-            let prefix_wrapper = |tokens: &dyn quote::ToTokens|{
+            let add_postfix = |tokens: &dyn quote::ToTokens|{
                 let content: &dyn quote::ToTokens = match &postgresql_json_type_subtype_table_type_declaration_or_create {
                     PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&tokens),
                     PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &naming::parameter::SelfCreateUpperCamelCase::from_tokens(&tokens),
@@ -456,15 +456,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 &StructDeclarationOrNewType::StructDeclaration,
                             ),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(
-                                &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&prefix_wrapper(ident_standart_not_null_upper_camel_case))
+                                &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&add_postfix(ident_standart_not_null_upper_camel_case))
                             ),
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => wrap_into_scopes_pub_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&prefix_wrapper(
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => wrap_into_scopes_pub_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&add_postfix(
                                 &ident_with_id_standart_not_null_upper_camel_case
                             ))),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                                &prefix_wrapper(&ident_with_id_array_not_null_upper_camel_case)
+                                &add_postfix(&ident_with_id_array_not_null_upper_camel_case)
                             )),
                         },
                     }
@@ -494,15 +494,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_json_type_subtype_table_type_declaration_or_create,
                                 &StructDeclarationOrNewType::NewType,
                             ),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_wrap_into_value_parameter_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&prefix_wrapper(ident_standart_not_null_upper_camel_case))),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_wrap_into_value_parameter_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&add_postfix(ident_standart_not_null_upper_camel_case))),
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_wrap_into_value_parameter_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&prefix_wrapper(
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_wrap_into_value_parameter_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&add_postfix(
                                 &ident_with_id_standart_not_null_upper_camel_case
                             ))),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_wrap_into_value_parameter_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                                 &postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
-                                    &prefix_wrapper(&ident_with_id_standart_not_null_upper_camel_case)
+                                    &add_postfix(&ident_with_id_standart_not_null_upper_camel_case)
                                 )
                             )),
                         },
@@ -520,10 +520,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => self_value_token_stream,
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let ident_not_null_array_with_id_upper_camel_case = generate_ident_upper_camel_case(
+                                let ident_not_null_array_with_id_postfix_upper_camel_case = add_postfix(&generate_ident_upper_camel_case(
                                     &IdentPattern::NotNullArrayWithId
-                                );
-                                let ident_not_null_array_with_id_postfix_upper_camel_case = prefix_wrapper(&ident_not_null_array_with_id_upper_camel_case);
+                                ));
                                 quote::quote!{Self(
                                     match #value_snake_case {
                                         Some(value) => Some(#ident_not_null_array_with_id_postfix_upper_camel_case::new(value)),
