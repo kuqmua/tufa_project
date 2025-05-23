@@ -598,9 +598,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 )
 
             );
-            // let impl_new_for_ident_table_type_declaration_token_stream = generate_impl_new_for_ident_table_type_declaration_or_ident_create_token_stream(
-            //     &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration
-            // );
+            let impl_new_for_ident_table_type_declaration_or_ident_create_token_stream = generate_impl_new_for_ident_table_type_declaration_or_ident_create_token_stream(
+                &postgresql_json_type_subtype_table_type_declaration_or_create
+            );
+
+
+
+
             // let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
             //     &ident_table_type_declaration_upper_camel_case,
             //     &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_content_token_stream
@@ -615,9 +619,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             //         &quote::quote! {write!(formatter, "{:?}", self)}
             //     )
             // };
-            // let impl_new_for_ident_create_token_stream = generate_impl_new_for_ident_table_type_declaration_or_ident_create_token_stream(
-            //     &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create
-            // );
             // let impl_std_fmt_display_for_ident_create_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(
             //     &ident_create_upper_camel_case
             // );
@@ -630,6 +631,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             // );
             quote::quote! {
                 #ident_table_type_declaration_or_ident_create_token_stream
+                #impl_new_for_ident_table_type_declaration_or_ident_create_token_stream
 
                 // #impl_new_for_ident_table_type_declaration_token_stream
                 // #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_token_stream
