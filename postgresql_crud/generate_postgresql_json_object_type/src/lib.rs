@@ -599,7 +599,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_content_token_stream(
                     &postgresql_json_type_subtype_table_type_declaration_or_create
                 )
-
             );
             let impl_new_for_ident_table_type_declaration_or_ident_create_token_stream = generate_impl_new_for_ident_table_type_declaration_or_ident_create_token_stream(
                 &postgresql_json_type_subtype_table_type_declaration_or_create
@@ -608,89 +607,45 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_table_type_declaration_or_ident_create_upper_camel_case,
                 &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_content_token_stream
             );
-            let maybe_ident_with_id_table_type_declaration_standart_not_null_token_stream = if is_standart_not_null {
-                // let ident_with_id_table_type_declaration_or_ident_create_standart_not_null_upper_camel_case = match {
-
-                // };
-
-                // let ident_with_id_table_type_declaration_standart_not_null_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
-                //     &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
-                //     &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
-                //         &IsStandartWithId::True,
-                //         &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration,
-                //         &StructDeclarationOrNewType::StructDeclaration,
-                //     ),
-                // );
-                // let impl_new_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
-                //     &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
-                //     &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
-                //         &IsStandartWithId::True,
-                //         &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration,
-                //         &StructDeclarationOrNewType::NewType,
-                //     ),
-                //     &generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream(
-                //         &IsStandartWithId::True
-                //     ),
-                // );
-                // let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
-                //     &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
-                //     &quote::quote!{
-                //         #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_with_id_token_stream
-                //     },
-                // );
-                // let impl_create_table_column_query_part_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream(
-                //     &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case
-                // );
-
-
-
-                // let ident_with_id_create_standart_not_null_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
-                //     &ident_with_id_create_standart_not_null_upper_camel_case,
-                //     &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
-                //         &IsStandartWithId::False,
-                //         &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create,
-                //         &StructDeclarationOrNewType::StructDeclaration,
-                //     )
-                // );
-                // let impl_new_for_ident_with_id_create_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
-                //     &ident_with_id_create_standart_not_null_upper_camel_case,
-                //     &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
-                //         &IsStandartWithId::False,
-                //         &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create,
-                //         &StructDeclarationOrNewType::NewType,
-                //     ),
-                //     &generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream(
-                //         &IsStandartWithId::False
-                //     ),
-                // );
-                // let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(
-                //     &ident_with_id_create_standart_not_null_upper_camel_case
-                // );
-                // let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
-                //     &ident_with_id_create_standart_not_null_upper_camel_case
-                // );
-                // let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
-                //     &ident_with_id_create_standart_not_null_upper_camel_case,
-                //     &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream
-                // );
-                // let impl_ident_with_id_create_standart_not_null_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
-                //     &ident_with_id_create_standart_not_null_upper_camel_case,
-                //     &generate_standart_not_null_create_query_part_content_token_stream(IsStandartWithId::True),
-                //     postgresql_crud_macros_common::IsQueryBindMutable::True,
-                //     &quote::quote!{#standart_not_null_create_query_bind_content_token_stream},
-                // );
+            let maybe_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = if is_standart_not_null {
+                let ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &postgresql_json_type_subtype_table_type_declaration_or_create {
+                    PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
+                    PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &ident_with_id_create_standart_not_null_upper_camel_case,
+                };
+                let current_is_standart_with_id = match &postgresql_json_type_subtype_table_type_declaration_or_create {
+                    PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => IsStandartWithId::True,
+                    PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => IsStandartWithId::False,
+                };
+                let ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
+                    &ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_upper_camel_case,
+                    &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
+                        &current_is_standart_with_id,
+                        &postgresql_json_type_subtype_table_type_declaration_or_create,
+                        &StructDeclarationOrNewType::StructDeclaration,
+                    ),
+                );
+                let impl_new_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
+                    &ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_upper_camel_case,
+                    &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
+                        &current_is_standart_with_id,
+                        &postgresql_json_type_subtype_table_type_declaration_or_create,
+                        &StructDeclarationOrNewType::NewType,
+                    ),
+                    &generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream(
+                        &current_is_standart_with_id
+                    ),
+                );
+                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
+                    &ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_upper_camel_case,
+                    &match &postgresql_json_type_subtype_table_type_declaration_or_create {
+                        PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_with_id_token_stream,
+                        PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream,
+                    }
+                );
                 quote::quote! {
-                    // #ident_with_id_table_type_declaration_standart_not_null_token_stream
-                    // #impl_new_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
-                    // #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
-                    // #impl_create_table_column_query_part_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
-
-                    // #ident_with_id_create_standart_not_null_token_stream
-                    // #impl_new_for_ident_with_id_create_standart_not_null_token_stream
-                    // #impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream
-                    // #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream
-                    // #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream
-                    // #impl_ident_with_id_create_standart_not_null_token_stream
+                    #ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream
+                    #impl_new_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream
+                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream
                 }
             }
             else {
@@ -700,10 +655,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #ident_table_type_declaration_or_ident_create_token_stream
                 #impl_new_for_ident_table_type_declaration_or_ident_create_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_ident_create_token_stream
+                #maybe_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream
             }
         };
 
-        
         let ident_table_type_declaration_token_stream = {
             let ident_table_type_declaration_common_token_stream = generate_ident_table_type_declaration_or_ident_create_common_token_stream(
                 &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration
@@ -725,38 +680,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_table_type_declaration_upper_camel_case
             );
             let maybe_ident_with_id_table_type_declaration_standart_not_null_token_stream = if is_standart_not_null {
-                let ident_with_id_table_type_declaration_standart_not_null_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
-                    &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
-                    &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
-                        &IsStandartWithId::True,
-                        &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration,
-                        &StructDeclarationOrNewType::StructDeclaration,
-                    ),
-                );
-                let impl_new_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
-                    &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
-                    &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
-                        &IsStandartWithId::True,
-                        &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration,
-                        &StructDeclarationOrNewType::NewType,
-                    ),
-                    &generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream(
-                        &IsStandartWithId::True
-                    ),
-                );
-                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
-                    &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
-                    &quote::quote!{
-                        #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_with_id_token_stream
-                    },
-                );
                 let impl_create_table_column_query_part_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream(
                     &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case
                 );
                 quote::quote! {
-                    #ident_with_id_table_type_declaration_standart_not_null_token_stream
-                    #impl_new_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
-                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
                     #impl_create_table_column_query_part_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
                 }
             }
@@ -953,34 +880,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             );
             let maybe_ident_with_id_create_standart_not_null_token_stream = if is_standart_not_null {
-                let ident_with_id_create_standart_not_null_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
-                    &ident_with_id_create_standart_not_null_upper_camel_case,
-                    &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
-                        &IsStandartWithId::False,
-                        &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create,
-                        &StructDeclarationOrNewType::StructDeclaration,
-                    )
-                );
-                let impl_new_for_ident_with_id_create_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
-                    &ident_with_id_create_standart_not_null_upper_camel_case,
-                    &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
-                        &IsStandartWithId::False,
-                        &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create,
-                        &StructDeclarationOrNewType::NewType,
-                    ),
-                    &generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream(
-                        &IsStandartWithId::False
-                    ),
-                );
                 let impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_std_fmt_display_for_ident_create_token_stream(
                     &ident_with_id_create_standart_not_null_upper_camel_case
                 );
                 let impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream = generate_generate_impl_error_occurence_lib_to_std_string_string_wrapper_token_stream(
                     &ident_with_id_create_standart_not_null_upper_camel_case
-                );
-                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_token_stream(
-                    &ident_with_id_create_standart_not_null_upper_camel_case,
-                    &impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_table_type_declaration_or_create_standart_not_null_content_token_stream
                 );
                 let impl_ident_with_id_create_standart_not_null_token_stream = generate_create_query_part_and_create_query_bind_token_stream(
                     &ident_with_id_create_standart_not_null_upper_camel_case,
@@ -989,11 +893,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &quote::quote!{#standart_not_null_create_query_bind_content_token_stream},
                 );
                 quote::quote! {
-                    #ident_with_id_create_standart_not_null_token_stream
-                    #impl_new_for_ident_with_id_create_standart_not_null_token_stream
                     #impl_std_fmt_display_for_ident_with_id_create_standart_not_null_token_stream
                     #impl_error_occurence_lib_to_std_string_string_for_ident_with_id_create_standart_not_null_token_stream
-                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_id_create_standart_not_null_token_stream
                     #impl_ident_with_id_create_standart_not_null_token_stream
                 }
             }
