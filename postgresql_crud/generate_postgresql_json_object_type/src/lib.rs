@@ -2433,28 +2433,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 }
             };
-            let impl_new_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
-                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(
-                        &ident_update_upper_camel_case,
-                        &quote::quote!{},
-                        &quote::quote!{},
-                    ),
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
-                        &ident_update_upper_camel_case,
-                        &quote::quote!{},
-                        &quote::quote!{},
-                    ),
-                },
-                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
-                        &ident_update_upper_camel_case,
-                        &quote::quote!{},
-                        &quote::quote!{},
-                    ),
-                },
-            };
 
             let not_unique_id_in_json_update_array_upper_camel_case = naming::NotUniqueIdInJsonUpdateArrayUpperCamelCase;
             let not_unique_id_in_json_delete_array_upper_camel_case = naming::NotUniqueIdInJsonDeleteArrayUpperCamelCase;
@@ -2487,8 +2465,23 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                 }
             };
-            let maybe_impl_try_new_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
-                PostgresqlJsonObjectTypePattern::Standart => proc_macro2::TokenStream::new(),
+            let maybe_impl_new_or_try_new_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
+                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_update_upper_camel_case,
+                        &generate_value_type_token_stream(
+                            &generate_unique_vec_wrapper_token_stream(&ident_update_element_standart_not_null_upper_camel_case)
+                        ),
+                        &self_value_token_stream,
+                    ),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_update_upper_camel_case,
+                        &generate_value_type_token_stream(
+                            &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_update_standart_not_null_upper_camel_case)
+                        ),
+                        &self_value_token_stream,
+                    ),
+                },
                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                         let fields_token_stream = generate_create_update_delete_fields_token_stream(&ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False);
@@ -2573,7 +2566,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             }
                         }
                     },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
+                        &ident_update_upper_camel_case,
+                        &generate_value_type_token_stream(
+                            &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                                &naming::parameter::SelfUpdateUpperCamelCase::from_display(&ident_with_id_array_not_null_upper_camel_case),
+                            )
+                        ),
+                        &self_value_token_stream,
+                    ),
                 }
             };
             let maybe_impl_serde_deserialize_for_ident_update_token_stream = match &postgresql_json_object_type_pattern {
@@ -3169,9 +3170,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             quote::quote! {
                 #ident_update_token_stream
-                // #impl_new_for_ident_update_token_stream
                 #maybe_ident_update_try_new_error_named_token_stream
-                #maybe_impl_try_new_for_ident_update_token_stream
+                #maybe_impl_new_or_try_new_for_ident_update_token_stream
                 #maybe_impl_serde_deserialize_for_ident_update_token_stream
                 #maybe_impl_default_default_for_ident_update_token_stream
                 #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
