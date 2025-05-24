@@ -155,7 +155,7 @@ pub struct Example {
     {
         "not_null_or_nullable": "NotNull",
         "postgresql_json_object_type_pattern": "Standart",
-        "trait_gen": "PostgresqlType"
+        "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
     }
 }]
 pub struct Animal {

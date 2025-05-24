@@ -9,7 +9,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     panic_location::panic_location();
     #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
     enum TraitGen {
-        PostgresqlType,
         PostgresqlJsonType,
         PostgresqlTypeAndPostgresqlJsonType,
     }
@@ -115,7 +114,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     //         },
     //     };
     //     let trait_gen_filter = match &element.trait_gen {
-    //         TraitGen::PostgresqlType => true,
     //         TraitGen::PostgresqlJsonType => true,
     //         TraitGen::PostgresqlTypeAndPostgresqlJsonType => true,
     //     };
@@ -3091,9 +3089,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 // #[derive(PartialEq)]
                 // pub struct WrapperOfWrapperOfMyTraitAlias(WrapperOfMyTraitAlias);
                 // // error[E0369]: binary operation `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
-                let ident_with_id_update_element_standart_not_null_fields_declaration_token_stream = quote::quote!{
-                    #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
-                    #fields_snake_case: #ident_update_standart_not_null_upper_camel_case,
+                let ident_with_id_update_element_standart_not_null_fields_declaration_token_stream = {
+                    let fields_type_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                        &ident_standart_not_null_upper_camel_case,
+                        &PostgresqlJsonTypeSubtype::Update
+                    );
+                    quote::quote!{
+                        #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
+                        #fields_snake_case: #fields_type_token_stream
+                    }
                 };
                 let ident_with_id_update_element_standart_not_null_token_stream = quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
@@ -3225,10 +3229,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &update_query_bind_token_stream
             );
             match &trait_gen {
-                TraitGen::PostgresqlType => (
-                    proc_macro2::TokenStream::new(),
-                    impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
-                ),
                 TraitGen::PostgresqlTypeAndPostgresqlJsonType => (
                     impl_postgresql_crud_postgresql_json_type_for_ident_token_stream,
                     impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
@@ -3281,8 +3281,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     PostgresqlJsonObjectTypePattern::Standart,
         //     // PostgresqlJsonObjectTypePattern::Array,
 
-        //     TraitGen::PostgresqlType,
-        //     // TraitGen::PostgresqlJsonType,
+        //     TraitGen::PostgresqlJsonType,
         //     // TraitGen::PostgresqlTypeAndPostgresqlJsonType,
         // ) = (
         //     &not_null_or_nullable,
