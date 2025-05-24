@@ -150,6 +150,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let field_ident_snake_case = naming::FieldIdentSnakeCase;
         let id_snake_case = naming::IdSnakeCase;
+        let fields_snake_case = naming::FieldsSnakeCase;
         let self_upper_camel_case = naming::SelfUpperCamelCase;
         let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
         let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
@@ -3112,17 +3113,23 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 // #[derive(PartialEq)]
                 // pub struct WrapperOfWrapperOfMyTraitAlias(WrapperOfMyTraitAlias);
                 // // error[E0369]: binary operation `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
+                let ident_with_id_update_element_standart_not_null_fields_declaration_token_stream = quote::quote!{
+                    #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
+                    #fields_snake_case: #ident_update_standart_not_null_upper_camel_case,
+                };
                 let ident_with_id_update_element_standart_not_null_token_stream = quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
                     pub struct #ident_with_id_update_element_standart_not_null_upper_camel_case {
-                        pub #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
-                        pub fields: #ident_update_standart_not_null_upper_camel_case,
+                        #ident_with_id_update_element_standart_not_null_fields_declaration_token_stream
                     }
                 };
                 let impl_new_for_ident_with_id_update_element_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
                     &ident_with_id_update_element_standart_not_null_upper_camel_case,
-                    &quote::quote!{},
-                    &quote::quote!{},
+                    &ident_with_id_update_element_standart_not_null_fields_declaration_token_stream,
+                    &quote::quote!{Self {
+                        #id_snake_case,
+                        #fields_snake_case
+                    }},
                 );
                 let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_standart_not_null_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                     &ident_with_id_update_element_standart_not_null_upper_camel_case,
@@ -3160,7 +3167,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 );
                 quote::quote! {
                     #ident_with_id_update_element_standart_not_null_token_stream
-                    // #impl_new_for_ident_with_id_update_element_standart_not_null_token_stream
+                    #impl_new_for_ident_with_id_update_element_standart_not_null_token_stream
                     #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_with_update_element_standart_not_null_token_stream
                     #impl_ident_with_id_update_element_standart_not_null_token_stream
                 }
