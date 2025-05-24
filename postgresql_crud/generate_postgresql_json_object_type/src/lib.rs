@@ -1738,7 +1738,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &ShouldDeriveSerdeDeserialize::True,
                         ),
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_wrapper_token_stream(
-                            &quote::quote!{(std::option::Option<#ident_with_id_read_array_not_null_upper_camel_case>);},//todo maybe reuse std::option::Option<>
+                            &quote::quote!{(std::option::Option<#ident_with_id_read_array_not_null_upper_camel_case>);},
                             &ShouldDeriveDefault::False,
                             &ShouldDeriveSerdeDeserialize::True,
                         ),
