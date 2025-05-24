@@ -1442,21 +1442,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                     }
                 };
-                let maybe_impl_new_for_ident_where_element_token_stream = match &not_null_or_nullable {
-                    NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => macros_helpers::generate_impl_new_for_ident_token_stream(
-                            &ident_where_element_upper_camel_case,
-                            &quote::quote!{},
-                            &quote::quote!{}
-                        ),
-                        PostgresqlJsonObjectTypePattern::Array => macros_helpers::generate_impl_new_for_ident_token_stream(
-                            &ident_where_element_upper_camel_case,
-                            &quote::quote!{},
-                            &quote::quote!{}
-                        ),
-                    },
-                    NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
-                };
                 let generate_where_filter_query_part_content_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
                     let query_part_variants_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
                         let field_ident_stringified = element
@@ -1686,7 +1671,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 quote::quote! {
                     #maybe_ident_where_element_token_stream
-                    // #maybe_impl_new_for_ident_where_element_token_stream
                     #maybe_impl_postgresql_crud_postgresql_type_postgresql_type_where_filter_for_ident_where_element_token_stream
                     #maybe_impl_error_occurence_lib_to_std_string_string_for_ident_where_element_token_stream
                     #maybe_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_element_token_stream
