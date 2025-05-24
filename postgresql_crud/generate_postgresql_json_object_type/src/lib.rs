@@ -957,7 +957,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let dimension1_pagination_token_stream = quote::quote!{dimension1_pagination};
             let import_path_pagination_token_stream = quote::quote!{#import_path::Pagination};
-            //todo reuse pub struct
             let ident_select_token_stream = match &postgresql_json_object_type_pattern {
                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_select_standart_not_null_token_stream(&IsStandartWithId::False),
@@ -1640,6 +1639,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
             }))
         };
+        enum ShouldDeriveSerdeDeserialize {
+            True,
+            False
+        }
+        impl quote::ToTokens for ShouldDeriveSerdeDeserialize {
+            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                if let Self::True = &self {
+                    quote::quote!{serde::Deserialize,}.to_tokens(tokens);
+                }
+            }
+        }
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_with_id_read_standart_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_read_token_stream = {
@@ -1678,22 +1688,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #(#content_token_stream),*
                 }
             };
-            enum ShouldDeriveSerdeDeserialize {
-                True,
-                False,
-            }
             let generate_ident_read_token_stream = |
                 ident_token_stream: &dyn quote::ToTokens,
                 content_token_stream: &dyn quote::ToTokens,
                 should_derive_default: &ShouldDeriveDefault,
                 should_derive_serde_deserialize: &ShouldDeriveSerdeDeserialize,
             |{
-                let maybe_derive_serde_deserialize_token_stream = match &should_derive_serde_deserialize {
-                    ShouldDeriveSerdeDeserialize::True => quote::quote!{serde::Deserialize,},
-                    ShouldDeriveSerdeDeserialize::False => proc_macro2::TokenStream::new(),
-                };
                 quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, #should_derive_default serde::Serialize, #maybe_derive_serde_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
+                    #[derive(Debug, Clone, PartialEq, #should_derive_default serde::Serialize, #should_derive_serde_deserialize utoipa::ToSchema, schemars::JsonSchema)]
                     pub struct #ident_token_stream #content_token_stream
                 }
             };
@@ -2370,25 +2372,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
 
             let ident_update_token_stream = {
-                enum ShouldDeriveSerdeDeserialize {
-                    True,
-                    False
-                }
                 let generate_ident_update_token_stream = |
                     should_derive_default: &ShouldDeriveDefault,
                     should_derive_serde_deserialize: &ShouldDeriveSerdeDeserialize,
                     content_token_stream: &dyn quote::ToTokens
                 |{
-                    let maybe_should_derive_default_token_stream = match &should_derive_default {
-                        ShouldDeriveDefault::True => quote::quote!{Default,},//todo maybe reuse Default,
-                        ShouldDeriveDefault::False => proc_macro2::TokenStream::new()
-                    };
-                    let maybe_derive_serde_deserialize_token_stream = match &should_derive_serde_deserialize {
-                        ShouldDeriveSerdeDeserialize::True => quote::quote!{serde::Deserialize,},//todo maybe reuse serde::Deserialize,
-                        ShouldDeriveSerdeDeserialize::False => proc_macro2::TokenStream::new()
-                    };
                     quote::quote! {
-                        #[derive(Debug, Clone, PartialEq, #maybe_should_derive_default_token_stream serde::Serialize, #maybe_derive_serde_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
+                        #[derive(Debug, Clone, PartialEq, #should_derive_default serde::Serialize, #should_derive_serde_deserialize utoipa::ToSchema, schemars::JsonSchema)]
                         pub struct #ident_update_upper_camel_case #content_token_stream
                     }
                 };
