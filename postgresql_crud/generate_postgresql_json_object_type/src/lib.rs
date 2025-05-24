@@ -816,11 +816,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#standart_not_null_create_query_bind_content_token_stream},
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            let ident_create_standart_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);//here
+                            let ident_standart_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                                &ident_standart_not_null_upper_camel_case,
+                                &PostgresqlJsonTypeSubtype::Create
+                            );
                             quote::quote! {
                                 match self.0 {
-                                    Some(value) => #value_snake_case.#create_query_bind_snake_case(#query_snake_case),
-                                    None => #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#ident_create_standart_not_null_upper_camel_case>>))
+                                    Some(#value_snake_case) => #value_snake_case.#create_query_bind_snake_case(#query_snake_case),
+                                    None => #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<
+                                        #ident_standart_not_null_as_postgresql_json_type_create_token_stream
+                                    >>))
                                 }
                             }
                         }
@@ -833,13 +838,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #query_snake_case
                         },
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            let ident_with_id_create_array_not_null_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(
-                                &ident_with_id_array_not_null_upper_camel_case
+                            let ident_with_id_array_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                                &ident_with_id_array_not_null_upper_camel_case,
+                                &PostgresqlJsonTypeSubtype::Create
                             );
                             quote::quote! {
                                 match self.0 {
                                     Some(value) => value.create_query_bind(query),
-                                    None => query.bind(sqlx::types::Json(None::<std::option::Option<#ident_with_id_create_array_not_null_upper_camel_case>>))
+                                    None => query.bind(sqlx::types::Json(None::<std::option::Option<#ident_with_id_array_not_null_as_postgresql_json_type_create_token_stream>>))
                                 }
                             }
                         }
