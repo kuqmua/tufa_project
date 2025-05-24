@@ -903,6 +903,17 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             &import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream,
             &PostgresqlJsonTypeSubtype::Update
         );
+        enum ShouldDeriveDefault {
+            True,
+            False,
+        }
+        impl quote::ToTokens for ShouldDeriveDefault {
+            fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                if let Self::True = &self {
+                    quote::quote!{Default,}.to_tokens(tokens);
+                }
+            }
+        }
         let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
         let ident_with_id_select_standart_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_select_token_stream = {
@@ -910,6 +921,25 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_with_id_select_standart_not_null_snake_case = naming::parameter::SelfSelectSnakeCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_select_element_standart_not_null_upper_camel_case = naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_select_element_standart_not_null_upper_camel_case = naming::parameter::SelfSelectElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let generate_pub_struct_ident_select_token_stream = |
+                ident_token_stream: &dyn quote::ToTokens,
+                should_derive_default: &ShouldDeriveDefault,
+                content_token_stream: &dyn quote::ToTokens,
+            |{
+                quote::quote! {
+                    #[derive(
+                        Debug,
+                        Clone,
+                        #should_derive_default
+                        PartialEq,
+                        serde::Serialize,
+                        serde::Deserialize,
+                        utoipa::ToSchema,
+                        schemars::JsonSchema,
+                    )]
+                    pub struct #ident_token_stream #content_token_stream
+                }
+            };
             let generate_ident_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 let ident_select_or_ident_with_id_select_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
                     IsStandartWithId::False => &ident_select_standart_not_null_upper_camel_case,
@@ -919,19 +949,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     IsStandartWithId::False => &ident_select_element_standart_not_null_upper_camel_case,
                     IsStandartWithId::True => &ident_with_id_select_element_standart_not_null_upper_camel_case
                 };
-                quote::quote! {
-                    #[derive(
-                        Debug,
-                        Clone,
-                        Default,
-                        PartialEq,
-                        serde::Serialize,
-                        serde::Deserialize,
-                        utoipa::ToSchema,
-                        schemars::JsonSchema,
-                    )]
-                    pub struct #ident_select_or_ident_with_id_select_upper_camel_case(#import_path::UniqueVec<#type_token_stream>);
-                }
+                generate_pub_struct_ident_select_token_stream(
+                    &ident_select_or_ident_with_id_select_upper_camel_case,
+                    &ShouldDeriveDefault::True,
+                    &quote::quote!{(#import_path::UniqueVec<#type_token_stream>);}
+                )
             };
             let dimension1_pagination_token_stream = quote::quote!{dimension1_pagination};
             let import_path_pagination_token_stream = quote::quote!{#import_path::Pagination};
@@ -939,47 +961,31 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_select_token_stream = match &postgresql_json_object_type_pattern {
                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_select_standart_not_null_token_stream(&IsStandartWithId::False),
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            serde::Serialize,
-                            serde::Deserialize,
-                            utoipa::ToSchema,
-                            schemars::JsonSchema
-                        )]
-                        pub struct #ident_select_upper_camel_case(std::option::Option<#ident_select_standart_not_null_upper_camel_case>);
-                    },
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_struct_ident_select_token_stream(
+                        &ident_select_upper_camel_case,
+                        &ShouldDeriveDefault::False,
+                        &quote::quote!{(std::option::Option<#ident_select_standart_not_null_upper_camel_case>);}
+                    ),
                 },
                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                        quote::quote! {
-                            #[derive(
-                                Debug,
-                                Clone,
-                                Default,
-                                PartialEq,
-                                serde::Serialize,
-                                serde::Deserialize,
-                                utoipa::ToSchema,
-                                schemars::JsonSchema,
-                            )]
-                            pub struct #ident_select_upper_camel_case {
-                                #ident_with_id_select_standart_not_null_snake_case: #ident_with_id_select_standart_not_null_upper_camel_case,
-                                #dimension1_pagination_token_stream: #import_path_pagination_token_stream
-                            }
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_pub_struct_ident_select_token_stream(
+                        &ident_select_upper_camel_case,
+                        &ShouldDeriveDefault::True,
+                        &quote::quote!{{
+                            #ident_with_id_select_standart_not_null_snake_case: #ident_with_id_select_standart_not_null_upper_camel_case,
+                            #dimension1_pagination_token_stream: #import_path_pagination_token_stream
+                        }}
+                    ),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_struct_ident_select_token_stream(
+                        &ident_select_upper_camel_case,
+                        &ShouldDeriveDefault::False,
+                        &{
+                            let ident_with_id_select_array_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(
+                                &ident_with_id_array_not_null_upper_camel_case
+                            );
+                            quote::quote!{(std::option::Option<#ident_with_id_select_array_not_null_upper_camel_case>);}
                         }
-                    },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                        let ident_with_id_select_array_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(
-                            &ident_with_id_array_not_null_upper_camel_case
-                        );
-                        quote::quote! {
-                            #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                            pub struct #ident_select_upper_camel_case(std::option::Option<#ident_with_id_select_array_not_null_upper_camel_case>);
-                        }
-                    },
+                    )
                 },
             };
             let impl_new_for_ident_select_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
@@ -1634,10 +1640,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
             }))
         };
-        enum ShouldDeriveDefault {
-            True,
-            False,
-        }
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_with_id_read_standart_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_read_token_stream = {
@@ -1686,16 +1688,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 should_derive_default: &ShouldDeriveDefault,
                 should_derive_serde_deserialize: &ShouldDeriveSerdeDeserialize,
             |{
-                let maybe_derive_default_token_stream = match &should_derive_default {
-                    ShouldDeriveDefault::True => quote::quote!{Default,},
-                    ShouldDeriveDefault::False => proc_macro2::TokenStream::new(),
-                };
                 let maybe_derive_serde_deserialize_token_stream = match &should_derive_serde_deserialize {
                     ShouldDeriveSerdeDeserialize::True => quote::quote!{serde::Deserialize,},
                     ShouldDeriveSerdeDeserialize::False => proc_macro2::TokenStream::new(),
                 };
                 quote::quote! {
-                    #[derive(Debug, Clone, PartialEq, #maybe_derive_default_token_stream serde::Serialize, #maybe_derive_serde_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
+                    #[derive(Debug, Clone, PartialEq, #should_derive_default serde::Serialize, #maybe_derive_serde_deserialize_token_stream utoipa::ToSchema, schemars::JsonSchema)]
                     pub struct #ident_token_stream #content_token_stream
                 }
             };
