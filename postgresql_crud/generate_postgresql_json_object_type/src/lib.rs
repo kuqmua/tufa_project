@@ -423,12 +423,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &element.ty,
                         &PostgresqlJsonTypeSubtype::from(postgresql_json_type_subtype_table_type_declaration_or_create)
                     );
-                    let maybe_pub_token_stream = match &struct_declaration_or_new_type {
-                        StructDeclarationOrNewType::StructDeclaration => quote::quote! {pub},
-                        StructDeclarationOrNewType::NewType => proc_macro2::TokenStream::new()
-                    };
                     quote::quote! {
-                        #maybe_pub_token_stream #field_ident: #type_as_postgresql_json_type_subtype_table_type_declaration_token_stream
+                        #field_ident: #type_as_postgresql_json_type_subtype_table_type_declaration_token_stream
                     }
                 });
                 let fields_content_token_stream = quote::quote!{#(#content_token_stream),*};
@@ -447,8 +443,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_table_type_declaration_or_ident_create_token_stream = generate_ident_table_type_declaration_or_create_token_stream(
                 &ident_table_type_declaration_or_ident_create_upper_camel_case,
                 &{
-                    let wrap_into_scopes_pub_token_stream = |content: &dyn quote::ToTokens|{
-                        quote::quote! {(pub #content);}
+                    let wrap_into_scopes_token_stream = |content: &dyn quote::ToTokens|{
+                        quote::quote! {(#content);}
                     };
                     match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -457,15 +453,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 postgresql_json_type_subtype_table_type_declaration_or_create,
                                 &StructDeclarationOrNewType::StructDeclaration,
                             ),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_token_stream(
                                 &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&add_postfix(ident_standart_not_null_upper_camel_case))
                             ),
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => wrap_into_scopes_pub_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&add_postfix(
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => wrap_into_scopes_token_stream(&postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&add_postfix(
                                 &ident_with_id_standart_not_null_upper_camel_case
                             ))),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_pub_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                                 &add_postfix(&ident_with_id_array_not_null_upper_camel_case)
                             )),
                         },
@@ -934,11 +930,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         utoipa::ToSchema,
                         schemars::JsonSchema,
                     )]
-                    pub struct #ident_select_or_ident_with_id_select_upper_camel_case(pub #import_path::UniqueVec<#type_token_stream>);
+                    pub struct #ident_select_or_ident_with_id_select_upper_camel_case(#import_path::UniqueVec<#type_token_stream>);
                 }
             };
             let dimension1_pagination_token_stream = quote::quote!{dimension1_pagination};
             let import_path_pagination_token_stream = quote::quote!{#import_path::Pagination};
+            //todo reuse pub struct
             let ident_select_token_stream = match &postgresql_json_object_type_pattern {
                 PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_select_standart_not_null_token_stream(&IsStandartWithId::False),
@@ -952,7 +949,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             utoipa::ToSchema,
                             schemars::JsonSchema
                         )]
-                        pub struct #ident_select_upper_camel_case(pub std::option::Option<#ident_select_standart_not_null_upper_camel_case>);
+                        pub struct #ident_select_upper_camel_case(std::option::Option<#ident_select_standart_not_null_upper_camel_case>);
                     },
                 },
                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -969,8 +966,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 schemars::JsonSchema,
                             )]
                             pub struct #ident_select_upper_camel_case {
-                                pub #ident_with_id_select_standart_not_null_snake_case: #ident_with_id_select_standart_not_null_upper_camel_case,
-                                pub #dimension1_pagination_token_stream: #import_path_pagination_token_stream
+                                #ident_with_id_select_standart_not_null_snake_case: #ident_with_id_select_standart_not_null_upper_camel_case,
+                                #dimension1_pagination_token_stream: #import_path_pagination_token_stream
                             }
                         }
                     },
@@ -980,7 +977,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         );
                         quote::quote! {
                             #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
-                            pub struct #ident_select_upper_camel_case(pub std::option::Option<#ident_with_id_select_array_not_null_upper_camel_case>);
+                            pub struct #ident_select_upper_camel_case(std::option::Option<#ident_with_id_select_array_not_null_upper_camel_case>);
                         }
                     },
                 },
@@ -1736,7 +1733,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_wrapper_token_stream(
-                            &quote::quote!{(pub std::vec::Vec<#ident_with_id_read_standart_not_null_upper_camel_case>);},
+                            &quote::quote!{(std::vec::Vec<#ident_with_id_read_standart_not_null_upper_camel_case>);},
                             &ShouldDeriveDefault::True,
                             &ShouldDeriveSerdeDeserialize::True,
                         ),
@@ -2385,11 +2382,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     content_token_stream: &dyn quote::ToTokens
                 |{
                     let maybe_should_derive_default_token_stream = match &should_derive_default {
-                        ShouldDeriveDefault::True => quote::quote!{Default,},
+                        ShouldDeriveDefault::True => quote::quote!{Default,},//todo maybe reuse Default,
                         ShouldDeriveDefault::False => proc_macro2::TokenStream::new()
                     };
                     let maybe_derive_serde_deserialize_token_stream = match &should_derive_serde_deserialize {
-                        ShouldDeriveSerdeDeserialize::True => quote::quote!{serde::Deserialize,},
+                        ShouldDeriveSerdeDeserialize::True => quote::quote!{serde::Deserialize,},//todo maybe reuse serde::Deserialize,
                         ShouldDeriveSerdeDeserialize::False => proc_macro2::TokenStream::new()
                     };
                     quote::quote! {
@@ -2397,9 +2394,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         pub struct #ident_update_upper_camel_case #content_token_stream
                     }
                 };
-                let generate_pub_std_option_option_ident_type_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                let generate_std_option_option_ident_type_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                     let std_option_option_ident_token_stream = &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_token_stream);
-                    quote::quote!{(pub #std_option_option_ident_token_stream);}
+                    quote::quote!{(#std_option_option_ident_token_stream);}
                 };
                 match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -2408,13 +2405,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &ShouldDeriveSerdeDeserialize::True,
                             &{
                                 let content_token_stream = generate_ident_update_standart_not_null_content_token_stream(&IsStandartWithId::False);
-                                quote::quote!{(pub #content_token_stream);}
+                                quote::quote!{(#content_token_stream);}//todo maybe reuse scope wrapper
                             }
                         ),
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(
                             &ShouldDeriveDefault::False,
                             &ShouldDeriveSerdeDeserialize::True,
-                            &generate_pub_std_option_option_ident_type_token_stream(&ident_update_standart_not_null_upper_camel_case),
+                            &generate_std_option_option_ident_type_token_stream(&ident_update_standart_not_null_upper_camel_case),
                         ),
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
@@ -2429,7 +2426,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(
                             &ShouldDeriveDefault::False,
                             &ShouldDeriveSerdeDeserialize::True,
-                            &generate_pub_std_option_option_ident_type_token_stream(&naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_with_id_array_not_null_upper_camel_case)),
+                            &generate_std_option_option_ident_type_token_stream(&naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_with_id_array_not_null_upper_camel_case)),
                         ),
                     },
                 }
