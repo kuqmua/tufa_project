@@ -1844,39 +1844,44 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 }
             };
-            let impl_new_or_try_new_for_ident_read_try_from_error_named_token_stream = match &postgresql_json_object_type_pattern {
-                PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&IsStandartWithId::False),
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
-                        &ident_read_upper_camel_case,
-                        &generate_value_type_token_stream(
-                            &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_read_standart_not_null_upper_camel_case)
+            let impl_new_or_try_new_for_ident_read_try_from_error_named_token_stream = {
+                let std_vec_vec_ident_with_id_read_standart_not_null_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+                    &ident_with_id_read_standart_not_null_upper_camel_case
+                );
+                match &postgresql_json_object_type_pattern {
+                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&IsStandartWithId::False),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
+                            &ident_read_upper_camel_case,
+                            &generate_value_type_token_stream(
+                                &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_read_standart_not_null_upper_camel_case)
+                            ),
+                            &self_value_token_stream,
                         ),
-                        &self_value_token_stream,
-                    ),
-                },
-                PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(
-                        &ident_read_upper_camel_case,
-                        &generate_value_type_token_stream(&quote::quote!{std::vec::Vec<#ident_with_id_read_standart_not_null_upper_camel_case>}),
-                        &self_value_token_stream,
-                    ),
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
-                        &ident_read_upper_camel_case,
-                        &generate_value_type_token_stream(
-                            &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&quote::quote!{std::vec::Vec<#ident_with_id_read_standart_not_null_upper_camel_case>})
+                    },
+                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => macros_helpers::generate_impl_new_for_ident_token_stream(
+                            &ident_read_upper_camel_case,
+                            &generate_value_type_token_stream(&std_vec_vec_ident_with_id_read_standart_not_null_token_stream),
+                            &self_value_token_stream,
                         ),
-                        &{
-                            let ident_with_id_read_array_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_display(&ident_with_id_array_not_null_upper_camel_case);
-                            quote::quote!{
-                                Self(match #value_snake_case {
-                                    Some(#value_snake_case) => Some(#ident_with_id_read_array_not_null_upper_camel_case::new(#value_snake_case)),
-                                    None => None
-                                })
-                            }
-                        },
-                    ),
-                },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
+                            &ident_read_upper_camel_case,
+                            &generate_value_type_token_stream(
+                                &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&std_vec_vec_ident_with_id_read_standart_not_null_token_stream)
+                            ),
+                            &{
+                                let ident_with_id_read_array_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_display(&ident_with_id_array_not_null_upper_camel_case);
+                                quote::quote!{
+                                    Self(match #value_snake_case {
+                                        Some(#value_snake_case) => Some(#ident_with_id_read_array_not_null_upper_camel_case::new(#value_snake_case)),
+                                        None => None
+                                    })
+                                }
+                            },
+                        ),
+                    },
+                }
             };
             let generate_impl_serde_deserialize_for_ident_read_token_stream = |is_standart_with_id: &IsStandartWithId| {
                 let ident_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_standart_with_id {
