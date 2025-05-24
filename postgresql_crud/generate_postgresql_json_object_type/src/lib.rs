@@ -1243,14 +1243,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let ident_with_id_select_array_not_null_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(
-                                    &ident_with_id_array_not_null_upper_camel_case
+                                let ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                                    &ident_with_id_array_not_null_upper_camel_case,
+                                    &PostgresqlJsonTypeSubtype::Select
                                 );
                                 quote::quote!{
                                     format!("case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end", {
                                         let value = match &self.0 {
                                             Some(value) => value,
-                                            None => &<#ident_with_id_select_array_not_null_upper_camel_case as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                            None => &<#ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                         };
                                         value.select_query_part(
                                             field_ident,
