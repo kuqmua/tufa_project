@@ -2411,7 +2411,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_update_token_stream(
                             &ShouldDeriveDefault::False,
                             &ShouldDeriveSerdeDeserialize::True,
-                            &generate_std_option_option_ident_type_token_stream(&naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident_with_id_array_not_null_upper_camel_case)),
+                            &generate_std_option_option_ident_type_token_stream(
+                                &generate_type_as_postgresql_json_type_subtype_token_stream(
+                                    &ident_with_id_array_not_null_upper_camel_case,
+                                    &PostgresqlJsonTypeSubtype::Update
+                                )
+                            ),
                         ),
                     },
                 }
