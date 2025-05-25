@@ -1805,7 +1805,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_wrapper_token_stream(
                             &{
                                 let type_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                                    &ident_with_id_read_array_not_null_upper_camel_case
+                                    &generate_type_as_postgresql_json_type_subtype_token_stream(
+                                        &ident_with_id_array_not_null_upper_camel_case,
+                                        &PostgresqlJsonTypeSubtype::Read
+                                    )
                                 );
                                 quote::quote!{(#type_token_stream);}
                             },
