@@ -1675,6 +1675,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_read_token_stream = {
             let ident_read_try_from_error_named_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
             let ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let ident_standart_not_null_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                &ident_standart_not_null_upper_camel_case,
+                &PostgresqlJsonTypeSubtype::Read
+            );
             let ident_with_id_array_not_null_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
                 &ident_with_id_array_not_null_upper_camel_case,
                 &PostgresqlJsonTypeSubtype::Read
@@ -1751,10 +1755,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_wrapper_token_stream(
                             &{
                                 let type_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                                    &generate_type_as_postgresql_json_type_subtype_token_stream(
-                                        &ident_standart_not_null_upper_camel_case,
-                                        &PostgresqlJsonTypeSubtype::Read
-                                    )
+                                    &ident_standart_not_null_as_postgresql_json_type_read_token_stream
                                 );
                                 quote::quote!{(#type_token_stream);}
                             },
@@ -1899,10 +1900,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &ident_read_upper_camel_case,
                             &generate_value_type_token_stream(
                                 &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                                    &generate_type_as_postgresql_json_type_subtype_token_stream(
-                                        &ident_standart_not_null_upper_camel_case,
-                                        &PostgresqlJsonTypeSubtype::Read
-                                    )
+                                    &ident_standart_not_null_as_postgresql_json_type_read_token_stream
                                 )
                             ),
                             &self_value_token_stream,
