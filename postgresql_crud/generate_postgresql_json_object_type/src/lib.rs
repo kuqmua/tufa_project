@@ -936,6 +936,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_standart_not_null_upper_camel_case,
                 &PostgresqlJsonTypeSubtype::Select
             );
+            let ident_with_id_standart_not_null_as_postgresql_json_type_select_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                &ident_with_id_standart_not_null_upper_camel_case,
+                &PostgresqlJsonTypeSubtype::Select
+            );
             let generate_pub_struct_ident_select_token_stream = |
                 ident_token_stream: &dyn quote::ToTokens,
                 should_derive_default: &ShouldDeriveDefault,
@@ -992,16 +996,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_pub_struct_ident_select_token_stream(
                         &ident_select_upper_camel_case,
                         &ShouldDeriveDefault::True,
-                        &{
-                            let ident_with_id_standart_not_null_as_postgresql_json_type_select_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                                &ident_with_id_standart_not_null_upper_camel_case,
-                                &PostgresqlJsonTypeSubtype::Select
-                            );
-                            quote::quote!{{
-                                #ident_with_id_select_standart_not_null_snake_case: #ident_with_id_standart_not_null_as_postgresql_json_type_select_token_stream,
-                                #dimension1_pagination_token_stream: #import_path_pagination_token_stream
-                            }}
-                        }
+                        &quote::quote!{{
+                            #ident_with_id_select_standart_not_null_snake_case: #ident_with_id_standart_not_null_as_postgresql_json_type_select_token_stream,
+                            #dimension1_pagination_token_stream: #import_path_pagination_token_stream
+                        }}
                     ),
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_struct_ident_select_token_stream(
                         &ident_select_upper_camel_case,
@@ -1032,15 +1030,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             ),
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let ident_with_id_standart_not_null_as_postgresql_json_type_select_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                                    &ident_with_id_standart_not_null_upper_camel_case,
-                                    &PostgresqlJsonTypeSubtype::Select
-                                );
-                                quote::quote!{
-                                    #ident_with_id_select_standart_not_null_snake_case: #ident_with_id_standart_not_null_as_postgresql_json_type_select_token_stream,
-                                    #dimension1_pagination_token_stream: #import_path_pagination_token_stream
-                                }
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                                #ident_with_id_select_standart_not_null_snake_case: #ident_with_id_standart_not_null_as_postgresql_json_type_select_token_stream,
+                                #dimension1_pagination_token_stream: #import_path_pagination_token_stream
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_value_type_token_stream(
                                 &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
