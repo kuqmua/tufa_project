@@ -388,7 +388,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
         }
         let self_value_token_stream = quote::quote!{Self(#value_snake_case)};
-        
+
         let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
         let ident_with_id_table_type_declaration_standart_not_null_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
@@ -630,7 +630,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let ident_table_type_declaration_common_token_stream = generate_ident_table_type_declaration_or_ident_create_common_token_stream(
                 &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration
             );
-            let generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+            let generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                let ident_token_stream = match &is_standart_with_id {
+                    IsStandartWithId::False => &ident_table_type_declaration_upper_camel_case,
+                    IsStandartWithId::True => &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case
+                };
                 postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(
                     &ident_token_stream,
                     postgresql_crud_macros_common::IsPrimaryKeyUsed::False,
@@ -644,11 +648,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 )
             };
             let impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream = generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream(
-                &ident_table_type_declaration_upper_camel_case
+                &IsStandartWithId::False,
             );
             let maybe_ident_with_id_table_type_declaration_standart_not_null_token_stream = if is_standart_not_null {
                 let impl_create_table_column_query_part_for_ident_with_id_table_type_declaration_standart_not_null_token_stream = generate_impl_create_table_column_query_part_for_ident_table_type_declaration_token_stream(
-                    &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case
+                    &IsStandartWithId::True
                 );
                 quote::quote! {
                     #impl_create_table_column_query_part_for_ident_with_id_table_type_declaration_standart_not_null_token_stream
