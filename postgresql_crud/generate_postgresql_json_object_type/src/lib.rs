@@ -2379,9 +2379,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True => quote::quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
                     ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => proc_macro2::TokenStream::new()
                 };
+                let ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                    &ident_with_id_standart_not_null_upper_camel_case,
+                    &PostgresqlJsonTypeSubtype::Create
+                );
                 quote::quote!{
                     #maybe_serde_skip_serializing_if_vec_is_empty_token_stream
-                    #create_snake_case: std::vec::Vec<#ident_with_id_create_standart_not_null_upper_camel_case>,
+                    #create_snake_case: std::vec::Vec<#ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream>,
                     #maybe_serde_skip_serializing_if_vec_is_empty_token_stream
                     #update_snake_case: std::vec::Vec<#ident_with_id_update_element_standart_not_null_upper_camel_case>,
                     #maybe_serde_skip_serializing_if_vec_is_empty_token_stream
