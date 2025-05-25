@@ -3082,10 +3082,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_update_query_bind_standart_not_null_content_token_stream(&IsStandartWithId::False),
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                            match self.0 {
-                                Some(#value_snake_case) => #value_snake_case.#update_query_bind_snake_case(query),
-                                None => #query_snake_case.bind(sqlx::types::Json(#ident_update_upper_camel_case(None))),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            let ident_as_postgresql_json_type_update_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                                &ident,
+                                &PostgresqlJsonTypeSubtype::Update
+                            );
+                            quote::quote!{
+                                match self.0 {
+                                    Some(#value_snake_case) => #value_snake_case.#update_query_bind_snake_case(#query_snake_case),
+                                    None => #query_snake_case.bind(sqlx::types::Json(#ident_as_postgresql_json_type_update_token_stream::new(None))),
+                                }
                             }
                         },
                     },
