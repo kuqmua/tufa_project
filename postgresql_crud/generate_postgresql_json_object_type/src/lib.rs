@@ -978,7 +978,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &ShouldDeriveDefault::False,
                         &{
                             let type_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
-                                &ident_select_standart_not_null_upper_camel_case
+                                &generate_type_as_postgresql_json_type_subtype_token_stream(
+                                    &ident_standart_not_null_upper_camel_case,
+                                    &PostgresqlJsonTypeSubtype::Select
+                                )
                             );
                             quote::quote!{(#type_token_stream);}
                         }
@@ -1231,23 +1234,29 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &match &postgresql_json_object_type_pattern {
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&IsStandartWithId::False),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
-                                format!(
-                                    "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))",
-                                    {
-                                        let value = match &self.0 {
-                                            Some(value) => value,
-                                            None => &<#ident_select_standart_not_null_upper_camel_case as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                        };
-                                        value.select_query_part(
-                                            field_ident,
-                                            &column_name_and_maybe_field_getter_field_ident,
-                                            column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong - add postfix field_ident or column_name_and_maybe_field_getter_field_ident
-                                            true
-                                        )
-                                    }
-                                )
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let ident_standart_not_null_as_postgresql_json_type_select_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                                    &ident_standart_not_null_upper_camel_case,
+                                    &PostgresqlJsonTypeSubtype::Select
+                                );
+                                quote::quote!{
+                                    let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
+                                    format!(
+                                        "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))",
+                                        {
+                                            let value = match &self.0 {
+                                                Some(value) => value,
+                                                None => &<#ident_standart_not_null_as_postgresql_json_type_select_token_stream as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()//todo reuse
+                                            };
+                                            value.select_query_part(
+                                                field_ident,
+                                                &column_name_and_maybe_field_getter_field_ident,
+                                                column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong - add postfix field_ident or column_name_and_maybe_field_getter_field_ident
+                                                true
+                                            )
+                                        }
+                                    )
+                                }
                             },
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
