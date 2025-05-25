@@ -1679,6 +1679,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_with_id_array_not_null_upper_camel_case,
                 &PostgresqlJsonTypeSubtype::Read
             );
+            let generate_field_type_as_json_type_read_token_stream = |type_token_stream: &dyn quote::ToTokens|{
+                generate_type_as_postgresql_json_type_subtype_token_stream(
+                    &type_token_stream,
+                    &PostgresqlJsonTypeSubtype::Read
+                )
+            };
             enum ShouldAddSerdeOptionIsNoneAnnotation {
                 True,
                 False
@@ -1695,15 +1701,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
                     });
-                    let field_type_as_json_type_read_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                        &element.ty,
-                        &PostgresqlJsonTypeSubtype::Read
-                    );
+                    let field_type_as_json_type_read_token_stream = generate_field_type_as_json_type_read_token_stream(&element.ty);
                     quote::quote! {
                         #maybe_serde_skip_serializing_if_option_is_none_token_stream
-                        #field_ident: std::option::Option<#import_path::Value<
-                            #field_type_as_json_type_read_token_stream
-                        >>
+                        #field_ident: std::option::Option<#import_path::Value<#field_type_as_json_type_read_token_stream>>
                     }
                 });
                 quote::quote! {
@@ -2018,10 +2019,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let visit_seq_fields_initialization_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
                         generate_serde_de_seq_access_next_element_token_stream(
                             index,
-                            &generate_type_as_postgresql_json_type_subtype_token_stream(
-                                &element.ty,
-                                &PostgresqlJsonTypeSubtype::Read
-                            )
+                            &generate_field_type_as_json_type_read_token_stream(&element.ty)
                         )
                     });
                     quote::quote! {
@@ -2054,10 +2052,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     let visit_map_fields_initialization_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
                         generate_mut_field_index_serde_private_option_token_stream(
                             index,
-                            &generate_type_as_postgresql_json_type_subtype_token_stream(
-                                &element.ty,
-                                &PostgresqlJsonTypeSubtype::Read
-                            )
+                            &generate_field_type_as_json_type_read_token_stream(&element.ty)
                         )
                     });
                     quote::quote! {
@@ -2084,10 +2079,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         generate_field_initialization_token_stream(
                             index,
                             &generate_field_ident_double_quotes_token_stream(element),
-                            &generate_type_as_postgresql_json_type_subtype_token_stream(
-                                &element.ty,
-                                &PostgresqlJsonTypeSubtype::Read
-                            )
+                            &generate_field_type_as_json_type_read_token_stream(&element.ty)
                         )
                     });
                     quote::quote! {
