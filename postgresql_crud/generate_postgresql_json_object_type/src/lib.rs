@@ -1831,11 +1831,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
                 PostgresqlJsonObjectTypePattern::Array => proc_macro2::TokenStream::new(),
             };
-            let generate_impl_try_new_for_ident_read_try_from_error_named_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                let ident_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_standart_with_id {
+            let generate_ident_read_or_ident_with_id_read_upper_camel_case = |is_standart_with_id: &IsStandartWithId|{
+                match &is_standart_with_id {
                     IsStandartWithId::False => &ident_read_upper_camel_case,
                     IsStandartWithId::True => &ident_with_id_read_standart_not_null_upper_camel_case,
-                };
+                }
+            };
+            let generate_impl_try_new_for_ident_read_try_from_error_named_token_stream = |is_standart_with_id: &IsStandartWithId|{
+                let ident_token_stream = generate_ident_read_or_ident_with_id_read_upper_camel_case(&is_standart_with_id);
                 let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                 let fields_declaration_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                     is_standart_with_id,
@@ -1946,10 +1949,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let generate_impl_serde_deserialize_for_ident_read_token_stream = |is_standart_with_id: &IsStandartWithId| {
-                let ident_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &is_standart_with_id {
-                    IsStandartWithId::False => &ident_read_upper_camel_case,
-                    IsStandartWithId::True => &ident_with_id_read_standart_not_null_upper_camel_case,
-                };
+                let ident_token_stream = generate_ident_read_or_ident_with_id_read_upper_camel_case(&is_standart_with_id);
                 let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                 let current_vec_syn_field_len = current_vec_syn_field.len();
                 let field_enum_variants_token_stream = {
@@ -2303,10 +2303,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_token_stream = |is_standart_with_id: &IsStandartWithId|{
                 postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                    &match &is_standart_with_id {
-                        IsStandartWithId::False => &ident_read_upper_camel_case,
-                        IsStandartWithId::True => &ident_with_id_read_standart_not_null_upper_camel_case
-                    },
+                    &generate_ident_read_or_ident_with_id_read_upper_camel_case(&is_standart_with_id),
                     &proc_macro2::TokenStream::new(),
                     &{
                         let fields_token_stream = get_vec_syn_field(is_standart_with_id).iter().map(|element| {
