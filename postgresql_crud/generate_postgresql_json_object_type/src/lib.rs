@@ -1450,9 +1450,18 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 &generate_ident_where_element_content_token_stream(&IsStandartWithId::False)
                             ),
                             PostgresqlJsonObjectTypePattern::Array => generate_ident_where_element_wrapper_token_stream(&{
+                                let equal_token_stream = {
+                                    let ident_as_postgresql_json_type_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                                        &ident,
+                                        &PostgresqlJsonTypeSubtype::TableTypeDeclaration
+                                    );
+                                    quote::quote! {
+                                        Equal(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_as_postgresql_json_type_table_type_declaration_token_stream>)
+                                    }
+                                };
                                 //todo additional filters
                                 quote::quote! {
-                                    Equal(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_table_type_declaration_upper_camel_case>)
+                                    #equal_token_stream
                                 }
                             })
                         },
