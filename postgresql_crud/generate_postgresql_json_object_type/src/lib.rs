@@ -1703,7 +1703,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
         let ident_with_id_read_standart_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         let ident_read_token_stream = {
-            let ident_read_standart_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_try_from_error_named_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident);
             let ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case = naming::parameter::SelfReadTryFromErrorNamedUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_read_array_not_null_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_with_id_array_not_null_upper_camel_case);
@@ -1925,7 +1924,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_impl_new_for_ident_token_stream(
                             &ident_read_upper_camel_case,
                             &generate_value_type_token_stream(
-                                &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_read_standart_not_null_upper_camel_case)
+                                &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                                    &generate_type_as_postgresql_json_type_subtype_token_stream(
+                                        &ident_standart_not_null_upper_camel_case,
+                                        &PostgresqlJsonTypeSubtype::Read
+                                    )
+                                )
                             ),
                             &self_value_token_stream,
                         ),
