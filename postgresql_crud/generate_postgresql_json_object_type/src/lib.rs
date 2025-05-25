@@ -976,7 +976,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_struct_ident_select_token_stream(
                         &ident_select_upper_camel_case,
                         &ShouldDeriveDefault::False,
-                        &quote::quote!{(std::option::Option<#ident_select_standart_not_null_upper_camel_case>);}
+                        &{
+                            let type_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                                &ident_select_standart_not_null_upper_camel_case
+                            );
+                            quote::quote!{(#type_token_stream);}
+                        }
                     ),
                 },
                 PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
