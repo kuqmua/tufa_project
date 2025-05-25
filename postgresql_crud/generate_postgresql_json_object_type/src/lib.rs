@@ -906,7 +906,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             quote::quote!{#value_snake_case: #type_token_stream}
         };
         let generate_unique_vec_wrapper_token_stream = |type_token_stream: &dyn quote::ToTokens|{
-            quote::quote!{postgresql_crud::UniqueVec<#type_token_stream>}
+            quote::quote!{#import_path::UniqueVec<#type_token_stream>}
         };
         let postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
             &import_path_postgresql_json_type_uuid_uuid_as_not_null_jsonb_string_token_stream,
@@ -953,18 +953,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let generate_ident_select_standart_not_null_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                let ident_select_or_ident_with_id_select_upper_camel_case: &dyn quote::ToTokens = match &is_standart_with_id {
-                    IsStandartWithId::False => &ident_select_standart_not_null_upper_camel_case,
-                    IsStandartWithId::True => &ident_with_id_select_standart_not_null_upper_camel_case
-                };
-                let type_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
-                    IsStandartWithId::False => &ident_select_element_standart_not_null_upper_camel_case,
-                    IsStandartWithId::True => &ident_with_id_select_element_standart_not_null_upper_camel_case
-                };
                 generate_pub_struct_ident_select_token_stream(
-                    &ident_select_or_ident_with_id_select_upper_camel_case,
+                    match &is_standart_with_id {
+                        IsStandartWithId::False => &ident_select_standart_not_null_upper_camel_case,
+                        IsStandartWithId::True => &ident_with_id_select_standart_not_null_upper_camel_case
+                    },
                     &ShouldDeriveDefault::True,
-                    &quote::quote!{(#import_path::UniqueVec<#type_token_stream>);}
+                    &{
+                        let type_token_stream = generate_unique_vec_wrapper_token_stream(match &is_standart_with_id {
+                            IsStandartWithId::False => &ident_select_element_standart_not_null_upper_camel_case,
+                            IsStandartWithId::True => &ident_with_id_select_element_standart_not_null_upper_camel_case
+                        });
+                        quote::quote!{(#type_token_stream);}
+                    }
                 )
             };
             let dimension1_pagination_token_stream = quote::quote!{dimension1_pagination};
