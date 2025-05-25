@@ -479,10 +479,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 quote::quote!{Self {#(#content_token_stream),*}}
             };
             let impl_new_for_ident_table_type_declaration_or_ident_create_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
-                match &postgresql_json_type_subtype_table_type_declaration_or_create {
-                    PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::TableTypeDeclaration => &ident_table_type_declaration_upper_camel_case,
-                    PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate::Create => &ident_create_upper_camel_case,
-                },
+                &ident_table_type_declaration_or_ident_create_upper_camel_case,
                 &{
                     let generate_wrap_into_value_parameter_token_stream = |type_token_stream: &dyn quote::ToTokens|{
                         quote::quote!{value: #type_token_stream}
