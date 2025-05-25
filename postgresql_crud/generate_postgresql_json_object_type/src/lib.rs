@@ -1776,19 +1776,34 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             &ShouldDeriveSerdeDeserialize::False,
                         ),
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_wrapper_token_stream(
-                            &quote::quote!{(std::option::Option<#ident_read_standart_not_null_upper_camel_case>);},
+                            &{
+                                let type_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                                    &ident_read_standart_not_null_upper_camel_case
+                                );
+                                quote::quote!{(#type_token_stream);}
+                            },
                             &ShouldDeriveDefault::False,//todo maybe True ?
                             &ShouldDeriveSerdeDeserialize::True,
                         ),
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_wrapper_token_stream(
-                            &quote::quote!{(std::vec::Vec<#ident_with_id_read_standart_not_null_upper_camel_case>);},
+                            &{
+                                let type_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
+                                    &ident_with_id_read_standart_not_null_upper_camel_case
+                                );
+                                quote::quote!{(#type_token_stream);}
+                            },
                             &ShouldDeriveDefault::True,
                             &ShouldDeriveSerdeDeserialize::True,
                         ),
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_wrapper_token_stream(
-                            &quote::quote!{(std::option::Option<#ident_with_id_read_array_not_null_upper_camel_case>);},
+                            &{
+                                let type_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
+                                    &ident_with_id_read_array_not_null_upper_camel_case
+                                );
+                                quote::quote!{(#type_token_stream);}
+                            },
                             &ShouldDeriveDefault::False,
                             &ShouldDeriveSerdeDeserialize::True,
                         ),
