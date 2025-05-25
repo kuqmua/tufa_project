@@ -1679,6 +1679,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_standart_not_null_upper_camel_case,
                 &PostgresqlJsonTypeSubtype::Read
             );
+            let ident_with_id_standart_not_null_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                &ident_with_id_standart_not_null_upper_camel_case,
+                &PostgresqlJsonTypeSubtype::Read
+            );
             let ident_with_id_array_not_null_as_postgresql_json_type_read_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
                 &ident_with_id_array_not_null_upper_camel_case,
                 &PostgresqlJsonTypeSubtype::Read
@@ -1767,10 +1771,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_wrapper_token_stream(
                             &{
                                 let type_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
-                                    &generate_type_as_postgresql_json_type_subtype_token_stream(
-                                        &ident_with_id_standart_not_null_upper_camel_case,
-                                        &PostgresqlJsonTypeSubtype::Read
-                                    )
+                                    &ident_with_id_standart_not_null_as_postgresql_json_type_read_token_stream
                                 );
                                 quote::quote!{(#type_token_stream);}
                             },
@@ -1888,10 +1889,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let impl_new_or_try_new_for_ident_read_try_from_error_named_token_stream = {
                 let std_vec_vec_ident_with_id_read_standart_not_null_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
-                    &generate_type_as_postgresql_json_type_subtype_token_stream(
-                        &ident_with_id_standart_not_null_upper_camel_case,
-                        &PostgresqlJsonTypeSubtype::Read
-                    )
+                    &ident_with_id_standart_not_null_as_postgresql_json_type_read_token_stream
                 );
                 match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
@@ -3152,15 +3150,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 // #[derive(PartialEq)]
                 // pub struct WrapperOfWrapperOfMyTraitAlias(WrapperOfMyTraitAlias);
                 // // error[E0369]: binary operation `==` cannot be applied to type `WrapperOfMyTrait<MyStruct>`
-                let ident_with_id_update_element_standart_not_null_fields_declaration_token_stream = {
-                    let fields_type_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                        &ident_standart_not_null_upper_camel_case,
-                        &PostgresqlJsonTypeSubtype::Update
-                    );
-                    quote::quote!{
-                        #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
-                        #fields_snake_case: #fields_type_token_stream
-                    }
+                let ident_with_id_update_element_standart_not_null_fields_declaration_token_stream = quote::quote!{
+                    #id_snake_case: #postgresql_crud_path_postgresql_json_type_uuid_uuid_update_token_stream,
+                    #fields_snake_case: #ident_standart_not_null_as_postgresql_json_type_update_token_stream
                 };
                 let ident_with_id_update_element_standart_not_null_token_stream = quote::quote! {
                     #[derive(Debug, Clone, PartialEq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
