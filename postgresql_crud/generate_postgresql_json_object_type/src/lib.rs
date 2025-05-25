@@ -2412,6 +2412,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             );
             let ident_update_element_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_with_id_update_element_standart_not_null_upper_camel_case = &naming::parameter::SelfUpdateElementUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+            let ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                &ident_with_id_standart_not_null_upper_camel_case,
+                &PostgresqlJsonTypeSubtype::Create
+            );
             let (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream) = {
                 let generate_jsonb_set_target_snake_case = naming::GenerateJsonbSetTargetSnakeCase;
                 let generate_jsonb_set_target_token_stream = {
@@ -2439,10 +2443,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::True => quote::quote! {#[serde(skip_serializing_if = "Vec::is_empty")]},
                     ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation::False => proc_macro2::TokenStream::new()
                 };
-                let ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                    &ident_with_id_standart_not_null_upper_camel_case,
-                    &PostgresqlJsonTypeSubtype::Create
-                );
                 quote::quote!{
                     #maybe_serde_skip_serializing_if_vec_is_empty_token_stream
                     #create_snake_case: std::vec::Vec<#ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream>,
@@ -2660,10 +2660,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let tuple_struct_ident_update_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("tuple struct {ident_update_upper_camel_case}"));
                         let ident_update_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_update_upper_camel_case);
                         let match_try_new_in_deserialize_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(&ident_update_upper_camel_case, &quote::quote! {__field0, __field1, __field2});
-                        let ident_with_id_standart_not_null_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                            &ident_with_id_standart_not_null_upper_camel_case,
-                            &PostgresqlJsonTypeSubtype::Create
-                        );
                         quote::quote! {
                             impl<'de> serde::Deserialize<'de> for #ident_update_upper_camel_case {
                                 fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
