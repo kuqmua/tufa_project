@@ -1908,7 +1908,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let impl_new_or_try_new_for_ident_read_try_from_error_named_token_stream = {
                 let std_vec_vec_ident_with_id_read_standart_not_null_token_stream = postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
-                    &ident_with_id_read_standart_not_null_upper_camel_case
+                    &generate_type_as_postgresql_json_type_subtype_token_stream(
+                        &ident_with_id_standart_not_null_upper_camel_case,
+                        &PostgresqlJsonTypeSubtype::Read
+                    )
                 );
                 match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
