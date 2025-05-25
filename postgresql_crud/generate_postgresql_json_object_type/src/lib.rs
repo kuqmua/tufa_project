@@ -2375,11 +2375,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 (generate_jsonb_set_target_snake_case, generate_jsonb_set_target_token_stream)
             };
             let generate_ident_update_standart_not_null_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
-                let type_token_stream: &dyn quote::ToTokens = match &is_standart_with_id {
+                generate_unique_vec_wrapper_token_stream(match &is_standart_with_id {
                     IsStandartWithId::False => &ident_update_element_upper_camel_case,
                     IsStandartWithId::True => &ident_with_id_update_element_standart_not_null_upper_camel_case
-                };
-                quote::quote! {#import_path::UniqueVec<#type_token_stream>}
+                })
             };
             enum ShouldAddSerdeSkipSerializingIfVecIsEmptyAnnotation {
                 True,
