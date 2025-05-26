@@ -816,16 +816,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         },
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                        let type_as_postgresql_json_type_create_token_stream = generate_type_as_postgresql_json_type_create_token_stream(
+                        let std_option_option_type_as_postgresql_json_type_create_token_stream = postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_type_as_postgresql_json_type_create_token_stream(
                             &match &postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_upper_camel_case,
                                 PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_upper_camel_case,
                             }
-                        );
+                        ));
                         quote::quote! {
                             match self.0 {
                                 Some(#value_snake_case) => #value_snake_case.#create_query_bind_snake_case(#query_snake_case),
-                                None => #query_snake_case.bind(sqlx::types::Json(None::<std::option::Option<#type_as_postgresql_json_type_create_token_stream>>))
+                                None => #query_snake_case.bind(sqlx::types::Json(None::<#std_option_option_type_as_postgresql_json_type_create_token_stream>))
                             }
                         }
                     }
