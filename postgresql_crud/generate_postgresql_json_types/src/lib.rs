@@ -1245,7 +1245,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Debug,
                             Clone,
                             PartialEq,
-                            Default,
                             serde::Serialize,
                             serde::Deserialize,
                             utoipa::ToSchema,
@@ -1269,7 +1268,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 #(#arguments_token_stream),*
                             }}
                         }
-                        Err(_) => quote::quote! {#core_default_default_default_token_stream},
+                        Err(_) => quote::quote! {Self{}},
                     },
                 );
                 quote::quote! {
