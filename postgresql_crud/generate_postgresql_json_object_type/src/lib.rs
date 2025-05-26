@@ -157,6 +157,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let reference_std_primitive_str_token_stream = token_patterns::RefStdPrimitiveStr;
         let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
         let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
+        let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
+        let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
         let std_string_string_token_stream = token_patterns::StdStringString;
         let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
@@ -1242,7 +1244,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 format!(#format_handle_token_stream, {
                                     let #value_snake_case = match &self.0 {
                                         Some(#value_snake_case) => #value_snake_case,//todo reuse
-                                        None => &<#type_token_stream as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                        None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
                                     };
                                     #value_snake_case.select_query_part(
                                         field_ident,
@@ -1588,7 +1590,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     PostgresqlJsonObjectTypePattern::Array => postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                         &ident_where_element_upper_camel_case,
                         &quote::quote!{
-                            vec![Self::Equal(#import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())]
+                            vec![Self::Equal(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case())]
                         }
                     ),
                 };
