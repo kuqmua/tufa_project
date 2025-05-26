@@ -1198,35 +1198,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => ParameterIsPostgresqlTypeUsed::True,
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => ParameterIsPostgresqlTypeUsed::False,
                         },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => ParameterIsPostgresqlTypeUsed::False,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => ParameterIsPostgresqlTypeUsed::False,
-                        }
+                        PostgresqlJsonObjectTypePattern::Array => ParameterIsPostgresqlTypeUsed::False
                     },
-                    &match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&IsStandartWithId::False),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
-                                format!(
-                                    "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))",
-                                    {
-                                        let value = match &self.0 {
-                                            Some(value) => value,
-                                            None => &<#ident_standart_not_null_as_postgresql_json_type_select_token_stream as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()//todo reuse
-                                        };
-                                        value.select_query_part(
-                                            field_ident,
-                                            &column_name_and_maybe_field_getter_field_ident,
-                                            column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong - add postfix field_ident or column_name_and_maybe_field_getter_field_ident. error messages test
-                                            true
-                                        )
-                                    }
-                                )
-                            },
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                    &match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
+                            PostgresqlJsonObjectTypePattern::Standart => generate_select_query_part_content_for_ident_select_or_ident_with_id_select_standart_not_null_token_stream(&IsStandartWithId::False),
+                            PostgresqlJsonObjectTypePattern::Array => {
                                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',case when (jsonb_array_length({{column_name_and_maybe_field_getter}}->'{{field_ident}}') = 0) then '[]'::jsonb else (select jsonb_agg(({{{ident_with_id_select_standart_not_null_snake_case}}})) from jsonb_array_elements((select {{column_name_and_maybe_field_getter}}->'{{field_ident}}')) with ordinality where ordinality between {{dimension1_start}} and {{dimension1_end}}) end ))"));
                                 quote::quote!{
                                     let #ident_with_id_select_standart_not_null_snake_case = self.#ident_with_id_select_standart_not_null_snake_case.select_query_part(
@@ -1239,21 +1216,43 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     let dimension1_end = self.#dimension1_pagination_token_stream.end();
                                     format!(#format_handle_token_stream)
                                 }
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                format!("case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end", {
-                                    let value = match &self.0 {
-                                        Some(value) => value,
-                                        None => &<#ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                            }
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            let maybe_column_name_and_maybe_field_getter_field_ident_token_stream = match &postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => quote::quote!{
+                                    let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
+                                },
+                                PostgresqlJsonObjectTypePattern::Array => proc_macro2::TokenStream::new()
+                            };
+                            let column_name_and_maybe_field_getter_or_column_name_and_maybe_field_getter_field_ident_token_stream = match &postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => quote::quote!{column_name_and_maybe_field_getter_field_ident},
+                                PostgresqlJsonObjectTypePattern::Array => quote::quote!{column_name_and_maybe_field_getter},
+                            };
+                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&match &postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))",
+                                PostgresqlJsonObjectTypePattern::Array => "case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end"
+                            });
+                            let type_token_stream: &dyn quote::ToTokens = match &postgresql_json_object_type_pattern {
+                                PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
+                                PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
+                            };
+                            quote::quote!{
+                                #maybe_column_name_and_maybe_field_getter_field_ident_token_stream
+                                format!(#format_handle_token_stream, {
+                                    let #value_snake_case = match &self.0 {
+                                        Some(#value_snake_case) => #value_snake_case,//todo reuse
+                                        None => &<#type_token_stream as #import_path::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                     };
-                                    value.select_query_part(
+                                    #value_snake_case.select_query_part(
                                         field_ident,
-                                        &column_name_and_maybe_field_getter,
-                                        column_name_and_maybe_field_getter_for_error_message, true
+                                        &#column_name_and_maybe_field_getter_or_column_name_and_maybe_field_getter_field_ident_token_stream,
+                                        column_name_and_maybe_field_getter_for_error_message,
+                                        true
                                     )
                                 })
-                            },
-                        }
+                            }
+                        },
                     }
                 );
                 quote::quote!{
