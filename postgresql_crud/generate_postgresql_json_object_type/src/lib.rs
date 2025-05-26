@@ -417,6 +417,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 StructDeclaration,
                 NewType
             }
+            let struct_declaration_or_new_type_struct_declaration = StructDeclarationOrNewType::StructDeclaration;
+            let struct_declaration_or_new_type_new_type = StructDeclarationOrNewType::NewType;
             let generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream = |
                 is_standart_with_id: &IsStandartWithId,
                 postgresql_json_type_subtype_table_type_declaration_or_create: &PostgresqlJsonTypeSubtypeTableTypeDeclarationOrCreate,
@@ -460,7 +462,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
                                 &is_standart_with_id_false,
                                 postgresql_json_type_subtype_table_type_declaration_or_create,
-                                &StructDeclarationOrNewType::StructDeclaration,
+                                &struct_declaration_or_new_type_struct_declaration,
                             ),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => wrap_into_scopes_token_stream(
                                 &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
@@ -498,7 +500,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
                                 &is_standart_with_id_false,
                                 postgresql_json_type_subtype_table_type_declaration_or_create,
-                                &StructDeclarationOrNewType::NewType,
+                                &struct_declaration_or_new_type_new_type,
                             ),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_wrap_into_value_parameter_token_stream(&postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&generate_type_as_postgresql_json_type_subtype_table_type_declaration_or_create_token_stream(ident_standart_not_null_upper_camel_case))),
                         },
@@ -592,7 +594,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
                         &current_is_standart_with_id,
                         &postgresql_json_type_subtype_table_type_declaration_or_create,
-                        &StructDeclarationOrNewType::StructDeclaration,
+                        &struct_declaration_or_new_type_struct_declaration,
                     ),
                 );
                 let impl_new_for_ident_with_id_table_type_declaration_or_ident_with_id_create_standart_not_null_token_stream = macros_helpers::generate_impl_new_for_ident_token_stream(
@@ -600,7 +602,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &generate_ident_table_type_declaration_or_create_or_ident_with_id_table_type_declaration_or_create_standart_not_null_content_token_stream(
                         &current_is_standart_with_id,
                         &postgresql_json_type_subtype_table_type_declaration_or_create,
-                        &StructDeclarationOrNewType::NewType,
+                        &struct_declaration_or_new_type_new_type,
                     ),
                     &generate_self_content_for_ident_or_ident_with_id_table_type_declaration_or_create_token_stream(
                         &current_is_standart_with_id
