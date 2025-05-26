@@ -639,14 +639,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             let ident = &generate_ident_token_stream(not_null_or_nullable, postgresql_json_type_pattern);
             let ident_standart_not_null_upper_camel_case = &generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlJsonTypePattern::Standart);
-
             let ident_token_stream = quote::quote! {
                 #[derive(Debug)]
                 pub struct #ident;
             };
             let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
-
             let field_type_standart_not_null = match &postgresql_json_type {
                 PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber => quote::quote! {std::primitive::i8},
                 PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber => quote::quote! {std::primitive::i16},
@@ -1225,7 +1223,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     #impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream
                 }
             };
-
             let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
             let ident_select_token_stream = {
                 let ident_select_token_stream = {
@@ -1555,9 +1552,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_origin_token_stream
-
                 #ident_select_token_stream
-
                 #ident_where_element_token_stream
                 #impl_crate_postgresql_json_type_for_ident_token_stream
             };
