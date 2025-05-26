@@ -926,7 +926,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             Clone,
                             PartialEq,
                             PartialOrd,
-                            Default,
                             #maybe_derive_serde_serialize_token_stream
                             #maybe_derive_serde_deserialize_token_stream
                             utoipa::ToSchema,
