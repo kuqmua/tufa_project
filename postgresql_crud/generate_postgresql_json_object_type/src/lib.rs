@@ -1,4 +1,3 @@
-//todo maybe in many few dimantional array error message would be wrong. test it
 //todo generate authorization rights enum for json fields
 #[proc_macro_attribute]
 pub fn postgresql_json_object_type_pattern(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
@@ -1047,7 +1046,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             let impl_sqlx_decode_sqlx_postgres_for_ident_select_token_stream = generate_impl_sqlx_decode_sqlx_postgres_for_ident_wrapper_token_stream(&ident_select_upper_camel_case);
             let maybe_impl_default_default_for_ident_select_token_stream = match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
-                //todo different realizations of standart and array //todo maybe not need for array nullable
+                //todo maybe not need for array nullable
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => macros_helpers::generate_std_default_default_token_stream::generate_std_default_default_token_stream(
                     &ident_select_upper_camel_case,
                     &self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
@@ -1210,7 +1209,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         value.select_query_part(
                                             field_ident,
                                             &column_name_and_maybe_field_getter_field_ident,
-                                            column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong - add postfix field_ident or column_name_and_maybe_field_getter_field_ident
+                                            column_name_and_maybe_field_getter_for_error_message,//todo maybe wrong - add postfix field_ident or column_name_and_maybe_field_getter_field_ident. error messages test
                                             true
                                         )
                                     }
@@ -1529,7 +1528,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             ),
                             NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                         },
-                        //todo different filters for not_null and nullable
                         PostgresqlJsonObjectTypePattern::Array => generate_impl_postgresql_type_where_filter_for_ident_token_stream(
                             &quote::quote!{
                                 match &self {
@@ -1579,7 +1577,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         ),
                         NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                     },
-                    //todo diffrent filters for not_null and nullable
                     PostgresqlJsonObjectTypePattern::Array => postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                         &ident_where_element_upper_camel_case,
                         &quote::quote!{
@@ -3279,7 +3276,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         else {
             proc_macro2::TokenStream::new()
         };
-        //todo impl new or try new without inner wrapper types. (vec<Option<bool>> instead of VecOfOptionBool(OptionBool(Bool)))
         let generated = quote::quote! {
             #ident_token_stream
             #ident_table_type_declaration_token_stream
