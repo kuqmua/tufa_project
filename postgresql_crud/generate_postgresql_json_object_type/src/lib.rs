@@ -1247,7 +1247,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 #maybe_column_name_and_maybe_field_getter_field_ident_token_stream
                                 format!(#format_handle_token_stream, {
                                     let #value_snake_case = match &self.0 {
-                                        Some(#value_snake_case) => #value_snake_case,//todo reuse
+                                        Some(#value_snake_case) => #value_snake_case,
                                         None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
                                     };
                                     #value_snake_case.select_query_part(
