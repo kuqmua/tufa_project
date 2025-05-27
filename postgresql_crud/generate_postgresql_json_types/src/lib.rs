@@ -1501,6 +1501,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &ident_select_upper_camel_case,
                     &ident_origin_upper_camel_case,
+                    &postgresql_crud_macros_common::IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::False,
                     &{
                         let format_handle = {
                             //last child dimension value does not matter - null or type - works both good
