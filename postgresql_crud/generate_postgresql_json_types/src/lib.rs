@@ -330,7 +330,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
     }
     let postgresql_json_type_record_vec = {
-        if false {
+        if true {
             PostgresqlJsonTypeRecord::all()
         } else {
             let postgresql_json_type_record_vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonTypeRecord>>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_json_types");
@@ -1482,6 +1482,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident,
                     &ident_origin_upper_camel_case,
                     &ident_origin_upper_camel_case,
+                    &postgresql_crud_macros_common::IsCreateQueryPartSelfCreateUsed::False,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(value) => {
@@ -1586,6 +1587,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             }
                         }
                     },
+                    &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::False,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &quote::quote! {
                         query = query.bind(#value_snake_case);
@@ -1720,7 +1722,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
     //     "PostgresqlJsonTypeTokens",
-    //     &generated,
+    //     &generated
     // );
     generated.into()
 }

@@ -191,6 +191,18 @@ impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
     }
 }
 
+pub enum IsCreateQueryPartSelfCreateUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsCreateQueryPartSelfCreateUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => quote::quote!{_}.to_tokens(tokens),
+        }
+    }
+}
 pub enum IsCreateQueryBindMutable {
     True,
     False,
@@ -200,6 +212,18 @@ impl quote::ToTokens for IsCreateQueryBindMutable {
         match &self {
             Self::True => naming::MutSnakeCase.to_tokens(tokens),
             Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+        }
+    }
+}
+pub enum IsUpdateQueryPartSelfUpdateUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsUpdateQueryPartSelfUpdateUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => quote::quote!{_}.to_tokens(tokens),
         }
     }
 }
@@ -220,6 +244,7 @@ pub fn generate_postgresql_json_type_token_stream(
     ident: &dyn quote::ToTokens,
     table_type_declaration_type_token_stream: &dyn quote::ToTokens,
     create_type_token_stream: &dyn quote::ToTokens,
+    is_create_query_part_self_create_used: &IsCreateQueryPartSelfCreateUsed,
     create_query_part_token_stream: &dyn quote::ToTokens,
     is_create_query_bind_mutable: &IsCreateQueryBindMutable,
     create_query_bind_token_stream: &dyn quote::ToTokens,
@@ -229,6 +254,7 @@ pub fn generate_postgresql_json_type_token_stream(
     where_element_type_token_stream: &dyn quote::ToTokens,
     update_type_token_stream: &dyn quote::ToTokens,
     update_query_part_token_stream: &dyn quote::ToTokens,
+    is_update_query_part_self_update_used: &IsUpdateQueryPartSelfUpdateUsed,
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -268,7 +294,7 @@ pub fn generate_postgresql_json_type_token_stream(
             type #table_type_declaration_upper_camel_case = #table_type_declaration_type_token_stream;
             type #create_upper_camel_case = #create_type_token_stream;
             fn #create_query_part_snake_case(
-                #value_snake_case: &Self::#create_upper_camel_case,
+                #is_create_query_part_self_create_used: &Self::#create_upper_camel_case,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream
             ) -> Result<#std_string_string_token_stream, #path_token_stream QueryPartErrorNamed> {
                 #create_query_part_token_stream
@@ -293,7 +319,7 @@ pub fn generate_postgresql_json_type_token_stream(
             type #read_upper_camel_case = #read_type_token_stream;
             type #update_upper_camel_case = #update_type_token_stream;
             fn #update_query_part_snake_case(
-                #value_snake_case: &Self::#update_upper_camel_case,
+                #is_update_query_part_self_update_used: &Self::#update_upper_camel_case,
                 #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
                 #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
                 #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,

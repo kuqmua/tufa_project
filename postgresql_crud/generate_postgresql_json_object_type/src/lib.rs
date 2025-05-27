@@ -3165,6 +3165,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident,
                 &ident_table_type_declaration_upper_camel_case,
                 &ident_create_upper_camel_case,
+                &postgresql_crud_macros_common::IsCreateQueryPartSelfCreateUsed::True,
                 &create_query_part_token_stream,
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                 &create_query_bind_token_stream,
@@ -3174,6 +3175,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_where_element_upper_camel_case,
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
+                &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream,
             );
@@ -3222,6 +3224,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_with_id_standart_not_null_upper_camel_case,
                 &ident_with_id_table_type_declaration_standart_not_null_upper_camel_case,
                 &ident_with_id_create_standart_not_null_upper_camel_case,
+                &postgresql_crud_macros_common::IsCreateQueryPartSelfCreateUsed::True,
                 &create_query_part_token_stream,
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                 &create_query_bind_token_stream,
@@ -3231,6 +3234,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_with_id_where_element_standart_not_null_upper_camel_case,
                 &ident_with_id_update_standart_not_null_upper_camel_case,
                 &update_query_part_token_stream,
+                &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream,
             )
