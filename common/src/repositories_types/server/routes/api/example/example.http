@@ -41,7 +41,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
-        "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+        "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0,
+        "column_1761f64d_b930_446b_8422_e4fa6faf8872": null
       }
     }
   }
@@ -73,7 +74,150 @@ POST http://127.0.0.1:8080/example/read_many HTTP/1.1
 content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
-
+{
+  # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  "animal_as_not_null_jsonb_object": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "DoggieAsNotNullJsonbObject": {
+          "logical_operator": "Or",
+          "value": [
+            # {
+            #   "Column113F366235A24A7A932603Bbd441815F": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       {
+            #         "Equal": {
+            #           "logical_operator": "Or",
+            #           "value": 0
+            #         }
+            #       },
+            #       {
+            #         "GreaterThan": {
+            #           "logical_operator": "Or",
+            #           "value": 0
+            #         }
+            #       },
+            #       {
+            #         "Between": {
+            #           "logical_operator": "Or",
+            #           "start": 0,
+            #           "end": 0
+            #         }
+            #       },
+            #       {
+            #         "In": {
+            #           "logical_operator": "Or",
+            #           "value": [
+            #             0
+            #           ]
+            #         }
+            #       }
+            #     ]
+            #   }
+            # },
+            {
+              "Column1761F64DB930446B8422E4Fa6Faf8872": {
+                "logical_operator": "Or",
+                "value": [
+                  {
+                    "Equal": {
+                      "logical_operator": "Or",
+                      "value": null
+                    }
+                  }
+                  # ,
+                  # {
+                  #   "GreaterThan": {
+                  #     "logical_operator": "Or",
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "Between": {
+                  #     "logical_operator": "Or",
+                  #     "start": 0,
+                  #     "end": 0
+                  #   }
+                  # },
+                  # {
+                  #   "In": {
+                  #     "logical_operator": "Or",
+                  #     "value": [
+                  #       0
+                  #     ]
+                  #   }
+                  # }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "select": [
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
+    {
+      "animal_as_not_null_jsonb_object": [
+        {
+          "doggie_as_not_null_jsonb_object": [
+            {
+              "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+            },
+            {
+              "column_1761f64d_b930_446b_8422_e4fa6faf8872": null
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "order_by": {
+    "column": {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
+    "order": "asc"
+  },
+  "pagination": {
+    "limit": 3,
+    "offset": 0
+  }
+}
 
 ###
 
