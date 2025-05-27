@@ -227,6 +227,18 @@ impl quote::ToTokens for IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorM
         }
     }
 }
+pub enum IsSelectQueryPartIsPostgresqlTypeUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsSelectQueryPartIsPostgresqlTypeUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote!{is_postgresql_type}.to_tokens(tokens),
+            Self::False => quote::quote!{_}.to_tokens(tokens),
+        }
+    }
+}
 pub enum IsUpdateQueryPartSelfUpdateUsed {
     True,
     False,
@@ -275,6 +287,7 @@ pub fn generate_postgresql_json_type_token_stream(
     select_type_token_stream: &dyn quote::ToTokens,
     read_type_token_stream: &dyn quote::ToTokens,
     is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed,
+    is_select_query_part_is_postgresql_type_used: &IsSelectQueryPartIsPostgresqlTypeUsed,
     select_query_part_token_stream: &dyn quote::ToTokens,
     where_element_type_token_stream: &dyn quote::ToTokens,
     update_type_token_stream: &dyn quote::ToTokens,
@@ -335,7 +348,7 @@ pub fn generate_postgresql_json_type_token_stream(
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: #reference_std_primitive_str_token_stream,
-                is_postgresql_type: #std_primitive_bool_token_stream,
+                #is_select_query_part_is_postgresql_type_used: #std_primitive_bool_token_stream,
             ) -> #std_string_string_token_stream {
                 #select_query_part_token_stream
             }
