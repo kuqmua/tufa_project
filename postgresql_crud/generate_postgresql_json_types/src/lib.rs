@@ -734,6 +734,122 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                 }
             };
+            let ident_origin_impl_new_value_type_token_stream = match &element.postgresql_json_type_pattern {
+                PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#field_type_standart_not_null>},
+                },
+                PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
+                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
+                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                },
+                PostgresqlJsonTypePattern::ArrayDimension2 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                } => &{
+                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
+                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension2_type>});
+                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                },
+                PostgresqlJsonTypePattern::ArrayDimension3 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                } => &{
+                    let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
+                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension3_type>});
+                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension2_type>});
+                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                },
+                PostgresqlJsonTypePattern::ArrayDimension4 {
+                    dimension1_not_null_or_nullable,
+                    dimension2_not_null_or_nullable,
+                    dimension3_not_null_or_nullable,
+                    dimension4_not_null_or_nullable,
+                } => &{
+                    let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
+                    let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension4_type>});
+                    let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension3_type>});
+                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension2_type>});
+                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                },
+            };
+            let ident_origin_impl_new_self_content_token_stream = {
+                let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
+                    quote::quote! {match value {
+                        Some(value) => Some(#type_token_stream::new(value)),
+                        None => None
+                    }}
+                };
+                let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::new(element)).collect()},
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
+                };
+                match &postgresql_json_type_pattern {
+                    PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value},
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
+                    },
+                    PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
+                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlJsonTypePattern::Standart, dimension1_not_null_or_nullable),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                        };
+                        generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
+                    }),
+                    PostgresqlJsonTypePattern::ArrayDimension2 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                    } => generate_array_dimensions_initialization_token_stream(&{
+                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                                &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                    dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                                },
+                                dimension1_not_null_or_nullable,
+                            ),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                        };
+                        generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
+                    }),
+                    PostgresqlJsonTypePattern::ArrayDimension3 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                    } => generate_array_dimensions_initialization_token_stream(&{
+                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                                &PostgresqlJsonTypePattern::ArrayDimension2 {
+                                    dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                                    dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                                },
+                                dimension1_not_null_or_nullable,
+                            ),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                        };
+                        generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
+                    }),
+                    PostgresqlJsonTypePattern::ArrayDimension4 {
+                        dimension1_not_null_or_nullable,
+                        dimension2_not_null_or_nullable,
+                        dimension3_not_null_or_nullable,
+                        dimension4_not_null_or_nullable,
+                    } => generate_array_dimensions_initialization_token_stream(&{
+                        let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                                &PostgresqlJsonTypePattern::ArrayDimension3 {
+                                    dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
+                                    dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
+                                    dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
+                                },
+                                dimension1_not_null_or_nullable,
+                            ),
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                        };
+                        generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
+                    }),
+                }
+            };
             let ident_origin_token_stream = {
                 let schema_name_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&ident_origin_upper_camel_case);
                 let metadata_4167ee5c_732b_4787_9b37_e0060b0aa8de_token_stream = quote::quote! {
@@ -932,126 +1048,21 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         pub struct #ident_origin_upper_camel_case(#field_type_handle);
                     }
                 };
-                //todo why need new ?
                 let impl_new_for_ident_origin_token_stream = {
-                    let type_token_stream: &dyn quote::ToTokens = match &element.postgresql_json_type_pattern {
-                        PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#field_type_standart_not_null>},
-                        },
-                        PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
-                            not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
-                        },
-                        PostgresqlJsonTypePattern::ArrayDimension2 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                        } => &{
-                            let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension2_type>});
-                            not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
-                        },
-                        PostgresqlJsonTypePattern::ArrayDimension3 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                        } => &{
-                            let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
-                            let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension3_type>});
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension2_type>});
-                            not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
-                        },
-                        PostgresqlJsonTypePattern::ArrayDimension4 {
-                            dimension1_not_null_or_nullable,
-                            dimension2_not_null_or_nullable,
-                            dimension3_not_null_or_nullable,
-                            dimension4_not_null_or_nullable,
-                        } => &{
-                            let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
-                            let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension4_type>});
-                            let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension3_type>});
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension2_type>});
-                            not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
-                        },
-                    };
-                    let content_token_stream = {
-                        let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                            quote::quote! {match value {
-                                Some(value) => Some(#type_token_stream::new(value)),
-                                None => None
-                            }}
-                        };
-                        let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::new(element)).collect()},
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
-                        };
-                        match &postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
-                            },
-                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
-                                let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlJsonTypePattern::Standart, dimension1_not_null_or_nullable),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                                };
-                                generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
-                            }),
-                            PostgresqlJsonTypePattern::ArrayDimension2 {
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                            } => generate_array_dimensions_initialization_token_stream(&{
-                                let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
-                                        &PostgresqlJsonTypePattern::ArrayDimension1 {
-                                            dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                        },
-                                        dimension1_not_null_or_nullable,
-                                    ),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                                };
-                                generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
-                            }),
-                            PostgresqlJsonTypePattern::ArrayDimension3 {
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
-                            } => generate_array_dimensions_initialization_token_stream(&{
-                                let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
-                                        &PostgresqlJsonTypePattern::ArrayDimension2 {
-                                            dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                            dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                        },
-                                        dimension1_not_null_or_nullable,
-                                    ),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                                };
-                                generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
-                            }),
-                            PostgresqlJsonTypePattern::ArrayDimension4 {
-                                dimension1_not_null_or_nullable,
-                                dimension2_not_null_or_nullable,
-                                dimension3_not_null_or_nullable,
-                                dimension4_not_null_or_nullable,
-                            } => generate_array_dimensions_initialization_token_stream(&{
-                                let (current_postgresql_json_type_pattern, current_not_null_or_nullable): (&PostgresqlJsonTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
-                                        &PostgresqlJsonTypePattern::ArrayDimension3 {
-                                            dimension1_not_null_or_nullable: *dimension2_not_null_or_nullable,
-                                            dimension2_not_null_or_nullable: *dimension3_not_null_or_nullable,
-                                            dimension3_not_null_or_nullable: *dimension4_not_null_or_nullable,
-                                        },
-                                        dimension1_not_null_or_nullable,
-                                    ),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_json_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                                };
-                                generate_current_ident_origin_non_wrapping(current_not_null_or_nullable, current_postgresql_json_type_pattern)
-                            }),
+                    let pub_fn_new_token_stream = quote::quote! {
+                        pub fn new(#value_snake_case: #ident_origin_impl_new_value_type_token_stream) -> Self {
+                            Self(#ident_origin_impl_new_self_content_token_stream)
                         }
                     };
-                    let maybe_additional_uuid_standart_not_null_impl_token_stream =
-                        if let (PostgresqlJsonType::UuidUuidAsJsonbString, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonTypePattern::Standart) = (&postgresql_json_type, &not_null_or_nullable, &postgresql_json_type_pattern) {
+                    let maybe_additional_uuid_standart_not_null_impl_token_stream = if let (
+                        PostgresqlJsonType::UuidUuidAsJsonbString,
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                        PostgresqlJsonTypePattern::Standart
+                    ) = (
+                        &postgresql_json_type,
+                        &not_null_or_nullable,
+                        &postgresql_json_type_pattern
+                    ) {
                             //need for uuid bind for json object logic//need for uuid bind for json object logic
                             let query_bind_as_postgresql_text_token_stream = quote::quote! {
                                 pub fn query_bind_as_postgresql_text(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
@@ -1072,9 +1083,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         };
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
-                            pub fn new(value: #type_token_stream) -> Self {
-                                Self(#content_token_stream)
-                            }
+                            #pub_fn_new_token_stream
                             #maybe_additional_uuid_standart_not_null_impl_token_stream
                         }
                     }
@@ -1472,6 +1481,39 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             // println!("{ident_where_element_token_stream}");
+            //exists only because need to implement .get() for fields only for read subtype
+            let ident_read_token_stream = {
+                let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
+                let ident_read_token_stream = quote::quote! {
+                    #[derive(
+                        Debug,
+                        Clone,
+                        PartialEq,
+                        serde::Serialize,
+                        serde::Deserialize,
+                        utoipa::ToSchema,
+                        schemars::JsonSchema,
+                    )]
+                    pub struct #ident_read_upper_camel_case(#ident_origin_upper_camel_case);
+                };
+                let impl_new_for_ident_read_token_stream = {
+                    let pub_fn_new_token_stream = quote::quote!{
+                        pub fn new(value: #ident_origin_impl_new_value_type_token_stream) -> Self {
+                            Self(#ident_origin_upper_camel_case::new(#ident_origin_impl_new_self_content_token_stream))
+                        }
+                    };
+                    quote::quote! {
+                        impl #ident_read_upper_camel_case {
+                            #pub_fn_new_token_stream
+                        }
+                    }
+                };
+                quote::quote!{
+                    #ident_read_token_stream
+                    #impl_new_for_ident_read_token_stream
+                    //  + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
+                }
+            };
             let impl_crate_postgresql_json_type_for_ident_token_stream = {
                 let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
@@ -1613,6 +1655,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 #ident_origin_token_stream
                 #ident_select_token_stream
                 #ident_where_element_token_stream
+                // #ident_read_token_stream
                 #impl_crate_postgresql_json_type_for_ident_token_stream
             };
             // if let (
