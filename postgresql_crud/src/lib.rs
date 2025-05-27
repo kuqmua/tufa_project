@@ -58,7 +58,7 @@ pub trait PostgresqlTypeWhereFilter<'a> {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
-
+//todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<UniqueVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
@@ -91,7 +91,10 @@ where
     T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        vec![Self(Some(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())), Self(None)]
+        vec![
+            Self(Some(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
+            // , Self(None)
+        ]
     }
 }
 
