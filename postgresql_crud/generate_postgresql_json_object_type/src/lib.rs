@@ -3176,6 +3176,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
+                &postgresql_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::True,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream,
             );
@@ -3235,6 +3236,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_with_id_update_standart_not_null_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
+                &postgresql_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::True,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream,
             )

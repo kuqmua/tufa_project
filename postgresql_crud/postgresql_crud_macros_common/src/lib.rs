@@ -227,6 +227,18 @@ impl quote::ToTokens for IsUpdateQueryPartSelfUpdateUsed {
         }
     }
 }
+pub enum IsUpdateQueryPartJsonbSetTargetUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsUpdateQueryPartJsonbSetTargetUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::JsonbSetTargetSnakeCase.to_tokens(tokens),
+            Self::False => quote::quote!{_}.to_tokens(tokens),
+        }
+    }
+}
 pub enum IsUpdateQueryBindMutable {
     True,
     False,
@@ -255,6 +267,7 @@ pub fn generate_postgresql_json_type_token_stream(
     update_type_token_stream: &dyn quote::ToTokens,
     update_query_part_token_stream: &dyn quote::ToTokens,
     is_update_query_part_self_update_used: &IsUpdateQueryPartSelfUpdateUsed,
+    is_update_query_part_jsonb_set_target_used: &IsUpdateQueryPartJsonbSetTargetUsed,
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_token_stream: &dyn quote::ToTokens,
 ) -> proc_macro2::TokenStream {
@@ -273,7 +286,6 @@ pub fn generate_postgresql_json_type_token_stream(
     let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
     let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
     let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
-    let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
     let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
     let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
@@ -321,7 +333,7 @@ pub fn generate_postgresql_json_type_token_stream(
             fn #update_query_part_snake_case(
                 #is_update_query_part_self_update_used: &Self::#update_upper_camel_case,
                 #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
-                #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
+                #is_update_query_part_jsonb_set_target_used: #reference_std_primitive_str_token_stream,
                 #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
                 #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
             ) -> Result<#std_string_string_token_stream, #path_token_stream QueryPartErrorNamed> {

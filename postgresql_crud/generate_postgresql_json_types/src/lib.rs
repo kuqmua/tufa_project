@@ -1588,6 +1588,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     },
                     &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::False,
+                    &postgresql_crud_macros_common::IsUpdateQueryPartJsonbSetTargetUsed::False,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &quote::quote! {
                         query = query.bind(#value_snake_case);
