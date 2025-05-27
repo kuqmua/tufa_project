@@ -215,6 +215,18 @@ impl quote::ToTokens for IsCreateQueryBindMutable {
         }
     }
 }
+pub enum IsSelectQueryPartSelfSelectUsed {
+    True,
+    False,
+}
+impl quote::ToTokens for IsSelectQueryPartSelfSelectUsed {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => naming::ValueSnakeCase.to_tokens(tokens),
+            Self::False => quote::quote!{_}.to_tokens(tokens),
+        }
+    }
+}
 pub enum IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed {
     True,
     False,
@@ -286,6 +298,7 @@ pub fn generate_postgresql_json_type_token_stream(
     create_query_bind_token_stream: &dyn quote::ToTokens,
     select_type_token_stream: &dyn quote::ToTokens,
     read_type_token_stream: &dyn quote::ToTokens,
+    is_select_query_part_self_select_used: &IsSelectQueryPartSelfSelectUsed,
     is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed,
     is_select_query_part_is_postgresql_type_used: &IsSelectQueryPartIsPostgresqlTypeUsed,
     select_query_part_token_stream: &dyn quote::ToTokens,
@@ -344,7 +357,7 @@ pub fn generate_postgresql_json_type_token_stream(
             }
             type #select_upper_camel_case = #select_type_token_stream;
             fn #select_query_part_snake_case(
-                #value_snake_case: &Self::#select_upper_camel_case,
+                #is_select_query_part_self_select_used: &Self::#select_upper_camel_case,
                 #field_ident_snake_case: #reference_std_primitive_str_token_stream,
                 #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
                 #is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: #reference_std_primitive_str_token_stream,

@@ -330,7 +330,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
     }
     let postgresql_json_type_record_vec = {
-        if true {
+        if false {
             PostgresqlJsonTypeRecord::all()
         } else {
             let postgresql_json_type_record_vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonTypeRecord>>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_json_types");
@@ -1501,6 +1501,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &ident_select_upper_camel_case,
                     &ident_origin_upper_camel_case,
+                    &match &element.postgresql_json_type_pattern {
+                        PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::False,
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::False,
+                        },
+                        PostgresqlJsonTypePattern::ArrayDimension1 {..} => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
+                        PostgresqlJsonTypePattern::ArrayDimension2 {..} => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
+                        PostgresqlJsonTypePattern::ArrayDimension3 {..} => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
+                        PostgresqlJsonTypePattern::ArrayDimension4 {..} => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::True,
+                    },
                     &postgresql_crud_macros_common::IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed::False,
                     &postgresql_crud_macros_common::IsSelectQueryPartIsPostgresqlTypeUsed::False,
                     &{
