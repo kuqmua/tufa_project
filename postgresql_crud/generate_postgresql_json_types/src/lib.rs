@@ -1418,28 +1418,97 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     },
                     //todo reuse analog filters in generate_postgresql_types
-                    PostgresqlJsonTypePattern::ArrayDimension1 { .. } => match &postgresql_json_type_specific {
-                        PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
-                        PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
-                        PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                    PostgresqlJsonTypePattern::ArrayDimension1 { .. } => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type_specific {
+                            PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
+                            PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
+                            PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            // let ident_where_element_array_dimension1_nullable_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
+                            // let ident_where_element_array_dimension1_not_null_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                            //     &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                            //     &PostgresqlJsonTypePattern::ArrayDimension1 { .. }
+                            // ));
+                            // quote::quote!{
+                            //     pub type #ident_where_element_array_dimension1_nullable_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<#ident_where_element_array_dimension1_not_null_upper_camel_case>;
+                            // }
+                            match &postgresql_json_type_specific {
+                                PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
+                                PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
+                                PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                            }
+                        }
                     },
-                    PostgresqlJsonTypePattern::ArrayDimension2 { .. } => match &postgresql_json_type_specific {
-                        PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
-                        PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
-                        PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                    PostgresqlJsonTypePattern::ArrayDimension2 { .. } => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type_specific {
+                            PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
+                            PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
+                            PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            // let ident_where_element_standart_nullable_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
+                            // let ident_where_element_standart_not_null_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                            //     &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                            //     &PostgresqlJsonTypePattern::Standart
+                            // ));
+                            // quote::quote!{
+                            //     pub type #ident_where_element_standart_nullable_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<#ident_where_element_standart_not_null_upper_camel_case>;
+                            // }
+                            match &postgresql_json_type_specific {
+                                PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
+                                PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
+                                PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                            }
+                        }
                     },
-                    PostgresqlJsonTypePattern::ArrayDimension3 { .. } => match &postgresql_json_type_specific {
-                        PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
-                        PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
-                        PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                    PostgresqlJsonTypePattern::ArrayDimension3 { .. } => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type_specific {
+                            PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
+                            PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
+                            PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            // let ident_where_element_standart_nullable_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
+                            // let ident_where_element_standart_not_null_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                            //     &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                            //     &PostgresqlJsonTypePattern::Standart
+                            // ));
+                            // quote::quote!{
+                            //     pub type #ident_where_element_standart_nullable_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<#ident_where_element_standart_not_null_upper_camel_case>;
+                            // }
+                            match &postgresql_json_type_specific {
+                                PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
+                                PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
+                                PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                            }
+                        }
                     },
-                    PostgresqlJsonTypePattern::ArrayDimension4 { .. } => match &postgresql_json_type_specific {
-                        PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
-                        PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
-                        PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
-                    },
+                    PostgresqlJsonTypePattern::ArrayDimension4 { .. } => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type_specific {
+                            PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
+                            PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
+                            PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            // let ident_where_element_standart_nullable_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
+                            // let ident_where_element_standart_not_null_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                            //     &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                            //     &PostgresqlJsonTypePattern::Standart
+                            // ));
+                            // quote::quote!{
+                            //     pub type #ident_where_element_standart_nullable_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<#ident_where_element_standart_not_null_upper_camel_case>;
+                            // }
+                            match &postgresql_json_type_specific {
+                                PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
+                                PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
+                                PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                            }
+                        }
+                    }
                 }
             };
+            // println!("{ident_where_element_token_stream}");
             let impl_crate_postgresql_json_type_for_ident_token_stream = {
                 let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
