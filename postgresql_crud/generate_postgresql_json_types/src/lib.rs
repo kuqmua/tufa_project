@@ -1428,125 +1428,127 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                 }
             };
-            let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
-            let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
-            let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
-            let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
-            let impl_crate_postgresql_json_type_for_ident_token_stream = postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
-                &postgresql_crud_macros_common::ImportPath::Crate,
-                &ident,
-                &ident_origin_upper_camel_case,
-                &ident_origin_upper_camel_case,
-                &quote::quote! {
-                    match increment.checked_add(1) {
-                        Some(value) => {
-                            *increment = value;
-                            Ok(format!("${increment}"))
-                        }
-                        None => Err(crate::QueryPartErrorNamed::#checked_add_upper_camel_case {
-                            code_occurence: error_occurence_lib::code_occurence!()
-                        }),
-                    }
-                },
-                &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                &quote::quote! {
-                    query = query.bind(#value_snake_case);
-                    query
-                },
-                &ident_select_upper_camel_case,
-                &ident_origin_upper_camel_case,
-                &{
-                    let format_handle = {
-                        //last child dimension value does not matter - null or type - works both good
-                        use postgresql_crud_macros_common::NotNullOrNullable;
-                        let column_name_and_maybe_field_getter_field_ident = format!("{{{}}}->'{{field_ident}}'", naming::ColumnNameAndMaybeFieldGetterSnakeCase);
-                        let format_handle = match ArrayDimension::try_from(postgresql_json_type_pattern) {
-                            Ok(array_dimension) => {
-                                let generate_jsonb_agg = |jsonb_agg_content: &std::primitive::str, jsonb_array_elements_content: &std::primitive::str, ordinality_content: &std::primitive::str, dimensions_number: std::primitive::usize| {
-                                    let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
-                                    let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
-                                    format!("select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}")
-                                };
-                                match ArrayDimensionSelectPattern::try_from(&array_dimension) {
-                                    //Dimension1 does not fit into pattern. its only for 2+ dimensions
-                                    Ok(array_dimension_select_pattern) => {
-                                        let generate_d_number_elem = |content: std::primitive::usize| format!("d{content}_elem");
-                                        let generate_d_number_ord = |content: std::primitive::usize| format!("d{content}_elem");
-                                        let generate_dot_value = |content: &std::primitive::str| format!("{content}.value");
-                                        let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str| format!("as {first_content}(value, {second_content}) where {second_content}");
-                                        let one = 1;
-                                        generate_jsonb_agg(
-                                            &{
-                                                let mut current_usize_value = array_dimension_select_pattern.to_usize();
-                                                array_dimension_select_pattern.select_array().into_iter().fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, not_null_or_nullable| {
-                                                    let current_usize_value_minus_one = current_usize_value - one;
-                                                    let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
-                                                    let value = generate_jsonb_agg(&acc, &d_usize_minus_one_elem_value, &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)), current_usize_value);
-                                                    acc = match &not_null_or_nullable {
-                                                        NotNullOrNullable::NotNull => value,
-                                                        NotNullOrNullable::Nullable => format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='array' then ({value}) else null end"),
-                                                    };
-                                                    current_usize_value = current_usize_value_minus_one;
-                                                    acc
-                                                })
-                                            },
-                                            &column_name_and_maybe_field_getter_field_ident,
-                                            &generate_as_value_where(&generate_d_number_elem(one), &generate_d_number_ord(one)),
-                                            one,
-                                        )
-                                    }
-                                    Err(_) => generate_jsonb_agg("value", &format!("select {column_name_and_maybe_field_getter_field_ident}"), "where ordinality", 1),
-                                }
-                            }
-                            Err(_) => column_name_and_maybe_field_getter_field_ident.clone(),
-                        };
-                        match &not_null_or_nullable {
-                            NotNullOrNullable::NotNull => format_handle,
-                            NotNullOrNullable::Nullable => format!("case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident})='null' then null else ({format_handle}) end"),
-                        }
-                    };
-                    let maybe_dimensions_start_end_initialization = {
-                        let mut acc = vec![];
-                        if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
-                            for element in 1..=array_dimension.to_usize() {
-                                let dimension_number_start_token_stream = generate_dimension_number_start_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
-                                let dimension_number_end_token_stream = generate_dimension_number_end_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
-                                let dimension_number_pagination_token_stream = format!("{}_pagination", generate_dimension_number_stringified(element)).parse::<proc_macro2::TokenStream>().unwrap();
-                                acc.push(quote::quote! {
-                                    let #dimension_number_start_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.start();
-                                    let #dimension_number_end_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.end();
-                                });
-                            }
-                        }
-                        acc
-                    };
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
-                    quote::quote! {
-                        #(#maybe_dimensions_start_end_initialization)*
-                        format!(#format_handle_token_stream)
-                    }
-                },
-                &ident_where_element_upper_camel_case,
-                &ident_origin_upper_camel_case,
-                &{
-                    let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
-                    quote::quote! {
+            let impl_crate_postgresql_json_type_for_ident_token_stream = {
+                let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+                let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
+                let generate_dimension_number_start_stringified = |dimensions_number: std::primitive::usize| format!("{}_start", generate_dimension_number_stringified(dimensions_number));
+                let generate_dimension_number_end_stringified = |dimensions_number: std::primitive::usize| format!("{}_end", generate_dimension_number_stringified(dimensions_number));
+                postgresql_crud_macros_common::generate_postgresql_json_type_token_stream(
+                    &postgresql_crud_macros_common::ImportPath::Crate,
+                    &ident,
+                    &ident_origin_upper_camel_case,
+                    &ident_origin_upper_camel_case,
+                    &quote::quote! {
                         match increment.checked_add(1) {
                             Some(value) => {
                                 *increment = value;
-                                Ok(format!(#format_handle_token_stream))
+                                Ok(format!("${increment}"))
                             }
-                            None => Err(crate::QueryPartErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                            None => Err(crate::QueryPartErrorNamed::#checked_add_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!()
+                            }),
                         }
-                    }
-                },
-                &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
-                &quote::quote! {
-                    query = query.bind(#value_snake_case);
-                    query
-                },
-            );
+                    },
+                    &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
+                    &quote::quote! {
+                        query = query.bind(#value_snake_case);
+                        query
+                    },
+                    &ident_select_upper_camel_case,
+                    &ident_origin_upper_camel_case,
+                    &{
+                        let format_handle = {
+                            //last child dimension value does not matter - null or type - works both good
+                            use postgresql_crud_macros_common::NotNullOrNullable;
+                            let column_name_and_maybe_field_getter_field_ident = format!("{{{}}}->'{{field_ident}}'", naming::ColumnNameAndMaybeFieldGetterSnakeCase);
+                            let format_handle = match ArrayDimension::try_from(postgresql_json_type_pattern) {
+                                Ok(array_dimension) => {
+                                    let generate_jsonb_agg = |jsonb_agg_content: &std::primitive::str, jsonb_array_elements_content: &std::primitive::str, ordinality_content: &std::primitive::str, dimensions_number: std::primitive::usize| {
+                                        let dimension_number_start = generate_dimension_number_start_stringified(dimensions_number);
+                                        let dimension_number_end = generate_dimension_number_end_stringified(dimensions_number);
+                                        format!("select jsonb_agg(({jsonb_agg_content})) from jsonb_array_elements(({jsonb_array_elements_content})) with ordinality {ordinality_content} between {{{dimension_number_start}}} and {{{dimension_number_end}}}")
+                                    };
+                                    match ArrayDimensionSelectPattern::try_from(&array_dimension) {
+                                        //Dimension1 does not fit into pattern. its only for 2+ dimensions
+                                        Ok(array_dimension_select_pattern) => {
+                                            let generate_d_number_elem = |content: std::primitive::usize| format!("d{content}_elem");
+                                            let generate_d_number_ord = |content: std::primitive::usize| format!("d{content}_elem");
+                                            let generate_dot_value = |content: &std::primitive::str| format!("{content}.value");
+                                            let generate_as_value_where = |first_content: &std::primitive::str, second_content: &std::primitive::str| format!("as {first_content}(value, {second_content}) where {second_content}");
+                                            let one = 1;
+                                            generate_jsonb_agg(
+                                                &{
+                                                    let mut current_usize_value = array_dimension_select_pattern.to_usize();
+                                                    array_dimension_select_pattern.select_array().into_iter().fold(generate_dot_value(&generate_d_number_elem(current_usize_value)), |mut acc, not_null_or_nullable| {
+                                                        let current_usize_value_minus_one = current_usize_value - one;
+                                                        let d_usize_minus_one_elem_value = generate_dot_value(&generate_d_number_elem(current_usize_value_minus_one));
+                                                        let value = generate_jsonb_agg(&acc, &d_usize_minus_one_elem_value, &generate_as_value_where(&generate_d_number_elem(current_usize_value), &generate_d_number_ord(current_usize_value)), current_usize_value);
+                                                        acc = match &not_null_or_nullable {
+                                                            NotNullOrNullable::NotNull => value,
+                                                            NotNullOrNullable::Nullable => format!("case when jsonb_typeof({d_usize_minus_one_elem_value})='array' then ({value}) else null end"),
+                                                        };
+                                                        current_usize_value = current_usize_value_minus_one;
+                                                        acc
+                                                    })
+                                                },
+                                                &column_name_and_maybe_field_getter_field_ident,
+                                                &generate_as_value_where(&generate_d_number_elem(one), &generate_d_number_ord(one)),
+                                                one,
+                                            )
+                                        }
+                                        Err(_) => generate_jsonb_agg("value", &format!("select {column_name_and_maybe_field_getter_field_ident}"), "where ordinality", 1),
+                                    }
+                                }
+                                Err(_) => column_name_and_maybe_field_getter_field_ident.clone(),
+                            };
+                            match &not_null_or_nullable {
+                                NotNullOrNullable::NotNull => format_handle,
+                                NotNullOrNullable::Nullable => format!("case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident})='null' then null else ({format_handle}) end"),
+                            }
+                        };
+                        let maybe_dimensions_start_end_initialization = {
+                            let mut acc = vec![];
+                            if let Ok(array_dimension) = ArrayDimension::try_from(postgresql_json_type_pattern) {
+                                for element in 1..=array_dimension.to_usize() {
+                                    let dimension_number_start_token_stream = generate_dimension_number_start_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
+                                    let dimension_number_end_token_stream = generate_dimension_number_end_stringified(element).parse::<proc_macro2::TokenStream>().unwrap();
+                                    let dimension_number_pagination_token_stream = format!("{}_pagination", generate_dimension_number_stringified(element)).parse::<proc_macro2::TokenStream>().unwrap();
+                                    acc.push(quote::quote! {
+                                        let #dimension_number_start_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.start();
+                                        let #dimension_number_end_token_stream = #value_snake_case.#dimension_number_pagination_token_stream.end();
+                                    });
+                                }
+                            }
+                            acc
+                        };
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_build_object('{{field_ident}}',jsonb_build_object('value',({format_handle})))"));
+                        quote::quote! {
+                            #(#maybe_dimensions_start_end_initialization)*
+                            format!(#format_handle_token_stream)
+                        }
+                    },
+                    &ident_where_element_upper_camel_case,
+                    &ident_origin_upper_camel_case,
+                    &{
+                        let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{jsonb_set_path}}}}}}',${{increment}})"));
+                        quote::quote! {
+                            match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    Ok(format!(#format_handle_token_stream))
+                                }
+                                None => Err(crate::QueryPartErrorNamed::#checked_add_upper_camel_case { code_occurence: error_occurence_lib::code_occurence!() }),
+                            }
+                        }
+                    },
+                    &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
+                    &quote::quote! {
+                        query = query.bind(#value_snake_case);
+                        query
+                    },
+                )
+            };
             let generated = quote::quote! {
                 #ident_token_stream
                 #ident_origin_token_stream
