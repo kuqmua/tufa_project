@@ -1103,7 +1103,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 fn schema_id() -> std::borrow::Cow<'static, str> {
                                     std::borrow::Cow::Borrowed(#schema_id_format_handle_token_stream)
                                 }
-                                fn json_schema(generator: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
+                                fn json_schema(_: &mut schemars::SchemaGenerator) -> schemars::schema::Schema {
                                     {
                                         schemars::schema::Schema::Object(schemars::schema::SchemaObject {
                                             metadata: #metadata_token_stream,
