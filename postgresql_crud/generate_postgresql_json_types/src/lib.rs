@@ -1507,7 +1507,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     };
                     let pub_fn_into_inner_token_stream = {
                         let content_token_stream = {
-                            use postgresql_crud_macros_common::NotNullOrNullable;
                             let element_dot_zero_token_stream = quote::quote!{#element_snake_case.0};
                             let generate_into_iter_map_element_collect_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                                 quote::quote!{.into_iter().map(|#element_snake_case|#content_token_stream).collect()}
@@ -1604,8 +1603,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             };
                             let self_dot_zero_dot_zero_token_stream = quote::quote!{self.0.0};
                             match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => quote::quote!{#self_dot_zero_dot_zero_token_stream #content_token_stream},
-                                NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{#self_dot_zero_dot_zero_token_stream #content_token_stream},
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(
                                     &self_dot_zero_dot_zero_token_stream,
                                     &content_token_stream
                                 )
