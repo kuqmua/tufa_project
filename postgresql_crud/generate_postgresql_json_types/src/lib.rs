@@ -568,6 +568,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
             let value_snake_case = naming::ValueSnakeCase;
+            let element_snake_case = naming::ElementSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
             let none_upper_camel_case = naming::NoneUpperCamelCase;
 
@@ -1507,14 +1508,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     let pub_fn_into_inner_token_stream = {
                         let content_token_stream = {
                             use postgresql_crud_macros_common::NotNullOrNullable;
-                            let value_dot_zero_token_stream = quote::quote!{value.0};
-                            let element_dot_zero_token_stream = quote::quote!{element.0};
+                            let element_dot_zero_token_stream = quote::quote!{#element_snake_case.0};
                             let generate_into_iter_map_element_collect_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                                quote::quote!{.into_iter().map(|element|#content_token_stream).collect()}
+                                quote::quote!{.into_iter().map(|#element_snake_case|#content_token_stream).collect()}
                             };
                             let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
                                 quote::quote!{match #match_token_stream {
-                                    Some(value) => Some(value.0 #content_token_stream),
+                                    Some(#value_snake_case) => Some(#value_snake_case.0 #content_token_stream),
                                     None => None
                                 }}
                             };
@@ -1541,9 +1541,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             &element_dot_zero_token_stream,
                                             &content_token_stream
                                         );
-                                        quote::quote!{
-                                            .into_iter().map(|element|#match_element_zero_token_stream).collect()
-                                        }
+                                        quote::quote!{.into_iter().map(|#element_snake_case|#match_element_zero_token_stream).collect()}
                                     },
                                 }
                             };
