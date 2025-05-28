@@ -550,7 +550,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     //     "GeneratePostgresqlJsonTypesJsonVariants",
     //     &serde_json::to_string(&postgresql_json_type_record_vec).unwrap(),
     // );
-    // let mut f = String::new();
     use rayon::iter::IntoParallelRefIterator;
     use rayon::iter::ParallelIterator;
     let (postgresql_crud_json_object_rust_struct_fields_token_stream, postgresql_json_type_array) = postgresql_json_type_record_vec
@@ -1629,11 +1628,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_read_upper_camel_case,
                     &quote::quote! {Self(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
                 );
-                // let g = quote::quote!{
-                //     #ident_read_token_stream
-                //     #impl_ident_read_token_stream
-                // };
-                // f.push_str(&g.to_string());
                 quote::quote!{
                     #ident_read_token_stream
                     #impl_ident_read_token_stream
@@ -1907,11 +1901,5 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     //     "PostgresqlJsonTypeTokens",
     //     &generated
     // );
-
-    // use std::io::Write;
-    // let path_stringified = format!("meow.rs");
-    // let mut file = std::fs::File::create(std::path::Path::new(&path_stringified)).unwrap_or_else(|_| panic!("std::fs::File::create {path_stringified} failed"));
-    // file.write_all(&f.into_bytes()).unwrap_or_else(|_| panic!("file.write_all {path_stringified} failed"));
-
     generated.into()
 }
