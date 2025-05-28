@@ -1748,6 +1748,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 }
             };
+            let impl_into_inner_for_ident_read_token_stream = {
+                //todo
+                quote::quote!{
+                    
+                }
+            };
             let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
             let generate_ident_read_try_from_error_named_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                 quote::quote! {
@@ -2299,6 +2305,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             quote::quote! {
                 #ident_read_token_stream
+                #impl_into_inner_for_ident_read_token_stream
                 #maybe_ident_read_try_from_error_named_token_stream
                 #impl_new_or_try_new_for_ident_read_try_from_error_named_token_stream
                 #maybe_impl_serde_deserialize_for_ident_read_token_stream

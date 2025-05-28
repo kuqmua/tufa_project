@@ -330,7 +330,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
         }
     }
     let postgresql_json_type_record_vec = {
-        if true {
+        if false {
             PostgresqlJsonTypeRecord::all()
         } else {
             let postgresql_json_type_record_vec = serde_json::from_str::<std::vec::Vec<PostgresqlJsonTypeRecord>>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_json_types");
