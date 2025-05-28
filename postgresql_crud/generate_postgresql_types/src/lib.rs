@@ -3337,9 +3337,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let pub_fn_into_inner_token_stream = {
                         let content_token_stream = {
-                            quote::quote!{
+                            // match &postgresql_type_pattern {
+                            //     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                            //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{},
+                            //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{},
+                            //     },
+                            //     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullabl, &dimension1_not_null_or_nullable) {
 
-                            }
+                            //     },
+                            // }
+                            quote::quote!{}
                         };
                         quote::quote!{
                             // pub fn into_inner(self) ->  {
