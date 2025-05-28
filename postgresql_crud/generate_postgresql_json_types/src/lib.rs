@@ -1506,45 +1506,76 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     };
                     let pub_fn_into_inner_token_stream = {
                         use postgresql_crud_macros_common::NotNullOrNullable;
+                        let generate_start_token_stream = |
+                            not_null_content_token_stream: &dyn quote::ToTokens,
+                            nullable_content_token_stream: &dyn quote::ToTokens
+                        |{
+                            match &not_null_or_nullable {
+                                NotNullOrNullable::NotNull => quote::quote!{self.0.0 #not_null_content_token_stream},
+                                NotNullOrNullable::Nullable => quote::quote!{
+                                    match self.0.0 {
+                                        Some(value) => Some(#nullable_content_token_stream),
+                                        None => None
+                                    }
+                                },
+                            }
+                        };
                         let content_token_stream = match &element.postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{self.0.0},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                    match self.0.0 {
-                                        Some(value) => Some(value.0),
-                                        None => None
-                                    }
-                                },
-                            },
-                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (
-                                &not_null_or_nullable,
-                                &dimension1_not_null_or_nullable,
-                            ) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                    self.0.0.into_iter().map(|element|element.0).collect()
-                                },
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                    self.0.0.into_iter().map(|element|match element.0 {
-                                        Some(value) => Some(value.0),
-                                        None => None
-                                    }).collect()
-                                },
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                    match self.0.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
-                                        None => None
-                                    }
-                                },
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                    match self.0.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|match element.0{
+                            PostgresqlJsonTypePattern::Standart => generate_start_token_stream(
+                                &proc_macro2::TokenStream::new(),
+                                &quote::quote!{value.0}
+                            ),
+                            PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_start_token_stream(
+                                &match &dimension1_not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => quote::quote!{.into_iter().map(|element|element.0).collect()},
+                                    NotNullOrNullable::Nullable => quote::quote!{
+                                        .into_iter().map(|element|match element.0 {
                                             Some(value) => Some(value.0),
                                             None => None
-                                        }).collect()),
-                                        None => None
-                                    }
+                                        }).collect()
+                                    },
                                 },
-                            },
+                                &match &dimension1_not_null_or_nullable {
+                                    NotNullOrNullable::NotNull => quote::quote!{value.0.into_iter().map(|element|element.0).collect()},
+                                    NotNullOrNullable::Nullable => quote::quote!{
+                                        value.0.into_iter().map(|element|match element.0{
+                                            Some(value) => Some(value.0),
+                                            None => None
+                                        }).collect()
+                                    },
+                                },
+                            ),
+                            // {
+                            //     match (
+                            //         &not_null_or_nullable,
+                            //         &dimension1_not_null_or_nullable,
+                            //     ) {
+                            //         (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                            //             self.0.0.into_iter().map(|element|element.0).collect()
+                            //         },
+                            //         (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                            //             self.0.0.into_iter().map(|element|match element.0 {
+                            //                 Some(value) => Some(value.0),
+                            //                 None => None
+                            //             }).collect()
+                            //         },
+                            //         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                            //             match self.0.0 {
+                            //                 Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                            //                 None => None
+                            //             }
+                            //         },
+                            //         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                            //             match self.0.0 {
+                            //                 Some(value) => Some(value.0.into_iter().map(|element|match element.0{
+                            //                     Some(value) => Some(value.0),
+                            //                     None => None
+                            //                 }).collect()),
+                            //                 None => None
+                            //             }
+                            //         },
+                            //     }
+                            // },
                             PostgresqlJsonTypePattern::ArrayDimension2 {
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
@@ -1562,12 +1593,49 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         None => None
                                     }).collect()).collect()
                                 },
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                    self.0.0.into_iter().map(|element|match element.0 {
+                                        Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                        None => None,
+                                    }).collect()
+                                },
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                    self.0.0.into_iter().map(|element|match element.0 {
+                                        Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                                            Some(value) => Some(value.0),
+                                            None => None,
+                                        }).collect()),
+                                        None => None,
+                                    }).collect()
+                                },
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                    // match self.0.0 {
+                                    //     Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                    //     None => None
+                                    // }
+                                    todo!()
+                                },
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                    // match self.0.0 {
+                                    //     Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                    //     None => None
+                                    // }
+                                    todo!()
+                                },
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                    // match self.0.0 {
+                                    //     Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                    //     None => None
+                                    // }
+                                    todo!()
+                                },
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                    // match self.0.0 {
+                                    //     Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                    //     None => None
+                                    // }
+                                    todo!()
+                                },
                             },
                             PostgresqlJsonTypePattern::ArrayDimension3 {
                                 dimension1_not_null_or_nullable,
