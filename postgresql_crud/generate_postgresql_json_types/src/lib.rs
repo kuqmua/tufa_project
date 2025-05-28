@@ -1511,13 +1511,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             let generate_into_iter_map_element_collect_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                                 quote::quote!{.into_iter().map(|element|#content_token_stream).collect()}
                             };
+                            let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
+                                quote::quote!{match #match_token_stream {
+                                    Some(value) => Some(value.0 #content_token_stream),
+                                    None => None
+                                }}
+                            };
                             let generate_into_iter_map_element_collect_not_null_or_nullable_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
                                 let content_token_stream = match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{element.0},
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{match element.0 {
-                                        Some(value) => Some(value.0),
-                                        None => None
-                                    }},
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(
+                                        &quote::quote!{element.0},
+                                        &proc_macro2::TokenStream::new()
+                                    )
                                 };
                                 generate_into_iter_map_element_collect_token_stream(&content_token_stream)
                             };
@@ -1529,11 +1535,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_element_collect_token_stream(
                                         &quote::quote!{element.0 #content_token_stream}
                                     ),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                        .into_iter().map(|element|match element.0 {
-                                            Some(value) => Some(value.0 #content_token_stream),
-                                            None => None,
-                                        }).collect()
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                        let match_element_zero_token_stream = generate_match_element_zero_token_stream(
+                                            &quote::quote!{element.0},
+                                            &content_token_stream
+                                        );
+                                        quote::quote!{
+                                            .into_iter().map(|element|#match_element_zero_token_stream).collect()
+                                        }
                                     },
                                 }
                             };
@@ -1594,12 +1603,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     )
                                 }
                             };
+                            let self_dot_zero_dot_zero_token_stream = quote::quote!{self.0.0};
                             match &not_null_or_nullable {
-                                NotNullOrNullable::NotNull => quote::quote!{self.0.0 #content_token_stream},
-                                NotNullOrNullable::Nullable => quote::quote!{match self.0.0 {
-                                    Some(value) => Some(value.0 #content_token_stream),
-                                    None => None
-                                }},
+                                NotNullOrNullable::NotNull => quote::quote!{#self_dot_zero_dot_zero_token_stream #content_token_stream},
+                                NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(
+                                    &self_dot_zero_dot_zero_token_stream,
+                                    &content_token_stream
+                                )
                             }
                         };
                         quote::quote!{
