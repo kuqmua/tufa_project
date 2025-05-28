@@ -2572,6 +2572,46 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             } else {
                 (postgresql_crud_macros_common::DeriveOrImpl::Derive, postgresql_crud_macros_common::DeriveOrImpl::Derive)
             };
+            let impl_new_for_ident_origin_type_token_stream = match &element.postgresql_type_pattern {
+                PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#field_type_standart_not_null>},
+                },
+                PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
+                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
+                    not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
+                },
+                // PostgresqlTypePattern::ArrayDimension2 {
+                //     dimension1_not_null_or_nullable,
+                //     dimension2_not_null_or_nullable,
+                // } => &{
+                //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
+                //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
+                //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
+                // },
+                // PostgresqlTypePattern::ArrayDimension3 {
+                //     dimension1_not_null_or_nullable,
+                //     dimension2_not_null_or_nullable,
+                //     dimension3_not_null_or_nullable,
+                // } => &{
+                //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
+                //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
+                //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
+                //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
+                // },
+                // PostgresqlTypePattern::ArrayDimension4 {
+                //     dimension1_not_null_or_nullable,
+                //     dimension2_not_null_or_nullable,
+                //     dimension3_not_null_or_nullable,
+                //     dimension4_not_null_or_nullable,
+                // } => &{
+                //     let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
+                //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension4_type>});
+                //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
+                //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
+                //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
+                // },
+            };
             let ident_origin_token_stream = {
                 let ident_origin_token_stream = {
                     let maybe_derive_partial_ord_token_stream = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
@@ -2637,46 +2677,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let impl_new_for_ident_origin_token_stream = {
-                    let type_token_stream: &dyn quote::ToTokens = match &element.postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#field_type_standart_not_null>},
-                        },
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
-                            let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
-                            not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
-                        },
-                        // PostgresqlTypePattern::ArrayDimension2 {
-                        //     dimension1_not_null_or_nullable,
-                        //     dimension2_not_null_or_nullable,
-                        // } => &{
-                        //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
-                        //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
-                        //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
-                        // },
-                        // PostgresqlTypePattern::ArrayDimension3 {
-                        //     dimension1_not_null_or_nullable,
-                        //     dimension2_not_null_or_nullable,
-                        //     dimension3_not_null_or_nullable,
-                        // } => &{
-                        //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
-                        //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
-                        //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
-                        //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
-                        // },
-                        // PostgresqlTypePattern::ArrayDimension4 {
-                        //     dimension1_not_null_or_nullable,
-                        //     dimension2_not_null_or_nullable,
-                        //     dimension3_not_null_or_nullable,
-                        //     dimension4_not_null_or_nullable,
-                        // } => &{
-                        //     let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
-                        //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension4_type>});
-                        //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
-                        //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
-                        //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
-                        // },
-                    };
                     let content_token_stream = {
                         let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {match value {
@@ -2791,7 +2791,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
-                            pub fn new(value: #type_token_stream) -> Self {
+                            pub fn new(value: #impl_new_for_ident_origin_type_token_stream) -> Self {
                                 Self(#content_token_stream)
                             }
                         }
@@ -3331,9 +3331,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 let impl_ident_read_token_stream = {
                     let pub_fn_new_token_stream = quote::quote!{
-                        // pub fn new(#value_snake_case: ) -> Self {
-                            
-                        // }
+                        pub fn new(#value_snake_case: #impl_new_for_ident_origin_type_token_stream) -> Self {
+                            Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                        }
                     };
                     let pub_fn_into_inner_token_stream = {
                         let content_token_stream = {
