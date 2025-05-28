@@ -1633,11 +1633,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     }
                                 },
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                    // match self.0.0 {
-                                    //     Some(value) => Some(value.0.into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()),
-                                    //     None => None
-                                    // }
-                                    todo!()
+                                    match self.0.0 {
+                                        Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                                            Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                                                Some(value) => Some(value.0),
+                                                None => None,
+                                            }).collect()),
+                                            None => None
+                                        }).collect()),
+                                        None => None
+                                    }
                                 },
                             },
                             PostgresqlJsonTypePattern::ArrayDimension3 {
