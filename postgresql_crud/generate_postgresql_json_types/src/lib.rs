@@ -1579,72 +1579,132 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonTypePattern::ArrayDimension2 {
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
-                            } => match (
-                                &not_null_or_nullable,
-                                &dimension1_not_null_or_nullable,
-                                &dimension2_not_null_or_nullable,
-                            ) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                    self.0.0.into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
+                            } => generate_start_token_stream(
+                                &match (
+                                    &dimension1_not_null_or_nullable,
+                                    &dimension2_not_null_or_nullable,
+                                ) {
+                                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                        .into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
+                                    },
+                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                        .into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
+                                            Some(value) => Some(value.0),
+                                            None => None
+                                        }).collect()).collect()
+                                    },
+                                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                        .into_iter().map(|element|match element.0 {
+                                            Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                            None => None,
+                                        }).collect()
+                                    },
+                                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                        .into_iter().map(|element|match element.0 {
+                                            Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                                                Some(value) => Some(value.0),
+                                                None => None,
+                                            }).collect()),
+                                            None => None,
+                                        }).collect()
+                                    },
                                 },
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                    self.0.0.into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
-                                        Some(value) => Some(value.0),
-                                        None => None
-                                    }).collect()).collect()
-                                },
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                    self.0.0.into_iter().map(|element|match element.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
-                                        None => None,
-                                    }).collect()
-                                },
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                    self.0.0.into_iter().map(|element|match element.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                                &match (
+                                    &dimension1_not_null_or_nullable,
+                                    &dimension2_not_null_or_nullable,
+                                ) {
+                                    (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                        value.0.into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
+                                    },
+                                    (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                        value.0.into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
                                             Some(value) => Some(value.0),
                                             None => None,
-                                        }).collect()),
-                                        None => None,
-                                    }).collect()
-                                },
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                    match self.0.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()),
-                                        None => None
-                                    }
-                                },
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                    match self.0.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
-                                            Some(value) => Some(value.0),
-                                            None => None,
-                                        }).collect()).collect()),
-                                        None => None
-                                    }
-                                },
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                    match self.0.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                                        }).collect()).collect()
+                                    },
+                                    (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                        value.0.into_iter().map(|element|match element.0 {
                                             Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
                                             None => None
-                                        }).collect()),
-                                        None => None
-                                    }
-                                },
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                    match self.0.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                                        }).collect()
+                                    },
+                                    (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                        value.0.into_iter().map(|element|match element.0 {
                                             Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
                                                 Some(value) => Some(value.0),
                                                 None => None,
                                             }).collect()),
                                             None => None
-                                        }).collect()),
-                                        None => None
-                                    }
+                                        }).collect()
+                                    },
                                 },
-                            },
+                            ),
+                            // match (
+                            //     &not_null_or_nullable,
+                            //     &dimension1_not_null_or_nullable,
+                            //     &dimension2_not_null_or_nullable,
+                            // ) {
+                            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                            //         self.0.0.into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
+                            //     },
+                            //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                            //         self.0.0.into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
+                            //             Some(value) => Some(value.0),
+                            //             None => None
+                            //         }).collect()).collect()
+                            //     },
+                            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                            //         self.0.0.into_iter().map(|element|match element.0 {
+                            //             Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                            //             None => None,
+                            //         }).collect()
+                            //     },
+                            //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                            //         self.0.0.into_iter().map(|element|match element.0 {
+                            //             Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                            //                 Some(value) => Some(value.0),
+                            //                 None => None,
+                            //             }).collect()),
+                            //             None => None,
+                            //         }).collect()
+                            //     },
+                            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                            //         match self.0.0 {
+                            //             Some(value) => Some(value.0.into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()),
+                            //             None => None
+                            //         }
+                            //     },
+                            //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                            //         match self.0.0 {
+                            //             Some(value) => Some(value.0.into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
+                            //                 Some(value) => Some(value.0),
+                            //                 None => None,
+                            //             }).collect()).collect()),
+                            //             None => None
+                            //         }
+                            //     },
+                            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                            //         match self.0.0 {
+                            //             Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                            //                 Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                            //                 None => None
+                            //             }).collect()),
+                            //             None => None
+                            //         }
+                            //     },
+                            //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                            //         match self.0.0 {
+                            //             Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                            //                 Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                            //                     Some(value) => Some(value.0),
+                            //                     None => None,
+                            //                 }).collect()),
+                            //                 None => None
+                            //             }).collect()),
+                            //             None => None
+                            //         }
+                            //     },
+                            // },
                             PostgresqlJsonTypePattern::ArrayDimension3 {
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
