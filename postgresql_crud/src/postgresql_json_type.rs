@@ -66,28 +66,34 @@ generate_postgresql_json_types::generate_postgresql_json_types!([
 pub struct StdPrimitiveI8AsNotNullJsonbNumberRead(StdPrimitiveI8AsNotNullJsonbNumberOrigin);
 impl StdPrimitiveI8AsNotNullJsonbNumberRead {
     pub fn into_inner(self) -> std::primitive::i8 {
-        todo!()
+        self.0.0
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct OptionStdPrimitiveI8AsNullableJsonbNumberRead(OptionStdPrimitiveI8AsNullableJsonbNumberOrigin);
 impl OptionStdPrimitiveI8AsNullableJsonbNumberRead {
     pub fn into_inner(self) -> std::option::Option<std::primitive::i8> {
-        todo!()
+        match self.0.0 {
+            Some(value) => Some(value.0),
+            None => None
+        }
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberRead(VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberOrigin);
 impl VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberRead {
     pub fn into_inner(self) -> std::vec::Vec<std::primitive::i8> {
-        todo!()
+        self.0.0.into_iter().map(|element|{element.0}).collect()
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumberRead(VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumberOrigin);
 impl VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumberRead {
     pub fn into_inner(self) -> std::vec::Vec<std::option::Option<std::primitive::i8>> {
-        todo!()
+        self.0.0.into_iter().map(|element|match element.0{
+            Some(value) => Some(value.0),
+            None => None
+        }).collect()
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
