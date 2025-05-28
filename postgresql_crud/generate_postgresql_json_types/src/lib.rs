@@ -1507,98 +1507,100 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     };
                     let pub_fn_into_inner_token_stream = {
                         let content_token_stream = {
-                            let element_dot_zero_token_stream = quote::quote!{#element_snake_case.0};
-                            let generate_into_iter_map_element_collect_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                                quote::quote!{.into_iter().map(|#element_snake_case|#content_token_stream).collect()}
-                            };
                             let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
                                 quote::quote!{match #match_token_stream {
                                     Some(#value_snake_case) => Some(#value_snake_case.0 #content_token_stream),
                                     None => None
                                 }}
                             };
-                            let generate_into_iter_map_element_collect_not_null_or_nullable_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
-                                let content_token_stream = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => element_dot_zero_token_stream.clone(),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(
-                                        &element_dot_zero_token_stream,
-                                        &proc_macro2::TokenStream::new()
-                                    )
+                            let content_token_stream = {
+                                let element_dot_zero_token_stream = quote::quote!{#element_snake_case.0};
+                                let generate_into_iter_map_element_collect_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                                    quote::quote!{.into_iter().map(|#element_snake_case|#content_token_stream).collect()}
                                 };
-                                generate_into_iter_map_element_collect_token_stream(&content_token_stream)
-                            };
-                            let generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream = |
-                                not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
-                                content_token_stream: &dyn quote::ToTokens,
-                            |{
-                                match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_element_collect_token_stream(
-                                        &quote::quote!{#element_dot_zero_token_stream #content_token_stream}
-                                    ),
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                        let match_element_zero_token_stream = generate_match_element_zero_token_stream(
+                                let generate_into_iter_map_element_collect_not_null_or_nullable_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+                                    let content_token_stream = match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => element_dot_zero_token_stream.clone(),
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(
                                             &element_dot_zero_token_stream,
-                                            &content_token_stream
+                                            &proc_macro2::TokenStream::new()
+                                        )
+                                    };
+                                    generate_into_iter_map_element_collect_token_stream(&content_token_stream)
+                                };
+                                let generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream = |
+                                    not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                                    content_token_stream: &dyn quote::ToTokens,
+                                |{
+                                    match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_element_collect_token_stream(
+                                            &quote::quote!{#element_dot_zero_token_stream #content_token_stream}
+                                        ),
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                            let match_element_zero_token_stream = generate_match_element_zero_token_stream(
+                                                &element_dot_zero_token_stream,
+                                                &content_token_stream
+                                            );
+                                            quote::quote!{.into_iter().map(|#element_snake_case|#match_element_zero_token_stream).collect()}
+                                        },
+                                    }
+                                };
+                                match &element.postgresql_json_type_pattern {
+                                    PostgresqlJsonTypePattern::Standart => proc_macro2::TokenStream::new(),
+                                    PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
+                                        &dimension1_not_null_or_nullable
+                                    ),
+                                    PostgresqlJsonTypePattern::ArrayDimension2 {
+                                        dimension1_not_null_or_nullable,
+                                        dimension2_not_null_or_nullable,
+                                    } => {
+                                        let dimension2_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
+                                            &dimension2_not_null_or_nullable
                                         );
-                                        quote::quote!{.into_iter().map(|#element_snake_case|#match_element_zero_token_stream).collect()}
+                                        generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
+                                            &dimension1_not_null_or_nullable,
+                                            &dimension2_not_null_or_nullable_content_token_stream
+                                        )
                                     },
-                                }
-                            };
-                            let content_token_stream = match &element.postgresql_json_type_pattern {
-                                PostgresqlJsonTypePattern::Standart => proc_macro2::TokenStream::new(),
-                                PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
-                                    &dimension1_not_null_or_nullable
-                                ),
-                                PostgresqlJsonTypePattern::ArrayDimension2 {
-                                    dimension1_not_null_or_nullable,
-                                    dimension2_not_null_or_nullable,
-                                } => {
-                                    let dimension2_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
-                                        &dimension2_not_null_or_nullable
-                                    );
-                                    generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
-                                        &dimension1_not_null_or_nullable,
-                                        &dimension2_not_null_or_nullable_content_token_stream
-                                    )
-                                },
-                                PostgresqlJsonTypePattern::ArrayDimension3 {
-                                    dimension1_not_null_or_nullable,
-                                    dimension2_not_null_or_nullable,
-                                    dimension3_not_null_or_nullable,
-                                } => {
-                                    let dimension3_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
-                                        &dimension3_not_null_or_nullable
-                                    );
-                                    let dimension2_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
-                                        &dimension2_not_null_or_nullable,
-                                        &dimension3_not_null_or_nullable_content_token_stream
-                                    );
-                                    generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
-                                        &dimension1_not_null_or_nullable,
-                                        &dimension2_not_null_or_nullable_content_token_stream
-                                    )
-                                },
-                                PostgresqlJsonTypePattern::ArrayDimension4 {
-                                    dimension1_not_null_or_nullable,
-                                    dimension2_not_null_or_nullable,
-                                    dimension3_not_null_or_nullable,
-                                    dimension4_not_null_or_nullable,
-                                } => {
-                                    let dimension4_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
-                                        &dimension4_not_null_or_nullable
-                                    );
-                                    let dimension3_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
-                                        &dimension3_not_null_or_nullable,
-                                        &dimension4_not_null_or_nullable_content_token_stream
-                                    );
-                                    let dimension2_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
-                                        &dimension2_not_null_or_nullable,
-                                        &dimension3_not_null_or_nullable_content_token_stream
-                                    );
-                                    generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
-                                        &dimension1_not_null_or_nullable,
-                                        &dimension2_not_null_or_nullable_content_token_stream
-                                    )
+                                    PostgresqlJsonTypePattern::ArrayDimension3 {
+                                        dimension1_not_null_or_nullable,
+                                        dimension2_not_null_or_nullable,
+                                        dimension3_not_null_or_nullable,
+                                    } => {
+                                        let dimension3_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
+                                            &dimension3_not_null_or_nullable
+                                        );
+                                        let dimension2_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
+                                            &dimension2_not_null_or_nullable,
+                                            &dimension3_not_null_or_nullable_content_token_stream
+                                        );
+                                        generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
+                                            &dimension1_not_null_or_nullable,
+                                            &dimension2_not_null_or_nullable_content_token_stream
+                                        )
+                                    },
+                                    PostgresqlJsonTypePattern::ArrayDimension4 {
+                                        dimension1_not_null_or_nullable,
+                                        dimension2_not_null_or_nullable,
+                                        dimension3_not_null_or_nullable,
+                                        dimension4_not_null_or_nullable,
+                                    } => {
+                                        let dimension4_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
+                                            &dimension4_not_null_or_nullable
+                                        );
+                                        let dimension3_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
+                                            &dimension3_not_null_or_nullable,
+                                            &dimension4_not_null_or_nullable_content_token_stream
+                                        );
+                                        let dimension2_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
+                                            &dimension2_not_null_or_nullable,
+                                            &dimension3_not_null_or_nullable_content_token_stream
+                                        );
+                                        generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
+                                            &dimension1_not_null_or_nullable,
+                                            &dimension2_not_null_or_nullable_content_token_stream
+                                        )
+                                    }
                                 }
                             };
                             let self_dot_zero_dot_zero_token_stream = quote::quote!{self.0.0};
