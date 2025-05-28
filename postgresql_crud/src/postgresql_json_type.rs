@@ -123,7 +123,7 @@ impl OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumberRead {
 pub struct VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumberRead(VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumberOrigin);
 impl VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumberRead {
     pub fn into_inner(self) -> std::vec::Vec<std::vec::Vec<std::primitive::i8>> {
-        todo!()
+        self.0.0.into_iter().map(|element|{element.0.into_iter().map(|element|element.0).collect()}).collect()
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
