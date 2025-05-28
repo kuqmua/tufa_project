@@ -3347,7 +3347,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // }
                         }
                     };
-                    //
                     quote::quote!{
                         impl #ident_read_upper_camel_case {
                             #pub_fn_new_token_stream
@@ -3355,16 +3354,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     }
                 };
+                let impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
+                    &ident_read_upper_camel_case,
+                    &ident_origin_upper_camel_case,
+                    &quote::quote! {Ok(Self(#value_snake_case))}
+                );
+                let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    &ident_read_upper_camel_case,
+                    &ident_origin_upper_camel_case,
+                );
                 quote::quote!{
                     #ident_read_token_stream
                     #impl_ident_read_token_stream
-                    // std::fmt::Debug 
-                    // + Clone 
-                    // + PartialEq 
-                    // + serde::Serialize 
-                    // + for<'__> serde::Deserialize<'__> 
-                    // + for<'__> sqlx::Decode<'__, sqlx::Postgres> 
-                    // + sqlx::Type<sqlx::Postgres>;
+                    #impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream
+                    #impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream
                 }
             };
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
