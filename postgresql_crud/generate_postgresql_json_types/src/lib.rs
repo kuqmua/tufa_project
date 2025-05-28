@@ -1579,64 +1579,48 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                             } => {
+                                let content_9c3409ca_3a1a_4aec_8faf_a854fb4fb719 = quote::quote!{
+                                    .into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
+                                };
+                                let content_3fe06235_43a5_4d30_ba47_d0a476088890 = quote::quote!{
+                                    .into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
+                                        Some(value) => Some(value.0),
+                                        None => None
+                                    }).collect()).collect()
+                                };
+                                let content_4a1c2e3b_d6c3_4560_b379_89ff29baeb2a = quote::quote!{
+                                    .into_iter().map(|element|match element.0 {
+                                        Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                        None => None,
+                                    }).collect()
+                                };
+                                let content_86ed5025_dfd0_40b0_999c_acc7b70a9a77 = quote::quote!{
+                                    .into_iter().map(|element|match element.0 {
+                                        Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
+                                            Some(value) => Some(value.0),
+                                            None => None,
+                                        }).collect()),
+                                        None => None,
+                                    }).collect()
+                                };
                                 generate_start_token_stream(
                                     &match (
                                         &dimension1_not_null_or_nullable,
                                         &dimension2_not_null_or_nullable,
                                     ) {
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            .into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            .into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
-                                                Some(value) => Some(value.0),
-                                                None => None
-                                            }).collect()).collect()
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            .into_iter().map(|element|match element.0 {
-                                                Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
-                                                None => None,
-                                            }).collect()
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            .into_iter().map(|element|match element.0 {
-                                                Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
-                                                    Some(value) => Some(value.0),
-                                                    None => None,
-                                                }).collect()),
-                                                None => None,
-                                            }).collect()
-                                        },
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => content_9c3409ca_3a1a_4aec_8faf_a854fb4fb719.clone(),
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => content_3fe06235_43a5_4d30_ba47_d0a476088890.clone(),
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => content_4a1c2e3b_d6c3_4560_b379_89ff29baeb2a.clone(),
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => content_86ed5025_dfd0_40b0_999c_acc7b70a9a77.clone(),
                                     },
                                     &match (
                                         &dimension1_not_null_or_nullable,
                                         &dimension2_not_null_or_nullable,
                                     ) {
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            .into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            .into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
-                                                Some(value) => Some(value.0),
-                                                None => None,
-                                            }).collect()).collect()
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            .into_iter().map(|element|match element.0 {
-                                                Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
-                                                None => None
-                                            }).collect()
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            .into_iter().map(|element|match element.0 {
-                                                Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
-                                                    Some(value) => Some(value.0),
-                                                    None => None,
-                                                }).collect()),
-                                                None => None
-                                            }).collect()
-                                        },
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => content_9c3409ca_3a1a_4aec_8faf_a854fb4fb719.clone(),
+                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => content_3fe06235_43a5_4d30_ba47_d0a476088890.clone(),
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => content_4a1c2e3b_d6c3_4560_b379_89ff29baeb2a.clone(),
+                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => content_86ed5025_dfd0_40b0_999c_acc7b70a9a77.clone(),
                                     },
                                 )
                             },
