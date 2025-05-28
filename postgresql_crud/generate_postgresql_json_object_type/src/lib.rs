@@ -1697,61 +1697,80 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 }
             };
             let ident_read_token_stream = {
-                let generate_ident_read_wrapper_token_stream = |
-                    content_token_stream: &dyn quote::ToTokens,
-                    should_derive_serde_deserialize: &ShouldDeriveSerdeDeserialize,
-                |{
-                    generate_ident_read_token_stream(
-                        &ident_read_upper_camel_case,
-                        &content_token_stream,
-                        should_derive_serde_deserialize,
-                    )
-                };
-                match &postgresql_json_object_type_pattern {
+                let (content_token_stream, should_derive_serde_deserialize) = match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_wrapper_token_stream(
-                            &{
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                            {
                                 let content_token_stream = generate_ident_read_or_ident_with_id_read_fields_declaration_token_stream(
                                     &is_standart_with_id_false,
                                     &ShouldAddSerdeOptionIsNoneAnnotation::True
                                 );
                                 quote::quote!{{#content_token_stream}}
                             },
-                            &ShouldDeriveSerdeDeserialize::False,
+                            ShouldDeriveSerdeDeserialize::False,
                         ),
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_wrapper_token_stream(
-                            &wrap_content_into_scopes_dot_comma_token_stream(
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
+                            wrap_content_into_scopes_dot_comma_token_stream(
                                 &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                                     &ident_standart_not_null_as_postgresql_json_type_read_token_stream
                                 )
                             ),
-                            &ShouldDeriveSerdeDeserialize::True,
+                            ShouldDeriveSerdeDeserialize::True,
                         ),
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_wrapper_token_stream(
-                            &wrap_content_into_scopes_dot_comma_token_stream(
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                            wrap_content_into_scopes_dot_comma_token_stream(
                                 &postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(
                                     &ident_with_id_standart_not_null_as_postgresql_json_type_read_token_stream
                                 )
                             ),
-                            &ShouldDeriveSerdeDeserialize::True,
+                            ShouldDeriveSerdeDeserialize::True,
                         ),
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_ident_read_wrapper_token_stream(
-                            &wrap_content_into_scopes_dot_comma_token_stream(
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
+                            wrap_content_into_scopes_dot_comma_token_stream(
                                 &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(
                                     &ident_with_id_array_not_null_as_postgresql_json_type_read_token_stream
                                 )
                             ),
-                            &ShouldDeriveSerdeDeserialize::True,
+                            ShouldDeriveSerdeDeserialize::True,
                         ),
                     },
-                }
+                };
+                generate_ident_read_token_stream(
+                    &ident_read_upper_camel_case,
+                    &content_token_stream,
+                    &should_derive_serde_deserialize
+                )
             };
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct DoggieAsNotNullJsonbObjectRead {
+//     #[serde(skip_serializing_if = "Option::is_none")]
+//     column_113f3662_35a2_4a7a_9326_03bbd441815f: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+//     #[serde(skip_serializing_if = "Option::is_none")]
+//     column_1761f64d_b930_446b_8422_e4fa6faf8872: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+//     #[serde(skip_serializing_if = "Option::is_none")]
+//     column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+//     #[serde(skip_serializing_if = "Option::is_none")]
+//     column_17c31340_b040_4ead_8dcf_476451486b4a: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+//     #[serde(skip_serializing_if = "Option::is_none")]
+//     column_95fb90c0_96bc_4a73_9e4c_2537bcfe92b6: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+//     #[serde(skip_serializing_if = "Option::is_none")]
+//     column_77f1b2d9_19ea_4f29_8252_b1658a701077: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
+// }
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct OptionDoggieAsNullableJsonbObjectRead(std::option::Option<<DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Read>);
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead(std::vec::Vec<<DoggieWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Read>);
+// #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+// pub struct OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead(std::option::Option<<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Read>);
             let impl_into_inner_for_ident_read_token_stream = {
-                //todo
                 quote::quote!{
-                    
+                    // impl #ident_read_upper_camel_case {
+                    //     pub fn into_inner(self) -> {
+
+                    //     }
+                    // }
                 }
             };
             let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
