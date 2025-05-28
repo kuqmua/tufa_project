@@ -83,14 +83,14 @@ impl OptionStdPrimitiveI8AsNullableJsonbNumberRead {
 pub struct VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberRead(VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberOrigin);
 impl VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumberRead {
     pub fn into_inner(self) -> std::vec::Vec<std::primitive::i8> {
-        self.0.0.into_iter().map(|element|{element.0}).collect()
+        self.0.0.into_iter().map(|element|element.0).collect()
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumberRead(VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumberOrigin);
 impl VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumberRead {
     pub fn into_inner(self) -> std::vec::Vec<std::option::Option<std::primitive::i8>> {
-        self.0.0.into_iter().map(|element|match element.0{
+        self.0.0.into_iter().map(|element|match element.0 {
             Some(value) => Some(value.0),
             None => None
         }).collect()
@@ -101,7 +101,7 @@ pub struct OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumberRead(Opti
 impl OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumberRead {
     pub fn into_inner(self) -> std::option::Option<std::vec::Vec<std::primitive::i8>> {
         match self.0.0 {
-            Some(value) => Some(value.0.into_iter().map(|element|{element.0}).collect()),
+            Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
             None => None
         }
     }
@@ -123,7 +123,7 @@ impl OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumberRead {
 pub struct VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumberRead(VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumberOrigin);
 impl VecOfVecOfStdPrimitiveI8AsNotNullArrayOfNotNullArrayOfNotNullJsonbNumberRead {
     pub fn into_inner(self) -> std::vec::Vec<std::vec::Vec<std::primitive::i8>> {
-        self.0.0.into_iter().map(|element|{element.0.into_iter().map(|element|element.0).collect()}).collect()
+        self.0.0.into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
     }
 }
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
