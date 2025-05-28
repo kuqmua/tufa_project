@@ -1518,7 +1518,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 },
                             }
                         };
-                        let generate_into_iter_map_element_content_collect_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
+                        let generate_into_iter_map_element_collect_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                            quote::quote!{.into_iter().map(|element|#content_token_stream).collect()}
+                        };
+                        let generate_into_iter_map_element_collect_not_null_or_nullable_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
                             let content_token_stream = match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{element.0},
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{match element.0 {
@@ -1526,25 +1529,73 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     None => None
                                 }},
                             };
-                            quote::quote!{
-                                .into_iter().map(|element|element.0).collect()
+                            generate_into_iter_map_element_collect_token_stream(&content_token_stream)
+                        };
+                        //
+                        let generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream = |
+                            not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable,
+                            content_token_stream: &dyn quote::ToTokens,
+                        |{
+                            // let content_token_stream = match &not_null_or_nullable {
+                            //     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{element.0},
+                            //     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{match element.0 {
+                            //         Some(value) => Some(value.0),
+                            //         None => None
+                            //     }},
+                            // };
+                            // generate_into_iter_map_element_collect_token_stream(&content_token_stream)
+                            // let content_9c3409ca_3a1a_4aec_8faf_a854fb4fb719 = quote::quote!{
+                            //     .into_iter().map(|element|element.0 #dimension2_not_null_or_nullable_content_token_stream).collect()
+                            // };
+                            // let content_3fe06235_43a5_4d30_ba47_d0a476088890 = quote::quote!{
+                            //     .into_iter().map(|element|element.0 #dimension2_not_null_or_nullable_content_token_stream).collect()
+                            // };
+                            // let content_4a1c2e3b_d6c3_4560_b379_89ff29baeb2a = quote::quote!{
+                            //     .into_iter().map(|element|match element.0 {
+                            //         Some(value) => Some(value.0 #dimension2_not_null_or_nullable_content_token_stream),
+                            //         None => None,
+                            //     }).collect()
+                            // };
+                            // let content_86ed5025_dfd0_40b0_999c_acc7b70a9a77 = quote::quote!{
+                            //     .into_iter().map(|element|match element.0 {
+                            //         Some(value) => Some(value.0 #dimension2_not_null_or_nullable_content_token_stream),
+                            //         None => None,
+                            //     }).collect()
+                            // };
+                            match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_element_collect_token_stream(
+                                    &quote::quote!{element.0 #content_token_stream}
+                                ),
+                                // quote::quote!{
+                                //     .into_iter().map(|element|element.0 #content_token_stream).collect()
+                                // },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                    .into_iter().map(|element|match element.0 {
+                                        Some(value) => Some(value.0 #content_token_stream),
+                                        None => None,
+                                    }).collect()
+                                },
                             }
                         };
+                        //
                         let content_token_stream = match &element.postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => generate_start_token_stream(&proc_macro2::TokenStream::new()),
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
-                                let content_1212856f_1311_4cf6_8974_b5582e99e6de = quote::quote!{.into_iter().map(|element|element.0).collect()};
-                                let content_2dd7f807_d61e_4784_8ecf_f1737682a558 = quote::quote!{
-                                    .into_iter().map(|element|match element.0 {
-                                        Some(value) => Some(value.0),
-                                        None => None
-                                    }).collect()
-                                };
+                                // let content_1212856f_1311_4cf6_8974_b5582e99e6de = quote::quote!{.into_iter().map(|element|element.0).collect()};
+                                // let content_2dd7f807_d61e_4784_8ecf_f1737682a558 = quote::quote!{
+                                //     .into_iter().map(|element|match element.0 {
+                                //         Some(value) => Some(value.0),
+                                //         None => None
+                                //     }).collect()
+                                // };
                                 generate_start_token_stream(
-                                    &match &dimension1_not_null_or_nullable {
-                                        NotNullOrNullable::NotNull => content_1212856f_1311_4cf6_8974_b5582e99e6de.clone(),
-                                        NotNullOrNullable::Nullable => content_2dd7f807_d61e_4784_8ecf_f1737682a558.clone(),
-                                    },
+                                    &generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
+                                        &dimension1_not_null_or_nullable
+                                    )
+                                    // &match &dimension1_not_null_or_nullable {
+                                    //     NotNullOrNullable::NotNull => content_1212856f_1311_4cf6_8974_b5582e99e6de.clone(),
+                                    //     NotNullOrNullable::Nullable => content_2dd7f807_d61e_4784_8ecf_f1737682a558.clone(),
+                                    // },
                                 )
                             },
                             // {
@@ -1581,40 +1632,48 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 dimension1_not_null_or_nullable,
                                 dimension2_not_null_or_nullable,
                             } => {
-                                let content_9c3409ca_3a1a_4aec_8faf_a854fb4fb719 = quote::quote!{
-                                    .into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
-                                };
-                                let content_3fe06235_43a5_4d30_ba47_d0a476088890 = quote::quote!{
-                                    .into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
-                                        Some(value) => Some(value.0),
-                                        None => None
-                                    }).collect()).collect()
-                                };
-                                let content_4a1c2e3b_d6c3_4560_b379_89ff29baeb2a = quote::quote!{
-                                    .into_iter().map(|element|match element.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
-                                        None => None,
-                                    }).collect()
-                                };
-                                let content_86ed5025_dfd0_40b0_999c_acc7b70a9a77 = quote::quote!{
-                                    .into_iter().map(|element|match element.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|match element.0 {
-                                            Some(value) => Some(value.0),
-                                            None => None,
-                                        }).collect()),
-                                        None => None,
-                                    }).collect()
-                                };
+                                let dimension2_not_null_or_nullable_content_token_stream = generate_into_iter_map_element_collect_not_null_or_nullable_token_stream(
+                                    &dimension2_not_null_or_nullable
+                                );
+                                // match &not_null_or_nullable {
+                                //     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{element.0},
+                                //     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{match element.0 {
+                                //         Some(value) => Some(value.0),
+                                //         None => None
+                                //     }},
+                                // };
+                                // let content_9c3409ca_3a1a_4aec_8faf_a854fb4fb719 = quote::quote!{
+                                //     .into_iter().map(|element|element.0 #dimension2_not_null_or_nullable_content_token_stream).collect()
+                                // };
+                                // let content_3fe06235_43a5_4d30_ba47_d0a476088890 = quote::quote!{
+                                //     .into_iter().map(|element|element.0 #dimension2_not_null_or_nullable_content_token_stream).collect()
+                                // };
+                                // let content_4a1c2e3b_d6c3_4560_b379_89ff29baeb2a = quote::quote!{
+                                //     .into_iter().map(|element|match element.0 {
+                                //         Some(value) => Some(value.0 #dimension2_not_null_or_nullable_content_token_stream),
+                                //         None => None,
+                                //     }).collect()
+                                // };
+                                // let content_86ed5025_dfd0_40b0_999c_acc7b70a9a77 = quote::quote!{
+                                //     .into_iter().map(|element|match element.0 {
+                                //         Some(value) => Some(value.0 #dimension2_not_null_or_nullable_content_token_stream),
+                                //         None => None,
+                                //     }).collect()
+                                // };
                                 generate_start_token_stream(
-                                    &match (
+                                    // &match (
+                                    //     &dimension1_not_null_or_nullable,
+                                    //     &dimension2_not_null_or_nullable,
+                                    // ) {
+                                    //     (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => content_9c3409ca_3a1a_4aec_8faf_a854fb4fb719.clone(),
+                                    //     (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => content_3fe06235_43a5_4d30_ba47_d0a476088890.clone(),
+                                    //     (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => content_4a1c2e3b_d6c3_4560_b379_89ff29baeb2a.clone(),
+                                    //     (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => content_86ed5025_dfd0_40b0_999c_acc7b70a9a77.clone(),
+                                    // },
+                                    &generate_into_iter_map_element_collect_not_null_or_nullable_content_token_stream(
                                         &dimension1_not_null_or_nullable,
-                                        &dimension2_not_null_or_nullable,
-                                    ) {
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => content_9c3409ca_3a1a_4aec_8faf_a854fb4fb719.clone(),
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => content_3fe06235_43a5_4d30_ba47_d0a476088890.clone(),
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => content_4a1c2e3b_d6c3_4560_b379_89ff29baeb2a.clone(),
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => content_86ed5025_dfd0_40b0_999c_acc7b70a9a77.clone(),
-                                    },
+                                        &dimension2_not_null_or_nullable_content_token_stream
+                                    )
                                 )
                             },
                             // match (
