@@ -3316,6 +3316,57 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
             let ident_read_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case);
+            let ident_read_token_stream_f = {
+                let ident_read_token_stream = {
+                    quote::quote! {
+                        #[derive(
+                            Debug,
+                            Clone,
+                            PartialEq,
+                            serde::Serialize,
+                            serde::Deserialize
+                        )]
+                        pub struct #ident_read_upper_camel_case(#ident_origin_upper_camel_case);
+                    }
+                };
+                let impl_ident_read_token_stream = {
+                    let pub_fn_new_token_stream = quote::quote!{
+                        // pub fn new(#value_snake_case: ) -> Self {
+                            
+                        // }
+                    };
+                    let pub_fn_into_inner_token_stream = {
+                        let content_token_stream = {
+                            quote::quote!{
+
+                            }
+                        };
+                        quote::quote!{
+                            // pub fn into_inner(self) ->  {
+                            //     #content_token_stream
+                            // }
+                        }
+                    };
+                    //
+                    quote::quote!{
+                        impl #ident_read_upper_camel_case {
+                            #pub_fn_new_token_stream
+                            #pub_fn_into_inner_token_stream
+                        }
+                    }
+                };
+                quote::quote!{
+                    #ident_read_token_stream
+                    #impl_ident_read_token_stream
+                    // std::fmt::Debug 
+                    // + Clone 
+                    // + PartialEq 
+                    // + serde::Serialize 
+                    // + for<'__> serde::Deserialize<'__> 
+                    // + for<'__> sqlx::Decode<'__, sqlx::Postgres> 
+                    // + sqlx::Type<sqlx::Postgres>;
+                }
+            };
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
             let ident_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case);
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
