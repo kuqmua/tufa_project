@@ -1508,17 +1508,42 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         use postgresql_crud_macros_common::NotNullOrNullable;
                         let content_token_stream = match &element.postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{todo!()},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{todo!()},
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{self.0.0},
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                    match self.0.0 {
+                                        Some(value) => Some(value.0),
+                                        None => None
+                                    }
+                                },
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (
                                 &not_null_or_nullable,
                                 &dimension1_not_null_or_nullable,
                             ) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                    self.0.0.into_iter().map(|element|element.0).collect()
+                                },
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                    self.0.0.into_iter().map(|element|match element.0 {
+                                        Some(value) => Some(value.0),
+                                        None => None
+                                    }).collect()
+                                },
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                    match self.0.0 {
+                                        Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                        None => None
+                                    }
+                                },
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                    match self.0.0 {
+                                        Some(value) => Some(value.0.into_iter().map(|element|match element.0{
+                                            Some(value) => Some(value.0),
+                                            None => None
+                                        }).collect()),
+                                        None => None
+                                    }
+                                },
                             },
                             PostgresqlJsonTypePattern::ArrayDimension2 {
                                 dimension1_not_null_or_nullable,
@@ -1528,8 +1553,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &dimension1_not_null_or_nullable,
                                 &dimension2_not_null_or_nullable,
                             ) {
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                    self.0.0.into_iter().map(|element|element.0.into_iter().map(|element|element.0).collect()).collect()
+                                },
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                    self.0.0.into_iter().map(|element|element.0.into_iter().map(|element|match element.0 {
+                                        Some(value) => Some(value.0),
+                                        None => None
+                                    }).collect()).collect()
+                                },
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{todo!()},
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{todo!()},
@@ -1618,7 +1650,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     };
                     quote::quote! {
                         impl #ident_read_upper_camel_case {
-                            // #pub_fn_new_token_stream
+                            #pub_fn_new_token_stream
                             #pub_fn_into_inner_token_stream
                         }
                     }
@@ -1780,7 +1812,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 #ident_origin_token_stream
                 #ident_select_token_stream
                 #ident_where_element_token_stream
-                // #ident_read_token_stream
+                #ident_read_token_stream
                 #impl_crate_postgresql_json_type_for_ident_token_stream
             };
             // if let (
