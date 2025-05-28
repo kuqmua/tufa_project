@@ -1507,7 +1507,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     let pub_fn_into_inner_token_stream = {
                         let content_token_stream = {
                             use postgresql_crud_macros_common::NotNullOrNullable;
-                            let value_zero_token_stream = quote::quote!{value.0};
+                            let value_dot_zero_token_stream = quote::quote!{value.0};
+                            let element_dot_zero_token_stream = quote::quote!{element.0};
                             let generate_into_iter_map_element_collect_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                                 quote::quote!{.into_iter().map(|element|#content_token_stream).collect()}
                             };
@@ -1519,9 +1520,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             };
                             let generate_into_iter_map_element_collect_not_null_or_nullable_token_stream = |not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable|{
                                 let content_token_stream = match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{element.0},
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => element_dot_zero_token_stream.clone(),
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_element_zero_token_stream(
-                                        &quote::quote!{element.0},
+                                        &element_dot_zero_token_stream,
                                         &proc_macro2::TokenStream::new()
                                     )
                                 };
@@ -1533,11 +1534,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             |{
                                 match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_into_iter_map_element_collect_token_stream(
-                                        &quote::quote!{element.0 #content_token_stream}
+                                        &quote::quote!{#element_dot_zero_token_stream #content_token_stream}
                                     ),
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                         let match_element_zero_token_stream = generate_match_element_zero_token_stream(
-                                            &quote::quote!{element.0},
+                                            &element_dot_zero_token_stream,
                                             &content_token_stream
                                         );
                                         quote::quote!{
