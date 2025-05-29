@@ -3314,71 +3314,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
                 }
             };
-            let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
-            let ident_read_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case);
-            let ident_read_token_stream_f = {
-                let ident_read_token_stream = {
-                    quote::quote! {
-                        #[derive(
-                            Debug,
-                            Clone,
-                            PartialEq,
-                            serde::Serialize,
-                            serde::Deserialize
-                        )]
-                        pub struct #ident_read_upper_camel_case(#ident_origin_upper_camel_case);
-                    }
-                };
-                let impl_ident_read_token_stream = {
-                    let pub_fn_new_token_stream = quote::quote!{
-                        pub fn new(#value_snake_case: #impl_new_for_ident_origin_type_token_stream) -> Self {
-                            Self(#ident_origin_upper_camel_case::new(#value_snake_case))
-                        }
-                    };
-                    let pub_fn_into_inner_token_stream = {
-                        // let content_token_stream = {
-                        //     // match &postgresql_type_pattern {
-                        //     //     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                        //     //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{},
-                        //     //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{},
-                        //     //     },
-                        //     //     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullabl, &dimension1_not_null_or_nullable) {
-
-                        //     //     },
-                        //     // }
-                        //     quote::quote!{}
-                        // };
-                        quote::quote!{
-                            // pub fn into_inner(self) ->  {
-                            //     #content_token_stream
-                            // }
-                        }
-                    };
-                    quote::quote!{
-                        impl #ident_read_upper_camel_case {
-                            #pub_fn_new_token_stream
-                            #pub_fn_into_inner_token_stream
-                        }
-                    }
-                };
-                let impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
-                    &ident_read_upper_camel_case,
-                    &ident_origin_upper_camel_case,
-                    &quote::quote! {Ok(Self(#value_snake_case))}
-                );
-                let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
-                    &ident_read_upper_camel_case,
-                    &ident_origin_upper_camel_case,
-                );
-                quote::quote!{
-                    #ident_read_token_stream
-                    #impl_ident_read_token_stream
-                    #impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream
-                    #impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream
-                }
-            };
-            let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
-            let ident_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case);
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
             let ident_where_element_token_stream = {
                 let generate_ident_where_element_token_stream = |variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter>| {
@@ -3545,6 +3480,71 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     // PostgresqlTypePattern::ArrayDimension4 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
                 }
             };
+            let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
+            let ident_read_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_read_upper_camel_case, &ident_origin_upper_camel_case);
+            let ident_read_token_stream_f = {
+                let ident_read_token_stream = {
+                    quote::quote! {
+                        #[derive(
+                            Debug,
+                            Clone,
+                            PartialEq,
+                            serde::Serialize,
+                            serde::Deserialize
+                        )]
+                        pub struct #ident_read_upper_camel_case(#ident_origin_upper_camel_case);
+                    }
+                };
+                let impl_ident_read_token_stream = {
+                    let pub_fn_new_token_stream = quote::quote!{
+                        pub fn new(#value_snake_case: #impl_new_for_ident_origin_type_token_stream) -> Self {
+                            Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                        }
+                    };
+                    let pub_fn_into_inner_token_stream = {
+                        // let content_token_stream = {
+                        //     // match &postgresql_type_pattern {
+                        //     //     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                        //     //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{},
+                        //     //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{},
+                        //     //     },
+                        //     //     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullabl, &dimension1_not_null_or_nullable) {
+
+                        //     //     },
+                        //     // }
+                        //     quote::quote!{}
+                        // };
+                        quote::quote!{
+                            // pub fn into_inner(self) ->  {
+                            //     #content_token_stream
+                            // }
+                        }
+                    };
+                    quote::quote!{
+                        impl #ident_read_upper_camel_case {
+                            #pub_fn_new_token_stream
+                            #pub_fn_into_inner_token_stream
+                        }
+                    }
+                };
+                let impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_decode_sqlx_postgres_for_ident_token_stream(
+                    &ident_read_upper_camel_case,
+                    &ident_origin_upper_camel_case,
+                    &quote::quote! {Ok(Self(#value_snake_case))}
+                );
+                let impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(
+                    &ident_read_upper_camel_case,
+                    &ident_origin_upper_camel_case,
+                );
+                quote::quote!{
+                    #ident_read_token_stream
+                    #impl_ident_read_token_stream
+                    #impl_sqlx_decode_sqlx_postgres_for_ident_read_token_stream
+                    #impl_sqlx_type_sqlx_postgres_for_ident_read_token_stream
+                }
+            };
+            let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
+            let ident_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case);
             let impl_postgresql_type_for_ident_token_stream = {
                 let generate_ok_std_string_string_from_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {Ok(#std_string_string_token_stream::from(#content_token_stream))}
