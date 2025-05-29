@@ -2535,17 +2535,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         })),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => {
-                            postgresql_crud_macros_common::DeriveOrImpl::Impl(
-                                generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(&impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream)
-                            )
-                        }
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(
+                            &impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                        )),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(
                             &impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                         )),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => {
-                            postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(&impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream))
-                        }
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(
+                            &impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                        )),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&{
                             quote::quote! {
                                 #enum_field_two_token_stream
@@ -2557,9 +2555,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #serde_deserializer_deserialize_struct_visitor_token_stream
                             }
                         })),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => {
-                            postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(&impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream))
-                        }
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(
+                            &impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                        )),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(&impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream)
                         }),
@@ -2791,7 +2789,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 // }),
                             }
                         };
-                        quote::quote!{
+                        quote::quote! {
                             pub fn new(value: #impl_new_for_ident_origin_type_token_stream) -> Self {
                                 Self(#content_token_stream)
                             }
@@ -2811,8 +2809,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         //     quote::quote!{}
                         // };
 
-
-
                         // let generate_current_ident_origin = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
                         //     let value = generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable);
                         //     match &not_null_or_nullable {
@@ -2820,23 +2816,55 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value),
                         //     }
                         // };
-                        // let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_pattern {
-                        //     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                        //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
-                        //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case),
-                        //     },
-                        //     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
-                        //         let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                        //             postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, dimension1_not_null_or_nullable),
-                        //             postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                        //         };
-                        //         generate_current_ident_origin(current_postgresql_type_pattern, current_not_null_or_nullable)
-                        //     },
-                        // }
-                        quote::quote!{
-                            // pub fn into_inner(self) -> #impl_new_for_ident_origin_type_token_stream {
-                            //     #content_token_stream
-                            // }
+
+
+                        // pub struct StdPrimitiveI16AsNotNullInt2Origin(std::primitive::i16);
+                        // pub struct OptionStdPrimitiveI16AsNullableInt2Origin(std::option::Option<StdPrimitiveI16AsNotNullInt2Origin>);
+                        // pub struct VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2Origin(std::vec::Vec<OptionStdPrimitiveI16AsNullableInt2Origin>);
+                        // pub struct OptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableInt2Origin(std::option::Option<VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2Origin>);
+                        // pub struct StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin(std::primitive::i64);
+                        
+                        let content_token_stream = match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {self.0},
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                                    match self.0 {
+                                        Some(value) => Some(value.0),
+                                        None => None
+                                    }
+                                },
+                            },
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
+                                    self.0.into_iter().map(|element|element.0).collect()
+                                },
+                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
+                                    self.0.into_iter().map(|element| match element.0 {
+                                        Some(value) => Some(value.0),
+                                        None => None
+                                    }).collect()
+                                },
+                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
+                                    match self.0 {
+                                        Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                        None => None
+                                    }
+                                },
+                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
+                                    match self.0 {
+                                        Some(value) => Some(value.0.into_iter().map(|element| match element.0 {
+                                            Some(value) => Some(value.0),
+                                            None => None
+                                        }).collect()),
+                                        None => None
+                                    }
+                                },
+                            },
+                        };
+                        quote::quote! {
+                            pub fn into_inner(self) -> #impl_new_for_ident_origin_type_token_stream {
+                                #content_token_stream
+                            }
                         }
                     };
                     quote::quote! {
@@ -2900,12 +2928,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     postgresql_crud_macros_common::DeriveOrImpl::Impl(value) => value,
                 };
                 let impl_std_fmt_display_for_ident_origin_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {write!(formatter, "{self:?}")});
-                let impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
-                    &proc_macro2::TokenStream::new(),
-                    &ident_origin_upper_camel_case,
-                    &proc_macro2::TokenStream::new(),
-                    &quote::quote! {self.to_string()}
-                );
+                let impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream =
+                    macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {self.to_string()});
 
                 let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = quote::quote! {
                     #sqlx_types_time_date_as_date_field_type_token_stream::from_ordinal_date(
@@ -2921,9 +2945,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 // fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
                 //     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
                 // }
-                let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-                    &ident_origin_upper_camel_case, 
-                    &{
+                let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_origin_token_stream =
+                    postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_origin_upper_camel_case, &{
                         let content_token_stream = match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
@@ -2995,8 +3018,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         quote::quote! {Self(#content_token_stream)}
-                    }
-                );
+                    });
                 let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(&ident_origin_upper_camel_case, &field_type_handle);
                 let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = {
                     let self_snake_case = naming::SelfSnakeCase;
@@ -3059,45 +3081,38 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBePrimaryKey::False,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => CanBePrimaryKey::False,
                 };
-                let (maybe_impl_postgresql_type_where_filter_for_ident_origin_if_can_be_primary_key_token_stream, maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream) = if let (
-                    CanBePrimaryKey::True,
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                    PostgresqlTypePattern::Standart
-                ) = (
-                    &can_be_primary_key,
-                    &not_null_or_nullable,
-                    &postgresql_type_pattern
-                ) {
-                    (
-                        postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
-                            &quote::quote! {<'a>},
-                            &ident_standart_not_null_origin_upper_camel_case,
-                            &proc_macro2::TokenStream::new(),
-                            &{
-                                let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
-                                quote::quote! {
-                                    match #increment_snake_case.checked_add(1) {
-                                        Some(value) => {
-                                            *#increment_snake_case = value;
-                                            Ok(format!("({} = ${})", column, #increment_snake_case))
+                let (maybe_impl_postgresql_type_where_filter_for_ident_origin_if_can_be_primary_key_token_stream, maybe_impl_postgresql_type_primary_key_for_ident_standart_not_null_if_can_be_primary_key_token_stream) =
+                    if let (CanBePrimaryKey::True, postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&can_be_primary_key, &not_null_or_nullable, &postgresql_type_pattern) {
+                        (
+                            postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
+                                &quote::quote! {<'a>},
+                                &ident_standart_not_null_origin_upper_camel_case,
+                                &proc_macro2::TokenStream::new(),
+                                &{
+                                    let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
+                                    quote::quote! {
+                                        match #increment_snake_case.checked_add(1) {
+                                            Some(value) => {
+                                                *#increment_snake_case = value;
+                                                Ok(format!("({} = ${})", column, #increment_snake_case))
+                                            }
+                                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                         }
-                                        None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                     }
+                                },
+                                &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                                &generate_typical_query_bind_token_stream(&naming::SelfSnakeCase),
+                                &postgresql_crud_macros_common_import_path_crate,
+                            ),
+                            quote::quote! {
+                                impl crate::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
+                                    type PrimaryKey = #ident_standart_not_null_origin_upper_camel_case;
                                 }
                             },
-                            &postgresql_crud_macros_common::IsQueryBindMutable::True,
-                            &generate_typical_query_bind_token_stream(&naming::SelfSnakeCase),
-                            &postgresql_crud_macros_common_import_path_crate,
-                        ),
-                        quote::quote! {
-                            impl crate::PostgresqlTypePrimaryKey for #ident_standart_not_null_upper_camel_case {
-                                type PrimaryKey = #ident_standart_not_null_origin_upper_camel_case;
-                            }
-                        },
-                    )
-                } else {
-                    (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new())
-                };
+                        )
+                    } else {
+                        (proc_macro2::TokenStream::new(), proc_macro2::TokenStream::new())
+                    };
                 let impl_create_table_column_query_part_for_ident_origin_token_stream = postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(
                     &ident_origin_upper_camel_case,
                     postgresql_crud_macros_common::IsPrimaryKeyUsed::True,
@@ -3597,7 +3612,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             //         &quote::quote! {self.0.to_string()}
             //     );
             //     let impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_read_token_stream = postgresql_crud_macros_common::generate_impl_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-            //         &ident_read_upper_camel_case, 
+            //         &ident_read_upper_camel_case,
             //         &quote::quote! {Self(#crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)}
             //     );
             //     let impl_sqlx_encode_sqlx_postgres_for_ident_origin_token_stream = {
@@ -3660,7 +3675,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             //         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBePrimaryKey::False,
             //         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => CanBePrimaryKey::False,
             //     };
-            //     let 
+            //     let
             //     (
             //         maybe_impl_postgresql_type_where_filter_for_ident_read_if_can_be_primary_key_token_stream
             //         ,
