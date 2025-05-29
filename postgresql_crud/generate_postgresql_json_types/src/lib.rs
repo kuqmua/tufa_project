@@ -1636,10 +1636,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             // println!("{ident_read_token_stream}");
             let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
-            let ident_read_inner_token_stream = {
-                quote::quote!{
-                    pub type #ident_read_inner_upper_camel_case = std::primitive::bool;
-                }
+            let ident_read_inner_token_stream = quote::quote!{
+                pub type #ident_read_inner_upper_camel_case = #ident_origin_impl_new_value_type_token_stream;
             };
             let impl_crate_postgresql_json_type_for_ident_token_stream = {
                 let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
