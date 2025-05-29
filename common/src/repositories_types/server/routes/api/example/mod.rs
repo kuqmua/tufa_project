@@ -3428,7 +3428,7 @@ pub enum TryUpdateManyErrorNamed {
     },
     NotUniquePrimaryKey {
         #[eo_to_std_string_string]
-        not_unique_primary_key: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlRead,
+        not_unique_primary_key: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlUpdate,//was Read fix todo
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     TryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize {
@@ -3447,21 +3447,20 @@ pub async fn try_update_many(
             if !acc.contains(&&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36) {
                 acc.push(&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36);
             } else {
-                // let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
-                // return Err(TryUpdateManyErrorNamed::NotUniquePrimaryKey {
-                //     not_unique_primary_key: error_0,
-                //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                //         file!().to_owned(),
-                //         line!(),
-                //         column!(),
-                //         Some(error_occurence_lib::code_occurence::MacroOccurence {
-                //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                //             line: 4153,
-                //             column: 203,
-                //         }),
-                //     ),
-                // });
-                todo!()
+                let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
+                return Err(TryUpdateManyErrorNamed::NotUniquePrimaryKey {
+                    not_unique_primary_key: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 4153,
+                            column: 203,
+                        }),
+                    ),
+                });
             }
         }
         let value = UpdateManyPayload::from(parameters.payload);
