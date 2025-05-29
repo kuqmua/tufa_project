@@ -312,6 +312,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["permission"],
     ["tvfrr"],
     ["read"],
+    ["read", "inner"],
     ["logic"],
     ["extraction"],
     ["generated"],

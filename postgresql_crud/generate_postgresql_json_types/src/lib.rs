@@ -1635,6 +1635,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             // println!("{ident_read_token_stream}");
+            let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
+            let ident_read_inner_token_stream = {
+                quote::quote!{
+                    pub type #ident_read_inner_upper_camel_case = std::primitive::bool;
+                }
+            };
             let impl_crate_postgresql_json_type_for_ident_token_stream = {
                 let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
                 let generate_dimension_number_stringified = |dimensions_number: std::primitive::usize| format!("dimension{dimensions_number}");
@@ -1664,6 +1670,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &ident_select_upper_camel_case,
                     &ident_read_upper_camel_case,
+                    &ident_read_inner_upper_camel_case,
                     &match &element.postgresql_json_type_pattern {
                         PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::False,
@@ -1777,6 +1784,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 #ident_select_token_stream
                 #ident_where_element_token_stream
                 #ident_read_token_stream
+                #ident_read_inner_token_stream
                 #impl_crate_postgresql_json_type_for_ident_token_stream
             };
             // if let (
