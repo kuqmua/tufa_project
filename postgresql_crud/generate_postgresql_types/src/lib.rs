@@ -2796,34 +2796,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     let pub_fn_into_inner_token_stream = {
-                        // let content_token_stream = {
-                        //     // match &postgresql_type_pattern {
-                        //     //     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                        //     //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{},
-                        //     //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{},
-                        //     //     },
-                        //     //     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullabl, &dimension1_not_null_or_nullable) {
-
-                        //     //     },
-                        //     // }
-                        //     quote::quote!{}
-                        // };
-
-                        // let generate_current_ident_origin = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
-                        //     let value = generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable);
-                        //     match &not_null_or_nullable {
-                        //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_std_vec_vec_tokens_declaration_token_stream(&value),
-                        //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value),
-                        //     }
-                        // };
-
-
-                        // pub struct StdPrimitiveI16AsNotNullInt2Origin(std::primitive::i16);
-                        // pub struct OptionStdPrimitiveI16AsNullableInt2Origin(std::option::Option<StdPrimitiveI16AsNotNullInt2Origin>);
-                        // pub struct VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2Origin(std::vec::Vec<OptionStdPrimitiveI16AsNullableInt2Origin>);
-                        // pub struct OptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableInt2Origin(std::option::Option<VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2Origin>);
-                        // pub struct StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin(std::primitive::i64);
-                        
                         let content_token_stream = match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {self.0},
