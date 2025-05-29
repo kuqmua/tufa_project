@@ -2820,7 +2820,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&value),
                         //     }
                         // };
-                        // let type_token_stream: &dyn quote::ToTokens = match &postgresql_type_pattern {
+                        // let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_pattern {
                         //     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                         //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
                         //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case),
@@ -2834,7 +2834,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         //     },
                         // }
                         quote::quote!{
-                            // pub fn into_inner(self) -> #type_token_stream {
+                            // pub fn into_inner(self) -> #impl_new_for_ident_origin_type_token_stream {
                             //     #content_token_stream
                             // }
                         }
