@@ -2939,24 +2939,25 @@ pub async fn try_update_many_route_logic(app_state: axum::extract::State<crate::
                         if !acc.contains(&&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36) {
                             acc.push(&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36);
                         } else {
-                            let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
-                            let error = TryUpdateManyRouteLogicErrorNamed::NotUniquePrimaryKey {
-                                not_unique_primary_key: error_0,
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    file!().to_owned(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line: 3918,
-                                        column: 185,
-                                    }),
-                                ),
-                            };
-                            eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateManyRouteLogicResponseVariants::from(error)));
-                            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                            return response;
+                            // let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
+                            // let error = TryUpdateManyRouteLogicErrorNamed::NotUniquePrimaryKey {
+                            //     not_unique_primary_key: error_0,
+                            //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            //         file!().to_owned(),
+                            //         line!(),
+                            //         column!(),
+                            //         Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            //             line: 3918,
+                            //             column: 185,
+                            //         }),
+                            //     ),
+                            // };
+                            // eprintln!("{error}");
+                            // let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateManyRouteLogicResponseVariants::from(error)));
+                            // *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                            // return response;
+                            todo!()
                         }
                     }
                 }
@@ -3005,12 +3006,13 @@ pub async fn try_update_many_route_logic(app_state: axum::extract::State<crate::
             }
         },
     };
-    let expected_primary_keys = parameters
-        .payload
-        .0
-        .iter()
-        .map(|element| element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone())
-        .collect::<std::vec::Vec<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey>>();
+    // let expected_primary_keys = parameters
+    //     .payload
+    //     .0
+    //     .iter()
+    //     .map(|element| element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone())
+    //     .collect::<std::vec::Vec<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey>>();
+    //todo
     let query_string = {
         let mut query = std::string::String::from("update example set ");
         let mut increment: std::primitive::u64 = 0;
@@ -3317,57 +3319,57 @@ pub async fn try_update_many_route_logic(app_state: axum::extract::State<crate::
             }
             acc
         };
-        {
-            let error_0 = expected_primary_keys.into_iter().fold(std::vec::Vec::new(), |mut acc, element| {
-                if let false = value.contains(&element) {
-                    acc.push(element);
-                }
-                acc
-            });
-            if let false = error_0.is_empty() {
-                match executor.rollback().await {
-                    Ok(_) => {
-                        let error = TryUpdateManyRouteLogicErrorNamed::NonExistingPrimaryKeys {
-                            non_existing_primary_keys: error_0,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                file!().to_owned(),
-                                line!(),
-                                column!(),
-                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line: 1961,
-                                    column: 13,
-                                }),
-                            ),
-                        };
-                        eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateManyRouteLogicResponseVariants::from(error)));
-                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                        return response;
-                    }
-                    Err(error_1) => {
-                        let error = TryUpdateManyRouteLogicErrorNamed::NonExistingPrimaryKeysAndRollback {
-                            non_existing_primary_keys: error_0,
-                            rollback: error_1,
-                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                file!().to_owned(),
-                                line!(),
-                                column!(),
-                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line: 1977,
-                                    column: 13,
-                                }),
-                            ),
-                        };
-                        eprintln!("{error}");
-                        let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateManyRouteLogicResponseVariants::from(error)));
-                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                        return response;
-                    }
-                }
-            }
-        }
+        // {
+        //     let error_0 = expected_primary_keys.into_iter().fold(std::vec::Vec::new(), |mut acc, element| {
+        //         if let false = value.contains(&element) {
+        //             acc.push(element);
+        //         }
+        //         acc
+        //     });
+        //     if let false = error_0.is_empty() {
+        //         match executor.rollback().await {
+        //             Ok(_) => {
+        //                 let error = TryUpdateManyRouteLogicErrorNamed::NonExistingPrimaryKeys {
+        //                     non_existing_primary_keys: error_0,
+        //                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+        //                         file!().to_owned(),
+        //                         line!(),
+        //                         column!(),
+        //                         Some(error_occurence_lib::code_occurence::MacroOccurence {
+        //                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+        //                             line: 1961,
+        //                             column: 13,
+        //                         }),
+        //                     ),
+        //                 };
+        //                 eprintln!("{error}");
+        //                 let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateManyRouteLogicResponseVariants::from(error)));
+        //                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+        //                 return response;
+        //             }
+        //             Err(error_1) => {
+        //                 let error = TryUpdateManyRouteLogicErrorNamed::NonExistingPrimaryKeysAndRollback {
+        //                     non_existing_primary_keys: error_0,
+        //                     rollback: error_1,
+        //                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+        //                         file!().to_owned(),
+        //                         line!(),
+        //                         column!(),
+        //                         Some(error_occurence_lib::code_occurence::MacroOccurence {
+        //                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+        //                             line: 1977,
+        //                             column: 13,
+        //                         }),
+        //                     ),
+        //                 };
+        //                 eprintln!("{error}");
+        //                 let mut response = axum::response::IntoResponse::into_response(axum::Json(TryUpdateManyRouteLogicResponseVariants::from(error)));
+        //                 *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+        //                 return response;
+        //             }
+        //         }
+        //     }
+        // }
         if let Err(error_0) = executor.commit().await {
             let error = TryUpdateManyRouteLogicErrorNamed::Postgresql {
                 postgresql: error_0,
@@ -3446,20 +3448,21 @@ pub async fn try_update_many(
             if !acc.contains(&&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36) {
                 acc.push(&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36);
             } else {
-                let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
-                return Err(TryUpdateManyErrorNamed::NotUniquePrimaryKey {
-                    not_unique_primary_key: error_0,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                        file!().to_owned(),
-                        line!(),
-                        column!(),
-                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 4153,
-                            column: 203,
-                        }),
-                    ),
-                });
+                // let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
+                // return Err(TryUpdateManyErrorNamed::NotUniquePrimaryKey {
+                //     not_unique_primary_key: error_0,
+                //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                //         file!().to_owned(),
+                //         line!(),
+                //         column!(),
+                //         Some(error_occurence_lib::code_occurence::MacroOccurence {
+                //             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                //             line: 4153,
+                //             column: 203,
+                //         }),
+                //     ),
+                // });
+                todo!()
             }
         }
         let value = UpdateManyPayload::from(parameters.payload);
