@@ -2301,6 +2301,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     &ShouldDeriveSerdeDeserialize::False
                 );
+                let impl_into_inner_for_ident_with_id_read_standart_not_null_token_stream = {
+                    quote::quote!{
+                        // impl #ident_with_id_read_standart_not_null_upper_camel_case {
+                        //     pub fn into_inner(self) -> {
+
+                        //     }
+                        // }
+                    }
+                };
                 let ident_with_id_read_try_from_error_named_standart_not_null_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case);
                 let impl_try_new_for_ident_with_id_read_try_from_error_named_standart_not_null_token_stream = generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&is_standart_with_id_true);
                 let impl_serde_deserialize_for_ident_with_id_read_standart_not_null_token_stream = generate_impl_serde_deserialize_for_ident_read_token_stream(&is_standart_with_id_true);
@@ -2311,6 +2320,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 );
                 quote::quote! {
                     #ident_with_id_read_standart_not_null_token_stream
+                    #impl_into_inner_for_ident_with_id_read_standart_not_null_token_stream
                     #ident_with_id_read_try_from_error_named_standart_not_null_token_stream
                     #impl_try_new_for_ident_with_id_read_try_from_error_named_standart_not_null_token_stream
                     #impl_serde_deserialize_for_ident_with_id_read_standart_not_null_token_stream
