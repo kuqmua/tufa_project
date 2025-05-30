@@ -304,6 +304,7 @@ pub fn generate_postgresql_json_type_token_stream(
     where_element_type_token_stream: &dyn quote::ToTokens,
     read_type_token_stream: &dyn quote::ToTokens,
     read_inner_type_token_stream: &dyn quote::ToTokens,
+    into_inner_token_stream: &dyn quote::ToTokens,
     update_type_token_stream: &dyn quote::ToTokens,
     update_query_part_token_stream: &dyn quote::ToTokens,
     is_update_query_part_self_update_used: &IsUpdateQueryPartSelfUpdateUsed,
@@ -370,9 +371,9 @@ pub fn generate_postgresql_json_type_token_stream(
             type #where_element_upper_camel_case = #where_element_type_token_stream;
             type #read_upper_camel_case = #read_type_token_stream;
             type #read_inner_upper_camel_case = #read_inner_type_token_stream;
-            // fn into_inner(#value_snake_case: Self::#read_upper_camel_case) -> Self::#read_inner_type_token_stream {
-
-            // }
+            fn into_inner(#value_snake_case: Self::#read_upper_camel_case) -> Self::#read_inner_upper_camel_case {
+                #into_inner_token_stream
+            }
             type #update_upper_camel_case = #update_type_token_stream;
             fn #update_query_part_snake_case(
                 #is_update_query_part_self_update_used: &Self::#update_upper_camel_case,

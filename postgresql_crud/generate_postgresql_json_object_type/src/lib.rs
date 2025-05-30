@@ -3339,6 +3339,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &ident_read_inner_upper_camel_case,
+                &quote::quote!{
+                    todo!()
+                },
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
@@ -3403,6 +3406,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_with_id_where_element_standart_not_null_upper_camel_case,
                 &ident_with_id_read_standart_not_null_upper_camel_case,
                 &ident_with_id_read_inner_standart_not_null_upper_camel_case,
+                &quote::quote!{
+                    todo!()
+                },
                 &ident_with_id_update_standart_not_null_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,

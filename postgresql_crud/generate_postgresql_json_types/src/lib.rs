@@ -1753,6 +1753,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
                     &ident_read_inner_upper_camel_case,
+                    &quote::quote!{
+                        todo!()
+                    },
                     &ident_origin_upper_camel_case,
                     &{
                         let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
