@@ -3395,6 +3395,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
+                &ident_read_inner_upper_camel_case,
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
