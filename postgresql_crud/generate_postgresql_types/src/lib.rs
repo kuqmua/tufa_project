@@ -3707,6 +3707,45 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
                     &ident_read_inner_upper_camel_case,
+                    &match &postgresql_type_pattern {
+                        PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
+                                value.0.0
+                            },
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
+                                match value.0.0 {
+                                    Some(value) => Some(value.0),
+                                    None => None
+                                }
+                            },
+                        },
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
+                                value.0.0.into_iter().map(|element|element.0).collect()
+                            },
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
+                                value.0.0.into_iter().map(|element| match element.0 {
+                                    Some(value) => Some(value.0),
+                                    None => None
+                                }).collect()
+                            },
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
+                                match value.0.0 {
+                                    Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
+                                    None => None
+                                }
+                            },
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
+                                match value.0.0 {
+                                    Some(value) => Some(value.0.into_iter().map(|element| match element.0 {
+                                        Some(value) => Some(value.0),
+                                        None => None
+                                    }).collect()),
+                                    None => None
+                                }
+                            },
+                        },
+                    },
                     &ident_update_upper_camel_case,
                     &typical_query_part_token_stream,
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,

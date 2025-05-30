@@ -3396,6 +3396,30 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &ident_read_inner_upper_camel_case,
+                &match &postgresql_json_object_type_pattern {
+                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(
+                            &IsStandartWithId::False
+                        ),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                            match value.0 {
+                                Some(value) => Some(value.into_inner()),
+                                None => None
+                            }
+                        }
+                    },
+                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                            value.0.into_iter().map(|element|element.into_inner()).collect()
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                            match value.0 {
+                                Some(value) => Some(value.0.into_iter().map(|element|element.into_inner()).collect()),
+                                None => None
+                            }
+                        }
+                    },
+                },
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,

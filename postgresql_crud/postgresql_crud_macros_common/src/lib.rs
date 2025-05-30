@@ -557,6 +557,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     ident_where_element_upper_camel_case: &dyn quote::ToTokens,
     ident_read_upper_camel_case: &dyn quote::ToTokens,
     ident_read_inner_upper_camel_case: &dyn quote::ToTokens,
+    into_inner_token_stream: &dyn quote::ToTokens,
     ident_update_upper_camel_case: &dyn quote::ToTokens,
     update_query_part_content_token_stream: &dyn quote::ToTokens,
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
@@ -610,6 +611,9 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             type #where_element_upper_camel_case = #ident_where_element_upper_camel_case;
             type #read_upper_camel_case = #ident_read_upper_camel_case;
             type #read_inner_upper_camel_case = #ident_read_inner_upper_camel_case;
+            fn into_inner(#value_snake_case: Self::#read_upper_camel_case) -> Self::#read_inner_upper_camel_case {
+                #into_inner_token_stream
+            }
             type #update_upper_camel_case = #ident_update_upper_camel_case;
             fn #update_query_part_snake_case(
                 #value_snake_case: &Self::#update_upper_camel_case,
