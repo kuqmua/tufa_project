@@ -970,11 +970,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     //     "GeneratePostgresqlTypesJsonVariants",
     //     &serde_json::to_string(&postgresql_type_record_vec).unwrap(),
     // );
-    use rayon::iter::IntoParallelRefIterator;
-    use rayon::iter::ParallelIterator;
+    // use rayon::iter::IntoParallelRefIterator;
+    // use rayon::iter::ParallelIterator;
     let (postgresql_crud_table_rust_struct_fields_token_stream, postgresql_type_array) = postgresql_type_record_vec
-        .par_iter()
-        // .into_iter()//just for console prints ordering
+        // .par_iter()
+        .into_iter()//just for console prints ordering
         .map(|element| {
             // println!("{element:#?}");
             let postgresql_type = &element.postgresql_type;
@@ -3552,29 +3552,55 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     let pub_fn_into_inner_token_stream = {
-                        // let content_token_stream = {
-                        //     // match &postgresql_type_pattern {
-                        //     //     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                        //     //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{},
-                        //     //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{},
-                        //     //     },
-                        //     //     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullabl, &dimension1_not_null_or_nullable) {
+                        let content_token_stream = {
+                            // std::primitive::i16
+                            // std :: option :: Option < std::primitive::i16 >
+                            // std :: vec :: Vec < std :: option :: Option < std::primitive::i16 > >
+                            // std :: option :: Option < std :: vec :: Vec < std :: option :: Option <std::primitive::i16 > > >
+                            // println!("{impl_new_for_ident_origin_type_token_stream}");
 
-                        //     //     },
-                        //     // }
-                        //     quote::quote!{}
-                        // };
+                            // 
+                            // std::primitive::i16
+                            // std :: option :: Option < StdPrimitiveI16AsNotNullInt2Origin >
+                            // std :: vec :: Vec < OptionStdPrimitiveI16AsNullableInt2Origin >
+                            // std :: option :: Option <VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2Origin >
+                            // println!("{}", quote::quote!{#field_type_handle});
+                            match &postgresql_type_pattern {
+                                PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                                        todo!()
+                                    },
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                        todo!()
+                                    },
+                                },
+                                PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                                    (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{
+                                        todo!()
+                                    },
+                                    (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{
+                                        todo!()
+                                    },
+                                    (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{
+                                        todo!()
+                                    },
+                                    (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{
+                                        todo!()
+                                    },
+                                },
+                            }
+                        };
                         quote::quote!{
-                            // pub fn into_inner(self) ->  {
+                            // pub fn into_inner(self) -> #impl_new_for_ident_origin_type_token_stream {
                             //     #content_token_stream
                             // }
                         }
                     };
                     quote::quote!{
-                        // impl #ident_read_upper_camel_case {
-                        //     #pub_fn_new_token_stream
-                        //     #pub_fn_into_inner_token_stream
-                        // }
+                        impl #ident_read_upper_camel_case {
+                            #pub_fn_new_token_stream
+                            #pub_fn_into_inner_token_stream
+                        }
                     }
                 };
                 let impl_error_occurence_lib_to_std_string_string_for_ident_read_token_stream = macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(
