@@ -3568,7 +3568,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             match &postgresql_type_pattern {
                                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
-                                        todo!()
+                                        self.0.0
                                     },
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                                         todo!()
@@ -3591,9 +3591,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         quote::quote!{
-                            // pub fn into_inner(self) -> #impl_new_for_ident_origin_type_token_stream {
-                            //     #content_token_stream
-                            // }
+                            pub fn into_inner(self) -> #impl_new_for_ident_origin_type_token_stream {
+                                #content_token_stream
+                            }
                         }
                     };
                     quote::quote!{
