@@ -3553,17 +3553,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let pub_fn_into_inner_token_stream = {
                         let content_token_stream = {
-                            // std::primitive::i16
-                            // std :: option :: Option < std::primitive::i16 >
-                            // std :: vec :: Vec < std :: option :: Option < std::primitive::i16 > >
-                            // std :: option :: Option < std :: vec :: Vec < std :: option :: Option <std::primitive::i16 > > >
+                   
                             // println!("{impl_new_for_ident_origin_type_token_stream}");
 
                             // 
-                            // std::primitive::i16
-                            // std :: option :: Option < StdPrimitiveI16AsNotNullInt2Origin >
-                            // std :: vec :: Vec < OptionStdPrimitiveI16AsNullableInt2Origin >
-                            // std :: option :: Option <VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2Origin >
+          
                             // println!("{}", quote::quote!{#field_type_handle});
                             match &postgresql_type_pattern {
                                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
