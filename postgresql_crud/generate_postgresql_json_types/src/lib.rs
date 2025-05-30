@@ -1667,8 +1667,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         query
                     },
                     &ident_select_upper_camel_case,
-                    &ident_read_upper_camel_case,
-                    &ident_read_inner_upper_camel_case,
                     &match &element.postgresql_json_type_pattern {
                         PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::IsSelectQueryPartSelfSelectUsed::False,
@@ -1753,6 +1751,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         }
                     },
                     &ident_where_element_upper_camel_case,
+                    &ident_read_upper_camel_case,
+                    &ident_read_inner_upper_camel_case,
                     &ident_origin_upper_camel_case,
                     &{
                         let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;

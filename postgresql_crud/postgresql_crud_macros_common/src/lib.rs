@@ -297,13 +297,13 @@ pub fn generate_postgresql_json_type_token_stream(
     is_create_query_bind_mutable: &IsCreateQueryBindMutable,
     create_query_bind_token_stream: &dyn quote::ToTokens,
     select_type_token_stream: &dyn quote::ToTokens,
-    read_type_token_stream: &dyn quote::ToTokens,
-    read_inner_type_token_stream: &dyn quote::ToTokens,
     is_select_query_part_self_select_used: &IsSelectQueryPartSelfSelectUsed,
     is_select_query_part_column_name_and_maybe_field_getter_for_error_message_used: &IsSelectQueryPartColumnNameAndMaybeFieldGetterForErrorMessageUsed,
     is_select_query_part_is_postgresql_type_used: &IsSelectQueryPartIsPostgresqlTypeUsed,
     select_query_part_token_stream: &dyn quote::ToTokens,
     where_element_type_token_stream: &dyn quote::ToTokens,
+    read_type_token_stream: &dyn quote::ToTokens,
+    read_inner_type_token_stream: &dyn quote::ToTokens,
     update_type_token_stream: &dyn quote::ToTokens,
     update_query_part_token_stream: &dyn quote::ToTokens,
     is_update_query_part_self_update_used: &IsUpdateQueryPartSelfUpdateUsed,
@@ -370,6 +370,9 @@ pub fn generate_postgresql_json_type_token_stream(
             type #where_element_upper_camel_case = #where_element_type_token_stream;
             type #read_upper_camel_case = #read_type_token_stream;
             type #read_inner_upper_camel_case = #read_inner_type_token_stream;
+            // fn into_inner(#value_snake_case: Self::#read_upper_camel_case) -> Self::#read_inner_type_token_stream {
+
+            // }
             type #update_upper_camel_case = #update_type_token_stream;
             fn #update_query_part_snake_case(
                 #is_update_query_part_self_update_used: &Self::#update_upper_camel_case,
