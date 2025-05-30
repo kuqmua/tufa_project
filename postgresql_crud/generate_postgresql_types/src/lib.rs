@@ -1201,7 +1201,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     // },
                 }
             };
-            // println!("{}", quote::quote!{#field_type_handle});
 
             let generate_typical_query_bind_token_stream = |content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
@@ -3590,6 +3589,34 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 }
             };
             // println!("{ident_read_token_stream}");
+            let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
+            let ident_read_inner_token_stream = {
+                let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_pattern {
+                    PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote!{
+                            
+                        },
+                    },
+                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                        (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => &quote::quote! {
+
+                        },
+                        (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => &quote::quote! {
+
+                        },
+                        (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => &quote::quote! {
+
+                        },
+                        (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => &quote::quote! {
+
+                        },
+                    }
+                };
+                quote::quote!{
+                    pub type #ident_read_inner_upper_camel_case = #content_token_stream;
+                }
+            };
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
             let ident_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case);
             let impl_postgresql_type_for_ident_token_stream = {
