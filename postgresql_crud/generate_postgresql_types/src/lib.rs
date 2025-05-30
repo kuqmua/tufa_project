@@ -3571,7 +3571,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         self.0.0
                                     },
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                        todo!()
+                                        match self.0.0 {
+                                            Some(value) => Some(value.0),
+                                            None => None
+                                        }
                                     },
                                 },
                                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
