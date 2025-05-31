@@ -3427,8 +3427,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
         //     // postgresql_crud_macros_common::NotNullOrNullable::Nullable,
 
-        //     PostgresqlJsonObjectTypePattern::Standart,
-        //     // PostgresqlJsonObjectTypePattern::Array,
+        //     // PostgresqlJsonObjectTypePattern::Standart,
+        //     PostgresqlJsonObjectTypePattern::Array,
 
         //     TraitGen::PostgresqlJsonType,
         //     // TraitGen::PostgresqlTypeAndPostgresqlJsonType,
@@ -3437,7 +3437,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     &postgresql_json_object_type_pattern,
         //     &trait_gen,
         // ) {
-        //     if syn_derive_input_ident == "Animal" {//"Animal" // "Doggie"
+        //     if syn_derive_input_ident == "Doggie" {//"Animal" // "Doggie"
         //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //             "GeneratePostgresqlJsonObjectType",
         //             &generated,
