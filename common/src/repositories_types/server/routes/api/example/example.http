@@ -42,18 +42,20 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
         "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0,
-        "column_1761f64d_b930_446b_8422_e4fa6faf8872": 0,
-        "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": [
-          0
-        ],
-        "column_17c31340_b040_4ead_8dcf_476451486b4a": [
-          0
-        ],
-        "column_95fb90c0_96bc_4a73_9e4c_2537bcfe92b6": [
-          0
-        ],
-        "column_77f1b2d9_19ea_4f29_8252_b1658a701077": [
-          0
+        "column_1565db46_4881_405f_8950_773a346a6848": 
+        # null
+        [
+          [
+            [
+              [
+                0,
+                null
+              ],
+              null
+            ],
+            null
+          ],
+          null
         ]
       }
     }
@@ -87,185 +89,112 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": 1
-        }
-      }
-      # ,
-      # {
-      #   "GreaterThan": {
-      #     "logical_operator": "Or",
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "Between": {
-      #     "logical_operator": "Or",
-      #     "start": 0,
-      #     "end": 0
-      #   }
-      # },
-      # {
-      #   "In": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       0
-      #     ]
-      #   }
-      # }
-    ]
-  },
-  # "animal_as_not_null_jsonb_object": {
+  # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
   #   "logical_operator": "Or",
   #   "value": [
   #     {
-  #       "DoggieAsNotNullJsonbObject": {
+  #       "Equal": {
   #         "logical_operator": "Or",
-  #         "value": [
-  #           {
-  #             "Column113F366235A24A7A932603Bbd441815F": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 {
-  #                   "Equal": {
-  #                     "logical_operator": "Or",
-  #                     "value": 0
-  #                   }
-  #                 },
-  #                 {
-  #                   "GreaterThan": {
-  #                     "logical_operator": "Or",
-  #                     "value": 0
-  #                   }
-  #                 },
-  #                 {
-  #                   "Between": {
-  #                     "logical_operator": "Or",
-  #                     "start": 0,
-  #                     "end": 0
-  #                   }
-  #                 },
-  #                 {
-  #                   "In": {
-  #                     "logical_operator": "Or",
-  #                     "value": [
-  #                       0
-  #                     ]
-  #                   }
-  #                 }
-  #               ]
-  #             }
-  #           },
-  #           {
-  #             "Column1761F64DB930446B8422E4Fa6Faf8872": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 [
-  #                   {
-  #                     "Equal": {
-  #                       "logical_operator": "Or",
-  #                       "value": 0
-  #                     }
-  #                   },
-  #                   {
-  #                     "GreaterThan": {
-  #                       "logical_operator": "Or",
-  #                       "value": 0
-  #                     }
-  #                   },
-  #                   {
-  #                     "Between": {
-  #                       "logical_operator": "Or",
-  #                       "start": 0,
-  #                       "end": 0
-  #                     }
-  #                   },
-  #                   {
-  #                     "In": {
-  #                       "logical_operator": "Or",
-  #                       "value": [
-  #                         0
-  #                       ]
-  #                     }
-  #                   }
-  #                 ]
-  #               ]
-  #             }
-  #           },
-  #           {
-  #             "Column0F498E7954404C9D90CfC32F9B7D4005": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 {
-  #                   "Equal": {
-  #                     "logical_operator": "Or",
-  #                     "value": [
-  #                       0
-  #                     ]
-  #                   }
-  #                 }
-  #               ]
-  #             }
-  #           },
-  #           {
-  #             "Column17C31340B0404Ead8Dcf476451486B4A": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 {
-  #                   "Equal": {
-  #                     "logical_operator": "Or",
-  #                     "value": [
-  #                       0
-  #                     ]
-  #                   }
-  #                 }
-  #               ]
-  #             }
-  #           },
-  #           {
-  #             "Column95Fb90C096Bc4A739E4C2537Bcfe92B6": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 [
-  #                   {
-  #                     "Equal": {
-  #                       "logical_operator": "Or",
-  #                       "value": [
-  #                         0
-  #                       ]
-  #                     }
-  #                   }
-  #                 ]
-  #               ]
-  #             }
-  #           },
-  #           {
-  #             "Column77F1B2D919Ea4F298252B1658A701077": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 [
-  #                   {
-  #                     "Equal": {
-  #                       "logical_operator": "Or",
-  #                       "value": [
-  #                         0
-  #                       ]
-  #                     }
-  #                   }
-  #                 ]
-  #               ]
-  #             }
-  #           }
-  #         ]
+  #         "value": 3
   #       }
   #     }
+  #     # ,
+  #     # {
+  #     #   "GreaterThan": {
+  #     #     "logical_operator": "Or",
+  #     #     "value": 0
+  #     #   }
+  #     # },
+  #     # {
+  #     #   "Between": {
+  #     #     "logical_operator": "Or",
+  #     #     "start": 0,
+  #     #     "end": 0
+  #     #   }
+  #     # },
+  #     # {
+  #     #   "In": {
+  #     #     "logical_operator": "Or",
+  #     #     "value": [
+  #     #       0
+  #     #     ]
+  #     #   }
+  #     # }
   #   ]
   # },
+  "animal_as_not_null_jsonb_object": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "DoggieAsNotNullJsonbObject": {
+          "logical_operator": "Or",
+          "value": [
+            # {
+            #   "Column113F366235A24A7A932603Bbd441815F": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       {
+            #         "Equal": {
+            #           "logical_operator": "Or",
+            #           "value": 0
+            #         }
+            #       },
+            #       {
+            #         "GreaterThan": {
+            #           "logical_operator": "Or",
+            #           "value": 0
+            #         }
+            #       },
+            #       {
+            #         "Between": {
+            #           "logical_operator": "Or",
+            #           "start": 0,
+            #           "end": 0
+            #         }
+            #       },
+            #       {
+            #         "In": {
+            #           "logical_operator": "Or",
+            #           "value": [
+            #             0
+            #           ]
+            #         }
+            #       }
+            #     ]
+            #   }
+            # },
+            {
+              "Column1565Db464881405F8950773A346A6848": {
+                "logical_operator": "Or",
+                "value": [
+                  [
+                    {
+                      "Equal": {
+                        "logical_operator": "Or",
+                        "value": [
+                          [
+                            [
+                              [
+                                0,
+                                null
+                              ],
+                              null
+                            ],
+                            null
+                          ],
+                          null
+                        ]
+                      }
+                    }
+                  ]
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
   "select": [
     {
       "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
@@ -278,35 +207,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
               "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
             },
             {
-              "column_1761f64d_b930_446b_8422_e4fa6faf8872": null
-            },
-            {
-              "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": {
+              "column_1565db46_4881_405f_8950_773a346a6848": {
                 "dimension1_pagination": {
                   "limit": 3,
                   "offset": 0
-                }
-              }
-            },
-            {
-              "column_17c31340_b040_4ead_8dcf_476451486b4a": {
-                "dimension1_pagination": {
+                },
+                "dimension2_pagination": {
                   "limit": 3,
                   "offset": 0
-                }
-              }
-            },
-            {
-              "column_95fb90c0_96bc_4a73_9e4c_2537bcfe92b6": {
-                "dimension1_pagination": {
+                },
+                "dimension3_pagination": {
                   "limit": 3,
                   "offset": 0
-                }
-              }
-            },
-            {
-              "column_77f1b2d9_19ea_4f29_8252_b1658a701077": {
-                "dimension1_pagination": {
+                },
+                "dimension4_pagination": {
                   "limit": 3,
                   "offset": 0
                 }
@@ -363,39 +277,19 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
             "value": [
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                  "value": 10
-                }
-              },
-              {
-                "column_1761f64d_b930_446b_8422_e4fa6faf8872": {
                   "value": 0
                 }
               },
               {
-                "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": {
+                "column_1565db46_4881_405f_8950_773a346a6848": {
                   "value": [
-                    0
-                  ]
-                }
-              },
-              {
-                "column_17c31340_b040_4ead_8dcf_476451486b4a": {
-                  "value": [
-                    0
-                  ]
-                }
-              },
-              {
-                "column_95fb90c0_96bc_4a73_9e4c_2537bcfe92b6": {
-                  "value": [
-                    0
-                  ]
-                }
-              },
-              {
-                "column_77f1b2d9_19ea_4f29_8252_b1658a701077": {
-                  "value": [
-                    0
+                    [
+                      [
+                        [
+                          0,null
+                        ]
+                      ]
+                    ]
                   ]
                 }
               }

@@ -1196,6 +1196,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     });
                 let impl_sqlx_type_sqlx_postgres_for_ident_origin_token_stream = {
                     let sqlx_types_json_type_field_type_token_stream = postgresql_crud_macros_common::generate_sqlx_types_json_type_declaration_token_stream(&field_type_standart_not_null);
+                    // println!("{sqlx_types_json_type_field_type_token_stream}");
                     quote::quote! {
                         impl sqlx::Type<sqlx::Postgres> for #ident_origin_upper_camel_case {
                             fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
@@ -1417,9 +1418,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         },
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                             let ident_where_element_standart_nullable_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
-                            let ident_where_element_standart_not_null_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &element.postgresql_json_type_pattern));
+                            let ident_standart_not_null_upper_camel_case = generate_ident_token_stream(
+                                &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                &element.postgresql_json_type_pattern
+                            );
                             quote::quote! {
-                                pub type #ident_where_element_standart_nullable_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<#ident_where_element_standart_not_null_upper_camel_case>;
+                                pub type #ident_where_element_standart_nullable_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::WhereElement
+                                >;
                             }
                         }
                     },
