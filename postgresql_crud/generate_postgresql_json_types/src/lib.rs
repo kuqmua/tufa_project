@@ -1379,20 +1379,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         &postgresql_crud_macros_common::IsQueryBindMutable::False,
                     )
                 };
-                let generate_pub_type_ident_nullable_json_object_postgresql_type_where_filter_type_as_postgresql_json_type_where_element_token_stream = |
-                    postgresql_json_type_pattern: &PostgresqlJsonTypePattern,
-                |{
-                    let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
-                    let ident_as_token_stream = generate_ident_token_stream(
-                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                        &postgresql_json_type_pattern
-                    );
-                    quote::quote! {
-                        pub type #ident_where_element_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<
-                            <#ident_as_token_stream as crate::PostgresqlJsonType>::WhereElement
-                        >;
-                    }
-                };
                 match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &element.postgresql_json_type_pattern {
                         PostgresqlJsonTypePattern::Standart => match &postgresql_json_type_specific {
@@ -1451,9 +1437,18 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
                         },
                     },
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_type_ident_nullable_json_object_postgresql_type_where_filter_type_as_postgresql_json_type_where_element_token_stream(
-                        &element.postgresql_json_type_pattern
-                    ),
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                        let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
+                        let ident_as_token_stream = generate_ident_token_stream(
+                            &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                            &element.postgresql_json_type_pattern
+                        );
+                        quote::quote! {
+                            pub type #ident_where_element_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<
+                                <#ident_as_token_stream as crate::PostgresqlJsonType>::WhereElement
+                            >;
+                        }
+                    }
                 }
             };
             // println!("{ident_where_element_token_stream}");
