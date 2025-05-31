@@ -1393,9 +1393,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         >;
                     }
                 };
-                match &element.postgresql_json_type_pattern {
-                    PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type_specific {
+                match &not_null_or_nullable {
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &element.postgresql_json_type_pattern {
+                        PostgresqlJsonTypePattern::Standart => match &postgresql_json_type_specific {
                             PostgresqlJsonTypeSpecific::Number => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                                 &{
                                     let mut vec = common_postgresql_json_type_filters_variants.clone();
@@ -1429,55 +1429,34 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 &postgresql_crud_macros_common::IsQueryBindMutable::False,
                             ),
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_type_ident_nullable_json_object_postgresql_type_where_filter_type_as_postgresql_json_type_where_element_token_stream(
-                            &element.postgresql_json_type_pattern
-                        ),
-                    },
-                    //todo reuse analog filters in generate_postgresql_types
-                    PostgresqlJsonTypePattern::ArrayDimension1 { .. } => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type_specific {
+                        //todo reuse analog filters in generate_postgresql_types
+                        PostgresqlJsonTypePattern::ArrayDimension1 { .. } => match &postgresql_json_type_specific {
                             PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
                             PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
                             PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_type_ident_nullable_json_object_postgresql_type_where_filter_type_as_postgresql_json_type_where_element_token_stream(
-                            &element.postgresql_json_type_pattern
-                        )
-                    },
-                    PostgresqlJsonTypePattern::ArrayDimension2 { .. } => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type_specific {
+                        PostgresqlJsonTypePattern::ArrayDimension2 { .. } => match &postgresql_json_type_specific {
                             PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
                             PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
                             PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_type_ident_nullable_json_object_postgresql_type_where_filter_type_as_postgresql_json_type_where_element_token_stream(
-                            &element.postgresql_json_type_pattern
-                        )
-                    },
-                    PostgresqlJsonTypePattern::ArrayDimension3 { .. } => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type_specific {
+                        PostgresqlJsonTypePattern::ArrayDimension3 { .. } => match &postgresql_json_type_specific {
                             PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
                             PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
                             PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_type_ident_nullable_json_object_postgresql_type_where_filter_type_as_postgresql_json_type_where_element_token_stream(
-                            &element.postgresql_json_type_pattern
-                        )
-                    },
-                    PostgresqlJsonTypePattern::ArrayDimension4 { .. } => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_type_specific {
+                        PostgresqlJsonTypePattern::ArrayDimension4 { .. } => match &postgresql_json_type_specific {
                             PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
                             PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
                             PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
                         },
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_type_ident_nullable_json_object_postgresql_type_where_filter_type_as_postgresql_json_type_where_element_token_stream(
-                            &element.postgresql_json_type_pattern
-                        )
                     },
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_pub_type_ident_nullable_json_object_postgresql_type_where_filter_type_as_postgresql_json_type_where_element_token_stream(
+                        &element.postgresql_json_type_pattern
+                    ),
                 }
             };
             // println!("{ident_where_element_token_stream}");
-
             //exists because need to implement .into_inner() for fields (only for read subtype)
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
             let ident_read_token_stream = {
