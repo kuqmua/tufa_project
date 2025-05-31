@@ -1701,7 +1701,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 });
                 let field_type = &element.ty;
                 quote::quote! {
-                    #field_ident: match value.#field_ident {
+                    #field_ident: match self.#field_ident {
                         Some(value) => Some(#import_path::Value {
                             value: <#field_type as #import_path::PostgresqlJsonType>::into_inner(value.value)
                         }),
@@ -1784,61 +1784,55 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &should_derive_serde_deserialize
                 )
             };
-            // #[derive(Debug, Clone, PartialEq, serde :: Serialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-            // pub struct DoggieAsNotNullJsonbObjectRead {
-            //     #[serde(skip_serializing_if = "Option::is_none")]
-            //     column_113f3662_35a2_4a7a_9326_03bbd441815f: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-            //     #[serde(skip_serializing_if = "Option::is_none")]
-            //     column_1761f64d_b930_446b_8422_e4fa6faf8872: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-            //     #[serde(skip_serializing_if = "Option::is_none")]
-            //     column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-            //     #[serde(skip_serializing_if = "Option::is_none")]
-            //     column_17c31340_b040_4ead_8dcf_476451486b4a: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-            //     #[serde(skip_serializing_if = "Option::is_none")]
-            //     column_95fb90c0_96bc_4a73_9e4c_2537bcfe92b6: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-            //     #[serde(skip_serializing_if = "Option::is_none")]
-            //     column_77f1b2d9_19ea_4f29_8252_b1658a701077: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::OptionVecOfOptionStdPrimitiveI8AsNullableArrayOfNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::Read>>,
-            // }
-            // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-            // pub struct OptionDoggieAsNullableJsonbObjectRead(std::option::Option<<DoggieAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Read>);
-            // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-            // pub struct VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead(std::vec::Vec<<DoggieWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Read>);
-            // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-            // pub struct OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithIdRead(std::option::Option<<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Read>);
-            // let impl_into_inner_for_ident_read_token_stream = {
-            //     let content_token_stream = match &postgresql_json_object_type_pattern {
-            //         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-            //             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(
-            //                 &IsStandartWithId::False
-            //             ),
-            //             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-            //                 match self.0 {
-            //                     Some(value) => Some(value.into_inner()),
-            //                     None => None
-            //                 }
-            //             }
-            //         },
-            //         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-            //             postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
-            //                 self.0.into_iter().map(|element|element.into_inner()).collect()
-            //             },
-            //             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-            //                 match self.0 {
-            //                     Some(value) => Some(value.0.into_iter().map(|element|element.into_inner()).collect()),
-            //                     None => None
-            //                 }
-            //             }
-            //         },
-            //     };
-            //     quote::quote!{
-            //         impl #ident_read_upper_camel_case {
-            //             pub fn into_inner(self) -> #ident_read_inner_upper_camel_case {
-            //                 // #content_token_stream
-            //                 todo!()
-            //             }
-            //         }
-            //     }
-            // };
+            let generate_fn_into_inner_token_stream = |
+                ident_token_stream: &dyn quote::ToTokens,
+                return_type_token_stream: &dyn quote::ToTokens,
+                content_token_stream: &dyn quote::ToTokens
+            |{
+                quote::quote!{
+                    impl #ident_token_stream {
+                        fn into_inner(self) -> #return_type_token_stream {
+                            #content_token_stream
+                        }
+                    }
+                }
+            };
+            let impl_into_inner_for_ident_read_token_stream = generate_fn_into_inner_token_stream(
+                &ident_read_upper_camel_case,
+                &ident_read_inner_upper_camel_case,
+                &match &postgresql_json_object_type_pattern {
+                    PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(
+                            &IsStandartWithId::False
+                        ),
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                            match self.0 {
+                                Some(value) => Some({
+                                    <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonType>::into_inner(value)
+                                }),
+                                None => None
+                            }
+                        }
+                    },
+                    PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
+                            self.0.into_iter().map(|element|{
+                                <#ident_with_id_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonType>::into_inner(element)
+                            }).collect()
+                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                            quote::quote!{
+                                match self.0 {
+                                    Some(value) => Some(value.0.into_iter().map(|element|{
+                                        <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::into_inner(element)
+                                    }).collect()),
+                                    None => None
+                                }
+                            }
+                        }
+                    },
+                }
+            );
             let all_fields_are_none_upper_camel_case = naming::AllFieldsAreNoneUpperCamelCase;
             let generate_ident_read_try_from_error_named_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
                 quote::quote! {
@@ -2367,19 +2361,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     &ShouldDeriveSerdeDeserialize::False
                 );
-                // let impl_into_inner_for_ident_with_id_read_standart_not_null_token_stream = {
-                //     let content_token_stream = generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(
-                //         &IsStandartWithId::True
-                //     );
-                //     quote::quote!{
-                //         impl #ident_with_id_read_standart_not_null_upper_camel_case {
-                //             pub fn into_inner(self) -> #ident_with_id_read_inner_standart_not_null_upper_camel_case {
-                //                 // #content_token_stream
-                //                 todo!()
-                //             }
-                //         }
-                //     }
-                // };
+                let impl_into_inner_for_ident_with_id_read_standart_not_null_token_stream = generate_fn_into_inner_token_stream(
+                    &ident_with_id_read_standart_not_null_upper_camel_case,
+                    &ident_with_id_read_inner_standart_not_null_upper_camel_case,
+                    &generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(
+                        &IsStandartWithId::True
+                    )
+                );
                 let ident_with_id_read_try_from_error_named_standart_not_null_token_stream = generate_ident_read_try_from_error_named_token_stream(&ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case);
                 let impl_try_new_for_ident_with_id_read_try_from_error_named_standart_not_null_token_stream = generate_impl_try_new_for_ident_read_try_from_error_named_token_stream(&is_standart_with_id_true);
                 let impl_serde_deserialize_for_ident_with_id_read_standart_not_null_token_stream = generate_impl_serde_deserialize_for_ident_read_token_stream(&is_standart_with_id_true);
@@ -2390,7 +2378,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 );
                 quote::quote! {
                     #ident_with_id_read_standart_not_null_token_stream
-                    // #impl_into_inner_for_ident_with_id_read_standart_not_null_token_stream
+                    #impl_into_inner_for_ident_with_id_read_standart_not_null_token_stream
                     #ident_with_id_read_try_from_error_named_standart_not_null_token_stream
                     #impl_try_new_for_ident_with_id_read_try_from_error_named_standart_not_null_token_stream
                     #impl_serde_deserialize_for_ident_with_id_read_standart_not_null_token_stream
@@ -2404,7 +2392,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             quote::quote! {
                 #ident_read_token_stream
-                // #impl_into_inner_for_ident_read_token_stream
+                #impl_into_inner_for_ident_read_token_stream
                 #maybe_ident_read_try_from_error_named_token_stream
                 #impl_new_or_try_new_for_ident_read_try_from_error_named_token_stream
                 #maybe_impl_serde_deserialize_for_ident_read_token_stream
@@ -3321,41 +3309,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             )
         };
         let update_query_bind_token_stream = quote::quote!{#value_snake_case.#update_query_bind_snake_case(#query_snake_case)};
-        ////////////
-        //todo make it a function
-        let into_inner_token_stream = match &postgresql_json_object_type_pattern {
-            PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(
-                    &IsStandartWithId::False
-                ),
-                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                    match value.0 {
-                        Some(value) => Some({
-                            <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonType>::into_inner(value)
-                        }),
-                        None => None
-                    }
-                }
-            },
-            PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
-                    value.0.into_iter().map(|element|{
-                        <#ident_with_id_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonType>::into_inner(element)
-                    }).collect()
-                },
-                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                    quote::quote!{
-                        match value.0 {
-                            Some(value) => Some(value.0.into_iter().map(|element|{
-                                <#ident_with_id_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::into_inner(element)
-                            }).collect()),
-                            None => None
-                        }
-                    }
-                }
-            },
-        };
-        ////////////
+        let value_into_inner_token_stream = quote::quote!{#value_snake_case.into_inner()};
         let (
             maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream,
             maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
@@ -3377,41 +3331,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &ident_read_inner_upper_camel_case,
-                // &match &postgresql_json_object_type_pattern {
-                //     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(
-                //             &IsStandartWithId::False
-                //         ),
-                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                //             match value.0 {
-                //                 Some(value) => Some({
-                //                     use #import_path::PostgersqlJsonType;
-                //                     value.into_inner()
-                //                 }),
-                //                 None => None
-                //             }
-                //         }
-                //     },
-                //     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
-                //             value.0.into_iter().map(|element|{
-                //                 use #import_path::PostgersqlJsonType;
-                //                 element.into_inner()
-                //             }).collect()
-                //         },
-                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                //             match value.0 {
-                //                 Some(value) => Some(value.0.into_iter().map(|element|{
-                //                     use #import_path::PostgersqlJsonType;
-                //                     element.into_inner()
-                //                 }).collect()),
-                //                 None => None
-                //             }
-                //         }
-                //     },
-                // },
-                &into_inner_token_stream,
-
+                &value_into_inner_token_stream,
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
@@ -3443,42 +3363,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &ident_read_inner_upper_camel_case,
-                // &match &postgresql_json_object_type_pattern {
-                //     PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(
-                //             &IsStandartWithId::False
-                //         ),
-                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                //             match value.0 {
-                //                 Some(value) => Some({
-                //                     use #import_path::PostgersqlJsonType;
-                //                     value.into_inner()
-                //                 }),
-                //                 None => None
-                //             }
-                //         }
-                //     },
-                //     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{
-                //             value.0.into_iter().map(|element|{
-                //                 use #import_path::PostgersqlJsonType;
-                //                 element.into_inner()
-                //             }).collect()
-                //         },
-                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                //             match value.0 {
-                //                 Some(value) => Some(value.0.into_iter().map(|element|{
-                //                     use #import_path::PostgersqlJsonType;
-                //                     element.into_inner()
-                //                     // <DoggieWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::into_inner(element)
-                //                 }).collect()),
-                //                 None => None
-                //             }
-                //         }
-                //     },
-                // },
-                &into_inner_token_stream,
-
+                &value_into_inner_token_stream,
                 &ident_update_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
@@ -3513,9 +3398,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_with_id_where_element_standart_not_null_upper_camel_case,
                 &ident_with_id_read_standart_not_null_upper_camel_case,
                 &ident_with_id_read_inner_standart_not_null_upper_camel_case,
-                &generate_impl_into_inner_for_ident_read_or_ident_with_id_read_standart_not_null_token_stream(
-                    &IsStandartWithId::True
-                ),
+                &value_into_inner_token_stream,
                 &ident_with_id_update_standart_not_null_upper_camel_case,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryPartSelfUpdateUsed::True,
