@@ -42,9 +42,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
         "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0,
-        "column_1565db46_4881_405f_8950_773a346a6848": 
-        # null
-        [
+        "column_1761f64d_b930_446b_8422_e4fa6faf8872": 0,
+        "column_1565db46_4881_405f_8950_773a346a6848": [
           [
             [
               [
@@ -95,31 +94,30 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     {
   #       "Equal": {
   #         "logical_operator": "Or",
-  #         "value": 3
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
   #       }
   #     }
-  #     # ,
-  #     # {
-  #     #   "GreaterThan": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": 0
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "Between": {
-  #     #     "logical_operator": "Or",
-  #     #     "start": 0,
-  #     #     "end": 0
-  #     #   }
-  #     # },
-  #     # {
-  #     #   "In": {
-  #     #     "logical_operator": "Or",
-  #     #     "value": [
-  #     #       0
-  #     #     ]
-  #     #   }
-  #     # }
   #   ]
   # },
   "animal_as_not_null_jsonb_object": {
@@ -160,6 +158,42 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #           ]
             #         }
             #       }
+            #     ]
+            #   }
+            # },
+            # {
+            #   "Column1761F64DB930446B8422E4Fa6Faf8872": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       [
+            #         {
+            #           "Equal": {
+            #             "logical_operator": "Or",
+            #             "value": 0
+            #           }
+            #         },
+            #         {
+            #           "GreaterThan": {
+            #             "logical_operator": "Or",
+            #             "value": 0
+            #           }
+            #         },
+            #         {
+            #           "Between": {
+            #             "logical_operator": "Or",
+            #             "start": 0,
+            #             "end": 0
+            #           }
+            #         },
+            #         {
+            #           "In": {
+            #             "logical_operator": "Or",
+            #             "value": [
+            #               0
+            #             ]
+            #           }
+            #         }
+            #       ]
             #     ]
             #   }
             # },
@@ -205,6 +239,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           "doggie_as_not_null_jsonb_object": [
             {
               "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+            },
+            {
+              "column_1761f64d_b930_446b_8422_e4fa6faf8872": null
             },
             {
               "column_1565db46_4881_405f_8950_773a346a6848": {
@@ -276,20 +313,9 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
           "doggie_as_not_null_jsonb_object": {
             "value": [
               {
-                "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                  "value": 0
-                }
-              },
-              {
-                "column_1565db46_4881_405f_8950_773a346a6848": {
+                "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": {
                   "value": [
-                    [
-                      [
-                        [
-                          0,null
-                        ]
-                      ]
-                    ]
+                    1
                   ]
                 }
               }
