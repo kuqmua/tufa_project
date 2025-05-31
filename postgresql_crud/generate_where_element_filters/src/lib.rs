@@ -93,16 +93,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         True,
         False,
     }
-    let generate_try_new_logic_token_stream = |ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-                                               ident_try_new_error_named: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-                                               should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
-                                               should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed,
-                                               enum_ident_try_new_error_named_content_token_stream: &dyn quote::ToTokens,
-                                               generic_requirements_token_stream: &dyn quote::ToTokens,
-                                               additional_input_parameters_token_stream: &dyn quote::ToTokens,
-                                               impl_try_new_for_ident_content_token_stream: &dyn quote::ToTokens,
-                                               option_additional_traits_annotations_token_stream: std::option::Option<proc_macro2::TokenStream>,
-                                               additional_fields: &std::vec::Vec<&Field>| {
+    let generate_try_new_logic_token_stream = |
+        ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+        ident_try_new_error_named: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
+        should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
+        should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed,
+        enum_ident_try_new_error_named_content_token_stream: &dyn quote::ToTokens,
+        generic_requirements_token_stream: &dyn quote::ToTokens,
+        additional_input_parameters_token_stream: &dyn quote::ToTokens,
+        impl_try_new_for_ident_content_token_stream: &dyn quote::ToTokens,
+        option_additional_traits_annotations_token_stream: std::option::Option<proc_macro2::TokenStream>,
+        additional_fields: &std::vec::Vec<&Field>
+    | {
         let generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = |should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed| -> &dyn quote::ToTokens {
             match &should_add_declaration_of_generic_parameter_to_ident_try_new_error_named {
                 ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True => &t_annotation_generic_token_stream,
@@ -448,12 +450,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         PostgresqlType,
         PostgresqlJsonType,
     }
-    let generate_impl_postgresql_type_where_filter_token_stream = |filter_type: &FilterType,
-                                                                   should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
-                                                                   ident: &dyn quote::ToTokens,
-                                                                   query_part_content_token_stream: &dyn quote::ToTokens,
-                                                                   is_query_bind_mutable: &postgresql_crud_macros_common::IsQueryBindMutable,
-                                                                   query_bind_content_token_stream: &dyn quote::ToTokens| {
+    let generate_impl_postgresql_type_where_filter_token_stream = |
+        filter_type: &FilterType,
+        should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
+        ident: &dyn quote::ToTokens,
+        query_part_content_token_stream: &dyn quote::ToTokens,
+        is_query_bind_mutable: &postgresql_crud_macros_common::IsQueryBindMutable,
+        query_bind_content_token_stream: &dyn quote::ToTokens
+    | {
         postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
             &{
                 let maybe_t_additional_traits_for_postgresql_type_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
