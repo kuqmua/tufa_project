@@ -1343,16 +1343,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         ident: ident_token_stream
                     }
                 };
-                let case_sensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression {
-                    ident: quote::quote!{}
-                };
                 let generate_postgresql_json_type_filter_case_sensitive_regular_expression = |ident_token_stream: proc_macro2::TokenStream|{
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression {
                         ident: ident_token_stream
                     }
-                };
-                let case_insensitive_regular_expression = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression {
-                    ident: quote::quote!{}
                 };
                 let generate_postgresql_json_type_filter_case_insensitive_regular_expression = |ident_token_stream: proc_macro2::TokenStream|{
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression {
@@ -1360,9 +1354,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     }
                 };
                 let common_postgresql_json_type_filters: std::vec::Vec<&postgresql_crud_macros_common::PostgresqlJsonTypeFilter> = vec![
-                    &equal
-                ];
-                let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![
                     &equal
                 ];
                 let generate_where_element_variants_types_generic_token_stream = |
@@ -1399,13 +1390,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         &postgresql_crud_macros_common::IsQueryBindMutable::False,
                     )
                 };
+                let ident_origin_upper_camel_case_token_stream = quote::quote!{#ident_origin_upper_camel_case};
                 match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &element.postgresql_json_type_pattern {
                         PostgresqlJsonTypePattern::Standart => match &postgresql_json_type_specific {
                             PostgresqlJsonTypeSpecific::Number => {
-                                let greater_than = generate_postgresql_json_type_filter_greater_than(quote::quote!{#ident_origin_upper_camel_case});
-                                let between = generate_postgresql_json_type_filter_between(quote::quote!{#ident_origin_upper_camel_case});
-                                let in_filter = generate_postgresql_json_type_filter_in(quote::quote!{#ident_origin_upper_camel_case});
+                                let greater_than = generate_postgresql_json_type_filter_greater_than(ident_origin_upper_camel_case_token_stream.clone());
+                                let between = generate_postgresql_json_type_filter_between(ident_origin_upper_camel_case_token_stream.clone());
+                                let in_filter = generate_postgresql_json_type_filter_in(ident_origin_upper_camel_case_token_stream.clone());
                                 postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
                                     &{
                                         let mut vec = common_postgresql_json_type_filters.clone();
@@ -1419,25 +1411,27 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &postgresql_crud_macros_common::IsQueryBindMutable::False,
                                 )
                             },
-                            PostgresqlJsonTypeSpecific::Bool => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-                                &common_postgresql_json_type_filters_variants,
-                                generate_where_element_variants_types_generic_token_stream,
+                            PostgresqlJsonTypeSpecific::Bool => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                                &common_postgresql_json_type_filters,
                                 &ident,
                                 &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
                                 &postgresql_crud_macros_common::IsQueryBindMutable::False,
                             ),
-                            PostgresqlJsonTypeSpecific::String => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-                                &{
-                                    let mut vec = common_postgresql_json_type_filters_variants.clone();
-                                    vec.push(&case_sensitive_regular_expression);
-                                    vec.push(&case_insensitive_regular_expression);
-                                    vec
-                                },
-                                generate_where_element_variants_types_generic_token_stream,
-                                &ident,
-                                &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                                &postgresql_crud_macros_common::IsQueryBindMutable::False,
-                            ),
+                            PostgresqlJsonTypeSpecific::String => {
+                                let case_sensitive_regular_expression = generate_postgresql_json_type_filter_case_sensitive_regular_expression(ident_origin_upper_camel_case_token_stream.clone());
+                                let case_insensitive_regular_expression = generate_postgresql_json_type_filter_case_insensitive_regular_expression(ident_origin_upper_camel_case_token_stream.clone());
+                                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                                    &{
+                                        let mut vec = common_postgresql_json_type_filters.clone();
+                                        vec.push(&case_sensitive_regular_expression);
+                                        vec.push(&case_insensitive_regular_expression);
+                                        vec
+                                    },
+                                    &ident,
+                                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                                    &postgresql_crud_macros_common::IsQueryBindMutable::False,
+                                )
+                            },
                         },
                         //todo reuse analog filters in generate_postgresql_types
                         PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
