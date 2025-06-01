@@ -1205,12 +1205,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote! {
-                        value: T,
                         position: #std_primitive_i32_token_stream,
+                        value: T,
                     },
                     &quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         position: #core_default_default_default_token_stream,
+                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     },
                     &quote::quote! {
                         match increment.checked_add(1) {
