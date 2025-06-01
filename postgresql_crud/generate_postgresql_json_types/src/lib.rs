@@ -1356,40 +1356,21 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 let common_postgresql_json_type_filters: std::vec::Vec<&postgresql_crud_macros_common::PostgresqlJsonTypeFilter> = vec![
                     &equal
                 ];
-                let generate_where_element_variants_types_generic_token_stream = |
-                    is_relevant_only_for_not_null: std::primitive::bool
-                | -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
-                    if is_relevant_only_for_not_null {
-                        &ident_standart_not_null_origin_upper_camel_case
-                    } else {
-                        &ident_origin_upper_camel_case
-                    }
-                };
-                let todo_token_stream = {
-                    let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = {
-                        let 
-                        // mut 
-                        vec: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![
-                            &equal
-                        ];
-                        // vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual);
-                        // vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
-                        // if is_vec_element_type {
-                        //     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual);
-                        //     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray);
-                        //     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray);
-                        //     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual);
-                        // }
-                        vec
-                    };
-                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-                        &filters_variants,
-                        generate_where_element_variants_types_generic_token_stream,
-                        &ident,
-                        &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                        &postgresql_crud_macros_common::IsQueryBindMutable::False,
-                    )
-                };
+                // let generate_where_element_variants_types_generic_token_stream = |
+                //     is_relevant_only_for_not_null: std::primitive::bool
+                // | -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
+                //     if is_relevant_only_for_not_null {
+                //         &ident_standart_not_null_origin_upper_camel_case
+                //     } else {
+                //         &ident_origin_upper_camel_case
+                //     }
+                // };
+                let todo_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                    &common_postgresql_json_type_filters,
+                    &ident,
+                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::False,
+                );
                 let ident_origin_upper_camel_case_token_stream = quote::quote!{#ident_origin_upper_camel_case};
                 match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &element.postgresql_json_type_pattern {
