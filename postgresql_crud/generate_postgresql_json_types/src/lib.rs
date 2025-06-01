@@ -1327,27 +1327,104 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     ident: {
                         // let type_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
                         //     &{
+                        //         use postgresql_crud_macros_common::NotNullOrNullable;
                         //         let (not_null_or_nullable, postgresql_json_type_pattern) = match &postgresql_json_type_pattern {
                         //             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
-                        //                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value},
-                        //                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
+                        //                 NotNullOrNullable::NotNull => todo!(),
+                        //                 NotNullOrNullable::Nullable => todo!(),
                         //             },
-                        //             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => ,
+                        //             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (
+                        //                 &not_null_or_nullable,
+                        //                 &dimension1_not_null_or_nullable,
+                        //             ) {
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //             },
                         //             PostgresqlJsonTypePattern::ArrayDimension2 {
                         //                 dimension1_not_null_or_nullable,
                         //                 dimension2_not_null_or_nullable,
-                        //             } => ,
+                        //             } => match (
+                        //                 &not_null_or_nullable,
+                        //                 &dimension1_not_null_or_nullable,
+                        //                 &dimension2_not_null_or_nullable,
+                        //             ) {
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //             },
                         //             PostgresqlJsonTypePattern::ArrayDimension3 {
                         //                 dimension1_not_null_or_nullable,
                         //                 dimension2_not_null_or_nullable,
                         //                 dimension3_not_null_or_nullable,
-                        //             } => ,
+                        //             } => match (
+                        //                 &not_null_or_nullable,
+                        //                 &dimension1_not_null_or_nullable,
+                        //                 &dimension2_not_null_or_nullable,
+                        //                 &dimension3_not_null_or_nullable,
+                        //             ) {
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //             },
                         //             PostgresqlJsonTypePattern::ArrayDimension4 {
                         //                 dimension1_not_null_or_nullable,
                         //                 dimension2_not_null_or_nullable,
                         //                 dimension3_not_null_or_nullable,
                         //                 dimension4_not_null_or_nullable,
-                        //             } => ,
+                        //             } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => todo!(),
+                        //                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => todo!(),
+                        //             },
                         //         };
                         //         generate_ident_token_stream(
                         //             // not_null_or_nullable,
@@ -1392,43 +1469,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     vec
                 };
 
-                let generate_where_element_variants_types_generic_token_stream =
-                    |is_relevant_only_for_not_null: std::primitive::bool| -> &dyn naming::StdFmtDisplayPlusQuoteToTokens { if is_relevant_only_for_not_null { &ident_standart_not_null_origin_upper_camel_case } else { &ident_origin_upper_camel_case } };
-                let postgresql_json_type_where_element_vec_number_token_stream = {
-                    let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
-                    // if is_vec_element_type {
-                    //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan);
-                    //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan);
-                    //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan);
-                    // }
-                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-                        &filters_variants,
-                        generate_where_element_variants_types_generic_token_stream,
-                        &ident,
-                        &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                        &postgresql_crud_macros_common::IsQueryBindMutable::False,
-                    )
+                let generate_where_element_variants_types_generic_token_stream = |
+                    is_relevant_only_for_not_null: std::primitive::bool
+                | -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
+                    if is_relevant_only_for_not_null {
+                        &ident_standart_not_null_origin_upper_camel_case
+                    } else {
+                        &ident_origin_upper_camel_case
+                    }
                 };
-                let postgresql_json_type_where_element_vec_bool_token_stream = {
+                let todo_token_stream = {
                     let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
-                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-                        &filters_variants,
-                        generate_where_element_variants_types_generic_token_stream,
-                        &ident,
-                        &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                        &postgresql_crud_macros_common::IsQueryBindMutable::False,
-                    )
-                };
-                let postgresql_json_type_where_element_vec_string_token_stream = {
-                    let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
-                    // if is_vec_element_type {
-                    //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
-                    //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
-                    //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression);
-                    //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
-                    //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
-                    //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
-                    // }
                     postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                         &filters_variants,
                         generate_where_element_variants_types_generic_token_stream,
@@ -1475,24 +1526,64 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         },
                         //todo reuse analog filters in generate_postgresql_types
                         PostgresqlJsonTypePattern::ArrayDimension1 { .. } => match &postgresql_json_type_specific {
-                            PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
-                            PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
-                            PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                            PostgresqlJsonTypeSpecific::Number => {
+                                let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
+                                // if is_vec_element_type {
+                                //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan);
+                                //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan);
+                                //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan);
+                                // }
+                                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
+                                    &filters_variants,
+                                    generate_where_element_variants_types_generic_token_stream,
+                                    &ident,
+                                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                                    &postgresql_crud_macros_common::IsQueryBindMutable::False,
+                                )
+                            },
+                            PostgresqlJsonTypeSpecific::Bool => {
+                                let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
+                                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
+                                    &filters_variants,
+                                    generate_where_element_variants_types_generic_token_stream,
+                                    &ident,
+                                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                                    &postgresql_crud_macros_common::IsQueryBindMutable::False,
+                                )
+                            },
+                            PostgresqlJsonTypeSpecific::String => {
+                                let filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_vec_filters_variants.clone();
+                                // if is_vec_element_type {
+                                //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
+                                //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
+                                //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression);
+                                //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
+                                //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
+                                //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
+                                // }
+                                postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
+                                    &filters_variants,
+                                    generate_where_element_variants_types_generic_token_stream,
+                                    &ident,
+                                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                                    &postgresql_crud_macros_common::IsQueryBindMutable::False,
+                                )
+                            },
                         },
                         PostgresqlJsonTypePattern::ArrayDimension2 { .. } => match &postgresql_json_type_specific {
-                            PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
-                            PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
-                            PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                            PostgresqlJsonTypeSpecific::Number => todo_token_stream,
+                            PostgresqlJsonTypeSpecific::Bool => todo_token_stream,
+                            PostgresqlJsonTypeSpecific::String => todo_token_stream,
                         },
                         PostgresqlJsonTypePattern::ArrayDimension3 { .. } => match &postgresql_json_type_specific {
-                            PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
-                            PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
-                            PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                            PostgresqlJsonTypeSpecific::Number => todo_token_stream,
+                            PostgresqlJsonTypeSpecific::Bool => todo_token_stream,
+                            PostgresqlJsonTypeSpecific::String => todo_token_stream,
                         },
                         PostgresqlJsonTypePattern::ArrayDimension4 { .. } => match &postgresql_json_type_specific {
-                            PostgresqlJsonTypeSpecific::Number => postgresql_json_type_where_element_vec_number_token_stream,
-                            PostgresqlJsonTypeSpecific::Bool => postgresql_json_type_where_element_vec_bool_token_stream,
-                            PostgresqlJsonTypeSpecific::String => postgresql_json_type_where_element_vec_string_token_stream,
+                            PostgresqlJsonTypeSpecific::Number => todo_token_stream,
+                            PostgresqlJsonTypeSpecific::Bool => todo_token_stream,
+                            PostgresqlJsonTypeSpecific::String => todo_token_stream,
                         },
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
