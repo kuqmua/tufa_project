@@ -155,27 +155,63 @@ pub enum PostgresqlJsonTypeFilter {
     Equal {
         ident: proc_macro2::TokenStream,
     },
-    GreaterThan,
-    Between,
-    In,
-    CaseSensitiveRegularExpression,
-    CaseInsensitiveRegularExpression,
+    GreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    Between {
+        ident: proc_macro2::TokenStream,
+    },
+    In {
+        ident: proc_macro2::TokenStream,
+    },
+    CaseSensitiveRegularExpression {
+        ident: proc_macro2::TokenStream,
+    },
+    CaseInsensitiveRegularExpression {
+        ident: proc_macro2::TokenStream,
+    },
     LengthEqual,
     LengthMoreThan,
-    PositionEqual,
-    PositionGreaterThan,
-    PositionCaseSensitiveRegularExpression,
-    PositionCaseInsensitiveRegularExpression,
-    ContainsAllElementsOfArray,
+    PositionEqual {
+        ident: proc_macro2::TokenStream,
+    },
+    PositionGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    PositionCaseSensitiveRegularExpression {
+        ident: proc_macro2::TokenStream,
+    },
+    PositionCaseInsensitiveRegularExpression {
+        ident: proc_macro2::TokenStream,
+    },
+    ContainsAllElementsOfArray {
+        ident: proc_macro2::TokenStream,
+    },
     // ContainedInArray,
-    OverlapsWithArray,
-    AllElementsEqual,
-    ContainsElementGreaterThan,
-    AllElementsGreaterThan,
-    ContainsElementCaseSensitiveRegularExpression,
-    ContainsElementCaseInsensitiveRegularExpression,
-    AllElementsCaseSensitiveRegularExpression,
-    AllElementsCaseInsensitiveRegularExpression,
+    OverlapsWithArray {
+        ident: proc_macro2::TokenStream,
+    },
+    AllElementsEqual {
+        ident: proc_macro2::TokenStream,
+    },
+    ContainsElementGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    AllElementsGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    ContainsElementCaseSensitiveRegularExpression {
+        ident: proc_macro2::TokenStream,
+    },
+    ContainsElementCaseInsensitiveRegularExpression {
+        ident: proc_macro2::TokenStream,
+    },
+    AllElementsCaseSensitiveRegularExpression {
+        ident: proc_macro2::TokenStream,
+    },
+    AllElementsCaseInsensitiveRegularExpression {
+        ident: proc_macro2::TokenStream,
+    },
 }
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -183,26 +219,62 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::Equal {
                 ident: _
             } => &naming::EqualUpperCamelCase,
-            Self::GreaterThan => &naming::GreaterThanUpperCamelCase,
-            Self::Between => &naming::BetweenUpperCamelCase,
-            Self::In => &naming::InUpperCamelCase,
-            Self::CaseSensitiveRegularExpression => &naming::CaseSensitiveRegularExpressionUpperCamelCase,
-            Self::CaseInsensitiveRegularExpression => &naming::CaseInsensitiveRegularExpressionUpperCamelCase,
+            Self::GreaterThan {
+                ident: _
+            } => &naming::GreaterThanUpperCamelCase,
+            Self::Between {
+                ident: _
+            } => &naming::BetweenUpperCamelCase,
+            Self::In {
+                ident: _
+            } => &naming::InUpperCamelCase,
+            Self::CaseSensitiveRegularExpression {
+                ident: _
+            } => &naming::CaseSensitiveRegularExpressionUpperCamelCase,
+            Self::CaseInsensitiveRegularExpression {
+                ident: _
+            } => &naming::CaseInsensitiveRegularExpressionUpperCamelCase,
             Self::LengthEqual => &naming::LengthEqualUpperCamelCase,
             Self::LengthMoreThan => &naming::LengthMoreThanUpperCamelCase,
-            Self::PositionEqual => &naming::PositionEqualUpperCamelCase,
-            Self::PositionGreaterThan => &naming::PositionGreaterThanUpperCamelCase,
-            Self::PositionCaseSensitiveRegularExpression => &naming::PositionCaseSensitiveRegularExpressionUpperCamelCase,
-            Self::PositionCaseInsensitiveRegularExpression => &naming::PositionCaseInsensitiveRegularExpressionUpperCamelCase,
-            Self::ContainsAllElementsOfArray => &naming::ContainsAllElementsOfArrayUpperCamelCase,
-            Self::OverlapsWithArray => &naming::OverlapsWithArrayUpperCamelCase,
-            Self::AllElementsEqual => &naming::AllElementsEqualUpperCamelCase,
-            Self::ContainsElementGreaterThan => &naming::ContainsElementGreaterThanUpperCamelCase,
-            Self::AllElementsGreaterThan => &naming::AllElementsGreaterThanUpperCamelCase,
-            Self::ContainsElementCaseSensitiveRegularExpression => &naming::ContainsElementCaseSensitiveRegularExpressionUpperCamelCase,
-            Self::ContainsElementCaseInsensitiveRegularExpression => &naming::ContainsElementCaseInsensitiveRegularExpressionUpperCamelCase,
-            Self::AllElementsCaseSensitiveRegularExpression => &naming::AllElementsCaseSensitiveRegularExpressionUpperCamelCase,
-            Self::AllElementsCaseInsensitiveRegularExpression => &naming::AllElementsCaseInsensitiveRegularExpressionUpperCamelCase,
+            Self::PositionEqual {
+                ident: _
+            } => &naming::PositionEqualUpperCamelCase,
+            Self::PositionGreaterThan {
+                ident: _
+            } => &naming::PositionGreaterThanUpperCamelCase,
+            Self::PositionCaseSensitiveRegularExpression {
+                ident: _
+            } => &naming::PositionCaseSensitiveRegularExpressionUpperCamelCase,
+            Self::PositionCaseInsensitiveRegularExpression {
+                ident: _
+            } => &naming::PositionCaseInsensitiveRegularExpressionUpperCamelCase,
+            Self::ContainsAllElementsOfArray {
+                ident: _
+            } => &naming::ContainsAllElementsOfArrayUpperCamelCase,
+            Self::OverlapsWithArray {
+                ident: _
+            } => &naming::OverlapsWithArrayUpperCamelCase,
+            Self::AllElementsEqual {
+                ident: _
+            } => &naming::AllElementsEqualUpperCamelCase,
+            Self::ContainsElementGreaterThan {
+                ident: _
+            } => &naming::ContainsElementGreaterThanUpperCamelCase,
+            Self::AllElementsGreaterThan {
+                ident: _
+            } => &naming::AllElementsGreaterThanUpperCamelCase,
+            Self::ContainsElementCaseSensitiveRegularExpression {
+                ident: _
+            } => &naming::ContainsElementCaseSensitiveRegularExpressionUpperCamelCase,
+            Self::ContainsElementCaseInsensitiveRegularExpression {
+                ident: _
+            } => &naming::ContainsElementCaseInsensitiveRegularExpressionUpperCamelCase,
+            Self::AllElementsCaseSensitiveRegularExpression {
+                ident: _
+            } => &naming::AllElementsCaseSensitiveRegularExpressionUpperCamelCase,
+            Self::AllElementsCaseInsensitiveRegularExpression {
+                ident: _
+            } => &naming::AllElementsCaseInsensitiveRegularExpressionUpperCamelCase,
         }
     }
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
@@ -220,6 +292,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
         }
     }
 }
+//todo remove this
 pub enum PostgresqlJsonTypeFilterHasGeneric {
     Equal,
     GreaterThan,
@@ -273,26 +346,62 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::Equal {
                 ident: _
             } => Ok(Self::Equal),
-            PostgresqlJsonTypeFilter::GreaterThan => Ok(Self::GreaterThan),
-            PostgresqlJsonTypeFilter::Between => Ok(Self::Between),
-            PostgresqlJsonTypeFilter::In => Ok(Self::In),
-            PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::GreaterThan {
+                ident: _
+            } => Ok(Self::GreaterThan),
+            PostgresqlJsonTypeFilter::Between {
+                ident: _
+            } => Ok(Self::Between),
+            PostgresqlJsonTypeFilter::In {
+                ident: _
+            } => Ok(Self::In),
+            PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression {
+                ident: _
+            } => Ok(Self::CaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression {
+                ident: _
+            } => Ok(Self::CaseInsensitiveRegularExpression),
             PostgresqlJsonTypeFilter::LengthEqual => Err(()),
             PostgresqlJsonTypeFilter::LengthMoreThan => Err(()),
-            PostgresqlJsonTypeFilter::PositionEqual => Ok(Self::PositionEqual),
-            PostgresqlJsonTypeFilter::PositionGreaterThan => Ok(Self::PositionGreaterThan),
-            PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression => Ok(Self::PositionCaseSensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Ok(Self::PositionCaseInsensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::ContainsAllElementsOfArray => Ok(Self::ContainsAllElementsOfArray),
-            PostgresqlJsonTypeFilter::OverlapsWithArray => Ok(Self::OverlapsWithArray),
-            PostgresqlJsonTypeFilter::AllElementsEqual => Ok(Self::AllElementsEqual),
-            PostgresqlJsonTypeFilter::ContainsElementGreaterThan => Ok(Self::ContainsElementGreaterThan),
-            PostgresqlJsonTypeFilter::AllElementsGreaterThan => Ok(Self::AllElementsGreaterThan),
-            PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => Ok(Self::ContainsElementCaseSensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression => Ok(Self::ContainsElementCaseInsensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => Ok(Self::AllElementsCaseSensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression => Ok(Self::AllElementsCaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::PositionEqual {
+                ident: _
+            } => Ok(Self::PositionEqual),
+            PostgresqlJsonTypeFilter::PositionGreaterThan {
+                ident: _
+            } => Ok(Self::PositionGreaterThan),
+            PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression {
+                ident: _
+            } => Ok(Self::PositionCaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {
+                ident: _
+            } => Ok(Self::PositionCaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
+                ident: _
+            } => Ok(Self::ContainsAllElementsOfArray),
+            PostgresqlJsonTypeFilter::OverlapsWithArray {
+                ident: _
+            } => Ok(Self::OverlapsWithArray),
+            PostgresqlJsonTypeFilter::AllElementsEqual {
+                ident: _
+            } => Ok(Self::AllElementsEqual),
+            PostgresqlJsonTypeFilter::ContainsElementGreaterThan {
+                ident: _
+            } => Ok(Self::ContainsElementGreaterThan),
+            PostgresqlJsonTypeFilter::AllElementsGreaterThan {
+                ident: _
+            } => Ok(Self::AllElementsGreaterThan),
+            PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression {
+                ident: _
+            } => Ok(Self::ContainsElementCaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression {
+                ident: _
+            } => Ok(Self::ContainsElementCaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression {
+                ident: _
+            } => Ok(Self::AllElementsCaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression {
+                ident: _
+            } => Ok(Self::AllElementsCaseInsensitiveRegularExpression),
         }
     }
 }
