@@ -1320,7 +1320,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 //     PostgresqlJsonTypePattern::ArrayDimension3 {..} => true,
                 //     PostgresqlJsonTypePattern::ArrayDimension4 {..} => true,
                 // };
-                let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal];
+                let equal = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal {
+                    ident: quote::quote!{#ident_origin_upper_camel_case}
+                };
+                let common_postgresql_json_type_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![
+                    &equal
+                ];
                 let common_postgresql_json_type_vec_filters_variants: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = {
                     let mut vec: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = common_postgresql_json_type_filters_variants.clone();
                     vec.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual);

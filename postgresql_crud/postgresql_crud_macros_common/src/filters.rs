@@ -152,7 +152,9 @@ impl std::convert::TryFrom<&PostgresqlTypeFilter> for PostgresqlTypeFilterHasGen
 
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlJsonTypeFilter {
-    Equal,
+    Equal {
+        ident: proc_macro2::TokenStream,
+    },
     GreaterThan,
     Between,
     In,
@@ -178,7 +180,9 @@ pub enum PostgresqlJsonTypeFilter {
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         match &self {
-            Self::Equal => &naming::EqualUpperCamelCase,
+            Self::Equal {
+                ident: _
+            } => &naming::EqualUpperCamelCase,
             Self::GreaterThan => &naming::GreaterThanUpperCamelCase,
             Self::Between => &naming::BetweenUpperCamelCase,
             Self::In => &naming::InUpperCamelCase,
@@ -266,7 +270,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
     type Error = ();
     fn try_from(value: &PostgresqlJsonTypeFilter) -> Result<Self, Self::Error> {
         match &value {
-            PostgresqlJsonTypeFilter::Equal => Ok(Self::Equal),
+            PostgresqlJsonTypeFilter::Equal {
+                ident: _
+            } => Ok(Self::Equal),
             PostgresqlJsonTypeFilter::GreaterThan => Ok(Self::GreaterThan),
             PostgresqlJsonTypeFilter::Between => Ok(Self::Between),
             PostgresqlJsonTypeFilter::In => Ok(Self::In),

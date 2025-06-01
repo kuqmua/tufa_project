@@ -1064,7 +1064,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             type Error = ();
             fn try_from(value: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter) -> Result<Self, Self::Error> {
                 match &value {
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal {
+                        ident: _
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between => Ok(Self::Between),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In => Ok(Self::In),
@@ -1097,7 +1099,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query
             };
             let (should_add_declaration_of_struct_ident_generic, struct_additional_fields_token_stream, impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream, query_part_content_token_stream, query_bind_content_token_stream) = match &filter {
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal => (
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal { 
+                    ident: _
+                } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
