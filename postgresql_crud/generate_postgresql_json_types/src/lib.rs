@@ -1279,102 +1279,101 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                 }
             };
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
-            let ident_where_element_token_stream = {
-                // let generate_where_element_variants_types_generic_token_stream = |
-                //     is_relevant_only_for_not_null: std::primitive::bool
-                // | -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
-                //     if is_relevant_only_for_not_null {
-                //         &ident_standart_not_null_origin_upper_camel_case
-                //     } else {
-                //         &ident_origin_upper_camel_case
-                //     }
-                // };
-                #[derive(Debug, Clone)]
-                enum PostgresqlJsonTypeSpecific {
-                    Number,
-                    Bool,
-                    String,
-                }
-                impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypeSpecific {
-                    fn from(value: &PostgresqlJsonType) -> Self {
-                        match value {
-                            PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
-                            | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => Self::Number,
-                            PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => Self::Bool,
-                            PostgresqlJsonType::StdStringStringAsJsonbString | PostgresqlJsonType::UuidUuidAsJsonbString => Self::String,
+            let ident_where_element_token_stream = match &not_null_or_nullable {
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                    &{
+                        // let generate_where_element_variants_types_generic_token_stream = |
+                        //     is_relevant_only_for_not_null: std::primitive::bool
+                        // | -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
+                        //     if is_relevant_only_for_not_null {
+                        //         &ident_standart_not_null_origin_upper_camel_case
+                        //     } else {
+                        //         &ident_origin_upper_camel_case
+                        //     }
+                        // };
+                        #[derive(Debug, Clone)]
+                        enum PostgresqlJsonTypeSpecific {
+                            Number,
+                            Bool,
+                            String,
                         }
-                    }
-                }
-                let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&element.postgresql_json_type);
-
-                let generate_postgresql_json_type_filter_position_equal = |ident_token_stream: proc_macro2::TokenStream|{
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual { 
-                        ident: {
-                            let type_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                &ident_token_stream
-                            );
-                            quote::quote!{#type_token_stream}
+                        impl std::convert::From<&PostgresqlJsonType> for PostgresqlJsonTypeSpecific {
+                            fn from(value: &PostgresqlJsonType) -> Self {
+                                match value {
+                                    PostgresqlJsonType::StdPrimitiveI8AsJsonbNumber
+                                    | PostgresqlJsonType::StdPrimitiveI16AsJsonbNumber
+                                    | PostgresqlJsonType::StdPrimitiveI32AsJsonbNumber
+                                    | PostgresqlJsonType::StdPrimitiveI64AsJsonbNumber
+                                    | PostgresqlJsonType::StdPrimitiveU8AsJsonbNumber
+                                    | PostgresqlJsonType::StdPrimitiveU16AsJsonbNumber
+                                    | PostgresqlJsonType::StdPrimitiveU32AsJsonbNumber
+                                    | PostgresqlJsonType::StdPrimitiveU64AsJsonbNumber
+                                    | PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber
+                                    | PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => Self::Number,
+                                    PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => Self::Bool,
+                                    PostgresqlJsonType::StdStringStringAsJsonbString | PostgresqlJsonType::UuidUuidAsJsonbString => Self::String,
+                                }
+                            }
                         }
-                    }
-                };
-                let common_postgresql_json_type_filters = vec![
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal { ident: quote::quote! {#ident_origin_upper_camel_case} }
-                ];
-                let common_array_postgresql_json_type_filters = {
-                    let mut vec = common_postgresql_json_type_filters.clone();
-                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual);
-                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
-                    vec
-                };
-                let ident_origin_upper_camel_case_token_stream = quote::quote! {#ident_origin_upper_camel_case};
-                // PositionGreaterThan {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // PositionCaseSensitiveRegularExpression {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // PositionCaseInsensitiveRegularExpression {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // ContainsAllElementsOfArray {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // // ContainedInArray,
-                // OverlapsWithArray {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // AllElementsEqual {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // ContainsElementGreaterThan {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // AllElementsGreaterThan {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // ContainsElementCaseSensitiveRegularExpression {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // ContainsElementCaseInsensitiveRegularExpression {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // AllElementsCaseSensitiveRegularExpression {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                // AllElementsCaseInsensitiveRegularExpression {
-                //     ident: proc_macro2::TokenStream,
-                // },
-                match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
-                        &match &element.postgresql_json_type_pattern {
+                        let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&element.postgresql_json_type);
+                        let generate_postgresql_json_type_filter_position_equal = |ident_token_stream: proc_macro2::TokenStream|{
+                            postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual { 
+                                ident: {
+                                    let type_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                                        &ident_token_stream
+                                    );
+                                    quote::quote!{#type_token_stream}
+                                }
+                            }
+                        };
+                        let common_postgresql_json_type_filters = vec![
+                            postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal { ident: quote::quote! {#ident_origin_upper_camel_case} }
+                        ];
+                        let common_array_postgresql_json_type_filters = {
+                            let mut vec = common_postgresql_json_type_filters.clone();
+                            vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual);
+                            vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
+                            vec
+                        };
+                        let ident_origin_upper_camel_case_token_stream = quote::quote! {#ident_origin_upper_camel_case};
+                        // PositionGreaterThan {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // PositionCaseSensitiveRegularExpression {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // PositionCaseInsensitiveRegularExpression {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // ContainsAllElementsOfArray {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // // ContainedInArray,
+                        // OverlapsWithArray {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // AllElementsEqual {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // ContainsElementGreaterThan {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // AllElementsGreaterThan {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // ContainsElementCaseSensitiveRegularExpression {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // ContainsElementCaseInsensitiveRegularExpression {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // AllElementsCaseSensitiveRegularExpression {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        // AllElementsCaseInsensitiveRegularExpression {
+                        //     ident: proc_macro2::TokenStream,
+                        // },
+                        match &element.postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &postgresql_json_type_specific {
                                 PostgresqlJsonTypeSpecific::Number => {
                                     let mut vec = common_postgresql_json_type_filters.clone();
@@ -1503,19 +1502,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonTypeSpecific::String => common_array_dimension4_postgresql_json_type_filters,
                                 }
                             },
-                        },
-                        &ident,
-                        &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                        &postgresql_crud_macros_common::IsQueryBindMutable::False
-                    ),
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                        let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
-                        let ident_as_token_stream = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &element.postgresql_json_type_pattern);
-                        quote::quote! {
-                            pub type #ident_where_element_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<
-                                <#ident_as_token_stream as crate::PostgresqlJsonType>::WhereElement
-                            >;
                         }
+                    },
+                    &ident,
+                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                    &postgresql_crud_macros_common::IsQueryBindMutable::False
+                ),
+                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                    let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
+                    let ident_as_token_stream = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &element.postgresql_json_type_pattern);
+                    quote::quote! {
+                        pub type #ident_where_element_upper_camel_case = crate::NullableJsonObjectPostgresqlTypeWhereFilter<
+                            <#ident_as_token_stream as crate::PostgresqlJsonType>::WhereElement
+                        >;
                     }
                 }
             };
