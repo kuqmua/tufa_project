@@ -240,6 +240,12 @@ impl
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
+                // println!("column {column}");
+                // column animal_as_not_null_jsonb_object->'doggie_as_not_null_jsonb_object'->'column_113f3662_35a2_4a7a_9326_03bbd441815f'
+
+// SELECT 'cat'::jsonb->>'' ~* 'john';  -- false
+// SELECT '"johnny"'::jsonb->>'' ~* 'john';  -- true
+
                 Ok(format!("{}({} ~* ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
             }
             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
