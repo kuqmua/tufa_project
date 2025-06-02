@@ -145,21 +145,25 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                     #   }
                     # },
                     {
-                      "PositionEqual": {
+                      "LengthEqual": {
                         "logical_operator": "Or",
-                        "position": 0,
-                        "value": [
-                          [
-                            [
-                              0,
-                              null
-                            ],
-                            null
-                          ],
-                          null
-                        ]
+                        "value": 2
                       }
                     }
+                    # ,
+                    # {
+                    #   "PositionEqual": {
+                    #     "logical_operator": "Or",
+                    #     "position": 0,
+                    #     "value": [
+                    #       [
+                    #         [
+                    #           0
+                    #         ]
+                    #       ]
+                    #     ]
+                    #   }
+                    # }
                   ]
                 ]
               }

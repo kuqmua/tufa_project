@@ -1242,8 +1242,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
-                    &generate_query_part_one_value_token_stream(&quote::quote! {"{}(length({}) = ${})"}),
-                    &query_bind_one_value_token_stream,
+                    &generate_query_part_one_value_token_stream(&quote::quote! {"{}(jsonb_array_length({}) = ${})"}),
+                    &quote::quote! {
+                        query = query.bind(self.value);
+                        query
+                    }
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
