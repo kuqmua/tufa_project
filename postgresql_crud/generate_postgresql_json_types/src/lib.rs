@@ -1441,7 +1441,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan);
                                     //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan);
                                     // }
-                                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(&filters_variants, &ident, &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True, &postgresql_crud_macros_common::IsQueryBindMutable::False)
+                                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                                        &filters_variants,
+                                        &ident,
+                                        &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                                        &postgresql_crud_macros_common::IsQueryBindMutable::False
+                                    )
                                 }
                                 PostgresqlJsonTypeSpecific::Bool => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
                                     &common_array_dimension1_postgresql_json_type_filters,
@@ -1459,7 +1464,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
                                     //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
                                     // }
-                                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(&filters_variants, &ident, &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True, &postgresql_crud_macros_common::IsQueryBindMutable::False)
+                                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                                        &filters_variants,
+                                        &ident,
+                                        &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                                        &postgresql_crud_macros_common::IsQueryBindMutable::False
+                                    )
                                 }
                             }
                         }
