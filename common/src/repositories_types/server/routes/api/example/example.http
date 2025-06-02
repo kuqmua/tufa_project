@@ -144,10 +144,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                     #     ]
                     #   }
                     # },
+                    # {
+                    #   "LengthEqual": {
+                    #     "logical_operator": "Or",
+                    #     "value": 0
+                    #   }
+                    # },
                     {
-                      "LengthEqual": {
+                      "LengthMoreThan": {
                         "logical_operator": "Or",
-                        "value": 2
+                        "value": 1
                       }
                     }
                     # ,
