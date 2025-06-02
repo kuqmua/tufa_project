@@ -188,63 +188,63 @@ const _: () = {
         }
     }
 };
-// const _: () = {
-//     #[automatically_derived]
-//     #[allow(unused_braces)]
-//     impl schemars::JsonSchema
-//     for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
-//         fn schema_name() -> std::string::String {
-//             "PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression".to_owned()
-//         }
-//         fn schema_id() -> std::borrow::Cow<'static, str> {
-//             std::borrow::Cow::Borrowed(
-//                 "testing::PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression",
-//             )
-//         }
-//         fn json_schema(
-//             generator: &mut schemars::SchemaGenerator,
-//         ) -> schemars::schema::Schema {
-//             {
-//                 let mut schema_object = schemars::schema::SchemaObject {
-//                     instance_type: Some(schemars::schema::InstanceType::Object.into()),
-//                     ..Default::default()
-//                 };
-//                 let object_validation = schema_object.object();
-//                 {
-//                     schemars::_private::insert_object_property::<
-//                         crate::LogicalOperator,
-//                     >(
-//                         object_validation,
-//                         "logical_operator",
-//                         false,
-//                         false,
-//                         generator.subschema_for::<crate::LogicalOperator>(),
-//                     );
-//                 }
-//                 {
-//                     schemars::_private::insert_object_property::<
-//                         std::string::String,
-//                     >(
-//                         object_validation,
-//                         "value",
-//                         false,
-//                         false,
-//                         generator.subschema_for::<std::string::String>(),
-//                     );
-//                 }
-//                 schemars::schema::Schema::Object(schema_object)
-//             }
-//         }
-//     }
-// };
-// impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self {
-//             logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//             value: regex::Regex::new(std::primitive::str::default()).unwrap(),
-//         }
-//     }
-// }
+const _: () = {
+    #[automatically_derived]
+    #[allow(unused_braces)]
+    impl schemars::JsonSchema
+    for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+        fn schema_name() -> std::string::String {
+            "PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression".to_owned()
+        }
+        fn schema_id() -> std::borrow::Cow<'static, str> {
+            std::borrow::Cow::Borrowed(
+                "testing::PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression",
+            )
+        }
+        fn json_schema(
+            generator: &mut schemars::SchemaGenerator,
+        ) -> schemars::schema::Schema {
+            {
+                let mut schema_object = schemars::schema::SchemaObject {
+                    instance_type: Some(schemars::schema::InstanceType::Object.into()),
+                    ..Default::default()
+                };
+                let object_validation = schema_object.object();
+                {
+                    schemars::_private::insert_object_property::<
+                        crate::LogicalOperator,
+                    >(
+                        object_validation,
+                        "logical_operator",
+                        false,
+                        false,
+                        generator.subschema_for::<crate::LogicalOperator>(),
+                    );
+                }
+                {
+                    schemars::_private::insert_object_property::<
+                        std::string::String,
+                    >(
+                        object_validation,
+                        "value",
+                        false,
+                        false,
+                        generator.subschema_for::<std::string::String>(),
+                    );
+                }
+                schemars::schema::Schema::Object(schema_object)
+            }
+        }
+    }
+};
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            value: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
+}
 // impl <'a> crate::PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
 //     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
 //         match increment.checked_add(1) {

@@ -1050,3 +1050,8 @@ impl std::string::ToString for RegexRegex {
         self.0.to_string()
     }
 }
+impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegexRegex {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(regex::Regex::new("").unwrap())
+    }
+}
