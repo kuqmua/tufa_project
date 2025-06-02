@@ -1,56 +1,50 @@
 generate_where_element_filters::generate_where_element_filters!();
 
 
-
-
-
-
-// #[derive(Debug, Clone, 
-//     // PartialEq, 
-// )]
-// pub struct PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
-//     logical_operator: crate::LogicalOperator,
-//     value: regex::Regex,
-// }
-// #[doc(hidden)]
-// #[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
-// const _: () = {
-//     #[allow(unused_extern_crates, clippy::useless_attribute)]
-//     extern crate serde as _serde;
-//     #[automatically_derived]
-//     impl _serde::Serialize
-//     for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
-//         fn serialize<__S>(
-//             &self,
-//             __serializer: __S,
-//         ) -> _serde::__private::Result<__S::Ok, __S::Error>
-//         where
-//             __S: _serde::Serializer,
-//         {
-//             let mut __serde_state = _serde::Serializer::serialize_struct(
-//                 __serializer,
-//                 "PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression",
-//                 false as usize + 1 + 1,
-//             )?;
-//             _serde::ser::SerializeStruct::serialize_field(
-//                 &mut __serde_state,
-//                 "logical_operator",
-//                 &self.logical_operator,
-//             )?;
-//             _serde::ser::SerializeStruct::serialize_field(
-//                 &mut __serde_state,
-//                 "value",
-//                 &self.value.to_string(),
-//             )?;
-//             _serde::ser::SerializeStruct::end(__serde_state)
-//         }
-//     }
-// };
-// impl PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
-//     fn new(logical_operator: crate::LogicalOperator, value: regex::Regex) -> Self {
-//         Self { logical_operator, value }
-//     }
-// }
+#[derive(Debug, Clone)]
+pub struct PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+    logical_operator: crate::LogicalOperator,
+    value: crate::RegexRegex,
+}
+#[doc(hidden)]
+#[allow(non_upper_case_globals, unused_attributes, unused_qualifications)]
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl _serde::Serialize
+    for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+        fn serialize<__S>(
+            &self,
+            __serializer: __S,
+        ) -> _serde::__private::Result<__S::Ok, __S::Error>
+        where
+            __S: _serde::Serializer,
+        {
+            let mut __serde_state = _serde::Serializer::serialize_struct(
+                __serializer,
+                "PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression",
+                false as usize + 1 + 1,
+            )?;
+            _serde::ser::SerializeStruct::serialize_field(
+                &mut __serde_state,
+                "logical_operator",
+                &self.logical_operator,
+            )?;
+            _serde::ser::SerializeStruct::serialize_field(
+                &mut __serde_state,
+                "value",
+                &self.value.to_string(),
+            )?;
+            _serde::ser::SerializeStruct::end(__serde_state)
+        }
+    }
+};
+impl PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+    fn new(logical_operator: crate::LogicalOperator, value: crate::RegexRegex) -> Self {
+        Self { logical_operator, value }
+    }
+}
 // const _: () = {
 //     #[allow(unused_extern_crates, clippy::useless_attribute)]
 //     extern crate serde as _serde;

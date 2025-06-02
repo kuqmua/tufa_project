@@ -1045,3 +1045,8 @@ const _: () = {
         }
     }
 };
+impl std::string::ToString for RegexRegex {
+    fn to_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
