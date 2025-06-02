@@ -1318,12 +1318,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&element.postgresql_json_type);
                         let generate_postgresql_json_type_filter_position_equal = |ident_token_stream: proc_macro2::TokenStream|{
                             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual { 
-                                ident: {
-                                    let type_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                        &ident_token_stream
-                                    );
-                                    quote::quote!{#type_token_stream}
-                                }
+                                ident: quote::quote!{#ident_token_stream}
                             }
                         };
                         let common_postgresql_json_type_filters = vec![
@@ -1405,8 +1400,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let common_array_dimension1_postgresql_json_type_filters = {
                                     let mut vec = common_array_postgresql_json_type_filters.clone();
                                     vec.push(generate_postgresql_json_type_filter_position_equal({
-                                        let type_token_stream = generate_ident_token_stream(&dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart);
-                                        quote::quote! {#type_token_stream}
+                                        let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                                            &generate_ident_token_stream(&dimension1_not_null_or_nullable, &PostgresqlJsonTypePattern::Standart)
+                                        );
+                                        quote::quote!{#value}
                                     }));
                                     vec
                                 };
@@ -1434,13 +1431,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let common_array_dimension2_postgresql_json_type_filters = {
                                     let mut vec = common_array_postgresql_json_type_filters.clone();
                                     vec.push(generate_postgresql_json_type_filter_position_equal({
-                                    let type_token_stream = generate_ident_token_stream(
+                                        let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                             &dimension1_not_null_or_nullable,
                                             &PostgresqlJsonTypePattern::ArrayDimension1 {
                                                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone()
                                             }
-                                        );
-                                        quote::quote! {#type_token_stream}
+                                        ));
+                                        quote::quote!{#value}
                                     }));
                                     vec
                                 };
@@ -1458,14 +1455,14 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let common_array_dimension3_postgresql_json_type_filters = {
                                     let mut vec = common_array_postgresql_json_type_filters.clone();
                                     vec.push(generate_postgresql_json_type_filter_position_equal({
-                                        let type_token_stream = generate_ident_token_stream(
+                                        let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                             &dimension1_not_null_or_nullable,
                                             &PostgresqlJsonTypePattern::ArrayDimension2 {
                                                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
                                                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
                                             }
-                                        );
-                                        quote::quote! {#type_token_stream}
+                                        ));
+                                        quote::quote!{#value}
                                     }));
                                     vec
                                 };
@@ -1484,15 +1481,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 let common_array_dimension4_postgresql_json_type_filters = {
                                     let mut vec = common_array_postgresql_json_type_filters.clone();
                                     vec.push(generate_postgresql_json_type_filter_position_equal({
-                                        let type_token_stream = generate_ident_token_stream(
+                                        let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
                                             &dimension1_not_null_or_nullable,
                                             &PostgresqlJsonTypePattern::ArrayDimension3 {
                                                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
                                                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
                                                 dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
                                             }
-                                        );
-                                        quote::quote! {#type_token_stream}
+                                        ));
+                                        quote::quote!{#value}
                                     }));
                                     vec
                                 };
