@@ -46,7 +46,7 @@ impl std::default::Default for NotNullOrNullable {
 }
 
 pub fn generate_postgresql_type_where_element_token_stream_second(
-    variants: &std::vec::Vec<&PostgresqlJsonTypeFilter>,
+    variants: &std::vec::Vec<PostgresqlJsonTypeFilter>,
     prefix: &dyn quote::ToTokens,
     should_implement_schemars_json_schema: &crate::ShouldDeriveSchemarsJsonSchema,
     is_query_bind_mutable: &IsQueryBindMutable,
