@@ -1318,7 +1318,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         let postgresql_json_type_specific = PostgresqlJsonTypeSpecific::from(&element.postgresql_json_type);
                         let generate_postgresql_json_type_filter_position_equal = |ident_token_stream: proc_macro2::TokenStream|{
                             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual { 
-                                ident: quote::quote!{#ident_token_stream}
+                                ident: ident_token_stream
                             }
                         };
                         let common_postgresql_json_type_filters = vec![
@@ -1409,19 +1409,25 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec
                                 };
                                 match &postgresql_json_type_specific {
-                                    PostgresqlJsonTypeSpecific::Number => common_array_dimension1_postgresql_json_type_filters,
+                                    PostgresqlJsonTypeSpecific::Number => {
+                                        let mut filters = common_array_dimension1_postgresql_json_type_filters.clone();
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan {
+                                            ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
+                                        });
+                                        filters
+                                    },
                                     PostgresqlJsonTypeSpecific::Bool => common_array_dimension1_postgresql_json_type_filters,
                                     PostgresqlJsonTypeSpecific::String => {
-                                        let filters_variants = common_array_dimension1_postgresql_json_type_filters.clone();
+                                        let filters = common_array_dimension1_postgresql_json_type_filters.clone();
                                         // if is_vec_element_type {
-                                        //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
-                                        //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
-                                        //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression);
-                                        //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
-                                        //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
-                                        //     filters_variants.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
+                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
+                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
+                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression);
+                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
+                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
+                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
                                         // }
-                                        filters_variants
+                                        filters
                                     }
                                 }
                             }
