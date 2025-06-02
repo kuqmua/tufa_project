@@ -1142,6 +1142,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 position: #std_primitive_i32_token_stream,
                 value: T,
             };
+            let position_default_value_default_token_stream = quote::quote!{
+                position: #core_default_default_default_token_stream,
+                value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+            };
+            let position_is_less_than_zero_token_stream = quote::quote! {
+                PositionIsLessThanZero {
+                    #[eo_to_std_string_string_serialize_deserialize]
+                    position: #std_primitive_i32_token_stream,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                },
+            };
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
@@ -1271,10 +1282,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
-                    &quote::quote! {
-                        position: #core_default_default_default_token_stream,
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    },
+                    &position_default_value_default_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(first_increment) => {
@@ -1301,10 +1309,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
-                    &quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        position: #core_default_default_default_token_stream,
-                    },
+                    &position_default_value_default_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(first_increment) => {
@@ -1331,10 +1336,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
-                    &quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        position: #core_default_default_default_token_stream,
-                    },
+                    &position_default_value_default_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(first_increment) => {
@@ -1361,10 +1363,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
-                    &quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        position: #core_default_default_default_token_stream,
-                    },
+                    &position_default_value_default_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(first_increment) => {
@@ -1652,13 +1651,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::PositionEqual => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                PositionIsLessThanZero {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    position: #std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
+                            &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
                             &position_i32_value_t_token_stream,
                             &quote::quote! {
@@ -1676,13 +1669,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::PositionGreaterThan => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                PositionIsLessThanZero {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    position: #std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
+                            &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
                             &position_i32_value_t_token_stream,
                             &quote::quote! {
@@ -1700,13 +1687,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::PositionCaseSensitiveRegularExpression => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                PositionIsLessThanZero {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    position: #std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
+                            &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
                             &position_i32_value_t_token_stream,
                             &quote::quote! {
@@ -1724,13 +1705,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::PositionCaseInsensitiveRegularExpression => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                PositionIsLessThanZero {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    position: #std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
+                            &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
                             &position_i32_value_t_token_stream,
                             &quote::quote! {
