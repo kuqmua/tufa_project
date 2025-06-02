@@ -1464,21 +1464,38 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             dimension2_not_null_or_nullable,
                             dimension3_not_null_or_nullable,
                         } => {
+                            let position_equal = generate_postgresql_json_type_filter_position_equal({
+                                let type_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                                    &generate_ident_token_stream(
+                                        &dimension1_not_null_or_nullable,
+                                        &PostgresqlJsonTypePattern::ArrayDimension2 {
+                                            dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                            dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone()
+                                        }
+                                    )
+                                );
+                                quote::quote! {#type_token_stream}
+                            });
+                            let common_array_dimension3_postgresql_json_type_filters = {
+                                let mut vec = common_postgresql_json_type_filters.clone();
+                                vec.push(&position_equal);
+                                vec
+                            };
                             match &postgresql_json_type_specific {
                                 PostgresqlJsonTypeSpecific::Number => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
-                                    &common_postgresql_json_type_filters,
+                                    &common_array_dimension3_postgresql_json_type_filters,
                                     &ident,
                                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
                                     &postgresql_crud_macros_common::IsQueryBindMutable::False
                                 ),
                                 PostgresqlJsonTypeSpecific::Bool => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
-                                    &common_postgresql_json_type_filters,
+                                    &common_array_dimension3_postgresql_json_type_filters,
                                     &ident,
                                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
                                     &postgresql_crud_macros_common::IsQueryBindMutable::False
                                 ),
                                 PostgresqlJsonTypeSpecific::String => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
-                                    &common_postgresql_json_type_filters,
+                                    &common_array_dimension3_postgresql_json_type_filters,
                                     &ident,
                                     &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
                                     &postgresql_crud_macros_common::IsQueryBindMutable::False

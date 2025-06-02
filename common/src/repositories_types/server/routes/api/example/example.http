@@ -41,11 +41,14 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
-        "column_1b82fc80_8f0d_403c_bb2c_d8ebdd61e872": [
+        "column_52a69e2b_5c7b_4e8c_9de6_0b57269a2658": [
           [
-            0
-          ]
-          ,
+            [
+              0,
+              null
+            ],
+            null
+          ],
           null
         ]
       }
@@ -120,7 +123,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           "logical_operator": "Or",
           "value": [
             {
-              "Column1B82Fc808F0D403CBb2CD8Ebdd61E872": {
+              "Column52A69E2B5C7B4E8C9De60B57269A2658": {
                 "logical_operator": "Or",
                 "value": [
                   [
@@ -129,7 +132,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                     #     "logical_operator": "Or",
                     #     "value": [
                     #       [
-                    #         0
+                    #         [
+                    #           0
+                    #         ]
                     #       ]
                     #     ]
                     #   }
@@ -138,7 +143,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                       "PositionEqual": {
                         "logical_operator": "Or",
                         "position": 1,
-                        "value": null
+                        "value": 
+                        
+                        # [
+                        #   [
+                        #     0,
+                        #     null
+                        #   ],
+                        #   null
+                        # ]
+                        null
                       }
                     }
                   ]
@@ -159,12 +173,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         {
           "doggie_as_not_null_jsonb_object": [
             {
-              "column_1b82fc80_8f0d_403c_bb2c_d8ebdd61e872": {
+              "column_52a69e2b_5c7b_4e8c_9de6_0b57269a2658": {
                 "dimension1_pagination": {
                   "limit": 3,
                   "offset": 0
                 },
                 "dimension2_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                },
+                "dimension3_pagination": {
                   "limit": 3,
                   "offset": 0
                 }
