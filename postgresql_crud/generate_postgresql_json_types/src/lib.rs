@@ -1331,15 +1331,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             vec
                         };
                         let ident_origin_upper_camel_case_token_stream = quote::quote! {#ident_origin_upper_camel_case};
-                        // PositionGreaterThan {
-                        //     ident: proc_macro2::TokenStream,
-                        // },
-                        // PositionCaseSensitiveRegularExpression {
-                        //     ident: proc_macro2::TokenStream,
-                        // },
-                        // PositionCaseInsensitiveRegularExpression {
-                        //     ident: proc_macro2::TokenStream,
-                        // },
                         // ContainsAllElementsOfArray {
                         //     ident: proc_macro2::TokenStream,
                         // },
@@ -1418,7 +1409,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     },
                                     PostgresqlJsonTypeSpecific::Bool => common_array_dimension1_postgresql_json_type_filters,
                                     PostgresqlJsonTypeSpecific::String => {
-                                        let filters = common_array_dimension1_postgresql_json_type_filters.clone();
+                                        let mut filters = common_array_dimension1_postgresql_json_type_filters.clone();
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression {
+                                            ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
+                                        });
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {
+                                            ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
+                                        });
                                         // if is_vec_element_type {
                                         //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
                                         //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);

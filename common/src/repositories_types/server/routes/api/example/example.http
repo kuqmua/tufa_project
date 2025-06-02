@@ -42,7 +42,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
         "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": [
-          1
+          ""
         ]
       }
     }
@@ -123,7 +123,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   "Equal": {
                   #     "logical_operator": "Or",
                   #     "value": [
-                  #       0
+                  #       ""
                   #     ]
                   #   }
                   # },
@@ -143,14 +143,21 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   "PositionEqual": {
                   #     "logical_operator": "Or",
                   #     "position": 0,
-                  #     "value": 0
+                  #     "value": ""
+                  #   }
+                  # },
+                  # {
+                  #   "PositionCaseSensitiveRegularExpression": {
+                  #     "logical_operator": "Or",
+                  #     "position": 0,
+                  #     "value": ""
                   #   }
                   # },
                   {
-                    "PositionGreaterThan": {
+                    "PositionCaseInsensitiveRegularExpression": {
                       "logical_operator": "Or",
-                      "value": 0,
-                      "position": 0
+                      "position": 0,
+                      "value": ""
                     }
                   }
                 ]

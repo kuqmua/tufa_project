@@ -1153,6 +1153,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 },
             };
+            let is_position_is_less_than_zero_token_stream = quote::quote! {
+                if position >= 0 {
+                    Ok(Self { logical_operator, value, position })
+                } else {
+                    Err(#ident_try_new_error_named::PositionIsLessThanZero {
+                        position,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    })
+                }
+            };
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
@@ -1654,16 +1664,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
                             &position_i32_value_t_token_stream,
-                            &quote::quote! {
-                                if position >= 0 {
-                                    Ok(Self { logical_operator, value, position })
-                                } else {
-                                    Err(#ident_try_new_error_named::PositionIsLessThanZero {
-                                        position,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
+                            &is_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
@@ -1672,16 +1673,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
                             &position_i32_value_t_token_stream,
-                            &quote::quote! {
-                                if position >= 0 {
-                                    Ok(Self { logical_operator, value, position })
-                                } else {
-                                    Err(#ident_try_new_error_named::PositionIsLessThanZero {
-                                        position,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
+                            &is_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
@@ -1690,16 +1682,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
                             &position_i32_value_t_token_stream,
-                            &quote::quote! {
-                                if position >= 0 {
-                                    Ok(Self { logical_operator, value, position })
-                                } else {
-                                    Err(#ident_try_new_error_named::PositionIsLessThanZero {
-                                        position,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
+                            &is_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
@@ -1708,16 +1691,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
                             &position_i32_value_t_token_stream,
-                            &quote::quote! {
-                                if position >= 0 {
-                                    Ok(Self { logical_operator, value, position })
-                                } else {
-                                    Err(#ident_try_new_error_named::PositionIsLessThanZero {
-                                        position,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
+                            &is_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
