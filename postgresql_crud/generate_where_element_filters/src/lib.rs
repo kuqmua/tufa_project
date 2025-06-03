@@ -1100,7 +1100,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression {
                         ident: _
                     } => Ok(Self::PositionCaseSensitiveRegularExpression),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Ok(Self::PositionCaseInsensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                         ident: _
                     } => Ok(Self::ContainsAllElementsOfArray),
@@ -1375,7 +1375,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
                     &quote::quote! {
                         position: #std_primitive_i32_token_stream,
                         value: crate::RegexRegex
@@ -1388,9 +1388,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 match increment.checked_add(1) {
                                     Some(second_increment) => {
                                         *increment = second_increment;
-
-                                        // "{}(trim(both '\"' from ({})::text) ~* ${})"
-                                        Ok(format!("{}({}->>${} ~* ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
+                                        Ok(format!(
+                                            "{}((trim(both '\"' from ({}->>${})::text) ~* ${}))",
+                                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                            column,
+                                            first_increment,
+                                            second_increment
+                                        ))
                                     }
                                     None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                 }
@@ -1400,7 +1404,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     &quote::quote! {
                         query = query.bind(self.position);
-                        query = query.bind(sqlx::types::Json(self.value));
+                        query = query.bind(self.value.to_string());
                         query
                     },
                 ),
