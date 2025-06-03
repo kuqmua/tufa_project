@@ -1887,7 +1887,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 // impl <'a> crate::PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {+
             };
             match &filter {
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {ident: _} |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression {ident: _} |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression {ident: _} => {
