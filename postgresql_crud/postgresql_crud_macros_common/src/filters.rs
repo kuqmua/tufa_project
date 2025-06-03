@@ -179,9 +179,7 @@ pub enum PostgresqlJsonTypeFilter {
     PositionCaseSensitiveRegularExpression {
         ident: proc_macro2::TokenStream,
     },
-    PositionCaseInsensitiveRegularExpression {
-        ident: proc_macro2::TokenStream,
-    },
+    PositionCaseInsensitiveRegularExpression,
     ContainsAllElementsOfArray {
         ident: proc_macro2::TokenStream,
     },
@@ -241,9 +239,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::PositionCaseSensitiveRegularExpression {
                 ident: _
             } => &naming::PositionCaseSensitiveRegularExpressionUpperCamelCase,
-            Self::PositionCaseInsensitiveRegularExpression {
-                ident: _
-            } => &naming::PositionCaseInsensitiveRegularExpressionUpperCamelCase,
+            Self::PositionCaseInsensitiveRegularExpression => &naming::PositionCaseInsensitiveRegularExpressionUpperCamelCase,
             Self::ContainsAllElementsOfArray {
                 ident: _
             } => &naming::ContainsAllElementsOfArrayUpperCamelCase,
@@ -366,9 +362,7 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression {
                 ident: _
             } => Ok(Self::PositionCaseSensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {
-                ident: _
-            } => Ok(Self::PositionCaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Ok(Self::PositionCaseInsensitiveRegularExpression),
             PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                 ident: _
             } => Ok(Self::ContainsAllElementsOfArray),

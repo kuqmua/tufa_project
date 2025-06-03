@@ -1100,9 +1100,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression {
                         ident: _
                     } => Ok(Self::PositionCaseSensitiveRegularExpression),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {
-                        ident: _
-                    } => Ok(Self::PositionCaseInsensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Ok(Self::PositionCaseInsensitiveRegularExpression),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                         ident: _
                     } => Ok(Self::ContainsAllElementsOfArray),
@@ -1376,11 +1374,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression { 
-                    ident: _
-                } => (
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &position_i32_value_t_token_stream,
+                    &quote::quote! {
+                        position: #std_primitive_i32_token_stream,
+                        value: crate::RegexRegex
+                    },
                     &position_default_value_default_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
@@ -1389,6 +1388,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 match increment.checked_add(1) {
                                     Some(second_increment) => {
                                         *increment = second_increment;
+
+                                        // "{}(trim(both '\"' from ({})::text) ~* ${})"
                                         Ok(format!("{}({}->>${} ~* ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
                                     }
                                     None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
@@ -1887,7 +1888,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 // impl <'a> crate::PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {+
             };
             match &filter {
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {ident: _} |
+                // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {ident: _} |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression {ident: _} |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression {ident: _} => {
                     proc_macro2::TokenStream::new()
