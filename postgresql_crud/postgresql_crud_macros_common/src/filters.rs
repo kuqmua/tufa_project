@@ -192,13 +192,9 @@ pub enum PostgresqlJsonTypeFilter {
     AllElementsGreaterThan {
         ident: proc_macro2::TokenStream,
     },
-    ContainsElementCaseSensitiveRegularExpression {
-        ident: proc_macro2::TokenStream,
-    },
+    ContainsElementCaseSensitiveRegularExpression,
     ContainsElementCaseInsensitiveRegularExpression,
-    AllElementsCaseSensitiveRegularExpression {
-        ident: proc_macro2::TokenStream,
-    },
+    AllElementsCaseSensitiveRegularExpression,
     AllElementsCaseInsensitiveRegularExpression,
 }
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
@@ -243,13 +239,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::AllElementsGreaterThan {
                 ident: _
             } => &naming::AllElementsGreaterThanUpperCamelCase,
-            Self::ContainsElementCaseSensitiveRegularExpression {
-                ident: _
-            } => &naming::ContainsElementCaseSensitiveRegularExpressionUpperCamelCase,
+            Self::ContainsElementCaseSensitiveRegularExpression => &naming::ContainsElementCaseSensitiveRegularExpressionUpperCamelCase,
             Self::ContainsElementCaseInsensitiveRegularExpression => &naming::ContainsElementCaseInsensitiveRegularExpressionUpperCamelCase,
-            Self::AllElementsCaseSensitiveRegularExpression {
-                ident: _
-            } => &naming::AllElementsCaseSensitiveRegularExpressionUpperCamelCase,
+            Self::AllElementsCaseSensitiveRegularExpression => &naming::AllElementsCaseSensitiveRegularExpressionUpperCamelCase,
             Self::AllElementsCaseInsensitiveRegularExpression => &naming::AllElementsCaseInsensitiveRegularExpressionUpperCamelCase,
         }
     }
@@ -358,13 +350,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::AllElementsGreaterThan {
                 ident: _
             } => Ok(Self::AllElementsGreaterThan),
-            PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression {
-                ident: _
-            } => Ok(Self::ContainsElementCaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => Ok(Self::ContainsElementCaseSensitiveRegularExpression),
             PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression => Ok(Self::ContainsElementCaseInsensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression {
-                ident: _
-            } => Ok(Self::AllElementsCaseSensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => Ok(Self::AllElementsCaseSensitiveRegularExpression),
             PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression => Ok(Self::AllElementsCaseInsensitiveRegularExpression),
         }
     }

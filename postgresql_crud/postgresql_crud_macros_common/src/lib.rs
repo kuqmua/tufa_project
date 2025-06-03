@@ -101,13 +101,9 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::AllElementsGreaterThan {
                     ident,
                 } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression {
-                    ident,
-                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression => None,
-                crate::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression {
-                    ident,
-                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression => None,
             };
             let type_token_stream = match option_type_token_stream {
