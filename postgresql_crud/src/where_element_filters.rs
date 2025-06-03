@@ -40,11 +40,6 @@ const _: () = {
         }
     }
 };
-impl PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
-    fn new(logical_operator: crate::LogicalOperator, value: crate::RegexRegex) -> Self {
-        Self { logical_operator, value }
-    }
-}
 const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
@@ -135,7 +130,10 @@ const _: () = {
                             return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression with 2 elements"));
                         }
                     };
-                    Ok(PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression::new(__field0, __field1))
+                    Ok(PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+                        logical_operator: __field0,
+                        value: __field1,
+                    })
                 }
                 #[inline]
                 fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
@@ -171,7 +169,10 @@ const _: () = {
                         _serde::__private::Some(__field1) => __field1,
                         _serde::__private::None => _serde::__private::de::missing_field("value")?,
                     };
-                    Ok(PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression::new(__field0, __field1))
+                    Ok(PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+                        logical_operator: __field0,
+                        value: __field1,
+                    })
                 }
             }
             #[doc(hidden)]

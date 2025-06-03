@@ -7,6 +7,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let std_vec_vec_t_token_stream = &quote::quote! {std::vec::Vec<T>};
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
     let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
+    //todo reuse ?
     let core_default_default_default_token_stream = quote::quote! {
         ::core::default::Default::default()
     };
@@ -74,15 +75,56 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     };
     let generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream = |value: &std::primitive::str| generate_quotes::double_quotes_token_stream(&format!("{{}}({{}} {value} ${{}})"));
 
-    let generate_struct_token_stream = |filter_initialized_with_try_new_result_is_ok: std::primitive::bool, should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, struct_additional_fields_token_stream: &dyn quote::ToTokens| {
+    enum ShouldDeriveSerdeSerialize {
+        True,
+        False
+    }
+    impl quote::ToTokens for ShouldDeriveSerdeSerialize {
+        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            if let Self::True = &self {
+                quote::quote!{serde::Serialize,}.to_tokens(tokens)
+            }
+        }
+    }
+    enum ShouldDeriveSerdeDeserialize {
+        True,
+        False
+    }
+    impl quote::ToTokens for ShouldDeriveSerdeDeserialize {
+        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            if let Self::True = &self {
+                quote::quote!{serde::Deserialize,}.to_tokens(tokens)
+            }
+        }
+    }
+    enum ShouldDeriveSchemarsJsonSchema {
+        True,
+        False
+    }
+    impl quote::ToTokens for ShouldDeriveSchemarsJsonSchema {
+        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            if let Self::True = &self {
+                quote::quote!{schemars::JsonSchema,}.to_tokens(tokens)
+            }
+        }
+    }
+    let generate_struct_token_stream = |
+        filter_initialized_with_try_new_result_is_ok: std::primitive::bool,
+        should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
+        ident: &dyn quote::ToTokens,
+        struct_additional_fields_token_stream: &dyn quote::ToTokens,
+        should_derive_serde_serialize: &ShouldDeriveSerdeSerialize,
+        should_derive_serde_deserialize: &ShouldDeriveSerdeDeserialize,
+        should_derive_schemars_json_schema: &ShouldDeriveSchemarsJsonSchema,
+    | {
         let maybe_pub_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &naming::PubSnakeCase };
-        let maybe_derive_serde_serialize_for_ident_struct_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &quote::quote! {, serde::Deserialize} };
+        // let maybe_derive_serde_serialize_for_ident_struct_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &quote::quote! {, serde::Deserialize} };
         let maybe_declaration_of_struct_ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
             ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
         };
         quote::quote! {
-            #[derive(Debug, Clone, PartialEq, serde::Serialize, schemars::JsonSchema #maybe_derive_serde_serialize_for_ident_struct_token_stream)]
+            #[derive(Debug, Clone, PartialEq, #should_derive_serde_serialize #should_derive_serde_deserialize #should_derive_schemars_json_schema)]
             pub struct #ident #maybe_declaration_of_struct_ident_generic_token_stream {
                 #maybe_pub_token_stream logical_operator: crate::LogicalOperator,
                 #struct_additional_fields_token_stream
@@ -791,7 +833,20 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
             };
             let filter_initialized_with_try_new_result = PostgresqlTypeFilterInitializedWithTryNew::try_from(filter);
-            let struct_token_stream = generate_struct_token_stream(filter_initialized_with_try_new_result.is_ok(), &should_add_declaration_of_struct_ident_generic, &ident, &struct_additional_fields_token_stream);
+            let struct_token_stream = generate_struct_token_stream(
+                filter_initialized_with_try_new_result.is_ok(),
+                &should_add_declaration_of_struct_ident_generic,
+                &ident,
+                &struct_additional_fields_token_stream,
+                &ShouldDeriveSerdeSerialize::True,
+                &if filter_initialized_with_try_new_result.is_ok() {
+                    ShouldDeriveSerdeDeserialize::False
+                }
+                else {
+                    ShouldDeriveSerdeDeserialize::True
+                },
+                &ShouldDeriveSchemarsJsonSchema::True,
+            );
             let maybe_try_new_logic_token_stream = match filter_initialized_with_try_new_result {
                 Ok(value) => {
                     let (
@@ -1046,7 +1101,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             Between,
             In,
             CaseSensitiveRegularExpression,
-            CaseInsensitiveRegularExpression,
             LengthEqual,
             LengthMoreThan,
             PositionEqual,
@@ -1079,7 +1133,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression {
                         ident: _
                     } => Ok(Self::CaseSensitiveRegularExpression),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => Ok(Self::LengthEqual),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => Ok(Self::LengthMoreThan),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual {
@@ -1162,6 +1216,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }
             };
             let (
+                should_derive_serde_serialize,
+                should_derive_schemars_json_schema,
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
                 impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
@@ -1171,6 +1227,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -1180,6 +1238,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -1189,6 +1249,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote! {
                         start: T,
@@ -1224,6 +1286,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_std_vec_vec_t_token_stream,
                     &quote::quote! {
@@ -1256,6 +1320,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression {
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -1263,13 +1329,31 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &query_bind_sqlx_types_json_self_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &value_t_token_stream,
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    &quote::quote! {value: crate::RegexRegex},
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
-                    &query_bind_sqlx_types_json_self_value_token_stream,
+                    // &generate_query_part_one_value_token_stream(
+                    //     &generate_quotes::double_quotes_token_stream(&"{}(trim(both '\"' from ({})::text) ~* ${})")
+                    // ),
+                    &quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                Ok(format!("{}(trim(both '\"' from ({})::text) ~* ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    &quote::quote! {
+                        query = query.bind(self.value.to_string());
+                        query
+                    }
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
@@ -1277,6 +1361,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &query_bind_self_value_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &value_std_primitive_i32_token_stream,
                     &value_code_default_token_stream,
@@ -1286,6 +1372,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
                     &position_default_value_default_token_stream,
@@ -1313,6 +1401,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
                     &position_default_value_default_token_stream,
@@ -1340,6 +1430,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
                     &position_default_value_default_token_stream,
@@ -1367,6 +1459,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
                     &position_default_value_default_token_stream,
@@ -1394,6 +1488,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote! {value: std::vec::Vec<T>},
                     &quote::quote! {
@@ -1406,6 +1502,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote! {value: std::vec::Vec<T>},
                     &quote::quote! {
@@ -1417,6 +1515,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote! {pub value: std::vec::Vec<T>},
                     &quote::quote! {
@@ -1428,6 +1528,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote! {pub value: std::vec::Vec<T>},
                     &quote::quote! {
@@ -1439,6 +1541,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &quote::quote! {pub value: std::vec::Vec<T>},
                     &quote::quote! {
@@ -1450,6 +1554,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -1459,6 +1565,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -1468,6 +1576,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -1477,6 +1587,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression { 
                     ident: _
                 } => (
+                    ShouldDeriveSerdeSerialize::True,
+                    ShouldDeriveSchemarsJsonSchema::True,
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -1485,7 +1597,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
             };
             let filter_initialized_with_try_new_result = PostgresqlJsonTypeFilterInitializedWithTryNew::try_from(filter);
-            let struct_token_stream = generate_struct_token_stream(filter_initialized_with_try_new_result.is_ok(), &should_add_declaration_of_struct_ident_generic, &ident, &struct_additional_fields_token_stream);
+            let struct_token_stream = generate_struct_token_stream(
+                filter_initialized_with_try_new_result.is_ok(),
+                &should_add_declaration_of_struct_ident_generic,
+                &ident,
+                &struct_additional_fields_token_stream,
+                &should_derive_serde_serialize,
+                //todo refactor
+                &if filter_initialized_with_try_new_result.is_ok() {
+                    ShouldDeriveSerdeDeserialize::False
+                }
+                else {
+                    ShouldDeriveSerdeDeserialize::True
+                },
+                &should_derive_schemars_json_schema,
+            );
             let maybe_try_new_logic_token_stream = match filter_initialized_with_try_new_result {
                 Ok(value) => {
                     let (
@@ -1568,26 +1694,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &vec![&value_std_vec_vec_t_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::CaseSensitiveRegularExpression => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                //todo
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &quote::quote! {: crate::IsStringEmpty},
-                            &value_t_token_stream,
-                            &quote::quote! {
-                                if !crate::IsStringEmpty::is_string_empty(&value) {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
-                                }
-                            },
-                            Some(quote::quote! {+ crate::IsStringEmpty}),
-                            &vec![&value_t_field],
-                        ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::CaseInsensitiveRegularExpression => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote! {
                                 //todo
@@ -1860,8 +1966,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }
                 Err(_) => proc_macro2::TokenStream::new(),
             };
-            let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream =
-                generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(&should_add_declaration_of_struct_ident_generic, &ident, &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream);
+            let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
+                &should_add_declaration_of_struct_ident_generic,
+                &ident,
+                &impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+            );
             let impl_postgresql_type_where_filter_token_stream = generate_impl_postgresql_type_where_filter_token_stream(
                 &FilterType::PostgresqlJsonType,
                 &should_add_declaration_of_struct_ident_generic,
@@ -1870,11 +1979,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &postgresql_crud_macros_common::IsQueryBindMutable::True,
                 &query_bind_content_token_stream,
             );
+            //todo pub fields or not
             let f = quote::quote! {
                 #struct_token_stream
                 #maybe_try_new_logic_token_stream
                 #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                 #impl_postgresql_type_where_filter_token_stream
+
+
+
+                // pub struct PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression +
+                // impl _serde::Serialize for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+                // impl<'de> _serde::Deserialize<'de> for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+                // impl schemars::JsonSchema for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {
+                // impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {+
+                // impl <'a> crate::PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypeWhereElementCaseInsensitiveRegularExpression {+
             };
             match &filter {
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression |
