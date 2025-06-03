@@ -1334,18 +1334,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &quote::quote! {value: crate::RegexRegex},
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    // &generate_query_part_one_value_token_stream(
-                    //     &generate_quotes::double_quotes_token_stream(&"{}(trim(both '\"' from ({})::text) ~* ${})")
-                    // ),
-                    &quote::quote! {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!("{}(trim(both '\"' from ({})::text) ~* ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, increment))
-                            }
-                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                        }
-                    },
+                    &generate_query_part_one_value_token_stream(
+                        &quote::quote!{"{}(trim(both '\"' from ({})::text) ~* ${})"}
+                        // &generate_quotes::double_quotes_token_stream(&"{}(trim(both '\"' from ({})::text) ~* ${})")
+                    ),
                     &quote::quote! {
                         query = query.bind(self.value.to_string());
                         query
