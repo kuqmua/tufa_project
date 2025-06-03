@@ -1079,9 +1079,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression {
                         ident: _
                     } => Ok(Self::CaseSensitiveRegularExpression),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression {
-                        ident: _
-                    } => Ok(Self::CaseInsensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => Ok(Self::LengthEqual),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => Ok(Self::LengthMoreThan),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual {
@@ -1264,9 +1262,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~")),
                     &query_bind_sqlx_types_json_self_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression {
-                    ident: _
-                } => (
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -1881,7 +1877,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #impl_postgresql_type_where_filter_token_stream
             };
             match &filter {
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression {ident: _} |
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {ident: _} |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression {ident: _} |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression {ident: _} => {

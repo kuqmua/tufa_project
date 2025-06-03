@@ -41,7 +41,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
-        "column_113f3662_35a2_4a7a_9326_03bbd441815f": "cat",
+        "column_113f3662_35a2_4a7a_9326_03bbd441815f": "user@example.com",
         "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": [
           ""
         ]
@@ -126,16 +126,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": ""
                   #   }
                   # },
-                  # {
-                  #   "CaseSensitiveRegularExpression": {
-                  #     "logical_operator": "Or",
-                  #     "value": ""
-                  #   }
-                  # },
                   {
                     "CaseInsensitiveRegularExpression": {
                       "logical_operator": "Or",
-                      "value": "cat"
+                      "value": "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,}$"
                     }
                   }
                 ]
@@ -168,20 +162,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #       },
             #       {
             #         "PositionEqual": {
-            #           "logical_operator": "Or",
-            #           "position": 0,
-            #           "value": ""
-            #         }
-            #       },
-            #       {
-            #         "PositionCaseSensitiveRegularExpression": {
-            #           "logical_operator": "Or",
-            #           "position": 0,
-            #           "value": ""
-            #         }
-            #       },
-            #       {
-            #         "PositionCaseInsensitiveRegularExpression": {
             #           "logical_operator": "Or",
             #           "position": 0,
             #           "value": ""

@@ -1380,9 +1380,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     // vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression {
                                     //     ident: ident_origin_upper_camel_case_token_stream.clone(),
                                     // });
-                                    // vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression {
-                                    //     ident: ident_origin_upper_camel_case_token_stream.clone(),
-                                    // });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression);
                                     vec
                                 }
                             },

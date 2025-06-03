@@ -167,9 +167,7 @@ pub enum PostgresqlJsonTypeFilter {
     CaseSensitiveRegularExpression {
         ident: proc_macro2::TokenStream,
     },
-    CaseInsensitiveRegularExpression {
-        ident: proc_macro2::TokenStream,
-    },
+    CaseInsensitiveRegularExpression,
     LengthEqual,
     LengthMoreThan,
     PositionEqual {
@@ -231,9 +229,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::CaseSensitiveRegularExpression {
                 ident: _
             } => &naming::CaseSensitiveRegularExpressionUpperCamelCase,
-            Self::CaseInsensitiveRegularExpression {
-                ident: _
-            } => &naming::CaseInsensitiveRegularExpressionUpperCamelCase,
+            Self::CaseInsensitiveRegularExpression => &naming::CaseInsensitiveRegularExpressionUpperCamelCase,
             Self::LengthEqual => &naming::LengthEqualUpperCamelCase,
             Self::LengthMoreThan => &naming::LengthMoreThanUpperCamelCase,
             Self::PositionEqual {
@@ -358,9 +354,7 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression {
                 ident: _
             } => Ok(Self::CaseSensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression {
-                ident: _
-            } => Ok(Self::CaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
             PostgresqlJsonTypeFilter::LengthEqual => Err(()),
             PostgresqlJsonTypeFilter::LengthMoreThan => Err(()),
             PostgresqlJsonTypeFilter::PositionEqual {
