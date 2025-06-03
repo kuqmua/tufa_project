@@ -1095,9 +1095,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan {
                         ident: _
                     } => Ok(Self::PositionGreaterThan),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression {
-                        ident: _
-                    } => Ok(Self::PositionCaseSensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression => Ok(Self::PositionCaseSensitiveRegularExpression),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                         ident: _
@@ -1339,9 +1337,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression { 
-                    ident: _
-                } => (
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
                     &position_default_value_default_token_stream,
