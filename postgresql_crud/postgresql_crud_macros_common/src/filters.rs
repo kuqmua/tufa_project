@@ -173,6 +173,7 @@ pub enum PostgresqlJsonTypeFilter {
     PositionGreaterThan {
         ident: proc_macro2::TokenStream,
     },
+    PositionRegularExpression,
     PositionCaseSensitiveRegularExpression,
     PositionCaseInsensitiveRegularExpression,
     ContainsAllElementsOfArray {
@@ -220,6 +221,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::PositionGreaterThan {
                 ident: _
             } => &naming::PositionGreaterThanUpperCamelCase,
+            Self::PositionRegularExpression => &naming::PositionRegularExpressionUpperCamelCase,
             Self::PositionCaseSensitiveRegularExpression => &naming::PositionCaseSensitiveRegularExpressionUpperCamelCase,
             Self::PositionCaseInsensitiveRegularExpression => &naming::PositionCaseInsensitiveRegularExpressionUpperCamelCase,
             Self::ContainsAllElementsOfArray {
@@ -321,6 +323,7 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::In {
                 ident: _
             } => Ok(Self::In),
+            PostgresqlJsonTypeFilter::RegularExpression => Err(()),
             PostgresqlJsonTypeFilter::LengthEqual => Err(()),
             PostgresqlJsonTypeFilter::LengthMoreThan => Err(()),
             PostgresqlJsonTypeFilter::PositionEqual {
@@ -329,7 +332,7 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::PositionGreaterThan {
                 ident: _
             } => Ok(Self::PositionGreaterThan),
-            PostgresqlJsonTypeFilter::RegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::PositionRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression => Ok(Self::PositionCaseSensitiveRegularExpression),
             PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Ok(Self::PositionCaseInsensitiveRegularExpression),
             PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
