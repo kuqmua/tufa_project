@@ -1059,7 +1059,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             LengthMoreThan,
             PositionEqual,
             PositionGreaterThan,
-            PositionCaseSensitiveRegularExpression,
             ContainsAllElementsOfArray,
             OverlapsWithArray,
             ContainsElementCaseSensitiveRegularExpression,
@@ -1091,7 +1090,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan {
                         ident: _
                     } => Ok(Self::PositionGreaterThan),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression => Ok(Self::PositionCaseSensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                         ident: _
@@ -1333,8 +1332,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &position_i32_value_t_token_stream,
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    &quote::quote! {
+                        position: #std_primitive_i32_token_stream,
+                        value: crate::RegexRegex
+                    },
                     &position_default_value_default_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
@@ -1343,7 +1345,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 match increment.checked_add(1) {
                                     Some(second_increment) => {
                                         *increment = second_increment;
-                                        Ok(format!("{}({}->>${} ~ ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
+                                        Ok(format!(
+                                            "{}((trim(both '\"' from ({}->>${})::text) ~ ${}))",
+                                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                            column,
+                                            first_increment,
+                                            second_increment
+                                        ))
                                     }
                                     None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                 }
@@ -1353,7 +1361,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     &quote::quote! {
                         query = query.bind(self.position);
-                        query = query.bind(sqlx::types::Json(self.value));
+                        query = query.bind(self.value.to_string());
                         query
                     },
                 ),
@@ -1636,15 +1644,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::PositionCaseSensitiveRegularExpression => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &position_is_less_than_zero_token_stream,
-                            &quote::quote! {: std::cmp::PartialOrd},
-                            &position_i32_value_t_token_stream,
-                            &is_position_is_less_than_zero_token_stream,
-                            Some(quote::quote! {+ std::cmp::PartialOrd}),
-                            &vec![&position_std_primitive_i32_field, &value_t_field],
-                        ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::ContainsAllElementsOfArray => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote! {
@@ -1795,7 +1794,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #impl_postgresql_type_where_filter_token_stream
             };
             match &filter {
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression |
+                // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => {
                     proc_macro2::TokenStream::new()
