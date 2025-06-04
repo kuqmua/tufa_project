@@ -1061,7 +1061,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             PositionGreaterThan,
             ContainsAllElementsOfArray,
             OverlapsWithArray,
-            ContainsElementCaseSensitiveRegularExpression,
             AllElementsCaseSensitiveRegularExpression,
         }
         impl std::convert::TryFrom<&postgresql_crud_macros_common::PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilterInitializedWithTryNew {
@@ -1108,7 +1107,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan {
                         ident: _
                     } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => Ok(Self::ContainsElementCaseSensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => Ok(Self::AllElementsCaseSensitiveRegularExpression),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression => Err(()),
@@ -1456,11 +1455,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &query_bind_sqlx_types_json_self_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &value_t_token_stream,
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    &quote::quote! {value: crate::RegexRegex},
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~ ${}))"}),
-                    &query_bind_sqlx_types_json_self_value_token_stream,
+                    &quote::quote! {
+                        query = query.bind(self.value.to_string());
+                        query
+                    },
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
@@ -1717,26 +1719,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &vec![&value_std_vec_vec_t_field],
                         ),
                         //todo remove this checks coz T must check it in constructor
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::ContainsElementCaseSensitiveRegularExpression => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &quote::quote! {: crate::IsStringEmpty},
-                            &value_t_token_stream,
-                            &quote::quote! {
-                                //todo check on empry is wrong. T generic initialization must check it. not here
-                                if !crate::IsStringEmpty::is_string_empty(&value) {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
-                                }
-                            },
-                            Some(quote::quote! {+ crate::IsStringEmpty}),
-                            &vec![&value_t_field],
-                        ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::AllElementsCaseSensitiveRegularExpression => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote! {
@@ -1795,7 +1777,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             };
             match &filter {
                 // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression |
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression |
+                // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression |
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => {
                     proc_macro2::TokenStream::new()
                 }
