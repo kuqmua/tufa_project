@@ -174,8 +174,6 @@ pub enum PostgresqlJsonTypeFilter {
         ident: proc_macro2::TokenStream,
     },
     PositionRegularExpression,
-    PositionCaseSensitiveRegularExpression,
-    PositionCaseInsensitiveRegularExpression,
     ContainsAllElementsOfArray {
         ident: proc_macro2::TokenStream,
     },
@@ -222,8 +220,6 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
                 ident: _
             } => &naming::PositionGreaterThanUpperCamelCase,
             Self::PositionRegularExpression => &naming::PositionRegularExpressionUpperCamelCase,
-            Self::PositionCaseSensitiveRegularExpression => &naming::PositionCaseSensitiveRegularExpressionUpperCamelCase,
-            Self::PositionCaseInsensitiveRegularExpression => &naming::PositionCaseInsensitiveRegularExpressionUpperCamelCase,
             Self::ContainsAllElementsOfArray {
                 ident: _
             } => &naming::ContainsAllElementsOfArrayUpperCamelCase,
@@ -266,12 +262,8 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     GreaterThan,
     Between,
     In,
-    CaseSensitiveRegularExpression,
-    CaseInsensitiveRegularExpression,
     PositionEqual,
     PositionGreaterThan,
-    PositionCaseSensitiveRegularExpression,
-    PositionCaseInsensitiveRegularExpression,
     ContainsAllElementsOfArray,
     OverlapsWithArray,
     AllElementsEqual,
@@ -289,12 +281,8 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::GreaterThan => true,
             Self::Between => true,
             Self::In => false,
-            Self::CaseSensitiveRegularExpression => true,
-            Self::CaseInsensitiveRegularExpression => true,
             Self::PositionEqual => false,
             Self::PositionGreaterThan => true,
-            Self::PositionCaseSensitiveRegularExpression => true,
-            Self::PositionCaseInsensitiveRegularExpression => true,
             Self::ContainsAllElementsOfArray => false,
             Self::OverlapsWithArray => false,
             Self::AllElementsEqual => false,
@@ -333,8 +321,6 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
                 ident: _
             } => Ok(Self::PositionGreaterThan),
             PostgresqlJsonTypeFilter::PositionRegularExpression => Err(()),
-            PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression => Ok(Self::PositionCaseSensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression => Ok(Self::PositionCaseInsensitiveRegularExpression),
             PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                 ident: _
             } => Ok(Self::ContainsAllElementsOfArray),
