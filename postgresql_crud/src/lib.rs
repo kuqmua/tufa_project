@@ -1055,3 +1055,22 @@ impl DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegexRegex {
         Self(regex::Regex::new("").unwrap())
     }
 }
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]
+pub enum RegularExpressionCase {
+    Sensitive,
+    Insensitive
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for RegularExpressionCase {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self::Sensitive
+    }
+}
+impl RegularExpressionCase {
+    pub fn postgreql_syntax(&self) -> &'static std::primitive::str {
+        match &self {
+            Self::Sensitive => "~",
+            Self::Insensitive => "~*"
+        }
+    }
+}
