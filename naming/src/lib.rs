@@ -542,7 +542,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["uuid", "uuid", "as", "not", "null", "jsonb", "string"],
     ["jsonb"],
     ["regular", "expression"],
-    ["position", "regular", "expression"]
+    ["position", "regular", "expression"],
+    ["contains", "element", "regular", "expression"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

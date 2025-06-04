@@ -1434,6 +1434,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <= ${}))"}),
                     &query_bind_sqlx_types_json_self_value_token_stream,
                 ),
+                // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementRegularExpression => (
+                //     ShouldAddDeclarationOfStructIdentGeneric::False,
+                //     &quote::quote! {value: crate::RegexRegex},
+                //     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                //     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~ ${}))"}),
+                //     &quote::quote! {
+                //         query = query.bind(self.value.to_string());
+                //         query
+                //     },
+                // ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &quote::quote! {value: crate::RegexRegex},
