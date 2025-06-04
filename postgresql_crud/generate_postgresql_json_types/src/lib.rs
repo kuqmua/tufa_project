@@ -1366,8 +1366,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 PostgresqlJsonTypeSpecific::String => {
                                     let mut vec = common_postgresql_json_type_filters.clone();
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression);
-                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseSensitiveRegularExpression);
-                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::CaseInsensitiveRegularExpression);
                                     vec
                                 }
                             },
