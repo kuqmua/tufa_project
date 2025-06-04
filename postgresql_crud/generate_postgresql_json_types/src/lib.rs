@@ -1411,9 +1411,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         // filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression {
                                         //     ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                         // });
-                                        // filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {
-                                        //     ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
-                                        // });
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
                                         // if is_vec_element_type {
                                         //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
                                         //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);

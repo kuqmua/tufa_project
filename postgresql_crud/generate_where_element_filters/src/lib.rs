@@ -1841,8 +1841,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             };
             match &filter {
                 // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression {ident: _} |
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression |
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression => {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression
+                //  |
+                // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression
+                 => {
                     proc_macro2::TokenStream::new()
                 }
                 _ => f
