@@ -505,8 +505,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Between => Ok(Self::Between),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::In => Ok(Self::In),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Before => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate => Err(()),
@@ -1788,11 +1788,19 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &query_bind_content_token_stream,
             );
             //todo pub fields or not
-            quote::quote! {
+            let f = quote::quote! {
                 #struct_token_stream
                 #maybe_try_new_logic_token_stream
                 #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                 #impl_postgresql_type_where_filter_token_stream
+            };
+            match &filter {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression |
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression |
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => {
+                    proc_macro2::TokenStream::new()
+                }
+                _ => f
             }
         };
         let filter_array_token_stream = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::into_array().map(|element| generate_filters_token_stream(&element));
