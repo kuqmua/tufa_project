@@ -1408,19 +1408,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonTypeSpecific::Bool => common_array_dimension1_postgresql_json_type_filters,
                                     PostgresqlJsonTypeSpecific::String => {
                                         let mut filters = common_array_dimension1_postgresql_json_type_filters.clone();
-                                        // filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression {
-                                        //     ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
-                                        // });
+                                        // filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
+                                        // filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression);
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
-                                        // if is_vec_element_type {
-                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseSensitiveRegularExpression);
-                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
-                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression);
-                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
-                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
-                                        //     filters.push(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
-                                        // }
+                                        // filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
                                         filters
                                     }
                                 }
