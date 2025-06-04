@@ -1061,11 +1061,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             PositionEqual,
             PositionGreaterThan,
             PositionCaseSensitiveRegularExpression,
-            PositionCaseInsensitiveRegularExpression,
             ContainsAllElementsOfArray,
             OverlapsWithArray,
             ContainsElementCaseSensitiveRegularExpression,
-            ContainsElementCaseInsensitiveRegularExpression,
             AllElementsCaseSensitiveRegularExpression,
             AllElementsCaseInsensitiveRegularExpression,
         }
@@ -1663,15 +1661,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::PositionCaseInsensitiveRegularExpression => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &position_is_less_than_zero_token_stream,
-                            &quote::quote! {: std::cmp::PartialOrd},
-                            &position_i32_value_t_token_stream,
-                            &is_position_is_less_than_zero_token_stream,
-                            Some(quote::quote! {+ std::cmp::PartialOrd}),
-                            &vec![&position_std_primitive_i32_field, &value_t_field],
-                        ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::ContainsAllElementsOfArray => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote! {
@@ -1746,26 +1735,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ),
                         //todo remove this checks coz T must check it in constructor
                         PostgresqlJsonTypeFilterInitializedWithTryNew::ContainsElementCaseSensitiveRegularExpression => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &quote::quote! {: crate::IsStringEmpty},
-                            &value_t_token_stream,
-                            &quote::quote! {
-                                //todo check on empry is wrong. T generic initialization must check it. not here
-                                if !crate::IsStringEmpty::is_string_empty(&value) {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
-                                }
-                            },
-                            Some(quote::quote! {+ crate::IsStringEmpty}),
-                            &vec![&value_t_field],
-                        ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::ContainsElementCaseInsensitiveRegularExpression => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote! {
                                 IsEmpty {
