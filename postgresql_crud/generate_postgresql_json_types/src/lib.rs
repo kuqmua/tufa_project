@@ -1347,18 +1347,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         // AllElementsGreaterThan {
                         //     ident: proc_macro2::TokenStream,
                         // },
-                        // ContainsElementCaseSensitiveRegularExpression {
-                        //     ident: proc_macro2::TokenStream,
-                        // },
-                        // ContainsElementCaseInsensitiveRegularExpression {
-                        //     ident: proc_macro2::TokenStream,
-                        // },
-                        // AllElementsCaseSensitiveRegularExpression {
-                        //     ident: proc_macro2::TokenStream,
-                        // },
-                        // AllElementsCaseInsensitiveRegularExpression {
-                        //     ident: proc_macro2::TokenStream,
-                        // },
                         match &element.postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &postgresql_json_type_specific {
                                 PostgresqlJsonTypeSpecific::Number => {
@@ -1410,7 +1398,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionCaseInsensitiveRegularExpression);
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression);
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression);
-                                        // filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
                                         filters
                                     }

@@ -160,19 +160,25 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": ""
                   #   }
                   # },
-                  {
-                    "ContainsElementCaseSensitiveRegularExpression": {
-                      "logical_operator": "Or",
-                      "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,}$"
-                    }
-                  }
-                  # ,
+                  # {
+                  #   "ContainsElementCaseSensitiveRegularExpression": {
+                  #     "logical_operator": "Or",
+                  #     "value": ""
+                  #   }
+                  # },
                   # {
                   #   "ContainsElementCaseInsensitiveRegularExpression": {
                   #     "logical_operator": "Or",
                   #     "value": ""
                   #   }
                   # },
+                  {
+                    "AllElementsCaseSensitiveRegularExpression": {
+                      "logical_operator": "Or",
+                      "value": "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,}$"
+                    }
+                  }
+                  # ,
                   # {
                   #   "AllElementsCaseInsensitiveRegularExpression": {
                   #     "logical_operator": "Or",
