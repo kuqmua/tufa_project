@@ -520,8 +520,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         enum PostgresqlTypeFilterInitializedWithTryNew {
             Between,
             In,
-            ArrayLengthDimensionOne,
-            ArrayLengthMoreThanDimensionOne,
             RangeLength,
         }
         impl std::convert::TryFrom<&postgresql_crud_macros_common::PostgresqlTypeFilter> for PostgresqlTypeFilterInitializedWithTryNew {
@@ -540,8 +538,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne => Ok(Self::ArrayLengthDimensionOne),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne => Ok(Self::ArrayLengthMoreThanDimensionOne),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange => Err(()),
@@ -910,56 +908,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             },
                             Some(quote::quote! {+ PartialEq + Clone}),
                             &vec![&value_std_vec_vec_t_field],
-                        ),
-                        PostgresqlTypeFilterInitializedWithTryNew::ArrayLengthDimensionOne => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                LengthIsNegative {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &ShouldAddDeclarationOfStructIdentGeneric::False,
-                            &proc_macro2_token_stream_new,
-                            &value_declaration_token_stream,
-                            &quote::quote! {
-                                if value.get() >= 0 {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::LengthIsNegative {
-                                        value,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
-                            None,
-                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
-                        ),
-                        PostgresqlTypeFilterInitializedWithTryNew::ArrayLengthMoreThanDimensionOne => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                LengthIsNegative {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &ShouldAddDeclarationOfStructIdentGeneric::False,
-                            &proc_macro2_token_stream_new,
-                            &value_declaration_token_stream,
-                            &quote::quote! {
-                                if value.get() >= 0 {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::LengthIsNegative {
-                                        value,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
-                            None,
-                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
                         ),
                         PostgresqlTypeFilterInitializedWithTryNew::RangeLength => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
