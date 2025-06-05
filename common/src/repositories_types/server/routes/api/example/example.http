@@ -87,18 +87,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   }
       # },
       {
-        "CaseSensitiveRegularExpression": {
+        "RegularExpression": {
           "logical_operator": "Or",
+          "regular_expression_case": "Sensitive",
           "value": "cat"
         }
       }
-      # ,
-      # {
-      #   "CaseInsensitiveRegularExpression": {
-      #     "logical_operator": "Or",
-      #     "value": ""
-      #   }
-      # }
     ]
   },
   # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {

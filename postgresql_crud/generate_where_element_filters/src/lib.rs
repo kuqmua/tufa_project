@@ -491,8 +491,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         enum PostgresqlTypeFilterInitializedWithTryNew {
             Between,
             In,
-            CaseSensitiveRegularExpression,
-            CaseInsensitiveRegularExpression,
             ArrayLengthDimensionOne,
             ArrayLengthMoreThanDimensionOne,
             RangeLength,
@@ -506,8 +504,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Between => Ok(Self::Between),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::In => Ok(Self::In),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Before => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate => Err(()),
@@ -622,7 +618,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                // RegularExpression
                 postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &quote::quote! {
@@ -652,21 +647,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query = query.bind(self.value.to_string());
                         query
                     }
-                ),
-                //
-                postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~")),
-                    &query_bind_one_value_token_stream,
-                ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("~*")),
-                    &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Before => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -924,48 +904,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             },
                             Some(quote::quote! {+ PartialEq + Clone}),
                             &vec![&value_std_vec_vec_t_field],
-                        ),
-                        PostgresqlTypeFilterInitializedWithTryNew::CaseSensitiveRegularExpression => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                //todo
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
-                            &quote::quote! {: crate::IsStringEmpty},
-                            &value_t_token_stream,
-                            &quote::quote! {
-                                if !crate::IsStringEmpty::is_string_empty(&value) {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
-                                }
-                            },
-                            Some(quote::quote! {+ crate::IsStringEmpty}),
-                            &vec![&value_t_field],
-                        ),
-                        PostgresqlTypeFilterInitializedWithTryNew::CaseInsensitiveRegularExpression => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                //todo
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
-                            &quote::quote! {: crate::IsStringEmpty},
-                            &value_t_token_stream,
-                            &quote::quote! {
-                                if !crate::IsStringEmpty::is_string_empty(&value) {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() })
-                                }
-                            },
-                            Some(quote::quote! {+ crate::IsStringEmpty}),
-                            &vec![&value_t_field],
                         ),
                         PostgresqlTypeFilterInitializedWithTryNew::ArrayLengthDimensionOne => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
