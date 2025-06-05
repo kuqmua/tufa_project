@@ -191,6 +191,7 @@ pub enum PostgresqlJsonTypeFilter {
         ident: proc_macro2::TokenStream,
     },
     ContainsElementRegularExpression,
+    AllElementsRegularExpression,
     AllElementsCaseSensitiveRegularExpression,
     AllElementsCaseInsensitiveRegularExpression,
 }
@@ -235,6 +236,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
                 ident: _
             } => &naming::AllElementsGreaterThanUpperCamelCase,
             Self::ContainsElementRegularExpression => &naming::ContainsElementRegularExpressionUpperCamelCase,
+            Self::AllElementsRegularExpression => &naming::AllElementsRegularExpressionUpperCamelCase,
             Self::AllElementsCaseSensitiveRegularExpression => &naming::AllElementsCaseSensitiveRegularExpressionUpperCamelCase,
             Self::AllElementsCaseInsensitiveRegularExpression => &naming::AllElementsCaseInsensitiveRegularExpressionUpperCamelCase,
         }
@@ -331,8 +333,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
                 ident: _
             } => Ok(Self::AllElementsGreaterThan),
             PostgresqlJsonTypeFilter::ContainsElementRegularExpression => Err(()),
-            PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => Ok(Self::AllElementsCaseSensitiveRegularExpression),
-            PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression => Ok(Self::AllElementsCaseInsensitiveRegularExpression),
+            PostgresqlJsonTypeFilter::AllElementsRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression => Err(()),
         }
     }
 }

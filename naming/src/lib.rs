@@ -543,7 +543,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["jsonb"],
     ["regular", "expression"],
     ["position", "regular", "expression"],
-    ["contains", "element", "regular", "expression"]
+    ["contains", "element", "regular", "expression"],
+    ["all", "elements", "regular", "expression"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
