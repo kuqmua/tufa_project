@@ -1582,7 +1582,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionTwoPositionEqual => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &dimension1_position_is_less_than_zero_token_stream,
+                            // &dimension1_position_is_less_than_zero_token_stream,
+                            &quote::quote! {
+                                dimension1_position: #std_primitive_i32_token_stream,
+                                value: T,
+                            },
                             &quote::quote! {: std::cmp::PartialOrd},
                             &dimension1_position_value_declaration_token_stream,
                             &is_dimension1_position_is_less_than_zero_token_stream,
