@@ -50,7 +50,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         value: #core_default_default_default_token_stream
     };
     let position_std_primitive_i32_field = Field {
-        field_name: &naming::PositionSnakeCase,
+        field_name: &"dimension1_position",
         field_type: &std_primitive_i32_token_stream,
     };
     let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {
@@ -1107,27 +1107,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query = query.bind(self.value);
                 query
             };
-            let position_i32_value_t_token_stream = quote::quote! {
-                position: #std_primitive_i32_token_stream,
+            let dimension1_position_value_declaration_token_stream = quote::quote! {
+                dimension1_position: #std_primitive_i32_token_stream,
                 value: T,
             };
-            let position_default_value_default_token_stream = quote::quote!{
-                position: #core_default_default_default_token_stream,
+            let dimension1_position_value_default_initialization_token_stream = quote::quote!{
+                dimension1_position: #core_default_default_default_token_stream,
                 value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
             };
-            let position_is_less_than_zero_token_stream = quote::quote! {
-                PositionIsLessThanZero {
+            let dimension1_position_is_less_than_zero_token_stream = quote::quote! {
+                Dimension1PositionIsLessThanZero {
                     #[eo_to_std_string_string_serialize_deserialize]
-                    position: #std_primitive_i32_token_stream,
+                    dimension1_position: #std_primitive_i32_token_stream,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 },
             };
-            let is_position_is_less_than_zero_token_stream = quote::quote! {
-                if position >= 0 {
-                    Ok(Self { logical_operator, value, position })
+            let is_dimension1_position_is_less_than_zero_token_stream = quote::quote! {
+                if dimension1_position >= 0 {
+                    Ok(Self { logical_operator, value, dimension1_position })
                 } else {
-                    Err(#ident_try_new_error_named::PositionIsLessThanZero {
-                        position,
+                    Err(#ident_try_new_error_named::Dimension1PositionIsLessThanZero {
+                        dimension1_position,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     })
                 }
@@ -1249,8 +1249,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &position_i32_value_t_token_stream,
-                    &position_default_value_default_token_stream,
+                    &dimension1_position_value_declaration_token_stream,
+                    &dimension1_position_value_default_initialization_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(first_increment) => {
@@ -1267,7 +1267,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     &quote::quote! {
-                        query = query.bind(self.position);
+                        query = query.bind(self.dimension1_position);
                         query = query.bind(sqlx::types::Json(self.value));
                         query
                     },
@@ -1277,8 +1277,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 } => (
                     //here
                     ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &position_i32_value_t_token_stream,
-                    &position_default_value_default_token_stream,
+                    &dimension1_position_value_declaration_token_stream,
+                    &dimension1_position_value_default_initialization_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(first_increment) => {
@@ -1295,7 +1295,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     &quote::quote! {
-                        query = query.bind(self.position);
+                        query = query.bind(self.dimension1_position);
                         query = query.bind(sqlx::types::Json(self.value));
                         query
                     },
@@ -1304,8 +1304,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
-                    &position_i32_value_t_token_stream,
-                    &position_default_value_default_token_stream,
+                    &dimension1_position_value_declaration_token_stream,
+                    &dimension1_position_value_default_initialization_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(first_increment) => {
@@ -1322,7 +1322,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     &quote::quote! {
-                        query = query.bind(self.position);
+                        query = query.bind(self.dimension1_position);
                         query = query.bind(sqlx::types::Json(self.value));
                         query
                     },
@@ -1330,11 +1330,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &quote::quote! {
-                        position: #std_primitive_i32_token_stream,
+                        dimension1_position: #std_primitive_i32_token_stream,
                         #regular_expression_case_and_value_declaration_token_stream
                     },
                     &quote::quote! {
-                        position: #core_default_default_default_token_stream,
+                        dimension1_position: #core_default_default_default_token_stream,
                         #regular_expression_case_and_value_default_initialization_token_stream
                     },
                     &quote::quote! {
@@ -1360,7 +1360,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     &quote::quote! {
-                        query = query.bind(self.position);
+                        query = query.bind(self.dimension1_position);
                         #query_equals_query_self_value_to_string_token_stream
                     },
                 ),
@@ -1573,28 +1573,28 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionOnePositionEqual => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &position_is_less_than_zero_token_stream,
+                            &dimension1_position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
-                            &position_i32_value_t_token_stream,
-                            &is_position_is_less_than_zero_token_stream,
+                            &dimension1_position_value_declaration_token_stream,
+                            &is_dimension1_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionTwoPositionEqual => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &position_is_less_than_zero_token_stream,
+                            &dimension1_position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
-                            &position_i32_value_t_token_stream,
-                            &is_position_is_less_than_zero_token_stream,
+                            &dimension1_position_value_declaration_token_stream,
+                            &is_dimension1_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::PositionGreaterThan => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &position_is_less_than_zero_token_stream,
+                            &dimension1_position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
-                            &position_i32_value_t_token_stream,
-                            &is_position_is_less_than_zero_token_stream,
+                            &dimension1_position_value_declaration_token_stream,
+                            &is_dimension1_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
