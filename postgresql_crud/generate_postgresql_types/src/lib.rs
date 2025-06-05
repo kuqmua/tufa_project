@@ -3297,6 +3297,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan;
                 let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between;
                 let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In;
+                // let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
                 let case_sensitive_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression;
                 let case_insensitive_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression;
                 let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation;

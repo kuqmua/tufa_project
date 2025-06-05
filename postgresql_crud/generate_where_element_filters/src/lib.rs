@@ -505,6 +505,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Between => Ok(Self::Between),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::In => Ok(Self::In),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression => Ok(Self::CaseSensitiveRegularExpression),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression => Ok(Self::CaseInsensitiveRegularExpression),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Before => Err(()),
@@ -537,7 +538,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query = query.bind(self.value);
                 query
             };
-            let (should_add_declaration_of_struct_ident_generic, struct_additional_fields_token_stream, impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream, query_part_content_token_stream, query_bind_content_token_stream) = match &filter {
+            let (
+                should_add_declaration_of_struct_ident_generic,
+                struct_additional_fields_token_stream,
+                impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
+                query_part_content_token_stream,
+                query_bind_content_token_stream
+            ) = match &filter {
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Equal => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &pub_value_t_token_stream,
@@ -615,6 +622,38 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
+                // RegularExpression
+                postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    &quote::quote! {
+                        regular_expression_case: crate::RegularExpressionCase,
+                        value: crate::RegexRegex
+                    },
+                    &quote::quote! {
+                        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    },
+                    &quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                Ok(format!(
+                                    "{}({} {} ${})",
+                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    column,
+                                    self.regular_expression_case.postgreql_syntax(),
+                                    increment
+                                ))
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    &quote::quote! {
+                        query = query.bind(self.value.to_string());
+                        query
+                    }
+                ),
+                //
                 postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &value_t_token_stream,
