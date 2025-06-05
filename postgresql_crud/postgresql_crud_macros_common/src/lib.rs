@@ -77,7 +77,7 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::RegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::LengthEqual => None,
                 crate::PostgresqlJsonTypeFilter::LengthMoreThan => None,
-                crate::PostgresqlJsonTypeFilter::PositionEqual {
+                crate::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                     ident,
                 } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::PositionGreaterThan {

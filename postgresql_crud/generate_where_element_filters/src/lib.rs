@@ -1040,7 +1040,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             In,
             LengthEqual,
             LengthMoreThan,
-            PositionEqual,
+            DimensionOnePositionEqual,
             PositionGreaterThan,
             ContainsAllElementsOfArray,
             OverlapsWithArray,
@@ -1064,9 +1064,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => Ok(Self::LengthEqual),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => Ok(Self::LengthMoreThan),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual {
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                         ident: _
-                    } => Ok(Self::PositionEqual),
+                    } => Ok(Self::DimensionOnePositionEqual),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan {
                         ident: _
                     } => Ok(Self::PositionGreaterThan),
@@ -1241,7 +1241,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(jsonb_array_length({}) > ${})"}),
                     &query_bind_self_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionEqual { 
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                     ident: _
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -1539,7 +1539,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None,
                             &vec![&value_std_primitive_i32_field],
                         ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::PositionEqual => (
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionOnePositionEqual => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
