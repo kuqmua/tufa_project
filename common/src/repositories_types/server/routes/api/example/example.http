@@ -146,27 +146,22 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": ""
                   #   }
                   # },
+                  # {
+                  #   "PositionRegularExpression": {
+                  #     "logical_operator": "Or",
+                  #     "position": 0,
+                  #     "regular_expression_case": "Sensitive",
+                  #     "value": ""
+                  #   }
+                  # },
                   {
-                    "PositionRegularExpression": {
+                    "ContainsElementRegularExpression": {
                       "logical_operator": "Or",
-                      "position": 0,
                       "regular_expression_case": "Sensitive",
                       "value": "cat"
                     }
                   }
                   # ,
-                  # {
-                  #   "ContainsElementCaseSensitiveRegularExpression": {
-                  #     "logical_operator": "Or",
-                  #     "value": ""
-                  #   }
-                  # },
-                  # {
-                  #   "ContainsElementCaseInsensitiveRegularExpression": {
-                  #     "logical_operator": "Or",
-                  #     "value": ""
-                  #   }
-                  # },
                   # {
                   #   "AllElementsCaseSensitiveRegularExpression": {
                   #     "logical_operator": "Or",
