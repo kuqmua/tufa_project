@@ -1075,7 +1075,7 @@ impl RegularExpressionCase {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, serde::Serialize, schemars::JsonSchema)]
+#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
 pub struct DimensionPosition(std::primitive::i32);//todo why exactly i32? maybe different types for postgresql type and postgresql json type
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum DimensionPositionTryFromStdPrimitiveI32ErrorNamed {
@@ -1184,3 +1184,26 @@ const _: () = {
         }
     }
 };
+impl error_occurence_lib::ToStdStringString for DimensionPosition {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for DimensionPosition {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<std::primitive::i8> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::Json<std::primitive::i8> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for DimensionPosition {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(self.0), buf)
+    }
+}
+impl DimensionPosition {
+    pub fn get(&self) -> std::primitive::i32 {
+        self.0
+    }
+}
