@@ -912,7 +912,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         PostgresqlTypeFilterInitializedWithTryNew::RangeLength => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote! {
-                                LengthIsNegativeOrZero {
+                                LengthIsNegativeOrZero {//todo rename
                                     #[eo_to_std_string_string_serialize_deserialize]
                                     value: #unsigned_part_of_std_primitive_i32_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -966,7 +966,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                 #impl_postgresql_type_where_filter_token_stream
             };
-            // if let postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual = &filter {
+            // if let postgresql_crud_macros_common::PostgresqlTypeFilter:: = &filter {
             //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
             //         "GeneratePostgresqlTypeWhereElementFilter",
             //         &generated,
@@ -986,11 +986,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         enum PostgresqlJsonTypeFilterInitializedWithTryNew {
             Between,
             In,
-            LengthEqual,
-            LengthMoreThan,
-            DimensionOnePositionEqual,
-            DimensionTwoPositionEqual,
-            PositionGreaterThan,
             ContainsAllElementsOfArray,
             OverlapsWithArray,
         }
@@ -1011,17 +1006,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ident: _
                     } => Ok(Self::In),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => Err(()),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => Ok(Self::LengthEqual),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => Ok(Self::LengthMoreThan),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                         ident: _
-                    } => Ok(Self::DimensionOnePositionEqual),
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
                         ident: _
-                    } => Ok(Self::DimensionTwoPositionEqual),
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan {
                         ident: _
-                    } => Ok(Self::PositionGreaterThan),
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                         ident: _
@@ -1471,82 +1466,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote! {+ std::cmp::PartialOrd + Clone}),
                             &vec![&value_std_vec_vec_t_field],
                         ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::LengthEqual => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                LengthIsNegative {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &proc_macro2_token_stream_new,
-                            &value_declaration_token_stream,
-                            &quote::quote! {
-                                if value.get() >= 0 {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::LengthIsNegative {
-                                        value,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
-                            None,
-                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
-                        ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::LengthMoreThan => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &quote::quote! {
-                                LengthIsNegative {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &proc_macro2_token_stream_new,
-                            &value_declaration_token_stream,
-                            &quote::quote! {
-                                if value.get() >= 0 {
-                                    Ok(Self { logical_operator, value })
-                                } else {
-                                    Err(#ident_try_new_error_named::LengthIsNegative {
-                                        value,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
-                            None,
-                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
-                        ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionOnePositionEqual => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &dimension1_position_is_less_than_zero_token_stream,
-                            &quote::quote! {: std::cmp::PartialOrd},
-                            &dimension1_position_value_declaration_token_stream,
-                            &is_dimension1_position_is_less_than_zero_token_stream,
-                            Some(quote::quote! {+ std::cmp::PartialOrd}),
-                            &vec![&position_unsigned_part_of_std_primitive_i32_field, &value_t_field],
-                        ),
-                        //todo
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionTwoPositionEqual => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &dimension1_position_is_less_than_zero_token_stream,
-                            &quote::quote! {: std::cmp::PartialOrd},
-                            &dimension1_position_value_declaration_token_stream,
-                            &is_dimension1_position_is_less_than_zero_token_stream,
-                            Some(quote::quote! {+ std::cmp::PartialOrd}),
-                            &vec![&position_unsigned_part_of_std_primitive_i32_field, &value_t_field],
-                        ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::PositionGreaterThan => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            &dimension1_position_is_less_than_zero_token_stream,
-                            &quote::quote! {: std::cmp::PartialOrd},
-                            &dimension1_position_value_declaration_token_stream,
-                            &is_dimension1_position_is_less_than_zero_token_stream,
-                            Some(quote::quote! {+ std::cmp::PartialOrd}),
-                            &vec![&position_unsigned_part_of_std_primitive_i32_field, &value_t_field],
-                        ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::ContainsAllElementsOfArray => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote! {
@@ -1669,7 +1588,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             #(#filter_array_token_stream)*
             // #_token_stream
         };
-        // if let postgresql_crud_macros_common::PostgresqlTypeFilter::LengthEqual = &filter {
+        // if let postgresql_crud_macros_common::PostgresqlTypeFilter:: = &filter {
         //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
         //         "GeneratePostgresqlTypeWhereElementFilter",
         //         &generated,
