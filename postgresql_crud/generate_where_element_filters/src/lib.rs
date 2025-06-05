@@ -26,10 +26,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         field_name: &'a dyn std::fmt::Display,
         field_type: &'a dyn quote::ToTokens,
     }
-    let value_t_field = Field {
-        field_name: &naming::ValueSnakeCase,
-        field_type: &t_token_stream,
-    };
     let value_unsigned_part_of_std_primitive_i32_field = Field {
         field_name: &naming::ValueSnakeCase,
         field_type: &unsigned_part_of_std_primitive_i32_token_stream, //todo i32 or i64 or something between? or more? or less?
@@ -48,10 +44,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     };
     let value_code_default_token_stream = quote::quote! {
         value: #core_default_default_default_token_stream
-    };
-    let position_unsigned_part_of_std_primitive_i32_field = Field {
-        field_name: &"dimension1_position",
-        field_type: &unsigned_part_of_std_primitive_i32_token_stream,
     };
     let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {
         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
@@ -1057,23 +1049,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let dimension1_position_value_default_initialization_token_stream = quote::quote!{
                 dimension1_position: #core_default_default_default_token_stream,
                 value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-            };
-            let dimension1_position_is_less_than_zero_token_stream = quote::quote! {
-                Dimension1PositionIsLessThanZero {
-                    #[eo_to_std_string_string_serialize_deserialize]
-                    dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
-                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                },
-            };
-            let is_dimension1_position_is_less_than_zero_token_stream = quote::quote! {
-                if dimension1_position.get() >= 0 {
-                    Ok(Self { logical_operator, value, dimension1_position })
-                } else {
-                    Err(#ident_try_new_error_named::Dimension1PositionIsLessThanZero {
-                        dimension1_position,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    })
-                }
             };
             let (
                 should_add_declaration_of_struct_ident_generic,
