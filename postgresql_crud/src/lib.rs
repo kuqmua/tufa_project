@@ -1074,3 +1074,28 @@ impl RegularExpressionCase {
         }
     }
 }
+
+#[derive(Debug, Clone, PartialEq, serde::Serialize, schemars::JsonSchema)]
+pub struct DimensionPosition(std::primitive::i32);//todo why exactly i32? maybe different types for postgresql type and postgresql json type
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum DimensionPositionTryFromStdPrimitiveI32ErrorNamed {
+    DimensionPositionIsLessThanZero {
+        #[eo_to_std_string_string_serialize_deserialize]
+        dimension_position: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl std::convert::TryFrom<std::primitive::i32> for DimensionPosition {
+    type Error = DimensionPositionTryFromStdPrimitiveI32ErrorNamed;
+    fn try_from(value: std::primitive::i32) -> Result<Self, Self::Error> {
+        if value >= 0 {
+            Ok(Self(value))
+        } else {
+            Err(Self::Error::DimensionPositionIsLessThanZero {
+                dimension_position: value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+

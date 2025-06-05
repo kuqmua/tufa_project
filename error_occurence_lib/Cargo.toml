@@ -9,6 +9,7 @@ edition = "2024"
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 chrono = {version = "=0.4", features = ["serde"]}
 serde = {version = "=1.0", features = ["derive"]}
+schemars = {version = "=0.8.22"}
 git_info = {path = "../git_info"}
 app_state = {path = "../app_state"}
 error_occurence = {path = "./error_occurence"}
