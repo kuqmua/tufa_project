@@ -490,6 +490,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         pub regular_expression_case: crate::RegularExpressionCase,
         pub value: crate::RegexRegex
     };
+    let regular_expression_case_and_value_default_initialization_token_stream = quote::quote! {
+        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+    };
+    let generate_query_part_regular_expression_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
+        quote::quote! {
+            match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    Ok(format!(
+                        #format_handle_token_stream,
+                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                        column,
+                        self.regular_expression_case.postgreql_syntax(),
+                        increment
+                    ))
+                }
+                None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+            }
+        }
+    };
     let query_equals_query_self_value_to_string_token_stream = quote::quote! {
         query = query.bind(self.value.to_string());
         query
@@ -629,25 +650,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &regular_expression_case_and_value_declaration_token_stream,
-                    &quote::quote! {
-                        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    },
-                    &quote::quote! {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!(
-                                    "{}({} {} ${})",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    self.regular_expression_case.postgreql_syntax(),
-                                    increment
-                                ))
-                            }
-                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                        }
-                    },
+                    &regular_expression_case_and_value_default_initialization_token_stream,
+                    &generate_query_part_regular_expression_token_stream(&quote::quote!{"{}({} {} ${})"}),
                     &query_equals_query_self_value_to_string_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Before => (
@@ -1219,25 +1223,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &regular_expression_case_and_value_declaration_token_stream,
-                    &quote::quote! {
-                        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    },
-                    &quote::quote! {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!(
-                                    "{}(trim(both '\"' from ({})::text) {} ${})",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    self.regular_expression_case.postgreql_syntax(),
-                                    increment
-                                ))
-                            }
-                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                        }
-                    },
+                    &regular_expression_case_and_value_default_initialization_token_stream,
+                    &generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(trim(both '\"' from ({})::text) {} ${})"}),
                     &query_equals_query_self_value_to_string_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => (
@@ -1308,7 +1295,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                //
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &quote::quote! {
@@ -1317,8 +1303,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     &quote::quote! {
                         position: #core_default_default_default_token_stream,
-                        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        #regular_expression_case_and_value_default_initialization_token_stream
                     },
                     &quote::quote! {
                         match increment.checked_add(1) {
@@ -1406,49 +1391,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &regular_expression_case_and_value_declaration_token_stream,
-                    &quote::quote!{
-                        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    },
-                    &quote::quote! {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!(
-                                    "{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    self.regular_expression_case.postgreql_syntax(),
-                                    increment
-                                ))
-                            }
-                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                        }
-                    },
+                    &regular_expression_case_and_value_default_initialization_token_stream,
+                    &generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"}),
                     &query_equals_query_self_value_to_string_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &regular_expression_case_and_value_declaration_token_stream,
-                    &quote::quote!{
-                        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    },
-                    &quote::quote! {
-                        match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                Ok(format!(
-                                    "{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !{} ${}))",
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    self.regular_expression_case.postgreql_syntax(),
-                                    increment
-                                ))
-                            }
-                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                        }
-                    },
+                    &regular_expression_case_and_value_default_initialization_token_stream,
+                    &generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(not exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) !{} ${}))"}),
                     &query_equals_query_self_value_to_string_token_stream,
                 ),
             };
