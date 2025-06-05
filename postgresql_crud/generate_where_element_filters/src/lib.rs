@@ -1258,11 +1258,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 match increment.checked_add(1) {
                                     Some(second_increment) => {
                                         *increment = second_increment;
-                                        Ok(format!("{}({}->${} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
+                                        Ok(format!("{}({}->${} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment))
                                     }
                                     None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                                 }
-                            }
+                            },
                             None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
@@ -1580,13 +1580,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&position_std_primitive_i32_field, &value_t_field],
                         ),
+                        //todo
                         PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionTwoPositionEqual => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
-                            // &dimension1_position_is_less_than_zero_token_stream,
-                            &quote::quote! {
-                                dimension1_position: #std_primitive_i32_token_stream,
-                                value: T,
-                            },
+                            &dimension1_position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
                             &dimension1_position_value_declaration_token_stream,
                             &is_dimension1_position_is_less_than_zero_token_stream,
