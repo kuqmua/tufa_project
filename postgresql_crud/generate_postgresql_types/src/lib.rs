@@ -3337,9 +3337,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let where_element_sqlx_types_time_primitive_date_time_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_timestamp, &greater_than_current_timestamp]);
                 let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &before, &between]);
                 let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &before, &between]);
-                let where_element_sqlx_types_uuid_uuid_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &regular_expression, &case_sensitive_regular_expression, &case_insensitive_regular_expression]);
+                let where_element_sqlx_types_uuid_uuid_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &regular_expression]);
                 let where_element_sqlx_types_ipnetwork_ip_network_token_stream = generate_ident_where_element_token_stream(&vec![&equal]);
-                let where_element_sqlx_types_mac_address_mac_address_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &regular_expression, &case_sensitive_regular_expression, &case_insensitive_regular_expression]);
+                let where_element_sqlx_types_mac_address_mac_address_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &regular_expression]);
                 let (
                     where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                     where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,

@@ -158,7 +158,6 @@ type_alias_bounds = { level = "deny", priority = 0 } #bounds in type aliases are
 tyvar_behind_raw_pointer = { level = "deny", priority = 0 } #raw pointer to an inference variable
 uncommon_codepoints = { level = "deny", priority = 0 } #detects uncommon Unicode codepoints in identifiers
 unconditional_recursion = { level = "deny", priority = 0 } #functions that cannot return without calling themselves
-undefined_naked_function_abi = { level = "deny", priority = 0 } #undefined naked function ABI
 unexpected_cfgs = { level = "deny", priority = 0 } #detects unexpected names and values in `#[cfg]` conditions
 ungated_async_fn_track_caller = { level = "deny", priority = 0 } #enabling track_caller on an async fn is a no_op unless the async_fn_track_caller feature is enabled
 uninhabited_static = { level = "deny", priority = 0 } #uninhabited static
@@ -207,7 +206,6 @@ missing_fragment_specifier = { level = "deny", priority = 0 } #detects missing f
 mutable_transmutes = { level = "deny", priority = 0 } #transmuting &T to &mut T is undefined behavior, even if the reference is unused
 named_asm_labels = { level = "deny", priority = 0 } #named labels in inline assembly
 no_mangle_const_items = { level = "deny", priority = 0 } #const items will not have their symbols exported
-order_dependent_trait_objects = { level = "deny", priority = 0 } #trait_object types were treated as different depending on marker_trait order
 overflowing_literals = { level = "deny", priority = 0 } #literal out of range for its type
 patterns_in_fns_without_body = { level = "deny", priority = 0 } #patterns in functions without body were erroneously allowed
 proc_macro_derive_resolution_fallback = { level = "deny", priority = 0 } #detects proc macro derives using inaccessible names from parent modules
