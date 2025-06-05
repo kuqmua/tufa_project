@@ -1076,22 +1076,22 @@ impl RegularExpressionCase {
 }
 
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
-pub struct DimensionPosition(std::primitive::i32);//todo why exactly i32? maybe different types for postgresql type and postgresql json type
+pub struct UnsignedPartOfStdPrimitiveI32(std::primitive::i32);//todo why exactly i32? maybe different types for postgresql type and postgresql json type
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum DimensionPositionTryFromStdPrimitiveI32ErrorNamed {
-    DimensionPositionIsLessThanZero {
+pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
+    UnsignedPartOfStdPrimitiveI32IsLessThanZero {
         #[eo_to_std_string_string_serialize_deserialize]
         dimension_position: std::primitive::i32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
-impl std::convert::TryFrom<std::primitive::i32> for DimensionPosition {
-    type Error = DimensionPositionTryFromStdPrimitiveI32ErrorNamed;
+impl std::convert::TryFrom<std::primitive::i32> for UnsignedPartOfStdPrimitiveI32 {
+    type Error = UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
     fn try_from(value: std::primitive::i32) -> Result<Self, Self::Error> {
         if value >= 0 {
             Ok(Self(value))
         } else {
-            Err(Self::Error::DimensionPositionIsLessThanZero {
+            Err(Self::Error::UnsignedPartOfStdPrimitiveI32IsLessThanZero {
                 dimension_position: value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
@@ -1102,7 +1102,7 @@ const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for DimensionPosition {
+    impl<'de> _serde::Deserialize<'de> for UnsignedPartOfStdPrimitiveI32 {
         fn deserialize<__D>(
             __deserializer: __D,
         ) -> _serde::__private::Result<Self, __D::Error>
@@ -1111,19 +1111,19 @@ const _: () = {
         {
             #[doc(hidden)]
             struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<DimensionPosition>,
+                marker: _serde::__private::PhantomData<UnsignedPartOfStdPrimitiveI32>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = DimensionPosition;
+                type Value = UnsignedPartOfStdPrimitiveI32;
                 fn expecting(
                     &self,
                     __formatter: &mut _serde::__private::Formatter<'_>,
                 ) -> _serde::__private::fmt::Result {
                     _serde::__private::Formatter::write_str(
                         __formatter,
-                        "tuple struct DimensionPosition",
+                        "tuple struct UnsignedPartOfStdPrimitiveI32",
                     )
                 }
                 #[inline]
@@ -1137,7 +1137,7 @@ const _: () = {
                     let __field0: std::primitive::i32 = <std::primitive::i32 as _serde::Deserialize>::deserialize(
                         __e,
                     )?;
-                    match DimensionPosition::try_from(__field0) {
+                    match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
                             return Err(serde::de::Error::custom(format!("{error:?}")));
@@ -1160,12 +1160,12 @@ const _: () = {
                             return _serde::__private::Err(
                                 _serde::de::Error::invalid_length(
                                     0usize,
-                                    &"tuple struct DimensionPosition with 1 element",
+                                    &"tuple struct UnsignedPartOfStdPrimitiveI32 with 1 element",
                                 ),
                             );
                         }
                     };
-                    match DimensionPosition::try_from(__field0) {
+                    match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
                         Ok(value) => serde::__private::Ok(value),
                         Err(error) => {
                             return Err(serde::de::Error::custom(format!("{error:?}")));
@@ -1175,21 +1175,21 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "DimensionPosition",
+                "UnsignedPartOfStdPrimitiveI32",
                 __Visitor {
-                    marker: _serde::__private::PhantomData::<DimensionPosition>,
+                    marker: _serde::__private::PhantomData::<UnsignedPartOfStdPrimitiveI32>,
                     lifetime: _serde::__private::PhantomData,
                 },
             )
         }
     }
 };
-impl error_occurence_lib::ToStdStringString for DimensionPosition {
+impl error_occurence_lib::ToStdStringString for UnsignedPartOfStdPrimitiveI32 {
     fn to_std_string_string(&self) -> std::string::String {
         self.0.to_string()
     }
 }
-impl sqlx::Type<sqlx::Postgres> for DimensionPosition {
+impl sqlx::Type<sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::Json<std::primitive::i8> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
@@ -1197,12 +1197,12 @@ impl sqlx::Type<sqlx::Postgres> for DimensionPosition {
         <sqlx::types::Json<std::primitive::i8> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
-impl sqlx::Encode<'_, sqlx::Postgres> for DimensionPosition {
+impl sqlx::Encode<'_, sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(self.0), buf)
     }
 }
-impl DimensionPosition {
+impl UnsignedPartOfStdPrimitiveI32 {
     pub fn get(&self) -> std::primitive::i32 {
         self.0
     }

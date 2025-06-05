@@ -16,11 +16,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let value_t_token_stream = quote::quote! {value: T};
     let pub_value_t_token_stream = quote::quote! {pub value: #t_token_stream};
     let value_std_vec_vec_t_token_stream = quote::quote! {value: #std_vec_vec_t_token_stream};
-    let dimension_position_token_stream = {
-        let dimension_position_upper_camel_case = naming::DimensionPositionUpperCamelCase;
-        quote::quote!{crate::#dimension_position_upper_camel_case}
-    };
-    let value_declaration_token_stream = quote::quote! {value: #dimension_position_token_stream};
+    let unsigned_part_of_std_primitive_i32_token_stream = quote::quote!{crate::UnsignedPartOfStdPrimitiveI32};
+    let value_declaration_token_stream = quote::quote! {value: #unsigned_part_of_std_primitive_i32_token_stream};
     enum ShouldAddDeclarationOfStructIdentGeneric {
         True,
         False,
@@ -33,9 +30,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         field_name: &naming::ValueSnakeCase,
         field_type: &t_token_stream,
     };
-    let value_dimension_position_field = Field {
+    let value_unsigned_part_of_std_primitive_i32_field = Field {
         field_name: &naming::ValueSnakeCase,
-        field_type: &dimension_position_token_stream, //todo i32 or i64 or something between? or more? or less?
+        field_type: &unsigned_part_of_std_primitive_i32_token_stream, //todo i32 or i64 or something between? or more? or less?
     };
     let start_t_field = Field {
         field_name: &naming::StartSnakeCase,
@@ -52,9 +49,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let value_code_default_token_stream = quote::quote! {
         value: #core_default_default_default_token_stream
     };
-    let position_dimension_position_field = Field {
+    let position_unsigned_part_of_std_primitive_i32_field = Field {
         field_name: &"dimension1_position",
-        field_type: &dimension_position_token_stream,
+        field_type: &unsigned_part_of_std_primitive_i32_token_stream,
     };
     let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {
         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
@@ -919,7 +916,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &quote::quote! {
                                 LengthIsNegative {
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #dimension_position_token_stream,
+                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
@@ -937,14 +934,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                             },
                             None,
-                            &vec![&value_dimension_position_field],
+                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
                         ),
                         PostgresqlTypeFilterInitializedWithTryNew::ArrayLengthMoreThanDimensionOne => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote! {
                                 LengthIsNegative {
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #dimension_position_token_stream,
+                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
@@ -962,14 +959,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                             },
                             None,
-                            &vec![&value_dimension_position_field],
+                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
                         ),
                         PostgresqlTypeFilterInitializedWithTryNew::RangeLength => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote! {
                                 LengthIsNegativeOrZero {
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #dimension_position_token_stream,
+                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
@@ -987,7 +984,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                             },
                             None,
-                            &vec![&value_dimension_position_field],
+                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
                         ),
                     };
                     generate_try_new_logic_token_stream(
@@ -1111,7 +1108,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query
             };
             let dimension1_position_value_declaration_token_stream = quote::quote! {
-                dimension1_position: #dimension_position_token_stream,
+                dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
                 value: T,
             };
             let dimension1_position_value_default_initialization_token_stream = quote::quote!{
@@ -1121,7 +1118,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let dimension1_position_is_less_than_zero_token_stream = quote::quote! {
                 Dimension1PositionIsLessThanZero {
                     #[eo_to_std_string_string_serialize_deserialize]
-                    dimension1_position: #dimension_position_token_stream,
+                    dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 },
             };
@@ -1333,7 +1330,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &quote::quote! {
-                        dimension1_position: #dimension_position_token_stream,
+                        dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
                         #regular_expression_case_and_value_declaration_token_stream
                     },
                     &quote::quote! {
@@ -1531,7 +1528,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &quote::quote! {
                                 LengthIsNegative {
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #dimension_position_token_stream,
+                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
@@ -1548,14 +1545,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                             },
                             None,
-                            &vec![&value_dimension_position_field],
+                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::LengthMoreThan => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote! {
                                 LengthIsNegative {
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #dimension_position_token_stream,
+                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
@@ -1572,7 +1569,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                             },
                             None,
-                            &vec![&value_dimension_position_field],
+                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionOnePositionEqual => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -1581,7 +1578,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &dimension1_position_value_declaration_token_stream,
                             &is_dimension1_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
-                            &vec![&position_dimension_position_field, &value_t_field],
+                            &vec![&position_unsigned_part_of_std_primitive_i32_field, &value_t_field],
                         ),
                         //todo
                         PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionTwoPositionEqual => (
@@ -1591,7 +1588,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &dimension1_position_value_declaration_token_stream,
                             &is_dimension1_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
-                            &vec![&position_dimension_position_field, &value_t_field],
+                            &vec![&position_unsigned_part_of_std_primitive_i32_field, &value_t_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::PositionGreaterThan => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
@@ -1600,7 +1597,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &dimension1_position_value_declaration_token_stream,
                             &is_dimension1_position_is_less_than_zero_token_stream,
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
-                            &vec![&position_dimension_position_field, &value_t_field],
+                            &vec![&position_unsigned_part_of_std_primitive_i32_field, &value_t_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::ContainsAllElementsOfArray => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
