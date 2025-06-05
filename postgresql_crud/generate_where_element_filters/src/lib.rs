@@ -1104,6 +1104,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan {
                         ident: _
                     } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseInsensitiveRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => Err(()),
@@ -1434,16 +1435,36 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <= ${}))"}),
                     &query_bind_sqlx_types_json_self_value_token_stream,
                 ),
-                // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementRegularExpression => (
-                //     ShouldAddDeclarationOfStructIdentGeneric::False,
-                //     &quote::quote! {value: crate::RegexRegex},
-                //     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                //     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) ~ ${}))"}),
-                //     &quote::quote! {
-                //         query = query.bind(self.value.to_string());
-                //         query
-                //     },
-                // ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementRegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    &quote::quote! {
+                        regular_expression_case: crate::RegularExpressionCase,
+                        value: crate::RegexRegex
+                    },
+                    &quote::quote!{
+                        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                    },
+                    &quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                Ok(format!(
+                                    "{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))",
+                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    column,
+                                    self.regular_expression_case.postgreql_syntax(),
+                                    increment
+                                ))
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    &quote::quote! {
+                        query = query.bind(self.value.to_string());
+                        query
+                    },
+                ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementCaseSensitiveRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &quote::quote! {value: crate::RegexRegex},
