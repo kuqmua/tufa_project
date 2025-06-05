@@ -1041,6 +1041,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             LengthEqual,
             LengthMoreThan,
             DimensionOnePositionEqual,
+            DimensionTwoPositionEqual,
             PositionGreaterThan,
             ContainsAllElementsOfArray,
             OverlapsWithArray,
@@ -1067,6 +1068,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                         ident: _
                     } => Ok(Self::DimensionOnePositionEqual),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
+                        ident: _
+                    } => Ok(Self::DimensionTwoPositionEqual),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan {
                         ident: _
                     } => Ok(Self::PositionGreaterThan),
@@ -1244,6 +1248,34 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                     ident: _
                 } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    &position_i32_value_t_token_stream,
+                    &position_default_value_default_token_stream,
+                    &quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(first_increment) => {
+                                *increment = first_increment;
+                                match increment.checked_add(1) {
+                                    Some(second_increment) => {
+                                        *increment = second_increment;
+                                        Ok(format!("{}({}->${} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
+                                    }
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                }
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    &quote::quote! {
+                        query = query.bind(self.position);
+                        query = query.bind(sqlx::types::Json(self.value));
+                        query
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
+                    ident: _
+                } => (
+                    //here
                     ShouldAddDeclarationOfStructIdentGeneric::True,
                     &position_i32_value_t_token_stream,
                     &position_default_value_default_token_stream,
@@ -1540,6 +1572,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &vec![&value_std_primitive_i32_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionOnePositionEqual => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
+                            &position_is_less_than_zero_token_stream,
+                            &quote::quote! {: std::cmp::PartialOrd},
+                            &position_i32_value_t_token_stream,
+                            &is_position_is_less_than_zero_token_stream,
+                            Some(quote::quote! {+ std::cmp::PartialOrd}),
+                            &vec![&position_std_primitive_i32_field, &value_t_field],
+                        ),
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionTwoPositionEqual => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &position_is_less_than_zero_token_stream,
                             &quote::quote! {: std::cmp::PartialOrd},
