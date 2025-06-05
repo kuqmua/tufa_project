@@ -1396,8 +1396,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionRegularExpression);
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementRegularExpression);
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsRegularExpression);
-                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression);
-                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseInsensitiveRegularExpression);
                                         filters
                                     }
                                 }
