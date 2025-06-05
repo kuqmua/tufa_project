@@ -3298,8 +3298,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between;
                 let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In;
                 let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
-                let case_sensitive_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::CaseSensitiveRegularExpression;
-                let case_insensitive_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::CaseInsensitiveRegularExpression;
                 let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation;
                 let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
                 let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
@@ -3326,7 +3324,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let where_element_sqlx_postgres_types_pg_money_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &in_handle]);
                 let where_element_sqlx_types_big_decimal_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between]);
                 let where_element_bool_token_stream = generate_ident_where_element_token_stream(&vec![&equal]);
-                let where_element_std_string_string_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &regular_expression, &case_sensitive_regular_expression, &case_insensitive_regular_expression]);
+                let where_element_std_string_string_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &regular_expression]);
                 let where_element_std_vec_vec_std_primitive_u8_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &equal_to_encoded_string_representation]);
                 let where_element_sqlx_types_chrono_naive_time_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_time, &greater_than_current_time]);
                 let where_element_sqlx_types_time_time_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_time, &greater_than_current_time]);
