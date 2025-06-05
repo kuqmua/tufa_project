@@ -486,6 +486,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         )
     };
 
+    let regular_expression_case_and_value_declaration_token_stream = quote::quote! {
+        pub regular_expression_case: crate::RegularExpressionCase,
+        pub value: crate::RegexRegex
+    };
+    let query_equals_query_self_value_to_string_token_stream = quote::quote! {
+        query = query.bind(self.value.to_string());
+        query
+    };
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum PostgresqlTypeFilterInitializedWithTryNew {
@@ -620,10 +628,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &quote::quote! {
-                        regular_expression_case: crate::RegularExpressionCase,
-                        value: crate::RegexRegex
-                    },
+                    &regular_expression_case_and_value_declaration_token_stream,
                     &quote::quote! {
                         regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -643,10 +648,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
-                    &quote::quote! {
-                        query = query.bind(self.value.to_string());
-                        query
-                    }
+                    &query_equals_query_self_value_to_string_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Before => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
@@ -1216,10 +1218,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &quote::quote! {
-                        pub regular_expression_case: crate::RegularExpressionCase,
-                        pub value: crate::RegexRegex,
-                    },
+                    &regular_expression_case_and_value_declaration_token_stream,
                     &quote::quote! {
                         regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -1239,10 +1238,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
-                    &quote::quote! {
-                        query = query.bind(self.value.to_string());
-                        query
-                    }
+                    &query_equals_query_self_value_to_string_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
@@ -1317,8 +1313,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     &quote::quote! {
                         position: #std_primitive_i32_token_stream,
-                        pub regular_expression_case: crate::RegularExpressionCase,
-                        pub value: crate::RegexRegex
+                        #regular_expression_case_and_value_declaration_token_stream
                     },
                     &quote::quote! {
                         position: #core_default_default_default_token_stream,
@@ -1349,8 +1344,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     &quote::quote! {
                         query = query.bind(self.position);
-                        query = query.bind(self.value.to_string());
-                        query
+                        #query_equals_query_self_value_to_string_token_stream
                     },
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray { 
@@ -1411,10 +1405,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &quote::quote! {
-                        regular_expression_case: crate::RegularExpressionCase,
-                        value: crate::RegexRegex
-                    },
+                    &regular_expression_case_and_value_declaration_token_stream,
                     &quote::quote!{
                         regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
@@ -1434,17 +1425,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
-                    &quote::quote! {
-                        query = query.bind(self.value.to_string());
-                        query
-                    },
+                    &query_equals_query_self_value_to_string_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &quote::quote! {
-                        regular_expression_case: crate::RegularExpressionCase,
-                        value: crate::RegexRegex,
-                    },
+                    &regular_expression_case_and_value_declaration_token_stream,
                     &quote::quote!{
                         regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
@@ -1464,10 +1449,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
                         }
                     },
-                    &quote::quote! {
-                        query = query.bind(self.value.to_string());
-                        query
-                    },
+                    &query_equals_query_self_value_to_string_token_stream,
                 ),
             };
             let filter_initialized_with_try_new_result = PostgresqlJsonTypeFilterInitializedWithTryNew::try_from(filter);
@@ -1733,7 +1715,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #impl_postgresql_type_where_filter_token_stream
             };
             // match &filter {
-            //     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsCaseSensitiveRegularExpression => {
+            //     postgresql_crud_macros_common::PostgresqlJsonTypeFilter:: => {
             //         proc_macro2::TokenStream::new()
             //     }
             //     _ => f
