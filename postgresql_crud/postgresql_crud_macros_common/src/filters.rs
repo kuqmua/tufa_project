@@ -179,6 +179,15 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionOnePositionGreaterThan {
         ident: proc_macro2::TokenStream,
     },
+    DimensionTwoPositionGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionThreePositionGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionFourPositionGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
     PositionRegularExpression,
     ContainsAllElementsOfArray {
         ident: proc_macro2::TokenStream,
