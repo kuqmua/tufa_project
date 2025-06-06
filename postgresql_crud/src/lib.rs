@@ -1191,15 +1191,15 @@ impl error_occurence_lib::ToStdStringString for UnsignedPartOfStdPrimitiveI32 {
 }
 impl sqlx::Type<sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::Json<std::primitive::i8> as sqlx::Type<sqlx::Postgres>>::type_info()
+        <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::type_info()
     }
     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::types::Json<std::primitive::i8> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+        <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
     }
 }
 impl sqlx::Encode<'_, sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&sqlx::types::Json(self.0), buf)
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
     }
 }
 impl UnsignedPartOfStdPrimitiveI32 {
