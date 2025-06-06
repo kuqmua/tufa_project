@@ -1469,6 +1469,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual { 
                                         ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone()
                                     });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionEqual { 
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone()
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionEqual { 
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone()
+                                    });
                                     vec
                                 };
                                 match &postgresql_json_type_specific {

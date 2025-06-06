@@ -170,6 +170,9 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoPositionEqual {
         ident: proc_macro2::TokenStream,
     },
+    DimensionThreePositionEqual {
+        ident: proc_macro2::TokenStream,
+    },
     PositionGreaterThan {
         ident: proc_macro2::TokenStream,
     },
@@ -217,6 +220,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoPositionEqual {
                 ident: _
             } => &naming::DimensionTwoPositionEqualUpperCamelCase,
+            Self::DimensionThreePositionEqual {
+                ident: _
+            } => &naming::DimensionThreePositionEqualUpperCamelCase,
             Self::PositionGreaterThan {
                 ident: _
             } => &naming::PositionGreaterThanUpperCamelCase,
@@ -263,6 +269,7 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     In,
     DimensionOnePositionEqual,
     DimensionTwoPositionEqual,
+    DimensionThreePositionEqual,
     PositionGreaterThan,
     ContainsAllElementsOfArray,
     OverlapsWithArray,
@@ -281,6 +288,7 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::In => false,
             Self::DimensionOnePositionEqual => false,
             Self::DimensionTwoPositionEqual => false,
+            Self::DimensionThreePositionEqual => false,
             Self::PositionGreaterThan => true,
             Self::ContainsAllElementsOfArray => false,
             Self::OverlapsWithArray => false,
@@ -317,6 +325,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
                 ident: _
             } => Ok(Self::DimensionTwoPositionEqual),
+            PostgresqlJsonTypeFilter::DimensionThreePositionEqual {
+                ident: _
+            } => Ok(Self::DimensionThreePositionEqual),
             PostgresqlJsonTypeFilter::PositionGreaterThan {
                 ident: _
             } => Ok(Self::PositionGreaterThan),
