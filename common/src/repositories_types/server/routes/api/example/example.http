@@ -151,19 +151,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": 0
                   #   }
                   # },
-                  # {
-                  #   "DimensionOnePositionEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "value": [
-                  #       [
-                  #         [
-                  #           0
-                  #         ]
-                  #       ]
-                  #     ]
-                  #   }
-                  # }
+                  {
+                    "DimensionOnePositionEqual": {
+                      "logical_operator": "Or",
+                      "dimension1_position": 0,
+                      "value": [
+                        [
+                          [
+                            0
+                          ]
+                        ]
+                      ]
+                    }
+                  }
                   # ,
                   # {
                   #   "DimensionTwoPositionEqual": {
@@ -190,16 +190,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   }
                   # }
                   # ,
-                  {
-                    "DimensionFourPositionEqual": {
-                      "logical_operator": "Or",
-                      "dimension1_position": 0,
-                      "dimension2_position": 0,
-                      "dimension3_position": 0,
-                      "dimension4_position": 0,
-                      "value": 0
-                    }
-                  }
+                  # {
+                  #   "DimensionFourPositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "dimension4_position": 0,
+                  #     "value": 0
+                  #   }
+                  # }
                 ]
               }
             }

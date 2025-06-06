@@ -1176,19 +1176,25 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &dimension1_position_value_declaration_token_stream,
                     &dimension1_position_value_default_initialization_token_stream,
                     &quote::quote! {
-                        match increment.checked_add(1) {
-                            Some(first_increment) => {
-                                *increment = first_increment;
-                                match increment.checked_add(1) {
-                                    Some(second_increment) => {
-                                        *increment = second_increment;
-                                        Ok(format!("{}({}->${} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment))
-                                    }
-                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                                }
+                        let first_increment = match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                value
                             },
-                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                        }
+                            None => {
+                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                            },
+                        };
+                        let second_increment = match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                value
+                            },
+                            None => {
+                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                            },
+                        };
+                        Ok(format!("{}({}->${} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment))
                     },
                     &quote::quote! {
                         query = query.bind(self.dimension1_position);
