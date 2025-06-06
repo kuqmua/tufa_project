@@ -1012,7 +1012,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
                         ident: _
                     } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan {
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
                         ident: _
                     } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionRegularExpression => Err(()),
@@ -1277,7 +1277,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
                     ident: _
                 } => generate_dimension_position_equal_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan { 
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan { 
                     ident: _
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,

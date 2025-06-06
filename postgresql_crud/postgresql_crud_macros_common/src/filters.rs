@@ -176,7 +176,7 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionFourPositionEqual {
         ident: proc_macro2::TokenStream,
     },
-    PositionGreaterThan {
+    DimensionOnePositionGreaterThan {
         ident: proc_macro2::TokenStream,
     },
     PositionRegularExpression,
@@ -229,9 +229,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourPositionEqual {
                 ident: _
             } => &naming::DimensionFourPositionEqualUpperCamelCase,
-            Self::PositionGreaterThan {
+            Self::DimensionOnePositionGreaterThan {
                 ident: _
-            } => &naming::PositionGreaterThanUpperCamelCase,
+            } => &naming::DimensionOnePositionGreaterThanUpperCamelCase,
             Self::PositionRegularExpression => &naming::PositionRegularExpressionUpperCamelCase,
             Self::ContainsAllElementsOfArray {
                 ident: _
@@ -277,7 +277,7 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionTwoPositionEqual,
     DimensionThreePositionEqual,
     DimensionFourPositionEqual,
-    PositionGreaterThan,
+    DimensionOnePositionGreaterThan,
     ContainsAllElementsOfArray,
     OverlapsWithArray,
     AllElementsEqual,
@@ -287,6 +287,7 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     AllElementsCaseInsensitiveRegularExpression,
 }
 impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
+    //todo maybe not need
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
         match &self {
             Self::Equal => false,
@@ -297,7 +298,7 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionTwoPositionEqual => false,
             Self::DimensionThreePositionEqual => false,
             Self::DimensionFourPositionEqual => false,
-            Self::PositionGreaterThan => true,
+            Self::DimensionOnePositionGreaterThan => true,
             Self::ContainsAllElementsOfArray => false,
             Self::OverlapsWithArray => false,
             Self::AllElementsEqual => false,
@@ -339,9 +340,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
                 ident: _
             } => Ok(Self::DimensionFourPositionEqual),
-            PostgresqlJsonTypeFilter::PositionGreaterThan {
+            PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
                 ident: _
-            } => Ok(Self::PositionGreaterThan),
+            } => Ok(Self::DimensionOnePositionGreaterThan),
             PostgresqlJsonTypeFilter::PositionRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                 ident: _

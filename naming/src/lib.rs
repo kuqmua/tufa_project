@@ -489,7 +489,6 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["position"],
     ["bit", "vec", "position", "equal"],
     ["position", "is", "less", "than", "zero"],
-    ["position", "greater", "than"],
     ["position", "case", "sensitive", "regular", "expression"],
     ["position", "case", "insensitive", "regular", "expression"],
     ["contains", "all", "elements", "of", "array"],
@@ -549,7 +548,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["dimension", "two", "position", "equal"],
     ["dimension", "three", "position", "equal"],
     ["dimension", "four", "position", "equal"],
-    ["dimension", "position"]
+    ["dimension", "position"],
+    ["dimension", "one", "position", "greater", "than"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

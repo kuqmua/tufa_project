@@ -1382,7 +1382,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 match &postgresql_json_type_specific {
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut filters = common_array_dimension1_postgresql_json_type_filters.clone();
-                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan {
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
                                             ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters
