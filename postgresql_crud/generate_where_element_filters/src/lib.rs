@@ -1009,6 +1009,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionEqual {
                         ident: _
                     } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
+                        ident: _
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionGreaterThan {
                         ident: _
                     } => Err(()),
@@ -1297,6 +1300,75 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query = query.bind(self.dimension1_position);
                         query = query.bind(self.dimension2_position);
                         query = query.bind(self.dimension3_position);
+                        query = query.bind(sqlx::types::Json(self.value));
+                        query
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    &quote::quote! {
+                        dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
+                        dimension2_position: #unsigned_part_of_std_primitive_i32_token_stream,
+                        dimension3_position: #unsigned_part_of_std_primitive_i32_token_stream,
+                        dimension4_position: #unsigned_part_of_std_primitive_i32_token_stream,
+                        value: T,
+                    },
+                    &quote::quote!{
+                        dimension1_position: #core_default_default_default_token_stream,
+                        dimension2_position: #core_default_default_default_token_stream,
+                        dimension3_position: #core_default_default_default_token_stream,
+                        dimension4_position: #core_default_default_default_token_stream,
+                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    },
+                    &quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(first_increment) => {
+                                *increment = first_increment;
+                                match increment.checked_add(1) {
+                                    Some(second_increment) => {
+                                        *increment = second_increment;
+                                        match increment.checked_add(1) {
+                                            Some(third_increment) => {
+                                                *increment = third_increment;
+                                                match increment.checked_add(1) {
+                                                    Some(fourth_increment) => {
+                                                        *increment = fourth_increment;
+                                                        match increment.checked_add(1) {
+                                                            Some(fifth_increment) => {
+                                                                *increment = fifth_increment;
+                                                                Ok(format!(
+                                                                    "{}({}->${}->${}->${}->${} = ${})",
+                                                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                                                    column,
+                                                                    first_increment,
+                                                                    second_increment,
+                                                                    third_increment,
+                                                                    fourth_increment,
+                                                                    fifth_increment,
+                                                                ))
+                                                            }
+                                                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                                        }
+                                                    }
+                                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                                }
+                                            }
+                                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                        }
+                                    }
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                }
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    &quote::quote! {
+                        query = query.bind(self.dimension1_position);
+                        query = query.bind(self.dimension2_position);
+                        query = query.bind(self.dimension3_position);
+                        query = query.bind(self.dimension4_position);
                         query = query.bind(sqlx::types::Json(self.value));
                         query
                     },

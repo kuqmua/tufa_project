@@ -173,6 +173,9 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionThreePositionEqual {
         ident: proc_macro2::TokenStream,
     },
+    DimensionFourPositionEqual {
+        ident: proc_macro2::TokenStream,
+    },
     PositionGreaterThan {
         ident: proc_macro2::TokenStream,
     },
@@ -223,6 +226,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionThreePositionEqual {
                 ident: _
             } => &naming::DimensionThreePositionEqualUpperCamelCase,
+            Self::DimensionFourPositionEqual {
+                ident: _
+            } => &naming::DimensionFourPositionEqualUpperCamelCase,
             Self::PositionGreaterThan {
                 ident: _
             } => &naming::PositionGreaterThanUpperCamelCase,
@@ -270,6 +276,7 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionOnePositionEqual,
     DimensionTwoPositionEqual,
     DimensionThreePositionEqual,
+    DimensionFourPositionEqual,
     PositionGreaterThan,
     ContainsAllElementsOfArray,
     OverlapsWithArray,
@@ -289,6 +296,7 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionOnePositionEqual => false,
             Self::DimensionTwoPositionEqual => false,
             Self::DimensionThreePositionEqual => false,
+            Self::DimensionFourPositionEqual => false,
             Self::PositionGreaterThan => true,
             Self::ContainsAllElementsOfArray => false,
             Self::OverlapsWithArray => false,
@@ -328,6 +336,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionThreePositionEqual {
                 ident: _
             } => Ok(Self::DimensionThreePositionEqual),
+            PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
+                ident: _
+            } => Ok(Self::DimensionFourPositionEqual),
             PostgresqlJsonTypeFilter::PositionGreaterThan {
                 ident: _
             } => Ok(Self::PositionGreaterThan),

@@ -41,10 +41,12 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
-        "column_69fd7fb1_30db_466d_8f71_eaa255b0b941": [
+        "column_32fc16eb_2641_4d65_acec_0c7addbfe338": [
           [
             [
-              0
+              [
+                0
+              ]
             ]
           ]
         ]
@@ -120,7 +122,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           "logical_operator": "Or",
           "value": [
             {
-              "Column69Fd7Fb130Db466D8F71Eaa255B0B941": {
+              "Column32Fc16Eb26414D65Acec0C7Addbfe338": {
                 "logical_operator": "Or",
                 "value": [
                   # {
@@ -129,7 +131,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": [
                   #       [
                   #         [
-                  #           0
+                  #           [
+                  #             0
+                  #           ]
                   #         ]
                   #       ]
                   #     ]
@@ -153,7 +157,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "dimension1_position": 0,
                   #     "value": [
                   #       [
-                  #         0
+                  #         [
+                  #           0
+                  #         ]
                   #       ]
                   #     ]
                   #   }
@@ -165,17 +171,32 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "dimension1_position": 0,
                   #     "dimension2_position": 0,
                   #     "value": [
+                  #       [
+                  #         0
+                  #       ]
+                  #     ]
+                  #   }
+                  # }
+                  # ,
+                  # {
+                  #   "DimensionThreePositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "value": [
                   #       0
                   #     ]
                   #   }
                   # }
                   # ,
                   {
-                    "DimensionThreePositionEqual": {
+                    "DimensionFourPositionEqual": {
                       "logical_operator": "Or",
                       "dimension1_position": 0,
                       "dimension2_position": 0,
                       "dimension3_position": 0,
+                      "dimension4_position": 0,
                       "value": 0
                     }
                   }
@@ -196,7 +217,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         {
           "doggie_as_not_null_jsonb_object": [
             {
-              "column_69fd7fb1_30db_466d_8f71_eaa255b0b941": {
+              "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
                 "dimension1_pagination": {
                   "limit": 3,
                   "offset": 0
@@ -206,6 +227,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   "offset": 0
                 },
                 "dimension3_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                },
+                "dimension4_pagination": {
                   "limit": 3,
                   "offset": 0
                 }
