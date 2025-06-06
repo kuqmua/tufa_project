@@ -45,7 +45,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
           [
             [
               [
-                0
+                0,2
               ]
             ]
           ]
@@ -151,19 +151,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": 0
                   #   }
                   # },
-                  {
-                    "DimensionOnePositionEqual": {
-                      "logical_operator": "Or",
-                      "dimension1_position": 0,
-                      "value": [
-                        [
-                          [
-                            0
-                          ]
-                        ]
-                      ]
-                    }
-                  }
+                  # {
+                  #   "DimensionOnePositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "value": [
+                  #       [
+                  #         [
+                  #           0
+                  #         ]
+                  #       ]
+                  #     ]
+                  #   }
+                  # }
                   # ,
                   # {
                   #   "DimensionTwoPositionEqual": {
@@ -176,7 +176,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #       ]
                   #     ]
                   #   }
-                  # },
+                  # }
+                  # ,
                   # {
                   #   "DimensionThreePositionEqual": {
                   #     "logical_operator": "Or",
@@ -187,17 +188,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #       0
                   #     ]
                   #   }
-                  # },
-                  # {
-                  #   "DimensionFourPositionEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "dimension4_position": 0,
-                  #     "value": 0
-                  #   }
                   # }
+                  # ,
+                  {
+                    "DimensionFourPositionEqual": {
+                      "logical_operator": "Or",
+                      "dimension1_position": 0,
+                      "dimension2_position": 0,
+                      "dimension3_position": 0,
+                      "dimension4_position": 1,
+                      "value": 2
+                    }
+                  }
                 ]
               }
             }
