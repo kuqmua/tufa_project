@@ -176,8 +176,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #       ]
                   #     ]
                   #   }
-                  # }
-                  # ,
+                  # },
                   # {
                   #   "DimensionThreePositionEqual": {
                   #     "logical_operator": "Or",
@@ -188,8 +187,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #       0
                   #     ]
                   #   }
-                  # }
-                  # ,
+                  # },
                   # {
                   #   "DimensionFourPositionEqual": {
                   #     "logical_operator": "Or",

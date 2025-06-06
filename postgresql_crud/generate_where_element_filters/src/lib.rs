@@ -1082,19 +1082,19 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             ) {
                 let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
                 let dimension_number_std_primitive_u8_plus_one = dimension_number_std_primitive_u8.checked_add(1).unwrap();
-                let struct_additional_fields_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
+                let struct_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
                     let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
                     quote::quote! {
                         #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
                     }
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
+                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
                     let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
                     quote::quote! {
                         #dimension_number_position_token_stream: #core_default_default_default_token_stream,
                     }
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let increments_initialization_token_stream = (1..dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
+                let increments_initialization_token_stream = (1..=dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
                     let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
                     quote::quote! {
                         let #increment_number_token_stream = match increment.checked_add(1) {
@@ -1109,18 +1109,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 let format_handle_token_stream = {
-                    let indexes = (1..dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
+                    let indexes = (1..=dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
                         acc.push_str(
                             &"->${}"
                         );
                         acc
                     });
-                    format!("{{}}({{}}{indexes} = ${{}})").parse::<proc_macro2::TokenStream>().unwrap()
+                    generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{indexes} = ${{}})"))
                 };
-                let format_increments_token_stream = (1..dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
+                let format_increments_token_stream = (1..=dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
                     format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let query_bind_dimension_position_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
+                let query_bind_dimension_position_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
                     let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
                     quote::quote! {
                         query = query.bind(self.#dimension_number_position_token_stream);
@@ -1267,37 +1267,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                     ident: _
-                } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    dimension1_position_value_declaration_token_stream.clone(),
-                    dimension1_position_value_default_initialization_token_stream.clone(),
-                    quote::quote! {
-                        let first_increment = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                value
-                            },
-                            None => {
-                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                            },
-                        };
-                        let second_increment = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                value
-                            },
-                            None => {
-                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                            },
-                        };
-                        Ok(format!("{}({}->${} = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment))
-                    },
-                    quote::quote! {
-                        query = query.bind(self.dimension1_position);
-                        query = query.bind(sqlx::types::Json(self.value));
-                        query
-                    },
-                ),
+                } => generate_dimension_position_equal_token_stream(&DimensionNumber::One),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
                     ident: _
                 } => (
