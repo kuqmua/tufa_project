@@ -1448,6 +1448,22 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     ));
                                     quote::quote!{#value}
                                 };
+                                let array_dimension2_inner_element_ident_origin_upper_camel_case = {
+                                    let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        &dimension2_not_null_or_nullable,
+                                        &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                            dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                        }
+                                    ));
+                                    quote::quote!{#value}
+                                };
+                                let array_dimension3_inner_element_ident_origin_upper_camel_case = {
+                                    let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        &dimension3_not_null_or_nullable,
+                                        &PostgresqlJsonTypePattern::Standart
+                                    ));
+                                    quote::quote!{#value}
+                                };
                                 let common_array_dimension3_postgresql_json_type_filters = {
                                     let mut vec = common_array_postgresql_json_type_filters.clone();
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual { 
@@ -1475,6 +1491,32 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
                                             dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone()
                                         }
+                                    ));
+                                    quote::quote!{#value}
+                                };
+                                let array_dimension2_inner_element_ident_origin_upper_camel_case = {
+                                    let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        &dimension2_not_null_or_nullable,
+                                        &PostgresqlJsonTypePattern::ArrayDimension2 {
+                                            dimension1_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                            dimension2_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
+                                        }
+                                    ));
+                                    quote::quote!{#value}
+                                };
+                                let array_dimension3_inner_element_ident_origin_upper_camel_case = {
+                                    let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        &dimension3_not_null_or_nullable,
+                                        &PostgresqlJsonTypePattern::ArrayDimension1 {
+                                            dimension1_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
+                                        }
+                                    ));
+                                    quote::quote!{#value}
+                                };
+                                let array_dimension4_inner_element_ident_origin_upper_camel_case = {
+                                    let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(
+                                        &dimension4_not_null_or_nullable,
+                                        &PostgresqlJsonTypePattern::Standart
                                     ));
                                     quote::quote!{#value}
                                 };
