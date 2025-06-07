@@ -241,6 +241,15 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionOnePositionGreaterThan {
                 ident: _
             } => &naming::DimensionOnePositionGreaterThanUpperCamelCase,
+            Self::DimensionTwoPositionGreaterThan {
+                ident: _
+            } => &naming::DimensionTwoPositionGreaterThanUpperCamelCase,
+            Self::DimensionThreePositionGreaterThan {
+                ident: _
+            } => &naming::DimensionThreePositionGreaterThanUpperCamelCase,
+            Self::DimensionFourPositionGreaterThan {
+                ident: _
+            } => &naming::DimensionFourPositionGreaterThanUpperCamelCase,
             Self::PositionRegularExpression => &naming::PositionRegularExpressionUpperCamelCase,
             Self::ContainsAllElementsOfArray {
                 ident: _
@@ -287,6 +296,9 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionThreePositionEqual,
     DimensionFourPositionEqual,
     DimensionOnePositionGreaterThan,
+    DimensionTwoPositionGreaterThan,
+    DimensionThreePositionGreaterThan,
+    DimensionFourPositionGreaterThan,
     ContainsAllElementsOfArray,
     OverlapsWithArray,
     AllElementsEqual,
@@ -308,6 +320,9 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionThreePositionEqual => false,
             Self::DimensionFourPositionEqual => false,
             Self::DimensionOnePositionGreaterThan => true,
+            Self::DimensionTwoPositionGreaterThan => true,
+            Self::DimensionThreePositionGreaterThan => true,
+            Self::DimensionFourPositionGreaterThan => true,
             Self::ContainsAllElementsOfArray => false,
             Self::OverlapsWithArray => false,
             Self::AllElementsEqual => false,
@@ -352,6 +367,15 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
                 ident: _
             } => Ok(Self::DimensionOnePositionGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionTwoPositionGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionThreePositionGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionThreePositionGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionFourPositionGreaterThan),
             PostgresqlJsonTypeFilter::PositionRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                 ident: _

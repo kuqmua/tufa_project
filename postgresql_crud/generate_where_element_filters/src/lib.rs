@@ -1015,6 +1015,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
                         ident: _
                     } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionGreaterThan {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
+                        ident: _
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                         ident: _
@@ -1278,6 +1287,87 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => generate_dimension_position_equal_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    dimension1_position_value_declaration_token_stream.clone(),
+                    dimension1_position_value_default_initialization_token_stream.clone(),
+                    quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(first_increment) => {
+                                *increment = first_increment;
+                                match increment.checked_add(1) {
+                                    Some(second_increment) => {
+                                        *increment = second_increment;
+                                        Ok(format!("{}({}->${} > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
+                                    }
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                }
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    quote::quote! {
+                        query = query.bind(self.dimension1_position);
+                        query = query.bind(sqlx::types::Json(self.value));
+                        query
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    dimension1_position_value_declaration_token_stream.clone(),
+                    dimension1_position_value_default_initialization_token_stream.clone(),
+                    quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(first_increment) => {
+                                *increment = first_increment;
+                                match increment.checked_add(1) {
+                                    Some(second_increment) => {
+                                        *increment = second_increment;
+                                        Ok(format!("{}({}->${} > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
+                                    }
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                }
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    quote::quote! {
+                        query = query.bind(self.dimension1_position);
+                        query = query.bind(sqlx::types::Json(self.value));
+                        query
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionGreaterThan { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    dimension1_position_value_declaration_token_stream.clone(),
+                    dimension1_position_value_default_initialization_token_stream.clone(),
+                    quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(first_increment) => {
+                                *increment = first_increment;
+                                match increment.checked_add(1) {
+                                    Some(second_increment) => {
+                                        *increment = second_increment;
+                                        Ok(format!("{}({}->${} > ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, first_increment, second_increment,))
+                                    }
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                }
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    quote::quote! {
+                        query = query.bind(self.dimension1_position);
+                        query = query.bind(sqlx::types::Json(self.value));
+                        query
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan { 
                     ident: _
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
