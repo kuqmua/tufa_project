@@ -1320,8 +1320,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal { ident: quote::quote! {#ident_origin_upper_camel_case} }
                         ];
                         let common_array_postgresql_json_type_filters = {
-                            let mut vec = common_postgresql_json_type_filters.clone();
-                            vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
+                            let vec = common_postgresql_json_type_filters.clone();
+                            
                             vec
                         };
                         let ident_origin_upper_camel_case_token_stream = quote::quote! {#ident_origin_upper_camel_case};
@@ -1377,6 +1377,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone()
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
                                     vec
                                 };
                                 match &postgresql_json_type_specific {
@@ -1427,6 +1428,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan);
                                     vec
                                 };
                                 match &postgresql_json_type_specific {
@@ -1486,6 +1489,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan);
                                     vec
                                 };
                                 match &postgresql_json_type_specific {
@@ -1561,6 +1567,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthEqual);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthMoreThan);
                                     vec
                                 };
                                 match &postgresql_json_type_specific {
