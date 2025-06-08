@@ -1030,7 +1030,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
                         ident: _
                     } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionRegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                         ident: _
                     } => Ok(Self::ContainsAllElementsOfArray),
@@ -1057,10 +1057,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let ident_try_new_error_named = naming::parameter::PostgresqlJsonTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
             let query_bind_sqlx_types_json_self_value_token_stream = quote::quote! {
                 query = query.bind(sqlx::types::Json(self.value));
-                query
-            };
-            let query_bind_self_value_token_stream = quote::quote! {
-                query = query.bind(self.value);
                 query
             };
             #[derive(Clone)]
@@ -1527,7 +1523,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan { 
                     ident: _
                 } => generate_dimension_position_greater_than_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::PositionRegularExpression => (
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     quote::quote! {
                         dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,

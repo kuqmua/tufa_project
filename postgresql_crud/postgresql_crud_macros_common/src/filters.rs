@@ -155,6 +155,7 @@ pub enum PostgresqlJsonTypeFilter {
     GreaterThan {
         ident: proc_macro2::TokenStream,
     },
+    //todo dimension one two three four for between and in
     Between {
         ident: proc_macro2::TokenStream,
     },
@@ -194,7 +195,7 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionFourPositionGreaterThan {
         ident: proc_macro2::TokenStream,
     },
-    PositionRegularExpression,
+    DimensionOnePositionRegularExpression,
     ContainsAllElementsOfArray {
         ident: proc_macro2::TokenStream,
     },
@@ -262,7 +263,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourPositionGreaterThan {
                 ident: _
             } => &naming::DimensionFourPositionGreaterThanUpperCamelCase,
-            Self::PositionRegularExpression => &naming::PositionRegularExpressionUpperCamelCase,
+            Self::DimensionOnePositionRegularExpression => &naming::DimensionOnePositionRegularExpressionUpperCamelCase,
             Self::ContainsAllElementsOfArray {
                 ident: _
             } => &naming::ContainsAllElementsOfArrayUpperCamelCase,
@@ -394,7 +395,7 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
                 ident: _
             } => Ok(Self::DimensionFourPositionGreaterThan),
-            PostgresqlJsonTypeFilter::PositionRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                 ident: _
             } => Ok(Self::ContainsAllElementsOfArray),
