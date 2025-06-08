@@ -196,6 +196,9 @@ pub enum PostgresqlJsonTypeFilter {
         ident: proc_macro2::TokenStream,
     },
     DimensionOnePositionRegularExpression,
+    DimensionTwoPositionRegularExpression,
+    DimensionThreePositionRegularExpression,
+    DimensionFourPositionRegularExpression,
     ContainsAllElementsOfArray {
         ident: proc_macro2::TokenStream,
     },
@@ -264,6 +267,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
                 ident: _
             } => &naming::DimensionFourPositionGreaterThanUpperCamelCase,
             Self::DimensionOnePositionRegularExpression => &naming::DimensionOnePositionRegularExpressionUpperCamelCase,
+            Self::DimensionTwoPositionRegularExpression => &naming::DimensionTwoPositionRegularExpressionUpperCamelCase,
+            Self::DimensionThreePositionRegularExpression => &naming::DimensionThreePositionRegularExpressionUpperCamelCase,
+            Self::DimensionFourPositionRegularExpression => &naming::DimensionFourPositionRegularExpressionUpperCamelCase,
             Self::ContainsAllElementsOfArray {
                 ident: _
             } => &naming::ContainsAllElementsOfArrayUpperCamelCase,
@@ -396,6 +402,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
                 ident: _
             } => Ok(Self::DimensionFourPositionGreaterThan),
             PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionTwoPositionRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionThreePositionRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                 ident: _
             } => Ok(Self::ContainsAllElementsOfArray),

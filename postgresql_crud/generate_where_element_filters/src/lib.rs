@@ -1031,6 +1031,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ident: _
                     } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionRegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionRegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
                         ident: _
                     } => Ok(Self::ContainsAllElementsOfArray),
@@ -1524,6 +1527,117 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => generate_dimension_position_greater_than_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    quote::quote! {
+                        dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
+                        #regular_expression_case_and_value_declaration_token_stream
+                    },
+                    quote::quote! {
+                        dimension1_position: #core_default_default_default_token_stream,
+                        #regular_expression_case_and_value_default_initialization_token_stream
+                    },
+                    quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(first_increment) => {
+                                *increment = first_increment;
+                                match increment.checked_add(1) {
+                                    Some(second_increment) => {
+                                        *increment = second_increment;
+                                        Ok(format!(
+                                            "{}((trim(both '\"' from ({}->>${})::text) {} ${}))",
+                                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                            column,
+                                            first_increment,
+                                            self.regular_expression_case.postgreql_syntax(),
+                                            second_increment
+                                        ))
+                                    }
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                }
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    quote::quote! {
+                        query = query.bind(self.dimension1_position);
+                        #query_equals_query_self_value_to_string_token_stream
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionRegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    quote::quote! {
+                        dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
+                        #regular_expression_case_and_value_declaration_token_stream
+                    },
+                    quote::quote! {
+                        dimension1_position: #core_default_default_default_token_stream,
+                        #regular_expression_case_and_value_default_initialization_token_stream
+                    },
+                    quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(first_increment) => {
+                                *increment = first_increment;
+                                match increment.checked_add(1) {
+                                    Some(second_increment) => {
+                                        *increment = second_increment;
+                                        Ok(format!(
+                                            "{}((trim(both '\"' from ({}->>${})::text) {} ${}))",
+                                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                            column,
+                                            first_increment,
+                                            self.regular_expression_case.postgreql_syntax(),
+                                            second_increment
+                                        ))
+                                    }
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                }
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    quote::quote! {
+                        query = query.bind(self.dimension1_position);
+                        #query_equals_query_self_value_to_string_token_stream
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionRegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    quote::quote! {
+                        dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
+                        #regular_expression_case_and_value_declaration_token_stream
+                    },
+                    quote::quote! {
+                        dimension1_position: #core_default_default_default_token_stream,
+                        #regular_expression_case_and_value_default_initialization_token_stream
+                    },
+                    quote::quote! {
+                        match increment.checked_add(1) {
+                            Some(first_increment) => {
+                                *increment = first_increment;
+                                match increment.checked_add(1) {
+                                    Some(second_increment) => {
+                                        *increment = second_increment;
+                                        Ok(format!(
+                                            "{}((trim(both '\"' from ({}->>${})::text) {} ${}))",
+                                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                            column,
+                                            first_increment,
+                                            self.regular_expression_case.postgreql_syntax(),
+                                            second_increment
+                                        ))
+                                    }
+                                    None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                                }
+                            }
+                            None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                        }
+                    },
+                    quote::quote! {
+                        query = query.bind(self.dimension1_position);
+                        #query_equals_query_self_value_to_string_token_stream
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     quote::quote! {
                         dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
