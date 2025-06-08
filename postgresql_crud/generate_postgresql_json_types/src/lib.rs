@@ -1321,8 +1321,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         ];
                         let common_array_postgresql_json_type_filters = {
                             let mut vec = common_postgresql_json_type_filters.clone();
-                            vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual);
-                            vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan);
+                            vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
+                            vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
                             vec
                         };
                         let ident_origin_upper_camel_case_token_stream = quote::quote! {#ident_origin_upper_camel_case};

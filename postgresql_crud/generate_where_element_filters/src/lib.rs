@@ -998,8 +998,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ident: _
                     } => Ok(Self::In),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => Err(()),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => Err(()),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                         ident: _
                     } => Err(()),
@@ -1331,14 +1331,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(trim(both '\"' from ({})::text) {} ${})"}),
                     query_equals_query_self_value_to_string_token_stream.clone()
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthEqual => (
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     value_declaration_token_stream.clone(),
                     value_code_default_token_stream.clone(),
                     generate_query_part_one_value_token_stream(&quote::quote! {"{}(jsonb_array_length({}) = ${})"}),
                     query_bind_self_value_token_stream.clone()
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => (
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     value_declaration_token_stream.clone(),
                     value_code_default_token_stream.clone(),
