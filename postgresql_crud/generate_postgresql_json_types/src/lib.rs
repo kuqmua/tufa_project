@@ -1428,7 +1428,13 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec
                                 };
                                 match &postgresql_json_type_specific {
-                                    PostgresqlJsonTypeSpecific::Number => common_array_dimension2_postgresql_json_type_filters,
+                                    PostgresqlJsonTypeSpecific::Number => {
+                                        let mut filters = common_array_dimension2_postgresql_json_type_filters.clone();
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan {
+                                            ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
+                                        });
+                                        filters
+                                    },
                                     PostgresqlJsonTypeSpecific::Bool => common_array_dimension2_postgresql_json_type_filters,
                                     PostgresqlJsonTypeSpecific::String => common_array_dimension2_postgresql_json_type_filters,
                                 }
