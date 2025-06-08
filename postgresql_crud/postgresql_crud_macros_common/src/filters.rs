@@ -163,6 +163,9 @@ pub enum PostgresqlJsonTypeFilter {
     },
     RegularExpression,
     DimensionOneLengthEqual,
+    DimensionTwoLengthEqual,
+    DimensionThreeLengthEqual,
+    DimensionFourLengthEqual,
     DimensionOneLengthMoreThan,
     DimensionOnePositionEqual {
         ident: proc_macro2::TokenStream,
@@ -225,6 +228,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             } => &naming::InUpperCamelCase,
             Self::RegularExpression => &naming::RegularExpressionUpperCamelCase,
             Self::DimensionOneLengthEqual => &naming::DimensionOneLengthEqualUpperCamelCase,
+            Self::DimensionTwoLengthEqual => &naming::DimensionTwoLengthEqualUpperCamelCase,
+            Self::DimensionThreeLengthEqual => &naming::DimensionThreeLengthEqualUpperCamelCase,
+            Self::DimensionFourLengthEqual => &naming::DimensionFourLengthEqualUpperCamelCase,
             Self::DimensionOneLengthMoreThan => &naming::DimensionOneLengthMoreThanUpperCamelCase,
             Self::DimensionOnePositionEqual {
                 ident: _
@@ -351,6 +357,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             } => Ok(Self::In),
             PostgresqlJsonTypeFilter::RegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionOneLengthEqual => Err(()),
+            PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => Err(()),
+            PostgresqlJsonTypeFilter::DimensionThreeLengthEqual => Err(()),
+            PostgresqlJsonTypeFilter::DimensionFourLengthEqual => Err(()),
             PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => Err(()),
             PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                 ident: _

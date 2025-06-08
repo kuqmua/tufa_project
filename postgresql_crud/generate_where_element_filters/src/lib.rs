@@ -999,6 +999,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     } => Ok(Self::In),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthEqual => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
                         ident: _
@@ -1332,6 +1335,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     query_equals_query_self_value_to_string_token_stream.clone()
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    value_declaration_token_stream.clone(),
+                    value_code_default_token_stream.clone(),
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(jsonb_array_length({}) = ${})"}),
+                    query_bind_self_value_token_stream.clone()
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    value_declaration_token_stream.clone(),
+                    value_code_default_token_stream.clone(),
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(jsonb_array_length({}) = ${})"}),
+                    query_bind_self_value_token_stream.clone()
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    value_declaration_token_stream.clone(),
+                    value_code_default_token_stream.clone(),
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(jsonb_array_length({}) = ${})"}),
+                    query_bind_self_value_token_stream.clone()
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthEqual => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     value_declaration_token_stream.clone(),
                     value_code_default_token_stream.clone(),
