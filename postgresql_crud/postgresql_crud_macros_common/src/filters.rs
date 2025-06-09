@@ -199,7 +199,7 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoPositionRegularExpression,
     DimensionThreePositionRegularExpression,
     DimensionFourPositionRegularExpression,
-    ContainsAllElementsOfArray {
+    DimensionOneContainsAllElementsOfArray {
         ident: proc_macro2::TokenStream,
     },
     // ContainedInArray,
@@ -270,9 +270,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoPositionRegularExpression => &naming::DimensionTwoPositionRegularExpressionUpperCamelCase,
             Self::DimensionThreePositionRegularExpression => &naming::DimensionThreePositionRegularExpressionUpperCamelCase,
             Self::DimensionFourPositionRegularExpression => &naming::DimensionFourPositionRegularExpressionUpperCamelCase,
-            Self::ContainsAllElementsOfArray {
+            Self::DimensionOneContainsAllElementsOfArray {
                 ident: _
-            } => &naming::ContainsAllElementsOfArrayUpperCamelCase,
+            } => &naming::DimensionOneContainsAllElementsOfArrayUpperCamelCase,
             Self::OverlapsWithArray {
                 ident: _
             } => &naming::OverlapsWithArrayUpperCamelCase,
@@ -405,7 +405,7 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionTwoPositionRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionThreePositionRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression => Err(()),
-            PostgresqlJsonTypeFilter::ContainsAllElementsOfArray {
+            PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
                 ident: _
             } => Ok(Self::ContainsAllElementsOfArray),
             PostgresqlJsonTypeFilter::OverlapsWithArray {
