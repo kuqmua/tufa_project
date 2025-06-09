@@ -1373,6 +1373,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual);
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan);
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
+                                        ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone()
+                                    });
                                     vec
                                 };
                                 match &postgresql_json_type_specific {

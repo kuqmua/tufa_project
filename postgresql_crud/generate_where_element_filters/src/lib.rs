@@ -1599,16 +1599,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression => generate_dimension_position_regular_expression_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
                     ident: _
-                } => generate_dimension_position_contains_all_elements_of_array_token_stream(&DimensionNumber::One),
-                // (
-                //     ShouldAddDeclarationOfStructIdentGeneric::True,
-                //     quote::quote! {value: std::vec::Vec<T>},
-                //     quote::quote! {
-                //         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
-                //     },
-                //     generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
-                //     query_bind_sqlx_types_json_self_value_token_stream.clone(),
-                // ),
+                } => 
+                // generate_dimension_position_contains_all_elements_of_array_token_stream(&DimensionNumber::One),
+                (
+                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    quote::quote! {value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsAllElementsOfArray { 
                     ident: _
                 } => (
