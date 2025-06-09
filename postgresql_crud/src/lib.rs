@@ -1000,35 +1000,24 @@ impl<T> std::convert::From<NotEmptyUniqueStructVec<T>> for Vec<T> {
         val.0
     }
 }
-// impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueEnumVec<T>
-// where
-//     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
-// {
-//     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
-//         let mut acc = std::string::String::default();
-//         for (index, element) in self.0.iter().enumerate() {
-//             match element.query_part(increment, column, index != 0) {
-//                 Ok(value) => {
-//                     acc.push_str(&value);
-//                 }
-//                 Err(error) => {
-//                     return Err(error);
-//                 }
-//             }
-//         }
-//         Ok(format!("({acc})"))
-//     }
-//     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         for element in self.0 {
-//             query = element.query_bind(query);
-//         }
-//         query
-//     }
-// }
-//
-
-
-
+impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueStructVec<T>
+where
+    T: serde::Serialize + 'a,
+{
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                Ok(format!("${value})"))
+            }
+            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
+        }
+    }
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(sqlx::types::Json(self.0));
+        query
+    }
+}
 
 #[derive(Debug, Clone)]
 pub struct RegexRegex(regex::Regex);//regex::Regex
