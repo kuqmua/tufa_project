@@ -1091,73 +1091,81 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             ) {
                 let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
                 let dimension_number_std_primitive_u8_plus_one = dimension_number_std_primitive_u8.checked_add(1).unwrap();
-                let struct_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        #dimension_number_position_token_stream: #core_default_default_default_token_stream,
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let increments_initialization_token_stream = (1..=dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
-                    let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        let #increment_number_token_stream = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                value
-                            },
-                            None => {
-                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                            },
-                        };
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let format_handle_token_stream = {
-                    let indexes = (1..=dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
-                        acc.push_str(
-                            &"->${}"
-                        );
-                        acc
-                    });
-                    generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{indexes} {operator} ${{}})"))
-                };
-                let format_increments_token_stream = (1..=dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
-                    format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let query_bind_dimension_position_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        query = query.bind(self.#dimension_number_position_token_stream);
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 (
                     ShouldAddDeclarationOfStructIdentGeneric::True,
-                    quote::quote! {
-                        #(#struct_additional_fields_token_stream)*
-                        value: T,
+                    {
+                        let struct_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#struct_additional_fields_token_stream)*
+                            value: T,
+                        }
                     },
-                    quote::quote!{
-                        #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    {
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                #dimension_number_position_token_stream: #core_default_default_default_token_stream,
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote!{
+                            #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
+                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        }
                     },
-                    quote::quote! {
-                        #(#increments_initialization_token_stream)*
-                        Ok(format!(
-                            #format_handle_token_stream,
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            #(#format_increments_token_stream),*
-                        ))
+                    {
+                        let increments_initialization_token_stream = (1..=dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
+                            let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                let #increment_number_token_stream = match increment.checked_add(1) {
+                                    Some(value) => {
+                                        *increment = value;
+                                        value
+                                    },
+                                    None => {
+                                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                    },
+                                };
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let format_handle_token_stream = {
+                            let indexes = (1..=dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
+                                acc.push_str(
+                                    &"->${}"
+                                );
+                                acc
+                            });
+                            generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{indexes} {operator} ${{}})"))
+                        };
+                        let format_increments_token_stream = (1..=dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
+                            format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#increments_initialization_token_stream)*
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #(#format_increments_token_stream),*
+                            ))
+                        }
                     },
-                    quote::quote! {
-                        #(#query_bind_dimension_position_token_stream)*
-                        query = query.bind(sqlx::types::Json(self.value));
-                        query
+                    {
+                        let query_bind_dimension_position_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                query = query.bind(self.#dimension_number_position_token_stream);
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#query_bind_dimension_position_token_stream)*
+                            query = query.bind(sqlx::types::Json(self.value));
+                            query
+                        }
                     },
                 )
             };
@@ -1175,73 +1183,81 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             ) {
                 let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
                 let dimension_number_std_primitive_u8_plus_one = dimension_number_std_primitive_u8.checked_add(1).unwrap();
-                let struct_additional_fields_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        #dimension_number_position_token_stream: #core_default_default_default_token_stream,
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let increments_initialization_token_stream = (1..dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
-                    let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        let #increment_number_token_stream = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                value
-                            },
-                            None => {
-                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                            },
-                        };
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let format_handle_token_stream = {
-                    let indexes = (1..dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
-                        acc.push_str(
-                            &"->${}"
-                        );
-                        acc
-                    });
-                    generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{indexes}) {operator} ${{}})"))
-                };
-                let format_increments_token_stream = (1..dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
-                    format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let query_bind_dimension_position_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        query = query.bind(self.#dimension_number_position_token_stream);
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
-                    quote::quote! {
-                        #(#struct_additional_fields_token_stream)*
-                        value: #unsigned_part_of_std_primitive_i32_token_stream
+                    {
+                        let struct_additional_fields_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#struct_additional_fields_token_stream)*
+                            value: #unsigned_part_of_std_primitive_i32_token_stream
+                        }
                     },
-                    quote::quote! {
-                        #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
-                        value: #core_default_default_default_token_stream
+                    {
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                #dimension_number_position_token_stream: #core_default_default_default_token_stream,
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
+                            value: #core_default_default_default_token_stream
+                        }
                     },
-                    quote::quote! {
-                        #(#increments_initialization_token_stream)*
-                        Ok(format!(
-                            #format_handle_token_stream,
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            #(#format_increments_token_stream),*
-                        ))
+                    {
+                        let increments_initialization_token_stream = (1..dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
+                            let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                let #increment_number_token_stream = match increment.checked_add(1) {
+                                    Some(value) => {
+                                        *increment = value;
+                                        value
+                                    },
+                                    None => {
+                                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                    },
+                                };
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let format_handle_token_stream = {
+                            let indexes = (1..dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
+                                acc.push_str(
+                                    &"->${}"
+                                );
+                                acc
+                            });
+                            generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{indexes}) {operator} ${{}})"))
+                        };
+                        let format_increments_token_stream = (1..dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
+                            format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#increments_initialization_token_stream)*
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #(#format_increments_token_stream),*
+                            ))
+                        }
                     },
-                    quote::quote! {
-                        #(#query_bind_dimension_position_token_stream)*
-                        query = query.bind(self.value);
-                        query
+                    {
+                        let query_bind_dimension_position_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                query = query.bind(self.#dimension_number_position_token_stream);
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#query_bind_dimension_position_token_stream)*
+                            query = query.bind(self.value);
+                            query
+                        }
                     }
                 )
             };
@@ -1255,89 +1271,96 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
             ) {
                 let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
-                let dimension_number_std_primitive_u8_plus_one = dimension_number_std_primitive_u8.checked_add(1).unwrap();
-                let struct_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        #dimension_number_position_token_stream: #core_default_default_default_token_stream,
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let increments_initialization_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        let #increment_number_token_stream = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                value
-                            },
-                            None => {
-                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                            },
-                        };
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let format_handle_token_stream = {
-                    let indexes = (2..=dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
-                        acc.push_str(
-                            &"->${}"
-                        );
-                        acc
-                    });
-                    generate_quotes::double_quotes_token_stream(&format!(
-                        "{{}}((trim(both '\\\"' from ({{}}{indexes}->>${{}})::text) {{}} ${{}}))"
-                    ))
-                };
-                let format_increments_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let query_bind_dimension_position_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote! {
-                        query = query.bind(self.#dimension_number_position_token_stream);
-                    }
-                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
-                    quote::quote! {
-                        #(#struct_additional_fields_token_stream)*
-                        pub regular_expression_case: crate::RegularExpressionCase,
-                        pub value: crate::RegexRegex
+                    {
+                        let struct_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#struct_additional_fields_token_stream)*
+                            pub regular_expression_case: crate::RegularExpressionCase,
+                            pub value: crate::RegexRegex
+                        }
                     },
-                    quote::quote! {
-                        #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
-                        regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    {
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                #dimension_number_position_token_stream: #core_default_default_default_token_stream,
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
+                            regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        }
                     },
-                    quote::quote! {
-                        #(#increments_initialization_token_stream)*
-                        let last_increment = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                value
-                            },
-                            None => {
-                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                            },
+                    {
+                        let increments_initialization_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                let #increment_number_token_stream = match increment.checked_add(1) {
+                                    Some(value) => {
+                                        *increment = value;
+                                        value
+                                    },
+                                    None => {
+                                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                    },
+                                };
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let format_handle_token_stream = {
+                            let indexes = (2..=dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
+                                acc.push_str(
+                                    &"->${}"
+                                );
+                                acc
+                            });
+                            generate_quotes::double_quotes_token_stream(&format!(
+                                "{{}}((trim(both '\\\"' from ({{}}{indexes}->>${{}})::text) {{}} ${{}}))"
+                            ))
                         };
-                        Ok(format!(
-                            #format_handle_token_stream,
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            #(#format_increments_token_stream),*,
-                            self.regular_expression_case.postgreql_syntax(),
-                            last_increment
-                        ))
+                        let format_increments_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#increments_initialization_token_stream)*
+                            let last_increment = match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    value
+                                },
+                                None => {
+                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                },
+                            };
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #(#format_increments_token_stream),*,
+                                self.regular_expression_case.postgreql_syntax(),
+                                last_increment
+                            ))
+                        }
                     },
-                    quote::quote! {
-                        #(#query_bind_dimension_position_token_stream)*
-                        query = query.bind(self.value.to_string());
-                        query
+                    {
+                        let query_bind_dimension_position_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
+                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                            quote::quote! {
+                                query = query.bind(self.#dimension_number_position_token_stream);
+                            }
+                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        quote::quote! {
+                            #(#query_bind_dimension_position_token_stream)*
+                            query = query.bind(self.value.to_string());
+                            query
+                        }
                     },
                 )
             };
