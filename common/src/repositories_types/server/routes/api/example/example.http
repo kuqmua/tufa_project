@@ -42,7 +42,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
         "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": [
-          1,2,3
+          1,2,3,4,5,6
         ]
       }
     }
@@ -150,7 +150,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                     "DimensionOneContainsAllElementsOfArray": {
                       "logical_operator": "Or",
                       "value": [
-                        2,3
+                        4,3
                       ]
                     }
                   }
