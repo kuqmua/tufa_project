@@ -22,7 +22,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let unsigned_part_of_std_primitive_i32_token_stream = quote::quote!{crate::UnsignedPartOfStdPrimitiveI32};
     let value_declaration_token_stream = quote::quote! {value: #unsigned_part_of_std_primitive_i32_token_stream};
     enum ShouldAddDeclarationOfStructIdentGeneric {
-        True,
+        True {
+            maybe_additional_traits_token_stream: std::option::Option<proc_macro2::TokenStream>
+        },
         False,
     }
     struct Field<'a> {
@@ -78,7 +80,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let maybe_pub_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &naming::PubSnakeCase };
         let maybe_derive_serde_deserialize_token_stream: &dyn quote::ToTokens = if filter_initialized_with_try_new_result_is_ok { &proc_macro2_token_stream_new } else { &quote::quote! {serde::Deserialize,} };
         let maybe_declaration_of_struct_ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-            ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
+            ShouldAddDeclarationOfStructIdentGeneric::True {
+                maybe_additional_traits_token_stream
+            } => &match maybe_additional_traits_token_stream {
+                Some(value) => quote::quote! {<#t_token_stream: #value>},
+                None => quote::quote! {<#t_token_stream>},
+            },
             ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
         };
         quote::quote! {
@@ -129,11 +136,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         };
         let impl_try_new_for_ident_token_stream = {
             let impl_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                ShouldAddDeclarationOfStructIdentGeneric::True => &quote::quote! {<T #generic_requirements_token_stream>},
+                ShouldAddDeclarationOfStructIdentGeneric::True {
+                    maybe_additional_traits_token_stream: _
+                } => &quote::quote! {<T #generic_requirements_token_stream>},
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             };
             let ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
+                ShouldAddDeclarationOfStructIdentGeneric::True {
+                    maybe_additional_traits_token_stream: _
+                } => &t_annotation_generic_token_stream,
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             };
             let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(should_add_declaration_of_generic_parameter_to_ident_try_new_error_named);
@@ -427,13 +438,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         |should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric, ident: &dyn quote::ToTokens, impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream: &dyn quote::ToTokens| {
             postgresql_crud_macros_common::generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                 &match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => quote::quote! {<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: _
+                    } => quote::quote! {<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>},
                     ShouldAddDeclarationOfStructIdentGeneric::False => proc_macro2::TokenStream::new(),
                 },
                 &postgresql_crud_macros_common::ImportPath::Crate,
                 &ident,
                 match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: _
+                    } => &t_annotation_generic_token_stream,
                     ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
                 },
                 &{
@@ -461,7 +476,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
             &{
                 let maybe_t_additional_traits_for_postgresql_type_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True => match &filter_type {
+                    ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream: _ } => match &filter_type {
                         FilterType::PostgresqlType => &quote::quote! {, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send},
                         FilterType::PostgresqlJsonType => &quote::quote! {, T: std::marker::Send + serde::Serialize + 'a},
                     },
@@ -471,7 +486,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             },
             &ident,
             &match &should_add_declaration_of_struct_ident_generic {
-                ShouldAddDeclarationOfStructIdentGeneric::True => &t_annotation_generic_token_stream,
+                ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream: _ } => &t_annotation_generic_token_stream,
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             },
             &query_part_content_token_stream,
@@ -564,21 +579,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query_bind_content_token_stream
             ) = match &filter {
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Equal => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Between => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &quote::quote! {
                         start: T,
                         end: T,
@@ -611,7 +632,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::In => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &value_std_vec_vec_t_token_stream,
                     &quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
@@ -648,7 +671,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &query_equals_query_self_value_to_string_token_stream
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::Before => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("<")),
@@ -711,7 +736,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &quote::quote! {
                         pub encode_format: crate::postgresql_type::EncodeFormat,
                         pub encoded_string_representation: T,
@@ -735,63 +762,81 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&>")),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(lower({}) = ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(upper({}) = ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("-|-")),
@@ -843,7 +888,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
+                            &ShouldAddDeclarationOfStructIdentGeneric::True {
+                                maybe_additional_traits_token_stream: None
+                            },
                             &quote::quote! {: std::cmp::PartialOrd},
                             &quote::quote! {
                                 start: T,
@@ -879,7 +926,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
-                            &ShouldAddDeclarationOfStructIdentGeneric::True,
+                            &ShouldAddDeclarationOfStructIdentGeneric::True {
+                                maybe_additional_traits_token_stream: None
+                            },
                             &quote::quote! {: PartialEq + Clone},
                             &value_std_vec_vec_t_token_stream,
                             &quote::quote! {
@@ -1103,7 +1152,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
                 let dimension_number_std_primitive_u8_plus_one = dimension_number_std_primitive_u8.checked_add(1).unwrap();
                 (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     {
                         let struct_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
                             let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
@@ -1385,7 +1436,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
                 let dimension_number_std_primitive_u8_plus_one = dimension_number_std_primitive_u8.checked_add(1).unwrap();
                 (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     {
                         let struct_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
                             let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
@@ -1472,7 +1525,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     value_t_token_stream.clone(),
                     value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
@@ -1481,7 +1536,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     pub_value_t_token_stream.clone(),
                     value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
@@ -1490,7 +1547,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     quote::quote! {
                         start: T,
                         end: T,
@@ -1525,7 +1584,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     value_std_vec_vec_t_token_stream.clone(),
                     quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
@@ -1602,7 +1663,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 } => 
                 // generate_dimension_position_contains_all_elements_of_array_token_stream(&DimensionNumber::One),
                 (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     quote::quote! {value: std::vec::Vec<T>},
                     quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
@@ -1610,10 +1673,34 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     query_bind_sqlx_types_json_self_value_token_stream.clone(),
                 ),
+                // (
+                //     ShouldAddDeclarationOfStructIdentGeneric::True {
+                //         maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
+                //     },
+                //     quote::quote! {value: crate::NotEmptyUniqueStructVec<T>},
+                //     quote::quote! {
+                //         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                //     },
+                //     quote::quote! {
+                //         let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                //             Ok(value) => value,
+                //             Err(error) => {
+                //                 return Err(error);
+                //             } 
+                //         };
+                //         Ok(format!("{}({} @> {value})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
+                //     },
+                //     quote::quote! {
+                //         query = self.value.query_bind(query);
+                //         query
+                //     }
+                // ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsAllElementsOfArray { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     quote::quote! {value: std::vec::Vec<T>},
                     quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
@@ -1624,7 +1711,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsAllElementsOfArray { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     quote::quote! {value: std::vec::Vec<T>},
                     quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
@@ -1635,7 +1724,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsAllElementsOfArray { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     quote::quote! {value: std::vec::Vec<T>},
                     quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
@@ -1647,7 +1738,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     quote::quote! {value: std::vec::Vec<T>},
                     quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
@@ -1658,7 +1751,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     quote::quote! {pub value: std::vec::Vec<T>},
                     quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
@@ -1669,7 +1764,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     quote::quote! {pub value: std::vec::Vec<T>},
                     quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
@@ -1680,7 +1777,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan { 
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
                     quote::quote! {pub value: std::vec::Vec<T>},
                     quote::quote! {
                         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
