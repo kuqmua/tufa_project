@@ -71,7 +71,7 @@ pub trait PostgresqlTypeWhereFilter<'a> {
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
-pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<UniqueVec<T>>);
+pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<NotEmptyUniqueVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
@@ -760,9 +760,9 @@ impl<PostgresqlTypeWhereElement: crate::AllEnumVariantsArrayDefaultButOptionIsAl
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct UniqueVec<T>(std::vec::Vec<T>);
+pub struct NotEmptyUniqueVec<T>(std::vec::Vec<T>);
 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum UniqueVecTryNewErrorNamed<T> {
+pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
     IsEmpty {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
@@ -772,16 +772,16 @@ pub enum UniqueVecTryNewErrorNamed<T> {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
-    pub fn try_new(value: std::vec::Vec<T>) -> Result<Self, UniqueVecTryNewErrorNamed<T>> {
+impl<T: std::cmp::PartialEq + Clone> NotEmptyUniqueVec<T> {
+    pub fn try_new(value: std::vec::Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
-            return Err(UniqueVecTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+            return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }
         {
             let mut acc = vec![];
             for element in &value {
                 if acc.contains(&element) {
-                    return Err(UniqueVecTryNewErrorNamed::NotUnique {
+                    return Err(NotEmptyUniqueVecTryNewErrorNamed::NotUnique {
                         value: element.clone(),
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
@@ -791,12 +791,18 @@ impl<T: std::cmp::PartialEq + Clone> UniqueVec<T> {
         }
         Ok(Self(value))
     }
+    pub const fn to_vec(&self) -> &std::vec::Vec<T> {
+        &self.0
+    }
+    pub fn into_vec(self) -> std::vec::Vec<T> {
+        self.0
+    }
 }
 const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for UniqueVec<T> {
+    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for NotEmptyUniqueVec<T> {
         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
@@ -806,14 +812,14 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private::PhantomData<UniqueVec<T>>,
+                marker: _serde::__private::PhantomData<NotEmptyUniqueVec<T>>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
-                type Value = UniqueVec<T>;
+                type Value = NotEmptyUniqueVec<T>;
                 fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__f, "tuple struct UniqueVec")
+                    _serde::__private::Formatter::write_str(__f, "tuple struct NotEmptyUniqueVec")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
@@ -821,7 +827,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    _serde::__private::Ok(UniqueVec(__field0))
+                    _serde::__private::Ok(NotEmptyUniqueVec(__field0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
@@ -831,10 +837,10 @@ const _: () = {
                     let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct UniqueVec with 1 element"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotEmptyUniqueVec with 1 element"));
                         }
                     };
-                    match UniqueVec::try_new(__field0) {
+                    match NotEmptyUniqueVec::try_new(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -842,7 +848,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "UniqueVec",
+                "NotEmptyUniqueVec",
                 __Visitor {
                     marker: _serde::__private::PhantomData::<Self>,
                     lifetime: _serde::__private::PhantomData,
@@ -851,30 +857,22 @@ const _: () = {
         }
     }
 };
-impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for UniqueVec<T> {
+impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl<T> std::default::Default for UniqueVec<T> {
+impl<T> std::default::Default for NotEmptyUniqueVec<T> {
     fn default() -> Self {
         Self(std::vec::Vec::default())
     }
 }
-impl<T> UniqueVec<T> {
-    pub const fn to_vec(&self) -> &std::vec::Vec<T> {
-        &self.0
-    }
-    pub fn into_vec(self) -> std::vec::Vec<T> {
-        self.0
-    }
-}
-impl<T> std::convert::From<UniqueVec<T>> for Vec<T> {
-    fn from(val: UniqueVec<T>) -> Self {
+impl<T> std::convert::From<NotEmptyUniqueVec<T>> for Vec<T> {
+    fn from(val: NotEmptyUniqueVec<T>) -> Self {
         val.0
     }
 }
-impl<'a, T> PostgresqlTypeWhereFilter<'a> for UniqueVec<T>
+impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueVec<T>
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
