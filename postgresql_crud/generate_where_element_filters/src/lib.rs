@@ -13,6 +13,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {
         crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
     };
+    // let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = quote::quote!{
+    //     crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
+    // };
     let value_t_token_stream = quote::quote! {value: T};
     let pub_value_t_token_stream = quote::quote! {pub value: #t_token_stream};
     let value_std_vec_vec_t_token_stream = quote::quote! {value: #std_vec_vec_t_token_stream};
@@ -978,10 +981,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         enum PostgresqlJsonTypeFilterInitializedWithTryNew {
             Between,
             In,
-            DimensionOneContainsAllElementsOfArray,
-            DimensionTwoContainsAllElementsOfArray,
-            DimensionThreeContainsAllElementsOfArray,
-            DimensionFourContainsAllElementsOfArray,
             OverlapsWithArray,
         }
         impl std::convert::TryFrom<&postgresql_crud_macros_common::PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilterInitializedWithTryNew {
@@ -1039,16 +1038,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
                         ident: _
-                    } => Ok(Self::DimensionOneContainsAllElementsOfArray),
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsAllElementsOfArray {
                         ident: _
-                    } => Ok(Self::DimensionTwoContainsAllElementsOfArray),
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsAllElementsOfArray {
                         ident: _
-                    } => Ok(Self::DimensionThreeContainsAllElementsOfArray),
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsAllElementsOfArray {
                         ident: _
-                    } => Ok(Self::DimensionFourContainsAllElementsOfArray),
+                    } => Err(()),
                     // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainedInArray => todo!(),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray {
                         ident: _
@@ -1396,7 +1395,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                         quote::quote! {
                             #(#struct_additional_fields_token_stream),*,
-                            value: std::vec::Vec<T>
+                            value: crate::NotEmptyUniqueVec<T>
                         }
                     },
                     {
@@ -1408,7 +1407,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                         quote::quote! {
                             #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream),*,
-                            value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                            value: //here
                         }
                     },
                     {
@@ -1598,19 +1597,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionRegularExpression => generate_dimension_position_regular_expression_token_stream(&DimensionNumber::Two),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionRegularExpression => generate_dimension_position_regular_expression_token_stream(&DimensionNumber::Three),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression => generate_dimension_position_regular_expression_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray { 
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
                     ident: _
-                } => 
-                // generate_dimension_position_contains_all_elements_of_array_token_stream(&DimensionNumber::One),
-                (
-                    ShouldAddDeclarationOfStructIdentGeneric::True,
-                    quote::quote! {value: std::vec::Vec<T>},
-                    quote::quote! {
-                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
-                    },
-                    generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
-                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
-                ),
+                } => generate_dimension_position_contains_all_elements_of_array_token_stream(&DimensionNumber::One),
+                // (
+                //     ShouldAddDeclarationOfStructIdentGeneric::True,
+                //     quote::quote! {value: std::vec::Vec<T>},
+                //     quote::quote! {
+                //         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                //     },
+                //     generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
+                //     query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                // ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsAllElementsOfArray { 
                     ident: _
                 } => (
@@ -1792,151 +1790,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote! {+ std::cmp::PartialOrd + Clone}),
                             &vec![&value_std_vec_vec_t_field],
                         ),
-                        //todo reuse
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionOneContainsAllElementsOfArray => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                            &quote::quote! {
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                NotUnique {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: T,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &quote::quote! {: std::cmp::PartialEq + Clone},
-                            &quote::quote! {value: std::vec::Vec<T>},
-                            &quote::quote! {
-                                if value.is_empty() {
-                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-                                }
-                                {
-                                    let mut acc = vec![];
-                                    for element in &value {
-                                        if !acc.contains(&element) {
-                                            acc.push(element);
-                                        } else {
-                                            return Err(#ident_try_new_error_named::NotUnique {
-                                                value: element.clone(),
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                Ok(Self { logical_operator, value })
-                            },
-                            Some(quote::quote! {+ std::cmp::PartialEq + Clone}),
-                            &vec![&value_std_vec_vec_t_field],
-                        ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionTwoContainsAllElementsOfArray => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                            &quote::quote! {
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                NotUnique {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: T,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &quote::quote! {: std::cmp::PartialEq + Clone},
-                            &quote::quote! {value: std::vec::Vec<T>},
-                            &quote::quote! {
-                                if value.is_empty() {
-                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-                                }
-                                {
-                                    let mut acc = vec![];
-                                    for element in &value {
-                                        if !acc.contains(&element) {
-                                            acc.push(element);
-                                        } else {
-                                            return Err(#ident_try_new_error_named::NotUnique {
-                                                value: element.clone(),
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                Ok(Self { logical_operator, value })
-                            },
-                            Some(quote::quote! {+ std::cmp::PartialEq + Clone}),
-                            &vec![&value_std_vec_vec_t_field],
-                        ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionThreeContainsAllElementsOfArray => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                            &quote::quote! {
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                NotUnique {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: T,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &quote::quote! {: std::cmp::PartialEq + Clone},
-                            &quote::quote! {value: std::vec::Vec<T>},
-                            &quote::quote! {
-                                if value.is_empty() {
-                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-                                }
-                                {
-                                    let mut acc = vec![];
-                                    for element in &value {
-                                        if !acc.contains(&element) {
-                                            acc.push(element);
-                                        } else {
-                                            return Err(#ident_try_new_error_named::NotUnique {
-                                                value: element.clone(),
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                Ok(Self { logical_operator, value })
-                            },
-                            Some(quote::quote! {+ std::cmp::PartialEq + Clone}),
-                            &vec![&value_std_vec_vec_t_field],
-                        ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionFourContainsAllElementsOfArray => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                            &quote::quote! {
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                NotUnique {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: T,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &quote::quote! {: std::cmp::PartialEq + Clone},
-                            &quote::quote! {value: std::vec::Vec<T>},
-                            &quote::quote! {
-                                if value.is_empty() {
-                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-                                }
-                                {
-                                    let mut acc = vec![];
-                                    for element in &value {
-                                        if !acc.contains(&element) {
-                                            acc.push(element);
-                                        } else {
-                                            return Err(#ident_try_new_error_named::NotUnique {
-                                                value: element.clone(),
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                Ok(Self { logical_operator, value })
-                            },
-                            Some(quote::quote! {+ std::cmp::PartialEq + Clone}),
-                            &vec![&value_std_vec_vec_t_field],
-                        ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::OverlapsWithArray => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote! {
@@ -2009,13 +1862,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                 #impl_postgresql_type_where_filter_token_stream
             };
-            // match &filter {
-            //     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {ident: _} => {
-            //         proc_macro2::TokenStream::new()
-            //     }
-            //     _ => f
-            // }
-            f
+            match &filter {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {ident: _} => {
+                    proc_macro2::TokenStream::new()
+                }
+                _ => f
+            }
+            // f
         };
         let filter_array_token_stream = postgresql_crud_macros_common::PostgresqlJsonTypeFilter::into_array().map(|element| generate_filters_token_stream(&element));
         // let _token_stream = generate_filters_token_stream(&postgresql_crud_macros_common::PostgresqlJsonTypeFilter::);

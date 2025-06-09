@@ -191,6 +191,10 @@ pub trait PostgresqlJsonType {
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed>;
     fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>;
 }
+// pub trait PostgresqlJsonTypeWhereFilter<'a> {
+//     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed>;
+//     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>;
+// }
 
 pub trait GeneratePostgresqlJsonObjectTypeToRead {
     fn generate_postgresql_json_object_type_to_read_from_vec(value: &[Self], column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str) -> std::string::String
@@ -897,6 +901,26 @@ where
         query
     }
 }
+// impl<'a, T> PostgresqlJsonTypeWhereFilter<'a> for NotEmptyUniqueVec<T>
+// where
+//     T: std::fmt::Debug + PartialEq + Clone + serde::Serialize,
+// {
+//     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+//         match increment.checked_add(1) {
+//             Some(value) => {
+//                 *increment = value;
+//                 Ok(format!("${value}"))
+//             },
+//             None => Err(QueryPartErrorNamed::CheckedAdd {
+//                 code_occurence: error_occurence_lib::code_occurence!()
+//             }),
+//         }
+//     }
+//     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+//         query = query.bind(sqlx::types::Json(self.0));
+//         query
+//     }
+// }
 
 
 
