@@ -4,7 +4,7 @@ generate_where_element_filters::generate_where_element_filters!();
 // pub struct PostgresqlJsonTypeWhereElementDimensionOneContainsAllElementsOfArray<T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone> {
 //     pub logical_operator: crate::LogicalOperator,
 //     dimension1_position: crate::UnsignedPartOfStdPrimitiveI32,
-//     value: crate::NotEmptyUniqueVec<T>,
+//     value: crate::NotEmptyUniqueEnumVec<T>,
 // }
 // impl<
 //     T: std::fmt::Debug 
@@ -53,13 +53,17 @@ generate_where_element_filters::generate_where_element_filters!();
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, schemars :: JsonSchema)]
 pub struct PostgresqlJsonTypeWhereElementDimensionOneContainsAllElementsOfArray<T> {
     pub logical_operator: crate::LogicalOperator,
-    value: std::vec::Vec<T>,
+    value: 
+    // crate::NotEmptyUniqueEnumVec<T>,
+    std::vec::Vec<T>,
 }
 impl<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlJsonTypeWhereElementDimensionOneContainsAllElementsOfArray<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
             logical_operator: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            value: vec![crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()],
+            value: 
+            
+            vec![crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()],
         }
     }
 }

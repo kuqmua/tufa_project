@@ -1395,7 +1395,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                         quote::quote! {
                             #(#struct_additional_fields_token_stream),*,
-                            value: crate::NotEmptyUniqueVec<T>
+                            value: crate::NotEmptyUniqueEnumVec<T>
                         }
                     },
                     {
