@@ -1004,7 +1004,7 @@ impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueStructVec<T>
 where
     T: serde::Serialize + 'a,
 {
-    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
