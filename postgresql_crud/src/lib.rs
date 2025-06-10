@@ -1008,7 +1008,7 @@ where
         match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
-                Ok(format!("${value})"))
+                Ok(format!("${value}"))
             }
             None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
         }
