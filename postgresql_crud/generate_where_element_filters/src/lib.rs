@@ -1224,6 +1224,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     acc
                 })
             }
+            fn generate_format_increments_token_stream<T>(value: T) -> proc_macro2::TokenStream
+            where
+                T: IntoIterator<Item = std::primitive::u8>,
+            {
+                let content_token_stream = value.into_iter().map(|element|{
+                    format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
+                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                quote::quote! {#(#content_token_stream),*}
+            }
             let generate_dimension_position_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1262,17 +1271,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             "{{}}({{}}{} {operator} ${{}})",
                             generate_indexes_stringified(1..=dimension_number_std_primitive_u8)
                         ));
-                        let format_increments_token_stream = (1..=dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
-                            format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let format_increments_token_stream = generate_format_increments_token_stream(1..=dimension_number_std_primitive_u8_plus_one);
                         quote::quote! {
-                            // #(#increments_initialization_token_stream)*
                             #increments_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 column,
-                                #(#format_increments_token_stream),*
+                                #format_increments_token_stream
                             ))
                         }
                     },
@@ -1329,16 +1335,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             "{{}}(jsonb_array_length({{}}{}) {operator} ${{}})",
                             generate_indexes_stringified(1..dimension_number_std_primitive_u8)
                         ));
-                        let format_increments_token_stream = (1..dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
-                            format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let format_increments_token_stream = generate_format_increments_token_stream(1..dimension_number_std_primitive_u8_plus_one);
                         quote::quote! {
                             #increments_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 column,
-                                #(#format_increments_token_stream),*
+                                #format_increments_token_stream
                             ))
                         }
                     },
@@ -1393,9 +1397,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             "{{}}((trim(both '\\\"' from ({{}}{}->>${{}})::text) {{}} ${{}}))",
                             generate_indexes_stringified(2..=dimension_number_std_primitive_u8)
                         ));
-                        let format_increments_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                            format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let format_increments_token_stream = generate_format_increments_token_stream(1..=dimension_number_std_primitive_u8);
                         quote::quote! {
                             #increments_initialization_token_stream
                             let last_increment = match increment.checked_add(1) {
@@ -1411,7 +1413,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 column,
-                                #(#format_increments_token_stream),*,
+                                #format_increments_token_stream,
                                 self.regular_expression_case.postgreql_syntax(),
                                 last_increment
                             ))
@@ -1467,9 +1469,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             "{{}}({{}}{} @> {{value}})",
                             generate_indexes_stringified(1..=dimension_number_std_primitive_u8_minus_one)
                         ));
-                        let format_increments_token_stream = (1..=dimension_number_std_primitive_u8_minus_one).into_iter().map(|element|{
-                            format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let format_increments_token_stream = generate_format_increments_token_stream(1..=dimension_number_std_primitive_u8_minus_one);
                         quote::quote! {
                             #increments_initialization_token_stream
                             let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
@@ -1482,7 +1482,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 column,
-                                #(#format_increments_token_stream),*
+                                #format_increments_token_stream
                             ))
                         }
                     },
