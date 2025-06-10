@@ -1561,6 +1561,82 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                 )
             };
+            // select 
+            // animal_as_not_null_jsonb_object 
+            // from 
+            //   example 
+            // where 
+            // not exists(
+            //   select 
+            //     1 
+            //   from 
+            //     jsonb_array_elements(
+            //       animal_as_not_null_jsonb_object -> 'doggie_as_not_null_jsonb_object' -> 'column_32fc16eb_2641_4d65_acec_0c7addbfe338' -> 0 -> 0 -> 0
+            //     ) as el 
+            //   where 
+            //     (el) <> '[1,2,3]'::jsonb
+            // )
+            let generate_dimension_position_all_elements_equal_token_stream = |dimension_number: &DimensionNumber| -> (
+                ShouldAddDeclarationOfStructIdentGeneric,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+            ) {
+                let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
+                (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
+                    },
+                    {
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
+                        quote::quote! {
+                            #struct_additional_fields_token_stream
+                            value: crate::NotEmptyUniqueStructVec<T>
+                        }
+                    },
+                    {
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                            range_minus_one.clone()
+                        );
+                        quote::quote! {
+                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        }
+                    },
+                    {
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <> {{value}}))",
+                            generate_indexes_stringified(range_minus_one.clone())
+                        ));
+                        let format_increments_token_stream = generate_format_increments_token_stream(range_minus_one.clone());
+                        quote::quote! {
+                            #increments_initialization_token_stream
+                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                } 
+                            };
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #format_increments_token_stream
+                            ))
+                        }
+                    },
+                    {
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
+                        quote::quote! {
+                            #query_bind_dimension_position_token_stream
+                            query = query.bind(sqlx::types::Json(self.value));
+                            query
+                        }
+                    },
+                )
+            };
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
@@ -1731,56 +1807,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 } => generate_dimension_position_overlaps_with_array_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual { 
                     ident: _
-                } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
-                    quote::quote! {pub value: std::vec::Vec<T>},
-                    quote::quote! {
-                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
-                    },
-                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
-                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
-                ),
+                } => generate_dimension_position_all_elements_equal_token_stream(&DimensionNumber::One),
+                // (
+                //     ShouldAddDeclarationOfStructIdentGeneric::True {
+                //         maybe_additional_traits_token_stream: None
+                //     },
+                //     quote::quote! {pub value: std::vec::Vec<T>},
+                //     quote::quote! {
+                //         value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                //     },
+                //     generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
+                //     query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                // ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual { 
                     ident: _
-                } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
-                    quote::quote! {pub value: std::vec::Vec<T>},
-                    quote::quote! {
-                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
-                    },
-                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
-                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
-                ),
+                } => generate_dimension_position_all_elements_equal_token_stream(&DimensionNumber::Two),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual { 
                     ident: _
-                } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
-                    quote::quote! {pub value: std::vec::Vec<T>},
-                    quote::quote! {
-                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
-                    },
-                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
-                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
-                ),
+                } => generate_dimension_position_all_elements_equal_token_stream(&DimensionNumber::Three),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual { 
                     ident: _
-                } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
-                    quote::quote! {pub value: std::vec::Vec<T>},
-                    quote::quote! {
-                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
-                    },
-                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
-                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
-                ),
+                } => generate_dimension_position_all_elements_equal_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan { 
                     ident: _
                 } => (
