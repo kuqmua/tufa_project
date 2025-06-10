@@ -1256,13 +1256,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
             ) {
                 let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
-                let dimension_number_std_primitive_u8_plus_one = dimension_number_std_primitive_u8.checked_add(1).unwrap();
+                let range = 1..=dimension_number_std_primitive_u8;
+                let range_plus_one = 1..=dimension_number_std_primitive_u8.checked_add(1).unwrap();
                 (
                     ShouldAddDeclarationOfStructIdentGeneric::True {
                         maybe_additional_traits_token_stream: None
                     },
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(1..=dimension_number_std_primitive_u8);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             value: T,
@@ -1270,7 +1271,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     {
                         let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            1..=dimension_number_std_primitive_u8
+                            range.clone()
                         );
                         quote::quote!{
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
@@ -1278,12 +1279,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..=dimension_number_std_primitive_u8_plus_one);
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_plus_one.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                             "{{}}({{}}{} {operator} ${{}})",
-                            generate_indexes_stringified(1..=dimension_number_std_primitive_u8)
+                            generate_indexes_stringified(range.clone())
                         ));
-                        let format_increments_token_stream = generate_format_increments_token_stream(1..=dimension_number_std_primitive_u8_plus_one);
+                        let format_increments_token_stream = generate_format_increments_token_stream(range_plus_one);
                         quote::quote! {
                             #increments_initialization_token_stream
                             Ok(format!(
@@ -1295,7 +1296,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(1..=dimension_number_std_primitive_u8);
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
                             query = query.bind(sqlx::types::Json(self.value));
@@ -1317,11 +1318,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
             ) {
                 let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
-                let dimension_number_std_primitive_u8_plus_one = dimension_number_std_primitive_u8.checked_add(1).unwrap();
+                let range = 1..dimension_number_std_primitive_u8;
+                let range_plus_one = 1..dimension_number_std_primitive_u8.checked_add(1).unwrap();
                 (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(1..dimension_number_std_primitive_u8);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             value: #unsigned_part_of_std_primitive_i32_token_stream
@@ -1329,7 +1331,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     {
                         let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            1..dimension_number_std_primitive_u8
+                            range.clone()
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
@@ -1337,12 +1339,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..dimension_number_std_primitive_u8_plus_one);
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_plus_one.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                             "{{}}(jsonb_array_length({{}}{}) {operator} ${{}})",
-                            generate_indexes_stringified(1..dimension_number_std_primitive_u8)
+                            generate_indexes_stringified(range.clone())
                         ));
-                        let format_increments_token_stream = generate_format_increments_token_stream(1..dimension_number_std_primitive_u8_plus_one);
+                        let format_increments_token_stream = generate_format_increments_token_stream(range_plus_one.clone());
                         quote::quote! {
                             #increments_initialization_token_stream
                             Ok(format!(
@@ -1354,7 +1356,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(1..dimension_number_std_primitive_u8);
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
                             query = query.bind(self.value);
@@ -1373,10 +1375,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
             ) {
                 let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
+                let range = 1..=dimension_number_std_primitive_u8;
                 (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(1..=dimension_number_std_primitive_u8);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             pub regular_expression_case: crate::RegularExpressionCase,
@@ -1385,7 +1388,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     {
                         let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            1..=dimension_number_std_primitive_u8
+                            range.clone()
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
@@ -1394,12 +1397,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..=dimension_number_std_primitive_u8);
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                             "{{}}((trim(both '\\\"' from ({{}}{}->>${{}})::text) {{}} ${{}}))",
                             generate_indexes_stringified(2..=dimension_number_std_primitive_u8)
                         ));
-                        let format_increments_token_stream = generate_format_increments_token_stream(1..=dimension_number_std_primitive_u8);
+                        let format_increments_token_stream = generate_format_increments_token_stream(range.clone());
                         quote::quote! {
                             #increments_initialization_token_stream
                             let last_increment = match increment.checked_add(1) {
@@ -1422,7 +1425,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(1..=dimension_number_std_primitive_u8);
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range.clone());
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
                             query = query.bind(self.value.to_string());
@@ -1438,14 +1441,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
-                let dimension_number_std_primitive_u8_minus_one = dimension_number_std_primitive_u8.checked_sub(1).unwrap();
+                let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
                 (
                     ShouldAddDeclarationOfStructIdentGeneric::True {
                         maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
                     },
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(1..=dimension_number_std_primitive_u8_minus_one);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             value: crate::NotEmptyUniqueStructVec<T>
@@ -1453,7 +1455,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     {
                         let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            1..=dimension_number_std_primitive_u8_minus_one
+                            range_minus_one.clone()
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
@@ -1461,12 +1463,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..=dimension_number_std_primitive_u8_minus_one);
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                             "{{}}({{}}{} @> {{value}})",
-                            generate_indexes_stringified(1..=dimension_number_std_primitive_u8_minus_one)
+                            generate_indexes_stringified(range_minus_one.clone())
                         ));
-                        let format_increments_token_stream = generate_format_increments_token_stream(1..=dimension_number_std_primitive_u8_minus_one);
+                        let format_increments_token_stream = generate_format_increments_token_stream(range_minus_one.clone());
                         quote::quote! {
                             #increments_initialization_token_stream
                             let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
@@ -1484,7 +1486,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(1..=dimension_number_std_primitive_u8_minus_one);
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
                             query = query.bind(sqlx::types::Json(self.value));
