@@ -1233,6 +1233,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {#(#content_token_stream),*}
             }
+            fn generate_query_bind_dimension_position_token_stream<T>(value: T) -> proc_macro2::TokenStream
+            where
+                T: IntoIterator<Item = std::primitive::u8>,
+            {
+                let content_token_stream = value.into_iter().map(|element|{
+                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                    quote::quote! {
+                        query = query.bind(self.#dimension_number_position_token_stream);
+                    }
+                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                quote::quote! {#(#content_token_stream)*}
+            }
             let generate_dimension_position_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1283,14 +1295,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let query_bind_dimension_position_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                query = query.bind(self.#dimension_number_position_token_stream);
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(1..=dimension_number_std_primitive_u8);
                         quote::quote! {
-                            #(#query_bind_dimension_position_token_stream)*
+                            #query_bind_dimension_position_token_stream
                             query = query.bind(sqlx::types::Json(self.value));
                             query
                         }
@@ -1347,14 +1354,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let query_bind_dimension_position_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
-                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                query = query.bind(self.#dimension_number_position_token_stream);
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(1..dimension_number_std_primitive_u8);
                         quote::quote! {
-                            #(#query_bind_dimension_position_token_stream)*
+                            #query_bind_dimension_position_token_stream
                             query = query.bind(self.value);
                             query
                         }
@@ -1420,14 +1422,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let query_bind_dimension_position_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                query = query.bind(self.#dimension_number_position_token_stream);
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(1..=dimension_number_std_primitive_u8);
                         quote::quote! {
-                            #(#query_bind_dimension_position_token_stream)*
+                            #query_bind_dimension_position_token_stream
                             query = query.bind(self.value.to_string());
                             query
                         }
@@ -1487,14 +1484,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let query_bind_dimension_position_token_stream = (1..=dimension_number_std_primitive_u8_minus_one).into_iter().map(|element|{
-                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                query = query.bind(self.#dimension_number_position_token_stream);
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(1..=dimension_number_std_primitive_u8_minus_one);
                         quote::quote! {
-                            #(#query_bind_dimension_position_token_stream)*
+                            #query_bind_dimension_position_token_stream
                             query = query.bind(sqlx::types::Json(self.value));
                             query
                         }
