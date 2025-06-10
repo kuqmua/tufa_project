@@ -1040,6 +1040,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             Between,
             In,
             DimensionOneOverlapsWithArray,
+            DimensionTwoOverlapsWithArray,
+            DimensionThreeOverlapsWithArray,
+            DimensionFourOverlapsWithArray,
         }
         impl std::convert::TryFrom<&postgresql_crud_macros_common::PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilterInitializedWithTryNew {
             type Error = ();
@@ -1110,6 +1113,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneOverlapsWithArray {
                         ident: _
                     } => Ok(Self::DimensionOneOverlapsWithArray),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoOverlapsWithArray {
+                        ident: _
+                    } => Ok(Self::DimensionTwoOverlapsWithArray),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeOverlapsWithArray {
+                        ident: _
+                    } => Ok(Self::DimensionThreeOverlapsWithArray),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
+                        ident: _
+                    } => Ok(Self::DimensionFourOverlapsWithArray),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual {
                         ident: _
                     } => Err(()),
@@ -1699,6 +1711,45 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"}),
                     query_bind_sqlx_types_json_self_value_token_stream.clone(),
                 ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoOverlapsWithArray { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    quote::quote! {value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"}),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeOverlapsWithArray { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    quote::quote! {value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"}),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    quote::quote! {value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists (select 1 from jsonb_array_elements_text({}) as e1 join jsonb_array_elements_text(${}) as e2 on e1.value = e2.value))"}),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual { 
                     ident: _
                 } => (
@@ -1842,6 +1893,114 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &vec![&value_std_vec_vec_t_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionOneOverlapsWithArray => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote! {
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                NotUnique {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &quote::quote! {: std::cmp::PartialEq + Clone},
+                            &quote::quote! {value: std::vec::Vec<T>},
+                            &quote::quote! {
+                                if value.is_empty() {
+                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                                {
+                                    let mut acc = vec![];
+                                    for element in &value {
+                                        if !acc.contains(&element) {
+                                            acc.push(element);
+                                        } else {
+                                            return Err(#ident_try_new_error_named::NotUnique {
+                                                value: element.clone(),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                Ok(Self { logical_operator, value })
+                            },
+                            Some(quote::quote! {+ std::cmp::PartialEq + Clone}),
+                            &vec![&value_std_vec_vec_t_field],
+                        ),
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionTwoOverlapsWithArray => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote! {
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                NotUnique {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &quote::quote! {: std::cmp::PartialEq + Clone},
+                            &quote::quote! {value: std::vec::Vec<T>},
+                            &quote::quote! {
+                                if value.is_empty() {
+                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                                {
+                                    let mut acc = vec![];
+                                    for element in &value {
+                                        if !acc.contains(&element) {
+                                            acc.push(element);
+                                        } else {
+                                            return Err(#ident_try_new_error_named::NotUnique {
+                                                value: element.clone(),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                Ok(Self { logical_operator, value })
+                            },
+                            Some(quote::quote! {+ std::cmp::PartialEq + Clone}),
+                            &vec![&value_std_vec_vec_t_field],
+                        ),
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionThreeOverlapsWithArray => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote! {
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                NotUnique {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &quote::quote! {: std::cmp::PartialEq + Clone},
+                            &quote::quote! {value: std::vec::Vec<T>},
+                            &quote::quote! {
+                                if value.is_empty() {
+                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                                {
+                                    let mut acc = vec![];
+                                    for element in &value {
+                                        if !acc.contains(&element) {
+                                            acc.push(element);
+                                        } else {
+                                            return Err(#ident_try_new_error_named::NotUnique {
+                                                value: element.clone(),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                Ok(Self { logical_operator, value })
+                            },
+                            Some(quote::quote! {+ std::cmp::PartialEq + Clone}),
+                            &vec![&value_std_vec_vec_t_field],
+                        ),
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionFourOverlapsWithArray => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote! {
                                 IsEmpty {
