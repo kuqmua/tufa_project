@@ -36,7 +36,24 @@ POST http://127.0.0.1:8080/example/create_many HTTP/1.1
 content-type: application/json
 commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
-
+[
+  {
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
+    "animal_as_not_null_jsonb_object": {
+      "doggie_as_not_null_jsonb_object": {
+        "column_32fc16eb_2641_4d65_acec_0c7addbfe338": [
+          [
+            [
+              [
+                1,2,3,4,5
+              ]
+            ]
+          ]
+        ]
+      }
+    }
+  }
+]
 
 ###
  
@@ -64,7 +81,255 @@ POST http://127.0.0.1:8080/example/read_many HTTP/1.1
 content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
-
+{
+  # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  "animal_as_not_null_jsonb_object": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "DoggieAsNotNullJsonbObject": {
+          "logical_operator": "Or",
+          "value": [
+            {
+              "Column32Fc16Eb26414D65Acec0C7Addbfe338": {
+                "logical_operator": "Or",
+                "value": [
+                  # {
+                  #   "Equal": {
+                  #     "logical_operator": "Or",
+                  #     "value": [
+                  #       [
+                  #         [
+                  #           [
+                  #             0
+                  #           ]
+                  #         ]
+                  #       ]
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOnePositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "value": [
+                  #       [
+                  #         [
+                  #           0
+                  #         ]
+                  #       ]
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionTwoPositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "value": [
+                  #       [
+                  #         0
+                  #       ]
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionThreePositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "value": [
+                  #       0
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionFourPositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "dimension4_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOneLengthEqual": {
+                  #     "logical_operator": "Or",
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionTwoLengthEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionThreeLengthEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionFourLengthEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOneLengthMoreThan": {
+                  #     "logical_operator": "Or",
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionTwoLengthMoreThan": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionThreeLengthMoreThan": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionFourLengthMoreThan": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionFourContainsAllElementsOfArray": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "value": [
+                  #       0
+                  #     ]
+                  #   }
+                  # },
+                  {
+                    "DimensionFourOverlapsWithArray": {
+                      "logical_operator": "Or",
+                      "dimension1_position": 0,
+                      "dimension2_position": 0,
+                      "dimension3_position": 0,
+                      "value": [
+                        4,2
+                      ]
+                    }
+                  }
+                  # ,
+                  # {
+                  #   "DimensionFourPositionGreaterThan": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "dimension4_position": 0,
+                  #     "value": 0
+                  #   }
+                  # }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "select": [
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
+    {
+      "animal_as_not_null_jsonb_object": [
+        {
+          "doggie_as_not_null_jsonb_object": [
+            {
+              "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
+                "dimension1_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                },
+                "dimension2_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                },
+                "dimension3_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                },
+                "dimension4_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "order_by": {
+    "column": {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
+    "order": "asc"
+  },
+  "pagination": {
+    "limit": 3,
+    "offset": 0
+  }
+}
 
 ###
 
