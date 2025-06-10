@@ -1192,6 +1192,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {#(#content_token_stream)*}
             }
+            fn generate_increments_initialization_token_stream<T>(value: T) -> proc_macro2::TokenStream
+            where
+                T: IntoIterator<Item = std::primitive::u8>,
+            {
+                let content_token_stream = value.into_iter().map(|element|{
+                    let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
+                    let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
+                    quote::quote! {
+                        let #increment_number_token_stream = match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                value
+                            },
+                            None => {
+                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                            },
+                        };
+                    }
+                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                quote::quote! {#(#content_token_stream)*}
+            }
             let generate_dimension_position_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1225,20 +1246,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let increments_initialization_token_stream = (1..=dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
-                            let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                let #increment_number_token_stream = match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        value
-                                    },
-                                    None => {
-                                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                    },
-                                };
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..=dimension_number_std_primitive_u8_plus_one);
                         let format_handle_token_stream = {
                             let indexes = (1..=dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
                                 acc.push_str(
@@ -1252,7 +1260,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                         quote::quote! {
-                            #(#increments_initialization_token_stream)*
+                            // #(#increments_initialization_token_stream)*
+                            #increments_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1309,20 +1318,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let increments_initialization_token_stream = (1..dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
-                            let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                let #increment_number_token_stream = match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        value
-                                    },
-                                    None => {
-                                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                    },
-                                };
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..dimension_number_std_primitive_u8_plus_one);
                         let format_handle_token_stream = {
                             let indexes = (1..dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
                                 acc.push_str(
@@ -1336,7 +1332,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                         quote::quote! {
-                            #(#increments_initialization_token_stream)*
+                            #increments_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1391,20 +1387,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let increments_initialization_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                            let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                let #increment_number_token_stream = match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        value
-                                    },
-                                    None => {
-                                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                    },
-                                };
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..=dimension_number_std_primitive_u8);
                         let format_handle_token_stream = {
                             let indexes = (2..=dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
                                 acc.push_str(
@@ -1420,7 +1403,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                         quote::quote! {
-                            #(#increments_initialization_token_stream)*
+                            #increments_initialization_token_stream
                             let last_increment = match increment.checked_add(1) {
                                 Some(value) => {
                                     *increment = value;
@@ -1485,20 +1468,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let increments_initialization_token_stream = (1..=dimension_number_std_primitive_u8_minus_one).into_iter().map(|element|{
-                            let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                let #increment_number_token_stream = match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        value
-                                    },
-                                    None => {
-                                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                    },
-                                };
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..=dimension_number_std_primitive_u8_minus_one);
                         let format_handle_token_stream = {
                             let indexes = (1..=dimension_number_std_primitive_u8_minus_one).into_iter().fold(std::string::String::new(), |mut acc, _| {
                                 acc.push_str(
@@ -1512,7 +1482,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                         quote::quote! {
-                            #(#increments_initialization_token_stream)*
+                            #increments_initialization_token_stream
                             let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
                                 Ok(value) => value,
                                 Err(error) => {
