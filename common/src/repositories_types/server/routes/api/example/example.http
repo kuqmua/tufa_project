@@ -41,8 +41,14 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
-        "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": [
-          4,2,3,7
+        "column_32fc16eb_2641_4d65_acec_0c7addbfe338": [
+          [
+            [
+              [
+                4,1,2,3
+              ]
+            ]
+          ]
         ]
       }
     }
@@ -116,14 +122,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           "logical_operator": "Or",
           "value": [
             {
-              "Column0F498E7954404C9D90CfC32F9B7D4005": {
+              "Column32Fc16Eb26414D65Acec0C7Addbfe338": {
                 "logical_operator": "Or",
                 "value": [
                   # {
                   #   "Equal": {
                   #     "logical_operator": "Or",
                   #     "value": [
-                  #       0
+                  #       [
+                  #         [
+                  #           [
+                  #             0
+                  #           ]
+                  #         ]
+                  #       ]
                   #     ]
                   #   }
                   # },
@@ -131,6 +143,45 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   "DimensionOnePositionEqual": {
                   #     "logical_operator": "Or",
                   #     "dimension1_position": 0,
+                  #     "value": [
+                  #       [
+                  #         [
+                  #           0
+                  #         ]
+                  #       ]
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionTwoPositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "value": [
+                  #       [
+                  #         0
+                  #       ]
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionThreePositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "value": [
+                  #       0
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionFourPositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "dimension4_position": 0,
                   #     "value": 0
                   #   }
                   # },
@@ -141,24 +192,78 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   }
                   # },
                   # {
+                  #   "DimensionTwoLengthEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionThreeLengthEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionFourLengthEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
                   #   "DimensionOneLengthMoreThan": {
                   #     "logical_operator": "Or",
                   #     "value": 0
                   #   }
                   # },
+                  # {
+                  #   "DimensionTwoLengthMoreThan": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionThreeLengthMoreThan": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionFourLengthMoreThan": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
                   {
-                    "DimensionOneContainsAllElementsOfArray": {
+                    "DimensionFourContainsAllElementsOfArray": {
                       "logical_operator": "Or",
+                      "dimension1_position": 0,
+                      "dimension2_position": 0,
+                      "dimension3_position": 0,
                       "value": [
-                        2,3
+                        1,2,3
                       ]
                     }
                   }
                   # ,
                   # {
-                  #   "DimensionOnePositionGreaterThan": {
+                  #   "DimensionFourPositionGreaterThan": {
                   #     "logical_operator": "Or",
                   #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "dimension4_position": 0,
                   #     "value": 0
                   #   }
                   # }
@@ -179,8 +284,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         {
           "doggie_as_not_null_jsonb_object": [
             {
-              "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": {
+              "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
                 "dimension1_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                },
+                "dimension2_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                },
+                "dimension3_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                },
+                "dimension4_pagination": {
                   "limit": 3,
                   "offset": 0
                 }
