@@ -1213,6 +1213,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {#(#content_token_stream)*}
             }
+            fn generate_indexes_stringified<T>(value: T) -> std::string::String
+            where
+                T: IntoIterator<Item = std::primitive::u8>,
+            {
+                value.into_iter().fold(std::string::String::new(), |mut acc, _| {
+                    acc.push_str(
+                        &"->${}"
+                    );
+                    acc
+                })
+            }
             let generate_dimension_position_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1247,15 +1258,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..=dimension_number_std_primitive_u8_plus_one);
-                        let format_handle_token_stream = {
-                            let indexes = (1..=dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
-                                acc.push_str(
-                                    &"->${}"
-                                );
-                                acc
-                            });
-                            generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{indexes} {operator} ${{}})"))
-                        };
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}({{}}{} {operator} ${{}})",
+                            generate_indexes_stringified(1..=dimension_number_std_primitive_u8)
+                        ));
                         let format_increments_token_stream = (1..=dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
                             format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
@@ -1319,15 +1325,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..dimension_number_std_primitive_u8_plus_one);
-                        let format_handle_token_stream = {
-                            let indexes = (1..dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
-                                acc.push_str(
-                                    &"->${}"
-                                );
-                                acc
-                            });
-                            generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{indexes}) {operator} ${{}})"))
-                        };
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}(jsonb_array_length({{}}{}) {operator} ${{}})",
+                            generate_indexes_stringified(1..dimension_number_std_primitive_u8)
+                        ));
                         let format_increments_token_stream = (1..dimension_number_std_primitive_u8_plus_one).into_iter().map(|element|{
                             format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
@@ -1388,17 +1389,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..=dimension_number_std_primitive_u8);
-                        let format_handle_token_stream = {
-                            let indexes = (2..=dimension_number_std_primitive_u8).into_iter().fold(std::string::String::new(), |mut acc, _| {
-                                acc.push_str(
-                                    &"->${}"
-                                );
-                                acc
-                            });
-                            generate_quotes::double_quotes_token_stream(&format!(
-                                "{{}}((trim(both '\\\"' from ({{}}{indexes}->>${{}})::text) {{}} ${{}}))"
-                            ))
-                        };
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}((trim(both '\\\"' from ({{}}{}->>${{}})::text) {{}} ${{}}))",
+                            generate_indexes_stringified(2..=dimension_number_std_primitive_u8)
+                        ));
                         let format_increments_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
                             format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
@@ -1469,15 +1463,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(1..=dimension_number_std_primitive_u8_minus_one);
-                        let format_handle_token_stream = {
-                            let indexes = (1..=dimension_number_std_primitive_u8_minus_one).into_iter().fold(std::string::String::new(), |mut acc, _| {
-                                acc.push_str(
-                                    &"->${}"
-                                );
-                                acc
-                            });
-                            generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{indexes} @> {{value}})"))
-                        };
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}({{}}{} @> {{value}})",
+                            generate_indexes_stringified(1..=dimension_number_std_primitive_u8_minus_one)
+                        ));
                         let format_increments_token_stream = (1..=dimension_number_std_primitive_u8_minus_one).into_iter().map(|element|{
                             format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
                         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
