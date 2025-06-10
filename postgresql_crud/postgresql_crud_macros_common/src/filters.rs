@@ -212,7 +212,7 @@ pub enum PostgresqlJsonTypeFilter {
         ident: proc_macro2::TokenStream,
     },
     // ContainedInArray,
-    OverlapsWithArray {
+    DimensionOneOverlapsWithArray {
         ident: proc_macro2::TokenStream,
     },
     AllElementsEqual {
@@ -291,9 +291,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourContainsAllElementsOfArray {
                 ident: _
             } => &naming::DimensionFourContainsAllElementsOfArrayUpperCamelCase,
-            Self::OverlapsWithArray {
+            Self::DimensionOneOverlapsWithArray {
                 ident: _
-            } => &naming::OverlapsWithArrayUpperCamelCase,
+            } => &naming::DimensionOneOverlapsWithArrayUpperCamelCase,
             Self::AllElementsEqual {
                 ident: _
             } => &naming::AllElementsEqualUpperCamelCase,
@@ -340,7 +340,7 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionTwoContainsAllElementsOfArray,
     DimensionThreeContainsAllElementsOfArray,
     DimensionFourContainsAllElementsOfArray,
-    OverlapsWithArray,
+    DimensionOneOverlapsWithArray,
     AllElementsEqual,
     ContainsElementGreaterThan,
     AllElementsGreaterThan,
@@ -367,7 +367,7 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionTwoContainsAllElementsOfArray => false,
             Self::DimensionThreeContainsAllElementsOfArray => false,
             Self::DimensionFourContainsAllElementsOfArray => false,
-            Self::OverlapsWithArray => false,
+            Self::DimensionOneOverlapsWithArray => false,
             Self::AllElementsEqual => false,
             Self::ContainsElementGreaterThan => true,
             Self::AllElementsGreaterThan => true,
@@ -441,9 +441,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionFourContainsAllElementsOfArray {
                 ident: _
             } => Ok(Self::DimensionFourContainsAllElementsOfArray),
-            PostgresqlJsonTypeFilter::OverlapsWithArray {
+            PostgresqlJsonTypeFilter::DimensionOneOverlapsWithArray {
                 ident: _
-            } => Ok(Self::OverlapsWithArray),
+            } => Ok(Self::DimensionOneOverlapsWithArray),
             PostgresqlJsonTypeFilter::AllElementsEqual {
                 ident: _
             } => Ok(Self::AllElementsEqual),

@@ -1039,7 +1039,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         enum PostgresqlJsonTypeFilterInitializedWithTryNew {
             Between,
             In,
-            OverlapsWithArray,
+            DimensionOneOverlapsWithArray,
         }
         impl std::convert::TryFrom<&postgresql_crud_macros_common::PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilterInitializedWithTryNew {
             type Error = ();
@@ -1107,9 +1107,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ident: _
                     } => Err(()),
                     // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainedInArray => todo!(),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray {
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneOverlapsWithArray {
                         ident: _
-                    } => Ok(Self::OverlapsWithArray),
+                    } => Ok(Self::DimensionOneOverlapsWithArray),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual {
                         ident: _
                     } => Err(()),
@@ -1686,7 +1686,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => generate_dimension_position_contains_all_elements_of_array_token_stream(&DimensionNumber::Four),
                 // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainedInArray => todo!(),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray { 
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneOverlapsWithArray { 
                     ident: _
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True {
@@ -1841,7 +1841,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote! {+ std::cmp::PartialOrd + Clone}),
                             &vec![&value_std_vec_vec_t_field],
                         ),
-                        PostgresqlJsonTypeFilterInitializedWithTryNew::OverlapsWithArray => (
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionOneOverlapsWithArray => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote! {
                                 IsEmpty {
