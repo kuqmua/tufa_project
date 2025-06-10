@@ -7,6 +7,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let std_vec_vec_t_token_stream = &quote::quote! {std::vec::Vec<T>};
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
     //todo reuse ?
+    fn generate_core_default_default_default_token_stream() -> proc_macro2::TokenStream {
+        quote::quote!{::core::default::Default::default()}
+    }
     let core_default_default_default_token_stream = quote::quote! {
         ::core::default::Default::default()
     };
@@ -1163,15 +1166,28 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 }
             }
-            fn generate_struct_additional_fields_token_stream<T>(collection: T) -> proc_macro2::TokenStream
+            fn generate_struct_additional_fields_token_stream<T>(value: T) -> proc_macro2::TokenStream
             where
                 T: IntoIterator<Item = std::primitive::u8>,
             {
                 let unsigned_part_of_std_primitive_i32_token_stream = generate_unsigned_part_of_std_primitive_i32_token_stream();
-                let content_token_stream = collection.into_iter().map(|element|{
+                let content_token_stream = value.into_iter().map(|element|{
                     let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
                     quote::quote! {
                         #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
+                    }
+                }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                quote::quote! {#(#content_token_stream)*}
+            }
+            fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream<T>(value: T) -> proc_macro2::TokenStream
+            where
+                T: IntoIterator<Item = std::primitive::u8>,
+            {
+                let content_token_stream = value.into_iter().map(|element|{
+                    let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
+                    let core_default_default_default_token_stream = generate_core_default_default_default_token_stream();
+                    quote::quote! {
+                        #dimension_number_position_token_stream: #core_default_default_default_token_stream,
                     }
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {#(#content_token_stream)*}
@@ -1200,14 +1216,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                #dimension_number_position_token_stream: #core_default_default_default_token_stream,
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                            1..=dimension_number_std_primitive_u8
+                        );
                         quote::quote!{
-                            #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
+                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                             value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         }
                     },
@@ -1287,14 +1300,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..dimension_number_std_primitive_u8).into_iter().map(|element|{
-                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                #dimension_number_position_token_stream: #core_default_default_default_token_stream,
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                            1..dimension_number_std_primitive_u8
+                        );
                         quote::quote! {
-                            #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
+                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                             value: #core_default_default_default_token_stream
                         }
                     },
@@ -1371,14 +1381,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8).into_iter().map(|element|{
-                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                #dimension_number_position_token_stream: #core_default_default_default_token_stream,
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                            1..=dimension_number_std_primitive_u8
+                        );
                         quote::quote! {
-                            #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
+                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                             regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                             value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         }
@@ -1469,14 +1476,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = (1..=dimension_number_std_primitive_u8_minus_one).into_iter().map(|element|{
-                            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-                            quote::quote! {
-                                #dimension_number_position_token_stream: #core_default_default_default_token_stream,
-                            }
-                        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                            1..=dimension_number_std_primitive_u8_minus_one
+                        );
                         quote::quote! {
-                            #(#impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream)*
+                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                             value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
