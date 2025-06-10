@@ -1124,7 +1124,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
                         ident: _
                     } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual {
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
                         ident: _
                     } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan {
@@ -1720,7 +1729,46 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray { 
                     ident: _
                 } => generate_dimension_position_overlaps_with_array_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual { 
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    quote::quote! {pub value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    quote::quote! {pub value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    quote::quote! {pub value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(not exists(select 1 from jsonb_array_elements({}) as el where (el) <> ${}))"}),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual { 
                     ident: _
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True {

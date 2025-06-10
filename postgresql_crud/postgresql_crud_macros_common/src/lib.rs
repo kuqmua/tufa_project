@@ -135,7 +135,16 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
                     ident,
                 } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::AllElementsEqual {
+                crate::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
                     ident,
                 } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::ContainsElementGreaterThan {
