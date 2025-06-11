@@ -265,6 +265,9 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionThreeContainsElementRegularExpression,
     DimensionFourContainsElementRegularExpression,
     DimensionOneAllElementsRegularExpression,
+    DimensionTwoAllElementsRegularExpression,
+    DimensionThreeAllElementsRegularExpression,
+    DimensionFourAllElementsRegularExpression,
 }
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -383,6 +386,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionThreeContainsElementRegularExpression => &naming::DimensionThreeContainsElementRegularExpressionUpperCamelCase,
             Self::DimensionFourContainsElementRegularExpression => &naming::DimensionFourContainsElementRegularExpressionUpperCamelCase,
             Self::DimensionOneAllElementsRegularExpression => &naming::DimensionOneAllElementsRegularExpressionUpperCamelCase,
+            Self::DimensionTwoAllElementsRegularExpression => &naming::DimensionTwoAllElementsRegularExpressionUpperCamelCase,
+            Self::DimensionThreeAllElementsRegularExpression => &naming::DimensionThreeAllElementsRegularExpressionUpperCamelCase,
+            Self::DimensionFourAllElementsRegularExpression => &naming::DimensionFourAllElementsRegularExpressionUpperCamelCase,
         }
     }
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
@@ -592,6 +598,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionTwoAllElementsRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionThreeAllElementsRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionFourAllElementsRegularExpression => Err(()),
         }
     }
 }
