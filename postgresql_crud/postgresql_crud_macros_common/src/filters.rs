@@ -260,7 +260,7 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionFourAllElementsGreaterThan {
         ident: proc_macro2::TokenStream,
     },
-    ContainsElementRegularExpression,
+    DimensionOneContainsElementRegularExpression,
     AllElementsRegularExpression,
 }
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
@@ -375,7 +375,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourAllElementsGreaterThan {
                 ident: _
             } => &naming::DimensionFourAllElementsGreaterThanUpperCamelCase,
-            Self::ContainsElementRegularExpression => &naming::ContainsElementRegularExpressionUpperCamelCase,
+            Self::DimensionOneContainsElementRegularExpression => &naming::DimensionOneContainsElementRegularExpressionUpperCamelCase,
             Self::AllElementsRegularExpression => &naming::AllElementsRegularExpressionUpperCamelCase,
         }
     }
@@ -585,7 +585,7 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
                 ident: _
             } => Ok(Self::DimensionFourAllElementsGreaterThan),
-            PostgresqlJsonTypeFilter::ContainsElementRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::AllElementsRegularExpression => Err(()),
         }
     }

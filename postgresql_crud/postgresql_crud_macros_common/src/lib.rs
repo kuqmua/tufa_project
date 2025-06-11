@@ -171,7 +171,7 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
                     ident,
                 } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::ContainsElementRegularExpression => None,
+                crate::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::AllElementsRegularExpression => None,
             };
             let type_token_stream = match option_type_token_stream {
