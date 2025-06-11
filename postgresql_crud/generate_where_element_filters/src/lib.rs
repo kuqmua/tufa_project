@@ -1136,7 +1136,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
                         ident: _
                     } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan {
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
                         ident: _
                     } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan {
@@ -1805,7 +1805,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual { 
                     ident: _
                 } => generate_dimension_position_all_elements_equal_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan { 
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan { 
                     ident: _
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True {

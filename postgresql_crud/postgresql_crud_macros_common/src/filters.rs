@@ -236,7 +236,7 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionFourAllElementsEqual {
         ident: proc_macro2::TokenStream,
     },
-    ContainsElementGreaterThan {
+    DimensionOneContainsElementGreaterThan {
         ident: proc_macro2::TokenStream,
     },
     AllElementsGreaterThan {
@@ -333,9 +333,9 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourAllElementsEqual {
                 ident: _
             } => &naming::DimensionFourAllElementsEqualUpperCamelCase,
-            Self::ContainsElementGreaterThan {
+            Self::DimensionOneContainsElementGreaterThan {
                 ident: _
-            } => &naming::ContainsElementGreaterThanUpperCamelCase,
+            } => &naming::DimensionOneContainsElementGreaterThanUpperCamelCase,
             Self::AllElementsGreaterThan {
                 ident: _
             } => &naming::AllElementsGreaterThanUpperCamelCase,
@@ -384,7 +384,7 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionTwoAllElementsEqual,
     DimensionThreeAllElementsEqual,
     DimensionFourAllElementsEqual,
-    ContainsElementGreaterThan,
+    DimensionOneContainsElementGreaterThan,
     AllElementsGreaterThan,
     AllElementsCaseSensitiveRegularExpression,
     AllElementsCaseInsensitiveRegularExpression,
@@ -417,7 +417,7 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionTwoAllElementsEqual => false,
             Self::DimensionThreeAllElementsEqual => false,
             Self::DimensionFourAllElementsEqual => false,
-            Self::ContainsElementGreaterThan => true,
+            Self::DimensionOneContainsElementGreaterThan => true,
             Self::AllElementsGreaterThan => true,
             Self::AllElementsCaseSensitiveRegularExpression => true,
             Self::AllElementsCaseInsensitiveRegularExpression => true,
@@ -513,9 +513,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
                 ident: _
             } => Ok(Self::DimensionFourAllElementsEqual),
-            PostgresqlJsonTypeFilter::ContainsElementGreaterThan {
+            PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
                 ident: _
-            } => Ok(Self::ContainsElementGreaterThan),
+            } => Ok(Self::DimensionOneContainsElementGreaterThan),
             PostgresqlJsonTypeFilter::AllElementsGreaterThan {
                 ident: _
             } => Ok(Self::AllElementsGreaterThan),
