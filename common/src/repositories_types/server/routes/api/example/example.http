@@ -45,7 +45,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
           [
             [
               [
-                1,2,3,4,5
+                4,4,4,4,4
               ]
             ]
           ]
@@ -273,9 +273,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                       "dimension1_position": 0,
                       "dimension2_position": 0,
                       "dimension3_position": 0,
-                      "value": [
-                        7,6,9
-                      ]
+                      "value": 4
                     }
                   }
                   # ,
