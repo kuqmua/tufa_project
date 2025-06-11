@@ -1139,6 +1139,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
                         ident: _
                     } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {
+                        ident: _
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsGreaterThan {
                         ident: _
                     } => Err(()),
@@ -1806,6 +1815,45 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => generate_dimension_position_all_elements_equal_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    quote::quote! {pub value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))"}),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    quote::quote! {pub value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))"}),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    quote::quote! {pub value: std::vec::Vec<T>},
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream],
+                    },
+                    generate_query_part_one_value_token_stream(&quote::quote! {"{}(exists(select 1 from jsonb_array_elements({}) as el where (el) > ${}))"}),
+                    query_bind_sqlx_types_json_self_value_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan { 
                     ident: _
                 } => (
                     ShouldAddDeclarationOfStructIdentGeneric::True {
