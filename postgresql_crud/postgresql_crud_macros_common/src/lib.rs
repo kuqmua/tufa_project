@@ -175,7 +175,7 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => None,
-                crate::PostgresqlJsonTypeFilter::AllElementsRegularExpression => None,
+                crate::PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => None,
             };
             let type_token_stream = match option_type_token_stream {
                 Some(value) => quote::quote!{<#value>},

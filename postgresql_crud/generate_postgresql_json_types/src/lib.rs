@@ -1390,7 +1390,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         let mut filters = common_array_dimension1_postgresql_json_type_filters.clone();
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression);
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression);
-                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsRegularExpression);
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression);
                                         filters
                                     }
                                 }

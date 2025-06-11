@@ -1164,7 +1164,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => Err(()),
-                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsRegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => Err(()),
                 }
             }
         }
@@ -2060,7 +2060,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
                     &DimensionNumber::Four
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsRegularExpression => (
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     regular_expression_case_and_value_declaration_token_stream.clone(),
                     regular_expression_case_and_value_default_initialization_token_stream.clone(),

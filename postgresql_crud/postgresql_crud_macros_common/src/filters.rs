@@ -264,7 +264,7 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoContainsElementRegularExpression,
     DimensionThreeContainsElementRegularExpression,
     DimensionFourContainsElementRegularExpression,
-    AllElementsRegularExpression,
+    DimensionOneAllElementsRegularExpression,
 }
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -382,7 +382,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoContainsElementRegularExpression => &naming::DimensionTwoContainsElementRegularExpressionUpperCamelCase,
             Self::DimensionThreeContainsElementRegularExpression => &naming::DimensionThreeContainsElementRegularExpressionUpperCamelCase,
             Self::DimensionFourContainsElementRegularExpression => &naming::DimensionFourContainsElementRegularExpressionUpperCamelCase,
-            Self::AllElementsRegularExpression => &naming::AllElementsRegularExpressionUpperCamelCase,
+            Self::DimensionOneAllElementsRegularExpression => &naming::DimensionOneAllElementsRegularExpressionUpperCamelCase,
         }
     }
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
@@ -434,8 +434,6 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionTwoAllElementsGreaterThan,
     DimensionThreeAllElementsGreaterThan,
     DimensionFourAllElementsGreaterThan,
-    AllElementsCaseSensitiveRegularExpression,
-    AllElementsCaseInsensitiveRegularExpression,
 }
 impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
     //todo maybe not need
@@ -473,8 +471,6 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionTwoAllElementsGreaterThan => true,
             Self::DimensionThreeAllElementsGreaterThan => true,
             Self::DimensionFourAllElementsGreaterThan => true,
-            Self::AllElementsCaseSensitiveRegularExpression => true,
-            Self::AllElementsCaseInsensitiveRegularExpression => true,
         }
     }
 }
@@ -595,7 +591,7 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => Err(()),
-            PostgresqlJsonTypeFilter::AllElementsRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => Err(()),
         }
     }
 }
