@@ -45,7 +45,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
           [
             [
               [
-                99
+                4,5,6,7,8,9,10,11
               ]
             ]
           ]
@@ -319,13 +319,21 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": 0
                   #   }
                   # },
+                  # {
+                  #   "DimensionFourContainsElementGreaterThan": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "dimension2_position": 0,
+                  #     "dimension3_position": 0,
+                  #     "value": 0
+                  #   }
+                  # },
                   {
-                    "DimensionFourContainsElementGreaterThan": {
+                    "DimensionFourAllElementsGreaterThan": {
                       "logical_operator": "Or",
-                      "dimension1_position": 0,
-                      "dimension2_position": 0,
-                      "dimension3_position": 0,
-                      "value": 6
+                      "value": [
+                        9
+                      ]
                     }
                   }
                 ]
@@ -347,19 +355,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             {
               "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
                 "dimension1_pagination": {
-                  "limit": 3,
+                  "limit": 30,
                   "offset": 0
                 },
                 "dimension2_pagination": {
-                  "limit": 3,
+                  "limit": 30,
                   "offset": 0
                 },
                 "dimension3_pagination": {
-                  "limit": 3,
+                  "limit": 30,
                   "offset": 0
                 },
                 "dimension4_pagination": {
-                  "limit": 3,
+                  "limit": 30,
                   "offset": 0
                 }
               }
@@ -376,7 +384,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "order": "asc"
   },
   "pagination": {
-    "limit": 3,
+    "limit": 30,
     "offset": 0
   }
 }

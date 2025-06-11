@@ -1380,6 +1380,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
                                             ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone()
                                         });
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
+                                            ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone()
+                                        });
                                         filters
                                     },
                                     PostgresqlJsonTypeSpecific::Bool => common_array_dimension1_postgresql_json_type_filters,
@@ -1445,6 +1448,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
+                                            ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone()
+                                        });
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
                                             ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone()
                                         });
                                         filters
@@ -1529,6 +1535,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
+                                            ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone()
+                                        });
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
                                             ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone()
                                         });
                                         filters
@@ -1633,6 +1642,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {
+                                            ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone()
+                                        });
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
                                             ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone()
                                         });
                                         filters
