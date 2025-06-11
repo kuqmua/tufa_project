@@ -1459,6 +1459,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonTypeSpecific::String => {
                                         let mut filters = common_array_dimension2_postgresql_json_type_filters.clone();
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionRegularExpression);
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression);
                                         filters
                                     },
                                 }
@@ -1546,6 +1547,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonTypeSpecific::String => {
                                         let mut filters = common_array_dimension3_postgresql_json_type_filters.clone();
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionRegularExpression);
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression);
                                         filters
                                     },
                                 }
@@ -1653,6 +1655,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonTypeSpecific::String => {
                                         let mut filters = common_array_dimension4_postgresql_json_type_filters.clone();
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression);
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression);
                                         filters
                                     },
                                 }

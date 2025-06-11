@@ -1255,9 +1255,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 T: IntoIterator<Item = std::primitive::u8>,
             {
                 let content_token_stream = value.into_iter().map(|element|{
-                    format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap()
+                    let value = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
+                    quote::quote!{#value,}
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                quote::quote! {#(#content_token_stream),*}
+                quote::quote! {#(#content_token_stream)*}
             }
             fn generate_query_bind_dimension_position_token_stream<T>(value: T) -> proc_macro2::TokenStream
             where
@@ -1445,7 +1446,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 column,
-                                #format_increments_token_stream,
+                                #format_increments_token_stream
                                 self.regular_expression_case.postgreql_syntax(),
                                 last_increment
                             ))
@@ -1827,7 +1828,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 column,
-                                #format_increments_token_stream,
+                                #format_increments_token_stream
                                 self.regular_expression_case.postgreql_syntax(),
                                 last_increment
                             ))
@@ -2047,33 +2048,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
                     ident: _
                 } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    regular_expression_case_and_value_declaration_token_stream.clone(),
-                    regular_expression_case_and_value_default_initialization_token_stream.clone(),
-                    generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"}),
-                    query_equals_query_self_value_to_string_token_stream.clone(),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
+                    &DimensionNumber::One
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    regular_expression_case_and_value_declaration_token_stream.clone(),
-                    regular_expression_case_and_value_default_initialization_token_stream.clone(),
-                    generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"}),
-                    query_equals_query_self_value_to_string_token_stream.clone(),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
+                    &DimensionNumber::Two
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    regular_expression_case_and_value_declaration_token_stream.clone(),
-                    regular_expression_case_and_value_default_initialization_token_stream.clone(),
-                    generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"}),
-                    query_equals_query_self_value_to_string_token_stream.clone(),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
+                    &DimensionNumber::Three
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    regular_expression_case_and_value_declaration_token_stream.clone(),
-                    regular_expression_case_and_value_default_initialization_token_stream.clone(),
-                    generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"}),
-                    query_equals_query_self_value_to_string_token_stream.clone(),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
+                    &DimensionNumber::Four
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
