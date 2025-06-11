@@ -251,6 +251,15 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionOneAllElementsGreaterThan {
         ident: proc_macro2::TokenStream,
     },
+    DimensionTwoAllElementsGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionThreeAllElementsGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionFourAllElementsGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
     ContainsElementRegularExpression,
     AllElementsRegularExpression,
 }
@@ -357,6 +366,15 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionOneAllElementsGreaterThan {
                 ident: _
             } => &naming::DimensionOneAllElementsGreaterThanUpperCamelCase,
+            Self::DimensionTwoAllElementsGreaterThan {
+                ident: _
+            } => &naming::DimensionTwoAllElementsGreaterThanUpperCamelCase,
+            Self::DimensionThreeAllElementsGreaterThan {
+                ident: _
+            } => &naming::DimensionThreeAllElementsGreaterThanUpperCamelCase,
+            Self::DimensionFourAllElementsGreaterThan {
+                ident: _
+            } => &naming::DimensionFourAllElementsGreaterThanUpperCamelCase,
             Self::ContainsElementRegularExpression => &naming::ContainsElementRegularExpressionUpperCamelCase,
             Self::AllElementsRegularExpression => &naming::AllElementsRegularExpressionUpperCamelCase,
         }
@@ -407,6 +425,9 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionThreeContainsElementGreaterThan,
     DimensionFourContainsElementGreaterThan,
     DimensionOneAllElementsGreaterThan,
+    DimensionTwoAllElementsGreaterThan,
+    DimensionThreeAllElementsGreaterThan,
+    DimensionFourAllElementsGreaterThan,
     AllElementsCaseSensitiveRegularExpression,
     AllElementsCaseInsensitiveRegularExpression,
 }
@@ -443,6 +464,9 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionThreeContainsElementGreaterThan => true,
             Self::DimensionFourContainsElementGreaterThan => true,
             Self::DimensionOneAllElementsGreaterThan => true,
+            Self::DimensionTwoAllElementsGreaterThan => true,
+            Self::DimensionThreeAllElementsGreaterThan => true,
+            Self::DimensionFourAllElementsGreaterThan => true,
             Self::AllElementsCaseSensitiveRegularExpression => true,
             Self::AllElementsCaseInsensitiveRegularExpression => true,
         }
@@ -552,6 +576,15 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
                 ident: _
             } => Ok(Self::DimensionOneAllElementsGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionTwoAllElementsGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionThreeAllElementsGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionFourAllElementsGreaterThan),
             PostgresqlJsonTypeFilter::ContainsElementRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::AllElementsRegularExpression => Err(()),
         }
