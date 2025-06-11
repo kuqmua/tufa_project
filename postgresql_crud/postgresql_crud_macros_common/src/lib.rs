@@ -172,6 +172,9 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                     ident,
                 } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => None,
+                crate::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => None,
+                crate::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => None,
+                crate::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::AllElementsRegularExpression => None,
             };
             let type_token_stream = match option_type_token_stream {

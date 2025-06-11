@@ -1161,6 +1161,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ident: _
                     } => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsRegularExpression => Err(()),
                 }
             }
@@ -1976,6 +1979,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    regular_expression_case_and_value_declaration_token_stream.clone(),
+                    regular_expression_case_and_value_default_initialization_token_stream.clone(),
+                    generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"}),
+                    query_equals_query_self_value_to_string_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    regular_expression_case_and_value_declaration_token_stream.clone(),
+                    regular_expression_case_and_value_default_initialization_token_stream.clone(),
+                    generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"}),
+                    query_equals_query_self_value_to_string_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    regular_expression_case_and_value_declaration_token_stream.clone(),
+                    regular_expression_case_and_value_default_initialization_token_stream.clone(),
+                    generate_query_part_regular_expression_token_stream(&quote::quote!{"{}(exists(select 1 from jsonb_array_elements({}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"}),
+                    query_equals_query_self_value_to_string_token_stream.clone(),
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     regular_expression_case_and_value_declaration_token_stream.clone(),
                     regular_expression_case_and_value_default_initialization_token_stream.clone(),
