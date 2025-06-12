@@ -1184,7 +1184,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         // }
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
             let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
-            let ident_try_new_error_named = naming::parameter::PostgresqlJsonTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
             let query_bind_sqlx_types_json_self_value_token_stream = quote::quote! {
                 query = query.bind(sqlx::types::Json(self.value));
                 query

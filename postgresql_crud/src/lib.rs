@@ -1357,231 +1357,231 @@ where T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>
     start: T,
     end: T,
 }
-// #[derive(
-//     Debug,
-//     Clone,
-//     serde::Serialize,
-//     serde::Deserialize,
-//     thiserror::Error,
-//     error_occurence_lib::ErrorOccurence,
-// )]
-// pub enum BetweenTryNewErrorNamed<T> {
-//     StartMoreOrEqualToEnd {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         start: T,
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         end: T,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
-// impl<T: std::cmp::PartialOrd> Between<T> {
-//     fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewErrorNamed<T>> {
-//         if start < end {
-//             Ok(Self { start, end })
-//         } else {
-//             Err(BetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
-//                 start,
-//                 end,
-//                 code_occurence: error_occurence_lib::code_occurence!(),
-//             })
-//         }
-//     }
-// }
-// const _: () = {
-//     #[allow(unused_extern_crates, clippy::useless_attribute)]
-//     extern crate serde as _serde;
-//     #[automatically_derived]
-//     impl<'de, T> _serde::Deserialize<'de> for Between<T>
-//     where
-//         T: std::fmt::Debug + _serde::Deserialize<'de> + std::cmp::PartialOrd,
-//     {
-//         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
-//         where
-//             __D: _serde::Deserializer<'de>,
-//         {
-//             #[allow(non_camel_case_types)]
-//             #[doc(hidden)]
-//             enum __Field {
-//                 __field0,
-//                 __field1,
-//                 __ignore,
-//             }
-//             #[doc(hidden)]
-//             struct __FieldVisitor;
-//             impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-//                 type Value = __Field;
-//                 fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-//                     _serde::__private::Formatter::write_str(__f, "field identifier")
-//                 }
-//                 fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
-//                 where
-//                     __E: _serde::de::Error,
-//                 {
-//                     match __value {
-//                         1u64 => _serde::__private::Ok(__Field::__field0),
-//                         2u64 => _serde::__private::Ok(__Field::__field1),
-//                         _ => _serde::__private::Ok(__Field::__ignore),
-//                     }
-//                 }
-//                 fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-//                 where
-//                     __E: _serde::de::Error,
-//                 {
-//                     match __value {
-//                         "start" => _serde::__private::Ok(__Field::__field0),
-//                         "end" => _serde::__private::Ok(__Field::__field1),
-//                         _ => _serde::__private::Ok(__Field::__ignore),
-//                     }
-//                 }
-//                 fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
-//                 where
-//                     __E: _serde::de::Error,
-//                 {
-//                     match __value {
-//                         b"start" => _serde::__private::Ok(__Field::__field0),
-//                         b"end" => _serde::__private::Ok(__Field::__field1),
-//                         _ => _serde::__private::Ok(__Field::__ignore),
-//                     }
-//                 }
-//             }
-//             impl<'de> _serde::Deserialize<'de> for __Field {
-//                 #[inline]
-//                 fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
-//                 where
-//                     __D: _serde::Deserializer<'de>,
-//                 {
-//                     _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-//                 }
-//             }
-//             #[doc(hidden)]
-//             struct __Visitor<'de, T>
-//             where
-//                 T: _serde::Deserialize<'de>,
-//             {
-//                 marker: _serde::__private::PhantomData<Between<T>>,
-//                 lifetime: _serde::__private::PhantomData<&'de ()>,
-//             }
-//             impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
-//             where
-//                 T: std::fmt::Debug + _serde::Deserialize<'de> + std::cmp::PartialOrd,
-//             {
-//                 type Value = Between<T>;
-//                 fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-//                     _serde::__private::Formatter::write_str(__f, "struct Between")
-//                 }
-//                 #[inline]
-//                 fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
-//                 where
-//                     __A: _serde::de::SeqAccess<'de>,
-//                 {
-//                     let __field0 = match _serde::de::SeqAccess::next_element::<T>(&mut __seq)? {
-//                         _serde::__private::Some(__value) => __value,
-//                         _serde::__private::None => {
-//                             return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct Between with 2 elements"));
-//                         }
-//                     };
-//                     let __field1 = match _serde::de::SeqAccess::next_element::<T>(&mut __seq)? {
-//                         _serde::__private::Some(__value) => __value,
-//                         _serde::__private::None => {
-//                             return _serde::__private::Err(_serde::de::Error::invalid_length(2usize, &"struct Between with 2 elements"));
-//                         }
-//                     };
-//                     match Between::try_new(__field0, __field1) {
-//                         Ok(value) => serde::__private::Ok(value),
-//                         Err(error) => {
-//                             return Err(serde::de::Error::custom(format!("{error:?}")));
-//                         }
-//                     }
-//                 }
-//                 #[inline]
-//                 fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
-//                 where
-//                     __A: _serde::de::MapAccess<'de>,
-//                 {
-//                     let mut __field0: _serde::__private::Option<T> = _serde::__private::None;
-//                     let mut __field1: _serde::__private::Option<T> = _serde::__private::None;
-//                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-//                         match __key {
-//                             __Field::__field0 => {
-//                                 if _serde::__private::Option::is_some(&__field0) {
-//                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("start"));
-//                                 }
-//                                 __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
-//                             }
-//                             __Field::__field1 => {
-//                                 if _serde::__private::Option::is_some(&__field1) {
-//                                     return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("end"));
-//                                 }
-//                                 __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
-//                             }
-//                             _ => {
-//                                 let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
-//                             }
-//                         }
-//                     }
-//                     let __field0 = match __field0 {
-//                         _serde::__private::Some(__field0) => __field0,
-//                         _serde::__private::None => _serde::__private::de::missing_field("start")?,
-//                     };
-//                     let __field1 = match __field1 {
-//                         _serde::__private::Some(__field1) => __field1,
-//                         _serde::__private::None => _serde::__private::de::missing_field("end")?,
-//                     };
-//                     match Between::try_new(__field0, __field1) {
-//                         Ok(value) => serde::__private::Ok(value),
-//                         Err(error) => {
-//                             return Err(serde::de::Error::custom(format!("{error:?}")));
-//                         }
-//                     }
-//                 }
-//             }
-//             #[doc(hidden)]
-//             const FIELDS: &'static [&'static str] = &["start", "end"];
-//             _serde::Deserializer::deserialize_struct(
-//                 __deserializer,
-//                 "Between",
-//                 FIELDS,
-//                 __Visitor {
-//                     marker: _serde::__private::PhantomData::<Between<T>>,
-//                     lifetime: _serde::__private::PhantomData,
-//                 },
-//             )
-//         }
-//     }
-// };
-// impl<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Between<T> {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self {
-//             start: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//             end: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//         }
-//     }
-// }
-// impl<'a, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send> crate::PostgresqlTypeWhereFilter<'a> for Between<T> {
-//     fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-//         let start_increment = match increment.checked_add(1) {
-//             Some(value) => {
-//                 *increment = value;
-//                 value
-//             }
-//             None => {
-//                 return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//             },
-//         };
-//         let end_increment = match increment.checked_add(1) {
-//             Some(value) => {
-//                 *increment = value;
-//                 value
-//             }
-//             None => {
-//                 return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
-//             },
-//         };
-//         Ok(format!("between ${start_increment} and ${end_increment})"))
-//     }
-//     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         query = query.bind(self.start);
-//         query = query.bind(self.end);
-//         query
-//     }
-// }
+#[derive(
+    Debug,
+    Clone,
+    serde::Serialize,
+    serde::Deserialize,
+    thiserror::Error,
+    error_occurence_lib::ErrorOccurence,
+)]
+pub enum BetweenTryNewErrorNamed<T> {
+    StartMoreOrEqualToEnd {
+        #[eo_to_std_string_string_serialize_deserialize]
+        start: T,
+        #[eo_to_std_string_string_serialize_deserialize]
+        end: T,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl<T: sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + std::cmp::PartialOrd > Between<T> {
+    fn try_new(start: T, end: T) -> Result<Self, BetweenTryNewErrorNamed<T>> {
+        if start < end {
+            Ok(Self { start, end })
+        } else {
+            Err(BetweenTryNewErrorNamed::StartMoreOrEqualToEnd {
+                start,
+                end,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de, T> _serde::Deserialize<'de> for Between<T>
+    where
+        T: std::fmt::Debug + _serde::Deserialize<'de> + std::cmp::PartialOrd + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+    {
+        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[allow(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                __field0,
+                __field1,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__f, "field identifier")
+                }
+                fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        1u64 => _serde::__private::Ok(__Field::__field0),
+                        2u64 => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        "start" => _serde::__private::Ok(__Field::__field0),
+                        "end" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        b"start" => _serde::__private::Ok(__Field::__field0),
+                        b"end" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+            }
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de, T>
+            where
+                T: _serde::Deserialize<'de> + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+            {
+                marker: _serde::__private::PhantomData<Between<T>>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            impl<'de, T> _serde::de::Visitor<'de> for __Visitor<'de, T>
+            where
+                T: std::fmt::Debug + _serde::Deserialize<'de> + std::cmp::PartialOrd + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>,
+            {
+                type Value = Between<T>;
+                fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(__f, "struct Between")
+                }
+                #[inline]
+                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<T>(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct Between with 2 elements"));
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<T>(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(2usize, &"struct Between with 2 elements"));
+                        }
+                    };
+                    match Between::try_new(__field0, __field1) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+                #[inline]
+                fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut __field0: _serde::__private::Option<T> = _serde::__private::None;
+                    let mut __field1: _serde::__private::Option<T> = _serde::__private::None;
+                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                        match __key {
+                            __Field::__field0 => {
+                                if _serde::__private::Option::is_some(&__field0) {
+                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("start"));
+                                }
+                                __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
+                            }
+                            __Field::__field1 => {
+                                if _serde::__private::Option::is_some(&__field1) {
+                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("end"));
+                                }
+                                __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<T>(&mut __map)?);
+                            }
+                            _ => {
+                                let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                            }
+                        }
+                    }
+                    let __field0 = match __field0 {
+                        _serde::__private::Some(__field0) => __field0,
+                        _serde::__private::None => _serde::__private::de::missing_field("start")?,
+                    };
+                    let __field1 = match __field1 {
+                        _serde::__private::Some(__field1) => __field1,
+                        _serde::__private::None => _serde::__private::de::missing_field("end")?,
+                    };
+                    match Between::try_new(__field0, __field1) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &'static [&'static str] = &["start", "end"];
+            _serde::Deserializer::deserialize_struct(
+                __deserializer,
+                "Between",
+                FIELDS,
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<Between<T>>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl<T: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Between<T> {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            start: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            end: crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
+}
+impl<'a, T: std::marker::Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres> + 'a> crate::PostgresqlTypeWhereFilter<'a> for Between<T> {
+    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        let start_increment = match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                value
+            }
+            None => {
+                return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+            },
+        };
+        let end_increment = match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                value
+            }
+            None => {
+                return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+            },
+        };
+        Ok(format!("between ${start_increment} and ${end_increment})"))
+    }
+    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(self.start);
+        query = query.bind(self.end);
+        query
+    }
+}
