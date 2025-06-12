@@ -1321,25 +1321,31 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         ];
                         let ident_origin_upper_camel_case_token_stream = quote::quote! {#ident_origin_upper_camel_case};
                         match &element.postgresql_json_type_pattern {
-                            PostgresqlJsonTypePattern::Standart => match &postgresql_json_type_specific {
-                                PostgresqlJsonTypeSpecific::Number => {
+                            PostgresqlJsonTypePattern::Standart => {
+                                let common_standart_postgresql_json_type_filters = {
                                     let mut vec = common_postgresql_json_type_filters.clone();
-                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan {
-                                        ident: ident_origin_upper_camel_case_token_stream.clone(),
-                                    });
-                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between {
-                                        ident: ident_origin_upper_camel_case_token_stream.clone(),
-                                    });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In {
                                         ident: ident_origin_upper_camel_case_token_stream.clone(),
                                     });
                                     vec
-                                }
-                                PostgresqlJsonTypeSpecific::Bool => common_postgresql_json_type_filters,
-                                PostgresqlJsonTypeSpecific::String => {
-                                    let mut vec = common_postgresql_json_type_filters.clone();
-                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression);
-                                    vec
+                                };
+                                match &postgresql_json_type_specific {
+                                    PostgresqlJsonTypeSpecific::Number => {
+                                        let mut vec = common_standart_postgresql_json_type_filters.clone();
+                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan {
+                                            ident: ident_origin_upper_camel_case_token_stream.clone(),
+                                        });
+                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between {
+                                            ident: ident_origin_upper_camel_case_token_stream.clone(),
+                                        });
+                                        vec
+                                    }
+                                    PostgresqlJsonTypeSpecific::Bool => common_standart_postgresql_json_type_filters,
+                                    PostgresqlJsonTypeSpecific::String => {
+                                        let mut vec = common_standart_postgresql_json_type_filters.clone();
+                                        vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression);
+                                        vec
+                                    }
                                 }
                             },
                             //todo reuse analog filters in generate_postgresql_types
