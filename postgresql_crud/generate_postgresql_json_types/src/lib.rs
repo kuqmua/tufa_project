@@ -1445,6 +1445,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
                                         ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone()
                                     });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoIn {
+                                        ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone()
+                                    });
                                     vec
                                 };
                                 match &postgresql_json_type_specific {
@@ -1532,6 +1535,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone()
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual {
+                                        ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone()
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeIn {
                                         ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone()
                                     });
                                     vec
@@ -1641,6 +1647,9 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone()
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
+                                        ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone()
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourIn {
                                         ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone()
                                     });
                                     vec
