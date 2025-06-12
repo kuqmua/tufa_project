@@ -41,7 +41,9 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
-        "column_113f3662_35a2_4a7a_9326_03bbd441815f": "dog"
+        "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": [
+          "cat", "c"
+        ]
       }
     }
   }
@@ -114,26 +116,85 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           "logical_operator": "Or",
           "value": [
             {
-              "Column113F366235A24A7A932603Bbd441815F": {
+              "Column0F498E7954404C9D90CfC32F9B7D4005": {
                 "logical_operator": "Or",
                 "value": [
                   # {
                   #   "Equal": {
                   #     "logical_operator": "Or",
+                  #     "value": [
+                  #       ""
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOnePositionEqual": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "value": ""
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOneLengthEqual": {
+                  #     "logical_operator": "Or",
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOneLengthMoreThan": {
+                  #     "logical_operator": "Or",
+                  #     "value": 0
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOneContainsAllElementsOfArray": {
+                  #     "logical_operator": "Or",
+                  #     "value": [
+                  #       ""
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOneOverlapsWithArray": {
+                  #     "logical_operator": "Or",
+                  #     "value": [
+                  #       ""
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOneAllElementsEqual": {
+                  #     "logical_operator": "Or",
                   #     "value": ""
                   #   }
                   # },
                   {
-                    "In": {
+                    "DimensionOneIn": {
                       "logical_operator": "Or",
+                      "dimension1_position": 1,
                       "value": [
-                        "cat", "meow"
+                        "a", "b"
                       ]
                     }
                   }
                   # ,
                   # {
-                  #   "RegularExpression": {
+                  #   "DimensionOnePositionRegularExpression": {
+                  #     "logical_operator": "Or",
+                  #     "dimension1_position": 0,
+                  #     "regular_expression_case": "Sensitive",
+                  #     "value": ""
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOneContainsElementRegularExpression": {
+                  #     "logical_operator": "Or",
+                  #     "regular_expression_case": "Sensitive",
+                  #     "value": ""
+                  #   }
+                  # },
+                  # {
+                  #   "DimensionOneAllElementsRegularExpression": {
                   #     "logical_operator": "Or",
                   #     "regular_expression_case": "Sensitive",
                   #     "value": ""
@@ -156,7 +217,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         {
           "doggie_as_not_null_jsonb_object": [
             {
-              "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+              "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": {
+                "dimension1_pagination": {
+                  "limit": 3,
+                  "offset": 0
+                }
+              }
             }
           ]
         }

@@ -367,10 +367,10 @@ mod tests {
     }
 }]
 pub struct Doggie {
-    pub column_113f3662_35a2_4a7a_9326_03bbd441815f: postgresql_crud::postgresql_json_type::StdStringStringAsNotNullJsonbString,
+    // pub column_113f3662_35a2_4a7a_9326_03bbd441815f: postgresql_crud::postgresql_json_type::StdStringStringAsNotNullJsonbString,
     // pub column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: postgresql_crud::postgresql_json_type::VecOfStdStringStringAsNotNullArrayOfNotNullJsonbString,
 
-    // pub column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: postgresql_crud::postgresql_json_type::VecOfStdStringStringAsNotNullArrayOfNotNullJsonbString,
+    pub column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: postgresql_crud::postgresql_json_type::VecOfStdStringStringAsNotNullArrayOfNotNullJsonbString,
     // pub column_32fc16eb_2641_4d65_acec_0c7addbfe338: postgresql_crud::postgresql_json_type::VecOfVecOfVecOfVecOfStdStringStringAsNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullJsonbString,
     //
     // pub column_113f3662_35a2_4a7a_9326_03bbd441815f: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,

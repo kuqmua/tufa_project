@@ -1929,7 +1929,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            //
             let generate_dimension_in_token_stream = |dimension_number: &DimensionNumber| -> (
                 ShouldAddDeclarationOfStructIdentGeneric,
                 proc_macro2::TokenStream,
@@ -1961,7 +1960,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                            "{{}}(exists (select 1 from jsonb_array_elements_text({{}}{}) as e1 join jsonb_array_elements_text({{value}}) as e2 on e1.value = e2.value))",
+                            "{{}}({{}}{} in ({{value}}))",
                             generate_indexes_stringified(range.clone())
                         ));
                         let format_increments_token_stream = generate_format_increments_token_stream(range.clone());
