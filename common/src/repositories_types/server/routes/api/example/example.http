@@ -41,7 +41,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
-        "column_113f3662_35a2_4a7a_9326_03bbd441815f": 6
+        "column_113f3662_35a2_4a7a_9326_03bbd441815f": 5
       }
     }
   }
@@ -140,7 +140,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                     "In": {
                       "logical_operator": "Or",
                       "value": [
-                        2,4,5,6
+                        3,4,5
                       ]
                     }
                   }

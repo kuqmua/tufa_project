@@ -926,6 +926,32 @@ impl<T: std::cmp::PartialEq + Clone> NotEmptyUniqueStructVec<T> {
         self.0
     }
 }
+impl<T: std::cmp::PartialEq + Clone + serde::Serialize> NotEmptyUniqueStructVec<T> {
+    pub fn query_part_one_by_one(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        for _ in self.to_vec() {
+            match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    acc.push_str(&format!("${},", value));
+                }
+                None => {
+                    return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                }
+            }
+        }
+        let _ = acc.pop();
+        Ok(acc)
+    }
+    pub fn query_bind_one_by_one<'a>(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>
+    where T: 'a 
+    {
+        for element in self.0 {
+            query = query.bind(sqlx::types::Json(element));
+        }
+        query
+    }
+}
 const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
