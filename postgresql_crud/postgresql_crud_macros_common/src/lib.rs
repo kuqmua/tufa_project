@@ -74,6 +74,18 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::In {
                     ident,
                 } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionOneIn {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionTwoIn {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionThreeIn {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionFourIn {
+                    ident,
+                } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::RegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => None,
                 crate::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => None,

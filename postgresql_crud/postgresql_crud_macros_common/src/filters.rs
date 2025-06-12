@@ -162,9 +162,18 @@ pub enum PostgresqlJsonTypeFilter {
     In {
         ident: proc_macro2::TokenStream,
     },
-    // DimensionOneIn {
-    //     ident: proc_macro2::TokenStream,
-    // },
+    DimensionOneIn {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionTwoIn {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionThreeIn {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionFourIn {
+        ident: proc_macro2::TokenStream,
+    },
     RegularExpression,
     DimensionOneLengthEqual,
     DimensionTwoLengthEqual,
@@ -287,6 +296,18 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::In {
                 ident: _
             } => &naming::InUpperCamelCase,
+            Self::DimensionOneIn {
+                ident: _
+            } => &naming::DimensionOneInUpperCamelCase,
+            Self::DimensionTwoIn {
+                ident: _
+            } => &naming::DimensionTwoInUpperCamelCase,
+            Self::DimensionThreeIn {
+                ident: _
+            } => &naming::DimensionThreeInUpperCamelCase,
+            Self::DimensionFourIn {
+                ident: _
+            } => &naming::DimensionFourInUpperCamelCase,
             Self::RegularExpression => &naming::RegularExpressionUpperCamelCase,
             Self::DimensionOneLengthEqual => &naming::DimensionOneLengthEqualUpperCamelCase,
             Self::DimensionTwoLengthEqual => &naming::DimensionTwoLengthEqualUpperCamelCase,
@@ -415,6 +436,10 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     GreaterThan,
     Between,
     In,
+    DimensionOneIn,
+    DimensionTwoIn,
+    DimensionThreeIn,
+    DimensionFourIn,
     DimensionOnePositionEqual,
     DimensionTwoPositionEqual,
     DimensionThreePositionEqual,
@@ -452,6 +477,10 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::GreaterThan => true,
             Self::Between => true,
             Self::In => false,
+            Self::DimensionOneIn => false,
+            Self::DimensionTwoIn => false,
+            Self::DimensionThreeIn => false,
+            Self::DimensionFourIn => false,
             Self::DimensionOnePositionEqual => false,
             Self::DimensionTwoPositionEqual => false,
             Self::DimensionThreePositionEqual => false,
@@ -499,6 +528,18 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::In {
                 ident: _
             } => Ok(Self::In),
+            PostgresqlJsonTypeFilter::DimensionOneIn {
+                ident: _
+            } => Ok(Self::DimensionOneIn),
+            PostgresqlJsonTypeFilter::DimensionTwoIn {
+                ident: _
+            } => Ok(Self::DimensionTwoIn),
+            PostgresqlJsonTypeFilter::DimensionThreeIn {
+                ident: _
+            } => Ok(Self::DimensionThreeIn),
+            PostgresqlJsonTypeFilter::DimensionFourIn {
+                ident: _
+            } => Ok(Self::DimensionFourIn),
             PostgresqlJsonTypeFilter::RegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionOneLengthEqual => Err(()),
             PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => Err(()),

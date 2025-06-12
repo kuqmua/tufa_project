@@ -1045,6 +1045,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         enum PostgresqlJsonTypeFilterInitializedWithTryNew {
             Between,
             In,
+            DimensionOneIn,
+            DimensionTwoIn,
+            DimensionThreeIn,
+            DimensionFourIn
         }
         impl std::convert::TryFrom<&postgresql_crud_macros_common::PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilterInitializedWithTryNew {
             type Error = ();
@@ -1062,6 +1066,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In {
                         ident: _
                     } => Ok(Self::In),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneIn {
+                        ident: _
+                    } => Ok(Self::DimensionOneIn),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoIn {
+                        ident: _
+                    } => Ok(Self::DimensionTwoIn),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeIn {
+                        ident: _
+                    } => Ok(Self::DimensionThreeIn),
+                    postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourIn {
+                        ident: _
+                    } => Ok(Self::DimensionFourIn),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => Err(()),
                     postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => Err(()),
@@ -2065,6 +2081,142 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     //     }
                     // },
                 ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneIn { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    value_std_vec_vec_t_token_stream.clone(),
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
+                    },
+                    quote::quote! {
+                        let mut acc = std::string::String::default();
+                        for element in &self.value {
+                            match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    acc.push_str(&format!("${},", value));
+                                }
+                                None => {
+                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                }
+                            }
+                        }
+                        let _ = acc.pop();
+                        let in_snake_case = naming::InSnakeCase;
+                        Ok(format!("{}({} {in_snake_case} ({}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, acc))
+                    },
+                    quote::quote! {
+                        for element in self.value {
+                            query = query.bind(sqlx::types::Json(element));
+                        }
+                        query
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoIn { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    value_std_vec_vec_t_token_stream.clone(),
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
+                    },
+                    quote::quote! {
+                        let mut acc = std::string::String::default();
+                        for element in &self.value {
+                            match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    acc.push_str(&format!("${},", value));
+                                }
+                                None => {
+                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                }
+                            }
+                        }
+                        let _ = acc.pop();
+                        let in_snake_case = naming::InSnakeCase;
+                        Ok(format!("{}({} {in_snake_case} ({}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, acc))
+                    },
+                    quote::quote! {
+                        for element in self.value {
+                            query = query.bind(sqlx::types::Json(element));
+                        }
+                        query
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeIn { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    value_std_vec_vec_t_token_stream.clone(),
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
+                    },
+                    quote::quote! {
+                        let mut acc = std::string::String::default();
+                        for element in &self.value {
+                            match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    acc.push_str(&format!("${},", value));
+                                }
+                                None => {
+                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                }
+                            }
+                        }
+                        let _ = acc.pop();
+                        let in_snake_case = naming::InSnakeCase;
+                        Ok(format!("{}({} {in_snake_case} ({}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, acc))
+                    },
+                    quote::quote! {
+                        for element in self.value {
+                            query = query.bind(sqlx::types::Json(element));
+                        }
+                        query
+                    },
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourIn { 
+                    ident: _
+                } => (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    value_std_vec_vec_t_token_stream.clone(),
+                    quote::quote! {
+                        value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
+                    },
+                    quote::quote! {
+                        let mut acc = std::string::String::default();
+                        for element in &self.value {
+                            match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    acc.push_str(&format!("${},", value));
+                                }
+                                None => {
+                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                }
+                            }
+                        }
+                        let _ = acc.pop();
+                        let in_snake_case = naming::InSnakeCase;
+                        Ok(format!("{}({} {in_snake_case} ({}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, acc))
+                    },
+                    quote::quote! {
+                        for element in self.value {
+                            query = query.bind(sqlx::types::Json(element));
+                        }
+                        query
+                    },
+                ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
                     regular_expression_case_and_value_declaration_token_stream.clone(),
@@ -2247,6 +2399,150 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &vec![&start_t_field, &end_t_field],
                         ),
                         PostgresqlJsonTypeFilterInitializedWithTryNew::In => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote! {
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                NotUnique {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &quote::quote! {: PartialEq + Clone},
+                            &value_std_vec_vec_t_token_stream,
+                            &quote::quote! {
+                                if value.is_empty() {
+                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                                {
+                                    let mut acc = vec![];
+                                    for element in &value {
+                                        if !acc.contains(&element) {
+                                            acc.push(element);
+                                        } else {
+                                            return Err(#ident_try_new_error_named::NotUnique {
+                                                value: element.clone(),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                Ok(Self { logical_operator, value })
+                            },
+                            Some(quote::quote! {+ std::cmp::PartialOrd + Clone}),
+                            &vec![&value_std_vec_vec_t_field],
+                        ),
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionOneIn => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote! {
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                NotUnique {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &quote::quote! {: PartialEq + Clone},
+                            &value_std_vec_vec_t_token_stream,
+                            &quote::quote! {
+                                if value.is_empty() {
+                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                                {
+                                    let mut acc = vec![];
+                                    for element in &value {
+                                        if !acc.contains(&element) {
+                                            acc.push(element);
+                                        } else {
+                                            return Err(#ident_try_new_error_named::NotUnique {
+                                                value: element.clone(),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                Ok(Self { logical_operator, value })
+                            },
+                            Some(quote::quote! {+ std::cmp::PartialOrd + Clone}),
+                            &vec![&value_std_vec_vec_t_field],
+                        ),
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionTwoIn => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote! {
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                NotUnique {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &quote::quote! {: PartialEq + Clone},
+                            &value_std_vec_vec_t_token_stream,
+                            &quote::quote! {
+                                if value.is_empty() {
+                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                                {
+                                    let mut acc = vec![];
+                                    for element in &value {
+                                        if !acc.contains(&element) {
+                                            acc.push(element);
+                                        } else {
+                                            return Err(#ident_try_new_error_named::NotUnique {
+                                                value: element.clone(),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                Ok(Self { logical_operator, value })
+                            },
+                            Some(quote::quote! {+ std::cmp::PartialOrd + Clone}),
+                            &vec![&value_std_vec_vec_t_field],
+                        ),
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionThreeIn => (
+                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
+                            &quote::quote! {
+                                IsEmpty {
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                NotUnique {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    value: T,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            },
+                            &quote::quote! {: PartialEq + Clone},
+                            &value_std_vec_vec_t_token_stream,
+                            &quote::quote! {
+                                if value.is_empty() {
+                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
+                                }
+                                {
+                                    let mut acc = vec![];
+                                    for element in &value {
+                                        if !acc.contains(&element) {
+                                            acc.push(element);
+                                        } else {
+                                            return Err(#ident_try_new_error_named::NotUnique {
+                                                value: element.clone(),
+                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                            });
+                                        }
+                                    }
+                                }
+                                Ok(Self { logical_operator, value })
+                            },
+                            Some(quote::quote! {+ std::cmp::PartialOrd + Clone}),
+                            &vec![&value_std_vec_vec_t_field],
+                        ),
+                        PostgresqlJsonTypeFilterInitializedWithTryNew::DimensionFourIn => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote! {
                                 IsEmpty {
