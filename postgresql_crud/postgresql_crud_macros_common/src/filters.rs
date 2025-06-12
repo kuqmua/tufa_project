@@ -162,6 +162,9 @@ pub enum PostgresqlJsonTypeFilter {
     In {
         ident: proc_macro2::TokenStream,
     },
+    // DimensionOneIn {
+    //     ident: proc_macro2::TokenStream,
+    // },
     RegularExpression,
     DimensionOneLengthEqual,
     DimensionTwoLengthEqual,

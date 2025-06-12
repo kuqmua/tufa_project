@@ -2014,6 +2014,56 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                         query
                     },
+                    // ShouldAddDeclarationOfStructIdentGeneric::True {
+                    //     maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
+                    // },
+                    // {
+                    //     let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
+                    //     quote::quote! {
+                    //         #struct_additional_fields_token_stream
+                    //         value: crate::NotEmptyUniqueStructVec<T>
+                    //     }
+                    // },
+                    // {
+                    //     let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                    //         range_minus_one.clone()
+                    //     );
+                    //     quote::quote! {
+                    //         #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                    //         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                    //     }
+                    // },
+                    // {
+                    //     let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
+                    //     let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                    //         "{{}}(exists (select 1 from jsonb_array_elements_text({{}}{}) as e1 join jsonb_array_elements_text({{value}}) as e2 on e1.value = e2.value))",
+                    //         generate_indexes_stringified(range_minus_one.clone())
+                    //     ));
+                    //     let format_increments_token_stream = generate_format_increments_token_stream(range_minus_one.clone());
+                    //     quote::quote! {
+                    //         #increments_initialization_token_stream
+                    //         let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                    //             Ok(value) => value,
+                    //             Err(error) => {
+                    //                 return Err(error);
+                    //             } 
+                    //         };
+                    //         Ok(format!(
+                    //             #format_handle_token_stream,
+                    //             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                    //             column,
+                    //             #format_increments_token_stream
+                    //         ))
+                    //     }
+                    // },
+                    // {
+                    //     let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
+                    //     quote::quote! {
+                    //         #query_bind_dimension_position_token_stream
+                    //         query = query.bind(sqlx::types::Json(self.value));
+                    //         query
+                    //     }
+                    // },
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
