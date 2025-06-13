@@ -510,7 +510,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             &postgresql_crud_macros_common::ImportPath::Crate,
         )
     };
-
     let regular_expression_case_and_value_declaration_token_stream = quote::quote! {
         pub regular_expression_case: crate::RegularExpressionCase,
         pub value: crate::RegexRegex
@@ -1476,8 +1475,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub regular_expression_case: crate::RegularExpressionCase,
-                            pub value: crate::RegexRegex
+                            #regular_expression_case_and_value_declaration_token_stream
                         }
                     },
                     {
@@ -1544,8 +1542,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub regular_expression_case: crate::RegularExpressionCase,
-                            pub value: crate::RegexRegex
+                            #regular_expression_case_and_value_declaration_token_stream
                         }
                     },
                     {
@@ -1612,8 +1609,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub regular_expression_case: crate::RegularExpressionCase,
-                            pub value: crate::RegexRegex
+                            #regular_expression_case_and_value_declaration_token_stream
                         }
                     },
                     {
