@@ -586,7 +586,11 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["dimension", "one", "in"],
     ["dimension", "two", "in"],
     ["dimension", "three", "in"],
-    ["dimension", "four", "in"]
+    ["dimension", "four", "in"],
+    ["dimension", "one", "between"],
+    ["dimension", "two", "between"],
+    ["dimension", "three", "between"],
+    ["dimension", "four", "between"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

@@ -155,8 +155,19 @@ pub enum PostgresqlJsonTypeFilter {
     GreaterThan {
         ident: proc_macro2::TokenStream,
     },
-    //todo dimension one two three four for between and in
     Between {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionOneBetween {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionTwoBetween {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionThreeBetween {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionFourBetween {
         ident: proc_macro2::TokenStream,
     },
     In {
@@ -293,6 +304,18 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::Between {
                 ident: _
             } => &naming::BetweenUpperCamelCase,
+            Self::DimensionOneBetween {
+                ident: _
+            } => &naming::DimensionOneBetweenUpperCamelCase,
+            Self::DimensionTwoBetween {
+                ident: _
+            } => &naming::DimensionTwoBetweenUpperCamelCase,
+            Self::DimensionThreeBetween {
+                ident: _
+            } => &naming::DimensionThreeBetweenUpperCamelCase,
+            Self::DimensionFourBetween {
+                ident: _
+            } => &naming::DimensionFourBetweenUpperCamelCase,
             Self::In {
                 ident: _
             } => &naming::InUpperCamelCase,
@@ -435,6 +458,10 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     Equal,
     GreaterThan,
     Between,
+    DimensionOneBetween,
+    DimensionTwoBetween,
+    DimensionThreeBetween,
+    DimensionFourBetween,
     In,
     DimensionOneIn,
     DimensionTwoIn,
@@ -476,6 +503,10 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::Equal => false,
             Self::GreaterThan => true,
             Self::Between => true,
+            Self::DimensionOneBetween => true,
+            Self::DimensionTwoBetween => true,
+            Self::DimensionThreeBetween => true,
+            Self::DimensionFourBetween => true,
             Self::In => false,
             Self::DimensionOneIn => false,
             Self::DimensionTwoIn => false,
@@ -525,6 +556,18 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::Between {
                 ident: _
             } => Ok(Self::Between),
+            PostgresqlJsonTypeFilter::DimensionOneBetween {
+                ident: _
+            } => Ok(Self::DimensionOneBetween),
+            PostgresqlJsonTypeFilter::DimensionTwoBetween {
+                ident: _
+            } => Ok(Self::DimensionTwoBetween),
+            PostgresqlJsonTypeFilter::DimensionThreeBetween {
+                ident: _
+            } => Ok(Self::DimensionThreeBetween),
+            PostgresqlJsonTypeFilter::DimensionFourBetween {
+                ident: _
+            } => Ok(Self::DimensionFourBetween),
             PostgresqlJsonTypeFilter::In {
                 ident: _
             } => Ok(Self::In),
