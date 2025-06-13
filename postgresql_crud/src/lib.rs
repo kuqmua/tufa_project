@@ -1577,7 +1577,7 @@ impl<'a, T: std::marker::Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Enco
                 return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
             },
         };
-        Ok(format!("between ${start_increment} and ${end_increment})"))
+        Ok(format!("between ${start_increment} and ${end_increment}"))
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(self.start);
