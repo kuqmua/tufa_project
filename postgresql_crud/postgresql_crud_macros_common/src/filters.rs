@@ -210,6 +210,10 @@ pub enum PostgresqlJsonTypeFilter {
         ident: proc_macro2::TokenStream,
     },
     RegularExpression,
+    DimensionOneRegularExpression,
+    DimensionTwoRegularExpression,
+    DimensionThreeRegularExpression,
+    DimensionFourRegularExpression,
     DimensionOneLengthEqual,
     DimensionTwoLengthEqual,
     DimensionThreeLengthEqual,
@@ -218,10 +222,6 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoLengthMoreThan,
     DimensionThreeLengthMoreThan,
     DimensionFourLengthMoreThan,
-    DimensionOnePositionRegularExpression,
-    DimensionTwoPositionRegularExpression,
-    DimensionThreePositionRegularExpression,
-    DimensionFourPositionRegularExpression,
     DimensionOneContainsAllElementsOfArray {
         ident: proc_macro2::TokenStream,
     },
@@ -356,6 +356,10 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
                 ident: _
             } => &naming::DimensionFourInUpperCamelCase,
             Self::RegularExpression => &naming::RegularExpressionUpperCamelCase,
+            Self::DimensionOneRegularExpression => &naming::DimensionOneRegularExpressionUpperCamelCase,
+            Self::DimensionTwoRegularExpression => &naming::DimensionTwoRegularExpressionUpperCamelCase,
+            Self::DimensionThreeRegularExpression => &naming::DimensionThreeRegularExpressionUpperCamelCase,
+            Self::DimensionFourRegularExpression => &naming::DimensionFourRegularExpressionUpperCamelCase,
             Self::DimensionOneLengthEqual => &naming::DimensionOneLengthEqualUpperCamelCase,
             Self::DimensionTwoLengthEqual => &naming::DimensionTwoLengthEqualUpperCamelCase,
             Self::DimensionThreeLengthEqual => &naming::DimensionThreeLengthEqualUpperCamelCase,
@@ -364,10 +368,6 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoLengthMoreThan => &naming::DimensionTwoLengthMoreThanUpperCamelCase,
             Self::DimensionThreeLengthMoreThan => &naming::DimensionThreeLengthMoreThanUpperCamelCase,
             Self::DimensionFourLengthMoreThan => &naming::DimensionFourLengthMoreThanUpperCamelCase,
-            Self::DimensionOnePositionRegularExpression => &naming::DimensionOnePositionRegularExpressionUpperCamelCase,
-            Self::DimensionTwoPositionRegularExpression => &naming::DimensionTwoPositionRegularExpressionUpperCamelCase,
-            Self::DimensionThreePositionRegularExpression => &naming::DimensionThreePositionRegularExpressionUpperCamelCase,
-            Self::DimensionFourPositionRegularExpression => &naming::DimensionFourPositionRegularExpressionUpperCamelCase,
             Self::DimensionOneContainsAllElementsOfArray {
                 ident: _
             } => &naming::DimensionOneContainsAllElementsOfArrayUpperCamelCase,
@@ -608,6 +608,10 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
                 ident: _
             } => Ok(Self::DimensionFourIn),
             PostgresqlJsonTypeFilter::RegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionOneRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionTwoRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionThreeRegularExpression => Err(()),
+            PostgresqlJsonTypeFilter::DimensionFourRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionOneLengthEqual => Err(()),
             PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => Err(()),
             PostgresqlJsonTypeFilter::DimensionThreeLengthEqual => Err(()),
@@ -616,10 +620,6 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => Err(()),
             PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => Err(()),
             PostgresqlJsonTypeFilter::DimensionFourLengthMoreThan => Err(()),
-            PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression => Err(()),
-            PostgresqlJsonTypeFilter::DimensionTwoPositionRegularExpression => Err(()),
-            PostgresqlJsonTypeFilter::DimensionThreePositionRegularExpression => Err(()),
-            PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression => Err(()),
             PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
                 ident: _
             } => Ok(Self::DimensionOneContainsAllElementsOfArray),
