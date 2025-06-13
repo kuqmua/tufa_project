@@ -108,6 +108,30 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::DimensionFourGreaterThan {
                     ident,
                 } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::Between {
                     ident,
                 } => Some(ident.clone()),
@@ -177,30 +201,6 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                     ident,
                 } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
                     ident,
                 } => Some(ident.clone()),
             };

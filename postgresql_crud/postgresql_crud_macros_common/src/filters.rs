@@ -195,6 +195,30 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionFourGreaterThan {
         ident: proc_macro2::TokenStream,
     },
+    DimensionOneContainsElementGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionTwoContainsElementGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionThreeContainsElementGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionFourContainsElementGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionOneAllElementsGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionTwoAllElementsGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionThreeAllElementsGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionFourAllElementsGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
     Between {
         ident: proc_macro2::TokenStream,
     },
@@ -267,30 +291,6 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionFourOverlapsWithArray {
         ident: proc_macro2::TokenStream,
     },
-    DimensionOneContainsElementGreaterThan {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionTwoContainsElementGreaterThan {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionThreeContainsElementGreaterThan {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionFourContainsElementGreaterThan {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionOneAllElementsGreaterThan {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionTwoAllElementsGreaterThan {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionThreeAllElementsGreaterThan {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionFourAllElementsGreaterThan {
-        ident: proc_macro2::TokenStream,
-    },
 }
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -341,6 +341,30 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourGreaterThan {
                 ident: _
             } => &naming::DimensionFourGreaterThanUpperCamelCase,
+            Self::DimensionOneContainsElementGreaterThan {
+                ident: _
+            } => &naming::DimensionOneContainsElementGreaterThanUpperCamelCase,
+            Self::DimensionTwoContainsElementGreaterThan {
+                ident: _
+            } => &naming::DimensionTwoContainsElementGreaterThanUpperCamelCase,
+            Self::DimensionThreeContainsElementGreaterThan {
+                ident: _
+            } => &naming::DimensionThreeContainsElementGreaterThanUpperCamelCase,
+            Self::DimensionFourContainsElementGreaterThan {
+                ident: _
+            } => &naming::DimensionFourContainsElementGreaterThanUpperCamelCase,
+            Self::DimensionOneAllElementsGreaterThan {
+                ident: _
+            } => &naming::DimensionOneAllElementsGreaterThanUpperCamelCase,
+            Self::DimensionTwoAllElementsGreaterThan {
+                ident: _
+            } => &naming::DimensionTwoAllElementsGreaterThanUpperCamelCase,
+            Self::DimensionThreeAllElementsGreaterThan {
+                ident: _
+            } => &naming::DimensionThreeAllElementsGreaterThanUpperCamelCase,
+            Self::DimensionFourAllElementsGreaterThan {
+                ident: _
+            } => &naming::DimensionFourAllElementsGreaterThanUpperCamelCase,
             Self::Between {
                 ident: _
             } => &naming::BetweenUpperCamelCase,
@@ -412,30 +436,6 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourOverlapsWithArray {
                 ident: _
             } => &naming::DimensionFourOverlapsWithArrayUpperCamelCase,
-            Self::DimensionOneContainsElementGreaterThan {
-                ident: _
-            } => &naming::DimensionOneContainsElementGreaterThanUpperCamelCase,
-            Self::DimensionTwoContainsElementGreaterThan {
-                ident: _
-            } => &naming::DimensionTwoContainsElementGreaterThanUpperCamelCase,
-            Self::DimensionThreeContainsElementGreaterThan {
-                ident: _
-            } => &naming::DimensionThreeContainsElementGreaterThanUpperCamelCase,
-            Self::DimensionFourContainsElementGreaterThan {
-                ident: _
-            } => &naming::DimensionFourContainsElementGreaterThanUpperCamelCase,
-            Self::DimensionOneAllElementsGreaterThan {
-                ident: _
-            } => &naming::DimensionOneAllElementsGreaterThanUpperCamelCase,
-            Self::DimensionTwoAllElementsGreaterThan {
-                ident: _
-            } => &naming::DimensionTwoAllElementsGreaterThanUpperCamelCase,
-            Self::DimensionThreeAllElementsGreaterThan {
-                ident: _
-            } => &naming::DimensionThreeAllElementsGreaterThanUpperCamelCase,
-            Self::DimensionFourAllElementsGreaterThan {
-                ident: _
-            } => &naming::DimensionFourAllElementsGreaterThanUpperCamelCase,
         }
     }
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
@@ -456,7 +456,27 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
 //todo remove this
 pub enum PostgresqlJsonTypeFilterHasGeneric {
     Equal,
+    DimensionOneEqual,
+    DimensionTwoEqual,
+    DimensionThreeEqual,
+    DimensionFourEqual,
+    DimensionOneAllElementsEqual,
+    DimensionTwoAllElementsEqual,
+    DimensionThreeAllElementsEqual,
+    DimensionFourAllElementsEqual,
     GreaterThan,
+    DimensionOneGreaterThan,
+    DimensionTwoGreaterThan,
+    DimensionThreeGreaterThan,
+    DimensionFourGreaterThan,
+    DimensionOneContainsElementGreaterThan,
+    DimensionTwoContainsElementGreaterThan,
+    DimensionThreeContainsElementGreaterThan,
+    DimensionFourContainsElementGreaterThan,
+    DimensionOneAllElementsGreaterThan,
+    DimensionTwoAllElementsGreaterThan,
+    DimensionThreeAllElementsGreaterThan,
+    DimensionFourAllElementsGreaterThan,
     Between,
     DimensionOneBetween,
     DimensionTwoBetween,
@@ -467,18 +487,6 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionTwoIn,
     DimensionThreeIn,
     DimensionFourIn,
-    DimensionOneEqual,
-    DimensionTwoEqual,
-    DimensionThreeEqual,
-    DimensionFourEqual,
-    DimensionOneAllElementsEqual,
-    DimensionTwoAllElementsEqual,
-    DimensionThreeAllElementsEqual,
-    DimensionFourAllElementsEqual,
-    DimensionOneGreaterThan,
-    DimensionTwoGreaterThan,
-    DimensionThreeGreaterThan,
-    DimensionFourGreaterThan,
     DimensionOneContainsAllElementsOfArray,
     DimensionTwoContainsAllElementsOfArray,
     DimensionThreeContainsAllElementsOfArray,
@@ -487,21 +495,33 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionTwoOverlapsWithArray,
     DimensionThreeOverlapsWithArray,
     DimensionFourOverlapsWithArray,
-    DimensionOneContainsElementGreaterThan,
-    DimensionTwoContainsElementGreaterThan,
-    DimensionThreeContainsElementGreaterThan,
-    DimensionFourContainsElementGreaterThan,
-    DimensionOneAllElementsGreaterThan,
-    DimensionTwoAllElementsGreaterThan,
-    DimensionThreeAllElementsGreaterThan,
-    DimensionFourAllElementsGreaterThan,
 }
 impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
     //todo maybe not need
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
         match &self {
             Self::Equal => false,
+            Self::DimensionOneEqual => false,
+            Self::DimensionTwoEqual => false,
+            Self::DimensionThreeEqual => false,
+            Self::DimensionFourEqual => false,
+            Self::DimensionOneAllElementsEqual => false,
+            Self::DimensionTwoAllElementsEqual => false,
+            Self::DimensionThreeAllElementsEqual => false,
+            Self::DimensionFourAllElementsEqual => false,
             Self::GreaterThan => true,
+            Self::DimensionOneGreaterThan => true,
+            Self::DimensionTwoGreaterThan => true,
+            Self::DimensionThreeGreaterThan => true,
+            Self::DimensionFourGreaterThan => true,
+            Self::DimensionOneContainsElementGreaterThan => true,
+            Self::DimensionTwoContainsElementGreaterThan => true,
+            Self::DimensionThreeContainsElementGreaterThan => true,
+            Self::DimensionFourContainsElementGreaterThan => true,
+            Self::DimensionOneAllElementsGreaterThan => true,
+            Self::DimensionTwoAllElementsGreaterThan => true,
+            Self::DimensionThreeAllElementsGreaterThan => true,
+            Self::DimensionFourAllElementsGreaterThan => true,
             Self::Between => true,
             Self::DimensionOneBetween => true,
             Self::DimensionTwoBetween => true,
@@ -512,18 +532,6 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionTwoIn => false,
             Self::DimensionThreeIn => false,
             Self::DimensionFourIn => false,
-            Self::DimensionOneEqual => false,
-            Self::DimensionTwoEqual => false,
-            Self::DimensionThreeEqual => false,
-            Self::DimensionFourEqual => false,
-            Self::DimensionOneAllElementsEqual => false,
-            Self::DimensionTwoAllElementsEqual => false,
-            Self::DimensionThreeAllElementsEqual => false,
-            Self::DimensionFourAllElementsEqual => false,
-            Self::DimensionOneGreaterThan => true,
-            Self::DimensionTwoGreaterThan => true,
-            Self::DimensionThreeGreaterThan => true,
-            Self::DimensionFourGreaterThan => true,
             Self::DimensionOneContainsAllElementsOfArray => false,
             Self::DimensionTwoContainsAllElementsOfArray => false,
             Self::DimensionThreeContainsAllElementsOfArray => false,
@@ -532,14 +540,6 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionTwoOverlapsWithArray => false,
             Self::DimensionThreeOverlapsWithArray => false,
             Self::DimensionFourOverlapsWithArray => false,
-            Self::DimensionOneContainsElementGreaterThan => true,
-            Self::DimensionTwoContainsElementGreaterThan => true,
-            Self::DimensionThreeContainsElementGreaterThan => true,
-            Self::DimensionFourContainsElementGreaterThan => true,
-            Self::DimensionOneAllElementsGreaterThan => true,
-            Self::DimensionTwoAllElementsGreaterThan => true,
-            Self::DimensionThreeAllElementsGreaterThan => true,
-            Self::DimensionFourAllElementsGreaterThan => true,
         }
     }
 }
@@ -593,6 +593,30 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionFourGreaterThan {
                 ident: _
             } => Ok(Self::DimensionFourGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionOneContainsElementGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionTwoContainsElementGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionThreeContainsElementGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionFourContainsElementGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionOneAllElementsGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionTwoAllElementsGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionThreeAllElementsGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
+                ident: _
+            } => Ok(Self::DimensionFourAllElementsGreaterThan),
             PostgresqlJsonTypeFilter::Between {
                 ident: _
             } => Ok(Self::Between),
@@ -664,30 +688,6 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
                 ident: _
             } => Ok(Self::DimensionFourOverlapsWithArray),
-            PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
-                ident: _
-            } => Ok(Self::DimensionOneContainsElementGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
-                ident: _
-            } => Ok(Self::DimensionTwoContainsElementGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
-                ident: _
-            } => Ok(Self::DimensionThreeContainsElementGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {
-                ident: _
-            } => Ok(Self::DimensionFourContainsElementGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
-                ident: _
-            } => Ok(Self::DimensionOneAllElementsGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
-                ident: _
-            } => Ok(Self::DimensionTwoAllElementsGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
-                ident: _
-            } => Ok(Self::DimensionThreeAllElementsGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
-                ident: _
-            } => Ok(Self::DimensionFourAllElementsGreaterThan),
         }
     }
 }

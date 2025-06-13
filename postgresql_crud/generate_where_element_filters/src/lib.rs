@@ -1983,6 +1983,30 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourGreaterThan {
                     ident: _
                 } => generate_dimension_position_greater_than_token_stream(&DimensionNumber::Four),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
+                    ident: _
+                } => generate_dimension_contains_element_greater_than_token_stream(&DimensionNumber::One),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
+                    ident: _
+                } => generate_dimension_contains_element_greater_than_token_stream(&DimensionNumber::Two),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
+                    ident: _
+                } => generate_dimension_contains_element_greater_than_token_stream(&DimensionNumber::Three),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {
+                    ident: _
+                } => generate_dimension_contains_element_greater_than_token_stream(&DimensionNumber::Four),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
+                    ident: _
+                } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::One),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
+                    ident: _
+                } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::Two),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
+                    ident: _
+                } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::Three),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
+                    ident: _
+                } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between {
                     ident: _
                 } => (
@@ -2136,30 +2160,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
                     ident: _
                 } => generate_dimension_overlaps_with_array_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan { 
-                    ident: _
-                } => generate_dimension_contains_element_greater_than_token_stream(&DimensionNumber::One),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
-                    ident: _
-                } => generate_dimension_contains_element_greater_than_token_stream(&DimensionNumber::Two),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
-                    ident: _
-                } => generate_dimension_contains_element_greater_than_token_stream(&DimensionNumber::Three),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {
-                    ident: _
-                } => generate_dimension_contains_element_greater_than_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
-                    ident: _
-                } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::One),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
-                    ident: _
-                } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::Two),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
-                    ident: _
-                } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::Three),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
-                    ident: _
-                } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::Four),
             };
             let struct_token_stream = generate_struct_token_stream(
                 false,
