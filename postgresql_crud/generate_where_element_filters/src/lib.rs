@@ -13,9 +13,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let core_default_default_default_token_stream = quote::quote! {
         ::core::default::Default::default()
     };
-    let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {
-        crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
-    };
+    fn generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream() -> proc_macro2::TokenStream {
+        quote::quote! {
+            crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+        }
+    }
+    let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
     // let all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = quote::quote!{
     //     crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
     // };
@@ -59,9 +62,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let value_code_default_token_stream = quote::quote! {
         value: #core_default_default_default_token_stream
     };
-    let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = quote::quote! {
-        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-    };
+    fn generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream() -> proc_macro2::TokenStream {
+        let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
+        quote::quote! {
+            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+        }
+    }
+    let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
     let generate_query_part_zero_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens| {
         quote::quote! {
             Ok(format!(#format_handle_token_stream, &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column))
@@ -1159,6 +1166,19 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     #pub_value_t_token_stream
                 }
             }
+            fn generate_additional_fields_value_t_default_initialization_token_stream<T>(value: T) -> proc_macro2::TokenStream
+            where
+                T: IntoIterator<Item = std::primitive::u8>,
+            {
+                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                    value
+                );
+                let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
+                quote::quote!{
+                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                    #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                }
+            }
             let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1177,15 +1197,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_additional_traits_token_stream: None
                     },
                     generate_additional_fields_value_t_declaration_token_stream(range.clone()),
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range.clone()
-                        );
-                        quote::quote!{
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    generate_additional_fields_value_t_default_initialization_token_stream(range.clone()),
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_plus_one.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
@@ -1285,15 +1297,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_additional_traits_token_stream: None
                     },
                     generate_additional_fields_value_t_declaration_token_stream(range_minus_one.clone()),
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range_minus_one.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
@@ -1345,15 +1349,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_additional_traits_token_stream: None
                     },
                     generate_additional_fields_value_t_declaration_token_stream(range_minus_one.clone()),
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range_minus_one.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
@@ -1403,15 +1399,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_additional_traits_token_stream: None
                     },
                     generate_additional_fields_value_t_declaration_token_stream(range_minus_one.clone()),
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range_minus_one.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
@@ -1665,15 +1653,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             pub value: crate::NotEmptyUniqueStructVec<T>
                         }
                     },
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    generate_additional_fields_value_t_default_initialization_token_stream(range.clone()),
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
@@ -1727,15 +1707,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             pub value: crate::NotEmptyUniqueStructVec<T>
                         }
                     },
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range_minus_one.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
@@ -1788,15 +1760,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             pub value: crate::NotEmptyUniqueStructVec<T>
                         }
                     },
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range_minus_one.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
@@ -1856,15 +1820,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             pub value: crate::Between<T>
                         }
                     },
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    generate_additional_fields_value_t_default_initialization_token_stream(range.clone()),
                     {
                         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range.clone());
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
