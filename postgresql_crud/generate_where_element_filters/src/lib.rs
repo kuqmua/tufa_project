@@ -1144,7 +1144,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {#(#content_token_stream)*}
             }
-            let generate_dimension_position_number_operation_token_stream = |
+            let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
             | -> (
@@ -1204,8 +1204,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                 )
             };
-            let generate_dimension_position_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_position_number_operation_token_stream(&dimension_number, &"=");
-            let generate_dimension_position_greater_than_token_stream = |dimension_number: &DimensionNumber|generate_dimension_position_number_operation_token_stream(&dimension_number, &">");
             let generate_dimension_length_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1264,198 +1262,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_dimension_length_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &"=");
-            let generate_dimension_length_more_than_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &">");
-            let generate_dimension_position_regular_expression_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
-                let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
-                let range = 1..=dimension_number_std_primitive_u8;
-                let two_range = 2..=dimension_number_std_primitive_u8;
-                (
-                    ShouldAddDeclarationOfStructIdentGeneric::False,
-                    {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
-                        quote::quote! {
-                            #struct_additional_fields_token_stream
-                            pub regular_expression_case: crate::RegularExpressionCase,
-                            pub value: crate::RegexRegex
-                        }
-                    },
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        }
-                    },
-                    {
-                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range.clone());
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                            "{{}}((trim(both '\\\"' from ({{}}{}->>${{}})::text) {{}} ${{}}))",
-                            generate_indexes_stringified(two_range)
-                        ));
-                        let format_increments_token_stream = generate_format_increments_token_stream(range.clone());
-                        quote::quote! {
-                            #increments_initialization_token_stream
-                            let last_increment = match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    value
-                                },
-                                None => {
-                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                },
-                            };
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                #format_increments_token_stream
-                                self.regular_expression_case.postgreql_syntax(),
-                                last_increment
-                            ))
-                        }
-                    },
-                    {
-                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range.clone());
-                        quote::quote! {
-                            #query_bind_dimension_position_token_stream
-                            query = query.bind(self.value.to_string());
-                            query
-                        }
-                    },
-                )
-            };
-            let generate_dimension_contains_all_elements_of_array_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
-                let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
-                (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
-                    },
-                    {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
-                        quote::quote! {
-                            #struct_additional_fields_token_stream
-                            value: crate::NotEmptyUniqueStructVec<T>
-                        }
-                    },
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range_minus_one.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
-                    {
-                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                            "{{}}({{}}{} @> {{value}})",
-                            generate_indexes_stringified(range_minus_one.clone())
-                        ));
-                        let format_increments_token_stream = generate_format_increments_token_stream(range_minus_one.clone());
-                        quote::quote! {
-                            #increments_initialization_token_stream
-                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                } 
-                            };
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                #format_increments_token_stream
-                            ))
-                        }
-                    },
-                    {
-                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
-                        quote::quote! {
-                            #query_bind_dimension_position_token_stream
-                            query = query.bind(sqlx::types::Json(self.value));
-                            query
-                        }
-                    },
-                )
-            };
-            let generate_dimension_overlaps_with_array_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
-                let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
-                (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
-                    },
-                    {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
-                        quote::quote! {
-                            #struct_additional_fields_token_stream
-                            value: crate::NotEmptyUniqueStructVec<T>
-                        }
-                    },
-                    {
-                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                            range_minus_one.clone()
-                        );
-                        quote::quote! {
-                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
-                    {
-                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                            "{{}}(exists (select 1 from jsonb_array_elements_text({{}}{}) as e1 join jsonb_array_elements_text({{value}}) as e2 on e1.value = e2.value))",
-                            generate_indexes_stringified(range_minus_one.clone())
-                        ));
-                        let format_increments_token_stream = generate_format_increments_token_stream(range_minus_one.clone());
-                        quote::quote! {
-                            #increments_initialization_token_stream
-                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                } 
-                            };
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                #format_increments_token_stream
-                            ))
-                        }
-                    },
-                    {
-                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
-                        quote::quote! {
-                            #query_bind_dimension_position_token_stream
-                            query = query.bind(sqlx::types::Json(self.value));
-                            query
-                        }
-                    },
-                )
-            };
+            let generate_dimension_position_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_array_number_operation_token_stream(&dimension_number, &"=");
             let generate_dimension_all_elements_equal_token_stream = |dimension_number: &DimensionNumber| -> (
                 ShouldAddDeclarationOfStructIdentGeneric,
                 proc_macro2::TokenStream,
@@ -1520,6 +1327,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                 )
             };
+            let generate_dimension_length_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &"=");
+            let generate_dimension_position_greater_than_token_stream = |dimension_number: &DimensionNumber|generate_dimension_array_number_operation_token_stream(&dimension_number, &">");
             let generate_dimension_contains_element_greater_than_token_stream = |dimension_number: &DimensionNumber| -> (
                 ShouldAddDeclarationOfStructIdentGeneric,
                 proc_macro2::TokenStream,
@@ -1643,6 +1452,74 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
                             query = query.bind(sqlx::types::Json(self.value));
+                            query
+                        }
+                    },
+                )
+            };
+            let generate_dimension_position_regular_expression_token_stream = |dimension_number: &DimensionNumber| -> (
+                ShouldAddDeclarationOfStructIdentGeneric,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+            ) {
+                let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
+                let range = 1..=dimension_number_std_primitive_u8;
+                let two_range = 2..=dimension_number_std_primitive_u8;
+                (
+                    ShouldAddDeclarationOfStructIdentGeneric::False,
+                    {
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
+                        quote::quote! {
+                            #struct_additional_fields_token_stream
+                            pub regular_expression_case: crate::RegularExpressionCase,
+                            pub value: crate::RegexRegex
+                        }
+                    },
+                    {
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                            range.clone()
+                        );
+                        quote::quote! {
+                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                            regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        }
+                    },
+                    {
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range.clone());
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}((trim(both '\\\"' from ({{}}{}->>${{}})::text) {{}} ${{}}))",
+                            generate_indexes_stringified(two_range)
+                        ));
+                        let format_increments_token_stream = generate_format_increments_token_stream(range.clone());
+                        quote::quote! {
+                            #increments_initialization_token_stream
+                            let last_increment = match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    value
+                                },
+                                None => {
+                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                },
+                            };
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #format_increments_token_stream
+                                self.regular_expression_case.postgreql_syntax(),
+                                last_increment
+                            ))
+                        }
+                    },
+                    {
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range.clone());
+                        quote::quote! {
+                            #query_bind_dimension_position_token_stream
+                            query = query.bind(self.value.to_string());
                             query
                         }
                     },
@@ -1840,6 +1717,130 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
                             query = self.value.query_bind_one_by_one(query);
+                            query
+                        }
+                    },
+                )
+            };
+            let generate_dimension_length_more_than_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &">");
+
+            let generate_dimension_contains_all_elements_of_array_token_stream = |dimension_number: &DimensionNumber| -> (
+                ShouldAddDeclarationOfStructIdentGeneric,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+            ) {
+                let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
+                (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
+                    },
+                    {
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
+                        quote::quote! {
+                            #struct_additional_fields_token_stream
+                            value: crate::NotEmptyUniqueStructVec<T>
+                        }
+                    },
+                    {
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                            range_minus_one.clone()
+                        );
+                        quote::quote! {
+                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        }
+                    },
+                    {
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}({{}}{} @> {{value}})",
+                            generate_indexes_stringified(range_minus_one.clone())
+                        ));
+                        let format_increments_token_stream = generate_format_increments_token_stream(range_minus_one.clone());
+                        quote::quote! {
+                            #increments_initialization_token_stream
+                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                } 
+                            };
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #format_increments_token_stream
+                            ))
+                        }
+                    },
+                    {
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
+                        quote::quote! {
+                            #query_bind_dimension_position_token_stream
+                            query = query.bind(sqlx::types::Json(self.value));
+                            query
+                        }
+                    },
+                )
+            };
+            let generate_dimension_overlaps_with_array_token_stream = |dimension_number: &DimensionNumber| -> (
+                ShouldAddDeclarationOfStructIdentGeneric,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+            ) {
+                let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
+                (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
+                    },
+                    {
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
+                        quote::quote! {
+                            #struct_additional_fields_token_stream
+                            value: crate::NotEmptyUniqueStructVec<T>
+                        }
+                    },
+                    {
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                            range_minus_one.clone()
+                        );
+                        quote::quote! {
+                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        }
+                    },
+                    {
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}(exists (select 1 from jsonb_array_elements_text({{}}{}) as e1 join jsonb_array_elements_text({{value}}) as e2 on e1.value = e2.value))",
+                            generate_indexes_stringified(range_minus_one.clone())
+                        ));
+                        let format_increments_token_stream = generate_format_increments_token_stream(range_minus_one.clone());
+                        quote::quote! {
+                            #increments_initialization_token_stream
+                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                } 
+                            };
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #format_increments_token_stream
+                            ))
+                        }
+                    },
+                    {
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
+                        quote::quote! {
+                            #query_bind_dimension_position_token_stream
+                            query = query.bind(sqlx::types::Json(self.value));
                             query
                         }
                     },
