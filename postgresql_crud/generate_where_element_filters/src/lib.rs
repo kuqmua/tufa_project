@@ -1845,6 +1845,75 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                 )
             };
+            let generate_dimension_between_token_stream = |dimension_number: &DimensionNumber| -> (
+                ShouldAddDeclarationOfStructIdentGeneric,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+            ) {
+                let range = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
+                (
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: Some(quote::quote!{
+                            std::fmt::Debug
+                            + std::cmp::PartialEq
+                            + PartialOrd
+                            + std::clone::Clone
+                            + sqlx::Type<sqlx::Postgres>
+                            + for<'__> sqlx::Encode<'__, sqlx::Postgres>
+                        })
+                    },
+                    {
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
+                        quote::quote! {
+                            #struct_additional_fields_token_stream
+                            value: crate::Between<T>
+                        }
+                    },
+                    {
+                        let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                            range.clone()
+                        );
+                        quote::quote! {
+                            #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        }
+                    },
+                    {
+                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range.clone());
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}({{}}{} {{}})",
+                            generate_indexes_stringified(range.clone())
+                        ));
+                        let format_increments_token_stream = generate_format_increments_token_stream(range.clone());
+                        quote::quote! {
+                            #increments_initialization_token_stream
+                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #format_increments_token_stream
+                                value
+                            ))
+                        }
+                    },
+                    {
+                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range);
+                        quote::quote! {
+                            #query_bind_dimension_position_token_stream
+                            query = self.value.query_bind(query);
+                            query
+                        }
+                    },
+                )
+            };
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
@@ -1910,140 +1979,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneBetween {
                     ident: _
-                } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream:  Some(quote::quote!{
-                            std::fmt::Debug
-                            + std::cmp::PartialEq
-                            + PartialOrd
-                            + std::clone::Clone
-                            + sqlx::Type<sqlx::Postgres>
-                            + for<'__> sqlx::Encode<'__, sqlx::Postgres>
-                        })
-                    },
-                    quote::quote! {value: crate::Between<T>},
-                    quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    },
-                    quote::quote! {
-                        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        Ok(format!(
-                            "{}({column} {value})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator)
-                        ))
-                    },
-                    quote::quote! {
-                        query = self.value.query_bind(query);
-                        query
-                    },
-                ),
+                } => generate_dimension_between_token_stream(&DimensionNumber::One),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoBetween {
                     ident: _
-                } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream:  Some(quote::quote!{
-                            std::fmt::Debug
-                            + std::cmp::PartialEq
-                            + PartialOrd
-                            + std::clone::Clone
-                            + sqlx::Type<sqlx::Postgres>
-                            + for<'__> sqlx::Encode<'__, sqlx::Postgres>
-                        })
-                    },
-                    quote::quote! {value: crate::Between<T>},
-                    quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    },
-                    quote::quote! {
-                        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        Ok(format!(
-                            "{}({column} {value})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator)
-                        ))
-                    },
-                    quote::quote! {
-                        query = self.value.query_bind(query);
-                        query
-                    },
-                ),
+                } => generate_dimension_between_token_stream(&DimensionNumber::Two),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeBetween {
                     ident: _
-                } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream:  Some(quote::quote!{
-                            std::fmt::Debug
-                            + std::cmp::PartialEq
-                            + PartialOrd
-                            + std::clone::Clone
-                            + sqlx::Type<sqlx::Postgres>
-                            + for<'__> sqlx::Encode<'__, sqlx::Postgres>
-                        })
-                    },
-                    quote::quote! {value: crate::Between<T>},
-                    quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    },
-                    quote::quote! {
-                        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        Ok(format!(
-                            "{}({column} {value})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator)
-                        ))
-                    },
-                    quote::quote! {
-                        query = self.value.query_bind(query);
-                        query
-                    },
-                ),
+                } => generate_dimension_between_token_stream(&DimensionNumber::Three),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourBetween {
                     ident: _
-                } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream:  Some(quote::quote!{
-                            std::fmt::Debug
-                            + std::cmp::PartialEq
-                            + PartialOrd
-                            + std::clone::Clone
-                            + sqlx::Type<sqlx::Postgres>
-                            + for<'__> sqlx::Encode<'__, sqlx::Postgres>
-                        })
-                    },
-                    quote::quote! {value: crate::Between<T>},
-                    quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    },
-                    quote::quote! {
-                        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        Ok(format!(
-                            "{}({column} {value})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator)
-                        ))
-                    },
-                    quote::quote! {
-                        query = self.value.query_bind(query);
-                        query
-                    },
-                ),
+                } => generate_dimension_between_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In {
                     ident: _
                 } => (
