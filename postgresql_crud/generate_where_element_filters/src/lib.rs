@@ -1146,6 +1146,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {#(#content_token_stream)*}
             }
+            let pub_value_t_token_stream = quote::quote!{pub value: T};
             let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1167,7 +1168,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub value: T,
+                            #pub_value_t_token_stream,
                         }
                     },
                     {
@@ -1281,7 +1282,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub value: T
+                            #pub_value_t_token_stream
                         }
                     },
                     {
@@ -1347,7 +1348,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub value: T
+                            #pub_value_t_token_stream
                         }
                     },
                     {
@@ -1411,7 +1412,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub value: T
+                            #pub_value_t_token_stream
                         }
                     },
                     {
