@@ -77,6 +77,22 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::DimensionFourEqual {
                     ident,
                 } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => None,
+                crate::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => None,
+                crate::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual => None,
+                crate::PostgresqlJsonTypeFilter::DimensionFourLengthEqual => None,
                 crate::PostgresqlJsonTypeFilter::GreaterThan {
                     ident,
                 } => Some(ident.clone()),
@@ -135,10 +151,6 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::DimensionTwoAllElementsRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::DimensionThreeAllElementsRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::DimensionFourAllElementsRegularExpression => None,
-                crate::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => None,
-                crate::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => None,
-                crate::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual => None,
-                crate::PostgresqlJsonTypeFilter::DimensionFourLengthEqual => None,
                 crate::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => None,
                 crate::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => None,
                 crate::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => None,
@@ -165,18 +177,6 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                     ident,
                 } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
                     ident,
                 } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {

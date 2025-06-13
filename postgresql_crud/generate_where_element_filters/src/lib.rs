@@ -1944,6 +1944,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourEqual {
                     ident: _
                 } => generate_dimension_position_equal_token_stream(&DimensionNumber::Four),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
+                    ident: _
+                } => generate_dimension_all_elements_equal_token_stream(&DimensionNumber::One),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
+                    ident: _
+                } => generate_dimension_all_elements_equal_token_stream(&DimensionNumber::Two),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual {
+                    ident: _
+                } => generate_dimension_all_elements_equal_token_stream(&DimensionNumber::Three),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
+                    ident: _
+                } => generate_dimension_all_elements_equal_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => generate_dimension_length_equal_token_stream(&DimensionNumber::One),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => generate_dimension_length_equal_token_stream(&DimensionNumber::Two),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual => generate_dimension_length_equal_token_stream(&DimensionNumber::Three),
@@ -2124,18 +2136,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
                     ident: _
                 } => generate_dimension_overlaps_with_array_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
-                    ident: _
-                } => generate_dimension_all_elements_equal_token_stream(&DimensionNumber::One),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
-                    ident: _
-                } => generate_dimension_all_elements_equal_token_stream(&DimensionNumber::Two),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual {
-                    ident: _
-                } => generate_dimension_all_elements_equal_token_stream(&DimensionNumber::Three),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
-                    ident: _
-                } => generate_dimension_all_elements_equal_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan { 
                     ident: _
                 } => generate_dimension_contains_element_greater_than_token_stream(&DimensionNumber::One),
