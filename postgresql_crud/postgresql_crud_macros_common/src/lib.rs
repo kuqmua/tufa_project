@@ -80,6 +80,18 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::GreaterThan {
                     ident,
                 } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionThreePositionGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
+                    ident,
+                } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::Between {
                     ident,
                 } => Some(ident.clone()),
@@ -119,18 +131,6 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => None,
                 crate::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => None,
                 crate::PostgresqlJsonTypeFilter::DimensionFourLengthMoreThan => None,
-                crate::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionThreePositionGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
-                    ident,
-                } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::DimensionTwoPositionRegularExpression => None,
                 crate::PostgresqlJsonTypeFilter::DimensionThreePositionRegularExpression => None,
