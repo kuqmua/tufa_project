@@ -140,7 +140,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   }
                   # },
                   # {
-                  #   "DimensionOnePositionEqual": {
+                  #   "DimensionOneEqual": {
                   #     "logical_operator": "Or",
                   #     "dimension1_position": 0,
                   #     "value": [
@@ -153,7 +153,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   }
                   # },
                   # {
-                  #   "DimensionTwoPositionEqual": {
+                  #   "DimensionTwoEqual": {
                   #     "logical_operator": "Or",
                   #     "dimension1_position": 0,
                   #     "dimension2_position": 0,
@@ -165,7 +165,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   }
                   # },
                   # {
-                  #   "DimensionThreePositionEqual": {
+                  #   "DimensionThreeEqual": {
                   #     "logical_operator": "Or",
                   #     "dimension1_position": 0,
                   #     "dimension2_position": 0,
@@ -176,7 +176,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   }
                   # },
                   # {
-                  #   "DimensionFourPositionEqual": {
+                  #   "DimensionFourEqual": {
                   #     "logical_operator": "Or",
                   #     "dimension1_position": 0,
                   #     "dimension2_position": 0,

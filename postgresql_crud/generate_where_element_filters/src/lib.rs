@@ -1932,16 +1932,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("=")),
                     query_bind_sqlx_types_json_self_value_token_stream.clone(),
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneEqual {
                     ident: _
                 } => generate_dimension_position_equal_token_stream(&DimensionNumber::One),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoEqual {
                     ident: _
                 } => generate_dimension_position_equal_token_stream(&DimensionNumber::Two),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionEqual {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeEqual {
                     ident: _
                 } => generate_dimension_position_equal_token_stream(&DimensionNumber::Three),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourEqual {
                     ident: _
                 } => generate_dimension_position_equal_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => generate_dimension_length_equal_token_stream(&DimensionNumber::One),
