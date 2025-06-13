@@ -517,7 +517,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     };
     let regular_expression_case_and_value_default_initialization_token_stream = quote::quote! {
         regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
     };
     let generate_query_part_regular_expression_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
         quote::quote! {
@@ -1177,7 +1177,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote!{
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -1291,7 +1291,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -1357,7 +1357,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -1421,7 +1421,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -1487,7 +1487,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                             regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -1555,7 +1555,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                             regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         }
                     },
                     {
@@ -1623,7 +1623,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
                             regular_expression_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -1689,7 +1689,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -1751,7 +1751,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -1812,7 +1812,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -1880,7 +1880,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                            value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
                     {
@@ -2024,9 +2024,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         })
                     },
                     quote::quote! {value: crate::Between<T>},
-                    quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    },
+                    value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     quote::quote! {
                         let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
                             Ok(value) => value,
@@ -2063,9 +2061,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
                     },
                     quote::quote! {value: crate::NotEmptyUniqueStructVec<T>},
-                    quote::quote! {
-                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    },
+                    value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     {
                         quote::quote! {
                             let value = match self.value.query_part_one_by_one(increment, column, is_need_to_add_logical_operator) {
