@@ -1041,147 +1041,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }
     };
     let postgresql_json_type_token_stream = {
-        // #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
-        // enum PostgresqlJsonTypeFilterInitializedWithTryNew {
-        //     Between,
-        // }
-        // impl std::convert::TryFrom<&postgresql_crud_macros_common::PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilterInitializedWithTryNew {
-        //     type Error = ();
-        //     fn try_from(value: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter) -> Result<Self, Self::Error> {
-        //         match &value {
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between {
-        //                 ident: _
-        //             } => Ok(Self::Between),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::In {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneIn {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoIn {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeIn {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourIn {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::RegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthEqual => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthEqual => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthMoreThan => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionEqual {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsAllElementsOfArray {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsAllElementsOfArray {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsAllElementsOfArray {
-        //                 ident: _
-        //             } => Err(()),
-        //             // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainedInArray => todo!(),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneOverlapsWithArray {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoOverlapsWithArray {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeOverlapsWithArray {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsEqual {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsEqual {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsEqual {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
-        //                 ident: _
-        //             } => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsRegularExpression => Err(()),
-        //             postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsRegularExpression => Err(()),
-        //         }
-        //     }
-        // }
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
             let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             let query_bind_sqlx_types_json_self_value_token_stream = quote::quote! {
@@ -2240,75 +2099,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &DimensionNumber::Four
                 ),
             };
-            // let filter_initialized_with_try_new_result = PostgresqlJsonTypeFilterInitializedWithTryNew::try_from(filter);
             let struct_token_stream = generate_struct_token_stream(
-                // filter_initialized_with_try_new_result.is_ok(),
                 false,
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
                 &struct_additional_fields_token_stream,
             );
-            // let maybe_try_new_logic_token_stream = match filter_initialized_with_try_new_result {
-            //     Ok(value) => {
-            //         let (
-            //             should_add_declaration_of_generic_parameter_to_ident_try_new_error_named,
-            //             enum_ident_try_new_error_named_content_token_stream,
-            //             generic_requirements_token_stream,
-            //             additional_input_parameters_token_stream,
-            //             impl_try_new_for_ident_content_token_stream,
-            //             option_additional_traits_annotations_token_stream,
-            //             additional_fields,
-            //         ) = match &value {
-            //             PostgresqlJsonTypeFilterInitializedWithTryNew::Between => (
-            //                 &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-            //                 &quote::quote! {
-            //                     StartMoreOrEqualToEnd {
-            //                         #[eo_to_std_string_string_serialize_deserialize]
-            //                         start: T,
-            //                         #[eo_to_std_string_string_serialize_deserialize]
-            //                         end: T,
-            //                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-            //                     },
-            //                 },
-            //                 &quote::quote! {: std::cmp::PartialOrd},
-            //                 &quote::quote! {
-            //                     start: T,
-            //                     end: T,
-            //                 },
-            //                 &quote::quote! {
-            //                     if start < end {//removed .0
-            //                         Ok(Self {
-            //                             logical_operator,
-            //                             start,
-            //                             end
-            //                         })
-            //                     } else {
-            //                         Err(#ident_try_new_error_named::StartMoreOrEqualToEnd {
-            //                             start,
-            //                             end,
-            //                             code_occurence: error_occurence_lib::code_occurence!(),
-            //                         })
-            //                     }
-            //                 },
-            //                 Some(quote::quote! {+ std::cmp::PartialOrd}),
-            //                 &vec![&start_t_field, &end_t_field],
-            //             ),
-            //         };
-            //         generate_try_new_logic_token_stream(
-            //             &ident,
-            //             &ident_try_new_error_named,
-            //             &should_add_declaration_of_struct_ident_generic,
-            //             should_add_declaration_of_generic_parameter_to_ident_try_new_error_named,
-            //             enum_ident_try_new_error_named_content_token_stream,
-            //             generic_requirements_token_stream,
-            //             additional_input_parameters_token_stream,
-            //             impl_try_new_for_ident_content_token_stream,
-            //             option_additional_traits_annotations_token_stream,
-            //             additional_fields,
-            //         )
-            //     }
-            //     Err(_) => proc_macro2::TokenStream::new(),
-            // };
             let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
@@ -2325,7 +2121,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             //todo pub fields or not
             let f = quote::quote! {
                 #struct_token_stream
-                // #maybe_try_new_logic_token_stream
                 #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                 #impl_postgresql_type_where_filter_token_stream
             };
