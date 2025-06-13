@@ -364,7 +364,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #   }
                   # },
                   # {
-                  #   "DimensionFourPositionGreaterThan": {
+                  #   "DimensionFourGreaterThan": {
                   #     "logical_operator": "Or",
                   #     "dimension1_position": 0,
                   #     "dimension2_position": 0,

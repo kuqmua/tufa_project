@@ -1380,7 +1380,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 match &postgresql_json_type_specific {
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut filters = common_array_dimension1_postgresql_json_type_filters.clone();
-                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneGreaterThan {
                                             ident: array_dimension1_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
@@ -1459,7 +1459,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 match &postgresql_json_type_specific {
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut filters = common_array_dimension2_postgresql_json_type_filters.clone();
-                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan {
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoGreaterThan {
                                             ident: array_dimension2_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementGreaterThan {
@@ -1560,7 +1560,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 match &postgresql_json_type_specific {
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut filters = common_array_dimension3_postgresql_json_type_filters.clone();
-                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionGreaterThan {
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeGreaterThan {
                                             ident: array_dimension3_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementGreaterThan {
@@ -1684,7 +1684,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 match &postgresql_json_type_specific {
                                     PostgresqlJsonTypeSpecific::Number => {
                                         let mut filters = common_array_dimension4_postgresql_json_type_filters.clone();
-                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
+                                        filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourGreaterThan {
                                             ident: array_dimension4_inner_element_ident_origin_upper_camel_case.clone(),
                                         });
                                         filters.push(postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementGreaterThan {

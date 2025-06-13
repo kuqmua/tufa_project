@@ -1959,16 +1959,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(">")),
                     query_bind_sqlx_types_json_self_value_token_stream.clone(),
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneGreaterThan {
                     ident: _
                 } => generate_dimension_position_greater_than_token_stream(&DimensionNumber::One),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoGreaterThan {
                     ident: _
                 } => generate_dimension_position_greater_than_token_stream(&DimensionNumber::Two),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreePositionGreaterThan {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeGreaterThan {
                     ident: _
                 } => generate_dimension_position_greater_than_token_stream(&DimensionNumber::Three),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourGreaterThan {
                     ident: _
                 } => generate_dimension_position_greater_than_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Between {

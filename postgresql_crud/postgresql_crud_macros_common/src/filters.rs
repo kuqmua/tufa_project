@@ -167,16 +167,16 @@ pub enum PostgresqlJsonTypeFilter {
     GreaterThan {
         ident: proc_macro2::TokenStream,
     },
-    DimensionOnePositionGreaterThan {
+    DimensionOneGreaterThan {
         ident: proc_macro2::TokenStream,
     },
-    DimensionTwoPositionGreaterThan {
+    DimensionTwoGreaterThan {
         ident: proc_macro2::TokenStream,
     },
-    DimensionThreePositionGreaterThan {
+    DimensionThreeGreaterThan {
         ident: proc_macro2::TokenStream,
     },
-    DimensionFourPositionGreaterThan {
+    DimensionFourGreaterThan {
         ident: proc_macro2::TokenStream,
     },
     Between {
@@ -313,18 +313,18 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::GreaterThan {
                 ident: _
             } => &naming::GreaterThanUpperCamelCase,
-            Self::DimensionOnePositionGreaterThan {
+            Self::DimensionOneGreaterThan {
                 ident: _
-            } => &naming::DimensionOnePositionGreaterThanUpperCamelCase,
-            Self::DimensionTwoPositionGreaterThan {
+            } => &naming::DimensionOneGreaterThanUpperCamelCase,
+            Self::DimensionTwoGreaterThan {
                 ident: _
-            } => &naming::DimensionTwoPositionGreaterThanUpperCamelCase,
-            Self::DimensionThreePositionGreaterThan {
+            } => &naming::DimensionTwoGreaterThanUpperCamelCase,
+            Self::DimensionThreeGreaterThan {
                 ident: _
-            } => &naming::DimensionThreePositionGreaterThanUpperCamelCase,
-            Self::DimensionFourPositionGreaterThan {
+            } => &naming::DimensionThreeGreaterThanUpperCamelCase,
+            Self::DimensionFourGreaterThan {
                 ident: _
-            } => &naming::DimensionFourPositionGreaterThanUpperCamelCase,
+            } => &naming::DimensionFourGreaterThanUpperCamelCase,
             Self::Between {
                 ident: _
             } => &naming::BetweenUpperCamelCase,
@@ -471,10 +471,10 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionTwoEqual,
     DimensionThreeEqual,
     DimensionFourEqual,
-    DimensionOnePositionGreaterThan,
-    DimensionTwoPositionGreaterThan,
-    DimensionThreePositionGreaterThan,
-    DimensionFourPositionGreaterThan,
+    DimensionOneGreaterThan,
+    DimensionTwoGreaterThan,
+    DimensionThreeGreaterThan,
+    DimensionFourGreaterThan,
     DimensionOneContainsAllElementsOfArray,
     DimensionTwoContainsAllElementsOfArray,
     DimensionThreeContainsAllElementsOfArray,
@@ -516,10 +516,10 @@ impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
             Self::DimensionTwoEqual => false,
             Self::DimensionThreeEqual => false,
             Self::DimensionFourEqual => false,
-            Self::DimensionOnePositionGreaterThan => true,
-            Self::DimensionTwoPositionGreaterThan => true,
-            Self::DimensionThreePositionGreaterThan => true,
-            Self::DimensionFourPositionGreaterThan => true,
+            Self::DimensionOneGreaterThan => true,
+            Self::DimensionTwoGreaterThan => true,
+            Self::DimensionThreeGreaterThan => true,
+            Self::DimensionFourGreaterThan => true,
             Self::DimensionOneContainsAllElementsOfArray => false,
             Self::DimensionTwoContainsAllElementsOfArray => false,
             Self::DimensionThreeContainsAllElementsOfArray => false,
@@ -565,18 +565,18 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::GreaterThan {
                 ident: _
             } => Ok(Self::GreaterThan),
-            PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
+            PostgresqlJsonTypeFilter::DimensionOneGreaterThan {
                 ident: _
-            } => Ok(Self::DimensionOnePositionGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionTwoPositionGreaterThan {
+            } => Ok(Self::DimensionOneGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionTwoGreaterThan {
                 ident: _
-            } => Ok(Self::DimensionTwoPositionGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionThreePositionGreaterThan {
+            } => Ok(Self::DimensionTwoGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionThreeGreaterThan {
                 ident: _
-            } => Ok(Self::DimensionThreePositionGreaterThan),
-            PostgresqlJsonTypeFilter::DimensionFourPositionGreaterThan {
+            } => Ok(Self::DimensionThreeGreaterThan),
+            PostgresqlJsonTypeFilter::DimensionFourGreaterThan {
                 ident: _
-            } => Ok(Self::DimensionFourPositionGreaterThan),
+            } => Ok(Self::DimensionFourGreaterThan),
             PostgresqlJsonTypeFilter::Between {
                 ident: _
             } => Ok(Self::Between),
