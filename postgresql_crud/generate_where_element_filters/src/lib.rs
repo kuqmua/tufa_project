@@ -2071,6 +2071,30 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoRegularExpression => generate_dimension_position_regular_expression_token_stream(&DimensionNumber::Two),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeRegularExpression => generate_dimension_position_regular_expression_token_stream(&DimensionNumber::Three),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourRegularExpression => generate_dimension_position_regular_expression_token_stream(&DimensionNumber::Four),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
+                    &DimensionNumber::One
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
+                    &DimensionNumber::Two
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
+                    &DimensionNumber::Three
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
+                    &DimensionNumber::Four
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
+                    &DimensionNumber::One
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
+                    &DimensionNumber::Two
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
+                    &DimensionNumber::Three
+                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
+                    &DimensionNumber::Four
+                ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => generate_dimension_length_more_than_token_stream(&DimensionNumber::One),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => generate_dimension_length_more_than_token_stream(&DimensionNumber::Two),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => generate_dimension_length_more_than_token_stream(&DimensionNumber::Three),
@@ -2136,30 +2160,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsGreaterThan {
                     ident: _
                 } => generate_dimension_all_elements_greater_than_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
-                    &DimensionNumber::One
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
-                    &DimensionNumber::Two
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
-                    &DimensionNumber::Three
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
-                    &DimensionNumber::Four
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
-                    &DimensionNumber::One
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
-                    &DimensionNumber::Two
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
-                    &DimensionNumber::Three
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
-                    &DimensionNumber::Four
-                ),
             };
             let struct_token_stream = generate_struct_token_stream(
                 false,
