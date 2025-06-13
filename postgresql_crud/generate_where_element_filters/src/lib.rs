@@ -1167,7 +1167,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            value: T,
+                            pub value: T,
                         }
                     },
                     {
@@ -1225,7 +1225,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            value: #unsigned_part_of_std_primitive_i32_token_stream
+                            pub value: #unsigned_part_of_std_primitive_i32_token_stream
                         }
                     },
                     {
@@ -1679,7 +1679,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            value: crate::NotEmptyUniqueStructVec<T>
+                            pub value: crate::NotEmptyUniqueStructVec<T>
                         }
                     },
                     {
@@ -1725,7 +1725,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 )
             };
             let generate_dimension_length_more_than_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &greater_than_sign);
-
             let generate_dimension_contains_all_elements_of_array_token_stream = |dimension_number: &DimensionNumber| -> (
                 ShouldAddDeclarationOfStructIdentGeneric,
                 proc_macro2::TokenStream,
@@ -1742,7 +1741,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            value: crate::NotEmptyUniqueStructVec<T>
+                            pub value: crate::NotEmptyUniqueStructVec<T>
                         }
                     },
                     {
@@ -1803,7 +1802,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            value: crate::NotEmptyUniqueStructVec<T>
+                            pub value: crate::NotEmptyUniqueStructVec<T>
                         }
                     },
                     {
@@ -1871,7 +1870,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone());
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            value: crate::Between<T>
+                            pub value: crate::Between<T>
                         }
                     },
                     {
