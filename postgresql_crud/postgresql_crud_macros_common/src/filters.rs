@@ -152,6 +152,18 @@ pub enum PostgresqlJsonTypeFilter {
     Equal {
         ident: proc_macro2::TokenStream,
     },
+    DimensionOnePositionEqual {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionTwoPositionEqual {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionThreePositionEqual {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionFourPositionEqual {
+        ident: proc_macro2::TokenStream,
+    },
     GreaterThan {
         ident: proc_macro2::TokenStream,
     },
@@ -194,18 +206,6 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoLengthMoreThan,
     DimensionThreeLengthMoreThan,
     DimensionFourLengthMoreThan,
-    DimensionOnePositionEqual {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionTwoPositionEqual {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionThreePositionEqual {
-        ident: proc_macro2::TokenStream,
-    },
-    DimensionFourPositionEqual {
-        ident: proc_macro2::TokenStream,
-    },
     DimensionOnePositionGreaterThan {
         ident: proc_macro2::TokenStream,
     },
@@ -298,6 +298,18 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::Equal {
                 ident: _
             } => &naming::EqualUpperCamelCase,
+            Self::DimensionOnePositionEqual {
+                ident: _
+            } => &naming::DimensionOnePositionEqualUpperCamelCase,
+            Self::DimensionTwoPositionEqual {
+                ident: _
+            } => &naming::DimensionTwoPositionEqualUpperCamelCase,
+            Self::DimensionThreePositionEqual {
+                ident: _
+            } => &naming::DimensionThreePositionEqualUpperCamelCase,
+            Self::DimensionFourPositionEqual {
+                ident: _
+            } => &naming::DimensionFourPositionEqualUpperCamelCase,
             Self::GreaterThan {
                 ident: _
             } => &naming::GreaterThanUpperCamelCase,
@@ -340,18 +352,6 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoLengthMoreThan => &naming::DimensionTwoLengthMoreThanUpperCamelCase,
             Self::DimensionThreeLengthMoreThan => &naming::DimensionThreeLengthMoreThanUpperCamelCase,
             Self::DimensionFourLengthMoreThan => &naming::DimensionFourLengthMoreThanUpperCamelCase,
-            Self::DimensionOnePositionEqual {
-                ident: _
-            } => &naming::DimensionOnePositionEqualUpperCamelCase,
-            Self::DimensionTwoPositionEqual {
-                ident: _
-            } => &naming::DimensionTwoPositionEqualUpperCamelCase,
-            Self::DimensionThreePositionEqual {
-                ident: _
-            } => &naming::DimensionThreePositionEqualUpperCamelCase,
-            Self::DimensionFourPositionEqual {
-                ident: _
-            } => &naming::DimensionFourPositionEqualUpperCamelCase,
             Self::DimensionOnePositionGreaterThan {
                 ident: _
             } => &naming::DimensionOnePositionGreaterThanUpperCamelCase,
@@ -550,6 +550,18 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::Equal {
                 ident: _
             } => Ok(Self::Equal),
+            PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
+                ident: _
+            } => Ok(Self::DimensionOnePositionEqual),
+            PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
+                ident: _
+            } => Ok(Self::DimensionTwoPositionEqual),
+            PostgresqlJsonTypeFilter::DimensionThreePositionEqual {
+                ident: _
+            } => Ok(Self::DimensionThreePositionEqual),
+            PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
+                ident: _
+            } => Ok(Self::DimensionFourPositionEqual),
             PostgresqlJsonTypeFilter::GreaterThan {
                 ident: _
             } => Ok(Self::GreaterThan),
@@ -592,18 +604,6 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
             PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => Err(()),
             PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => Err(()),
             PostgresqlJsonTypeFilter::DimensionFourLengthMoreThan => Err(()),
-            PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
-                ident: _
-            } => Ok(Self::DimensionOnePositionEqual),
-            PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
-                ident: _
-            } => Ok(Self::DimensionTwoPositionEqual),
-            PostgresqlJsonTypeFilter::DimensionThreePositionEqual {
-                ident: _
-            } => Ok(Self::DimensionThreePositionEqual),
-            PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
-                ident: _
-            } => Ok(Self::DimensionFourPositionEqual),
             PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
                 ident: _
             } => Ok(Self::DimensionOnePositionGreaterThan),

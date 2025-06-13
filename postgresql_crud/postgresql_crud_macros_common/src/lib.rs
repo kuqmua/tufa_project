@@ -65,6 +65,18 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::Equal {
                     ident,
                 } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionThreePositionEqual {
+                    ident,
+                } => Some(ident.clone()),
+                crate::PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
+                    ident,
+                } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::GreaterThan {
                     ident,
                 } => Some(ident.clone()),
@@ -107,18 +119,6 @@ pub fn generate_postgresql_type_where_element_token_stream_second(
                 crate::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => None,
                 crate::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => None,
                 crate::PostgresqlJsonTypeFilter::DimensionFourLengthMoreThan => None,
-                crate::PostgresqlJsonTypeFilter::DimensionOnePositionEqual {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionTwoPositionEqual {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionThreePositionEqual {
-                    ident,
-                } => Some(ident.clone()),
-                crate::PostgresqlJsonTypeFilter::DimensionFourPositionEqual {
-                    ident,
-                } => Some(ident.clone()),
                 crate::PostgresqlJsonTypeFilter::DimensionOnePositionGreaterThan {
                     ident,
                 } => Some(ident.clone()),
