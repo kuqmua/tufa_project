@@ -1884,31 +1884,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             + std::clone::Clone
                         })
                     },
+                    quote::quote! {value: crate::Between<T>},
                     quote::quote! {
-                        value: crate::Between<T>,
-                        // start: T,
-                        // end: T,
-                    },
-                    quote::quote! {
-                        // start: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        // end: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     },
                     quote::quote! {
-                        // let first_increment = match increment.checked_add(1) {
-                        //     Some(value) => {
-                        //         *increment = value;
-                        //         value
-                        //     }
-                        //     None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                        // };
-                        // let second_increment = match increment.checked_add(1) {
-                        //     Some(value) => {
-                        //         *increment = value;
-                        //         value
-                        //     }
-                        //     None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                        // };
                         let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
                             Ok(value) => value,
                             Err(error) => {
@@ -1921,8 +1901,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ))
                     },
                     quote::quote! {
-                        // query = query.bind(sqlx::types::Json(self.start));//here change
-                        // query = query.bind(sqlx::types::Json(self.end));//here change
                         query = self.value.query_bind(query);
                         query
                     },
