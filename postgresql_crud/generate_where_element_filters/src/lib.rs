@@ -1219,8 +1219,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
-                            query = query.bind(sqlx::types::Json(self.value));
-                            query
+                            #query_bind_sqlx_types_json_self_value_token_stream
                         }
                     },
                 )
@@ -1328,8 +1327,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
-                            query = query.bind(sqlx::types::Json(self.value));
-                            query
+                            #query_bind_sqlx_types_json_self_value_token_stream
                         }
                     },
                 )
@@ -1380,8 +1378,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
-                            query = query.bind(sqlx::types::Json(self.value));
-                            query
+                            #query_bind_sqlx_types_json_self_value_token_stream
                         }
                     },
                 )
@@ -1430,8 +1427,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
-                            query = query.bind(sqlx::types::Json(self.value));
-                            query
+                            #query_bind_sqlx_types_json_self_value_token_stream
                         }
                     },
                 )
@@ -1735,8 +1731,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
-                            query = query.bind(sqlx::types::Json(self.value));
-                            query
+                            #query_bind_sqlx_types_json_self_value_token_stream
                         }
                     },
                 )
@@ -1788,8 +1783,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_minus_one);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
-                            query = query.bind(sqlx::types::Json(self.value));
-                            query
+                            #query_bind_sqlx_types_json_self_value_token_stream
                         }
                     },
                 )
