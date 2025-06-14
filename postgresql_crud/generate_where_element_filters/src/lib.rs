@@ -1770,6 +1770,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     generate_query_bind_dimension_position_sqlx_types_json_self_value_token_stream(range_minus_one)
                 )
             };
+            let query_self_value_query_bind_token_stream = quote::quote! {
+                query = self.value.query_bind(query);
+                query
+            };
             let generate_dimension_between_token_stream = |dimension_number: &DimensionNumber| -> (
                 ShouldAddDeclarationOfStructIdentGeneric,
                 proc_macro2::TokenStream,
@@ -1816,8 +1820,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
-                            query = self.value.query_bind(query);
-                            query
+                            #query_self_value_query_bind_token_stream
                         }
                     },
                 )
@@ -1929,10 +1932,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator)
                         ))
                     },
-                    quote::quote! {
-                        query = self.value.query_bind(query);
-                        query
-                    },
+                    query_self_value_query_bind_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneBetween {
                     ident: _
@@ -2069,7 +2069,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &postgresql_crud_macros_common::IsQueryBindMutable::True,
                 &query_bind_content_token_stream,
             );
-            //todo pub fields or not
             let f = quote::quote! {
                 #struct_token_stream
                 #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
