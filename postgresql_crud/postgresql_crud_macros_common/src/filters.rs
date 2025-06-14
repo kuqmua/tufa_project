@@ -1,6 +1,7 @@
 #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
 pub enum PostgresqlTypeFilter {
     Equal,
+    DimensionOneEqual,
     GreaterThan,
     Between,
     In,
@@ -31,6 +32,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         match &self {
             Self::Equal => &naming::EqualUpperCamelCase,
+            Self::DimensionOneEqual => &naming::DimensionOneEqualUpperCamelCase,
             Self::GreaterThan => &naming::GreaterThanUpperCamelCase,
             Self::Between => &naming::BetweenUpperCamelCase,
             Self::In => &naming::InUpperCamelCase,
@@ -74,6 +76,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
 }
 pub enum PostgresqlTypeFilterHasGeneric {
     Equal,
+    DimensionOneEqual,
     GreaterThan,
     Between,
     In,
@@ -95,6 +98,7 @@ impl IsRelevantOnlyForNotNull for PostgresqlTypeFilterHasGeneric {
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
         match &self {
             Self::Equal => false,
+            Self::DimensionOneEqual => false,
             Self::GreaterThan => true,
             Self::Between => true,
             Self::In => false,
@@ -119,6 +123,7 @@ impl std::convert::TryFrom<&PostgresqlTypeFilter> for PostgresqlTypeFilterHasGen
     fn try_from(value: &PostgresqlTypeFilter) -> Result<Self, Self::Error> {
         match &value {
             PostgresqlTypeFilter::Equal => Ok(Self::Equal),
+            PostgresqlTypeFilter::DimensionOneEqual => Ok(Self::DimensionOneEqual),
             PostgresqlTypeFilter::GreaterThan => Ok(Self::GreaterThan),
             PostgresqlTypeFilter::Between => Ok(Self::Between),
             PostgresqlTypeFilter::In => Ok(Self::In),
