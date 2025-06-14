@@ -33,6 +33,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     }
     let unsigned_part_of_std_primitive_i32_token_stream = generate_unsigned_part_of_std_primitive_i32_token_stream();
     let value_declaration_token_stream = quote::quote! {value: #unsigned_part_of_std_primitive_i32_token_stream};
+    #[derive(Clone)]
     enum ShouldAddDeclarationOfStructIdentGeneric {
         True {
             maybe_additional_traits_token_stream: std::option::Option<proc_macro2::TokenStream>
@@ -1158,6 +1159,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {#(#content_token_stream)*}
             }
+            let should_add_declaration_of_struct_ident_generic_true_none = ShouldAddDeclarationOfStructIdentGeneric::True {
+                maybe_additional_traits_token_stream: None
+            };
             fn generate_additional_fields_value_t_declaration_token_stream<T>(value: T) -> proc_macro2::TokenStream
             where
                 T: IntoIterator<Item = std::primitive::u8>,
@@ -1207,9 +1211,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let range = 1..=dimension_number_std_primitive_u8;
                 let range_plus_one = 1..=dimension_number_std_primitive_u8.checked_add(1).unwrap();
                 (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
+                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     generate_additional_fields_value_t_declaration_token_stream(range.clone()),
                     generate_additional_fields_value_t_default_initialization_token_stream(range.clone()),
                     {
@@ -1300,9 +1302,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             ) {
                 let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
                 (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
+                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     generate_additional_fields_value_t_declaration_token_stream(range_minus_one.clone()),
                     generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
                     {
@@ -1345,9 +1345,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             ) {
                 let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
                 (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
+                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     generate_additional_fields_value_t_declaration_token_stream(range_minus_one.clone()),
                     generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
                     {
@@ -1388,9 +1386,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             ) {
                 let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
                 (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
+                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     generate_additional_fields_value_t_declaration_token_stream(range_minus_one.clone()),
                     generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
                     {
@@ -1837,9 +1833,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal {
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
+                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     value_t_token_stream.clone(),
                     value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&equal_sign)),
@@ -1876,9 +1870,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan {
                     ident: _
                 } => (
-                    ShouldAddDeclarationOfStructIdentGeneric::True {
-                        maybe_additional_traits_token_stream: None
-                    },
+                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     pub_value_t_token_stream.clone(),
                     value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&greater_than_sign)),
