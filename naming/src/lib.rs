@@ -590,7 +590,27 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["dimension", "one", "between"],
     ["dimension", "two", "between"],
     ["dimension", "three", "between"],
-    ["dimension", "four", "between"]
+    ["dimension", "four", "between"],
+    ["dimension", "one", "before"],
+    ["dimension", "one", "current", "date"],
+    ["dimension", "one", "greater", "than", "current", "date"],
+    ["dimension", "one", "current", "timestamp"],
+    ["dimension", "one", "greater", "than", "current", "timestamp"],
+    ["dimension", "one", "current", "time"],
+    ["dimension", "one", "greater", "than", "current", "time"],
+    ["dimension", "one", "array", "length", "dimension", "one"],
+    ["dimension", "one", "array", "length", "more", "than", "dimension", "one"],
+    ["dimension", "one", "equal", "to", "encoded", "string", "representation"],
+    ["dimension", "one", "value", "is", "contained", "within", "range"],
+    ["dimension", "one", "contains", "another", "range"],
+    ["dimension", "one", "strictly", "to", "left", "of", "range"],
+    ["dimension", "one", "strictly", "to", "right", "of", "range"],
+    ["dimension", "one", "included", "lower", "bound"],
+    ["dimension", "one", "excluded", "upper", "bound"],
+    ["dimension", "one", "greater", "than", "lower", "bound"],
+    ["dimension", "one", "overlap", "with", "range"],
+    ["dimension", "one", "adjacent", "with", "range"],
+    ["dimension", "one", "range", "length"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
