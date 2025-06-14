@@ -575,18 +575,42 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             type Error = ();
             fn try_from(value: &postgresql_crud_macros_common::PostgresqlTypeFilter) -> Result<Self, Self::Error> {
                 match &value {
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::Equal => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::Between => Ok(Self::Between),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween => Ok(Self::DimensionOneBetween),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::In => Ok(Self::In),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn => Ok(Self::DimensionOneIn),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::Before => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::Equal {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
+                        ident: _
+                    } => Ok(Self::Between),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween {
+                        ident: _
+                    } => Ok(Self::DimensionOneBetween),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::In {
+                        ident: _
+                    } => Ok(Self::In),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn {
+                        ident: _
+                    } => Ok(Self::DimensionOneIn),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore {
+                        ident: _
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentDate => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate => Err(()),
@@ -603,26 +627,66 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneArrayLengthDimensionOne => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneArrayLengthMoreThanDimensionOne => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneValueIsContainedWithinRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneContainsAnotherRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToRightOfRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneValueIsContainedWithinRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneContainsAnotherRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToRightOfRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
+                        ident: _
+                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange {
+                        ident: _
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength => Ok(Self::RangeLength),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRangeLength => Ok(Self::DimensionOneRangeLength),
                 }
@@ -638,35 +702,35 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query_part_content_token_stream,
                 query_bind_content_token_stream
             ) = match &filter {
-                postgresql_crud_macros_common::PostgresqlTypeFilter::Equal => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&equal_sign)),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&equal_sign)),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&greater_than_sign)),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&greater_than_sign)),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::Between => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::Between { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &quote::quote! {
                         start: T,
@@ -699,7 +763,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &quote::quote! {
                         start: T,
@@ -732,7 +796,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::In => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::In { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &value_std_vec_vec_t_token_stream,
                     &quote::quote! {
@@ -762,7 +826,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &value_std_vec_vec_t_token_stream,
                     &quote::quote! {
@@ -792,28 +856,28 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     &regular_expression_case_and_value_declaration_token_stream,
                     &regular_expression_case_and_value_default_initialization_token_stream,
                     &generate_query_part_regular_expression_token_stream(&quote::quote!{"{}({} {} ${})"}),
                     &query_equals_query_self_value_to_string_token_stream
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     &regular_expression_case_and_value_declaration_token_stream,
                     &regular_expression_case_and_value_default_initialization_token_stream,
                     &generate_query_part_regular_expression_token_stream(&quote::quote!{"{}({} {} ${})"}),
                     &query_equals_query_self_value_to_string_token_stream
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::Before => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::Before { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("<")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
@@ -932,7 +996,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(array_length({}, 1) > ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &quote::quote! {
                         pub encode_format: crate::postgresql_type::EncodeFormat,
@@ -956,7 +1020,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &quote::quote! {
                         pub encode_format: crate::postgresql_type::EncodeFormat,
@@ -980,126 +1044,126 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneValueIsContainedWithinRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneValueIsContainedWithinRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneContainsAnotherRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneContainsAnotherRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&>")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToRightOfRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToRightOfRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&>")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(lower({}) = ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(lower({}) = ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(upper({}) = ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(upper({}) = ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&greater_than_sign)),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&greater_than_sign)),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("-|-")),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     &pub_value_t_token_stream,
                     &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,

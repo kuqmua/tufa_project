@@ -3293,29 +3293,61 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     )
                 };
 
-                let equal = postgresql_crud_macros_common::PostgresqlTypeFilter::Equal;
-                let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan;
-                let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between;
-                let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In;
-                let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
-                let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation;
+                let equal = postgresql_crud_macros_common::PostgresqlTypeFilter::Equal {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
                 let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
                 let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
                 let current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime;
                 let greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime;
-                let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange;
-                let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange;
-                let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange;
-                let strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange;
-                let included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound;
-                let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound;
-                let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound;
-                let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange;
-                let adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange;
+                let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
+                let adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
+                    ident: proc_macro2::TokenStream::new()//todo
+                };
                 let range_length = postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength;
                 let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
                 let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
-                let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before;
+                let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
+                    ident: proc_macro2::TokenStream::new() //todo
+                };
                 // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
                 let array_length_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne;
                 let array_length_more_than_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne;
