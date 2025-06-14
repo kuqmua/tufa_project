@@ -552,6 +552,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     };
     let equal_sign = "=";
     let greater_than_sign = ">";
+    let query_bind_one_value_token_stream = quote::quote! {
+        query = query.bind(self.value);
+        query
+    };
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum PostgresqlTypeFilterInitializedWithTryNew {
@@ -594,10 +598,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
-            let query_bind_one_value_token_stream = quote::quote! {
-                query = query.bind(self.value);
-                query
-            };
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
@@ -1300,8 +1300,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range);
                         quote::quote! {
                             #query_bind_dimension_position_token_stream
-                            query = query.bind(self.value);
-                            query
+                            // query = query.bind(self.value);
+                            // query
+                            #query_bind_one_value_token_stream
                         }
                     }
                 )
