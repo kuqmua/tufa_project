@@ -3282,7 +3282,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
             let ident_where_element_token_stream = {
                 let generate_ident_where_element_token_stream = |variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter>| {
-                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                         // variants,
                         // |is_relevant_only_for_not_null: std::primitive::bool| {
                         //     if is_relevant_only_for_not_null { &ident_standart_not_null_origin_upper_camel_case } else { &ident_origin_upper_camel_case }

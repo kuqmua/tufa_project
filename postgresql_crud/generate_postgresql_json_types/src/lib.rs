@@ -1710,7 +1710,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             },
                         }
                     };
-                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
                         &variants.iter().map(|element|element as &dyn postgresql_crud_macros_common::PostgresqlFilter).collect(),
                         &ident,
                         &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
