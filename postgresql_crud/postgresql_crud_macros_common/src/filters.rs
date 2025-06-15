@@ -178,6 +178,60 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
     fn has_generic(&self) -> std::primitive::bool {
         PostgresqlTypeFilterHasGeneric::try_from(self).is_ok()
     }
+    fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream> {
+        match &self {
+            Self::Equal { ident } => Some(ident.clone()),
+            Self::DimensionOneEqual { ident } => Some(ident.clone()),
+            Self::GreaterThan { ident } => Some(ident.clone()),
+            Self::DimensionOneGreaterThan { ident } => Some(ident.clone()),
+            Self::Between { ident } => Some(ident.clone()),
+            Self::DimensionOneBetween { ident } => Some(ident.clone()),
+            Self::In { ident } => Some(ident.clone()),
+            Self::DimensionOneIn { ident } => Some(ident.clone()),
+            Self::RegularExpression { ident } => Some(ident.clone()),
+            Self::DimensionOneRegularExpression { ident } => Some(ident.clone()),
+            Self::Before { ident } => Some(ident.clone()),
+            Self::DimensionOneBefore { ident } => Some(ident.clone()),
+            Self::CurrentDate => None,
+            Self::DimensionOneCurrentDate => None,
+            Self::GreaterThanCurrentDate => None,
+            Self::DimensionOneGreaterThanCurrentDate => None,
+            Self::CurrentTimestamp => None,
+            Self::DimensionOneCurrentTimestamp => None,
+            Self::GreaterThanCurrentTimestamp => None,
+            Self::DimensionOneGreaterThanCurrentTimestamp => None,
+            Self::CurrentTime => None,
+            Self::DimensionOneCurrentTime => None,
+            Self::GreaterThanCurrentTime => None,
+            Self::DimensionOneGreaterThanCurrentTime => None,
+            Self::ArrayLengthDimensionOne => None,
+            Self::DimensionOneArrayLengthDimensionOne => None,
+            Self::ArrayLengthMoreThanDimensionOne => None,
+            Self::DimensionOneArrayLengthMoreThanDimensionOne => None,
+            Self::EqualToEncodedStringRepresentation { ident } => Some(ident.clone()),
+            Self::DimensionOneEqualToEncodedStringRepresentation { ident } => Some(ident.clone()),
+            Self::ValueIsContainedWithinRange { ident } => Some(ident.clone()),
+            Self::DimensionOneValueIsContainedWithinRange { ident } => Some(ident.clone()),
+            Self::ContainsAnotherRange { ident } => Some(ident.clone()),
+            Self::DimensionOneContainsAnotherRange { ident } => Some(ident.clone()),
+            Self::StrictlyToLeftOfRange { ident } => Some(ident.clone()),
+            Self::DimensionOneStrictlyToLeftOfRange { ident } => Some(ident.clone()),
+            Self::StrictlyToRightOfRange { ident } => Some(ident.clone()),
+            Self::DimensionOneStrictlyToRightOfRange { ident } => Some(ident.clone()),
+            Self::IncludedLowerBound { ident } => Some(ident.clone()),
+            Self::DimensionOneIncludedLowerBound { ident } => Some(ident.clone()),
+            Self::ExcludedUpperBound { ident } => Some(ident.clone()),
+            Self::DimensionOneExcludedUpperBound { ident } => Some(ident.clone()),
+            Self::GreaterThanLowerBound { ident } => Some(ident.clone()),
+            Self::DimensionOneGreaterThanLowerBound { ident } => Some(ident.clone()),
+            Self::OverlapWithRange { ident } => Some(ident.clone()),
+            Self::DimensionOneOverlapWithRange { ident } => Some(ident.clone()),
+            Self::AdjacentWithRange { ident } => Some(ident.clone()),
+            Self::DimensionOneAdjacentWithRange { ident } => Some(ident.clone()),
+            Self::RangeLength => None,
+            Self::DimensionOneRangeLength => None,
+        }
+    }
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
         if let Ok(value) = PostgresqlTypeFilterHasGeneric::try_from(self) {
             IsRelevantOnlyForNotNull::is_relevant_only_for_not_null(&value)
@@ -460,106 +514,42 @@ pub enum PostgresqlJsonTypeFilter {
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
         match &self {
-            Self::Equal {
-                ident: _
-            } => &naming::EqualUpperCamelCase,
-            Self::DimensionOneEqual {
-                ident: _
-            } => &naming::DimensionOneEqualUpperCamelCase,
-            Self::DimensionTwoEqual {
-                ident: _
-            } => &naming::DimensionTwoEqualUpperCamelCase,
-            Self::DimensionThreeEqual {
-                ident: _
-            } => &naming::DimensionThreeEqualUpperCamelCase,
-            Self::DimensionFourEqual {
-                ident: _
-            } => &naming::DimensionFourEqualUpperCamelCase,
-            Self::DimensionOneAllElementsEqual {
-                ident: _
-            } => &naming::DimensionOneAllElementsEqualUpperCamelCase,
-            Self::DimensionTwoAllElementsEqual {
-                ident: _
-            } => &naming::DimensionTwoAllElementsEqualUpperCamelCase,
-            Self::DimensionThreeAllElementsEqual {
-                ident: _
-            } => &naming::DimensionThreeAllElementsEqualUpperCamelCase,
-            Self::DimensionFourAllElementsEqual {
-                ident: _
-            } => &naming::DimensionFourAllElementsEqualUpperCamelCase,
+            Self::Equal { ident: _ } => &naming::EqualUpperCamelCase,
+            Self::DimensionOneEqual { ident: _ }=> &naming::DimensionOneEqualUpperCamelCase,
+            Self::DimensionTwoEqual { ident: _ }=> &naming::DimensionTwoEqualUpperCamelCase,
+            Self::DimensionThreeEqual { ident: _ }=> &naming::DimensionThreeEqualUpperCamelCase,
+            Self::DimensionFourEqual { ident: _ }=> &naming::DimensionFourEqualUpperCamelCase,
+            Self::DimensionOneAllElementsEqual { ident: _ }=> &naming::DimensionOneAllElementsEqualUpperCamelCase,
+            Self::DimensionTwoAllElementsEqual { ident: _ }=> &naming::DimensionTwoAllElementsEqualUpperCamelCase,
+            Self::DimensionThreeAllElementsEqual { ident: _ }=> &naming::DimensionThreeAllElementsEqualUpperCamelCase,
+            Self::DimensionFourAllElementsEqual { ident: _ }=> &naming::DimensionFourAllElementsEqualUpperCamelCase,
             Self::DimensionOneLengthEqual => &naming::DimensionOneLengthEqualUpperCamelCase,
             Self::DimensionTwoLengthEqual => &naming::DimensionTwoLengthEqualUpperCamelCase,
             Self::DimensionThreeLengthEqual => &naming::DimensionThreeLengthEqualUpperCamelCase,
             Self::DimensionFourLengthEqual => &naming::DimensionFourLengthEqualUpperCamelCase,
-            Self::GreaterThan {
-                ident: _
-            } => &naming::GreaterThanUpperCamelCase,
-            Self::DimensionOneGreaterThan {
-                ident: _
-            } => &naming::DimensionOneGreaterThanUpperCamelCase,
-            Self::DimensionTwoGreaterThan {
-                ident: _
-            } => &naming::DimensionTwoGreaterThanUpperCamelCase,
-            Self::DimensionThreeGreaterThan {
-                ident: _
-            } => &naming::DimensionThreeGreaterThanUpperCamelCase,
-            Self::DimensionFourGreaterThan {
-                ident: _
-            } => &naming::DimensionFourGreaterThanUpperCamelCase,
-            Self::DimensionOneContainsElementGreaterThan {
-                ident: _
-            } => &naming::DimensionOneContainsElementGreaterThanUpperCamelCase,
-            Self::DimensionTwoContainsElementGreaterThan {
-                ident: _
-            } => &naming::DimensionTwoContainsElementGreaterThanUpperCamelCase,
-            Self::DimensionThreeContainsElementGreaterThan {
-                ident: _
-            } => &naming::DimensionThreeContainsElementGreaterThanUpperCamelCase,
-            Self::DimensionFourContainsElementGreaterThan {
-                ident: _
-            } => &naming::DimensionFourContainsElementGreaterThanUpperCamelCase,
-            Self::DimensionOneAllElementsGreaterThan {
-                ident: _
-            } => &naming::DimensionOneAllElementsGreaterThanUpperCamelCase,
-            Self::DimensionTwoAllElementsGreaterThan {
-                ident: _
-            } => &naming::DimensionTwoAllElementsGreaterThanUpperCamelCase,
-            Self::DimensionThreeAllElementsGreaterThan {
-                ident: _
-            } => &naming::DimensionThreeAllElementsGreaterThanUpperCamelCase,
-            Self::DimensionFourAllElementsGreaterThan {
-                ident: _
-            } => &naming::DimensionFourAllElementsGreaterThanUpperCamelCase,
-            Self::Between {
-                ident: _
-            } => &naming::BetweenUpperCamelCase,
-            Self::DimensionOneBetween {
-                ident: _
-            } => &naming::DimensionOneBetweenUpperCamelCase,
-            Self::DimensionTwoBetween {
-                ident: _
-            } => &naming::DimensionTwoBetweenUpperCamelCase,
-            Self::DimensionThreeBetween {
-                ident: _
-            } => &naming::DimensionThreeBetweenUpperCamelCase,
-            Self::DimensionFourBetween {
-                ident: _
-            } => &naming::DimensionFourBetweenUpperCamelCase,
-            Self::In {
-                ident: _
-            } => &naming::InUpperCamelCase,
-            Self::DimensionOneIn {
-                ident: _
-            } => &naming::DimensionOneInUpperCamelCase,
-            Self::DimensionTwoIn {
-                ident: _
-            } => &naming::DimensionTwoInUpperCamelCase,
-            Self::DimensionThreeIn {
-                ident: _
-            } => &naming::DimensionThreeInUpperCamelCase,
-            Self::DimensionFourIn {
-                ident: _
-            } => &naming::DimensionFourInUpperCamelCase,
+            Self::GreaterThan { ident: _ }=> &naming::GreaterThanUpperCamelCase,
+            Self::DimensionOneGreaterThan { ident: _ }=> &naming::DimensionOneGreaterThanUpperCamelCase,
+            Self::DimensionTwoGreaterThan { ident: _ }=> &naming::DimensionTwoGreaterThanUpperCamelCase,
+            Self::DimensionThreeGreaterThan { ident: _ }=> &naming::DimensionThreeGreaterThanUpperCamelCase,
+            Self::DimensionFourGreaterThan { ident: _ }=> &naming::DimensionFourGreaterThanUpperCamelCase,
+            Self::DimensionOneContainsElementGreaterThan { ident: _ }=> &naming::DimensionOneContainsElementGreaterThanUpperCamelCase,
+            Self::DimensionTwoContainsElementGreaterThan { ident: _ }=> &naming::DimensionTwoContainsElementGreaterThanUpperCamelCase,
+            Self::DimensionThreeContainsElementGreaterThan { ident: _ }=> &naming::DimensionThreeContainsElementGreaterThanUpperCamelCase,
+            Self::DimensionFourContainsElementGreaterThan { ident: _ }=> &naming::DimensionFourContainsElementGreaterThanUpperCamelCase,
+            Self::DimensionOneAllElementsGreaterThan { ident: _ }=> &naming::DimensionOneAllElementsGreaterThanUpperCamelCase,
+            Self::DimensionTwoAllElementsGreaterThan { ident: _ }=> &naming::DimensionTwoAllElementsGreaterThanUpperCamelCase,
+            Self::DimensionThreeAllElementsGreaterThan { ident: _ }=> &naming::DimensionThreeAllElementsGreaterThanUpperCamelCase,
+            Self::DimensionFourAllElementsGreaterThan { ident: _ }=> &naming::DimensionFourAllElementsGreaterThanUpperCamelCase,
+            Self::Between { ident: _ }=> &naming::BetweenUpperCamelCase,
+            Self::DimensionOneBetween { ident: _ }=> &naming::DimensionOneBetweenUpperCamelCase,
+            Self::DimensionTwoBetween { ident: _ }=> &naming::DimensionTwoBetweenUpperCamelCase,
+            Self::DimensionThreeBetween { ident: _ }=> &naming::DimensionThreeBetweenUpperCamelCase,
+            Self::DimensionFourBetween { ident: _ }=> &naming::DimensionFourBetweenUpperCamelCase,
+            Self::In { ident: _ }=> &naming::InUpperCamelCase,
+            Self::DimensionOneIn { ident: _ }=> &naming::DimensionOneInUpperCamelCase,
+            Self::DimensionTwoIn { ident: _ }=> &naming::DimensionTwoInUpperCamelCase,
+            Self::DimensionThreeIn { ident: _ }=> &naming::DimensionThreeInUpperCamelCase,
+            Self::DimensionFourIn { ident: _ }=> &naming::DimensionFourInUpperCamelCase,
             Self::RegularExpression => &naming::RegularExpressionUpperCamelCase,
             Self::DimensionOneRegularExpression => &naming::DimensionOneRegularExpressionUpperCamelCase,
             Self::DimensionTwoRegularExpression => &naming::DimensionTwoRegularExpressionUpperCamelCase,
@@ -577,30 +567,14 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoLengthMoreThan => &naming::DimensionTwoLengthMoreThanUpperCamelCase,
             Self::DimensionThreeLengthMoreThan => &naming::DimensionThreeLengthMoreThanUpperCamelCase,
             Self::DimensionFourLengthMoreThan => &naming::DimensionFourLengthMoreThanUpperCamelCase,
-            Self::DimensionOneContainsAllElementsOfArray {
-                ident: _
-            } => &naming::DimensionOneContainsAllElementsOfArrayUpperCamelCase,
-            Self::DimensionTwoContainsAllElementsOfArray {
-                ident: _
-            } => &naming::DimensionTwoContainsAllElementsOfArrayUpperCamelCase,
-            Self::DimensionThreeContainsAllElementsOfArray {
-                ident: _
-            } => &naming::DimensionThreeContainsAllElementsOfArrayUpperCamelCase,
-            Self::DimensionFourContainsAllElementsOfArray {
-                ident: _
-            } => &naming::DimensionFourContainsAllElementsOfArrayUpperCamelCase,
-            Self::DimensionOneOverlapsWithArray {
-                ident: _
-            } => &naming::DimensionOneOverlapsWithArrayUpperCamelCase,
-            Self::DimensionTwoOverlapsWithArray {
-                ident: _
-            } => &naming::DimensionTwoOverlapsWithArrayUpperCamelCase,
-            Self::DimensionThreeOverlapsWithArray {
-                ident: _
-            } => &naming::DimensionThreeOverlapsWithArrayUpperCamelCase,
-            Self::DimensionFourOverlapsWithArray {
-                ident: _
-            } => &naming::DimensionFourOverlapsWithArrayUpperCamelCase,
+            Self::DimensionOneContainsAllElementsOfArray { ident: _ }=> &naming::DimensionOneContainsAllElementsOfArrayUpperCamelCase,
+            Self::DimensionTwoContainsAllElementsOfArray { ident: _ }=> &naming::DimensionTwoContainsAllElementsOfArrayUpperCamelCase,
+            Self::DimensionThreeContainsAllElementsOfArray { ident: _ }=> &naming::DimensionThreeContainsAllElementsOfArrayUpperCamelCase,
+            Self::DimensionFourContainsAllElementsOfArray { ident: _ }=> &naming::DimensionFourContainsAllElementsOfArrayUpperCamelCase,
+            Self::DimensionOneOverlapsWithArray { ident: _ }=> &naming::DimensionOneOverlapsWithArrayUpperCamelCase,
+            Self::DimensionTwoOverlapsWithArray { ident: _ }=> &naming::DimensionTwoOverlapsWithArrayUpperCamelCase,
+            Self::DimensionThreeOverlapsWithArray { ident: _ }=> &naming::DimensionThreeOverlapsWithArrayUpperCamelCase,
+            Self::DimensionFourOverlapsWithArray { ident: _ }=> &naming::DimensionFourOverlapsWithArrayUpperCamelCase,
         }
     }
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
@@ -609,6 +583,71 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     }
     fn has_generic(&self) -> std::primitive::bool {
         PostgresqlJsonTypeFilterHasGeneric::try_from(self).is_ok()
+    }
+    fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream> {
+        match &self {
+            Self::Equal { ident } => Some(ident.clone()),
+            Self::DimensionOneEqual { ident }=> Some(ident.clone()),
+            Self::DimensionTwoEqual { ident }=> Some(ident.clone()),
+            Self::DimensionThreeEqual { ident }=> Some(ident.clone()),
+            Self::DimensionFourEqual { ident }=> Some(ident.clone()),
+            Self::DimensionOneAllElementsEqual { ident }=> Some(ident.clone()),
+            Self::DimensionTwoAllElementsEqual { ident }=> Some(ident.clone()),
+            Self::DimensionThreeAllElementsEqual { ident }=> Some(ident.clone()),
+            Self::DimensionFourAllElementsEqual { ident }=> Some(ident.clone()),
+            Self::DimensionOneLengthEqual => None,
+            Self::DimensionTwoLengthEqual => None,
+            Self::DimensionThreeLengthEqual => None,
+            Self::DimensionFourLengthEqual => None,
+            Self::GreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionOneGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionTwoGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionThreeGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionFourGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionOneContainsElementGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionTwoContainsElementGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionThreeContainsElementGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionFourContainsElementGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionOneAllElementsGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionTwoAllElementsGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionThreeAllElementsGreaterThan { ident }=> Some(ident.clone()),
+            Self::DimensionFourAllElementsGreaterThan { ident }=> Some(ident.clone()),
+            Self::Between { ident }=> Some(ident.clone()),
+            Self::DimensionOneBetween { ident }=> Some(ident.clone()),
+            Self::DimensionTwoBetween { ident }=> Some(ident.clone()),
+            Self::DimensionThreeBetween { ident }=> Some(ident.clone()),
+            Self::DimensionFourBetween { ident }=> Some(ident.clone()),
+            Self::In { ident }=> Some(ident.clone()),
+            Self::DimensionOneIn { ident }=> Some(ident.clone()),
+            Self::DimensionTwoIn { ident }=> Some(ident.clone()),
+            Self::DimensionThreeIn { ident }=> Some(ident.clone()),
+            Self::DimensionFourIn { ident }=> Some(ident.clone()),
+            Self::RegularExpression => None,
+            Self::DimensionOneRegularExpression => None,
+            Self::DimensionTwoRegularExpression => None,
+            Self::DimensionThreeRegularExpression => None,
+            Self::DimensionFourRegularExpression => None,
+            Self::DimensionOneContainsElementRegularExpression => None,
+            Self::DimensionTwoContainsElementRegularExpression => None,
+            Self::DimensionThreeContainsElementRegularExpression => None,
+            Self::DimensionFourContainsElementRegularExpression => None,
+            Self::DimensionOneAllElementsRegularExpression => None,
+            Self::DimensionTwoAllElementsRegularExpression => None,
+            Self::DimensionThreeAllElementsRegularExpression => None,
+            Self::DimensionFourAllElementsRegularExpression => None,
+            Self::DimensionOneLengthMoreThan => None,
+            Self::DimensionTwoLengthMoreThan => None,
+            Self::DimensionThreeLengthMoreThan => None,
+            Self::DimensionFourLengthMoreThan => None,
+            Self::DimensionOneContainsAllElementsOfArray { ident }=> Some(ident.clone()),
+            Self::DimensionTwoContainsAllElementsOfArray { ident }=> Some(ident.clone()),
+            Self::DimensionThreeContainsAllElementsOfArray { ident }=> Some(ident.clone()),
+            Self::DimensionFourContainsAllElementsOfArray { ident }=> Some(ident.clone()),
+            Self::DimensionOneOverlapsWithArray { ident }=> Some(ident.clone()),
+            Self::DimensionTwoOverlapsWithArray { ident }=> Some(ident.clone()),
+            Self::DimensionThreeOverlapsWithArray { ident }=> Some(ident.clone()),
+            Self::DimensionFourOverlapsWithArray { ident }=> Some(ident.clone()),
+        }
     }
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
         if let Ok(value) = PostgresqlJsonTypeFilterHasGeneric::try_from(self) {
@@ -860,7 +899,9 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
 pub trait PostgresqlFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
+    //todo remove
     fn has_generic(&self) -> std::primitive::bool;
+    fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream>;
     fn is_relevant_only_for_not_null(&self) -> std::primitive::bool;
 }
 pub trait IsRelevantOnlyForNotNull {
