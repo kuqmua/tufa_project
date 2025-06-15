@@ -32,7 +32,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         quote::quote!{crate::UnsignedPartOfStdPrimitiveI32}
     }
     let unsigned_part_of_std_primitive_i32_token_stream = generate_unsigned_part_of_std_primitive_i32_token_stream();
-    let pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {value: #unsigned_part_of_std_primitive_i32_token_stream};
+    let value_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {value: #unsigned_part_of_std_primitive_i32_token_stream};
+    let pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {pub #value_unsigned_part_of_std_primitive_i32_declaration_token_stream};
     #[derive(Clone)]
     enum ShouldAddDeclarationOfStructIdentGeneric {
         True {
@@ -1375,7 +1376,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             },
                             &ShouldAddDeclarationOfStructIdentGeneric::False,
                             &proc_macro2_token_stream_new,
-                            &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
+                            &value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
                             &quote::quote! {
                                 if value.get() > 0 {
                                     Ok(Self { logical_operator, value })
@@ -1400,7 +1401,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             },
                             &ShouldAddDeclarationOfStructIdentGeneric::False,
                             &proc_macro2_token_stream_new,
-                            &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
+                            &value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
                             &quote::quote! {
                                 if value.get() > 0 {
                                     Ok(Self { logical_operator, value })
