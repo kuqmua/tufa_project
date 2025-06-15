@@ -1280,8 +1280,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             };
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
             let ident_where_element_token_stream = match &not_null_or_nullable {
-                postgresql_crud_macros_common::NotNullOrNullable::NotNull => postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
-                    &{
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                    let variants = {
                         // let generate_where_element_variants_types_generic_token_stream = |
                         //     is_relevant_only_for_not_null: std::primitive::bool
                         // | -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -1709,11 +1709,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 }
                             },
                         }
-                    },
-                    &ident,
-                    &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
-                    &postgresql_crud_macros_common::IsQueryBindMutable::False
-                ),
+                    };
+                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                        &variants.iter().map(|element|element as &dyn postgresql_crud_macros_common::PostgresqlFilter)
+                        .collect(),
+                        &ident,
+                        &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::True,
+                        &postgresql_crud_macros_common::IsQueryBindMutable::False
+                    )
+                },
                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                     let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
                     let ident_as_token_stream = generate_ident_token_stream(&postgresql_crud_macros_common::NotNullOrNullable::NotNull, &element.postgresql_json_type_pattern);
