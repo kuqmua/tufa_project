@@ -561,7 +561,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let should_add_declaration_of_struct_ident_generic_true_none = ShouldAddDeclarationOfStructIdentGeneric::True {
         maybe_additional_traits_token_stream: None
     };
-    //here
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum PostgresqlTypeFilterInitializedWithTryNew {
@@ -1493,7 +1492,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let content_token_stream = value.into_iter().map(|element|{
                     let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
                     quote::quote! {
-                        #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
+                        pub #dimension_number_position_token_stream: #unsigned_part_of_std_primitive_i32_token_stream,
                     }
                 }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                 quote::quote! {#(#content_token_stream)*}
