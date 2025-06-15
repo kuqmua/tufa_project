@@ -600,12 +600,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn {
                         ident: _
                     } => Ok(Self::DimensionOneIn),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression {
-                        ident: _
-                    } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression {
-                        ident: _
-                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
                         ident: _
                     } => Err(()),
@@ -857,14 +853,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         query
                     },
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression { ident: _ } => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     &regular_expression_case_and_value_declaration_token_stream,
                     &regular_expression_case_and_value_default_initialization_token_stream,
                     &generate_query_part_regular_expression_token_stream(&quote::quote!{"{}({} {} ${})"}),
                     &query_equals_query_self_value_to_string_token_stream
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression { ident: _ } => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression => (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     &regular_expression_case_and_value_declaration_token_stream,
                     &regular_expression_case_and_value_default_initialization_token_stream,

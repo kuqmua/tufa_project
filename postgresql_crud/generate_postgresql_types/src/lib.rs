@@ -3282,71 +3282,76 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
             let ident_where_element_token_stream = {
                 let generate_ident_where_element_token_stream = |variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter>| {
-                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-                        variants,
-                        |is_relevant_only_for_not_null: std::primitive::bool| {
-                            if is_relevant_only_for_not_null { &ident_standart_not_null_origin_upper_camel_case } else { &ident_origin_upper_camel_case }
-                        },
+                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream_second(
+                        // variants,
+                        // |is_relevant_only_for_not_null: std::primitive::bool| {
+                        //     if is_relevant_only_for_not_null { &ident_standart_not_null_origin_upper_camel_case } else { &ident_origin_upper_camel_case }
+                        // },
+                        // &ident,
+                        // &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
+                        // &postgresql_crud_macros_common::IsQueryBindMutable::False,
+
+                        // &variants.iter().map(|element|element as &dyn postgresql_crud_macros_common::PostgresqlFilter).collect(),
+
+                        &variants,
                         &ident,
                         &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
-                        &postgresql_crud_macros_common::IsQueryBindMutable::False,
+                        &postgresql_crud_macros_common::IsQueryBindMutable::False
                     )
                 };
 
                 let equal = postgresql_crud_macros_common::PostgresqlTypeFilter::Equal {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_origin_upper_camel_case}
                 };
                 let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_origin_upper_camel_case}
                 };
-                let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression {
-                    ident: proc_macro2::TokenStream::new()//todo
-                };
+                let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
                 let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
                 let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
                 let current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime;
                 let greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime;
                 let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
-                    ident: proc_macro2::TokenStream::new()//todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 let range_length = postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength;
                 let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
                 let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
                 let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
-                    ident: proc_macro2::TokenStream::new() //todo
+                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
                 // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
                 let array_length_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne;
