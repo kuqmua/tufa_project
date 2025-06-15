@@ -171,9 +171,6 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
         let value = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&self.upper_camel_case());
         quote::quote! {#value}
     }
-    fn has_generic(&self) -> std::primitive::bool {
-        PostgresqlTypeFilterHasGeneric::try_from(self).is_ok()
-    }
     fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream> {
         match &self {
             Self::Equal { ident } => Some(ident.clone()),
@@ -226,138 +223,6 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneAdjacentWithRange { ident } => Some(ident.clone()),
             Self::RangeLength => None,
             Self::DimensionOneRangeLength => None,
-        }
-    }
-    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
-        if let Ok(value) = PostgresqlTypeFilterHasGeneric::try_from(self) {
-            IsRelevantOnlyForNotNull::is_relevant_only_for_not_null(&value)
-        } else {
-            true //coz to not generate useless copies of generic types for optional types
-        }
-    }
-}
-pub enum PostgresqlTypeFilterHasGeneric {
-    Equal,
-    DimensionOneEqual,
-    GreaterThan,
-    DimensionOneGreaterThan,
-    Between,
-    DimensionOneBetween,
-    In,
-    DimensionOneIn,
-    Before,
-    DimensionOneBefore,
-    EqualToEncodedStringRepresentation,
-    DimensionOneEqualToEncodedStringRepresentation,
-    ValueIsContainedWithinRange,
-    DimensionOneValueIsContainedWithinRange,
-    ContainsAnotherRange,
-    DimensionOneContainsAnotherRange,
-    StrictlyToLeftOfRange,
-    DimensionOneStrictlyToLeftOfRange,
-    StrictlyToRightOfRange,
-    DimensionOneStrictlyToRightOfRange,
-    IncludedLowerBound,
-    DimensionOneIncludedLowerBound,
-    ExcludedUpperBound,
-    DimensionOneExcludedUpperBound,
-    GreaterThanLowerBound,
-    DimensionOneGreaterThanLowerBound,
-    OverlapWithRange,
-    DimensionOneOverlapWithRange,
-    AdjacentWithRange,
-    DimensionOneAdjacentWithRange,
-}
-impl IsRelevantOnlyForNotNull for PostgresqlTypeFilterHasGeneric {
-    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
-        match &self {
-            Self::Equal => false,
-            Self::DimensionOneEqual => false,
-            Self::GreaterThan => true,
-            Self::DimensionOneGreaterThan => true,
-            Self::Between => true,
-            Self::DimensionOneBetween => true,
-            Self::In => false,
-            Self::DimensionOneIn => false,
-            Self::Before => true,
-            Self::DimensionOneBefore => true,
-            Self::EqualToEncodedStringRepresentation => true,
-            Self::DimensionOneEqualToEncodedStringRepresentation => true,
-            Self::ValueIsContainedWithinRange => true,
-            Self::DimensionOneValueIsContainedWithinRange => true,
-            Self::ContainsAnotherRange => true,
-            Self::DimensionOneContainsAnotherRange => true,
-            Self::StrictlyToLeftOfRange => true,
-            Self::DimensionOneStrictlyToLeftOfRange => true,
-            Self::StrictlyToRightOfRange => true,
-            Self::DimensionOneStrictlyToRightOfRange => true,
-            Self::IncludedLowerBound => true,
-            Self::DimensionOneIncludedLowerBound => true,
-            Self::ExcludedUpperBound => true,
-            Self::DimensionOneExcludedUpperBound => true,
-            Self::GreaterThanLowerBound => true,
-            Self::DimensionOneGreaterThanLowerBound => true,
-            Self::OverlapWithRange => true,
-            Self::DimensionOneOverlapWithRange => true,
-            Self::AdjacentWithRange => true,
-            Self::DimensionOneAdjacentWithRange => true,
-        }
-    }
-}
-impl std::convert::TryFrom<&PostgresqlTypeFilter> for PostgresqlTypeFilterHasGeneric {
-    type Error = ();
-    fn try_from(value: &PostgresqlTypeFilter) -> Result<Self, Self::Error> {
-        match &value {
-            PostgresqlTypeFilter::Equal { ident: _ } => Ok(Self::Equal),
-            PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => Ok(Self::DimensionOneEqual),
-            PostgresqlTypeFilter::GreaterThan { ident: _ } => Ok(Self::GreaterThan),
-            PostgresqlTypeFilter::DimensionOneGreaterThan { ident: _ } => Ok(Self::DimensionOneGreaterThan),
-            PostgresqlTypeFilter::Between { ident: _ } => Ok(Self::Between),
-            PostgresqlTypeFilter::DimensionOneBetween { ident: _ } => Ok(Self::DimensionOneBetween),
-            PostgresqlTypeFilter::In { ident: _ } => Ok(Self::In),
-            PostgresqlTypeFilter::DimensionOneIn { ident: _ } => Ok(Self::DimensionOneIn),
-            PostgresqlTypeFilter::RegularExpression => Err(()),
-            PostgresqlTypeFilter::DimensionOneRegularExpression => Err(()),
-            PostgresqlTypeFilter::Before { ident: _ } => Ok(Self::Before),
-            PostgresqlTypeFilter::DimensionOneBefore { ident: _ } => Ok(Self::DimensionOneBefore),
-            PostgresqlTypeFilter::CurrentDate => Err(()),
-            PostgresqlTypeFilter::DimensionOneCurrentDate => Err(()),
-            PostgresqlTypeFilter::GreaterThanCurrentDate => Err(()),
-            PostgresqlTypeFilter::DimensionOneGreaterThanCurrentDate => Err(()),
-            PostgresqlTypeFilter::CurrentTimestamp => Err(()),
-            PostgresqlTypeFilter::DimensionOneCurrentTimestamp => Err(()),
-            PostgresqlTypeFilter::GreaterThanCurrentTimestamp => Err(()),
-            PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTimestamp => Err(()),
-            PostgresqlTypeFilter::CurrentTime => Err(()),
-            PostgresqlTypeFilter::DimensionOneCurrentTime => Err(()),
-            PostgresqlTypeFilter::GreaterThanCurrentTime => Err(()),
-            PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTime => Err(()),
-            PostgresqlTypeFilter::ArrayLengthDimensionOne => Err(()),
-            PostgresqlTypeFilter::DimensionOneArrayLengthDimensionOne => Err(()),
-            PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne => Err(()),
-            PostgresqlTypeFilter::DimensionOneArrayLengthMoreThanDimensionOne => Err(()),
-            PostgresqlTypeFilter::EqualToEncodedStringRepresentation { ident: _ } => Ok(Self::EqualToEncodedStringRepresentation),
-            PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation { ident: _ } => Ok(Self::DimensionOneEqualToEncodedStringRepresentation),
-            PostgresqlTypeFilter::ValueIsContainedWithinRange { ident: _ } => Ok(Self::ValueIsContainedWithinRange),
-            PostgresqlTypeFilter::DimensionOneValueIsContainedWithinRange { ident: _ } => Ok(Self::DimensionOneValueIsContainedWithinRange),
-            PostgresqlTypeFilter::ContainsAnotherRange { ident: _ } => Ok(Self::ContainsAnotherRange),
-            PostgresqlTypeFilter::DimensionOneContainsAnotherRange { ident: _ } => Ok(Self::DimensionOneContainsAnotherRange),
-            PostgresqlTypeFilter::StrictlyToLeftOfRange { ident: _ } => Ok(Self::StrictlyToLeftOfRange),
-            PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange { ident: _ } => Ok(Self::DimensionOneStrictlyToLeftOfRange),
-            PostgresqlTypeFilter::StrictlyToRightOfRange { ident: _ } => Ok(Self::StrictlyToRightOfRange),
-            PostgresqlTypeFilter::DimensionOneStrictlyToRightOfRange { ident: _ } => Ok(Self::DimensionOneStrictlyToRightOfRange),
-            PostgresqlTypeFilter::IncludedLowerBound { ident: _ } => Ok(Self::IncludedLowerBound),
-            PostgresqlTypeFilter::DimensionOneIncludedLowerBound { ident: _ } => Ok(Self::DimensionOneIncludedLowerBound),
-            PostgresqlTypeFilter::ExcludedUpperBound { ident: _ } => Ok(Self::ExcludedUpperBound),
-            PostgresqlTypeFilter::DimensionOneExcludedUpperBound { ident: _ } => Ok(Self::DimensionOneExcludedUpperBound),
-            PostgresqlTypeFilter::GreaterThanLowerBound { ident: _ } => Ok(Self::GreaterThanLowerBound),
-            PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound { ident: _ } => Ok(Self::DimensionOneGreaterThanLowerBound),
-            PostgresqlTypeFilter::OverlapWithRange { ident: _ } => Ok(Self::OverlapWithRange),
-            PostgresqlTypeFilter::DimensionOneOverlapWithRange { ident: _ } => Ok(Self::DimensionOneOverlapWithRange),
-            PostgresqlTypeFilter::AdjacentWithRange { ident: _ } => Ok(Self::AdjacentWithRange),
-            PostgresqlTypeFilter::DimensionOneAdjacentWithRange { ident: _ } => Ok(Self::DimensionOneAdjacentWithRange),
-            PostgresqlTypeFilter::RangeLength => Err(()),
-            PostgresqlTypeFilter::DimensionOneRangeLength => Err(()),
         }
     }
 }
@@ -577,9 +442,6 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
         let value = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&self.upper_camel_case());
         quote::quote! {#value}
     }
-    fn has_generic(&self) -> std::primitive::bool {
-        PostgresqlJsonTypeFilterHasGeneric::try_from(self).is_ok()
-    }
     fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream> {
         match &self {
             Self::Equal { ident } => Some(ident.clone()),
@@ -645,13 +507,6 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionFourOverlapsWithArray { ident }=> Some(ident.clone()),
         }
     }
-    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
-        if let Ok(value) = PostgresqlJsonTypeFilterHasGeneric::try_from(self) {
-            IsRelevantOnlyForNotNull::is_relevant_only_for_not_null(&value)
-        } else {
-            true //coz to not generate useless copies of generic types for optional types
-        }
-    }
 }
 //todo remove this
 pub enum PostgresqlJsonTypeFilterHasGeneric {
@@ -695,53 +550,6 @@ pub enum PostgresqlJsonTypeFilterHasGeneric {
     DimensionTwoOverlapsWithArray,
     DimensionThreeOverlapsWithArray,
     DimensionFourOverlapsWithArray,
-}
-impl IsRelevantOnlyForNotNull for PostgresqlJsonTypeFilterHasGeneric {
-    //todo maybe not need
-    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool {
-        match &self {
-            Self::Equal => false,
-            Self::DimensionOneEqual => false,
-            Self::DimensionTwoEqual => false,
-            Self::DimensionThreeEqual => false,
-            Self::DimensionFourEqual => false,
-            Self::DimensionOneAllElementsEqual => false,
-            Self::DimensionTwoAllElementsEqual => false,
-            Self::DimensionThreeAllElementsEqual => false,
-            Self::DimensionFourAllElementsEqual => false,
-            Self::GreaterThan => true,
-            Self::DimensionOneGreaterThan => true,
-            Self::DimensionTwoGreaterThan => true,
-            Self::DimensionThreeGreaterThan => true,
-            Self::DimensionFourGreaterThan => true,
-            Self::DimensionOneContainsElementGreaterThan => true,
-            Self::DimensionTwoContainsElementGreaterThan => true,
-            Self::DimensionThreeContainsElementGreaterThan => true,
-            Self::DimensionFourContainsElementGreaterThan => true,
-            Self::DimensionOneAllElementsGreaterThan => true,
-            Self::DimensionTwoAllElementsGreaterThan => true,
-            Self::DimensionThreeAllElementsGreaterThan => true,
-            Self::DimensionFourAllElementsGreaterThan => true,
-            Self::Between => true,
-            Self::DimensionOneBetween => true,
-            Self::DimensionTwoBetween => true,
-            Self::DimensionThreeBetween => true,
-            Self::DimensionFourBetween => true,
-            Self::In => false,
-            Self::DimensionOneIn => false,
-            Self::DimensionTwoIn => false,
-            Self::DimensionThreeIn => false,
-            Self::DimensionFourIn => false,
-            Self::DimensionOneContainsAllElementsOfArray => false,
-            Self::DimensionTwoContainsAllElementsOfArray => false,
-            Self::DimensionThreeContainsAllElementsOfArray => false,
-            Self::DimensionFourContainsAllElementsOfArray => false,
-            Self::DimensionOneOverlapsWithArray => false,
-            Self::DimensionTwoOverlapsWithArray => false,
-            Self::DimensionThreeOverlapsWithArray => false,
-            Self::DimensionFourOverlapsWithArray => false,
-        }
-    }
 }
 impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilterHasGeneric {
     type Error = ();
@@ -895,11 +703,5 @@ impl std::convert::TryFrom<&PostgresqlJsonTypeFilter> for PostgresqlJsonTypeFilt
 pub trait PostgresqlFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens;
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream;
-    //todo remove
-    fn has_generic(&self) -> std::primitive::bool;
     fn maybe_generic(&self) -> std::option::Option<proc_macro2::TokenStream>;
-    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool;
-}
-pub trait IsRelevantOnlyForNotNull {
-    fn is_relevant_only_for_not_null(&self) -> std::primitive::bool;
 }
