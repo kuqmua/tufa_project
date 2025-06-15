@@ -3280,259 +3280,445 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 }
             };
             let ident_where_element_upper_camel_case = naming::parameter::SelfWhereElementUpperCamelCase::from_tokens(&ident);
-            let ident_where_element_token_stream = {
-                let generate_ident_where_element_token_stream = |variants: &std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter>| {
-                    postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
-                        // variants,
-                        // |is_relevant_only_for_not_null: std::primitive::bool| {
-                        //     if is_relevant_only_for_not_null { &ident_standart_not_null_origin_upper_camel_case } else { &ident_origin_upper_camel_case }
-                        // },
-                        // &ident,
-                        // &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
-                        // &postgresql_crud_macros_common::IsQueryBindMutable::False,
-
-                        // &variants.iter().map(|element|element as &dyn postgresql_crud_macros_common::PostgresqlFilter).collect(),
-
-                        &variants,
-                        &ident,
-                        &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
-                        &postgresql_crud_macros_common::IsQueryBindMutable::False
-                    )
-                };
-
-                let equal = postgresql_crud_macros_common::PostgresqlTypeFilter::Equal {
-                    ident: quote::quote!{#ident_origin_upper_camel_case}
-                };
-                let dimension_one_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
-                    ident: quote::quote!{#ident_origin_upper_camel_case}
-                };
-                let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In {
-                    ident: quote::quote!{#ident_origin_upper_camel_case}
-                };
-                let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
-                let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
-                let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
-                let current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime;
-                let greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime;
-                let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                let range_length = postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength;
-                let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
-                let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
-                let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
-                    ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                };
-                // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
-                let array_length_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne;
-                let array_length_more_than_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne;
-
-                let where_element_number_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &in_handle]);
-                let where_element_sqlx_postgres_types_pg_money_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &in_handle]);
-                let where_element_sqlx_types_big_decimal_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between]);
-                let where_element_bool_token_stream = generate_ident_where_element_token_stream(&vec![&equal]);
-                let where_element_std_string_string_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &regular_expression]);
-                let where_element_std_vec_vec_std_primitive_u8_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &equal_to_encoded_string_representation]);
-                let where_element_sqlx_types_chrono_naive_time_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_time, &greater_than_current_time]);
-                let where_element_sqlx_types_time_time_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_time, &greater_than_current_time]);
-                let where_element_sqlx_postgres_types_pg_interval_token_stream = generate_ident_where_element_token_stream(&vec![&equal]);
-                let where_element_sqlx_types_time_date_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_date, &greater_than_current_date]);
-                let where_element_sqlx_types_chrono_naive_date_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_date, &greater_than_current_date]);
-                let where_element_sqlx_types_chrono_naive_date_time_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_timestamp, &greater_than_current_timestamp]);
-                let where_element_sqlx_types_time_primitive_date_time_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &between, &current_timestamp, &greater_than_current_timestamp]);
-                let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &before, &between]);
-                let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &before, &between]);
-                let where_element_sqlx_types_uuid_uuid_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &regular_expression]);
-                let where_element_sqlx_types_ipnetwork_ip_network_token_stream = generate_ident_where_element_token_stream(&vec![&equal]);
-                let where_element_sqlx_types_mac_address_mac_address_token_stream = generate_ident_where_element_token_stream(&vec![&equal, &greater_than, &regular_expression]);
-                let (
-                    where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                    where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                    where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
-                    where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-                    where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                    where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
-                    where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
-                    where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                    where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-                ) = {
-                    let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |postgresql_type_range: PostgresqlTypeRange| {
-                        enum ShouldImplPostgresqlTypeRangeLength {
-                            True,
-                            False,
-                        }
-                        let should_impl_postgresql_type_range_length = {
-                            let should_impl_postgresql_type_range_length_true = ShouldImplPostgresqlTypeRangeLength::True;
-                            let should_impl_postgresql_type_range_length_false = ShouldImplPostgresqlTypeRangeLength::False;
-                            match &postgresql_type_range {
-                                PostgresqlTypeRange::StdPrimitiveI32AsInt4 => should_impl_postgresql_type_range_length_true,
-                                PostgresqlTypeRange::StdPrimitiveI64AsInt8 => should_impl_postgresql_type_range_length_true,
-                                PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric => should_impl_postgresql_type_range_length_false,
-                                PostgresqlTypeRange::SqlxTypesTimeDateAsDate => should_impl_postgresql_type_range_length_false,
-                                PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => should_impl_postgresql_type_range_length_false,
-                                PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => should_impl_postgresql_type_range_length_false,
-                                PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp => should_impl_postgresql_type_range_length_false,
-                                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => should_impl_postgresql_type_range_length_false,
-                                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => should_impl_postgresql_type_range_length_false,
-                            }
-                        };
-                        generate_ident_where_element_token_stream(&{
-                            let mut value: std::vec::Vec<&dyn postgresql_crud_macros_common::PostgresqlFilter> = vec![
-                                &equal,
-                                &value_is_contained_within_range,
-                                &contains_another_range,
-                                &strictly_to_left_of_range,
-                                &strictly_to_right_of_range,
-                                &included_lower_bound,
-                                &excluded_upper_bound,
-                                &greater_than_lower_bound,
-                                &overlap_with_range,
-                                &adjacent_with_range,
+            let ident_where_element_token_stream = postgresql_crud_macros_common::generate_postgresql_type_where_element_token_stream(
+                &{
+                    let equal = postgresql_crud_macros_common::PostgresqlTypeFilter::Equal {
+                        ident: quote::quote!{#ident_origin_upper_camel_case}
+                    };
+                    let dimension_one_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
+                        ident: quote::quote!{#ident_origin_upper_camel_case}
+                    };
+                    let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In {
+                        ident: quote::quote!{#ident_origin_upper_camel_case}
+                    };
+                    let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
+                    let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
+                    let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
+                    let current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime;
+                    let greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime;
+                    let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    let range_length = postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength;
+                    let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
+                    let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
+                    let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
+                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                    };
+                    // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
+                    let array_length_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne;
+                    let array_length_more_than_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne;
+    
+                    let where_element_number_token_stream = vec![
+                        equal.clone(),
+                        greater_than.clone(),
+                        between.clone(),
+                        in_handle.clone()
+                    ];
+                    let where_element_sqlx_postgres_types_pg_money_token_stream = vec![
+                        equal.clone(),
+                        in_handle.clone(),
+                    ];
+                    let where_element_sqlx_types_big_decimal_token_stream = vec![
+                        equal.clone(),
+                        greater_than.clone(),
+                        between.clone(),
+                    ];
+                    let where_element_bool_token_stream = vec![
+                        equal.clone(),
+                    ];
+                    let where_element_std_string_string_token_stream = vec![
+                        equal.clone(),
+                        regular_expression.clone(),
+                    ];
+                    let where_element_std_vec_vec_std_primitive_u8_token_stream = vec![
+                        equal.clone(),
+                        equal_to_encoded_string_representation.clone(),
+                    ];
+                    let where_element_sqlx_types_chrono_naive_time_token_stream = vec![
+                        equal.clone(),
+                        greater_than.clone(),
+                        between.clone(),
+                        current_time.clone(),
+                        greater_than_current_time.clone(),
+                    ];
+                    let where_element_sqlx_types_time_time_token_stream = vec![
+                        equal.clone(),
+                        greater_than.clone(),
+                        between.clone(),
+                        current_time.clone(),
+                        greater_than_current_time.clone(),
+                    ];
+                    let where_element_sqlx_postgres_types_pg_interval_token_stream = vec![
+                        equal.clone(),
+                    ];
+                    let where_element_sqlx_types_time_date_token_stream = vec![
+                        equal.clone(),
+                        greater_than.clone(),
+                        between.clone(),
+                        current_date.clone(),
+                        greater_than_current_date.clone(),
+                    ];
+                    let where_element_sqlx_types_chrono_naive_date_token_stream = vec![
+                        equal.clone(),
+                        greater_than.clone(),
+                        between.clone(),
+                        current_date.clone(),
+                        greater_than_current_date.clone(),
+                    ];
+                    let where_element_sqlx_types_chrono_naive_date_time_token_stream = vec![
+                        equal.clone(),
+                        greater_than.clone(),
+                        between.clone(),
+                        current_timestamp.clone(),
+                        greater_than_current_timestamp.clone(),
+                    ];
+                    let where_element_sqlx_types_time_primitive_date_time_token_stream = vec![
+                        equal.clone(),
+                        greater_than.clone(),
+                        between.clone(),
+                        current_timestamp.clone(),
+                        greater_than_current_timestamp.clone(),
+                    ];
+                    let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = vec![
+                        equal.clone(),
+                        before.clone(),
+                        between.clone(),
+                    ];
+                    let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = vec![
+                        equal.clone(),
+                        before.clone(),
+                        between.clone(),
+                    ];
+                    let where_element_sqlx_types_uuid_uuid_token_stream = vec![
+                        equal.clone(),
+                        regular_expression.clone(),
+                    ];
+                    let where_element_sqlx_types_ipnetwork_ip_network_token_stream = vec![
+                        equal.clone(),
+                    ];
+                    let where_element_sqlx_types_mac_address_mac_address_token_stream = vec![
+                        equal.clone(),
+                        greater_than.clone(),
+                        regular_expression.clone(),
+                    ];
+                    let (
+                        where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                        where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                        where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                        where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                        where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                        where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                        where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                        where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                        where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                    ) = {
+                        let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |postgresql_type_range: PostgresqlTypeRange| {
+                            let mut value = vec![
+                                equal.clone(),
+                                value_is_contained_within_range.clone(),
+                                contains_another_range.clone(),
+                                strictly_to_left_of_range.clone(),
+                                strictly_to_right_of_range.clone(),
+                                included_lower_bound.clone(),
+                                excluded_upper_bound.clone(),
+                                greater_than_lower_bound.clone(),
+                                overlap_with_range.clone(),
+                                adjacent_with_range.clone(),
                             ];
-                            if let ShouldImplPostgresqlTypeRangeLength::True = &should_impl_postgresql_type_range_length {
-                                value.push(&range_length);
+                            match &postgresql_type_range {
+                                PostgresqlTypeRange::StdPrimitiveI32AsInt4 |
+                                PostgresqlTypeRange::StdPrimitiveI64AsInt8 => {
+                                    value.push(range_length.clone());
+                                },
+                                PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric |
+                                PostgresqlTypeRange::SqlxTypesTimeDateAsDate |
+                                PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate |
+                                PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                                PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp |
+                                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => (),
                             }
                             value
-                        })
+                        };
+                        (
+                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI32AsInt4),
+                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI64AsInt8),
+                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric),
+                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimeDateAsDate),
+                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate),
+                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
+                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp),
+                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
+                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz),
+                        )
                     };
-                    (
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI32AsInt4),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI64AsInt8),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimeDateAsDate),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
-                        generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz),
-                    )
-                };
-                match &postgresql_type_pattern {
-                    PostgresqlTypePattern::Standart => match &postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsInt2 => where_element_number_token_stream,
-                        PostgresqlType::StdPrimitiveI32AsInt4 => where_element_number_token_stream,
-                        PostgresqlType::StdPrimitiveI64AsInt8 => where_element_number_token_stream,
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => where_element_number_token_stream,
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => where_element_number_token_stream,
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => where_element_number_token_stream,
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => where_element_number_token_stream,
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => where_element_number_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => where_element_sqlx_postgres_types_pg_money_token_stream,
-                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => where_element_sqlx_types_big_decimal_token_stream,
-                        PostgresqlType::StdPrimitiveBoolAsBool => where_element_bool_token_stream,
-                        PostgresqlType::StdStringStringAsText => where_element_std_string_string_token_stream,
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => where_element_std_vec_vec_std_primitive_u8_token_stream,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => where_element_sqlx_types_chrono_naive_time_token_stream,
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => where_element_sqlx_types_time_time_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => where_element_sqlx_postgres_types_pg_interval_token_stream,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => where_element_sqlx_types_time_date_token_stream,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => where_element_sqlx_types_chrono_naive_date_token_stream,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => where_element_sqlx_types_chrono_naive_date_time_token_stream,
-                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => where_element_sqlx_types_time_primitive_date_time_token_stream,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => where_element_sqlx_types_uuid_uuid_token_stream,
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => where_element_sqlx_types_uuid_uuid_token_stream,
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => where_element_sqlx_types_mac_address_mac_address_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-                    },
-                    PostgresqlTypePattern::ArrayDimension1 { .. } => match &postgresql_type {
-                        //
-                        // SELECT 
-                        //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1:3]
-                        // FROM 
-                        //   example
-                        // WHERE 
-                        //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1] = 0;
-                        //
-                        PostgresqlType::StdPrimitiveI16AsInt2 => generate_ident_where_element_token_stream(&vec![
-                            &equal,
-                            &dimension_one_equal,
-                            &array_length_dimension_one,
-                            &array_length_more_than_dimension_one
-                        ]),
-                        PostgresqlType::StdPrimitiveI32AsInt4 => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::StdPrimitiveI64AsInt8 => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::StdPrimitiveF32AsFloat4 => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::StdPrimitiveF64AsFloat8 => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::StdPrimitiveBoolAsBool => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::StdStringStringAsText => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesTimeDateAsDate => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                    },
-                    // PostgresqlTypePattern::ArrayDimension2 {..} => todo!(),
-                    // PostgresqlTypePattern::ArrayDimension3 {..} => todo!(),
-                    // PostgresqlTypePattern::ArrayDimension4 {..} => todo!(),
-                }
-            };
+                    match &postgresql_type_pattern {
+                        PostgresqlTypePattern::Standart => match &postgresql_type {
+                            PostgresqlType::StdPrimitiveI16AsInt2 => where_element_number_token_stream,
+                            PostgresqlType::StdPrimitiveI32AsInt4 => where_element_number_token_stream,
+                            PostgresqlType::StdPrimitiveI64AsInt8 => where_element_number_token_stream,
+                            PostgresqlType::StdPrimitiveF32AsFloat4 => where_element_number_token_stream,
+                            PostgresqlType::StdPrimitiveF64AsFloat8 => where_element_number_token_stream,
+                            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => where_element_number_token_stream,
+                            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => where_element_number_token_stream,
+                            PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => where_element_number_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => where_element_sqlx_postgres_types_pg_money_token_stream,
+                            PostgresqlType::SqlxTypesBigDecimalAsNumeric => where_element_sqlx_types_big_decimal_token_stream,
+                            PostgresqlType::StdPrimitiveBoolAsBool => where_element_bool_token_stream,
+                            PostgresqlType::StdStringStringAsText => where_element_std_string_string_token_stream,
+                            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => where_element_std_vec_vec_std_primitive_u8_token_stream,
+                            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => where_element_sqlx_types_chrono_naive_time_token_stream,
+                            PostgresqlType::SqlxTypesTimeTimeAsTime => where_element_sqlx_types_time_time_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => where_element_sqlx_postgres_types_pg_interval_token_stream,
+                            PostgresqlType::SqlxTypesTimeDateAsDate => where_element_sqlx_types_time_date_token_stream,
+                            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => where_element_sqlx_types_chrono_naive_date_token_stream,
+                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => where_element_sqlx_types_chrono_naive_date_time_token_stream,
+                            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => where_element_sqlx_types_time_primitive_date_time_token_stream,
+                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => where_element_sqlx_types_uuid_uuid_token_stream,
+                            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => where_element_sqlx_types_uuid_uuid_token_stream,
+                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
+                            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => where_element_sqlx_types_mac_address_mac_address_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                        },
+                        PostgresqlTypePattern::ArrayDimension1 { .. } => match &postgresql_type {
+                            //
+                            // SELECT 
+                            //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1:3]
+                            // FROM 
+                            //   example
+                            // WHERE 
+                            //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1] = 0;
+                            //
+                            PostgresqlType::StdPrimitiveI16AsInt2 => vec![
+                                equal.clone(),
+                                dimension_one_equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdPrimitiveI32AsInt4 => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdPrimitiveI64AsInt8 => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdPrimitiveF32AsFloat4 => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdPrimitiveF64AsFloat8 => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesBigDecimalAsNumeric => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdPrimitiveBoolAsBool => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdStringStringAsText => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesTimeTimeAsTime => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesTimeDateAsDate => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => vec![
+                                equal.clone(),
+                                array_length_dimension_one.clone(),
+                                array_length_more_than_dimension_one.clone(),
+                            ],
+                        },
+                        // PostgresqlTypePattern::ArrayDimension2 {..} => todo!(),
+                        // PostgresqlTypePattern::ArrayDimension3 {..} => todo!(),
+                        // PostgresqlTypePattern::ArrayDimension4 {..} => todo!(),
+                    }
+                }.iter().map(|element|element as &dyn postgresql_crud_macros_common::PostgresqlFilter).collect(),
+                &ident,
+                &postgresql_crud_macros_common::ShouldDeriveSchemarsJsonSchema::False,
+                &postgresql_crud_macros_common::IsQueryBindMutable::False
+            );
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
             let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_token_stream = {
