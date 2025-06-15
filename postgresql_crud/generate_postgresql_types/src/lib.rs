@@ -3285,64 +3285,60 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let equal = postgresql_crud_macros_common::PostgresqlTypeFilter::Equal {
                         ident: quote::quote!{#ident_origin_upper_camel_case}
                     };
-                    let dimension_one_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
-                        ident: quote::quote!{#ident_origin_upper_camel_case}
-                    };
-                    let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In {
-                        ident: quote::quote!{#ident_origin_upper_camel_case}
-                    };
-                    let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
-                    let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
-                    let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
-                    let current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime;
-                    let greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime;
-                    let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    let range_length = postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength;
-                    let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
-                    let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
-                    let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
-                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                    };
-                    // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
-                    let array_length_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne;
-                    let array_length_more_than_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne;
+
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
+                            let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In {
+                                ident: quote::quote!{#ident_origin_upper_camel_case}
+                            };
+                            let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
+                            let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
+                            let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
+                            let current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime;
+                            let greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime;
+                            let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            let range_length = postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength;
+                            let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
+                            let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
+                            let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
+                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            };
+                            // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
                             let where_element_number_token_stream = vec![
                                 equal.clone(),
                                 greater_than.clone(),
@@ -3509,191 +3505,252 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
                             }
                         },
-                        PostgresqlTypePattern::ArrayDimension1 { .. } => match &postgresql_type {
+                        PostgresqlTypePattern::ArrayDimension1 { .. } => {
+                            let dimension_one_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
+                                ident: quote::quote!{#ident_origin_upper_camel_case}
+                            };
                             //
-                            // SELECT 
-                            //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1:3]
-                            // FROM 
-                            //   example
-                            // WHERE 
-                            //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1] = 0;
-                            //
-                            PostgresqlType::StdPrimitiveI16AsInt2 => vec![
-                                equal.clone(),
-                                dimension_one_equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdPrimitiveI32AsInt4 => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdPrimitiveI64AsInt8 => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdPrimitiveF32AsFloat4 => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdPrimitiveF64AsFloat8 => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesBigDecimalAsNumeric => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdPrimitiveBoolAsBool => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdStringStringAsText => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesTimeTimeAsTime => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesTimeDateAsDate => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => vec![
-                                equal.clone(),
-                                array_length_dimension_one.clone(),
-                                array_length_more_than_dimension_one.clone(),
-                            ],
+                            // let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In {
+                            //     ident: quote::quote!{#ident_origin_upper_camel_case}
+                            // };
+                            // let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
+                            // let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate;
+                            // let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
+                            // let current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime;
+                            // let greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime;
+                            // let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let range_length = postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength;
+                            // let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
+                            // let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
+                            // let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
+                            //     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            // };
+                            // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
+                            //todo rename
+                            let array_length_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne;
+                            //todo rename
+                            let array_length_more_than_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne;
+                            match &postgresql_type {
+                                //
+                                // SELECT 
+                                //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1:3]
+                                // FROM 
+                                //   example
+                                // WHERE 
+                                //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1] = 0;
+                                //
+                                PostgresqlType::StdPrimitiveI16AsInt2 => vec![
+                                    equal.clone(),
+                                    dimension_one_equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdPrimitiveI32AsInt4 => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdPrimitiveI64AsInt8 => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdPrimitiveF32AsFloat4 => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdPrimitiveF64AsFloat8 => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesBigDecimalAsNumeric => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdPrimitiveBoolAsBool => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdStringStringAsText => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesTimeTimeAsTime => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesTimeDateAsDate => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => vec![
+                                    equal.clone(),
+                                    array_length_dimension_one.clone(),
+                                    array_length_more_than_dimension_one.clone(),
+                                ],
+                            }
                         },
                         // PostgresqlTypePattern::ArrayDimension2 {..} => todo!(),
                         // PostgresqlTypePattern::ArrayDimension3 {..} => todo!(),
