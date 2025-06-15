@@ -3303,6 +3303,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let equal = postgresql_crud_macros_common::PostgresqlTypeFilter::Equal {
                     ident: quote::quote!{#ident_origin_upper_camel_case}
                 };
+                let dimension_one_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
+                    ident: quote::quote!{#ident_origin_upper_camel_case}
+                };
                 let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
                     ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                 };
@@ -3475,10 +3478,59 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
                     },
-                    PostgresqlTypePattern::ArrayDimension1 { .. } => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
-                    // PostgresqlTypePattern::ArrayDimension2 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
-                    // PostgresqlTypePattern::ArrayDimension3 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
-                    // PostgresqlTypePattern::ArrayDimension4 {..} => generate_ident_where_element_token_stream(&vec![&equal]),
+                    PostgresqlTypePattern::ArrayDimension1 { .. } => match &postgresql_type {
+                        //
+                        // SELECT 
+                        //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1:3]
+                        // FROM 
+                        //   example
+                        // WHERE 
+                        //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1] = 0;
+                        //
+                        PostgresqlType::StdPrimitiveI16AsInt2 => generate_ident_where_element_token_stream(&vec![
+                            &equal,
+                            &dimension_one_equal,
+                            &array_length_dimension_one,
+                            &array_length_more_than_dimension_one
+                        ]),
+                        PostgresqlType::StdPrimitiveI32AsInt4 => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::StdPrimitiveI64AsInt8 => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::StdPrimitiveF32AsFloat4 => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::StdPrimitiveF64AsFloat8 => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesBigDecimalAsNumeric => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::StdPrimitiveBoolAsBool => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::StdStringStringAsText => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesTimeDateAsDate => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => generate_ident_where_element_token_stream(&vec![&equal, &array_length_dimension_one, &array_length_more_than_dimension_one]),
+                    },
+                    // PostgresqlTypePattern::ArrayDimension2 {..} => todo!(),
+                    // PostgresqlTypePattern::ArrayDimension3 {..} => todo!(),
+                    // PostgresqlTypePattern::ArrayDimension4 {..} => todo!(),
                 }
             };
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);

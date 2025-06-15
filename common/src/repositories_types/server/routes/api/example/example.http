@@ -38,6 +38,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
+    "column_40d64ae4_a646_4394_bfce_3894bdfced87": 0,
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "animal_as_not_null_jsonb_object": {
       "doggie_as_not_null_jsonb_object": {
@@ -45,13 +46,16 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
           [
             [
               [
-                12
+                0
               ]
             ]
           ]
         ]
       }
-    }
+    },
+    "vec_std_primitive_i16_as_postgresql_int2_array_not_null": [
+      0
+    ]
   }
 ]
 
@@ -82,6 +86,38 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
+  # "column_40d64ae4_a646_4394_bfce_3894bdfced87": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "start": 0,
+  #         "end": 0
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
   # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
   #   "logical_operator": "Or",
   #   "value": [
@@ -114,335 +150,381 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "animal_as_not_null_jsonb_object": {
+  # "animal_as_not_null_jsonb_object": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "DoggieAsNotNullJsonbObject": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           {
+  #             "Column32Fc16Eb26414D65Acec0C7Addbfe338": {
+  #               "logical_operator": "Or",
+  #               "value": [
+  #                 {
+  #                   "Equal": {
+  #                     "logical_operator": "Or",
+  #                     "value": [
+  #                       [
+  #                         [
+  #                           [
+  #                             0
+  #                           ]
+  #                         ]
+  #                       ]
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionOneEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "value": [
+  #                       [
+  #                         [
+  #                           0
+  #                         ]
+  #                       ]
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionTwoEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "value": [
+  #                       [
+  #                         0
+  #                       ]
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionThreeEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "value": [
+  #                       0
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "dimension4_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionOneLengthEqual": {
+  #                     "logical_operator": "Or",
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionTwoLengthEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionThreeLengthEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourLengthEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionOneLengthMoreThan": {
+  #                     "logical_operator": "Or",
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionTwoLengthMoreThan": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionThreeLengthMoreThan": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourLengthMoreThan": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourContainsAllElementsOfArray": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "value": [
+  #                       0
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourOverlapsWithArray": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "value": [
+  #                       0
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionOneAllElementsEqual": {
+  #                     "logical_operator": "Or",
+  #                     "value": [
+  #                       [
+  #                         [
+  #                           0
+  #                         ]
+  #                       ]
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionTwoAllElementsEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "value": [
+  #                       [
+  #                         0
+  #                       ]
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionThreeAllElementsEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "value": [
+  #                       0
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourAllElementsEqual": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionOneIn": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "value": [
+  #                       [
+  #                         [
+  #                           [
+  #                             0
+  #                           ]
+  #                         ]
+  #                       ]
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionTwoIn": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "value": [
+  #                       [
+  #                         [
+  #                           0
+  #                         ]
+  #                       ]
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionThreeIn": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "value": [
+  #                       [
+  #                         0
+  #                       ]
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourIn": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "dimension4_position": 0,
+  #                     "value": [
+  #                       0
+  #                     ]
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourGreaterThan": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "dimension4_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourContainsElementGreaterThan": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourAllElementsGreaterThan": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "value": 0
+  #                   }
+  #                 },
+  #                 {
+  #                   "DimensionFourBetween": {
+  #                     "logical_operator": "Or",
+  #                     "dimension1_position": 0,
+  #                     "dimension2_position": 0,
+  #                     "dimension3_position": 0,
+  #                     "dimension4_position": 0,
+  #                     "value": {
+  #                       "start": 0,
+  #                       "end": 0
+  #                     }
+  #                   }
+  #                 }
+  #               ]
+  #             }
+  #           }
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
+  "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "Equal": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       0
+      #     ]
+      #   }
+      # },
       {
-        "DoggieAsNotNullJsonbObject": {
+        "DimensionOneEqual": {
           "logical_operator": "Or",
+          "dimension1_position": 0,
           "value": [
-            {
-              "Column32Fc16Eb26414D65Acec0C7Addbfe338": {
-                "logical_operator": "Or",
-                "value": [
-                  # {
-                  #   "Equal": {
-                  #     "logical_operator": "Or",
-                  #     "value": [
-                  #       [
-                  #         [
-                  #           [
-                  #             0
-                  #           ]
-                  #         ]
-                  #       ]
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionOneEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "value": [
-                  #       [
-                  #         [
-                  #           0
-                  #         ]
-                  #       ]
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionTwoEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "value": [
-                  #       [
-                  #         0
-                  #       ]
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionThreeEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "value": [
-                  #       0
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "dimension4_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionOneLengthEqual": {
-                  #     "logical_operator": "Or",
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionTwoLengthEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionThreeLengthEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourLengthEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionOneLengthMoreThan": {
-                  #     "logical_operator": "Or",
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionTwoLengthMoreThan": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionThreeLengthMoreThan": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourLengthMoreThan": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourContainsAllElementsOfArray": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "value": [
-                  #       0
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourOverlapsWithArray": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "value": [
-                  #       0
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionOneAllElementsEqual": {
-                  #     "logical_operator": "Or",
-                  #     "value": [
-                  #       [
-                  #         [
-                  #           0
-                  #         ]
-                  #       ]
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionTwoAllElementsEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "value": [
-                  #       [
-                  #         0
-                  #       ]
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionThreeAllElementsEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "value": [
-                  #       0
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourAllElementsEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionOneIn": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "value": [
-                  #       [
-                  #         [
-                  #           [
-                  #             0
-                  #           ]
-                  #         ]
-                  #       ]
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionTwoIn": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "value": [
-                  #       [
-                  #         [
-                  #           0
-                  #         ]
-                  #       ]
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionThreeIn": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "value": [
-                  #       [
-                  #         0
-                  #       ]
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourIn": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "dimension4_position": 0,
-                  #     "value": [
-                  #       0
-                  #     ]
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourGreaterThan": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "dimension4_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourContainsElementGreaterThan": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  # {
-                  #   "DimensionFourAllElementsGreaterThan": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "dimension2_position": 0,
-                  #     "dimension3_position": 0,
-                  #     "value": 0
-                  #   }
-                  # },
-                  {
-                    "DimensionFourBetween": {
-                      "logical_operator": "Or",
-                      "dimension1_position": 0,
-                      "dimension2_position": 0,
-                      "dimension3_position": 0,
-                      "dimension4_position": 0,
-                      "value": {
-                        "start": 3,
-                        "end": 7
-                      }
-                    }
-                  }
-                ]
-              }
-            }
+            0
           ]
         }
       }
+      # ,
+      # {
+      #   "ArrayLengthDimensionOne": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      # {
+      #   "ArrayLengthMoreThanDimensionOne": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # }
     ]
   },
   "select": [
+    # {
+    #   "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
+    # },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
+    # {
+    #   "animal_as_not_null_jsonb_object": [
+    #     {
+    #       "doggie_as_not_null_jsonb_object": [
+    #         {
+    #           "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
+    #             "dimension1_pagination": {
+    #               "limit": 3,
+    #               "offset": 0
+    #             },
+    #             "dimension2_pagination": {
+    #               "limit": 3,
+    #               "offset": 0
+    #             },
+    #             "dimension3_pagination": {
+    #               "limit": 3,
+    #               "offset": 0
+    #             },
+    #             "dimension4_pagination": {
+    #               "limit": 3,
+    #               "offset": 0
+    #             }
+    #           }
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # },
     {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
-    {
-      "animal_as_not_null_jsonb_object": [
-        {
-          "doggie_as_not_null_jsonb_object": [
-            {
-              "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
-                "dimension1_pagination": {
-                  "limit": 3,
-                  "offset": 0
-                },
-                "dimension2_pagination": {
-                  "limit": 3,
-                  "offset": 0
-                },
-                "dimension3_pagination": {
-                  "limit": 3,
-                  "offset": 0
-                },
-                "dimension4_pagination": {
-                  "limit": 3,
-                  "offset": 0
-                }
-              }
-            }
-          ]
+      "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
+        "dimension1_pagination": {
+          "limit": 3,
+          "offset": 0
         }
-      ]
+      }
     }
   ],
   "order_by": {

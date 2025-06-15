@@ -706,11 +706,62 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => (
-                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    &pub_value_t_token_stream,
-                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                    &generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&equal_sign)),
-                    &query_bind_one_value_token_stream,
+                    //
+                    // SELECT 
+                    //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1:3]
+                    // FROM 
+                    //   example
+                    // WHERE 
+                    //   vec_std_primitive_i16_as_postgresql_int2_array_not_null[1] = 0;
+                    //
+                    ShouldAddDeclarationOfStructIdentGeneric::True {
+                        maybe_additional_traits_token_stream: None
+                    },
+                    &quote::quote! {
+                        pub dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
+                        pub value: T
+                    },
+                    &quote::quote! {
+                        dimension1_position: #core_default_default_default_token_stream,
+                        value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                    },
+                    // &generate_query_part_one_value_token_stream(
+                    //     &generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&equal_sign)
+                    //     "{{}}({{}} {value} ${{}})"
+                    // ),
+                    &quote::quote! {
+                        let increment1 = match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                value
+                            }
+                            None => {
+                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                            },
+                        };
+                        let value = match increment.checked_add(1) {
+                            Some(value) => {
+                                *increment = value;
+                                value
+                            }
+                            None => {
+                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                            },
+                        };
+                        Ok(format!(
+                            // #format_handle_token_stream,
+                            "{}({}->${} = ${})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            column,
+                            increment1,
+                            value
+                        ))
+                    },
+                    &quote::quote! {
+                        query = query.bind(self.dimension1_position);
+                        query = query.bind(self.value);
+                        query
+                    }
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan { ident: _ } => (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
