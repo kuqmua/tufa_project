@@ -3341,188 +3341,173 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
                     let array_length_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne;
                     let array_length_more_than_dimension_one = postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne;
-    
-                    let where_element_number_token_stream = vec![
-                        equal.clone(),
-                        greater_than.clone(),
-                        between.clone(),
-                        in_handle.clone()
-                    ];
-                    let where_element_sqlx_postgres_types_pg_money_token_stream = vec![
-                        equal.clone(),
-                        in_handle.clone(),
-                    ];
-                    let where_element_sqlx_types_big_decimal_token_stream = vec![
-                        equal.clone(),
-                        greater_than.clone(),
-                        between.clone(),
-                    ];
-                    let where_element_bool_token_stream = vec![
-                        equal.clone(),
-                    ];
-                    let where_element_std_string_string_token_stream = vec![
-                        equal.clone(),
-                        regular_expression.clone(),
-                    ];
-                    let where_element_std_vec_vec_std_primitive_u8_token_stream = vec![
-                        equal.clone(),
-                        equal_to_encoded_string_representation.clone(),
-                    ];
-                    let where_element_sqlx_types_chrono_naive_time_token_stream = vec![
-                        equal.clone(),
-                        greater_than.clone(),
-                        between.clone(),
-                        current_time.clone(),
-                        greater_than_current_time.clone(),
-                    ];
-                    let where_element_sqlx_types_time_time_token_stream = vec![
-                        equal.clone(),
-                        greater_than.clone(),
-                        between.clone(),
-                        current_time.clone(),
-                        greater_than_current_time.clone(),
-                    ];
-                    let where_element_sqlx_postgres_types_pg_interval_token_stream = vec![
-                        equal.clone(),
-                    ];
-                    let where_element_sqlx_types_time_date_token_stream = vec![
-                        equal.clone(),
-                        greater_than.clone(),
-                        between.clone(),
-                        current_date.clone(),
-                        greater_than_current_date.clone(),
-                    ];
-                    let where_element_sqlx_types_chrono_naive_date_token_stream = vec![
-                        equal.clone(),
-                        greater_than.clone(),
-                        between.clone(),
-                        current_date.clone(),
-                        greater_than_current_date.clone(),
-                    ];
-                    let where_element_sqlx_types_chrono_naive_date_time_token_stream = vec![
-                        equal.clone(),
-                        greater_than.clone(),
-                        between.clone(),
-                        current_timestamp.clone(),
-                        greater_than_current_timestamp.clone(),
-                    ];
-                    let where_element_sqlx_types_time_primitive_date_time_token_stream = vec![
-                        equal.clone(),
-                        greater_than.clone(),
-                        between.clone(),
-                        current_timestamp.clone(),
-                        greater_than_current_timestamp.clone(),
-                    ];
-                    let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = vec![
-                        equal.clone(),
-                        before.clone(),
-                        between.clone(),
-                    ];
-                    let where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = vec![
-                        equal.clone(),
-                        before.clone(),
-                        between.clone(),
-                    ];
-                    let where_element_sqlx_types_uuid_uuid_token_stream = vec![
-                        equal.clone(),
-                        regular_expression.clone(),
-                    ];
-                    let where_element_sqlx_types_ipnetwork_ip_network_token_stream = vec![
-                        equal.clone(),
-                    ];
-                    let where_element_sqlx_types_mac_address_mac_address_token_stream = vec![
-                        equal.clone(),
-                        greater_than.clone(),
-                        regular_expression.clone(),
-                    ];
-                    let (
-                        where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                        where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                        where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
-                        where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-                        where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                        where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
-                        where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
-                        where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                        where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-                    ) = {
-                        let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |postgresql_type_range: PostgresqlTypeRange| {
-                            let mut value = vec![
-                                equal.clone(),
-                                value_is_contained_within_range.clone(),
-                                contains_another_range.clone(),
-                                strictly_to_left_of_range.clone(),
-                                strictly_to_right_of_range.clone(),
-                                included_lower_bound.clone(),
-                                excluded_upper_bound.clone(),
-                                greater_than_lower_bound.clone(),
-                                overlap_with_range.clone(),
-                                adjacent_with_range.clone(),
-                            ];
-                            match &postgresql_type_range {
-                                PostgresqlTypeRange::StdPrimitiveI32AsInt4 |
-                                PostgresqlTypeRange::StdPrimitiveI64AsInt8 => {
-                                    value.push(range_length.clone());
-                                },
-                                PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric |
-                                PostgresqlTypeRange::SqlxTypesTimeDateAsDate |
-                                PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate |
-                                PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                                PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp |
-                                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                                PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => (),
-                            }
-                            value
-                        };
-                        (
-                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI32AsInt4),
-                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI64AsInt8),
-                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric),
-                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimeDateAsDate),
-                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate),
-                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
-                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp),
-                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
-                            generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz),
-                        )
-                    };
                     match &postgresql_type_pattern {
-                        PostgresqlTypePattern::Standart => match &postgresql_type {
-                            PostgresqlType::StdPrimitiveI16AsInt2 => where_element_number_token_stream,
-                            PostgresqlType::StdPrimitiveI32AsInt4 => where_element_number_token_stream,
-                            PostgresqlType::StdPrimitiveI64AsInt8 => where_element_number_token_stream,
-                            PostgresqlType::StdPrimitiveF32AsFloat4 => where_element_number_token_stream,
-                            PostgresqlType::StdPrimitiveF64AsFloat8 => where_element_number_token_stream,
-                            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => where_element_number_token_stream,
-                            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => where_element_number_token_stream,
-                            PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => where_element_number_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => where_element_sqlx_postgres_types_pg_money_token_stream,
-                            PostgresqlType::SqlxTypesBigDecimalAsNumeric => where_element_sqlx_types_big_decimal_token_stream,
-                            PostgresqlType::StdPrimitiveBoolAsBool => where_element_bool_token_stream,
-                            PostgresqlType::StdStringStringAsText => where_element_std_string_string_token_stream,
-                            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => where_element_std_vec_vec_std_primitive_u8_token_stream,
-                            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => where_element_sqlx_types_chrono_naive_time_token_stream,
-                            PostgresqlType::SqlxTypesTimeTimeAsTime => where_element_sqlx_types_time_time_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => where_element_sqlx_postgres_types_pg_interval_token_stream,
-                            PostgresqlType::SqlxTypesTimeDateAsDate => where_element_sqlx_types_time_date_token_stream,
-                            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => where_element_sqlx_types_chrono_naive_date_token_stream,
-                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => where_element_sqlx_types_chrono_naive_date_time_token_stream,
-                            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => where_element_sqlx_types_time_primitive_date_time_token_stream,
-                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => where_element_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
-                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => where_element_sqlx_types_uuid_uuid_token_stream,
-                            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => where_element_sqlx_types_uuid_uuid_token_stream,
-                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => where_element_sqlx_types_ipnetwork_ip_network_token_stream,
-                            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => where_element_sqlx_types_mac_address_mac_address_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                        PostgresqlTypePattern::Standart => {
+                            let where_element_number_token_stream = vec![
+                                equal.clone(),
+                                greater_than.clone(),
+                                between.clone(),
+                                in_handle.clone()
+                            ];
+                            let where_element_sqlx_types_uuid_uuid_token_stream = vec![
+                                equal.clone(),
+                                regular_expression.clone(),
+                            ];
+                            let (
+                                where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                                where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                                where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                                where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                                where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                                where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                                where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                                where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                                where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                            ) = {
+                                let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |postgresql_type_range: PostgresqlTypeRange| {
+                                    let mut value = vec![
+                                        equal.clone(),
+                                        value_is_contained_within_range.clone(),
+                                        contains_another_range.clone(),
+                                        strictly_to_left_of_range.clone(),
+                                        strictly_to_right_of_range.clone(),
+                                        included_lower_bound.clone(),
+                                        excluded_upper_bound.clone(),
+                                        greater_than_lower_bound.clone(),
+                                        overlap_with_range.clone(),
+                                        adjacent_with_range.clone(),
+                                    ];
+                                    match &postgresql_type_range {
+                                        PostgresqlTypeRange::StdPrimitiveI32AsInt4 |
+                                        PostgresqlTypeRange::StdPrimitiveI64AsInt8 => {
+                                            value.push(range_length.clone());
+                                        },
+                                        PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric |
+                                        PostgresqlTypeRange::SqlxTypesTimeDateAsDate |
+                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate |
+                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                                        PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp |
+                                        PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                                        PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => (),
+                                    }
+                                    value
+                                };
+                                (
+                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI32AsInt4),
+                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI64AsInt8),
+                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric),
+                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimeDateAsDate),
+                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate),
+                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
+                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp),
+                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
+                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz),
+                                )
+                            };
+                            match &postgresql_type {
+                                PostgresqlType::StdPrimitiveI16AsInt2 => where_element_number_token_stream,
+                                PostgresqlType::StdPrimitiveI32AsInt4 => where_element_number_token_stream,
+                                PostgresqlType::StdPrimitiveI64AsInt8 => where_element_number_token_stream,
+                                PostgresqlType::StdPrimitiveF32AsFloat4 => where_element_number_token_stream,
+                                PostgresqlType::StdPrimitiveF64AsFloat8 => where_element_number_token_stream,
+                                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => where_element_number_token_stream,
+                                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => where_element_number_token_stream,
+                                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => where_element_number_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => vec![
+                                    equal.clone(),
+                                    in_handle.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesBigDecimalAsNumeric => vec![
+                                    equal.clone(),
+                                    greater_than.clone(),
+                                    between.clone(),
+                                ],
+                                PostgresqlType::StdPrimitiveBoolAsBool => vec![
+                                    equal.clone(),
+                                ],
+                                PostgresqlType::StdStringStringAsText => vec![
+                                    equal.clone(),
+                                    regular_expression.clone(),
+                                ],
+                                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => vec![
+                                    equal.clone(),
+                                    equal_to_encoded_string_representation.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => vec![
+                                    equal.clone(),
+                                    greater_than.clone(),
+                                    between.clone(),
+                                    current_time.clone(),
+                                    greater_than_current_time.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesTimeTimeAsTime => vec![
+                                    equal.clone(),
+                                    greater_than.clone(),
+                                    between.clone(),
+                                    current_time.clone(),
+                                    greater_than_current_time.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => vec![
+                                    equal.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesTimeDateAsDate => vec![
+                                    equal.clone(),
+                                    greater_than.clone(),
+                                    between.clone(),
+                                    current_date.clone(),
+                                    greater_than_current_date.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => vec![
+                                    equal.clone(),
+                                    greater_than.clone(),
+                                    between.clone(),
+                                    current_date.clone(),
+                                    greater_than_current_date.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => vec![
+                                    equal.clone(),
+                                    greater_than.clone(),
+                                    between.clone(),
+                                    current_timestamp.clone(),
+                                    greater_than_current_timestamp.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => vec![
+                                    equal.clone(),
+                                    greater_than.clone(),
+                                    between.clone(),
+                                    current_timestamp.clone(),
+                                    greater_than_current_timestamp.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => vec![
+                                    equal.clone(),
+                                    before.clone(),
+                                    between.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => vec![
+                                    equal.clone(),
+                                    before.clone(),
+                                    between.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => where_element_sqlx_types_uuid_uuid_token_stream,
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => where_element_sqlx_types_uuid_uuid_token_stream,
+                                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => vec![
+                                    equal.clone(),
+                                ],
+                                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => vec![
+                                    equal.clone(),
+                                    greater_than.clone(),
+                                    regular_expression.clone(),
+                                ],
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                            }
                         },
                         PostgresqlTypePattern::ArrayDimension1 { .. } => match &postgresql_type {
                             //
