@@ -781,6 +781,22 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         acc
                     })
                 }
+                let value_t_range_1_1_declaration_token_stream = {
+                    let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &IsZeroCanBeInDimensionPosition::True);
+                    quote::quote! {
+                        #struct_additional_fields_token_stream
+                        #pub_value_t_token_stream
+                    }
+                };
+                let value_t_range_1_1_default_initialization_token_stream = {
+                    let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
+                        range_1_1.clone()
+                    );
+                    quote::quote! {
+                        #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
+                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                    }
+                };
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_none.clone(),
@@ -791,22 +807,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                        &{
-                            let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &IsZeroCanBeInDimensionPosition::True);
-                            quote::quote! {
-                                #struct_additional_fields_token_stream
-                                #pub_value_t_token_stream
-                            }
-                        },
-                        &{
-                            let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                                range_1_1.clone()
-                            );
-                            quote::quote! {
-                                #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                                #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                            }
-                        },
+                        &value_t_range_1_1_declaration_token_stream.clone(),
+                        &value_t_range_1_1_default_initialization_token_stream.clone(),
                         &{
                             let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_1_1.clone());
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
@@ -851,22 +853,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                        &{
-                            let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &IsZeroCanBeInDimensionPosition::True);
-                            quote::quote! {
-                                #struct_additional_fields_token_stream
-                                #pub_value_t_token_stream
-                            }
-                        },
-                        &{
-                            let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                                range_1_1.clone()
-                            );
-                            quote::quote! {
-                                #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                                #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                            }
-                        },
+                        &value_t_range_1_1_declaration_token_stream.clone(),
+                        &value_t_range_1_1_default_initialization_token_stream.clone(),
                         &{
                             let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_1_1.clone());
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
