@@ -181,7 +181,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionOneEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
+  #                     "dimension1_position": 1,
   #                     "value": [
   #                       [
   #                         [
@@ -194,8 +194,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionTwoEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
   #                     "value": [
   #                       [
   #                         0
@@ -206,9 +206,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionThreeEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
   #                     "value": [
   #                       0
   #                     ]
@@ -217,10 +217,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionFourEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
-  #                     "dimension4_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
+  #                     "dimension4_position": 1,
   #                     "value": 0
   #                   }
   #                 },
@@ -233,24 +233,24 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionTwoLengthEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
+  #                     "dimension1_position": 1,
   #                     "value": 0
   #                   }
   #                 },
   #                 {
   #                   "DimensionThreeLengthEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
   #                     "value": 0
   #                   }
   #                 },
   #                 {
   #                   "DimensionFourLengthEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
   #                     "value": 0
   #                   }
   #                 },
@@ -263,33 +263,33 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionTwoLengthMoreThan": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
+  #                     "dimension1_position": 1,
   #                     "value": 0
   #                   }
   #                 },
   #                 {
   #                   "DimensionThreeLengthMoreThan": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
   #                     "value": 0
   #                   }
   #                 },
   #                 {
   #                   "DimensionFourLengthMoreThan": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
   #                     "value": 0
   #                   }
   #                 },
   #                 {
   #                   "DimensionFourContainsAllElementsOfArray": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
   #                     "value": [
   #                       0
   #                     ]
@@ -298,9 +298,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionFourOverlapsWithArray": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
   #                     "value": [
   #                       0
   #                     ]
@@ -321,7 +321,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionTwoAllElementsEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
+  #                     "dimension1_position": 1,
   #                     "value": [
   #                       [
   #                         0
@@ -332,8 +332,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionThreeAllElementsEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
   #                     "value": [
   #                       0
   #                     ]
@@ -342,16 +342,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionFourAllElementsEqual": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
   #                     "value": 0
   #                   }
   #                 },
   #                 {
   #                   "DimensionOneIn": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
+  #                     "dimension1_position": 1,
   #                     "value": [
   #                       [
   #                         [
@@ -366,8 +366,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionTwoIn": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
   #                     "value": [
   #                       [
   #                         [
@@ -380,9 +380,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionThreeIn": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
   #                     "value": [
   #                       [
   #                         0
@@ -393,10 +393,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionFourIn": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
-  #                     "dimension4_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
+  #                     "dimension4_position": 1,
   #                     "value": [
   #                       0
   #                     ]
@@ -405,38 +405,38 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #                 {
   #                   "DimensionFourGreaterThan": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
-  #                     "dimension4_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
+  #                     "dimension4_position": 1,
   #                     "value": 0
   #                   }
   #                 },
   #                 {
   #                   "DimensionFourContainsElementGreaterThan": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
   #                     "value": 0
   #                   }
   #                 },
   #                 {
   #                   "DimensionFourAllElementsGreaterThan": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
   #                     "value": 0
   #                   }
   #                 },
   #                 {
   #                   "DimensionFourBetween": {
   #                     "logical_operator": "Or",
-  #                     "dimension1_position": 0,
-  #                     "dimension2_position": 0,
-  #                     "dimension3_position": 0,
-  #                     "dimension4_position": 0,
+  #                     "dimension1_position": 1,
+  #                     "dimension2_position": 1,
+  #                     "dimension3_position": 1,
+  #                     "dimension4_position": 1,
   #                     "value": {
   #                       "start": 0,
   #                       "end": 0
@@ -462,14 +462,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     ]
       #   }
       # },
-      {
-        "DimensionOneEqual": {
-          "logical_operator": "Or",
-          "dimension1_position": 1,
-          "value": 0
-        }
-      }
-      # ,
+      # {
+      #   "DimensionOneEqual": {
+      #     "logical_operator": "Or",
+      #     "dimension1_position": 0,
+      #     "value": 0
+      #   }
+      # },
       # {
       #   "DimensionOneLengthEqual": {
       #     "logical_operator": "Or",
@@ -482,12 +481,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": 1
       #   }
       # },
-      # {
-      #   "DimensionOneGreaterThan": {
-      #     "logical_operator": "Or",
-      #     "value": 0
-      #   }
-      # },
+      {
+        "DimensionOneGreaterThan": {
+          "logical_operator": "Or",
+          "dimension1_position": 3,
+          "value": 2
+        }
+      }
+      # ,
       # {
       #   "DimensionOneBetween": {
       #     "logical_operator": "Or",
@@ -508,40 +509,40 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    # {
-    #   "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
-    # },
-    # {
-    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    # },
-    # {
-    #   "animal_as_not_null_jsonb_object": [
-    #     {
-    #       "doggie_as_not_null_jsonb_object": [
-    #         {
-    #           "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
-    #             "dimension1_pagination": {
-    #               "limit": 5,
-    #               "offset": 0
-    #             },
-    #             "dimension2_pagination": {
-    #               "limit": 5,
-    #               "offset": 0
-    #             },
-    #             "dimension3_pagination": {
-    #               "limit": 5,
-    #               "offset": 0
-    #             },
-    #             "dimension4_pagination": {
-    #               "limit": 5,
-    #               "offset": 0
-    #             }
-    #           }
-    #         }
-    #       ]
-    #     }
-    #   ]
-    # },
+    {
+      "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
+    },
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
+    {
+      "animal_as_not_null_jsonb_object": [
+        {
+          "doggie_as_not_null_jsonb_object": [
+            {
+              "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
+                "dimension1_pagination": {
+                  "limit": 5,
+                  "offset": 0
+                },
+                "dimension2_pagination": {
+                  "limit": 5,
+                  "offset": 0
+                },
+                "dimension3_pagination": {
+                  "limit": 5,
+                  "offset": 0
+                },
+                "dimension4_pagination": {
+                  "limit": 5,
+                  "offset": 0
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
     {
       "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
         "dimension1_pagination": {
