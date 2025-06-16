@@ -619,10 +619,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentTime => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTime => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneArrayLengthDimensionOne => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneArrayLengthMoreThanDimensionOne => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
                         ident: _
                     } => Err(()),
@@ -1015,28 +1013,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &generate_query_part_zero_value_token_stream(&quote::quote! {"{}({} > current_time)"}),
                     &quote::quote! {#query_snake_case},
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthDimensionOne => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual => (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
                     &value_code_default_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(array_length({}, 1) = ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneArrayLengthDimensionOne => (
-                    should_add_declaration_of_struct_ident_generic_false.clone(),
-                    &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
-                    &value_code_default_token_stream,
-                    &generate_query_part_one_value_token_stream(&quote::quote! {"{}(array_length({}, 1) = ${})"}),
-                    &query_bind_one_value_token_stream,
-                ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::ArrayLengthMoreThanDimensionOne => (
-                    should_add_declaration_of_struct_ident_generic_false.clone(),
-                    &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
-                    &value_code_default_token_stream,
-                    &generate_query_part_one_value_token_stream(&quote::quote! {"{}(array_length({}, 1) > ${})"}),
-                    &query_bind_one_value_token_stream,
-                ),
-                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneArrayLengthMoreThanDimensionOne => (
+                postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan => (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
                     &value_code_default_token_stream,
