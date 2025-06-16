@@ -854,13 +854,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&equal_sign)),
                         query_bind_one_value_token_stream.clone(),
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                        value_t_range_1_1_declaration_token_stream.clone(),
-                        value_t_range_1_1_default_initialization_token_stream.clone(),
-                        generate_value_t_range_1_1_query_part_token_stream(&equal_sign),
-                        value_t_range_query_bind_content_token_stream.clone()
-                    ),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream(&equal_sign),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_none.clone(),
                         pub_value_t_token_stream.clone(),
@@ -868,13 +862,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&greater_than_sign)),
                         query_bind_one_value_token_stream.clone(),
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                        value_t_range_1_1_declaration_token_stream.clone(),
-                        value_t_range_1_1_default_initialization_token_stream.clone(),
-                        generate_value_t_range_1_1_query_part_token_stream(&greater_than_sign),
-                        value_t_range_query_bind_content_token_stream.clone()
-                    ),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan { ident: _ } => generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream(&greater_than_sign),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Between { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_none.clone(),
                         quote::quote! {
