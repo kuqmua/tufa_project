@@ -3243,7 +3243,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let dimension_number_pagination_token_stream = format!("dimension{element}_pagination")
                             .parse::<proc_macro2::TokenStream>().unwrap();
                             arguments_token_stream.push(quote::quote! {
-                                #dimension_number_pagination_token_stream: crate::Pagination
+                                #dimension_number_pagination_token_stream: crate::PostgresqlTypePagination
                             });
                         }
                         quote::quote! {{

@@ -518,19 +518,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #         {
     #           "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
     #             "dimension1_pagination": {
-    #               "limit": 3,
+    #               "limit": 5,
     #               "offset": 0
     #             },
     #             "dimension2_pagination": {
-    #               "limit": 3,
+    #               "limit": 5,
     #               "offset": 0
     #             },
     #             "dimension3_pagination": {
-    #               "limit": 3,
+    #               "limit": 5,
     #               "offset": 0
     #             },
     #             "dimension4_pagination": {
-    #               "limit": 3,
+    #               "limit": 5,
     #               "offset": 0
     #             }
     #           }
@@ -542,8 +542,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
         "dimension1_pagination": {
-          "limit": 3,
-          "offset": 0
+          "limit": 5,
+          "offset": 1
         }
       }
     }
@@ -555,8 +555,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "order": "asc"
   },
   "pagination": {
-    "limit": 3,
-    "offset": 0
+    "limit": 5,
+    "offset": 1
   }
 }
 

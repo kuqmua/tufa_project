@@ -195,7 +195,7 @@ generate_postgresql_json_types::generate_postgresql_json_types!([
 // }
 // #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 // pub struct VecOfCustomStdPrimitiveI16AsNotNullArrayOfNotNullJsonbNumberSelect {
-//     dimension1_pagination: crate::Pagination,
+//     dimension1_pagination: crate::PostgresqlJsonTypePagination,
 // }
 // impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfCustomStdPrimitiveI16AsNotNullArrayOfNotNullJsonbNumberSelect {
 //     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {

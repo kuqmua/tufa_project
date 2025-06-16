@@ -3305,7 +3305,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream,
                     #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
                     pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_select_upper_camel_case>,
-                    pub pagination: postgresql_crud::Pagination,
+                    pub pagination: postgresql_crud::PostgresqlTypePagination,
                 },
             ),
         );

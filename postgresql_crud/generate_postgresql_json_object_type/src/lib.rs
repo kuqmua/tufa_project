@@ -975,7 +975,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 )
             };
             let dimension1_pagination_token_stream = quote::quote!{dimension1_pagination};
-            let import_path_pagination_token_stream = quote::quote!{#import_path::Pagination};
+            let import_path_pagination_token_stream = quote::quote!{#import_path::PostgresqlJsonTypePagination};
             let ident_select_token_stream = match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_json_object_type_pattern {
                     PostgresqlJsonObjectTypePattern::Standart => generate_ident_select_standart_not_null_token_stream(&is_standart_with_id_false),
