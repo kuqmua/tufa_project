@@ -790,9 +790,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         &query_bind_one_value_token_stream,
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => (
-                        ShouldAddDeclarationOfStructIdentGeneric::True {
-                            maybe_additional_traits_token_stream: None
-                        },
+                        should_add_declaration_of_struct_ident_generic_true_none.clone(),
                         &{
                             let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &IsZeroCanBeInDimensionPosition::True);
                             quote::quote! {
