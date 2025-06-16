@@ -463,22 +463,43 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         "DimensionOneEqual": {
           "logical_operator": "Or",
           "dimension1_position": 0,
-          "value": [
-            0
-          ]
+          "value": 0
         }
       }
       # ,
       # {
-      #   "LengthEqual": {
+      #   "DimensionOneLengthEqual": {
       #     "logical_operator": "Or",
       #     "value": 0
       #   }
       # },
       # {
-      #   "ArrayLengthMoreThanDimensionOne": {
+      #   "DimensionOneLengthMoreThan": {
       #     "logical_operator": "Or",
       #     "value": 0
+      #   }
+      # },
+      # {
+      #   "DimensionOneGreaterThan": {
+      #     "logical_operator": "Or",
+      #     "value": 0
+      #   }
+      # },
+      # {
+      #   "DimensionOneBetween": {
+      #     "logical_operator": "Or",
+      #     "start": 0,
+      #     "end": 0
+      #   }
+      # },
+      # {
+      #   "DimensionOneIn": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       [
+      #         0
+      #       ]
+      #     ]
       #   }
       # }
     ]

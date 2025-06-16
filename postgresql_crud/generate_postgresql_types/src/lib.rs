@@ -1087,6 +1087,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
+            
+            let ident_standart_not_null_or_nullable_upper_camel_case = generate_ident_token_stream(postgresql_type, not_null_or_nullable, &PostgresqlTypePattern::Standart);
+            let ident_standart_not_null_or_nullable_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_or_nullable_upper_camel_case);
 
             let field_type_standart_not_null = postgresql_type.field_type_token_stream();
             let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
@@ -3574,7 +3577,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let common_array_dimension1_postgresql_type_filters = {
                                 let mut vec = common_postgresql_type_filters.clone();
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
-                                    ident: quote::quote!{#ident_origin_upper_camel_case}
+                                    ident: quote::quote!{#ident_standart_not_null_or_nullable_origin_upper_camel_case}
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual);
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan);

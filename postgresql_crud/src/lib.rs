@@ -301,11 +301,63 @@ pub struct OrderBy<ColumnGeneric> {
     pub column: ColumnGeneric,
     pub order: Option<Order>,
 }
-
+const DEFAULT_PAGINATION_LIMIT: std::primitive::i64 = 5;
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct Pagination {
     limit: std::primitive::i64,
     offset: std::primitive::i64,
+}
+
+#[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum PaginationTryNewErrorNamed {
+    OffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::i64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::i64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    LimitIsLessThanOrEqualToZero {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::i64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OffsetIsLessThanZero {
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::i64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Pagination {
+    pub fn try_new(limit: std::primitive::i64, offset: std::primitive::i64) -> Result<Self, PaginationTryNewErrorNamed> {
+        if limit <= 0 || offset < 0 {
+            if limit <= 0 {
+                Err(PaginationTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
+                    limit,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            } else {
+                Err(PaginationTryNewErrorNamed::OffsetIsLessThanZero {
+                    offset,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        } else if offset.checked_add(limit).is_some() {
+            Ok(Self { limit, offset })
+        } else {
+            Err(PaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
+                limit,
+                offset,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+    pub const fn start(&self) -> std::primitive::i64 {
+        self.offset
+    }
+    pub const fn end(&self) -> std::primitive::i64 {
+        self.offset.checked_add(self.limit).unwrap()
+    }
 }
 impl<'de> serde::Deserialize<'de> for Pagination {
     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
@@ -451,70 +503,31 @@ impl<'de> serde::Deserialize<'de> for Pagination {
         )
     }
 }
-#[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PaginationTryNewErrorNamed {
-    OffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::i64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    LimitIsLessThanOrEqualToZero {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OffsetIsLessThanZero {
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl Pagination {
-    pub fn try_new(limit: std::primitive::i64, offset: std::primitive::i64) -> Result<Self, PaginationTryNewErrorNamed> {
-        if limit <= 0 || offset < 0 {
-            if limit <= 0 {
-                Err(PaginationTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
-                    limit,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            } else {
-                Err(PaginationTryNewErrorNamed::OffsetIsLessThanZero {
-                    offset,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        } else if offset.checked_add(limit).is_some() {
-            Ok(Self { limit, offset })
-        } else {
-            Err(PaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
-                limit,
-                offset,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub const fn start(&self) -> std::primitive::i64 {
-        self.offset
-    }
-    pub const fn end(&self) -> std::primitive::i64 {
-        self.offset.checked_add(self.limit).unwrap()
-    }
-}
-//for Read in GeneratePostgresqlCrud
 impl<'a> crate::PostgresqlTypeWhereFilter<'a> for Pagination {
     fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-        match increment.checked_add(1) {
-            Some(limit_increment) => {
-                *increment = limit_increment;
-                increment.checked_add(1).map_or_else(|| Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }), |offset_increment| {
-                    *increment = offset_increment;
-                    Ok(format!("limit ${limit_increment} offset ${offset_increment}"))
-                })
+        let limit_increment = match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                value
             }
-            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() }),
-        }
+            None => {
+                return Err(crate::QueryPartErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!()
+                });
+            },
+        };
+        let offset_increment = match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                value
+            }
+            None => {
+                return Err(crate::QueryPartErrorNamed::CheckedAdd {
+                    code_occurence: error_occurence_lib::code_occurence!()
+                });
+            },
+        };
+        Ok(format!("limit ${limit_increment} offset ${offset_increment}"))
     }
     fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         query = query.bind(self.limit);
@@ -525,7 +538,7 @@ impl<'a> crate::PostgresqlTypeWhereFilter<'a> for Pagination {
 impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for Pagination {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self { limit: 3, offset: std::default::Default::default() }
+        Self { limit: DEFAULT_PAGINATION_LIMIT, offset: std::default::Default::default() }
     }
 }
 
