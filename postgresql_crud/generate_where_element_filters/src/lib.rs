@@ -797,7 +797,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &IsZeroCanBeInDimensionPosition::True);
                             quote::quote! {
                                 #struct_additional_fields_token_stream
-                                pub value: T
+                                #pub_value_t_token_stream
                             }
                         },
                         &{
@@ -806,7 +806,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             );
                             quote::quote! {
                                 #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                                value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                                #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                             }
                         },
                         &{
