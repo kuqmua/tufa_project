@@ -3571,15 +3571,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let dimension_one_before = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore {
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                             };
-                            let dimension_one_length_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual;
-                            let dimension_one_length_more_than = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan;
                             let common_array_dimension1_postgresql_type_filters = {
                                 let mut vec = common_postgresql_type_filters.clone();
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
                                     ident: quote::quote!{#ident_origin_upper_camel_case}
                                 });
-                                vec.push(dimension_one_length_equal.clone());
-                                vec.push(dimension_one_length_more_than.clone());
+                                vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual);
+                                vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan);
                                 vec
                             };
                             let common_array_dimension1_postgresql_type_number_filters = {
