@@ -32,8 +32,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         quote::quote!{crate::UnsignedPartOfStdPrimitiveI32}
     }
     let unsigned_part_of_std_primitive_i32_token_stream = generate_unsigned_part_of_std_primitive_i32_token_stream();
-    let value_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {value: #unsigned_part_of_std_primitive_i32_token_stream};
-    let pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {pub #value_unsigned_part_of_std_primitive_i32_declaration_token_stream};
+    let not_zero_unsigned_part_of_std_primitive_i32_token_stream = quote::quote!{crate::NotZeroUnsignedPartOfStdPrimitiveI32};
+    let value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {value: #not_zero_unsigned_part_of_std_primitive_i32_token_stream};
+    let pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream = quote::quote! {pub #value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream};
     #[derive(Clone)]
     enum ShouldAddDeclarationOfStructIdentGeneric {
         True {
@@ -45,9 +46,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         field_name: &'a dyn std::fmt::Display,
         field_type: &'a dyn quote::ToTokens,
     }
-    let value_unsigned_part_of_std_primitive_i32_field = Field {
+    let value_not_zero_unsigned_part_of_std_primitive_i32_field = Field {
         field_name: &naming::ValueSnakeCase,
-        field_type: &unsigned_part_of_std_primitive_i32_token_stream, //todo i32 or i64 or something between? or more? or less?
+        field_type: &not_zero_unsigned_part_of_std_primitive_i32_token_stream, //todo i32 or i64 or something between? or more? or less?
     };
     let start_t_field = Field {
         field_name: &naming::StartSnakeCase,
@@ -60,9 +61,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let value_std_vec_vec_t_field = Field {
         field_name: &naming::ValueSnakeCase,
         field_type: &std_vec_vec_t_token_stream,
-    };
-    let value_code_default_token_stream = quote::quote! {
-        value: #core_default_default_default_token_stream
     };
     fn generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream() -> proc_macro2::TokenStream {
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
@@ -716,11 +714,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_additional_traits_token_stream: None
                     },
                     &quote::quote! {
-                        pub dimension1_position: #unsigned_part_of_std_primitive_i32_token_stream,
+                        pub dimension1_position: #not_zero_unsigned_part_of_std_primitive_i32_token_stream,
                         pub value: T
                     },
                     &quote::quote! {
-                        dimension1_position: #core_default_default_default_token_stream,
+                        dimension1_position: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         value: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                     },
                     // &generate_query_part_one_value_token_stream(
@@ -748,7 +746,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         };
                         Ok(format!(
                             // #format_handle_token_stream,
-                            "{}({}->${} = ${})",
+                            "{}({}[${}] = ${})",
                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                             column,
                             increment1,
@@ -1015,15 +1013,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual => (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
-                    &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
-                    &value_code_default_token_stream,
+                    &pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream,
+                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(array_length({}, 1) = ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan => (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
-                    &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
-                    &value_code_default_token_stream,
+                    &pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream,
+                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &generate_query_part_one_value_token_stream(&quote::quote! {"{}(array_length({}, 1) > ${})"}),
                     &query_bind_one_value_token_stream,
                 ),
@@ -1203,8 +1201,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
-                    &value_code_default_token_stream,
+                    &pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream,
+                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(value) => {
@@ -1218,8 +1216,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ),
                 postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRangeLength => (
                     ShouldAddDeclarationOfStructIdentGeneric::False,
-                    &pub_value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
-                    &value_code_default_token_stream,
+                    &pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream,
+                    &value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                     &quote::quote! {
                         match increment.checked_add(1) {
                             Some(value) => {
@@ -1400,13 +1398,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &quote::quote! {
                                 LengthIsNegativeOrZero {//todo rename
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
+                                    value: #not_zero_unsigned_part_of_std_primitive_i32_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
                             &ShouldAddDeclarationOfStructIdentGeneric::False,
                             &proc_macro2_token_stream_new,
-                            &value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
+                            &value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream,
                             &quote::quote! {
                                 if value.get() > 0 {
                                     Ok(Self { logical_operator, value })
@@ -1418,20 +1416,20 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                             },
                             None,
-                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
+                            &vec![&value_not_zero_unsigned_part_of_std_primitive_i32_field],
                         ),
                         PostgresqlTypeFilterInitializedWithTryNew::DimensionOneRangeLength => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote! {
                                 LengthIsNegativeOrZero {//todo rename
                                     #[eo_to_std_string_string_serialize_deserialize]
-                                    value: #unsigned_part_of_std_primitive_i32_token_stream,
+                                    value: #not_zero_unsigned_part_of_std_primitive_i32_token_stream,
                                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                 },
                             },
                             &ShouldAddDeclarationOfStructIdentGeneric::False,
                             &proc_macro2_token_stream_new,
-                            &value_unsigned_part_of_std_primitive_i32_declaration_token_stream,
+                            &value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream,
                             &quote::quote! {
                                 if value.get() > 0 {
                                     Ok(Self { logical_operator, value })
@@ -1443,7 +1441,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                             },
                             None,
-                            &vec![&value_unsigned_part_of_std_primitive_i32_field],
+                            &vec![&value_not_zero_unsigned_part_of_std_primitive_i32_field],
                         ),
                     };
                     generate_try_new_logic_token_stream(

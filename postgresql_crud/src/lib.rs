@@ -347,230 +347,13 @@ impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PaginationBase {
         query
     }
 }
-impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationBase {
-    #[inline]
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self { limit: 5, offset: std::default::Default::default() }
-    }
-}
 
-//difference between PostgresqlTypePagination and PostgresqlJsonTypePagination - PostgresqlTypePagination starts with 1, PostgresqlJsonTypePagination starts with 0
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct PostgresqlTypePagination(PaginationBase);
-#[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PostgresqlTypePaginationTryNewErrorNamed {
-    OffsetPlusLimitIsIntOverflow {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::i64,
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    LimitIsLessThanOrEqualToZero {
-        #[eo_to_std_string_string_serialize_deserialize]
-        limit: std::primitive::i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    OffsetIsLessThanOne {
-        #[eo_to_std_string_string_serialize_deserialize]
-        offset: std::primitive::i64,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-}
-impl PostgresqlTypePagination {
-    pub fn try_new(limit: std::primitive::i64, offset: std::primitive::i64) -> Result<Self, PostgresqlTypePaginationTryNewErrorNamed> {
-        if limit <= 0 || offset < 1 {
-            if limit <= 0 {
-                Err(PostgresqlTypePaginationTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
-                    limit,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            } else {
-                Err(PostgresqlTypePaginationTryNewErrorNamed::OffsetIsLessThanOne {
-                    offset,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                })
-            }
-        } else if offset.checked_add(limit).is_some() {
-            Ok(Self(PaginationBase { limit, offset }))
-        } else {
-            Err(PostgresqlTypePaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
-                limit,
-                offset,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub const fn start(&self) -> std::primitive::i64 {
-        self.0.start()
-    }
-    pub const fn end(&self) -> std::primitive::i64 {
-        self.0.end()
-    }
-}
-impl<'de> serde::Deserialize<'de> for PostgresqlTypePagination {
-    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-    where
-        __D: serde::Deserializer<'de>,
-    {
-        #[expect(non_camel_case_types)]
-        #[doc(hidden)]
-        enum __Field {
-            __field0,
-            __field1,
-            __ignore,
-        }
-        #[doc(hidden)]
-        struct __FieldVisitor;
-        impl serde::de::Visitor<'_> for __FieldVisitor {
-            type Value = __Field;
-            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__f, "field identifier")
-            }
-            fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-            where
-                __E: serde::de::Error,
-            {
-                match __value {
-                    0u64 => serde::__private::Ok(__Field::__field0),
-                    1u64 => serde::__private::Ok(__Field::__field1),
-                    _ => serde::__private::Ok(__Field::__ignore),
-                }
-            }
-            fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
-            where
-                __E: serde::de::Error,
-            {
-                match __value {
-                    "limit" => serde::__private::Ok(__Field::__field0),
-                    "offset" => serde::__private::Ok(__Field::__field1),
-                    _ => serde::__private::Ok(__Field::__ignore),
-                }
-            }
-            fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-            where
-                __E: serde::de::Error,
-            {
-                match __value {
-                    b"limit" => serde::__private::Ok(__Field::__field0),
-                    b"offset" => serde::__private::Ok(__Field::__field1),
-                    _ => serde::__private::Ok(__Field::__ignore),
-                }
-            }
-        }
-        impl<'de> serde::Deserialize<'de> for __Field {
-            #[inline]
-            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
-            where
-                __D: serde::Deserializer<'de>,
-            {
-                serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-            }
-        }
-        #[doc(hidden)]
-        struct __Visitor<'de> {
-            marker: serde::__private::PhantomData<PostgresqlTypePagination>,
-            lifetime: serde::__private::PhantomData<&'de ()>,
-        }
-        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = PostgresqlTypePagination;
-            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__f, "struct PostgresqlTypePagination")
-            }
-            #[inline]
-            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::SeqAccess<'de>,
-            {
-                let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct PostgresqlTypePagination with 2 elements"));
-                    }
-                };
-                let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
-                    serde::__private::Some(__value) => __value,
-                    serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct PostgresqlTypePagination with 2 elements"));
-                    }
-                };
-                match PostgresqlTypePagination::try_new(__field0, __field1) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
-                }
-            }
-            #[inline]
-            fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
-            where
-                __A: serde::de::MapAccess<'de>,
-            {
-                let mut __field0: serde::__private::Option<std::primitive::i64> = serde::__private::None;
-                let mut __field1: serde::__private::Option<std::primitive::i64> = serde::__private::None;
-                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                    match __key {
-                        __Field::__field0 => {
-                            if serde::__private::Option::is_some(&__field0) {
-                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("limit"));
-                            }
-                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
-                        }
-                        __Field::__field1 => {
-                            if serde::__private::Option::is_some(&__field1) {
-                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("offset"));
-                            }
-                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
-                        }
-                        _ => {
-                            let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
-                        }
-                    }
-                }
-                let __field0 = match __field0 {
-                    serde::__private::Some(__field0) => __field0,
-                    serde::__private::None => serde::__private::de::missing_field("limit")?,
-                };
-                let __field1 = match __field1 {
-                    serde::__private::Some(__field1) => __field1,
-                    serde::__private::None => serde::__private::de::missing_field("offset")?,
-                };
-                match PostgresqlTypePagination::try_new(__field0, __field1) {
-                    Ok(value) => serde::__private::Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
-                }
-            }
-        }
-        #[doc(hidden)]
-        const FIELDS: &[&str] = &["limit", "offset"];
-        serde::Deserializer::deserialize_struct(
-            __deserializer,
-            "PostgresqlTypePagination",
-            FIELDS,
-            __Visitor {
-                marker: serde::__private::PhantomData::<Self>,
-                lifetime: serde::__private::PhantomData,
-            },
-        )
-    }
-}
-impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PostgresqlTypePagination {
-    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
-        self.0.query_part(increment, column, is_need_to_add_logical_operator)
-    }
-    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        self.0.query_bind(query)
-    }
-}
-impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlTypePagination {
-    #[inline]
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
-    }
-}
+const DEFAULT_PAGINATION_LIMIT: std::primitive::i64 = 5;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct PostgresqlJsonTypePagination(PaginationBase);
+pub struct PaginationStartsWithZero(PaginationBase);
 #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-pub enum PostgresqlJsonTypePaginationTryNewErrorNamed {
+pub enum PaginationStartsWithZeroTryNewErrorNamed {
     OffsetPlusLimitIsIntOverflow {
         #[eo_to_std_string_string_serialize_deserialize]
         limit: std::primitive::i64,
@@ -589,16 +372,16 @@ pub enum PostgresqlJsonTypePaginationTryNewErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
 }
-impl PostgresqlJsonTypePagination {
-    pub fn try_new(limit: std::primitive::i64, offset: std::primitive::i64) -> Result<Self, PostgresqlJsonTypePaginationTryNewErrorNamed> {
+impl PaginationStartsWithZero {
+    pub fn try_new(limit: std::primitive::i64, offset: std::primitive::i64) -> Result<Self, PaginationStartsWithZeroTryNewErrorNamed> {
         if limit <= 0 || offset < 0 {
             if limit <= 0 {
-                Err(PostgresqlJsonTypePaginationTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
+                Err(PaginationStartsWithZeroTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
                     limit,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 })
             } else {
-                Err(PostgresqlJsonTypePaginationTryNewErrorNamed::OffsetIsLessThanZero {
+                Err(PaginationStartsWithZeroTryNewErrorNamed::OffsetIsLessThanZero {
                     offset,
                     code_occurence: error_occurence_lib::code_occurence!(),
                 })
@@ -606,7 +389,7 @@ impl PostgresqlJsonTypePagination {
         } else if offset.checked_add(limit).is_some() {
             Ok(Self(PaginationBase { limit, offset }))
         } else {
-            Err(PostgresqlJsonTypePaginationTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
+            Err(PaginationStartsWithZeroTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
                 limit,
                 offset,
                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -620,7 +403,7 @@ impl PostgresqlJsonTypePagination {
         self.0.end()
     }
 }
-impl<'de> serde::Deserialize<'de> for PostgresqlJsonTypePagination {
+impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
     fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
     where
         __D: serde::Deserializer<'de>,
@@ -681,13 +464,13 @@ impl<'de> serde::Deserialize<'de> for PostgresqlJsonTypePagination {
         }
         #[doc(hidden)]
         struct __Visitor<'de> {
-            marker: serde::__private::PhantomData<PostgresqlJsonTypePagination>,
+            marker: serde::__private::PhantomData<PaginationStartsWithZero>,
             lifetime: serde::__private::PhantomData<&'de ()>,
         }
         impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
-            type Value = PostgresqlJsonTypePagination;
+            type Value = PaginationStartsWithZero;
             fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                serde::__private::Formatter::write_str(__f, "struct PostgresqlJsonTypePagination")
+                serde::__private::Formatter::write_str(__f, "struct PaginationStartsWithZero")
             }
             #[inline]
             fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
@@ -697,16 +480,16 @@ impl<'de> serde::Deserialize<'de> for PostgresqlJsonTypePagination {
                 let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct PostgresqlJsonTypePagination with 2 elements"));
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithZero with 2 elements"));
                     }
                 };
                 let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
                     serde::__private::Some(__value) => __value,
                     serde::__private::None => {
-                        return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct PostgresqlJsonTypePagination with 2 elements"));
+                        return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithZero with 2 elements"));
                     }
                 };
-                match PostgresqlJsonTypePagination::try_new(__field0, __field1) {
+                match PaginationStartsWithZero::try_new(__field0, __field1) {
                     Ok(value) => serde::__private::Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                 }
@@ -745,7 +528,7 @@ impl<'de> serde::Deserialize<'de> for PostgresqlJsonTypePagination {
                     serde::__private::Some(__field1) => __field1,
                     serde::__private::None => serde::__private::de::missing_field("offset")?,
                 };
-                match PostgresqlJsonTypePagination::try_new(__field0, __field1) {
+                match PaginationStartsWithZero::try_new(__field0, __field1) {
                     Ok(value) => serde::__private::Ok(value),
                     Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
                 }
@@ -755,7 +538,7 @@ impl<'de> serde::Deserialize<'de> for PostgresqlJsonTypePagination {
         const FIELDS: &[&str] = &["limit", "offset"];
         serde::Deserializer::deserialize_struct(
             __deserializer,
-            "PostgresqlJsonTypePagination",
+            "PaginationStartsWithZero",
             FIELDS,
             __Visitor {
                 marker: serde::__private::PhantomData::<Self>,
@@ -764,7 +547,7 @@ impl<'de> serde::Deserialize<'de> for PostgresqlJsonTypePagination {
         )
     }
 }
-impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypePagination {
+impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PaginationStartsWithZero {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
         self.0.query_part(increment, column, is_need_to_add_logical_operator)
     }
@@ -772,10 +555,222 @@ impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypePagination {
         self.0.query_bind(query)
     }
 }
-impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlJsonTypePagination {
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithZero {
     #[inline]
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+        Self(PaginationBase { limit: DEFAULT_PAGINATION_LIMIT, offset: 0 })
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
+pub struct PaginationStartsWithOne(PaginationBase);
+#[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+pub enum PaginationStartsWithOneTryNewErrorNamed {
+    OffsetPlusLimitIsIntOverflow {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::i64,
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::i64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    LimitIsLessThanOrEqualToZero {
+        #[eo_to_std_string_string_serialize_deserialize]
+        limit: std::primitive::i64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    OffsetIsLessThanOne {
+        #[eo_to_std_string_string_serialize_deserialize]
+        offset: std::primitive::i64,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl PaginationStartsWithOne {
+    pub fn try_new(limit: std::primitive::i64, offset: std::primitive::i64) -> Result<Self, PaginationStartsWithOneTryNewErrorNamed> {
+        if limit <= 0 || offset < 1 {
+            if limit <= 0 {
+                Err(PaginationStartsWithOneTryNewErrorNamed::LimitIsLessThanOrEqualToZero {
+                    limit,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            } else {
+                Err(PaginationStartsWithOneTryNewErrorNamed::OffsetIsLessThanOne {
+                    offset,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                })
+            }
+        } else if offset.checked_add(limit).is_some() {
+            Ok(Self(PaginationBase { limit, offset }))
+        } else {
+            Err(PaginationStartsWithOneTryNewErrorNamed::OffsetPlusLimitIsIntOverflow {
+                limit,
+                offset,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+    pub const fn start(&self) -> std::primitive::i64 {
+        self.0.start()
+    }
+    pub const fn end(&self) -> std::primitive::i64 {
+        self.0.end()
+    }
+}
+impl<'de> serde::Deserialize<'de> for PaginationStartsWithOne {
+    fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+    where
+        __D: serde::Deserializer<'de>,
+    {
+        #[expect(non_camel_case_types)]
+        #[doc(hidden)]
+        enum __Field {
+            __field0,
+            __field1,
+            __ignore,
+        }
+        #[doc(hidden)]
+        struct __FieldVisitor;
+        impl serde::de::Visitor<'_> for __FieldVisitor {
+            type Value = __Field;
+            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__f, "field identifier")
+            }
+            fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    0u64 => serde::__private::Ok(__Field::__field0),
+                    1u64 => serde::__private::Ok(__Field::__field1),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_str<__E>(self, __value: &str) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    "limit" => serde::__private::Ok(__Field::__field0),
+                    "offset" => serde::__private::Ok(__Field::__field1),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+            fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+            where
+                __E: serde::de::Error,
+            {
+                match __value {
+                    b"limit" => serde::__private::Ok(__Field::__field0),
+                    b"offset" => serde::__private::Ok(__Field::__field1),
+                    _ => serde::__private::Ok(__Field::__ignore),
+                }
+            }
+        }
+        impl<'de> serde::Deserialize<'de> for __Field {
+            #[inline]
+            fn deserialize<__D>(__deserializer: __D) -> serde::__private::Result<Self, __D::Error>
+            where
+                __D: serde::Deserializer<'de>,
+            {
+                serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+            }
+        }
+        #[doc(hidden)]
+        struct __Visitor<'de> {
+            marker: serde::__private::PhantomData<PaginationStartsWithOne>,
+            lifetime: serde::__private::PhantomData<&'de ()>,
+        }
+        impl<'de> serde::de::Visitor<'de> for __Visitor<'de> {
+            type Value = PaginationStartsWithOne;
+            fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                serde::__private::Formatter::write_str(__f, "struct PaginationStartsWithOne")
+            }
+            #[inline]
+            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::SeqAccess<'de>,
+            {
+                let __field0 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct PaginationStartsWithOne with 2 elements"));
+                    }
+                };
+                let __field1 = match serde::de::SeqAccess::next_element::<std::primitive::i64>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct PaginationStartsWithOne with 2 elements"));
+                    }
+                };
+                match PaginationStartsWithOne::try_new(__field0, __field1) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                }
+            }
+            #[inline]
+            fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+            where
+                __A: serde::de::MapAccess<'de>,
+            {
+                let mut __field0: serde::__private::Option<std::primitive::i64> = serde::__private::None;
+                let mut __field1: serde::__private::Option<std::primitive::i64> = serde::__private::None;
+                while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                    match __key {
+                        __Field::__field0 => {
+                            if serde::__private::Option::is_some(&__field0) {
+                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("limit"));
+                            }
+                            __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
+                        }
+                        __Field::__field1 => {
+                            if serde::__private::Option::is_some(&__field1) {
+                                return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("offset"));
+                            }
+                            __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::primitive::i64>(&mut __map)?);
+                        }
+                        _ => {
+                            let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                        }
+                    }
+                }
+                let __field0 = match __field0 {
+                    serde::__private::Some(__field0) => __field0,
+                    serde::__private::None => serde::__private::de::missing_field("limit")?,
+                };
+                let __field1 = match __field1 {
+                    serde::__private::Some(__field1) => __field1,
+                    serde::__private::None => serde::__private::de::missing_field("offset")?,
+                };
+                match PaginationStartsWithOne::try_new(__field0, __field1) {
+                    Ok(value) => serde::__private::Ok(value),
+                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                }
+            }
+        }
+        #[doc(hidden)]
+        const FIELDS: &[&str] = &["limit", "offset"];
+        serde::Deserializer::deserialize_struct(
+            __deserializer,
+            "PaginationStartsWithOne",
+            FIELDS,
+            __Visitor {
+                marker: serde::__private::PhantomData::<Self>,
+                lifetime: serde::__private::PhantomData,
+            },
+        )
+    }
+}
+impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PaginationStartsWithOne {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        self.0.query_part(increment, column, is_need_to_add_logical_operator)
+    }
+    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        self.0.query_bind(query)
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PaginationStartsWithOne {
+    #[inline]
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(PaginationBase { limit: DEFAULT_PAGINATION_LIMIT, offset: 1 })
     }
 }
 
@@ -1473,7 +1468,7 @@ pub struct UnsignedPartOfStdPrimitiveI32(std::primitive::i32);//todo why exactly
 pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
     UnsignedPartOfStdPrimitiveI32IsLessThanZero {
         #[eo_to_std_string_string_serialize_deserialize]
-        dimension_position: std::primitive::i32,
+        value: std::primitive::i32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
@@ -1484,7 +1479,7 @@ impl std::convert::TryFrom<std::primitive::i32> for UnsignedPartOfStdPrimitiveI3
             Ok(Self(value))
         } else {
             Err(Self::Error::UnsignedPartOfStdPrimitiveI32IsLessThanZero {
-                dimension_position: value,
+                value: value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
@@ -1597,6 +1592,149 @@ impl sqlx::Encode<'_, sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
 impl UnsignedPartOfStdPrimitiveI32 {
     pub fn get(&self) -> std::primitive::i32 {
         self.0
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for UnsignedPartOfStdPrimitiveI32 {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(0)
+    }
+}
+
+#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
+pub struct NotZeroUnsignedPartOfStdPrimitiveI32(std::primitive::i32);//todo why exactly i32? maybe different types for postgresql type and postgresql json type
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
+    NotZeroUnsignedPartOfStdPrimitiveI32IsLessThanOne {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl std::convert::TryFrom<std::primitive::i32> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+    type Error = NotZeroUnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
+    fn try_from(value: std::primitive::i32) -> Result<Self, Self::Error> {
+        if value >= 1 {
+            Ok(Self(value))
+        } else {
+            Err(Self::Error::NotZeroUnsignedPartOfStdPrimitiveI32IsLessThanOne {
+                value: value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<NotZeroUnsignedPartOfStdPrimitiveI32>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = NotZeroUnsignedPartOfStdPrimitiveI32;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct NotZeroUnsignedPartOfStdPrimitiveI32",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(
+                    self,
+                    __e: __E,
+                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::primitive::i32 = <std::primitive::i32 as _serde::Deserialize>::deserialize(
+                        __e,
+                    )?;
+                    match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::primitive::i32,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"tuple struct NotZeroUnsignedPartOfStdPrimitiveI32 with 1 element",
+                                ),
+                            );
+                        }
+                    };
+                    match NotZeroUnsignedPartOfStdPrimitiveI32::try_from(__field0) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "NotZeroUnsignedPartOfStdPrimitiveI32",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<NotZeroUnsignedPartOfStdPrimitiveI32>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl error_occurence_lib::ToStdStringString for NotZeroUnsignedPartOfStdPrimitiveI32 {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for NotZeroUnsignedPartOfStdPrimitiveI32 {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl NotZeroUnsignedPartOfStdPrimitiveI32 {
+    pub fn get(&self) -> std::primitive::i32 {
+        self.0
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotZeroUnsignedPartOfStdPrimitiveI32 {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(1)
     }
 }
 

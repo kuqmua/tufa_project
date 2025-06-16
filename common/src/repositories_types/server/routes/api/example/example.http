@@ -46,7 +46,10 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
           [
             [
               [
-                0
+                0,2,4
+              ],
+              [
+                6,8,10
               ]
             ]
           ]
@@ -54,7 +57,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       }
     },
     "vec_std_primitive_i16_as_postgresql_int2_array_not_null": [
-      0
+      0,2,3,6
     ]
   }
 ]
@@ -462,7 +465,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       {
         "DimensionOneEqual": {
           "logical_operator": "Or",
-          "dimension1_position": 0,
+          "dimension1_position": 1,
           "value": 0
         }
       }
@@ -470,13 +473,13 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       # {
       #   "DimensionOneLengthEqual": {
       #     "logical_operator": "Or",
-      #     "value": 0
+      #     "value": 1
       #   }
       # },
       # {
       #   "DimensionOneLengthMoreThan": {
       #     "logical_operator": "Or",
-      #     "value": 0
+      #     "value": 1
       #   }
       # },
       # {
@@ -556,7 +559,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   },
   "pagination": {
     "limit": 5,
-    "offset": 1
+    "offset": 0
   }
 }
 
