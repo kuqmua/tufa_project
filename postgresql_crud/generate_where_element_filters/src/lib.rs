@@ -636,11 +636,23 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#content_token_stream)*}
     }
+    let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone = ShouldAddDeclarationOfStructIdentGeneric::True {
+        maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
+    };
+    let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
+        maybe_additional_traits_token_stream: Some(quote::quote!{
+            std::fmt::Debug
+            + std::cmp::PartialEq
+            + PartialOrd
+            + std::clone::Clone
+            + sqlx::Type<sqlx::Postgres>
+            + for<'__> sqlx::Encode<'__, sqlx::Postgres>
+        })
+    };
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum PostgresqlTypeFilterInitializedWithTryNew {
             Between,
-            DimensionOneBetween,
             In,
             DimensionOneIn,
             RangeLength,
@@ -667,7 +679,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     } => Ok(Self::Between),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween {
                         ident: _
-                    } => Ok(Self::DimensionOneBetween),
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::In {
                         ident: _
                     } => Ok(Self::In),
@@ -896,6 +908,49 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             query
                         },
                     ),
+                    // postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween { ident: _ } => (
+                    //     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
+                    //     {
+                    //         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &IsZeroCanBeInDimensionPosition::True);
+                    //         quote::quote! {
+                    //             #struct_additional_fields_token_stream
+                    //             value: crate::Between<T>
+                    //         }
+                    //     },
+                    //     value_t_range_1_1_default_initialization_token_stream.clone(),
+                    //     {
+                    //         let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_1_1.clone());
+                    //         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                    //             "{{}}({{}}{} {{}})",
+                    //             generate_postgresql_array_indexes_stringified(range_1_1.clone())
+                    //         ));
+                    //         let format_increments_token_stream = generate_format_increments_token_stream(range_1_1.clone());
+                    //         quote::quote! {
+                    //             #increments_initialization_token_stream
+                    //             let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                    //                 Ok(value) => value,
+                    //                 Err(error) => {
+                    //                     return Err(error);
+                    //                 }
+                    //             };
+                    //             Ok(format!(
+                    //                 #format_handle_token_stream,
+                    //                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                    //                 column,
+                    //                 #format_increments_token_stream
+                    //                 value
+                    //             ))
+                    //         }
+                    //     },
+                    //     {
+                    //         let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_1_1.clone());
+                    //         quote::quote! {
+                    //             #query_bind_dimension_position_token_stream
+                    //             query = self.value.query_bind(query);
+                    //             query
+                    //         }
+                    //     },
+                    // ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_none.clone(),
                         quote::quote! {
@@ -1375,41 +1430,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             Some(quote::quote! {+ std::cmp::PartialOrd}),
                             &vec![&start_t_field, &end_t_field],
                         ),
-                        PostgresqlTypeFilterInitializedWithTryNew::DimensionOneBetween => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                            &quote::quote! {
-                                StartMoreOrEqualToEnd {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    start: T,
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    end: T,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &should_add_declaration_of_struct_ident_generic_true_none,
-                            &quote::quote! {: std::cmp::PartialOrd},
-                            &quote::quote! {
-                                start: T,
-                                end: T,
-                            },
-                            &quote::quote! {
-                                if start < end {//removed .0
-                                    Ok(Self {
-                                        logical_operator,
-                                        start,
-                                        end
-                                    })
-                                } else {
-                                    Err(#ident_try_new_error_named::StartMoreOrEqualToEnd {
-                                        start,
-                                        end,
-                                        code_occurence: error_occurence_lib::code_occurence!(),
-                                    })
-                                }
-                            },
-                            Some(quote::quote! {+ std::cmp::PartialOrd}),
-                            &vec![&start_t_field, &end_t_field],
-                        ),
                         PostgresqlTypeFilterInitializedWithTryNew::In => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote! {
@@ -1622,19 +1642,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     acc
                 })
             }
-            let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone = ShouldAddDeclarationOfStructIdentGeneric::True {
-                maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
-            };
-            let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
-                maybe_additional_traits_token_stream: Some(quote::quote!{
-                    std::fmt::Debug
-                    + std::cmp::PartialEq
-                    + PartialOrd
-                    + std::clone::Clone
-                    + sqlx::Type<sqlx::Postgres>
-                    + for<'__> sqlx::Encode<'__, sqlx::Postgres>
-                })
-            };
             fn generate_additional_fields_value_t_declaration_token_stream<T>(value: T) -> proc_macro2::TokenStream
             where
                 T: IntoIterator<Item = std::primitive::u8>,
