@@ -496,8 +496,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let serde_serialize_token_stream = quote::quote!{serde::Serialize};
                         let content_token_stream = match (&filter_type, &maybe_additional_traits_token_stream) {
                             (FilterType::PostgresqlType, Some(value)) => &quote::quote! {#value + #send_and_lifetime_token_stream},
-                            (FilterType::PostgresqlJsonType, Some(value)) => &quote::quote! {#value + #serde_serialize_token_stream + #send_and_lifetime_token_stream},
                             (FilterType::PostgresqlType, None) => &quote::quote! {sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + #send_and_lifetime_token_stream},
+                            (FilterType::PostgresqlJsonType, Some(value)) => &quote::quote! {#value + #serde_serialize_token_stream + #send_and_lifetime_token_stream},
                             (FilterType::PostgresqlJsonType, None) => &quote::quote! {#serde_serialize_token_stream + #send_and_lifetime_token_stream},
                         };
                         &quote::quote! {, T: #content_token_stream}
