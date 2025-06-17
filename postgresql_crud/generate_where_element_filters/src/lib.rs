@@ -494,12 +494,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => {
                         let send_and_lifetime_token_stream = quote::quote!{std::marker::Send + 'a};
                         let serde_serialize_token_stream = quote::quote!{serde::Serialize};
-                        match (&filter_type, &maybe_additional_traits_token_stream) {
-                            (FilterType::PostgresqlType, Some(value)) => &quote::quote! {, T: #value + #send_and_lifetime_token_stream},
-                            (FilterType::PostgresqlJsonType, Some(value)) => &quote::quote! {, T: #value + #serde_serialize_token_stream + #send_and_lifetime_token_stream},
-                            (FilterType::PostgresqlType, None) => &quote::quote! {, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + #send_and_lifetime_token_stream},
-                            (FilterType::PostgresqlJsonType, None) => &quote::quote! {, T: #serde_serialize_token_stream + #send_and_lifetime_token_stream},
-                        }
+                        let content_token_stream = match (&filter_type, &maybe_additional_traits_token_stream) {
+                            (FilterType::PostgresqlType, Some(value)) => &quote::quote! {#value + #send_and_lifetime_token_stream},
+                            (FilterType::PostgresqlJsonType, Some(value)) => &quote::quote! {#value + #serde_serialize_token_stream + #send_and_lifetime_token_stream},
+                            (FilterType::PostgresqlType, None) => &quote::quote! {sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + #send_and_lifetime_token_stream},
+                            (FilterType::PostgresqlJsonType, None) => &quote::quote! {#serde_serialize_token_stream + #send_and_lifetime_token_stream},
+                        };
+                        &quote::quote! {, T: #content_token_stream}
                     },
                     ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
                 };
