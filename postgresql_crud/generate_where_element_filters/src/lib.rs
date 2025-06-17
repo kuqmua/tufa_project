@@ -491,11 +491,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         postgresql_crud_macros_common::impl_postgresql_type_where_filter_for_ident_token_stream(
             &{
                 let maybe_t_additional_traits_for_postgresql_type_where_filter_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                    ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => match (&filter_type, &maybe_additional_traits_token_stream) {
-                        (FilterType::PostgresqlType, Some(value)) => &quote::quote! {, T: #value + 'a + std::marker::Send},
-                        (FilterType::PostgresqlJsonType, Some(value)) => &quote::quote! {, T: #value + std::marker::Send + serde::Serialize + 'a},
-                        (FilterType::PostgresqlType, None) => &quote::quote! {, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + 'a + std::marker::Send},
-                        (FilterType::PostgresqlJsonType, None) => &quote::quote! {, T: std::marker::Send + serde::Serialize + 'a},
+                    ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream } => {
+                        let send_and_lifetime_token_stream = quote::quote!{std::marker::Send + 'a};
+                        let serde_serialize_token_stream = quote::quote!{serde::Serialize};
+                        match (&filter_type, &maybe_additional_traits_token_stream) {
+                            (FilterType::PostgresqlType, Some(value)) => &quote::quote! {, T: #value + #send_and_lifetime_token_stream},
+                            (FilterType::PostgresqlJsonType, Some(value)) => &quote::quote! {, T: #value + #serde_serialize_token_stream + #send_and_lifetime_token_stream},
+                            (FilterType::PostgresqlType, None) => &quote::quote! {, T: sqlx::Encode<'a, sqlx::Postgres> + sqlx::Type<sqlx::Postgres> + #send_and_lifetime_token_stream},
+                            (FilterType::PostgresqlJsonType, None) => &quote::quote! {, T: #serde_serialize_token_stream + #send_and_lifetime_token_stream},
+                        }
                     },
                     ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
                 };
