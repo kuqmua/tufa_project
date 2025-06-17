@@ -2259,3 +2259,13 @@ impl<T: Clone + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElemen
         Self(vec![<T as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(); LENGTH])
     }
 }
+// struct FF {
+//     f: BoundedStdVecVec<i32, 3>
+// }
+// fn fff() {
+//     let vec = vec![1, 2, 3];
+//     // let bv: BoundedStdVecVec<i32, 3> = BoundedStdVecVec::try_from(vec).unwrap();
+//     let h = FF {
+//         f: BoundedStdVecVec::try_from(vec).unwrap()
+//     };
+// }
