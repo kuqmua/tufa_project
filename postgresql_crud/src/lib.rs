@@ -1114,8 +1114,8 @@ impl<T> std::default::Default for PostgresqlJsonTypeNotEmptyUniqueEnumVec<T> {
     }
 }
 impl<T> std::convert::From<PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>> for Vec<T> {
-    fn from(val: PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>) -> Self {
-        val.0
+    fn from(value: PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>) -> Self {
+        value.0
     }
 }
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>
@@ -1268,8 +1268,8 @@ impl<T> std::default::Default for PostgresqlJsonTypeNotEmptyUniqueVec<T> {
     }
 }
 impl<T> std::convert::From<PostgresqlJsonTypeNotEmptyUniqueVec<T>> for Vec<T> {
-    fn from(val: PostgresqlJsonTypeNotEmptyUniqueVec<T>) -> Self {
-        val.0
+    fn from(value: PostgresqlJsonTypeNotEmptyUniqueVec<T>) -> Self {
+        value.0
     }
 }
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypeNotEmptyUniqueVec<T>
@@ -1415,26 +1415,8 @@ impl<T> std::default::Default for PostgresqlTypeNotEmptyUniqueVec<T> {
     }
 }
 impl<T> std::convert::From<PostgresqlTypeNotEmptyUniqueVec<T>> for Vec<T> {
-    fn from(val: PostgresqlTypeNotEmptyUniqueVec<T>) -> Self {
-        val.0
-    }
-}
-impl<'a, T> PostgresqlTypeWhereFilter<'a> for PostgresqlTypeNotEmptyUniqueVec<T>
-where
-    T: serde::Serialize + 'a,
-{
-    fn query_part(&self, increment: &mut std::primitive::u64, _: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
-        match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                Ok(format!("${value}"))
-            }
-            None => Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() })
-        }
-    }
-    fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        query = query.bind(sqlx::types::Json(self.0));
-        query
+    fn from(value: PostgresqlTypeNotEmptyUniqueVec<T>) -> Self {
+        value.0
     }
 }
 
