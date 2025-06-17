@@ -652,6 +652,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             query
         }
     }
+    //todo const generic dimensions vec instead of fields for each dimension
+    // use std::ops::Deref;
+    // #[derive(Debug, Clone)]
+    // pub struct BoundedVec<T, const LEN: usize> {
+    //     inner: Vec<T>,
+    // }
+    // impl<T, const LEN: usize> BoundedVec<T, LEN> {
+    //     pub fn try_new(vec: Vec<T>) -> Result<Self, &'static str> {
+    //         if vec.len() == LEN {
+    //             Ok(Self { inner: vec })
+    //         } else {
+    //             Err("Vector length does not match required size")
+    //         }
+    //     }
+    //     pub fn len(&self) -> usize {
+    //         LEN
+    //     }
+    //     pub fn into_inner(self) -> Vec<T> {
+    //         self.inner
+    //     }
+    // }
     let postgresql_type_token_stream = {
         let is_zero_can_be_in_dimension_position_false = IsZeroCanBeInDimensionPosition::False;
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
