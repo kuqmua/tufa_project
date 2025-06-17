@@ -655,7 +655,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let postgresql_type_token_stream = {
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum PostgresqlTypeFilterInitializedWithTryNew {
-            In,
             DimensionOneIn,
             RangeLength,
             DimensionOneRangeLength,
@@ -684,7 +683,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     } => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::In {
                         ident: _
-                    } => Ok(Self::In),
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn {
                         ident: _
                     } => Ok(Self::DimensionOneIn),
@@ -848,6 +847,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let should_add_declaration_of_struct_ident_generic_true_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
                     maybe_additional_traits_token_stream: Some(quote::quote!{sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>})
                 };
+                let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
+                    maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + Clone + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>})
+                };
                 let generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream = |operator: &dyn std::fmt::Display| -> (
                     ShouldAddDeclarationOfStructIdentGeneric,
                     proc_macro2::TokenStream,
@@ -946,14 +948,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         },
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::In { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        value_std_vec_vec_t_token_stream.clone(),
-                        quote::quote! {
-                            value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
-                        },
+                        should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone_type_encode.clone(),
+                        quote::quote! {pub value: crate::PostgresqlTypeNotEmptyUniqueVec<T>},
+                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                         quote::quote! {
                             let mut acc = std::string::String::default();
-                            for element in &self.value {
+                            for element in self.value.to_vec() {
                                 match increment.checked_add(1) {
                                     Some(value) => {
                                         *increment = value;
@@ -965,11 +965,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                             }
                             let _ = acc.pop();
-                            let in_snake_case = naming::InSnakeCase;
-                            Ok(format!("{}({} {in_snake_case} ({}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, acc))
+                            Ok(format!("{}({} in ({}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, acc))
                         },
                         quote::quote! {
-                            for element in self.value {
+                            for element in self.value.into_vec() {
                                 query = query.bind(element);
                             }
                             query
@@ -1356,43 +1355,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         option_additional_traits_annotations_token_stream,
                         additional_fields,
                     ) = match &value {
-                        PostgresqlTypeFilterInitializedWithTryNew::In => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                            &quote::quote! {
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                NotUnique {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: T,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &should_add_declaration_of_struct_ident_generic_true_none,
-                            &quote::quote! {: PartialEq + Clone + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>},
-                            &value_std_vec_vec_t_token_stream,
-                            &quote::quote! {
-                                if value.is_empty() {
-                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-                                }
-                                {
-                                    let mut acc = vec![];
-                                    for element in &value {
-                                        if !acc.contains(&element) {
-                                            acc.push(element);
-                                        } else {
-                                            return Err(#ident_try_new_error_named::NotUnique {
-                                                value: element.clone(),
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                Ok(Self { logical_operator, value })
-                            },
-                            Some(quote::quote! {+ PartialEq + Clone + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>}),
-                            &vec![&value_std_vec_vec_t_field],
-                        ),
                         PostgresqlTypeFilterInitializedWithTryNew::DimensionOneIn => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
                             &quote::quote! {
