@@ -1523,6 +1523,22 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 Three,
                 Four
             }
+            impl DimensionNumber {
+                fn dimension_std_primitive_u8(self) -> std::primitive::u8 {
+                    match &self {
+                        Self::One => 1,
+                        Self::Two => 2,
+                        Self::Three => 3,
+                        Self::Four => 4
+                    }
+                }
+                fn dimension_minus_one_std_primitive_u8(self) -> std::primitive::u8 {
+                    self.dimension_std_primitive_u8() - 1
+                }
+                fn dimension_plus_one_std_primitive_u8(self) -> std::primitive::u8 {
+                    self.dimension_std_primitive_u8() + 1
+                }
+            }
             //todo minus one and plus one
             impl std::convert::Into<std::primitive::u8> for DimensionNumber {
                 fn into(self) -> std::primitive::u8 {
