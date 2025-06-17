@@ -653,9 +653,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }
     }
     let postgresql_type_token_stream = {
+        let is_zero_can_be_in_dimension_position_false = IsZeroCanBeInDimensionPosition::False;
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
         enum PostgresqlTypeFilterInitializedWithTryNew {
-            DimensionOneIn,
             RangeLength,
             DimensionOneRangeLength,
         }
@@ -686,7 +686,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     } => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn {
                         ident: _
-                    } => Ok(Self::DimensionOneIn),
+                    } => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
@@ -795,7 +795,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     })
                 }
                 let value_t_range_1_1_declaration_token_stream = {
-                    let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &IsZeroCanBeInDimensionPosition::True);
+                    let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &is_zero_can_be_in_dimension_position_false);
                     quote::quote! {
                         #struct_additional_fields_token_stream
                         #pub_value_t_token_stream
@@ -865,6 +865,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         value_t_range_query_bind_content_token_stream.clone()
                     )
                 };
+                let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote!{pub value: crate::PostgresqlTypeNotEmptyUniqueVec<T>};
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
@@ -907,7 +908,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
                         {
-                            let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &IsZeroCanBeInDimensionPosition::True);
+                            let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &is_zero_can_be_in_dimension_position_false);
                             quote::quote! {
                                 #struct_additional_fields_token_stream
                                 #pub_value_between_t_token_stream
@@ -949,7 +950,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::In { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone_type_encode.clone(),
-                        quote::quote! {pub value: crate::PostgresqlTypeNotEmptyUniqueVec<T>},
+                        pub_value_postgresql_type_not_empty_unique_vec_t_token_stream.clone(),
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                         quote::quote! {
                             let mut acc = std::string::String::default();
@@ -965,7 +966,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 }
                             }
                             let _ = acc.pop();
-                            Ok(format!("{}({} in ({}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, acc))
+                            Ok(format!(
+                                "{}({} in ({}))",
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                acc
+                            ))
                         },
                         quote::quote! {
                             for element in self.value.into_vec() {
@@ -975,33 +981,55 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         },
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        value_std_vec_vec_t_token_stream.clone(),
-                        quote::quote! {
-                            value: vec![#path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream]
+                        should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone_type_encode.clone(),
+                        {
+                            let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &is_zero_can_be_in_dimension_position_false);
+                            quote::quote! {
+                                #struct_additional_fields_token_stream
+                                #pub_value_postgresql_type_not_empty_unique_vec_t_token_stream
+                            }
                         },
-                        quote::quote! {
-                            let mut acc = std::string::String::default();
-                            for element in &self.value {
-                                match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        acc.push_str(&format!("${},", value));
-                                    }
-                                    None => {
-                                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                        value_t_range_1_1_default_initialization_token_stream.clone(),
+                        {
+                            let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_1_1.clone());
+                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                                "{{}}({{}}{} in ({{}}))",//todo maybe use postgresql unnest feature?
+                                generate_postgresql_array_indexes_stringified(range_1_1.clone())
+                            ));
+                            let format_increments_token_stream = generate_format_increments_token_stream(range_1_1.clone());
+                            quote::quote! {
+                                #increments_initialization_token_stream
+                                let mut acc = std::string::String::default();
+                                for element in self.value.to_vec() {
+                                    match increment.checked_add(1) {
+                                        Some(value) => {
+                                            *increment = value;
+                                            acc.push_str(&format!("${},", value));
+                                        }
+                                        None => {
+                                            return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                        }
                                     }
                                 }
+                                let _ = acc.pop();
+                                Ok(format!(
+                                    #format_handle_token_stream,
+                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    column,
+                                    #format_increments_token_stream
+                                    acc
+                                ))
                             }
-                            let _ = acc.pop();
-                            let in_snake_case = naming::InSnakeCase;
-                            Ok(format!("{}({} {in_snake_case} ({}))", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, acc))
                         },
-                        quote::quote! {
-                            for element in self.value {
-                                query = query.bind(element);
+                        {
+                            let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_1_1.clone());
+                            quote::quote! {
+                                #query_bind_dimension_position_token_stream
+                                for element in self.value.into_vec() {
+                                    query = query.bind(element);
+                                }
+                                query
                             }
-                            query
                         },
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => (
@@ -1355,43 +1383,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         option_additional_traits_annotations_token_stream,
                         additional_fields,
                     ) = match &value {
-                        PostgresqlTypeFilterInitializedWithTryNew::DimensionOneIn => (
-                            &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True,
-                            &quote::quote! {
-                                IsEmpty {
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                                NotUnique {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    value: T,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                },
-                            },
-                            &should_add_declaration_of_struct_ident_generic_true_none,
-                            &quote::quote! {: PartialEq + Clone + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>},
-                            &value_std_vec_vec_t_token_stream,
-                            &quote::quote! {
-                                if value.is_empty() {
-                                    return Err(#ident_try_new_error_named::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
-                                }
-                                {
-                                    let mut acc = vec![];
-                                    for element in &value {
-                                        if !acc.contains(&element) {
-                                            acc.push(element);
-                                        } else {
-                                            return Err(#ident_try_new_error_named::NotUnique {
-                                                value: element.clone(),
-                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                            });
-                                        }
-                                    }
-                                }
-                                Ok(Self { logical_operator, value })
-                            },
-                            Some(quote::quote! {+ PartialEq + Clone + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>}),
-                            &vec![&value_std_vec_vec_t_field],
-                        ),
                         PostgresqlTypeFilterInitializedWithTryNew::RangeLength => (
                             &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False,
                             &quote::quote! {
@@ -1497,6 +1488,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }
     };
     let postgresql_json_type_token_stream = {
+        fn generate_is_zero_can_be_in_dimension_position_true() -> IsZeroCanBeInDimensionPosition {
+            IsZeroCanBeInDimensionPosition::True
+        }
+        let is_zero_can_be_in_dimension_position_true = generate_is_zero_can_be_in_dimension_position_true();
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
             let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             fn generate_query_bind_sqlx_types_json_self_value_token_stream() -> proc_macro2::TokenStream {
@@ -1538,7 +1533,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             where
                 T: IntoIterator<Item = std::primitive::u8>,
             {
-                let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(value, &IsZeroCanBeInDimensionPosition::False);
+                let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(value, &IsZeroCanBeInDimensionPosition::True);
                 let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                 quote::quote! {
                     #struct_additional_fields_token_stream
@@ -1622,7 +1617,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &IsZeroCanBeInDimensionPosition::False);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &is_zero_can_be_in_dimension_position_true);
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             pub value: #unsigned_part_of_std_primitive_i32_token_stream
@@ -1804,7 +1799,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &IsZeroCanBeInDimensionPosition::False);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &is_zero_can_be_in_dimension_position_true);
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             #regular_expression_case_and_value_declaration_token_stream
@@ -1870,7 +1865,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &IsZeroCanBeInDimensionPosition::False);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &is_zero_can_be_in_dimension_position_true);
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             #regular_expression_case_and_value_declaration_token_stream
@@ -1936,7 +1931,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &IsZeroCanBeInDimensionPosition::False);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &is_zero_can_be_in_dimension_position_true);
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             #regular_expression_case_and_value_declaration_token_stream
@@ -2000,7 +1995,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &IsZeroCanBeInDimensionPosition::False);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &is_zero_can_be_in_dimension_position_true);
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
@@ -2052,7 +2047,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone(), &IsZeroCanBeInDimensionPosition::False);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone(), &is_zero_can_be_in_dimension_position_true);
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
@@ -2096,7 +2091,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone(), &IsZeroCanBeInDimensionPosition::False);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone(), &is_zero_can_be_in_dimension_position_true);
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
@@ -2141,7 +2136,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &IsZeroCanBeInDimensionPosition::False);
+                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &is_zero_can_be_in_dimension_position_true);
                         quote::quote! {
                             #struct_additional_fields_token_stream
                             #pub_value_between_t_token_stream

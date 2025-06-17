@@ -3531,7 +3531,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                             };
                             let dimension_one_in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn {
-                                ident: quote::quote!{#ident_origin_upper_camel_case}
+                                ident: quote::quote!{#ident_standart_not_null_or_nullable_origin_upper_camel_case}
                             };
                             let dimension_one_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression;
                             let dimension_one_equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation {
