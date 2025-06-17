@@ -4,7 +4,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let query_snake_case = naming::QuerySnakeCase;
     let t_token_stream = quote::quote! {T};
     let t_annotation_generic_token_stream = quote::quote! {<#t_token_stream>};
-    let std_vec_vec_t_token_stream = &quote::quote! {std::vec::Vec<T>};
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
     //todo reuse ?
     fn generate_core_default_default_default_token_stream() -> proc_macro2::TokenStream {
@@ -25,7 +24,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     }
     let pub_value_t_token_stream = generate_pub_value_t_token_stream();
     //todo rewrite it as UniqueVec
-    let value_std_vec_vec_t_token_stream = quote::quote! {value: #std_vec_vec_t_token_stream};
     fn generate_unsigned_part_of_std_primitive_i32_token_stream() -> proc_macro2::TokenStream {
         quote::quote!{crate::UnsignedPartOfStdPrimitiveI32}
     }
@@ -50,10 +48,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let value_not_zero_unsigned_part_of_std_primitive_i32_field = Field {
         field_name: &naming::ValueSnakeCase,
         field_type: &not_zero_unsigned_part_of_std_primitive_i32_token_stream, //todo i32 or i64 or something between? or more? or less?
-    };
-    let value_std_vec_vec_t_field = Field {
-        field_name: &naming::ValueSnakeCase,
-        field_type: &std_vec_vec_t_token_stream,
     };
     fn generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream() -> proc_macro2::TokenStream {
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
