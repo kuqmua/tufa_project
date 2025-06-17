@@ -51,14 +51,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         field_name: &naming::ValueSnakeCase,
         field_type: &not_zero_unsigned_part_of_std_primitive_i32_token_stream, //todo i32 or i64 or something between? or more? or less?
     };
-    let start_t_field = Field {
-        field_name: &naming::StartSnakeCase,
-        field_type: &t_token_stream,
-    };
-    let end_t_field = Field {
-        field_name: &naming::EndSnakeCase,
-        field_type: &t_token_stream,
-    };
     let value_std_vec_vec_t_field = Field {
         field_name: &naming::ValueSnakeCase,
         field_type: &std_vec_vec_t_token_stream,
@@ -648,6 +640,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             + for<'__> sqlx::Encode<'__, sqlx::Postgres>
         })
     };
+    let value_between_t_token_stream = quote::quote!{value: crate::Between<T>};
+    let pub_value_between_t_token_stream = quote::quote!{pub #value_between_t_token_stream};
     fn generate_query_self_value_query_bind_token_stream() -> proc_macro2::TokenStream {
         quote::quote! {
             query = self.value.query_bind(query);
@@ -881,7 +875,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan { ident: _ } => generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream(&greater_than_sign),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Between { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
-                        quote::quote! {pub value: crate::Between<T>},
+                        pub_value_between_t_token_stream.clone(),
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                         {
                             quote::quote! {
@@ -907,7 +901,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &IsZeroCanBeInDimensionPosition::True);
                             quote::quote! {
                                 #struct_additional_fields_token_stream
-                                pub value: crate::Between<T>
+                                #pub_value_between_t_token_stream
                             }
                         },
                         value_t_range_1_1_default_initialization_token_stream.clone(),
@@ -2181,7 +2175,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &IsZeroCanBeInDimensionPosition::False);
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub value: crate::Between<T>
+                            #pub_value_between_t_token_stream
                         }
                     },
                     generate_additional_fields_value_t_default_initialization_token_stream(range.clone()),
@@ -2311,7 +2305,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
-                    quote::quote! {pub value: crate::Between<T>},
+                    pub_value_between_t_token_stream.clone(),
                     value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     quote::quote! {
                         let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
