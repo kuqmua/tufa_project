@@ -1516,11 +1516,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #impl_postgresql_type_where_filter_token_stream
             };
             // match &filter {
-            //     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween {ident: _} => {
-            //         // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            //         //     "GeneratePostgresqlTypeWhereElementFilter",
-            //         //     &generated,
-            //         // );
+            //     postgresql_crud_macros_common::PostgresqlTypeFilter::In {ident: _} => {
+            //         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            //             "GeneratePostgresqlTypeWhereElementFilter",
+            //             &generated,
+            //         );
             //         proc_macro2::TokenStream::new()
             //     },
             //     _ => generated
@@ -2041,7 +2041,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &IsZeroCanBeInDimensionPosition::False);
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub value: crate::NotEmptyUniqueStructVec<T>
+                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
                         }
                     },
                     generate_additional_fields_value_t_default_initialization_token_stream(range.clone()),
@@ -2093,7 +2093,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone(), &IsZeroCanBeInDimensionPosition::False);
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub value: crate::NotEmptyUniqueStructVec<T>
+                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
                         }
                     },
                     generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
@@ -2137,7 +2137,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_minus_one.clone(), &IsZeroCanBeInDimensionPosition::False);
                         quote::quote! {
                             #struct_additional_fields_token_stream
-                            pub value: crate::NotEmptyUniqueStructVec<T>
+                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
                         }
                     },
                     generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
@@ -2344,7 +2344,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
-                    quote::quote! {value: crate::NotEmptyUniqueStructVec<T>},
+                    quote::quote! {value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>},
                     value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     {
                         quote::quote! {

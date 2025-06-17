@@ -900,7 +900,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             quote::quote!{#value_snake_case: #type_token_stream}
         };
         let generate_unique_vec_wrapper_token_stream = |type_token_stream: &dyn quote::ToTokens|{
-            quote::quote!{#import_path::NotEmptyUniqueEnumVec<#type_token_stream>}
+            quote::quote!{#import_path::PostgresqlJsonTypeNotEmptyUniqueEnumVec<#type_token_stream>}
         };
         let self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
             Self(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))
