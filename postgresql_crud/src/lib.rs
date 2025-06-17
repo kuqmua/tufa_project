@@ -2084,7 +2084,9 @@ pub struct BoundedStdVecVec<T, const LENGTH: std::primitive::usize>(std::vec::Ve
 pub enum BoundedStdVecVecTryNewErrorNamed {
     LengthIsNotCorrect {
         #[eo_to_std_string_string_serialize_deserialize]
-        length: std::primitive::usize,
+        wrong_length: std::primitive::usize,
+        #[eo_to_std_string_string_serialize_deserialize]
+        expected: std::primitive::usize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
@@ -2146,7 +2148,8 @@ impl<T, const LENGTH: std::primitive::usize> std::convert::TryFrom<std::vec::Vec
             Ok(Self(value))
         } else {
             Err(BoundedStdVecVecTryNewErrorNamed::LengthIsNotCorrect {
-                length: len,
+                wrong_length: len,
+                expected: LENGTH,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
