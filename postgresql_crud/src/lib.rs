@@ -2078,142 +2078,181 @@ impl<'a, T: std::marker::Send + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Enco
     }
 }
 
-
-////////////
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, serde::Serialize, schemars::JsonSchema)]
-pub struct Dimensions<T, const LENGTH: std::primitive::u8>(std::vec::Vec<T>);//256 dimensions is enough i think
-// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-// pub enum UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed {
-//     UnsignedPartOfStdPrimitiveI32IsLessThanZero {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         value: std::primitive::i32,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     }
-// }
-// impl std::convert::TryFrom<std::primitive::i32> for UnsignedPartOfStdPrimitiveI32 {
-//     type Error = UnsignedPartOfStdPrimitiveI32TryFromStdPrimitiveI32ErrorNamed;
-//     fn try_from(value: std::primitive::i32) -> Result<Self, Self::Error> {
-//         if value >= 0 {
-//             Ok(Self(value))
-//         } else {
-//             Err(Self::Error::UnsignedPartOfStdPrimitiveI32IsLessThanZero {
-//                 value: value,
-//                 code_occurence: error_occurence_lib::code_occurence!(),
-//             })
-//         }
-//     }
-// }
-// const _: () = {
-//     #[allow(unused_extern_crates, clippy::useless_attribute)]
-//     extern crate serde as _serde;
-//     #[automatically_derived]
-//     impl<'de> _serde::Deserialize<'de> for UnsignedPartOfStdPrimitiveI32 {
-//         fn deserialize<__D>(
-//             __deserializer: __D,
-//         ) -> _serde::__private::Result<Self, __D::Error>
-//         where
-//             __D: _serde::Deserializer<'de>,
-//         {
-//             #[doc(hidden)]
-//             struct __Visitor<'de> {
-//                 marker: _serde::__private::PhantomData<UnsignedPartOfStdPrimitiveI32>,
-//                 lifetime: _serde::__private::PhantomData<&'de ()>,
-//             }
-//             #[automatically_derived]
-//             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-//                 type Value = UnsignedPartOfStdPrimitiveI32;
-//                 fn expecting(
-//                     &self,
-//                     __formatter: &mut _serde::__private::Formatter<'_>,
-//                 ) -> _serde::__private::fmt::Result {
-//                     _serde::__private::Formatter::write_str(
-//                         __formatter,
-//                         "tuple struct UnsignedPartOfStdPrimitiveI32",
-//                     )
-//                 }
-//                 #[inline]
-//                 fn visit_newtype_struct<__E>(
-//                     self,
-//                     __e: __E,
-//                 ) -> _serde::__private::Result<Self::Value, __E::Error>
-//                 where
-//                     __E: _serde::Deserializer<'de>,
-//                 {
-//                     let __field0: std::primitive::i32 = <std::primitive::i32 as _serde::Deserialize>::deserialize(
-//                         __e,
-//                     )?;
-//                     match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
-//                         Ok(value) => serde::__private::Ok(value),
-//                         Err(error) => {
-//                             return Err(serde::de::Error::custom(format!("{error:?}")));
-//                         }
-//                     }
-//                 }
-//                 #[inline]
-//                 fn visit_seq<__A>(
-//                     self,
-//                     mut __seq: __A,
-//                 ) -> _serde::__private::Result<Self::Value, __A::Error>
-//                 where
-//                     __A: _serde::de::SeqAccess<'de>,
-//                 {
-//                     let __field0 = match _serde::de::SeqAccess::next_element::<
-//                         std::primitive::i32,
-//                     >(&mut __seq)? {
-//                         _serde::__private::Some(__value) => __value,
-//                         _serde::__private::None => {
-//                             return _serde::__private::Err(
-//                                 _serde::de::Error::invalid_length(
-//                                     0usize,
-//                                     &"tuple struct UnsignedPartOfStdPrimitiveI32 with 1 element",
-//                                 ),
-//                             );
-//                         }
-//                     };
-//                     match UnsignedPartOfStdPrimitiveI32::try_from(__field0) {
-//                         Ok(value) => serde::__private::Ok(value),
-//                         Err(error) => {
-//                             return Err(serde::de::Error::custom(format!("{error:?}")));
-//                         }
-//                     }
-//                 }
-//             }
-//             _serde::Deserializer::deserialize_newtype_struct(
-//                 __deserializer,
-//                 "UnsignedPartOfStdPrimitiveI32",
-//                 __Visitor {
-//                     marker: _serde::__private::PhantomData::<UnsignedPartOfStdPrimitiveI32>,
-//                     lifetime: _serde::__private::PhantomData,
-//                 },
-//             )
-//         }
-//     }
-// };
-// impl error_occurence_lib::ToStdStringString for UnsignedPartOfStdPrimitiveI32 {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         self.0.to_string()
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-//         <std::primitive::i32 as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for UnsignedPartOfStdPrimitiveI32 {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-// }
-// impl UnsignedPartOfStdPrimitiveI32 {
-//     pub fn get(&self) -> std::primitive::i32 {
-//         self.0
-//     }
-// }
-// impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for UnsignedPartOfStdPrimitiveI32 {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self(0)
-//     }
-// }
+pub struct BoundedStdVecVec<T, const LENGTH: std::primitive::usize>(std::vec::Vec<T>);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum BoundedStdVecVecTryNewErrorNamed {
+    LengthIsNotCorrect {
+        #[eo_to_std_string_string_serialize_deserialize]
+        length: std::primitive::usize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+enum PostgresqlTypeOrPostgresqlJsonType {
+    PostgresqlType,
+    PostgresqlJsonType
+}
+impl<'a, T: sqlx::Type<sqlx::Postgres> + for <'__> sqlx::Encode<'__, sqlx::Postgres> + 'a, const LENGTH: std::primitive::usize> BoundedStdVecVec<T, LENGTH> {
+    pub fn to_inner(&self) -> &std::vec::Vec<T> {
+        &self.0
+    }
+    pub fn into_inner(self) -> std::vec::Vec<T> {
+        self.0
+    }
+    fn query_part(
+        &self,
+        increment: &mut std::primitive::u64,
+        _: &dyn std::fmt::Display,
+        _is_need_to_add_logical_operator: std::primitive::bool,
+        postgresql_type_or_postgresql_json_type: PostgresqlTypeOrPostgresqlJsonType
+    ) -> Result<std::string::String, QueryPartErrorNamed> {
+        let mut acc = std::string::String::new();
+        for _ in &self.0 {
+            match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    acc.push_str(&match &postgresql_type_or_postgresql_json_type {
+                        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("[{value}]"),
+                        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => format!("->${value}"),
+                    });
+                }
+                None => {
+                    return Err(crate::QueryPartErrorNamed::CheckedAdd {
+                        code_occurence: error_occurence_lib::code_occurence!()
+                    });
+                }
+            }
+        }
+        Ok(acc)
+    }
+    pub fn postgresql_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlType)
+    }
+    pub fn postgresql_json_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType)
+    }
+    pub fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        for element in self.0 {
+            query = query.bind(element);
+        }
+        query
+    }
+}
+impl<T, const LENGTH: std::primitive::usize> std::convert::TryFrom<std::vec::Vec<T>> for BoundedStdVecVec<T, LENGTH> {
+    type Error = BoundedStdVecVecTryNewErrorNamed;
+    fn try_from(value: std::vec::Vec<T>) -> Result<Self, Self::Error> {
+        let len = value.len();
+        if len == LENGTH {
+            Ok(Self(value))
+        } else {
+            Err(BoundedStdVecVecTryNewErrorNamed::LengthIsNotCorrect {
+                length: len,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de, T, const LENGTH: std::primitive::usize> _serde::Deserialize<'de>
+    for BoundedStdVecVec<T, LENGTH>
+    where
+        T: _serde::Deserialize<'de>,
+    {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de, T, const LENGTH: std::primitive::usize>
+            where
+                T: _serde::Deserialize<'de>,
+            {
+                marker: _serde::__private::PhantomData<BoundedStdVecVec<T, LENGTH>>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de, T, const LENGTH: std::primitive::usize> _serde::de::Visitor<'de>
+            for __Visitor<'de, T, LENGTH>
+            where
+                T: _serde::Deserialize<'de>,
+            {
+                type Value = BoundedStdVecVec<T, LENGTH>;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct BoundedStdVecVec",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(
+                    self,
+                    __e: __E,
+                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::vec::Vec<T> = <std::vec::Vec<
+                        T,
+                    > as _serde::Deserialize>::deserialize(__e)?;
+                    match BoundedStdVecVec::try_from(__field0) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::vec::Vec<T>,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"tuple struct BoundedStdVecVec with 1 element",
+                                ),
+                            );
+                        }
+                    };
+                    match BoundedStdVecVec::try_from(__field0) {
+                        Ok(value) => serde::__private::Ok(value),
+                        Err(error) => {
+                            return Err(serde::de::Error::custom(format!("{error:?}")));
+                        }
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "BoundedStdVecVec",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<
+                        BoundedStdVecVec<T, LENGTH>,
+                    >,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl<T: Clone + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement, const LENGTH: std::primitive::usize> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for BoundedStdVecVec<T, LENGTH> {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(vec![<T as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(); LENGTH])
+    }
+}
