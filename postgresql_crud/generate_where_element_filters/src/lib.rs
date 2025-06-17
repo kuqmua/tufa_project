@@ -1627,7 +1627,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     value
                                 }
                                 None => {
-                                    return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
                                 }
                             };
                             Ok(format!(
@@ -1715,20 +1715,34 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    generate_additional_fields_value_t_declaration_token_stream(range_minus_one.clone()),
-                    generate_additional_fields_value_t_default_initialization_token_stream(range_minus_one.clone()),
                     {
-                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_minus_one.clone());
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                            "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <> ${{value}}))",
-                            generate_postgresql_json_array_indexes_stringified(range_minus_one.clone())
-                        ));
-                        let format_increments_token_stream = generate_format_increments_token_stream(range_minus_one.clone());
+                        let dimension_number_token_stream: proc_macro2::TokenStream = dimension_number.clone().into();
+                        let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
-                            #increments_initialization_token_stream
+                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            #pub_value_t_token_stream
+                        }
+                    },
+                    {
+                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
+                        quote::quote!{
+                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        }
+                    },
+                    {
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}(not exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) <> ${{}}))",
+                        ));
+                        quote::quote! {
+                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
                             let value = match increment.checked_add(1) {
                                 Some(value) => {
                                     *increment = value;
@@ -1742,11 +1756,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                 column,
-                                #format_increments_token_stream
+                                dimensions_indexes,
+                                value
                             ))
                         }
                     },
-                    generate_query_bind_dimension_position_sqlx_types_json_self_value_token_stream(range_minus_one)
+                    {
+                        let query_bind_sqlx_types_json_self_value_token_stream = generate_query_bind_sqlx_types_json_self_value_token_stream();
+                        quote::quote!{
+                            query = self.dimensions.query_bind(query);
+                            #query_bind_sqlx_types_json_self_value_token_stream
+                        }
+                    }
                 )
             };
             let generate_dimension_length_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &equal_sign);
