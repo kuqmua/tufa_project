@@ -2245,51 +2245,46 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                //todo
-                let range = 1..=
-                1
-                // std::convert::Into::<std::primitive::u8>::into(dimension_number.clone())
-                ;
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
                     {
-                        let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range.clone(), &is_zero_can_be_in_dimension_position_true);
+                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
                         quote::quote! {
-                            #struct_additional_fields_token_stream
+                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
                             #pub_value_between_t_token_stream
                         }
                     },
-                    generate_additional_fields_value_t_default_initialization_token_stream(range.clone()),
                     {
-                        let increments_initialization_token_stream = generate_increments_initialization_token_stream(range.clone());
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                            "{{}}({{}}{} {{}})",
-                            generate_postgresql_json_array_indexes_stringified(range.clone())
-                        ));
-                        let format_increments_token_stream = generate_format_increments_token_stream(range.clone());
-                        quote::quote! {
-                            #increments_initialization_token_stream
-                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                #format_increments_token_stream
-                                value
-                            ))
+                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
+                        quote::quote!{
+                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         }
                     },
-                    {
-                        let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range);
-                        quote::quote! {
-                            #query_bind_dimension_position_token_stream
-                            #query_self_value_query_bind_token_stream
-                        }
+                    quote::quote! {
+                        let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                return Err(error);
+                            }
+                        };
+                        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                return Err(error);
+                            }
+                        };
+                        Ok(format!(
+                            "{}({}{} {})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            column,
+                            dimensions_indexes,
+                            value
+                        ))
+                    },
+                    quote::quote! {
+                        query = self.dimensions.query_bind(query);
+                        #query_self_value_query_bind_token_stream
                     },
                 )
             };
