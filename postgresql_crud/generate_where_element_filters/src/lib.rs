@@ -646,27 +646,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             query
         }
     }
-    //todo const generic dimensions vec instead of fields for each dimension
-    // use std::ops::Deref;
-    // #[derive(Debug, Clone)]
-    // pub struct BoundedVec<T, const LEN: usize> {
-    //     inner: Vec<T>,
-    // }
-    // impl<T, const LEN: usize> BoundedVec<T, LEN> {
-    //     pub fn try_new(vec: Vec<T>) -> Result<Self, &'static str> {
-    //         if vec.len() == LEN {
-    //             Ok(Self { inner: vec })
-    //         } else {
-    //             Err("Vector length does not match required size")
-    //         }
-    //     }
-    //     pub fn len(&self) -> usize {
-    //         LEN
-    //     }
-    //     pub fn into_inner(self) -> Vec<T> {
-    //         self.inner
-    //     }
-    // }
     let postgresql_type_token_stream = {
         let is_zero_can_be_in_dimension_position_false = IsZeroCanBeInDimensionPosition::False;
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -1524,7 +1503,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 Four
             }
             impl DimensionNumber {
-                fn dimension_std_primitive_u8(self) -> std::primitive::u8 {
+                fn dimension_std_primitive_u8(&self) -> std::primitive::u8 {
                     match &self {
                         Self::One => 1,
                         Self::Two => 2,
@@ -1532,29 +1511,20 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         Self::Four => 4
                     }
                 }
-                fn dimension_minus_one_std_primitive_u8(self) -> std::primitive::u8 {
+                fn dimension_minus_one_std_primitive_u8(&self) -> std::primitive::u8 {
                     self.dimension_std_primitive_u8() - 1
                 }
-                fn dimension_plus_one_std_primitive_u8(self) -> std::primitive::u8 {
+                fn dimension_plus_one_std_primitive_u8(&self) -> std::primitive::u8 {
                     self.dimension_std_primitive_u8() + 1
                 }
-            }
-            //todo minus one and plus one
-            impl std::convert::Into<std::primitive::u8> for DimensionNumber {
-                fn into(self) -> std::primitive::u8 {
-                    match &self {
-                        Self::One => 1,
-                        Self::Two => 2,
-                        Self::Three => 3,
-                        Self::Four => 4
-                    }
+                fn dimension_token_stream(&self) -> proc_macro2::TokenStream {
+                    self.dimension_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().unwrap()
                 }
-            }
-            impl std::convert::Into<proc_macro2::TokenStream> for DimensionNumber {
-                fn into(self) -> proc_macro2::TokenStream {
-                    let std_primitive_u8: std::primitive::u8 = self.into();
-                    let value = std_primitive_u8.to_string().parse::<proc_macro2::TokenStream>().unwrap();
-                    quote::quote!{#value}
+                fn dimension_minus_one_token_stream(&self) -> proc_macro2::TokenStream {
+                    self.dimension_minus_one_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().unwrap()
+                }
+                fn dimension_plus_one_token_stream(&self) -> proc_macro2::TokenStream {
+                    self.dimension_plus_one_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().unwrap()
                 }
             }
             fn generate_postgresql_json_array_indexes_stringified<T>(value: T) -> std::string::String
@@ -1616,7 +1586,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_token_stream: proc_macro2::TokenStream = dimension_number.clone().into();
+                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
                         quote::quote! {
                             pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
                             #pub_value_t_token_stream
@@ -1678,7 +1648,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
-                        let dimension_number_token_stream: proc_macro2::TokenStream = dimension_number.clone().into();
+                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
                         quote::quote! {
                             pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
                             pub value: #unsigned_part_of_std_primitive_i32_token_stream
@@ -1732,7 +1702,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_token_stream: proc_macro2::TokenStream = dimension_number.clone().into();
+                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
                         let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
                             pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
@@ -1794,7 +1764,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_token_stream: proc_macro2::TokenStream = dimension_number.clone().into();
+                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
                         let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
                             pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
@@ -1854,7 +1824,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_token_stream: proc_macro2::TokenStream = dimension_number.clone().into();
+                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
                         let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
                             pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
@@ -1912,7 +1882,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
+                //todo
+                let dimension_number_std_primitive_u8 = 
+                1
+                // std::convert::Into::<std::primitive::u8>::into(dimension_number.clone())
+                ;
                 let range = 1..=dimension_number_std_primitive_u8;
                 let two_range = 2..=dimension_number_std_primitive_u8;
                 (
@@ -1978,7 +1952,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
+                //todo
+                let dimension_number_std_primitive_u8 = 
+                1
+                // std::convert::Into::<std::primitive::u8>::into(dimension_number.clone())
+                ;
                 let range = 1..dimension_number_std_primitive_u8;
                 let two_range = 2..=dimension_number_std_primitive_u8;
                 (
@@ -2044,7 +2022,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                let dimension_number_std_primitive_u8 = std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
+                //todo
+                let dimension_number_std_primitive_u8 = 
+                1
+                // std::convert::Into::<std::primitive::u8>::into(dimension_number.clone())
+                ;
                 let range = 1..dimension_number_std_primitive_u8;
                 let two_range = 2..=dimension_number_std_primitive_u8;
                 (
@@ -2110,7 +2092,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                let range = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
+                //todo
+                let range = 1..=
+                1
+                // std::convert::Into::<std::primitive::u8>::into(dimension_number.clone())
+                ;
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
@@ -2162,7 +2148,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
+                //todo
+                let range_minus_one = 1..=
+                1
+                // std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap()
+                ;
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
@@ -2206,7 +2196,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                let range_minus_one = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap();
+                //todo
+                let range_minus_one = 1..=
+                1
+                // std::convert::Into::<std::primitive::u8>::into(dimension_number.clone()).checked_sub(1).unwrap()
+                ;
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
@@ -2251,7 +2245,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 proc_macro2::TokenStream,
                 proc_macro2::TokenStream,
             ) {
-                let range = 1..=std::convert::Into::<std::primitive::u8>::into(dimension_number.clone());
+                //todo
+                let range = 1..=
+                1
+                // std::convert::Into::<std::primitive::u8>::into(dimension_number.clone())
+                ;
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
                     {
