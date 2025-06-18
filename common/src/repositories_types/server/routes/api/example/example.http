@@ -317,15 +317,20 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": 0
                   #   }
                   # },
-                  # {
-                  #   "DimensionFourContainsAllElementsOfArray": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "value": [
-                  #       ""
-                  #     ]
-                  #   }
-                  # },
+                  {
+                    "DimensionFourContainsAllElementsOfArray": {
+                      "logical_operator": "Or",
+                      "dimensions": [
+                        0,
+                        0,
+                        0
+                      ],
+                      "value": [
+                        "fox", "cat"
+                      ]
+                    }
+                  }
+                  # ,
                   # {
                   #   "DimensionFourOverlapsWithArray": {
                   #     "logical_operator": "Or",
@@ -471,18 +476,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": ""
                   #   }
                   # },
-                  {
-                    "DimensionFourAllElementsRegularExpression": {
-                      "logical_operator": "Or",
-                      "dimensions": [
-                        0,
-                        0,
-                        0
-                      ],
-                      "regular_expression_case": "Sensitive",
-                      "value": "cat"
-                    }
-                  }
+                  # {
+                  #   "DimensionFourAllElementsRegularExpression": {
+                  #     "logical_operator": "Or",
+                  #     "dimensions": [
+                  #       0,
+                  #       0,
+                  #       0
+                  #     ],
+                  #     "regular_expression_case": "Sensitive",
+                  #     "value": ""
+                  #   }
+                  # }
                 ]
               }
             }
@@ -550,12 +555,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #   ]
   # },
   "select": [
-    # {
-    #   "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
-    # },
-    # {
-    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    # },
+    {
+      "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
+    },
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
     {
       "animal_as_not_null_jsonb_object": [
         {
@@ -583,16 +588,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           ]
         }
       ]
+    },
+    {
+      "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
+        "dimension1_pagination": {
+          "limit": 5,
+          "offset": 1
+        }
+      }
     }
-    # ,
-    # {
-    #   "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
-    #     "dimension1_pagination": {
-    #       "limit": 5,
-    #       "offset": 1
-    #     }
-    #   }
-    # }
   ],
   "order_by": {
     "column": {
