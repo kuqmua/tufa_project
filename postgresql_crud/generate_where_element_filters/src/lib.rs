@@ -1552,6 +1552,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ))
                 }
             };
+            let generate_ok_format_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
+                generate_ok_format_token_stream(format_handle_token_stream, &quote::quote!{value})
+            };
             let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1573,10 +1576,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{{}} {operator} ${{}})")),
-                            &quote::quote!{value}
-                        );
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(&generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{{}} {operator} ${{}})")));
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             #value_match_increment_checked_add_one_initialization_token_stream
@@ -1610,9 +1610,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         value: #core_default_default_default_token_stream
                     },
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{{}}) {operator} ${{}})")),
-                            &quote::quote!{value}
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{{}}) {operator} ${{}})"))
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
@@ -1645,9 +1644,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) <> ${{}}))")),
-                            &quote::quote!{value}
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) <> ${{}}))"))
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
@@ -1678,9 +1676,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) > ${{}}))")),
-                            &quote::quote!{value}
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) > ${{}}))"))
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
@@ -1709,9 +1706,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}(not exists(select 1 from jsonb_array_elements({}{}) as el where (el) <= ${}))"),
-                            &quote::quote!{value}
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}(not exists(select 1 from jsonb_array_elements({}{}) as el where (el) <= ${}))")
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
@@ -1741,9 +1737,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}({}{} {})"),
-                            &quote::quote!{value}
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}({}{} {})")
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
@@ -1775,9 +1770,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}({}{} in ({}))"),
-                            &quote::quote!{value}
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}({}{} in ({}))")
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
@@ -1926,9 +1920,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}({}{} @> {})"),
-                            &quote::quote!{value}
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}({}{} @> {})")
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
@@ -1957,9 +1950,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}(exists (select 1 from jsonb_array_elements_text({}{}) as e1 join jsonb_array_elements_text({}) as e2 on e1.value = e2.value))"),
-                            &quote::quote!{value}
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}(exists (select 1 from jsonb_array_elements_text({}{}) as e1 join jsonb_array_elements_text({}) as e2 on e1.value = e2.value))")
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
