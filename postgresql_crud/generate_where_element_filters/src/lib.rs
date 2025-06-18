@@ -680,6 +680,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             },
         };
     };
+    let value_match_self_value_query_part_initialization_token_stream = quote::quote!{
+        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(error);
+            }
+        };
+    };
     let postgresql_type_token_stream = {
         let is_zero_can_be_in_dimension_position_false = IsZeroCanBeInDimensionPosition::False;
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -909,12 +917,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                         {
                             quote::quote! {
-                                let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                                    Ok(value) => value,
-                                    Err(error) => {
-                                        return Err(error);
-                                    }
-                                };
+                                #value_match_self_value_query_part_initialization_token_stream
                                 Ok(format!(
                                     "{}({} {})",
                                     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -944,12 +947,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             let format_increments_token_stream = generate_format_increments_token_stream(range_1_1.clone());
                             quote::quote! {
                                 #increments_initialization_token_stream
-                                let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                                    Ok(value) => value,
-                                    Err(error) => {
-                                        return Err(error);
-                                    }
-                                };
+                                #value_match_self_value_query_part_initialization_token_stream
                                 Ok(format!(
                                     #format_handle_token_stream,
                                     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1757,12 +1755,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #value_match_self_value_query_part_initialization_token_stream
                             #ok_format_token_stream
                         }
                     },
@@ -1954,12 +1947,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                } 
-                            };
+                            #value_match_self_value_query_part_initialization_token_stream
                             #ok_format_token_stream
                         }
                     },
@@ -1990,12 +1978,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                } 
-                            };
+                            #value_match_self_value_query_part_initialization_token_stream
                             #ok_format_token_stream
                         }
                     },
@@ -2098,12 +2081,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     pub_value_between_t_token_stream.clone(),
                     value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     quote::quote! {
-                        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
+                        #value_match_self_value_query_part_initialization_token_stream
                         Ok(format!(
                             "{}({column} {value})",
                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator)
