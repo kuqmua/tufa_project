@@ -669,6 +669,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         //     self.dimension_std_primitive_u8().checked_add(1).unwrap().to_string().parse::<proc_macro2::TokenStream>().unwrap()
         // }
     }
+    let _token_stream = quote::quote!{
+        let value = match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                value
+            }
+            None => {
+                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+            },
+        };
+    };
     let postgresql_type_token_stream = {
         let is_zero_can_be_in_dimension_position_false = IsZeroCanBeInDimensionPosition::False;
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
