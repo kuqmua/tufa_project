@@ -1540,6 +1540,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #query_self_dimensions_query_bind_query_token_stream
                 #query_equals_query_self_value_to_string_token_stream
             };
+            let dimensions_indexes_postgresql_json_type_query_part_token_stream = quote::quote!{
+                let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
+                    Ok(value) => value,
+                    Err(error) => {
+                        return Err(error);
+                    }
+                };
+            };
             let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1563,12 +1571,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{{}} {operator} ${{}})"));
                         quote::quote! {
-                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             let value = match increment.checked_add(1) {
                                 Some(value) => {
                                     *increment = value;
@@ -1616,12 +1619,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{{}}) {operator} ${{}})"));
                         quote::quote! {
-                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             let value = match increment.checked_add(1) {
                                 Some(value) => {
                                     *increment = value;
@@ -1667,12 +1665,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) <> ${{}}))"));
                         quote::quote! {
-                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             let value = match increment.checked_add(1) {
                                 Some(value) => {
                                     *increment = value;
@@ -1716,12 +1709,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) > ${{}}))"));
                         quote::quote! {
-                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             let value = match increment.checked_add(1) {
                                 Some(value) => {
                                     *increment = value;
@@ -1763,12 +1751,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{}(not exists(select 1 from jsonb_array_elements({}{}) as el where (el) <= ${}))");
                         quote::quote! {
-                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             let value = match increment.checked_add(1) {
                                 Some(value) => {
                                     *increment = value;
@@ -1809,12 +1792,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     quote::quote! {
-                        let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
+                        #dimensions_indexes_postgresql_json_type_query_part_token_stream
                         let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
                             Ok(value) => value,
                             Err(error) => {
@@ -1853,12 +1831,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     quote::quote! {
-                        let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
+                        #dimensions_indexes_postgresql_json_type_query_part_token_stream
                         let value = match self.value.query_part_one_by_one(increment, column, is_need_to_add_logical_operator) {
                             Ok(value) => value,
                             Err(error) => {
@@ -1955,12 +1928,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_regular_expression_default_initialization_token_stream.clone(),
                     quote::quote! {
-                        let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
+                        #dimensions_indexes_postgresql_json_type_query_part_token_stream
                         let value = match increment.checked_add(1) {
                             Some(value) => {
                                 *increment = value;
@@ -2000,12 +1968,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_regular_expression_default_initialization_token_stream.clone(),
                     quote::quote! {
-                        let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
+                        #dimensions_indexes_postgresql_json_type_query_part_token_stream
                         let value = match increment.checked_add(1) {
                             Some(value) => {
                                 *increment = value;
@@ -2047,12 +2010,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         quote::quote! {
-                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
                                 Ok(value) => value,
                                 Err(error) => {
@@ -2090,12 +2048,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         quote::quote! {
-                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
                                 Ok(value) => value,
                                 Err(error) => {
