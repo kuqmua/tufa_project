@@ -1531,12 +1531,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 #regular_expression_case_and_value_default_initialization_token_stream
             };
+            let query_self_dimensions_query_bind_query_token_stream = quote::quote!{query = self.dimensions.query_bind(query);};
             let query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream = quote::quote!{
-                query = self.dimensions.query_bind(query);
+                #query_self_dimensions_query_bind_query_token_stream
                 #query_bind_sqlx_types_json_self_value_token_stream
             };
             let query_dimensions_bind_query_equals_query_self_value_to_string_token_stream = quote::quote!{
-                query = self.dimensions.query_bind(query);
+                #query_self_dimensions_query_bind_query_token_stream
                 #query_equals_query_self_value_to_string_token_stream
             };
             let generate_dimension_array_number_operation_token_stream = |
@@ -1640,7 +1641,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     quote::quote! {
-                        query = self.dimensions.query_bind(query);
+                        #query_self_dimensions_query_bind_query_token_stream
                         #query_bind_one_value_token_stream
                     }
                 )
@@ -1829,7 +1830,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ))
                     },
                     quote::quote! {
-                        query = self.dimensions.query_bind(query);
+                        #query_self_dimensions_query_bind_query_token_stream
                         #query_self_value_query_bind_token_stream
                     },
                 )
@@ -1873,7 +1874,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         ))
                     },
                     quote::quote! {
-                        query = self.dimensions.query_bind(query);
+                        #query_self_dimensions_query_bind_query_token_stream
                         query = self.value.query_bind_one_by_one(query);
                         query
                     },
