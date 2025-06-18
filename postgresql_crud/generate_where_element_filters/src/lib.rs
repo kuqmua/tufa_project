@@ -1530,6 +1530,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                 }
             };
+            let dimensions_default_regular_expression_default_initialization_token_stream = quote::quote! {
+                dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                #regular_expression_case_and_value_default_initialization_token_stream
+            };
             let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1910,10 +1914,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #regular_expression_case_and_value_declaration_token_stream
                         }
                     },
-                    quote::quote! {
-                        dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        #regular_expression_case_and_value_default_initialization_token_stream
-                    },
+                    dimensions_default_regular_expression_default_initialization_token_stream.clone(),
                     {
                         quote::quote! {
                             let dimensions_indexes_minus_one = match self.dimensions.postgresql_json_type_query_part_minus_one(increment, column, is_need_to_add_logical_operator) {
@@ -1974,10 +1975,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #regular_expression_case_and_value_declaration_token_stream
                         }
                     },
-                    quote::quote! {
-                        dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        #regular_expression_case_and_value_default_initialization_token_stream
-                    },
+                    dimensions_default_regular_expression_default_initialization_token_stream.clone(),
                     quote::quote! {
                         let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
                             Ok(value) => value,
@@ -2026,10 +2024,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #regular_expression_case_and_value_declaration_token_stream
                         }
                     },
-                    quote::quote! {
-                        dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                        #regular_expression_case_and_value_default_initialization_token_stream
-                    },
+                    dimensions_default_regular_expression_default_initialization_token_stream.clone(),
                     quote::quote! {
                         let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
                             Ok(value) => value,
