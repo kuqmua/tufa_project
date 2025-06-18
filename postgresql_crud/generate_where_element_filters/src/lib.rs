@@ -1510,6 +1510,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let postgresql_json_type_token_stream = {
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
             let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
+            let pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream = quote::quote!{pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>};
             fn generate_query_bind_sqlx_types_json_self_value_token_stream() -> proc_macro2::TokenStream {
                 quote::quote! {
                     query = query.bind(sqlx::types::Json(self.value));
@@ -1892,7 +1893,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
                         quote::quote! {
                             #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
-                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
+                            #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
                         }
                     },
                     {
@@ -2112,7 +2113,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
                         quote::quote! {
                             #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
-                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
+                            #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
                         }
                     },
                     {
@@ -2167,7 +2168,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
                         quote::quote! {
                             #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
-                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>//todo maybe reuse
+                            #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
                         }
                     },
                     {
