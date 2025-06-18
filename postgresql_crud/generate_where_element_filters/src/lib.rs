@@ -546,6 +546,20 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let should_add_declaration_of_struct_ident_generic_true_none = ShouldAddDeclarationOfStructIdentGeneric::True {
         maybe_additional_traits_token_stream: None
     };
+    fn generate_match_increment_checked_add_one_initialization_token_stream(ident_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+        let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
+        quote::quote!{
+            let #ident_token_stream = match increment.checked_add(1) {
+                Some(value) => {
+                    *increment = value;
+                    value
+                }
+                None => {
+                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                },
+            };
+        }
+    }
     enum IsZeroCanBeInDimensionPosition {
         True,
         False
@@ -584,19 +598,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         T: IntoIterator<Item = std::primitive::u8>,
     {
         let content_token_stream = value.into_iter().map(|element|{
-            let increment_number_token_stream = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
-            let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
-            quote::quote! {
-                let #increment_number_token_stream = match increment.checked_add(1) {
-                    Some(value) => {
-                        *increment = value;
-                        value
-                    },
-                    None => {
-                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                    },
-                };
-            }
+            generate_match_increment_checked_add_one_initialization_token_stream(&format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap())
         }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         quote::quote! {#(#content_token_stream)*}
     }
@@ -669,17 +671,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         //     self.dimension_std_primitive_u8().checked_add(1).unwrap().to_string().parse::<proc_macro2::TokenStream>().unwrap()
         // }
     }
-    let value_match_increment_checked_add_one_initialization_token_stream = quote::quote!{
-        let value = match increment.checked_add(1) {
-            Some(value) => {
-                *increment = value;
-                value
-            }
-            None => {
-                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-            },
-        };
-    };
+    let value_match_increment_checked_add_one_initialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{value});
     let value_match_self_value_query_part_initialization_token_stream = quote::quote!{
         let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
             Ok(value) => value,
@@ -1831,6 +1823,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 value
                             }
                         );
+                        let last_dimensions_index_intialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{last_dimensions_index});
                         quote::quote! {
                             let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part_minus_one(increment, column, is_need_to_add_logical_operator) {
                                 Ok(value) => value,
@@ -1838,15 +1831,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     return Err(error);
                                 }
                             };
-                            let last_dimensions_index = match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    value
-                                },
-                                None => {
-                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                },
-                            };
+                            #last_dimensions_index_intialization_token_stream
                             #value_match_increment_checked_add_one_initialization_token_stream
                             #ok_format_token_stream
                         }
