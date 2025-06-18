@@ -669,7 +669,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         //     self.dimension_std_primitive_u8().checked_add(1).unwrap().to_string().parse::<proc_macro2::TokenStream>().unwrap()
         // }
     }
-    let _token_stream = quote::quote!{
+    let value_match_increment_checked_add_one_initialization_token_stream = quote::quote!{
         let value = match increment.checked_add(1) {
             Some(value) => {
                 *increment = value;
@@ -847,15 +847,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     let format_increments_token_stream = generate_format_increments_token_stream(range_1_1.clone());
                     quote::quote! {
                         #increments_initialization_token_stream
-                        let value = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                value
-                            }
-                            None => {
-                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                            },
-                        };
+                        #value_match_increment_checked_add_one_initialization_token_stream
                         Ok(format!(
                             #format_handle_token_stream,
                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1583,15 +1575,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{{}} {operator} ${{}})"));
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            let value = match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    value
-                                }
-                                None => {
-                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                }
-                            };
+                            #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1631,15 +1615,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{{}}) {operator} ${{}})"));
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            let value = match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    value
-                                }
-                                None => {
-                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                }
-                            };
+                            #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1677,15 +1653,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) <> ${{}}))"));
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            let value = match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    value
-                                },
-                                None => {
-                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                },
-                            };
+                            #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1721,15 +1689,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) > ${{}}))"));
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            let value = match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    value
-                                },
-                                None => {
-                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                },
-                            };
+                            #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1763,15 +1723,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{}(not exists(select 1 from jsonb_array_elements({}{}) as el where (el) <= ${}))");
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            let value = match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    value
-                                },
-                                None => {
-                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                },
-                            };
+                            #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 #format_handle_token_stream,
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1898,15 +1850,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
                                 },
                             };
-                            let value = match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    value
-                                },
-                                None => {
-                                    return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                                },
-                            };
+                            #value_match_increment_checked_add_one_initialization_token_stream
                             Ok(format!(
                                 "{}((trim(both '\"' from ({}{}->>${})::text) {} ${}))",
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1940,15 +1884,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     dimensions_default_regular_expression_default_initialization_token_stream.clone(),
                     quote::quote! {
                         #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                        let value = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                value
-                            }
-                            None => {
-                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                            }
-                        };
+                        #value_match_increment_checked_add_one_initialization_token_stream
                         Ok(format!(
                             "{}(exists(select 1 from jsonb_array_elements({}{}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))",
                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
@@ -1980,15 +1916,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     dimensions_default_regular_expression_default_initialization_token_stream.clone(),
                     quote::quote! {
                         #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                        let value = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                value
-                            }
-                            None => {
-                                return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
-                            }
-                        };
+                        #value_match_increment_checked_add_one_initialization_token_stream
                         Ok(format!(
                             "{}(not exists(select 1 from jsonb_array_elements({}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{} ${}))",
                             &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
