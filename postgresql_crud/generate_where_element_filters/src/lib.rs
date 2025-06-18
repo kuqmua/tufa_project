@@ -1702,10 +1702,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
                         let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
                             #pub_value_t_token_stream
                         }
                     },
@@ -1764,10 +1764,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
                         let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
                             #pub_value_t_token_stream
                         }
                     },
@@ -1824,10 +1824,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
                         let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
                             #pub_value_t_token_stream
                         }
                     },
