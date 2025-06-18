@@ -1875,6 +1875,108 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
+            let query_self_value_query_bind_token_stream = generate_query_self_value_query_bind_token_stream();
+            let generate_dimension_between_token_stream = |dimension_number: &DimensionNumber| -> (
+                ShouldAddDeclarationOfStructIdentGeneric,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+            ) {
+                (
+                    should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
+                    {
+                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        quote::quote! {
+                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            #pub_value_between_t_token_stream
+                        }
+                    },
+                    {
+                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
+                        quote::quote!{
+                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        }
+                    },
+                    quote::quote! {
+                        let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                return Err(error);
+                            }
+                        };
+                        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                return Err(error);
+                            }
+                        };
+                        Ok(format!(
+                            "{}({}{} {})",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            column,
+                            dimensions_indexes,
+                            value
+                        ))
+                    },
+                    quote::quote! {
+                        query = self.dimensions.query_bind(query);
+                        #query_self_value_query_bind_token_stream
+                    },
+                )
+            };
+            let generate_dimension_in_token_stream = |dimension_number: &DimensionNumber| -> (
+                ShouldAddDeclarationOfStructIdentGeneric,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+                proc_macro2::TokenStream,
+            ) {
+                (
+                    should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
+                    {
+                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        quote::quote! {
+                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
+                        }
+                    },
+                    {
+                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
+                        quote::quote!{
+                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        }
+                    },
+                    quote::quote! {
+                        let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                return Err(error);
+                            }
+                        };
+                        let value = match self.value.query_part_one_by_one(increment, column, is_need_to_add_logical_operator) {
+                            Ok(value) => value,
+                            Err(error) => {
+                                return Err(error);
+                            }
+                        };
+                        Ok(format!(
+                            "{}({}{} in ({}))",
+                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            column,
+                            dimensions_indexes,
+                            value
+                        ))
+                    },
+                    quote::quote! {
+                        query = self.dimensions.query_bind(query);
+                        query = self.value.query_bind_one_by_one(query);
+                        query
+                    },
+                )
+            };
             let generate_dimension_regular_expression_token_stream = |dimension_number: &DimensionNumber| -> (
                 ShouldAddDeclarationOfStructIdentGeneric,
                 proc_macro2::TokenStream,
@@ -2043,57 +2145,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_dimension_in_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
-                (
-                    should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
-                    {
-                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
-                        quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
-                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
-                        }
-                    },
-                    {
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
-                    quote::quote! {
-                        let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        let value = match self.value.query_part_one_by_one(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        Ok(format!(
-                            "{}({}{} in ({}))",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            dimensions_indexes,
-                            value
-                        ))
-                    },
-                    quote::quote! {
-                        query = self.dimensions.query_bind(query);
-                        query = self.value.query_bind_one_by_one(query);
-                        query
-                    },
-                )
-            };
             let generate_dimension_length_more_than_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &greater_than_sign);
             let generate_dimension_contains_all_elements_of_array_token_stream = |dimension_number: &DimensionNumber| -> (
                 ShouldAddDeclarationOfStructIdentGeneric,
@@ -2203,57 +2254,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #query_bind_sqlx_types_json_self_value_token_stream
                         }
                     }
-                )
-            };
-            let query_self_value_query_bind_token_stream = generate_query_self_value_query_bind_token_stream();
-            let generate_dimension_between_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
-                (
-                    should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
-                    {
-                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
-                        quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
-                            #pub_value_between_t_token_stream
-                        }
-                    },
-                    {
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
-                    quote::quote! {
-                        let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        Ok(format!(
-                            "{}({}{} {})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            dimensions_indexes,
-                            value
-                        ))
-                    },
-                    quote::quote! {
-                        query = self.dimensions.query_bind(query);
-                        #query_self_value_query_bind_token_stream
-                    },
                 )
             };
             let (
