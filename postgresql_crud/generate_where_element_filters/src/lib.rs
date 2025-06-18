@@ -1523,6 +1523,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
                 quote::quote! {pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>}
             };
+            let dimensions_default_value_default_initialization_token_stream = {
+                let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
+                quote::quote!{
+                    dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                }
+            };
             let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1542,13 +1549,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_t_token_stream
                         }
                     },
-                    {
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{{}} {operator} ${{}})"));
                         quote::quote! {
@@ -1658,13 +1659,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_t_token_stream
                         }
                     },
-                    {
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) <> ${{}}))"));
                         quote::quote! {
@@ -1719,13 +1714,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_t_token_stream
                         }
                     },
-                    {
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) > ${{}}))"));
                         quote::quote! {
@@ -1778,14 +1767,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_t_token_stream
                         }
                     },
-                    {
-                        
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{}(not exists(select 1 from jsonb_array_elements({}{}) as el where (el) <= ${}))");
                         quote::quote! {
@@ -1839,13 +1821,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_between_t_token_stream
                         }
                     },
-                    {
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    dimensions_default_value_default_initialization_token_stream.clone(),
                     quote::quote! {
                         let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
                             Ok(value) => value,
@@ -1889,13 +1865,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
                         }
                     },
-                    {
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    dimensions_default_value_default_initialization_token_stream.clone(),
                     quote::quote! {
                         let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
                             Ok(value) => value,
@@ -2109,13 +2079,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
                         }
                     },
-                    {
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         quote::quote! {
                             let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
@@ -2164,13 +2128,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
                         }
                     },
-                    {
-                        let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                        quote::quote!{
-                            dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        }
-                    },
+                    dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         quote::quote! {
                             let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
