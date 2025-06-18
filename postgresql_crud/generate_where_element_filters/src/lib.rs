@@ -1551,6 +1551,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 };
             };
+            let generate_ok_format_token_stream = |format_handle_token_stream: &dyn quote::ToTokens, other_parameters: &dyn quote::ToTokens|{
+                quote::quote!{
+                    Ok(format!(
+                        #format_handle_token_stream,
+                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                        column,
+                        dimensions_indexes,
+                        #other_parameters
+                    ))
+                }
+            };
             let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1572,17 +1583,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{{}} {operator} ${{}})"));
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{{}} {operator} ${{}})")),
+                            &quote::quote!{value}
+                        );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             #value_match_increment_checked_add_one_initialization_token_stream
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                dimensions_indexes,
-                                value
-                            ))
+                            #ok_format_token_stream
                         }
                     },
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
@@ -1612,17 +1620,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         value: #core_default_default_default_token_stream
                     },
                     {
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{{}}) {operator} ${{}})"));
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{{}}) {operator} ${{}})")),
+                            &quote::quote!{value}
+                        );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             #value_match_increment_checked_add_one_initialization_token_stream
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                dimensions_indexes,
-                                value
-                            ))
+                            #ok_format_token_stream
                         }
                     },
                     quote::quote! {
@@ -1650,17 +1655,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) <> ${{}}))"));
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) <> ${{}}))")),
+                            &quote::quote!{value}
+                        );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             #value_match_increment_checked_add_one_initialization_token_stream
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                dimensions_indexes,
-                                value
-                            ))
+                            #ok_format_token_stream
                         }
                     },
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
@@ -1686,17 +1688,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) > ${{}}))"));
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(exists(select 1 from jsonb_array_elements({{}}{{}}) as el where (el) > ${{}}))")),
+                            &quote::quote!{value}
+                        );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             #value_match_increment_checked_add_one_initialization_token_stream
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                dimensions_indexes,
-                                value
-                            ))
+                            #ok_format_token_stream
                         }
                     },
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
@@ -1720,17 +1719,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{}(not exists(select 1 from jsonb_array_elements({}{}) as el where (el) <= ${}))");
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}(not exists(select 1 from jsonb_array_elements({}{}) as el where (el) <= ${}))"),
+                            &quote::quote!{value}
+                        );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             #value_match_increment_checked_add_one_initialization_token_stream
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                dimensions_indexes,
-                                value
-                            ))
+                            #ok_format_token_stream
                         }
                     },
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
@@ -1754,21 +1750,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
-                    quote::quote! {
-                        #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        Ok(format!(
-                            "{}({}{} {})",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            dimensions_indexes,
-                            value
-                        ))
+                    {
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}({}{} {})"),
+                            &quote::quote!{value}
+                        );
+                        quote::quote! {
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
+                            let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
+                            #ok_format_token_stream
+                        }
                     },
                     quote::quote! {
                         #query_self_dimensions_query_bind_query_token_stream
@@ -1793,21 +1789,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
-                    quote::quote! {
-                        #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                        let value = match self.value.query_part_one_by_one(increment, column, is_need_to_add_logical_operator) {
-                            Ok(value) => value,
-                            Err(error) => {
-                                return Err(error);
-                            }
-                        };
-                        Ok(format!(
-                            "{}({}{} in ({}))",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            dimensions_indexes,
-                            value
-                        ))
+                    {
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}({}{} in ({}))"),
+                            &quote::quote!{value}
+                        );
+                        quote::quote! {
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
+                            let value = match self.value.query_part_one_by_one(increment, column, is_need_to_add_logical_operator) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
+                                }
+                            };
+                            #ok_format_token_stream
+                        }
                     },
                     quote::quote! {
                         #query_self_dimensions_query_bind_query_token_stream
@@ -1834,8 +1830,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_regular_expression_default_initialization_token_stream.clone(),
                     {
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}((trim(both '\\\"' from ({}{}->>${})::text) {} ${}))"),
+                            &quote::quote!{
+                                last_dimensions_index,
+                                self.regular_expression_case.postgreql_syntax(),
+                                value
+                            }
+                        );
                         quote::quote! {
-                            let dimensions_indexes_minus_one = match self.dimensions.postgresql_json_type_query_part_minus_one(increment, column, is_need_to_add_logical_operator) {
+                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part_minus_one(increment, column, is_need_to_add_logical_operator) {
                                 Ok(value) => value,
                                 Err(error) => {
                                     return Err(error);
@@ -1851,15 +1855,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 },
                             };
                             #value_match_increment_checked_add_one_initialization_token_stream
-                            Ok(format!(
-                                "{}((trim(both '\"' from ({}{}->>${})::text) {} ${}))",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                dimensions_indexes_minus_one,
-                                last_dimensions_index,
-                                self.regular_expression_case.postgreql_syntax(),
-                                value
-                            ))
+                            #ok_format_token_stream
                         }
                     },
                     query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone(),
@@ -1882,17 +1878,19 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     dimensions_default_regular_expression_default_initialization_token_stream.clone(),
-                    quote::quote! {
-                        #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                        #value_match_increment_checked_add_one_initialization_token_stream
-                        Ok(format!(
-                            "{}(exists(select 1 from jsonb_array_elements({}{}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            dimensions_indexes,
-                            self.regular_expression_case.postgreql_syntax(),
-                            value
-                        ))
+                    {
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}(exists(select 1 from jsonb_array_elements({}{}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"),
+                            &quote::quote!{
+                                self.regular_expression_case.postgreql_syntax(),
+                                value
+                            }
+                        );
+                        quote::quote! {
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
+                            #value_match_increment_checked_add_one_initialization_token_stream
+                            #ok_format_token_stream
+                        }
                     },
                     query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone()
                 )
@@ -1914,17 +1912,19 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     dimensions_default_regular_expression_default_initialization_token_stream.clone(),
-                    quote::quote! {
-                        #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                        #value_match_increment_checked_add_one_initialization_token_stream
-                        Ok(format!(
-                            "{}(not exists(select 1 from jsonb_array_elements({}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{} ${}))",
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            dimensions_indexes,
-                            self.regular_expression_case.postgreql_syntax(),
-                            value
-                        ))
+                    {
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}(not exists(select 1 from jsonb_array_elements({}{}) as el where substring(el::text from 2 for length(el::text) - 2) !{} ${}))"),
+                            &quote::quote!{
+                                self.regular_expression_case.postgreql_syntax(),
+                                value
+                            }
+                        );
+                        quote::quote! {
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
+                            #value_match_increment_checked_add_one_initialization_token_stream
+                            #ok_format_token_stream
+                        }
                     },
                     query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone()
                 )
@@ -1948,6 +1948,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}({}{} @> {})"),
+                            &quote::quote!{value}
+                        );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
@@ -1956,13 +1960,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     return Err(error);
                                 } 
                             };
-                            Ok(format!(
-                                "{}({}{} @> {})",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                dimensions_indexes,
-                                value
-                            ))
+                            #ok_format_token_stream
                         }
                     },
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
@@ -1986,6 +1984,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
+                        let ok_format_token_stream = generate_ok_format_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&"{}(exists (select 1 from jsonb_array_elements_text({}{}) as e1 join jsonb_array_elements_text({}) as e2 on e1.value = e2.value))"),
+                            &quote::quote!{value}
+                        );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
                             let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
@@ -1994,13 +1996,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                     return Err(error);
                                 } 
                             };
-                            Ok(format!(
-                                "{}(exists (select 1 from jsonb_array_elements_text({}{}) as e1 join jsonb_array_elements_text({}) as e2 on e1.value = e2.value))",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                dimensions_indexes,
-                                value
-                            ))
+                            #ok_format_token_stream
                         }
                     },
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
