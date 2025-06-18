@@ -646,6 +646,32 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             query
         }
     }
+    #[derive(Clone)]
+    enum DimensionNumber {
+        One,
+        Two,
+        Three,
+        Four
+    }
+    impl DimensionNumber {
+        fn dimension_std_primitive_u8(&self) -> std::primitive::u8 {
+            match &self {
+                Self::One => 1,
+                Self::Two => 2,
+                Self::Three => 3,
+                Self::Four => 4
+            }
+        }
+        fn dimension_token_stream(&self) -> proc_macro2::TokenStream {
+            self.dimension_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().unwrap()
+        }
+        fn dimension_minus_one_token_stream(&self) -> proc_macro2::TokenStream {
+            self.dimension_std_primitive_u8().saturating_sub(1).to_string().parse::<proc_macro2::TokenStream>().unwrap()
+        }
+        // fn dimension_plus_one_token_stream(&self) -> proc_macro2::TokenStream {
+        //     self.dimension_std_primitive_u8().checked_add(1).unwrap().to_string().parse::<proc_macro2::TokenStream>().unwrap()
+        // }
+    }
     let postgresql_type_token_stream = {
         let is_zero_can_be_in_dimension_position_false = IsZeroCanBeInDimensionPosition::False;
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -1482,10 +1508,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }
     };
     let postgresql_json_type_token_stream = {
-        fn generate_is_zero_can_be_in_dimension_position_true() -> IsZeroCanBeInDimensionPosition {
-            IsZeroCanBeInDimensionPosition::True
-        }
-        let is_zero_can_be_in_dimension_position_true = generate_is_zero_can_be_in_dimension_position_true();
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlJsonTypeFilter| {
             let ident = naming::parameter::PostgresqlJsonTypeWhereElementSelfUpperCamelCase::from_display(&filter);
             fn generate_query_bind_sqlx_types_json_self_value_token_stream() -> proc_macro2::TokenStream {
@@ -1495,84 +1517,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }
             }
             let query_bind_sqlx_types_json_self_value_token_stream = generate_query_bind_sqlx_types_json_self_value_token_stream();
-            #[derive(Clone)]
-            enum DimensionNumber {
-                One,
-                Two,
-                Three,
-                Four
-            }
-            impl DimensionNumber {
-                fn dimension_std_primitive_u8(&self) -> std::primitive::u8 {
-                    match &self {
-                        Self::One => 1,
-                        Self::Two => 2,
-                        Self::Three => 3,
-                        Self::Four => 4
-                    }
-                }
-                fn dimension_minus_one_std_primitive_u8(&self) -> std::primitive::u8 {
-                    self.dimension_std_primitive_u8() - 1
-                }
-                fn dimension_plus_one_std_primitive_u8(&self) -> std::primitive::u8 {
-                    self.dimension_std_primitive_u8() + 1
-                }
-                fn dimension_token_stream(&self) -> proc_macro2::TokenStream {
-                    self.dimension_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().unwrap()
-                }
-                fn dimension_minus_one_token_stream(&self) -> proc_macro2::TokenStream {
-                    self.dimension_minus_one_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().unwrap()
-                }
-                fn dimension_plus_one_token_stream(&self) -> proc_macro2::TokenStream {
-                    self.dimension_plus_one_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().unwrap()
-                }
-            }
-            fn generate_postgresql_json_array_indexes_stringified<T>(value: T) -> std::string::String
-            where
-                T: IntoIterator<Item = std::primitive::u8>,
-            {
-                value.into_iter().fold(std::string::String::new(), |mut acc, _| {
-                    acc.push_str(
-                        &"->${}"
-                    );
-                    acc
-                })
-            }
-            fn generate_additional_fields_value_t_declaration_token_stream<T>(value: T) -> proc_macro2::TokenStream
-            where
-                T: IntoIterator<Item = std::primitive::u8>,
-            {
-                let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(value, &IsZeroCanBeInDimensionPosition::True);
-                let pub_value_t_token_stream = generate_pub_value_t_token_stream();
-                quote::quote! {
-                    #struct_additional_fields_token_stream
-                    #pub_value_t_token_stream
-                }
-            }
-            fn generate_additional_fields_value_t_default_initialization_token_stream<T>(value: T) -> proc_macro2::TokenStream
-            where
-                T: IntoIterator<Item = std::primitive::u8>,
-            {
-                let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                    value
-                );
-                let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-                quote::quote!{
-                    #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                    #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                }
-            }
-            fn generate_query_bind_dimension_position_sqlx_types_json_self_value_token_stream<T>(value: T) -> proc_macro2::TokenStream
-            where
-                T: IntoIterator<Item = std::primitive::u8>,
-            {
-                let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(value);
-                let query_bind_sqlx_types_json_self_value_token_stream = generate_query_bind_sqlx_types_json_self_value_token_stream();
-                quote::quote!{
-                    #query_bind_dimension_position_token_stream
-                    #query_bind_sqlx_types_json_self_value_token_stream
-                }
-            }
+            let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream = |dimension_number: &DimensionNumber|{
+                let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                quote::quote! {pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>}
+            };
+            let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = |dimension_number: &DimensionNumber|{
+                let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
+                quote::quote! {pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>}
+            };
             let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1587,8 +1539,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
                         let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
                             #pub_value_t_token_stream
                         }
                     },
@@ -1648,9 +1601,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
-                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
                             pub value: #unsigned_part_of_std_primitive_i32_token_stream
                         }
                     },
@@ -1702,10 +1655,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
                         let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
                             #pub_value_t_token_stream
                         }
                     },
@@ -1764,10 +1717,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
                         let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
                             #pub_value_t_token_stream
                         }
                     },
@@ -1824,10 +1777,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
-                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
                         let pub_value_t_token_stream = generate_pub_value_t_token_stream();
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
                             #pub_value_t_token_stream
                         }
                     },
@@ -1886,9 +1839,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
                     {
-                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
                             #pub_value_between_t_token_stream
                         }
                     },
@@ -1936,9 +1889,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
-                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
                             pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
                         }
                     },
@@ -1987,9 +1940,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
-                        let dimension_number_token_stream = dimension_number.dimension_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
                             #regular_expression_case_and_value_declaration_token_stream
                         }
                     },
@@ -2051,9 +2004,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
-                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
                             #regular_expression_case_and_value_declaration_token_stream
                         }
                     },
@@ -2103,9 +2056,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
-                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
                             #regular_expression_case_and_value_declaration_token_stream
                         }
                     },
@@ -2156,9 +2109,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
-                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
                             pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
                         }
                     },
@@ -2211,10 +2164,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
-                        let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
                         quote::quote! {
-                            pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>,
-                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
+                            pub value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>//todo maybe reuse
                         }
                     },
                     {
