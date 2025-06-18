@@ -1897,22 +1897,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     {
                         quote::quote! {
-                            let dimensions_indexes_minus_one = {
-                                let mut acc = std::string::String::new();
-                                for _ in 0..self.dimensions.to_inner().len().saturating_sub(1) {
-                                    match increment.checked_add(1) {
-                                        Some(value) => {
-                                            *increment = value;
-                                            acc.push_str(&format!("->${value}"));
-                                        }
-                                        None => {
-                                            return Err(crate::QueryPartErrorNamed::CheckedAdd {
-                                                code_occurence: error_occurence_lib::code_occurence!()
-                                            });
-                                        }
-                                    }
+                            let dimensions_indexes_minus_one = match self.dimensions.postgresql_json_type_query_part_minus_one(increment, column, is_need_to_add_logical_operator) {
+                                Ok(value) => value,
+                                Err(error) => {
+                                    return Err(error);
                                 }
-                                acc
                             };
                             let last_dimensions_index = match increment.checked_add(1) {
                                 Some(value) => {

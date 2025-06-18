@@ -2094,6 +2094,10 @@ enum PostgresqlTypeOrPostgresqlJsonType {
     PostgresqlType,
     PostgresqlJsonType
 }
+enum Variant {
+    Normal,
+    MinusOne
+}
 impl<'a, T: sqlx::Type<sqlx::Postgres> + for <'__> sqlx::Encode<'__, sqlx::Postgres> + 'a, const LENGTH: std::primitive::usize> BoundedStdVecVec<T, LENGTH> {
     pub fn to_inner(&self) -> &std::vec::Vec<T> {
         &self.0
@@ -2106,10 +2110,15 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for <'__> sqlx::Encode<'__, sqlx::Postg
         increment: &mut std::primitive::u64,
         _: &dyn std::fmt::Display,
         _is_need_to_add_logical_operator: std::primitive::bool,
-        postgresql_type_or_postgresql_json_type: PostgresqlTypeOrPostgresqlJsonType
+        postgresql_type_or_postgresql_json_type: PostgresqlTypeOrPostgresqlJsonType,
+        variant: &Variant,
     ) -> Result<std::string::String, QueryPartErrorNamed> {
         let mut acc = std::string::String::new();
-        for _ in &self.0 {
+        let current_len = match &variant {
+            Variant::Normal => self.0.len(),
+            Variant::MinusOne => self.0.len().saturating_sub(1)
+        };
+        for _ in 0..current_len {
             match increment.checked_add(1) {
                 Some(value) => {
                     *increment = value;
@@ -2128,10 +2137,16 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for <'__> sqlx::Encode<'__, sqlx::Postg
         Ok(acc)
     }
     pub fn postgresql_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
-        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlType)
+        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::Normal)
     }
     pub fn postgresql_json_type_query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
-        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType)
+        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::Normal)
+    }
+    pub fn postgresql_type_query_part_minus_one(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlType, &Variant::MinusOne)
+    }
+    pub fn postgresql_json_type_query_part_minus_one(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, _is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, QueryPartErrorNamed> {
+        self.query_part(increment, column, _is_need_to_add_logical_operator, PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType, &Variant::MinusOne)
     }
     pub fn query_bind(self, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         for element in self.0 {

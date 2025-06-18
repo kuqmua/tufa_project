@@ -221,18 +221,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     ]
                   #   }
                   # },
-                  # {
-                  #   "DimensionFourEqual": {
-                  #     "logical_operator": "Or",
-                  #     "dimensions": [
-                  #       0,
-                  #       0,
-                  #       0,
-                  #       0
-                  #     ],
-                  #     "value": ""
-                  #   }
-                  # },
+                  {
+                    "DimensionFourEqual": {
+                      "logical_operator": "Or",
+                      "dimensions": [
+                        0,
+                        0,
+                        0,
+                        0
+                      ],
+                      "value": "cat"
+                    }
+                  }
+                  # ,
                   # {
                   #   "DimensionOneLengthEqual": {
                   #     "logical_operator": "Or",
@@ -446,19 +447,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     ]
                   #   }
                   # },
-                  {
-                    "DimensionFourRegularExpression": {
-                      "logical_operator": "Or",
-                      "dimensions": [
-                        0,
-                        0,
-                        0,
-                        0
-                      ],
-                      "regular_expression_case": "Sensitive",
-                      "value": "cat"
-                    }
-                  }
+                  # {
+                  #   "DimensionFourRegularExpression": {
+                  #     "logical_operator": "Or",
+                  #     "dimensions": [
+                  #       0,
+                  #       0,
+                  #       0,
+                  #       0
+                  #     ],
+                  #     "regular_expression_case": "Sensitive",
+                  #     "value": "cat"
+                  #   }
+                  # }
                   # ,
                   # {
                   #   "DimensionFourContainsElementRegularExpression": {
