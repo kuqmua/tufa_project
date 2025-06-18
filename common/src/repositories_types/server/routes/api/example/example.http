@@ -390,7 +390,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   # {
                   #   "DimensionOneIn": {
                   #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
+                  #     "dimensions": [
+                  #       0
+                  #     ],
                   #     "value": [
                   #       [
                   #         [
@@ -405,7 +407,10 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   # {
                   #   "DimensionTwoIn": {
                   #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
+                  #     "dimensions": [
+                  #       0,
+                  #       0
+                  #     ],
                   #     "value": [
                   #       [
                   #         [
@@ -415,26 +420,37 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     ]
                   #   }
                   # },
-                  # {
-                  #   "DimensionThreeIn": {
-                  #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
-                  #     "value": [
-                  #       [
-                  #         0
-                  #       ]
-                  #     ]
-                  #   }
-                  # },
+                  {
+                    "DimensionThreeIn": {
+                      "logical_operator": "Or",
+                      "dimensions": [
+                        0,
+                        0,
+                        0
+                      ],
+                      "value": [
+                        [
+                          0
+                        ]
+                      ]
+                    }
+                  }
+                  # ,
                   # {
                   #   "DimensionFourIn": {
                   #     "logical_operator": "Or",
-                  #     "dimension1_position": 0,
+                  #     "dimensions": [
+                  #       0,
+                  #       0,
+                  #       0,
+                  #       0
+                  #     ],
                   #     "value": [
                   #       0
                   #     ]
                   #   }
-                  # },
+                  # }
+                  # ,
                   # {
                   #   "DimensionFourGreaterThan": {
                   #     "logical_operator": "Or",
@@ -469,21 +485,21 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                   #     "value": 0
                   #   }
                   # },
-                  {
-                    "DimensionFourBetween": {
-                      "logical_operator": "Or",
-                      "dimensions": [
-                        0,
-                        0,
-                        1,
-                        2
-                      ],
-                      "value": {
-                        "start": 7,
-                        "end": 12
-                      }
-                    }
-                  }
+                  # {
+                  #   "DimensionFourBetween": {
+                  #     "logical_operator": "Or",
+                  #     "dimensions": [
+                  #       0,
+                  #       0,
+                  #       0,
+                  #       0
+                  #     ],
+                  #     "value": {
+                  #       "start": 0,
+                  #       "end": 0
+                  #     }
+                  #   }
+                  # }
                 ]
               }
             }
