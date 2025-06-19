@@ -510,16 +510,15 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     ]
       #   }
       # },
-      {
-        "DimensionOneEqual": {
-          "logical_operator": "Or",
-          "dimensions": [
-            1
-          ],
-          "value": 1
-        }
-      }
-      # ,
+      # {
+      #   "DimensionOneEqual": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ],
+      #     "value": 0
+      #   }
+      # },
       # {
       #   "DimensionOneLengthEqual": {
       #     "logical_operator": "Or",
@@ -541,16 +540,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": 0
       #   }
       # },
-      # {
-      #   "DimensionOneBetween": {
-      #     "logical_operator": "Or",
-      #     "dimension1_position": 1,
-      #     "value": {
-      #       "start": 0,
-      #       "end": 0
-      #     }
-      #   }
-      # },
+      {
+        "DimensionOneBetween": {
+          "logical_operator": "Or",
+          "dimensions": [
+            1
+          ],
+          "value": {
+            "start": 3,
+            "end": 6
+          }
+        }
+      }
+      # ,
       # {
       #   "DimensionOneIn": {
       #     "logical_operator": "Or",

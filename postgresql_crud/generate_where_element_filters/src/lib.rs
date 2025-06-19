@@ -930,9 +930,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{postgresql_type_query_part}
                 );
                 let dimension_number_one = DimensionNumber::One;
+                let dimension_number_one_token_stream = dimension_number_one.dimension_token_stream();
                 let generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = |vec_length_token_stream: &dyn quote::ToTokens|{
                     generate_pub_dimensions_bounded_vec_token_stream(&vec_length_token_stream, &KindOfUnsignedPartOfStdPrimitiveI32::CanNotBeZero)
                 };
+                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_dimension_number_one_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number_one_token_stream);
                 let generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream = |
                     dimension_number: &DimensionNumber,
                     operator: &dyn std::fmt::Display
@@ -1013,39 +1015,25 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
-                        {
-                            let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &is_zero_can_be_in_dimension_position_false);
-                            quote::quote! {
-                                #struct_additional_fields_token_stream
-                                #pub_value_between_t_token_stream
-                            }
+                        quote::quote! {
+                            #pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_dimension_number_one_token_stream,
+                            #pub_value_between_t_token_stream
                         },
-                        value_t_range_1_1_default_initialization_token_stream.clone(),
+                        quote::quote! {
+                            #dimensions_default_initialization_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        },
                         {
-                            let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_1_1.clone());
-                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                                "{{}}({{}}{} {{}})",
-                                generate_postgresql_array_indexes_stringified(range_1_1.clone())
-                            ));
-                            let format_increments_token_stream = generate_format_increments_token_stream(range_1_1.clone());
+                            let ok_format_token_stream = generate_ok_format_value_token_stream(&quote::quote!{"{}({}{} {})"});
                             quote::quote! {
-                                #increments_initialization_token_stream
+                                #dimensions_indexes_postgresql_type_query_part_token_stream
                                 #value_match_self_value_query_part_initialization_token_stream
-                                Ok(format!(
-                                    #format_handle_token_stream,
-                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                    column,
-                                    #format_increments_token_stream
-                                    value
-                                ))
+                                #ok_format_token_stream
                             }
                         },
-                        {
-                            let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_1_1.clone());
-                            quote::quote! {
-                                #query_bind_dimension_position_token_stream
-                                #query_self_value_query_bind_token_stream
-                            }
+                        quote::quote! {
+                            #query_self_dimensions_query_bind_query_token_stream
+                            #query_self_value_query_bind_token_stream
                         },
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::In { ident: _ } => (
