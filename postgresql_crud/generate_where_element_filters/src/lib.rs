@@ -912,6 +912,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     &quote::quote!{postgresql_type_query_part}
                 );
                 let dimension_number_one = DimensionNumber::One;
+                let generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = |vec_length_token_stream: &dyn quote::ToTokens|{
+                    quote::quote! {pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::NotZeroUnsignedPartOfStdPrimitiveI32, #vec_length_token_stream>}
+                };
                 let generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream = |
                     dimension_number: &DimensionNumber,
                     operator: &dyn std::fmt::Display
@@ -925,9 +928,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         {
-                            let vec_length_token_stream = &dimension_number.dimension_token_stream();
+                            let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
                             quote::quote! {
-                                pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::NotZeroUnsignedPartOfStdPrimitiveI32, #vec_length_token_stream>,
+                                #pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,
                                 #pub_value_t_token_stream
                             }
                         },
