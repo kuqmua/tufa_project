@@ -3,6 +3,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     panic_location::panic_location();
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
+    let dimensions_snake_case = naming::DimensionsSnakeCase;
     let t_token_stream = quote::quote! {T};
     let t_annotation_generic_token_stream = quote::quote! {<#t_token_stream>};
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
@@ -697,6 +698,24 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         &value_snake_case,
         &quote::quote!{query_part}
     );
+    let generate_ok_format_token_stream = |format_handle_token_stream: &dyn quote::ToTokens, other_parameters: &dyn quote::ToTokens|{
+        quote::quote!{
+            Ok(format!(
+                #format_handle_token_stream,
+                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                column,
+                dimensions_indexes,
+                #other_parameters
+            ))
+        }
+    };
+    let generate_ok_format_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
+        generate_ok_format_token_stream(format_handle_token_stream, &quote::quote!{value})
+    };
+    let dimensions_default_initialization_token_stream = quote::quote!{
+        #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+    };
+    let query_self_dimensions_query_bind_query_token_stream = quote::quote!{query = self.#dimensions_snake_case.query_bind(query);};
     let postgresql_type_token_stream = {
         let is_zero_can_be_in_dimension_position_false = IsZeroCanBeInDimensionPosition::False;
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -887,7 +906,16 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
                     maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + Clone + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>})
                 };
-                let generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream = |operator: &dyn std::fmt::Display| -> (
+                let dimensions_indexes_postgresql_type_query_part_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
+                    &quote::quote!{dimensions_indexes},
+                    &dimensions_snake_case,
+                    &quote::quote!{postgresql_type_query_part}
+                );
+                let dimension_number_one = DimensionNumber::One;
+                let generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream = |
+                    dimension_number: &DimensionNumber,
+                    operator: &dyn std::fmt::Display
+                | -> (
                     ShouldAddDeclarationOfStructIdentGeneric,
                     proc_macro2::TokenStream,
                     proc_macro2::TokenStream,
@@ -896,10 +924,29 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ) {
                     (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        value_t_range_1_1_declaration_token_stream.clone(),
-                        value_t_range_1_1_default_initialization_token_stream.clone(),
-                        generate_value_t_range_1_1_query_part_token_stream(&operator),
-                        value_t_range_query_bind_content_token_stream.clone()
+                        {
+                            let vec_length_token_stream = &dimension_number.dimension_token_stream();
+                            quote::quote! {
+                                pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::NotZeroUnsignedPartOfStdPrimitiveI32, #vec_length_token_stream>,
+                                #pub_value_t_token_stream
+                            }
+                        },
+                        quote::quote! {
+                            #dimensions_default_initialization_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        },
+                        {
+                            let ok_format_token_stream = generate_ok_format_value_token_stream(&generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{{}} {operator} ${{}})")));
+                            quote::quote! {
+                                #dimensions_indexes_postgresql_type_query_part_token_stream
+                                #value_match_increment_checked_add_one_initialization_token_stream
+                                #ok_format_token_stream
+                            }
+                        },
+                        quote::quote! {
+                            #query_self_dimensions_query_bind_query_token_stream
+                            #query_bind_one_value_token_stream
+                        }
                     )
                 };
                 let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote!{pub value: crate::PostgresqlTypeNotEmptyUniqueVec<T>};
@@ -911,7 +958,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&equal_sign)),
                         query_bind_one_value_token_stream.clone(),
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream(&equal_sign),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream(
+                        &dimension_number_one,
+                        &equal_sign
+                    ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         pub_value_t_token_stream.clone(),
@@ -919,7 +969,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         generate_query_part_one_value_token_stream(&&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&greater_than_sign)),
                         query_bind_one_value_token_stream.clone(),
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan { ident: _ } => generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream(&greater_than_sign),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan { ident: _ } => generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream(
+                        &dimension_number_one,
+                        &greater_than_sign
+                    ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Between { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
                         pub_value_between_t_token_stream.clone(),
@@ -1521,7 +1574,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query = query.bind(sqlx::types::Json(self.value));
                 query
             };
-            let dimensions_snake_case = naming::DimensionsSnakeCase;
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = |vec_length_token_stream: &dyn quote::ToTokens|{
                 quote::quote! {pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #vec_length_token_stream>}
             };
@@ -1530,9 +1582,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             };
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = |dimension_number: &DimensionNumber|{
                 generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_minus_one_token_stream())
-            };
-            let dimensions_default_initialization_token_stream = quote::quote!{
-                #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
             };
             let dimensions_default_value_default_initialization_token_stream = {
                 let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
@@ -1545,7 +1594,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #dimensions_default_initialization_token_stream,
                 #regular_expression_case_and_value_default_initialization_token_stream
             };
-            let query_self_dimensions_query_bind_query_token_stream = quote::quote!{query = self.#dimensions_snake_case.query_bind(query);};
             let query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream = quote::quote!{
                 #query_self_dimensions_query_bind_query_token_stream
                 #query_bind_sqlx_types_json_self_value_token_stream
@@ -1559,20 +1607,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &dimensions_snake_case,
                 &quote::quote!{postgresql_json_type_query_part}
             );
-            let generate_ok_format_token_stream = |format_handle_token_stream: &dyn quote::ToTokens, other_parameters: &dyn quote::ToTokens|{
-                quote::quote!{
-                    Ok(format!(
-                        #format_handle_token_stream,
-                        &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                        column,
-                        dimensions_indexes,
-                        #other_parameters
-                    ))
-                }
-            };
-            let generate_ok_format_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
-                generate_ok_format_token_stream(format_handle_token_stream, &quote::quote!{value})
-            };
             let generate_dimension_array_number_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
