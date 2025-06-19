@@ -646,6 +646,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             query
         }
     }
+    let query_self_value_query_bind_one_by_one_token_stream = quote::quote! {
+        query = self.value.query_bind_one_by_one(query);
+        query
+    };
     #[derive(Clone)]
     enum DimensionNumber {
         One,
@@ -1800,8 +1804,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     quote::quote! {
                         #query_self_dimensions_query_bind_query_token_stream
-                        query = self.value.query_bind_one_by_one(query);
-                        query
+                        #query_self_value_query_bind_one_by_one_token_stream
                     },
                 )
             };
@@ -2114,10 +2117,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             ))
                         }
                     },
-                    quote::quote! {
-                        query = self.value.query_bind_one_by_one(query);
-                        query
-                    },
+                    query_self_value_query_bind_one_by_one_token_stream.clone(),
                 ),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneIn {
                     ident: _
