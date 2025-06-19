@@ -53,11 +53,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         ]
       }
     },
-    "vec_std_primitive_i16_as_postgresql_int2_array_not_null": [
-      0
-    ],
-    "vec_std_string_string_as_postgresql_text_array_not_null": [
-      "dog"
+    "column_2dc47998_5a25_42a3_9df3_d5db25683916": [
+      "1975-01-01T00:00:00Z"
     ]
   }
 ]
@@ -502,80 +499,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0
-  #         ]
-  #       }
-  #     },
-  #     {
-  #       "DimensionOneEqual": {
-  #         "logical_operator": "Or",
-  #         "dimensions": [
-  #           1
-  #         ],
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "DimensionOneLengthEqual": {
-  #         "logical_operator": "Or",
-  #         "value": 1
-  #       }
-  #     },
-  #     {
-  #       "DimensionOneLengthMoreThan": {
-  #         "logical_operator": "Or",
-  #         "value": 1
-  #       }
-  #     },
-  #     {
-  #       "DimensionOneGreaterThan": {
-  #         "logical_operator": "Or",
-  #         "dimensions": [
-  #           1
-  #         ],
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "DimensionOneBetween": {
-  #         "logical_operator": "Or",
-  #         "dimensions": [
-  #           1
-  #         ],
-  #         "value": {
-  #           "start": 0,
-  #           "end": 0
-  #         }
-  #       }
-  #     },
-  #     {
-  #       "DimensionOneIn": {
-  #         "logical_operator": "Or",
-  #         "dimensions": [
-  #           1
-  #         ],
-  #         "value": [
-  #           0
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
-  "vec_std_string_string_as_postgresql_text_array_not_null": {
+  "column_2dc47998_5a25_42a3_9df3_d5db25683916": {
     "logical_operator": "Or",
     "value": [
       # {
       #   "Equal": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       ""
+      #       "1970-01-01T00:00:00Z"
       #     ]
       #   }
       # },
@@ -585,7 +516,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": ""
+      #     "value": "1970-01-01T00:00:00Z"
       #   }
       # },
       # {
@@ -601,15 +532,27 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   }
       # },
       {
-        "DimensionOneRegularExpression": {
+        "DimensionOneBefore": {
           "logical_operator": "Or",
           "dimensions": [
             1
           ],
-          "regular_expression_case": "Sensitive",
-          "value": "dog"
+          "value": "1980-01-01T00:00:00Z"
         }
       }
+      # ,
+      # {
+      #   "DimensionOneBetween": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ],
+      #     "value": {
+      #       "start": "1970-01-01T00:00:00Z",
+      #       "end": "1970-01-01T00:00:00Z"
+      #     }
+      #   }
+      # }
     ]
   },
   "select": [
@@ -647,16 +590,8 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #     }
     #   ]
     # },
-    # {
-    #   "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
-    #     "dimension1_pagination": {
-    #       "limit": 5,
-    #       "offset": 1
-    #     }
-    #   }
-    # },
     {
-      "vec_std_string_string_as_postgresql_text_array_not_null": {
+      "column_2dc47998_5a25_42a3_9df3_d5db25683916": {
         "dimension1_pagination": {
           "limit": 5,
           "offset": 1
