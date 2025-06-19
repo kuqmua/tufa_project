@@ -1207,10 +1207,19 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentDate => (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
-                        proc_macro2_token_stream_new.clone(),
-                        proc_macro2_token_stream_new.clone(),
-                        generate_query_part_zero_value_token_stream(&quote::quote! {"{}({} > current_date)"}),
-                        quote::quote! {#query_snake_case},
+                        pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_dimension_number_one_token_stream.clone(),
+                        dimensions_default_initialization_token_stream.clone(),
+                        {
+                            let ok_format_token_stream = generate_ok_format_token_stream(&quote::quote!{"{}({}{} > current_date)"}, &proc_macro2::TokenStream::new());
+                            quote::quote! {
+                                #dimensions_indexes_postgresql_type_query_part_token_stream
+                                #ok_format_token_stream
+                            }
+                        },
+                        quote::quote!{
+                            #query_self_dimensions_query_bind_query_token_stream
+                            query
+                        }
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp => (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
