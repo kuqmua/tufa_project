@@ -1515,15 +1515,18 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = |dimension_number: &DimensionNumber|{
                 generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_minus_one_token_stream())
             };
+            let dimensions_default_initialization_token_stream = quote::quote!{
+                #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+            };
             let dimensions_default_value_default_initialization_token_stream = {
                 let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
                 quote::quote!{
-                    dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                    #dimensions_default_initialization_token_stream,
                     #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                 }
             };
             let dimensions_default_regular_expression_default_initialization_token_stream = quote::quote! {
-                #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                #dimensions_default_initialization_token_stream,
                 #regular_expression_case_and_value_default_initialization_token_stream
             };
             let query_self_dimensions_query_bind_query_token_stream = quote::quote!{query = self.#dimensions_snake_case.query_bind(query);};
@@ -1608,7 +1611,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     quote::quote! {
-                        #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        #dimensions_default_initialization_token_stream,
                         value: #core_default_default_default_token_stream
                     },
                     {
