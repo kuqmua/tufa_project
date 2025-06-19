@@ -1505,8 +1505,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query = query.bind(sqlx::types::Json(self.value));
                 query
             };
+            let dimensions_snake_case = naming::DimensionsSnakeCase;
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = |vec_length_token_stream: &dyn quote::ToTokens|{
-                quote::quote! {pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #vec_length_token_stream>}
+                quote::quote! {pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #vec_length_token_stream>}
             };
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream = |dimension_number: &DimensionNumber|{
                 generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream())
@@ -1522,10 +1523,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 }
             };
             let dimensions_default_regular_expression_default_initialization_token_stream = quote::quote! {
-                dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                 #regular_expression_case_and_value_default_initialization_token_stream
             };
-            let query_self_dimensions_query_bind_query_token_stream = quote::quote!{query = self.dimensions.query_bind(query);};
+            let query_self_dimensions_query_bind_query_token_stream = quote::quote!{query = self.#dimensions_snake_case.query_bind(query);};
             let query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream = quote::quote!{
                 #query_self_dimensions_query_bind_query_token_stream
                 #query_bind_sqlx_types_json_self_value_token_stream
@@ -1535,7 +1536,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #query_equals_query_self_value_to_string_token_stream
             };
             let dimensions_indexes_postgresql_json_type_query_part_token_stream = quote::quote!{
-                let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
+                let dimensions_indexes = match self.#dimensions_snake_case.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
                     Ok(value) => value,
                     Err(error) => {
                         return Err(error);
@@ -1607,7 +1608,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     quote::quote! {
-                        dimensions: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                        #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                         value: #core_default_default_default_token_stream
                     },
                     {
@@ -1820,7 +1821,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         );
                         let last_dimensions_index_intialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{last_dimensions_index});
                         quote::quote! {
-                            let dimensions_indexes = match self.dimensions.postgresql_json_type_query_part_minus_one(increment, column, is_need_to_add_logical_operator) {
+                            let dimensions_indexes = match self.#dimensions_snake_case.postgresql_json_type_query_part_minus_one(increment, column, is_need_to_add_logical_operator) {
                                 Ok(value) => value,
                                 Err(error) => {
                                     return Err(error);
