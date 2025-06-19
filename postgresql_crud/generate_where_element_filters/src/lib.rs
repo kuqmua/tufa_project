@@ -646,6 +646,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             query
         }
     }
+    let query_self_value_query_bind_token_stream = generate_query_self_value_query_bind_token_stream();
     let query_self_value_query_bind_one_by_one_token_stream = quote::quote! {
         query = self.value.query_bind_one_by_one(query);
         query
@@ -934,7 +935,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
-                        generate_query_self_value_query_bind_token_stream()
+                        query_self_value_query_bind_token_stream.clone()
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
@@ -967,7 +968,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         },
                         {
                             let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_1_1.clone());
-                            let query_self_value_query_bind_token_stream = generate_query_self_value_query_bind_token_stream();
                             quote::quote! {
                                 #query_bind_dimension_position_token_stream
                                 #query_self_value_query_bind_token_stream
