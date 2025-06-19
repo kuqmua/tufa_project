@@ -678,6 +678,24 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         //     self.dimension_std_primitive_u8().checked_add(1).unwrap().to_string().parse::<proc_macro2::TokenStream>().unwrap()
         // }
     }
+    enum KindOfUnsignedPartOfStdPrimitiveI32 {
+        CanBeZero,
+        CanNotBeZero
+    }
+    impl quote::ToTokens for KindOfUnsignedPartOfStdPrimitiveI32 {
+        fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+            match &self {
+                KindOfUnsignedPartOfStdPrimitiveI32::CanBeZero => quote::quote!{UnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
+                KindOfUnsignedPartOfStdPrimitiveI32::CanNotBeZero => quote::quote!{NotZeroUnsignedPartOfStdPrimitiveI32}.to_tokens(tokens),
+            }
+        }
+    }
+    let generate_pub_dimensions_bounded_vec_token_stream = |
+        vec_length_token_stream: &dyn quote::ToTokens,
+        kind_of_unsigned_part_of_std_primitive_i32: &KindOfUnsignedPartOfStdPrimitiveI32,
+    |{
+        quote::quote! {pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::#kind_of_unsigned_part_of_std_primitive_i32, #vec_length_token_stream>}
+    };
     let value_match_increment_checked_add_one_initialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{value});
     let generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream = |
         ident_token_stream: &dyn quote::ToTokens,
@@ -913,7 +931,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 );
                 let dimension_number_one = DimensionNumber::One;
                 let generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = |vec_length_token_stream: &dyn quote::ToTokens|{
-                    quote::quote! {pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::NotZeroUnsignedPartOfStdPrimitiveI32, #vec_length_token_stream>}
+                    generate_pub_dimensions_bounded_vec_token_stream(&vec_length_token_stream, &KindOfUnsignedPartOfStdPrimitiveI32::CanNotBeZero)
                 };
                 let generate_dimension_6bad7b4b_e612_42bd_8464_915d8e717255_token_stream = |
                     dimension_number: &DimensionNumber,
@@ -1578,7 +1596,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query
             };
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = |vec_length_token_stream: &dyn quote::ToTokens|{
-                quote::quote! {pub #dimensions_snake_case: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #vec_length_token_stream>}
+                generate_pub_dimensions_bounded_vec_token_stream(&vec_length_token_stream, &KindOfUnsignedPartOfStdPrimitiveI32::CanBeZero)
             };
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream = |dimension_number: &DimensionNumber|{
                 generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream())
