@@ -202,7 +202,6 @@ invalid_type_param_default = { level = "deny", priority = 0 } #type parameter de
 let_underscore_lock = { level = "deny", priority = 0 } #non_binding let on a synchronization lock
 long_running_const_eval = { level = "deny", priority = 0 } #detects long const eval operations
 macro_expanded_macro_exports_accessed_by_absolute_paths = { level = "deny", priority = 0 } #macro_expanded `macro_export` macros from the current crate cannot be referred to by absolute paths
-missing_fragment_specifier = { level = "deny", priority = 0 } #detects missing fragment specifiers in unused `macro_rules!` patterns
 mutable_transmutes = { level = "deny", priority = 0 } #transmuting &T to &mut T is undefined behavior, even if the reference is unused
 named_asm_labels = { level = "deny", priority = 0 } #named labels in inline assembly
 no_mangle_const_items = { level = "deny", priority = 0 } #const items will not have their symbols exported

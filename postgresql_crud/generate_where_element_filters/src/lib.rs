@@ -1505,13 +1505,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query = query.bind(sqlx::types::Json(self.value));
                 query
             };
+            let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = |vec_length_token_stream: &dyn quote::ToTokens|{
+                quote::quote! {pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #vec_length_token_stream>}
+            };
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream = |dimension_number: &DimensionNumber|{
-                let dimension_number_token_stream = dimension_number.dimension_token_stream();
-                quote::quote! {pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_token_stream>}
+                generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream())
             };
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = |dimension_number: &DimensionNumber|{
-                let dimension_number_minus_one_token_stream = dimension_number.dimension_minus_one_token_stream();
-                quote::quote! {pub dimensions: crate::BoundedStdVecVec<crate::UnsignedPartOfStdPrimitiveI32, #dimension_number_minus_one_token_stream>}
+                generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_minus_one_token_stream())
             };
             let dimensions_default_value_default_initialization_token_stream = {
                 let value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
