@@ -2,6 +2,7 @@
 pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStream) -> proc_macro::TokenStream {
     panic_location::panic_location();
     let query_snake_case = naming::QuerySnakeCase;
+    let value_snake_case = naming::ValueSnakeCase;
     let t_token_stream = quote::quote! {T};
     let t_annotation_generic_token_stream = quote::quote! {<#t_token_stream>};
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
@@ -672,14 +673,25 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         // }
     }
     let value_match_increment_checked_add_one_initialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{value});
-    let value_match_self_value_query_part_initialization_token_stream = quote::quote!{
-        let value = match self.value.query_part(increment, column, is_need_to_add_logical_operator) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(error);
-            }
-        };
+    let generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream = |
+        ident_token_stream: &dyn quote::ToTokens,
+        field_token_stream: &dyn quote::ToTokens,
+        function_token_stream: &dyn quote::ToTokens,
+    |{
+        quote::quote!{
+            let #ident_token_stream = match self.#field_token_stream.#function_token_stream(increment, column, is_need_to_add_logical_operator) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(error);
+                }
+            };
+        }
     };
+    let value_match_self_value_query_part_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
+        &value_snake_case,
+        &value_snake_case,
+        &quote::quote!{query_part}
+    );
     let postgresql_type_token_stream = {
         let is_zero_can_be_in_dimension_position_false = IsZeroCanBeInDimensionPosition::False;
         #[derive(Debug, Clone, strum_macros::Display, strum_macros::EnumIter, enum_extension_lib::EnumExtension)]
@@ -1538,14 +1550,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #query_self_dimensions_query_bind_query_token_stream
                 #query_equals_query_self_value_to_string_token_stream
             };
-            let dimensions_indexes_postgresql_json_type_query_part_token_stream = quote::quote!{
-                let dimensions_indexes = match self.#dimensions_snake_case.postgresql_json_type_query_part(increment, column, is_need_to_add_logical_operator) {
-                    Ok(value) => value,
-                    Err(error) => {
-                        return Err(error);
-                    }
-                };
-            };
+            let dimensions_indexes_postgresql_json_type_query_part_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
+                &quote::quote!{dimensions_indexes},
+                &dimensions_snake_case,
+                &quote::quote!{postgresql_json_type_query_part}
+            );
             let generate_ok_format_token_stream = |format_handle_token_stream: &dyn quote::ToTokens, other_parameters: &dyn quote::ToTokens|{
                 quote::quote!{
                     Ok(format!(
@@ -1778,14 +1787,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         let ok_format_token_stream = generate_ok_format_value_token_stream(
                             &generate_quotes::double_quotes_token_stream(&"{}({}{} in ({}))")
                         );
+                        let value_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
+                            &value_snake_case,
+                            &value_snake_case,
+                            &quote::quote!{query_part_one_by_one}
+                        );
                         quote::quote! {
                             #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            let value = match self.value.query_part_one_by_one(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #value_initialization_token_stream
                             #ok_format_token_stream
                         }
                     },
@@ -1814,6 +1823,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     dimensions_default_regular_expression_default_initialization_token_stream.clone(),
                     {
+                        let dimensions_indexes_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
+                            &quote::quote!{dimensions_indexes},
+                            &dimensions_snake_case,
+                            &quote::quote!{postgresql_json_type_query_part_minus_one}
+                        );
+                        let last_dimensions_index_intialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{last_dimensions_index});
                         let ok_format_token_stream = generate_ok_format_token_stream(
                             &generate_quotes::double_quotes_token_stream(&"{}((trim(both '\\\"' from ({}{}->>${})::text) {} ${}))"),
                             &quote::quote!{
@@ -1822,14 +1837,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 value
                             }
                         );
-                        let last_dimensions_index_intialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{last_dimensions_index});
                         quote::quote! {
-                            let dimensions_indexes = match self.#dimensions_snake_case.postgresql_json_type_query_part_minus_one(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #dimensions_indexes_initialization_token_stream
                             #last_dimensions_index_intialization_token_stream
                             #value_match_increment_checked_add_one_initialization_token_stream
                             #ok_format_token_stream
@@ -2090,13 +2099,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     quote::quote! {value: crate::PostgresqlJsonTypeNotEmptyUniqueVec<T>},
                     value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                     {
+                        let value_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
+                            &value_snake_case,
+                            &value_snake_case,
+                            &quote::quote!{query_part_one_by_one}
+                        );
                         quote::quote! {
-                            let value = match self.value.query_part_one_by_one(increment, column, is_need_to_add_logical_operator) {
-                                Ok(value) => value,
-                                Err(error) => {
-                                    return Err(error);
-                                }
-                            };
+                            #value_initialization_token_stream
                             Ok(format!(
                                 "{}({} in ({}))",
                                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
