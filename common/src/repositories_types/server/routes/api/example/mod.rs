@@ -146,6 +146,7 @@ pub struct Example {
 
     // ///////////////////////////
     pub vec_std_primitive_i16_as_postgresql_int2_array_not_null: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
+    pub vec_std_string_string_as_postgresql_text_array_not_null: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullText,
     // //63max
 }
 //todo enum tree support

@@ -1118,10 +1118,32 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression => (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
-                        regular_expression_case_and_value_declaration_token_stream.clone(),
-                        regular_expression_case_and_value_default_initialization_token_stream.clone(),
-                        generate_query_part_regular_expression_token_stream(&quote::quote!{"{}({} {} ${})"}),
-                        query_equals_query_self_value_to_string_token_stream.clone()
+                        quote::quote! {
+                            #pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_dimension_number_one_token_stream,
+                            #regular_expression_case_and_value_declaration_token_stream
+                        },
+                        quote::quote! {
+                            #dimensions_default_initialization_token_stream,
+                            #regular_expression_case_and_value_default_initialization_token_stream
+                        },
+                        {
+                            let ok_format_token_stream = generate_ok_format_token_stream(
+                                &quote::quote!{"{}({}{} {} ${})"},
+                                &quote::quote!{
+                                    self.regular_expression_case.postgreql_syntax(),
+                                    value
+                                }
+                            );
+                            quote::quote! {
+                                #dimensions_indexes_postgresql_type_query_part_token_stream
+                                #value_match_increment_checked_add_one_initialization_token_stream
+                                #ok_format_token_stream
+                            }
+                        },
+                        quote::quote! {
+                            #query_self_dimensions_query_bind_query_token_stream
+                            #query_equals_query_self_value_to_string_token_stream
+                        },
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Before { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
