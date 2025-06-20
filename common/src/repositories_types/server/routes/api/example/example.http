@@ -54,7 +54,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       }
     },
     "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": [
-      "2975-01-01T00:00:00"
+      "20:40:00"
     ]
   }
 ]
@@ -506,7 +506,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   "Equal": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       "1970-01-01T00:00:00"
+      #       "00:00:00"
       #     ]
       #   }
       # },
@@ -516,7 +516,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": "1970-01-01T00:00:00"
+      #     "value": "00:00:00"
       #   }
       # },
       # {
@@ -537,7 +537,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": "1970-01-01T00:00:00"
+      #     "value": "00:00:00"
       #   }
       # },
       # {
@@ -547,27 +547,25 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       1
       #     ],
       #     "value": {
-      #       "start": "1970-01-01T00:00:00",
-      #       "end": "1970-01-01T00:00:00"
+      #       "start": "00:00:00",
+      #       "end": "00:00:00"
       #     }
       #   }
       # },
-      # {
-      #   "DimensionOneCurrentTimestamp": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ]
-      #   }
-      # },
       {
-        "DimensionOneGreaterThanCurrentTimestamp": {
+        "DimensionOneCurrentTime": {
           "logical_operator": "Or",
           "dimensions": [
             1
           ]
         }
       }
+      # ,
+      # {
+      #   "DimensionOneGreaterThanCurrentTime": {
+      #     "logical_operator": "Or"
+      #   }
+      # }
     ]
   },
   "select": [
