@@ -793,10 +793,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ContainedWithinRange {
                         ident: _
                     } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneValueIsContainedWithinRange {
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneContainedWithinRange {
                         ident: _
                     } => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
@@ -1380,15 +1380,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             query
                         },
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange { ident: _ } => (
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::ContainedWithinRange { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         pub_value_t_token_stream.clone(),
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                         generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
                         query_bind_one_value_token_stream.clone(),
                     ),
-                    //todo maybe rename? without Value
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneValueIsContainedWithinRange { ident: _ } => (
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneContainedWithinRange { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         quote::quote! {
                             #pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_dimension_number_one_token_stream,

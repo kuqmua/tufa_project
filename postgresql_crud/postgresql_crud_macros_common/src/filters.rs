@@ -48,10 +48,10 @@ pub enum PostgresqlTypeFilter {
     DimensionOneLengthMoreThan,
     EqualToEncodedStringRepresentation,
     DimensionOneEqualToEncodedStringRepresentation,
-    ValueIsContainedWithinRange {
+    ContainedWithinRange {
         ident: proc_macro2::TokenStream,
     },
-    DimensionOneValueIsContainedWithinRange {
+    DimensionOneContainedWithinRange {
         ident: proc_macro2::TokenStream,
     },
     ContainsAnotherRange {
@@ -137,8 +137,8 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneLengthMoreThan => &naming::DimensionOneLengthMoreThanUpperCamelCase,
             Self::EqualToEncodedStringRepresentation => &naming::EqualToEncodedStringRepresentationUpperCamelCase,
             Self::DimensionOneEqualToEncodedStringRepresentation => &naming::DimensionOneEqualToEncodedStringRepresentationUpperCamelCase,
-            Self::ValueIsContainedWithinRange { ident: _ } => &naming::ValueIsContainedWithinRangeUpperCamelCase,
-            Self::DimensionOneValueIsContainedWithinRange { ident: _ } => &naming::DimensionOneValueIsContainedWithinRangeUpperCamelCase,
+            Self::ContainedWithinRange { ident: _ } => &naming::ContainedWithinRangeUpperCamelCase,
+            Self::DimensionOneContainedWithinRange { ident: _ } => &naming::DimensionOneContainedWithinRangeUpperCamelCase,
             Self::ContainsAnotherRange { ident: _ } => &naming::ContainsAnotherRangeUpperCamelCase,
             Self::DimensionOneContainsAnotherRange { ident: _ } => &naming::DimensionOneContainsAnotherRangeUpperCamelCase,
             Self::StrictlyToLeftOfRange { ident: _ } => &naming::StrictlyToLeftOfRangeUpperCamelCase,
@@ -193,8 +193,8 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneLengthMoreThan => None,
             Self::EqualToEncodedStringRepresentation => None,
             Self::DimensionOneEqualToEncodedStringRepresentation => None,
-            Self::ValueIsContainedWithinRange { ident } => Some(ident.clone()),
-            Self::DimensionOneValueIsContainedWithinRange { ident } => Some(ident.clone()),
+            Self::ContainedWithinRange { ident } => Some(ident.clone()),
+            Self::DimensionOneContainedWithinRange { ident } => Some(ident.clone()),
             Self::ContainsAnotherRange { ident } => Some(ident.clone()),
             Self::DimensionOneContainsAnotherRange { ident } => Some(ident.clone()),
             Self::StrictlyToLeftOfRange { ident } => Some(ident.clone()),
