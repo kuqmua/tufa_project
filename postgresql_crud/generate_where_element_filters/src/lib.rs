@@ -791,9 +791,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTime => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
-                        ident: _
-                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
                         ident: _
@@ -1325,24 +1323,25 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         generate_query_part_one_value_token_stream(&quote::quote! {"{}(array_length({}, 1) > ${})"}),
                         query_bind_one_value_token_stream.clone(),
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => (
+                        should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote::quote! {
                             pub encode_format: crate::postgresql_type::EncodeFormat,
-                            pub encoded_string_representation: T,
+                            pub encoded_string_representation: std::string::String,
                         },
                         quote::quote! {
                             encode_format: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            encoded_string_representation: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            encoded_string_representation: #core_default_default_default_token_stream
                         },
                         quote::quote! {
-                            match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    Ok(format!("{}(encode({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, &self.encode_format, increment))
-                                }
-                                None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                            }
+                            #value_match_increment_checked_add_one_initialization_token_stream
+                            Ok(format!(
+                                "{}(encode({}, '{}') = ${})",
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                &self.encode_format,
+                                value
+                            ))
                         },
                         quote::quote! {
                             query = query.bind(self.encoded_string_representation);

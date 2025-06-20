@@ -46,9 +46,7 @@ pub enum PostgresqlTypeFilter {
     DimensionOneGreaterThanCurrentTime,
     DimensionOneLengthEqual,
     DimensionOneLengthMoreThan,
-    EqualToEncodedStringRepresentation {
-        ident: proc_macro2::TokenStream,
-    },
+    EqualToEncodedStringRepresentation,
     DimensionOneEqualToEncodedStringRepresentation,
     ValueIsContainedWithinRange {
         ident: proc_macro2::TokenStream,
@@ -137,7 +135,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneGreaterThanCurrentTime => &naming::DimensionOneGreaterThanCurrentTimeUpperCamelCase,
             Self::DimensionOneLengthEqual => &naming::DimensionOneLengthEqualUpperCamelCase,
             Self::DimensionOneLengthMoreThan => &naming::DimensionOneLengthMoreThanUpperCamelCase,
-            Self::EqualToEncodedStringRepresentation { ident: _ } => &naming::EqualToEncodedStringRepresentationUpperCamelCase,
+            Self::EqualToEncodedStringRepresentation => &naming::EqualToEncodedStringRepresentationUpperCamelCase,
             Self::DimensionOneEqualToEncodedStringRepresentation => &naming::DimensionOneEqualToEncodedStringRepresentationUpperCamelCase,
             Self::ValueIsContainedWithinRange { ident: _ } => &naming::ValueIsContainedWithinRangeUpperCamelCase,
             Self::DimensionOneValueIsContainedWithinRange { ident: _ } => &naming::DimensionOneValueIsContainedWithinRangeUpperCamelCase,
@@ -193,7 +191,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneGreaterThanCurrentTime => None,
             Self::DimensionOneLengthEqual => None,
             Self::DimensionOneLengthMoreThan => None,
-            Self::EqualToEncodedStringRepresentation { ident } => Some(ident.clone()),
+            Self::EqualToEncodedStringRepresentation => None,
             Self::DimensionOneEqualToEncodedStringRepresentation => None,
             Self::ValueIsContainedWithinRange { ident } => Some(ident.clone()),
             Self::DimensionOneValueIsContainedWithinRange { ident } => Some(ident.clone()),
