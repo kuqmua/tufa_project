@@ -3307,10 +3307,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate;
                             let current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime;
                             let greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime;
-                            let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainedWithinRange {
+                            let value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesWithinGivenRange {
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                             };
-                            let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::ContainsAnotherRange {
+                            let contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesThatFullyContainTheGivenRange {
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                             };
                             let strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
@@ -3537,10 +3537,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let dimension_one_greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentDate;
                             let dimension_one_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentTime;
                             let dimension_one_greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTime;
-                            let dimension_one_value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneContainedWithinRange {
+                            let dimension_one_value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesWithinGivenRange {
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                             };
-                            let dimension_one_contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneContainsAnotherRange {
+                            let dimension_one_contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                             };
                             let dimension_one_strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange {

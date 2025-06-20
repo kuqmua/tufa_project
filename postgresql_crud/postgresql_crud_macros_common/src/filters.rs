@@ -48,16 +48,16 @@ pub enum PostgresqlTypeFilter {
     DimensionOneLengthMoreThan,
     EqualToEncodedStringRepresentation,
     DimensionOneEqualToEncodedStringRepresentation,
-    ContainedWithinRange {
+    FindRangesWithinGivenRange {
         ident: proc_macro2::TokenStream,
     },
-    DimensionOneContainedWithinRange {
+    DimensionOneFindRangesWithinGivenRange {
         ident: proc_macro2::TokenStream,
     },
-    ContainsAnotherRange {
+    FindRangesThatFullyContainTheGivenRange {
         ident: proc_macro2::TokenStream,
     },
-    DimensionOneContainsAnotherRange {
+    DimensionOneFindRangesThatFullyContainTheGivenRange {
         ident: proc_macro2::TokenStream,
     },
     StrictlyToLeftOfRange {
@@ -137,10 +137,10 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneLengthMoreThan => &naming::DimensionOneLengthMoreThanUpperCamelCase,
             Self::EqualToEncodedStringRepresentation => &naming::EqualToEncodedStringRepresentationUpperCamelCase,
             Self::DimensionOneEqualToEncodedStringRepresentation => &naming::DimensionOneEqualToEncodedStringRepresentationUpperCamelCase,
-            Self::ContainedWithinRange { ident: _ } => &naming::ContainedWithinRangeUpperCamelCase,
-            Self::DimensionOneContainedWithinRange { ident: _ } => &naming::DimensionOneContainedWithinRangeUpperCamelCase,
-            Self::ContainsAnotherRange { ident: _ } => &naming::ContainsAnotherRangeUpperCamelCase,
-            Self::DimensionOneContainsAnotherRange { ident: _ } => &naming::DimensionOneContainsAnotherRangeUpperCamelCase,
+            Self::FindRangesWithinGivenRange { ident: _ } => &naming::FindRangesWithinGivenRangeUpperCamelCase,
+            Self::DimensionOneFindRangesWithinGivenRange { ident: _ } => &naming::DimensionOneFindRangesWithinGivenRangeUpperCamelCase,
+            Self::FindRangesThatFullyContainTheGivenRange { ident: _ } => &naming::FindRangesThatFullyContainTheGivenRangeUpperCamelCase,
+            Self::DimensionOneFindRangesThatFullyContainTheGivenRange { ident: _ } => &naming::DimensionOneFindRangesThatFullyContainTheGivenRangeUpperCamelCase,
             Self::StrictlyToLeftOfRange { ident: _ } => &naming::StrictlyToLeftOfRangeUpperCamelCase,
             Self::DimensionOneStrictlyToLeftOfRange { ident: _ } => &naming::DimensionOneStrictlyToLeftOfRangeUpperCamelCase,
             Self::StrictlyToRightOfRange { ident: _ } => &naming::StrictlyToRightOfRangeUpperCamelCase,
@@ -193,10 +193,10 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneLengthMoreThan => None,
             Self::EqualToEncodedStringRepresentation => None,
             Self::DimensionOneEqualToEncodedStringRepresentation => None,
-            Self::ContainedWithinRange { ident } => Some(ident.clone()),
-            Self::DimensionOneContainedWithinRange { ident } => Some(ident.clone()),
-            Self::ContainsAnotherRange { ident } => Some(ident.clone()),
-            Self::DimensionOneContainsAnotherRange { ident } => Some(ident.clone()),
+            Self::FindRangesWithinGivenRange { ident } => Some(ident.clone()),
+            Self::DimensionOneFindRangesWithinGivenRange { ident } => Some(ident.clone()),
+            Self::FindRangesThatFullyContainTheGivenRange { ident } => Some(ident.clone()),
+            Self::DimensionOneFindRangesThatFullyContainTheGivenRange { ident } => Some(ident.clone()),
             Self::StrictlyToLeftOfRange { ident } => Some(ident.clone()),
             Self::DimensionOneStrictlyToLeftOfRange { ident } => Some(ident.clone()),
             Self::StrictlyToRightOfRange { ident } => Some(ident.clone()),
