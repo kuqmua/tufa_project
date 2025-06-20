@@ -54,16 +54,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       }
     },
     "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": [
-      {
-        "year": 2025,
-        "month": 6,
-        "day": 19
-      },
-      {
-        "year": 2026,
-        "month": 6,
-        "day": 10
-      }
+      "1975-01-01T00:00:00"
     ]
   }
 ]
@@ -515,11 +506,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   "Equal": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       {
-      #         "year": 0,
-      #         "month": 1,
-      #         "day": 1
-      #       }
+      #       "1970-01-01T00:00:00"
       #     ]
       #   }
       # },
@@ -529,11 +516,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": {
-      #       "year": 0,
-      #       "month": 1,
-      #       "day": 1
-      #     }
+      #     "value": "1970-01-01T00:00:00"
       #   }
       # },
       # {
@@ -554,11 +537,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": {
-      #       "year": 0,
-      #       "month": 1,
-      #       "day": 1
-      #     }
+      #     "value": "1970-01-01T00:00:00"
       #   }
       # },
       # {
@@ -568,72 +547,62 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       1
       #     ],
       #     "value": {
-      #       "start": {
-      #         "year": 0,
-      #         "month": 1,
-      #         "day": 1
-      #       },
-      #       "end": {
-      #         "year": 0,
-      #         "month": 1,
-      #         "day": 1
-      #       }
+      #       "start": "1970-01-01T00:00:00",
+      #       "end": "1970-01-01T00:00:00"
       #     }
       #   }
       # },
-      # {
-      #   "DimensionOneCurrentDate": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ]
-      #   }
-      # },
       {
-        "DimensionOneGreaterThanCurrentDate": {
+        "DimensionOneCurrentTimestamp": {
           "logical_operator": "Or",
           "dimensions": [
             1
           ]
         }
       }
+      # ,
+      # {
+      #   "DimensionOneGreaterThanCurrentTimestamp": {
+      #     "logical_operator": "Or"
+      #   }
+      # }
     ]
   },
   "select": [
-    {
-      "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
-    },
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
-    {
-      "animal_as_not_null_jsonb_object": [
-        {
-          "doggie_as_not_null_jsonb_object": [
-            {
-              "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
-                "dimension1_pagination": {
-                  "limit": 5,
-                  "offset": 0
-                },
-                "dimension2_pagination": {
-                  "limit": 5,
-                  "offset": 0
-                },
-                "dimension3_pagination": {
-                  "limit": 5,
-                  "offset": 0
-                },
-                "dimension4_pagination": {
-                  "limit": 5,
-                  "offset": 0
-                }
-              }
-            }
-          ]
-        }
-      ]
-    },
+    # {
+    #   "column_40d64ae4_a646_4394_bfce_3894bdfced87": null
+    # },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
+    # {
+    #   "animal_as_not_null_jsonb_object": [
+    #     {
+    #       "doggie_as_not_null_jsonb_object": [
+    #         {
+    #           "column_32fc16eb_2641_4d65_acec_0c7addbfe338": {
+    #             "dimension1_pagination": {
+    #               "limit": 5,
+    #               "offset": 0
+    #             },
+    #             "dimension2_pagination": {
+    #               "limit": 5,
+    #               "offset": 0
+    #             },
+    #             "dimension3_pagination": {
+    #               "limit": 5,
+    #               "offset": 0
+    #             },
+    #             "dimension4_pagination": {
+    #               "limit": 5,
+    #               "offset": 0
+    #             }
+    #           }
+    #         }
+    #       ]
+    #     }
+    #   ]
+    # },
     {
       "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": {
         "dimension1_pagination": {

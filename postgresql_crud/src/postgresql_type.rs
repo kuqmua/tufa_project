@@ -81,6 +81,15 @@ generate_postgresql_types::generate_postgresql_types!([
                 "dimension1_not_null_or_nullable": "NotNull"
             }
         }
+    },
+    {
+        "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
+        "not_null_or_nullable": "NotNull",
+        "postgresql_type_pattern": {
+            "ArrayDimension1": {
+                "dimension1_not_null_or_nullable": "NotNull"
+            }
+        }
     }
 ]);
 
