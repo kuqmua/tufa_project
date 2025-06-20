@@ -491,7 +491,7 @@ impl<'de> serde::Deserialize<'de> for PaginationStartsWithZero {
                 };
                 match PaginationStartsWithZero::try_new(__field0, __field1) {
                     Ok(value) => serde::__private::Ok(value),
-                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),
+                    Err(error) => Err(serde::de::Error::custom(format!("{error:?}"))),//todo use serde_json::to_string(&error).unwrap_or_else(|_|"failed to serialize error".into())
                 }
             }
             #[inline]
