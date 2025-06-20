@@ -1449,10 +1449,26 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        pub_value_t_token_stream.clone(),
-                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&<")),
-                        query_bind_one_value_token_stream.clone(),
+                        quote::quote! {
+                            #pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_dimension_number_one_token_stream,
+                            #pub_value_t_token_stream
+                        },
+                        quote::quote! {
+                            #dimensions_default_initialization_token_stream,
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        },
+                        {
+                            let ok_format_token_stream = generate_ok_format_value_token_stream(&quote::quote!{"{}({}{} &< ${})"});
+                            quote::quote! {
+                                #dimensions_indexes_postgresql_type_query_part_token_stream
+                                #value_match_increment_checked_add_one_initialization_token_stream
+                                #ok_format_token_stream
+                            }
+                        },
+                        quote::quote! {
+                            #query_self_dimensions_query_bind_query_token_stream
+                            #query_bind_one_value_token_stream
+                        },
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
