@@ -49,9 +49,7 @@ pub enum PostgresqlTypeFilter {
     EqualToEncodedStringRepresentation {
         ident: proc_macro2::TokenStream,
     },
-    DimensionOneEqualToEncodedStringRepresentation {
-        ident: proc_macro2::TokenStream,
-    },
+    DimensionOneEqualToEncodedStringRepresentation,
     ValueIsContainedWithinRange {
         ident: proc_macro2::TokenStream,
     },
@@ -140,7 +138,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneLengthEqual => &naming::DimensionOneLengthEqualUpperCamelCase,
             Self::DimensionOneLengthMoreThan => &naming::DimensionOneLengthMoreThanUpperCamelCase,
             Self::EqualToEncodedStringRepresentation { ident: _ } => &naming::EqualToEncodedStringRepresentationUpperCamelCase,
-            Self::DimensionOneEqualToEncodedStringRepresentation { ident: _ } => &naming::DimensionOneEqualToEncodedStringRepresentationUpperCamelCase,
+            Self::DimensionOneEqualToEncodedStringRepresentation => &naming::DimensionOneEqualToEncodedStringRepresentationUpperCamelCase,
             Self::ValueIsContainedWithinRange { ident: _ } => &naming::ValueIsContainedWithinRangeUpperCamelCase,
             Self::DimensionOneValueIsContainedWithinRange { ident: _ } => &naming::DimensionOneValueIsContainedWithinRangeUpperCamelCase,
             Self::ContainsAnotherRange { ident: _ } => &naming::ContainsAnotherRangeUpperCamelCase,
@@ -196,7 +194,7 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneLengthEqual => None,
             Self::DimensionOneLengthMoreThan => None,
             Self::EqualToEncodedStringRepresentation { ident } => Some(ident.clone()),
-            Self::DimensionOneEqualToEncodedStringRepresentation { ident } => Some(ident.clone()),
+            Self::DimensionOneEqualToEncodedStringRepresentation => None,
             Self::ValueIsContainedWithinRange { ident } => Some(ident.clone()),
             Self::DimensionOneValueIsContainedWithinRange { ident } => Some(ident.clone()),
             Self::ContainsAnotherRange { ident } => Some(ident.clone()),

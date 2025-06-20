@@ -794,9 +794,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation {
                         ident: _
                     } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation {
-                        ident: _
-                    } => Err(()),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::ValueIsContainedWithinRange {
                         ident: _
                     } => Err(()),
@@ -1349,28 +1347,36 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         quote::quote! {
                             query = query.bind(self.encoded_string_representation);
                             query
-                        },
+                        }
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation => (
+                        should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote::quote! {
+                            #pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_dimension_number_one_token_stream,
                             pub encode_format: crate::postgresql_type::EncodeFormat,
-                            pub encoded_string_representation: T,
+                            pub encoded_string_representation: std::string::String,
                         },
                         quote::quote! {
+                            #dimensions_default_initialization_token_stream,
                             encode_format: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-                            encoded_string_representation: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
+                            encoded_string_representation: #core_default_default_default_token_stream
                         },
-                        quote::quote! {
-                            match increment.checked_add(1) {
-                                Some(value) => {
-                                    *increment = value;
-                                    Ok(format!("{}(encode({}, '{}') = ${})", &self.logical_operator.to_query_part(is_need_to_add_logical_operator), column, &self.encode_format, increment))
+                        {
+                            let ok_format_token_stream = generate_ok_format_token_stream(
+                                &quote::quote!{"{}(encode({}{}, '{}') = ${})"},
+                                &quote::quote!{
+                                    &self.encode_format,
+                                    value
                                 }
-                                None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
+                            );
+                            quote::quote! {
+                                #dimensions_indexes_postgresql_type_query_part_token_stream
+                                #value_match_increment_checked_add_one_initialization_token_stream
+                                #ok_format_token_stream
                             }
                         },
                         quote::quote! {
+                            #query_self_dimensions_query_bind_query_token_stream
                             query = query.bind(self.encoded_string_representation);
                             query
                         },

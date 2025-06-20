@@ -54,7 +54,9 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       }
     },
     "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": [
-      "14:55:00"
+      [
+        104, 101, 114, 101
+      ]
     ]
   }
 ]
@@ -506,7 +508,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   "Equal": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       "00:00:00"
+      #       [
+      #         0
+      #       ]
       #     ]
       #   }
       # },
@@ -516,7 +520,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": "00:00:00"
+      #     "value": [
+      #       0
+      #     ]
       #   }
       # },
       # {
@@ -531,41 +537,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": 1
       #   }
       # },
-      # {
-      #   "DimensionOneGreaterThan": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": "00:00:00"
-      #   }
-      # },
-      # {
-      #   "DimensionOneBetween": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": "00:00:00",
-      #       "end": "00:00:00"
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneCurrentTime": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ]
-      #   }
-      # },
       {
-        "DimensionOneGreaterThanCurrentTime": {
+        "DimensionOneEqualToEncodedStringRepresentation": {
           "logical_operator": "Or",
           "dimensions": [
             1
-          ]
+          ],
+          "encode_format": "Base64",
+          "encoded_string_representation": "AA=="
         }
       }
     ]
