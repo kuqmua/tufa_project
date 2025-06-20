@@ -54,9 +54,14 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       }
     },
     "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": [
-      [
-        104, 101, 114, 101
-      ]
+      {
+        "start": {
+          "Included": 1
+        },
+        "end": {
+          "Excluded": 7
+        }
+      }
     ]
   }
 ]
@@ -508,9 +513,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   "Equal": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       [
-      #         0
-      #       ]
+      #       {
+      #         "start": {
+      #           "Included": 0
+      #         },
+      #         "end": {
+      #           "Excluded": 0
+      #         }
+      #       }
       #     ]
       #   }
       # },
@@ -520,9 +530,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": [
-      #       0
-      #     ]
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
       #   }
       # },
       # {
@@ -538,15 +553,132 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #   }
       # },
       {
-        "DimensionOneEqualToEncodedStringRepresentation": {
+        "DimensionOneValueIsContainedWithinRange": {
           "logical_operator": "Or",
           "dimensions": [
             1
           ],
-          "encode_format": "Base64",
-          "encoded_string_representation": "AA=="
+          "value": {
+            "start": {
+              "Included": 2
+            },
+            "end": {
+              "Excluded": 4
+            }
+          }
         }
       }
+      # ,
+      # {
+      #   "DimensionOneContainsAnotherRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "DimensionOneStrictlyToLeftOfRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "DimensionOneStrictlyToRightOfRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "DimensionOneIncludedLowerBound": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "DimensionOneExcludedUpperBound": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "DimensionOneGreaterThanLowerBound": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "DimensionOneOverlapWithRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "DimensionOneAdjacentWithRange": {
+      #     "logical_operator": "Or",
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "DimensionOneRangeLength": {
+      #     "logical_operator": "Or",
+      #     "value": 1
+      #   }
+      # }
     ]
   },
   "select": [
