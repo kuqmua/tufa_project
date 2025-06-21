@@ -1204,7 +1204,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     // },
                 }
             };
-
             let generate_typical_query_bind_token_stream = |content_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
                     #query_snake_case = #query_snake_case.bind(#content_token_stream);
@@ -3550,7 +3549,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                             };
                             let dimension_one_included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                ident: quote::quote!{
+                                    #ident_standart_not_null_origin_upper_camel_case
+                                    // std::primitive::i32
+                                    // #field_type_handle
+                                }
                             };
                             let dimension_one_excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound {
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}

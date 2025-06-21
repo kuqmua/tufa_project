@@ -584,49 +584,55 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     }
       #   }
       # },
+      # {
+      #   "DimensionOneStrictlyToLeftOfRange": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ],
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
+      # {
+      #   "DimensionOneStrictlyToRightOfRange": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ],
+      #     "value": {
+      #       "start": {
+      #         "Included": 0
+      #       },
+      #       "end": {
+      #         "Excluded": 0
+      #       }
+      #     }
+      #   }
+      # },
       {
-        "DimensionOneStrictlyToLeftOfRange": {
+        "DimensionOneIncludedLowerBound": {
           "logical_operator": "Or",
           "dimensions": [
             1
           ],
           "value": {
             "start": {
-              "Included": 15
+              "Included": 2
             },
             "end": {
-              "Excluded": 25
+              "Excluded": 4
             }
           }
         }
       }
       # ,
-      # {
-      #   "DimensionOneStrictlyToRightOfRange": {
-      #     "logical_operator": "Or",
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneIncludedLowerBound": {
-      #     "logical_operator": "Or",
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
       # {
       #   "DimensionOneExcludedUpperBound": {
       #     "logical_operator": "Or",
