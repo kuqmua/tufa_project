@@ -572,10 +572,23 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
 #[derive(Debug)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4Range;
 #[derive(Debug, Clone, PartialEq)]
-pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin(sqlx::postgres::types::PgRange<std::primitive::i32>);
+pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin(sqlx::postgres::types::PgRange<StdPrimitiveI32AsNotNullInt4Origin>);//here
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin {
     pub fn new(value: sqlx::postgres::types::PgRange<std::primitive::i32>) -> Self {
-        Self(value)
+        Self(
+            sqlx::postgres::types::PgRange {
+                start: match value.start {
+                    std::ops::Bound::Included(value) => std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(value)),
+                    std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(value)),
+                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                },
+                end: match value.end {
+                    std::ops::Bound::Included(value) => std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(value)),
+                    std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(value)),
+                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                }
+            }
+        )
     }
 }
 const _: () = {
@@ -695,8 +708,15 @@ impl error_occurence_lib::ToStdStringString for SqlxPostgresTypesPgRangeStdPrimi
 impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(sqlx::postgres::types::PgRange {
-            start: std::ops::Bound::Included(::core::default::Default::default()),
-            end: std::ops::Bound::Excluded(::core::default::Default::default()),
+            //here
+            start: std::ops::Bound::Included(
+                // ::core::default::Default::default()
+                crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+            ),
+            end: std::ops::Bound::Excluded(
+                // ::core::default::Default::default()
+                crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()
+            ),
         })
     }
 }
@@ -716,7 +736,7 @@ impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI3
 impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(Self(value)),
+            Ok(value) => Ok(Self::new(value)),//here
             Err(error) => Err(error),
         }
     }
@@ -884,7 +904,19 @@ impl crate::PostgresqlType for SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullI
     type Read = SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeRead;
     type ReadInner = SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner {
-        value.0 .0
+        //here
+        sqlx::postgres::types::PgRange {
+            start: match value.0.0.start {
+                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+            },
+            end: match value.0.0.end {
+                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+            },
+        }
     }
     type Update = SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeUpdate;
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
@@ -1132,7 +1164,21 @@ impl crate::PostgresqlType for VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNot
     type Read = VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4RangeRead;
     type ReadInner = VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4RangeReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner {
-        value.0 .0.into_iter().map(|element| element.0).collect()
+        //here
+        value.0 .0.into_iter().map(|element| 
+            sqlx::postgres::types::PgRange {
+                start: match element.0.start {
+                    std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                    std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
+                },
+                end: match element.0.end {
+                    std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                    std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
+                },
+            }
+        ).collect()
     }
     type Update = VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4RangeUpdate;
     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
