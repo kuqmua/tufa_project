@@ -2690,6 +2690,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     //here
                     let type_token_stream = {
                         let field_type_handle_token_stream = quote::quote!{#field_type_handle};
+                        fn wrap_into_sqlx_postgres_types_pg_range_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+                            wrap_into_sqlx_postgres_types_pg_range_stringified(&value).parse::<proc_macro2::TokenStream>().unwrap()
+                        };
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
@@ -2719,16 +2722,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                                     PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
                                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => field_type_handle_token_stream,
-    
-                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => quote::quote!{},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => quote::quote!{},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => quote::quote!{},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => quote::quote!{},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => wrap_into_sqlx_postgres_types_pg_range_token_stream(&""),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => wrap_into_sqlx_postgres_types_pg_range_token_stream(&""),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => wrap_into_sqlx_postgres_types_pg_range_token_stream(&""),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => wrap_into_sqlx_postgres_types_pg_range_token_stream(&""),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => wrap_into_sqlx_postgres_types_pg_range_token_stream(&""),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => wrap_into_sqlx_postgres_types_pg_range_token_stream(&""),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => wrap_into_sqlx_postgres_types_pg_range_token_stream(&""),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_postgres_types_pg_range_token_stream(&""),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => wrap_into_sqlx_postgres_types_pg_range_token_stream(&""),
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => field_type_handle_token_stream,
                             },
