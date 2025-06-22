@@ -3012,20 +3012,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_origin_upper_camel_case,
                     &field_type_handle,
                     &{
-                        let a = quote::quote! {(#value_snake_case)};
-                        let b = quote::quote! {::new(value)};
-                        let ok_self_value_token_stream = quote::quote! {Ok(Self(#value_snake_case))};
-                        match &postgresql_type_pattern {
+                        let scopes_value_token_stream = quote::quote! {(#value_snake_case)};
+                        let content_token_stream = match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => match PostgresqlTypeRange::try_from(postgresql_type) {
-                                    Ok(value) => quote::quote! {Ok(Self::new(value))}
-                                    Err(error) => ok_self_value_token_stream
+                                    Ok(value) => quote::quote! {::new #scopes_value_token_stream},
+                                    Err(error) => scopes_value_token_stream
                                 },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => ok_self_value_token_stream
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => scopes_value_token_stream
                             },
-                            PostgresqlTypePattern::ArrayDimension1 {..} => ok_self_value_token_stream
-                        }
-                        quote::quote! {Ok(Self(#value_snake_case))};
+                            PostgresqlTypePattern::ArrayDimension1 {..} => scopes_value_token_stream
+                        };
+                        quote::quote! {Ok(Self #content_token_stream)};
                     }
                 );
                 let impl_sqlx_postgres_pg_has_array_type_for_ident_origin_token_stream = {
