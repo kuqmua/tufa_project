@@ -3023,7 +3023,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                             PostgresqlTypePattern::ArrayDimension1 {..} => scopes_value_token_stream
                         };
-                        quote::quote! {Ok(Self #content_token_stream)};
+                        quote::quote! {Ok(Self #content_token_stream)}
                     }
                 );
                 let impl_sqlx_postgres_pg_has_array_type_for_ident_origin_token_stream = {
@@ -4011,8 +4011,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_read_inner_upper_camel_case,
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                value.0.0
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => match PostgresqlTypeRange::try_from(postgresql_type) {
+                                Ok(value) => quote::quote! {
+                                    sqlx::postgres::types::PgRange {
+                                        start: match value.0.0.start {
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                        },
+                                        end: match value.0.0.end {
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                        },
+                                    }
+                                },
+                                Err(error) => quote::quote! {value.0.0}
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                 match value.0.0 {
@@ -4023,7 +4037,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote! {
-                                value.0.0.into_iter().map(|element|element.0).collect()
+                                value.0.0.into_iter().map(|element| 
+                                    sqlx::postgres::types::PgRange {
+                                        start: match element.0.start {
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
+                                        },
+                                        end: match element.0.end {
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
+                                        },
+                                    }
+                                ).collect()
                             },
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
                                 value.0.0.into_iter().map(|element| match element.0 {
