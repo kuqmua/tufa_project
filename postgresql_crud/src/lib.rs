@@ -2123,7 +2123,7 @@ impl<'a, T: sqlx::Type<sqlx::Postgres> + for <'__> sqlx::Encode<'__, sqlx::Postg
                 Some(value) => {
                     *increment = value;
                     acc.push_str(&match &postgresql_type_or_postgresql_json_type {
-                        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("[{value}]"),
+                        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => format!("[${value}]"),
                         PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => format!("->${value}"),
                     });
                 }
