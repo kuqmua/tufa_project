@@ -652,26 +652,12 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": 0
       #   }
       # },
-      {
-        "DimensionOneOverlapWithRange": {
-          "logical_operator": "Or",
-          "dimensions": [
-            1
-          ],
-          "value": {
-            "start": {
-              "Included": 65
-            },
-            "end": {
-              "Excluded": 70
-            }
-          }
-        }
-      }
-      # ,
       # {
-      #   "DimensionOneAdjacentWithRange": {
+      #   "DimensionOneOverlapWithRange": {
       #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ],
       #     "value": {
       #       "start": {
       #         "Included": 0
@@ -682,6 +668,23 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     }
       #   }
       # },
+      {
+        "DimensionOneAdjacentWithRange": {
+          "logical_operator": "Or",
+          "dimensions": [
+            1
+          ],
+          "value": {
+            "start": {
+              "Included": 50
+            },
+            "end": {
+              "Excluded": 70
+            }
+          }
+        }
+      }
+      # ,
       # {
       #   "DimensionOneRangeLength": {
       #     "logical_operator": "Or",
