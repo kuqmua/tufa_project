@@ -1564,7 +1564,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         pub_value_t_token_stream.clone(),
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream(&greater_than_sign)),
+                        generate_query_part_one_value_token_stream(&quote::quote!{"{}(lower({}) > ${})"}),
                         query_bind_one_value_token_stream.clone(),
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound { ident: _ } => (
