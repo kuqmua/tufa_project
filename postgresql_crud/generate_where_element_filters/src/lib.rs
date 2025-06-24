@@ -896,6 +896,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     )
                 };
+                enum PostgresqlTypeKind {
+                    Standart,
+                    ArrayDimension1
+                }
+                impl PostgresqlTypeKind {
+                    fn format_argument(&self) -> &'static std::primitive::str {
+                        match &self {
+                            PostgresqlTypeKind::Standart => "",
+                            PostgresqlTypeKind::ArrayDimension1 => "{}",
+                        }
+                    }
+                }
+                let generate_between_format_handle_token_stream = |value: &PostgresqlTypeKind|{
+                    generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {{}})", value.format_argument()))
+                };
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
@@ -924,10 +939,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         pub_value_between_t_token_stream.clone(),
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                         {
+                            let format_handle_token_stream = generate_between_format_handle_token_stream(&PostgresqlTypeKind::Standart);
                             quote::quote! {
                                 #value_match_self_value_query_part_initialization_token_stream
                                 Ok(format!(
-                                    "{}({} {})",
+                                    #format_handle_token_stream,
                                     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                                     column,
                                     value
@@ -947,7 +963,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         },
                         {
-                            let ok_format_token_stream = generate_ok_format_value_token_stream(&quote::quote!{"{}({}{} {})"});
+                            let ok_format_token_stream = generate_ok_format_value_token_stream(
+                                &generate_between_format_handle_token_stream(&PostgresqlTypeKind::ArrayDimension1)
+                            );
                             quote::quote! {
                                 #dimensions_indexes_postgresql_type_query_part_token_stream
                                 #value_match_self_value_query_part_initialization_token_stream
