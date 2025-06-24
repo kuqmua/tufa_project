@@ -3972,6 +3972,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         // PostgresqlTypePattern::ArrayDimension3 {..} |
                         // PostgresqlTypePattern::ArrayDimension4 {..}
                         => {
+                            //todo change trait fn select_query_part( to Result String CheckedAdd
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
                                 let acc = std::iter::repeat_n("[{}:{}]", array_dimensions_number).collect::<String>();
                                 format!("{{column}}{acc}")

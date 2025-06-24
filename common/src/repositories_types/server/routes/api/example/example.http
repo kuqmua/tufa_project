@@ -735,7 +735,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     {
       "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": {
         "dimension1_pagination": {
-          "limit": 5,
+          "limit": 9,
           "offset": 1
         }
       }
@@ -748,7 +748,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "order": "asc"
   },
   "pagination": {
-    "limit": 5,
+    "limit": 7,
     "offset": 0
   }
 }
