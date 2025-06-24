@@ -56,10 +56,10 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
     "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": [
       {
         "start": {
-          "Included": 25
+          "Included": 10
         },
         "end": {
-          "Excluded": 50
+          "Excluded": 20
         }
       }
     ]
@@ -616,47 +616,30 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     }
       #   }
       # },
+      # {
+      #   "DimensionOneIncludedLowerBound": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ],
+      #     "value": 0
+      #   }
+      # }
+      # ,
       {
-        "DimensionOneIncludedLowerBound": {
+        "DimensionOneExcludedUpperBound": {
           "logical_operator": "Or",
           "dimensions": [
             1
           ],
-          "value": {
-            "start": {
-              "Included": 2
-            },
-            "end": {
-              "Excluded": 4
-            }
-          }
+          "value": 20
         }
       }
       # ,
       # {
-      #   "DimensionOneExcludedUpperBound": {
-      #     "logical_operator": "Or",
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
       #   "DimensionOneGreaterThanLowerBound": {
       #     "logical_operator": "Or",
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
+      #     "value": 0
       #   }
       # },
       # {
