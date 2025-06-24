@@ -4042,9 +4042,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident_read_inner_upper_camel_case,
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => match PostgresqlTypeRange::try_from(postgresql_type) {
-                                Ok(value) => generate_pg_range_conversion_value_one_token_stream(&quote::quote!{value.0.0}),
-                                Err(error) => quote::quote! {value.0.0}
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => if PostgresqlTypeRange::try_from(postgresql_type).is_ok() {
+                                generate_pg_range_conversion_value_one_token_stream(&quote::quote!{value.0.0})
+                            }
+                            else {
+                                quote::quote! {value.0.0}
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                 match value.0.0 {
@@ -4054,14 +4056,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => match PostgresqlTypeRange::try_from(postgresql_type) {
-                                Ok(value) => {
-                                    let pg_range_conversion_token_stream = generate_pg_range_conversion_value_one_token_stream(&quote::quote!{element.0});
-                                    quote::quote! {
-                                        value.0.0.into_iter().map(|element|#pg_range_conversion_token_stream).collect()
-                                    }
-                                },
-                                Err(error) => quote::quote! {value.0.0.into_iter().map(|element|element.0).collect()}
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => if PostgresqlTypeRange::try_from(postgresql_type).is_ok() {
+                                let pg_range_conversion_token_stream = generate_pg_range_conversion_value_one_token_stream(&quote::quote!{element.0});
+                                quote::quote! {
+                                    value.0.0.into_iter().map(|element|#pg_range_conversion_token_stream).collect()
+                                }
+                            }
+                            else {
+                                quote::quote! {value.0.0.into_iter().map(|element|element.0).collect()}
                             },
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote! {
                                 value.0.0.into_iter().map(|element| match element.0 {
