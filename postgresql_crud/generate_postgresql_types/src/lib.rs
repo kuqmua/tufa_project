@@ -3588,43 +3588,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 ident: quote::quote!{#ident_standart_not_null_or_nullable_origin_upper_camel_case}
                             };
                             let dimension_one_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression;
-                            let dimension_one_equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation;
                             let dimension_one_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentDate;
                             let dimension_one_greater_than_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentDate;
                             let dimension_one_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentTime;
                             let dimension_one_greater_than_current_time = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTime;
-                            let dimension_one_value_is_contained_within_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesWithinGivenRange {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                            };
-                            let dimension_one_contains_another_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                            };
-                            let dimension_one_strictly_to_left_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                            };
-                            let dimension_one_strictly_to_right_of_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToRightOfRange {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                            };
-                            let dimension_one_included_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound {
-                                ident: quote::quote!{
-                                    #ident_standart_not_null_origin_upper_camel_case
-                                    // std::primitive::i32
-                                    // #field_type_handle
-                                }
-                            };
-                            let dimension_one_excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                            };
-                            let dimension_one_greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                            };
-                            let dimension_one_overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                            };
-                            let dimension_one_adjacent_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
-                            };
-                            let dimension_one_range_length = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRangeLength;
                             let dimension_one_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentTimestamp;
                             let dimension_one_greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTimestamp;
                             let dimension_one_before = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore {
@@ -3659,19 +3626,43 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             ) = {
                                 let generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream = |postgresql_type_range: PostgresqlTypeRange| {
                                     let mut vec = common_array_dimension1_postgresql_type_filters.clone();
-                                    vec.push(dimension_one_value_is_contained_within_range.clone());
-                                    vec.push(dimension_one_contains_another_range.clone());
-                                    vec.push(dimension_one_strictly_to_left_of_range.clone());
-                                    vec.push(dimension_one_strictly_to_right_of_range.clone());
-                                    vec.push(dimension_one_included_lower_bound.clone());
-                                    vec.push(dimension_one_excluded_upper_bound.clone());
-                                    vec.push(dimension_one_greater_than_lower_bound.clone());
-                                    vec.push(dimension_one_overlap_with_range.clone());
-                                    vec.push(dimension_one_adjacent_with_range.clone());
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesWithinGivenRange {
+                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
+                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange {
+                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToRightOfRange {
+                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                    });
+                                    // println!("{ident_standart_not_null_origin_upper_camel_case}");
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound {
+                                        ident: quote::quote!{
+                                            #ident_standart_not_null_origin_upper_camel_case
+                                            // std::primitive::i32
+                                            // #field_type_handle
+                                        }
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound {
+                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound {
+                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange {
+                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                    });
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange {
+                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                    });
                                     match &postgresql_type_range {
                                         PostgresqlTypeRange::StdPrimitiveI32AsInt4 |
                                         PostgresqlTypeRange::StdPrimitiveI64AsInt8 => {
-                                            vec.push(dimension_one_range_length.clone());
+                                            //todo why length only for i32 and i64? 
+                                            vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRangeLength);
                                         },
                                         PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric |
                                         PostgresqlTypeRange::SqlxTypesTimeDateAsDate |
@@ -3723,7 +3714,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 },
                                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => {
                                     let mut vec = common_array_dimension1_postgresql_type_filters.clone();
-                                    vec.push(dimension_one_equal_to_encoded_string_representation.clone());
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation);
                                     vec
                                 },
                                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => {
