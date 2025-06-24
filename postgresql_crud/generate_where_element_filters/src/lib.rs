@@ -908,9 +908,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     }
                 }
-                let generate_between_format_handle_token_stream = |value: &PostgresqlTypeKind|{
+                fn generate_between_format_handle_token_stream(value: &PostgresqlTypeKind) -> proc_macro2::TokenStream {
                     generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {{}})", value.format_argument()))
-                };
+                }
+                fn generate_in_format_handle_token_stream(value: &PostgresqlTypeKind) -> proc_macro2::TokenStream {
+                    generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} in ({{}}))", value.format_argument()))
+                }
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
@@ -981,26 +984,29 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone_type_encode.clone(),
                         pub_value_postgresql_type_not_empty_unique_vec_t_token_stream.clone(),
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        quote::quote! {
-                            let mut acc = std::string::String::default();
-                            for element in self.value.to_vec() {
-                                match increment.checked_add(1) {
-                                    Some(value) => {
-                                        *increment = value;
-                                        acc.push_str(&format!("${},", value));
-                                    }
-                                    None => {
-                                        return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                        {
+                            let format_handle_token_stream = generate_in_format_handle_token_stream(&PostgresqlTypeKind::Standart);
+                            quote::quote! {
+                                let mut acc = std::string::String::default();
+                                for element in self.value.to_vec() {
+                                    match increment.checked_add(1) {
+                                        Some(value) => {
+                                            *increment = value;
+                                            acc.push_str(&format!("${},", value));
+                                        }
+                                        None => {
+                                            return Err(#crate_query_part_error_named_checked_add_initialization_token_stream);
+                                        }
                                     }
                                 }
+                                let _ = acc.pop();
+                                Ok(format!(
+                                    #format_handle_token_stream,
+                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    column,
+                                    acc
+                                ))
                             }
-                            let _ = acc.pop();
-                            Ok(format!(
-                                "{}({} in ({}))",
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                acc
-                            ))
                         },
                         quote::quote! {
                             for element in self.value.into_vec() {
@@ -1020,7 +1026,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         },
                         {
-                            let ok_format_token_stream = generate_ok_format_value_token_stream(&quote::quote!{"{}({}{} in ({}))"});
+                            let ok_format_token_stream = generate_ok_format_value_token_stream(
+                                &generate_in_format_handle_token_stream(&PostgresqlTypeKind::ArrayDimension1)
+                            );
                             quote::quote! {
                                 #dimensions_indexes_postgresql_type_query_part_token_stream
                                 let value = {
