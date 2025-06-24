@@ -3381,7 +3381,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let excluded_upper_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                             };
-                            let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
+                            let greater_than_lower_bound = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanIncludedLowerBound {
                                 ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                             };
                             let overlap_with_range = postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
@@ -3646,7 +3646,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound {
                                         ident: quote::quote!{<#range_element_ident_standart_not_null_token_stream as crate::PostgresqlType>::Read}
                                     });
-                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound {
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanIncludedLowerBound {
                                         ident: quote::quote!{<#range_element_ident_standart_not_null_token_stream as crate::PostgresqlType>::Read}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange {

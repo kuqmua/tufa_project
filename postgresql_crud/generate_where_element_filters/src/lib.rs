@@ -829,10 +829,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound {
                         ident: _
                     } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound {
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanIncludedLowerBound {
                         ident: _
                     } => Err(()),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound {
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanIncludedLowerBound {
                         ident: _
                     } => Err(()),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
@@ -1560,14 +1560,14 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #query_bind_one_value_token_stream
                         },
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanLowerBound { ident: _ } => (
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanIncludedLowerBound { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         pub_value_t_token_stream.clone(),
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
                         generate_query_part_one_value_token_stream(&quote::quote!{"{}(lower({}) > ${})"}),
                         query_bind_one_value_token_stream.clone(),
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanLowerBound { ident: _ } => (
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanIncludedLowerBound { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         quote::quote! {
                             #pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_dimension_number_one_token_stream,

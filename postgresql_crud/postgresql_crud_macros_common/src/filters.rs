@@ -84,10 +84,10 @@ pub enum PostgresqlTypeFilter {
     DimensionOneExcludedUpperBound {
         ident: proc_macro2::TokenStream,
     },
-    GreaterThanLowerBound {
+    GreaterThanIncludedLowerBound {
         ident: proc_macro2::TokenStream,
     },
-    DimensionOneGreaterThanLowerBound {
+    DimensionOneGreaterThanIncludedLowerBound {
         ident: proc_macro2::TokenStream,
     },
     OverlapWithRange {
@@ -149,8 +149,8 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneIncludedLowerBound { ident: _ } => &naming::DimensionOneIncludedLowerBoundUpperCamelCase,
             Self::ExcludedUpperBound { ident: _ } => &naming::ExcludedUpperBoundUpperCamelCase,
             Self::DimensionOneExcludedUpperBound { ident: _ } => &naming::DimensionOneExcludedUpperBoundUpperCamelCase,
-            Self::GreaterThanLowerBound { ident: _ } => &naming::GreaterThanLowerBoundUpperCamelCase,
-            Self::DimensionOneGreaterThanLowerBound { ident: _ } => &naming::DimensionOneGreaterThanLowerBoundUpperCamelCase,
+            Self::GreaterThanIncludedLowerBound { ident: _ } => &naming::GreaterThanIncludedLowerBoundUpperCamelCase,
+            Self::DimensionOneGreaterThanIncludedLowerBound { ident: _ } => &naming::DimensionOneGreaterThanIncludedLowerBoundUpperCamelCase,
             Self::OverlapWithRange { ident: _ } => &naming::OverlapWithRangeUpperCamelCase,
             Self::DimensionOneOverlapWithRange { ident: _ } => &naming::DimensionOneOverlapWithRangeUpperCamelCase,
             Self::AdjacentWithRange { ident: _ } => &naming::AdjacentWithRangeUpperCamelCase,
@@ -205,8 +205,8 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneIncludedLowerBound { ident } => Some(ident.clone()),
             Self::ExcludedUpperBound { ident } => Some(ident.clone()),
             Self::DimensionOneExcludedUpperBound { ident } => Some(ident.clone()),
-            Self::GreaterThanLowerBound { ident } => Some(ident.clone()),
-            Self::DimensionOneGreaterThanLowerBound { ident } => Some(ident.clone()),
+            Self::GreaterThanIncludedLowerBound { ident } => Some(ident.clone()),
+            Self::DimensionOneGreaterThanIncludedLowerBound { ident } => Some(ident.clone()),
             Self::OverlapWithRange { ident } => Some(ident.clone()),
             Self::DimensionOneOverlapWithRange { ident } => Some(ident.clone()),
             Self::AdjacentWithRange { ident } => Some(ident.clone()),
