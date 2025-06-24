@@ -90,6 +90,12 @@ pub enum PostgresqlTypeFilter {
     DimensionOneGreaterThanIncludedLowerBound {
         ident: proc_macro2::TokenStream,
     },
+    GreaterThanExcludedUpperBound {
+        ident: proc_macro2::TokenStream,
+    },
+    DimensionOneGreaterThanExcludedUpperBound {
+        ident: proc_macro2::TokenStream,
+    },
     OverlapWithRange {
         ident: proc_macro2::TokenStream,
     },
@@ -151,6 +157,8 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneExcludedUpperBound { ident: _ } => &naming::DimensionOneExcludedUpperBoundUpperCamelCase,
             Self::GreaterThanIncludedLowerBound { ident: _ } => &naming::GreaterThanIncludedLowerBoundUpperCamelCase,
             Self::DimensionOneGreaterThanIncludedLowerBound { ident: _ } => &naming::DimensionOneGreaterThanIncludedLowerBoundUpperCamelCase,
+            Self::GreaterThanExcludedUpperBound { ident: _ } => &naming::GreaterThanExcludedUpperBoundUpperCamelCase,
+            Self::DimensionOneGreaterThanExcludedUpperBound { ident: _ } => &naming::DimensionOneGreaterThanExcludedUpperBoundUpperCamelCase,
             Self::OverlapWithRange { ident: _ } => &naming::OverlapWithRangeUpperCamelCase,
             Self::DimensionOneOverlapWithRange { ident: _ } => &naming::DimensionOneOverlapWithRangeUpperCamelCase,
             Self::AdjacentWithRange { ident: _ } => &naming::AdjacentWithRangeUpperCamelCase,
@@ -207,6 +215,8 @@ impl PostgresqlFilter for PostgresqlTypeFilter {
             Self::DimensionOneExcludedUpperBound { ident } => Some(ident.clone()),
             Self::GreaterThanIncludedLowerBound { ident } => Some(ident.clone()),
             Self::DimensionOneGreaterThanIncludedLowerBound { ident } => Some(ident.clone()),
+            Self::GreaterThanExcludedUpperBound { ident } => Some(ident.clone()),
+            Self::DimensionOneGreaterThanExcludedUpperBound { ident } => Some(ident.clone()),
             Self::OverlapWithRange { ident } => Some(ident.clone()),
             Self::DimensionOneOverlapWithRange { ident } => Some(ident.clone()),
             Self::AdjacentWithRange { ident } => Some(ident.clone()),
