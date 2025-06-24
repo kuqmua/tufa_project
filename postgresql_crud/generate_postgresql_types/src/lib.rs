@@ -3423,20 +3423,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
                                         ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                                     });
-                                    match &postgresql_type_range {
-                                        PostgresqlTypeRange::StdPrimitiveI32AsInt4 |
-                                        PostgresqlTypeRange::StdPrimitiveI64AsInt8 => {
-                                            //todo why only i32 and i64
-                                            vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength);
-                                        },
-                                        PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric |
-                                        PostgresqlTypeRange::SqlxTypesTimeDateAsDate |
-                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate |
-                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                                        PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp |
-                                        PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                                        PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => (),
-                                    }
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength);
                                     vec
                                 };
                                 (
@@ -3652,20 +3639,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange {
                                         ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
                                     });
-                                    match &postgresql_type_range {
-                                        PostgresqlTypeRange::StdPrimitiveI32AsInt4 |
-                                        PostgresqlTypeRange::StdPrimitiveI64AsInt8 => {
-                                            //todo why length only for i32 and i64? 
-                                            vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRangeLength);
-                                        },
-                                        PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric |
-                                        PostgresqlTypeRange::SqlxTypesTimeDateAsDate |
-                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate |
-                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                                        PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp |
-                                        PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                                        PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => (),
-                                    }
+                                    vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRangeLength);
                                     vec
                                 };
                                 (
