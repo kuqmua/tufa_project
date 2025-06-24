@@ -2638,6 +2638,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => CanBePrimaryKey::False,
             };
+            fn generate_pg_range_conversion_token_stream(match_content_token_stream: &dyn quote::ToTokens, input_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+                quote::quote!{
+                    sqlx::postgres::types::PgRange {
+                        start: match #match_content_token_stream.start {
+                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#input_token_stream),
+                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#input_token_stream),
+                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                        },
+                        end: match #match_content_token_stream.end {
+                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#input_token_stream),
+                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#input_token_stream),
+                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                        },
+                    }
+                }
+            }
             let ident_origin_token_stream = {
                 let ident_origin_token_stream = {
                     let maybe_derive_partial_ord_token_stream = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
@@ -2735,29 +2751,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             match &postgresql_type_pattern {
                                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => match PostgresqlTypeRange::try_from(postgresql_type) {
-                                        Ok(value) => {
-                                            let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(
-                                                &generate_ident_stringified(
-                                                    &PostgresqlType::from(&value),
-                                                    &not_null_or_nullable,
-                                                    &postgresql_type_pattern
-                                                )
-                                            );
-                                            quote::quote! {
-                                                sqlx::postgres::types::PgRange {
-                                                    start: match value.start {
-                                                        std::ops::Bound::Included(value) => std::ops::Bound::Included(#range_postgresql_type_ident_origin::new(value)),
-                                                        std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#range_postgresql_type_ident_origin::new(value)),
-                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                    },
-                                                    end: match value.end {
-                                                        std::ops::Bound::Included(value) => std::ops::Bound::Included(#range_postgresql_type_ident_origin::new(value)),
-                                                        std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#range_postgresql_type_ident_origin::new(value)),
-                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                    }
-                                                }
+                                        Ok(value) => generate_pg_range_conversion_token_stream(
+                                            &value_snake_case,
+                                            &{
+                                                let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(
+                                                    &generate_ident_stringified(
+                                                        &PostgresqlType::from(&value),
+                                                        &not_null_or_nullable,
+                                                        &postgresql_type_pattern
+                                                    )
+                                                );
+                                                quote::quote!{#range_postgresql_type_ident_origin::new(value)}
                                             }
-                                        },
+                                        ),
                                         Err(error) => quote::quote! {value},
                                     },
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
@@ -3984,6 +3990,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => typical,
                     }
                 };
+                fn generate_pg_range_conversion_value_one_token_stream(match_content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+                    generate_pg_range_conversion_token_stream(
+                        &match_content_token_stream,
+                        &quote::quote!{value.0}
+                    )
+                }
                 postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
                     &postgresql_crud_macros_common_import_path_crate,
                     &ident,
@@ -4031,20 +4043,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => match PostgresqlTypeRange::try_from(postgresql_type) {
-                                Ok(value) => quote::quote! {
-                                    sqlx::postgres::types::PgRange {
-                                        start: match value.0.0.start {
-                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                        },
-                                        end: match value.0.0.end {
-                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                        },
-                                    }
-                                },
+                                Ok(value) => generate_pg_range_conversion_value_one_token_stream(&quote::quote!{value.0.0}),
                                 Err(error) => quote::quote! {value.0.0}
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
@@ -4056,21 +4055,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => match PostgresqlTypeRange::try_from(postgresql_type) {
-                                Ok(value) => quote::quote! {
-                                    value.0.0.into_iter().map(|element| 
-                                        sqlx::postgres::types::PgRange {
-                                            start: match element.0.start {
-                                                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                                                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                                                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
-                                            },
-                                            end: match element.0.end {
-                                                std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                                                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                                                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded
-                                            },
-                                        }
-                                    ).collect()
+                                Ok(value) => {
+                                    let pg_range_conversion_token_stream = generate_pg_range_conversion_value_one_token_stream(&quote::quote!{element.0});
+                                    quote::quote! {
+                                        value.0.0.into_iter().map(|element|#pg_range_conversion_token_stream).collect()
+                                    }
                                 },
                                 Err(error) => quote::quote! {value.0.0.into_iter().map(|element|element.0).collect()}
                             },
