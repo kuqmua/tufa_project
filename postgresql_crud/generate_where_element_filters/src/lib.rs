@@ -653,6 +653,26 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         query
     };
     #[derive(Clone)]
+    enum PostgresqlTypePatternHandle {
+        Standart,
+        ArrayDimension1,
+        ArrayDimension2,
+        ArrayDimension3,
+        ArrayDimension4,
+    }
+    impl std::convert::TryFrom<&PostgresqlTypePatternHandle> for DimensionNumber {
+        type Error = ();
+        fn try_from(value: &PostgresqlTypePatternHandle) -> Result<Self, Self::Error> {
+            match &value {
+                PostgresqlTypePatternHandle::Standart => Err(()),
+                PostgresqlTypePatternHandle::ArrayDimension1 => Ok(Self::One),
+                PostgresqlTypePatternHandle::ArrayDimension2 => Ok(Self::Two),
+                PostgresqlTypePatternHandle::ArrayDimension3 => Ok(Self::Three),
+                PostgresqlTypePatternHandle::ArrayDimension4 => Ok(Self::Four),
+            }
+        }
+    }
+    #[derive(Clone)]
     enum DimensionNumber {
         One,
         Two,
