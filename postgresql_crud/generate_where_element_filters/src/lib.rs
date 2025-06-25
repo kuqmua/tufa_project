@@ -914,6 +914,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 fn generate_in_format_handle_token_stream(value: &PostgresqlTypeKind) -> proc_macro2::TokenStream {
                     generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} in ({{}}))", value.format_argument()))
                 }
+                fn generate_regular_expression_format_handle_token_stream(value: &PostgresqlTypeKind) -> proc_macro2::TokenStream {
+                    generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {{}} ${{}})", value.format_argument()))
+                }
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
@@ -1062,7 +1065,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         regular_expression_case_and_value_declaration_token_stream.clone(),
                         regular_expression_case_and_value_default_initialization_token_stream.clone(),
-                        generate_query_part_regular_expression_token_stream(&quote::quote!{"{}({} {} ${})"}),
+                        generate_query_part_regular_expression_token_stream(
+                            &generate_regular_expression_format_handle_token_stream(&PostgresqlTypeKind::Standart)
+                        ),
                         query_equals_query_self_value_to_string_token_stream.clone()
                     ),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression => (
@@ -1077,7 +1082,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         },
                         {
                             let ok_format_token_stream = generate_ok_format_token_stream(
-                                &quote::quote!{"{}({}{} {} ${})"},
+                                &generate_regular_expression_format_handle_token_stream(&PostgresqlTypeKind::ArrayDimension1),
                                 &quote::quote!{
                                     self.regular_expression_case.postgreql_syntax(),
                                     value
