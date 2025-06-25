@@ -1620,7 +1620,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_dimension_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_array_number_operation_token_stream(&dimension_number, &equal_sign);
             let generate_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
                 ShouldAddDeclarationOfStructIdentGeneric,
                 proc_macro2::TokenStream,
