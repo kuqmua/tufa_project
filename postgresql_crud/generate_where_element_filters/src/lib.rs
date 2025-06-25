@@ -2165,36 +2165,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             &value_snake_case,
                             &quote::quote!{query_part_one_by_one}
                         );
-                        quote::quote! {
-                            #maybe_dimensions_indexes_initialization_token_stream
-                            #value_initialization_token_stream
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                #maybe_dimensions_indexes_parameter_token_stream
-                                value
-                            ))
-                        }
-                        //
-                        // quote::quote! {
-                        //     let value = match increment.checked_add(1) {
-                        //         Some(value) => {
-                        //             *increment = value;
-                        //         }
-                        //         None => Err(#crate_query_part_error_named_checked_add_initialization_token_stream),
-                        //     };
-                               //
-                                // Ok(format!(
-                                //     "{}(trim(both '\"' from ({})::text) {} ${})",
-                                //     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                //     column,
-                                //     self.regular_expression_case.postgreql_syntax(),
-                                //     value
-                                // ))
-                               //
-                        // }
-                        //
                         // let dimensions_indexes_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
                         //     &quote::quote!{dimensions_indexes},
                         //     &dimensions_snake_case,
@@ -2209,12 +2179,31 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         //         value
                         //     }
                         // );
-                        // quote::quote! {
-                        //     #dimensions_indexes_initialization_token_stream
-                        //     #last_dimensions_index_intialization_token_stream
-                        //     #value_match_increment_checked_add_one_initialization_token_stream
-                        //     #ok_format_token_stream
-                        // }
+                        quote::quote! {
+                            #maybe_dimensions_indexes_initialization_token_stream
+                            #value_initialization_token_stream
+                            // #dimensions_indexes_initialization_token_stream
+                            // #last_dimensions_index_intialization_token_stream
+                            // #value_match_increment_checked_add_one_initialization_token_stream
+                            // #ok_format_token_stream
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #maybe_dimensions_indexes_parameter_token_stream
+                                value
+                            ))
+                            // #value_match_increment_checked_add_one_initialization_token_stream
+                            // Ok(format!(
+                            //     "{}(trim(both '\"' from ({})::text) {} ${})",
+                            //     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            //     column,
+                            //     self.regular_expression_case.postgreql_syntax(),
+                            //     value
+                            // ))
+
+
+                        }
                     },
                     quote::quote!{
                         #maybe_dimensions_query_bind_content_token_stream
