@@ -883,6 +883,17 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
                 // };
+                let generate_length_filter_pattern_token_stream = |operator: &dyn std::fmt::Display|{
+                    (
+                        should_add_declaration_of_struct_ident_generic_false.clone(),
+                        pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream.clone(),
+                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
+                        generate_query_part_one_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(array_length({{}}, 1) {operator} ${{}})"))
+                        ),
+                        query_bind_one_value_token_stream.clone(),
+                    )
+                };
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
@@ -908,20 +919,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentTime => generate_current_time_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => generate_greater_than_current_time_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTime => generate_greater_than_current_time_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual => (
-                        should_add_declaration_of_struct_ident_generic_false.clone(),
-                        pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream.clone(),
-                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        generate_query_part_one_value_token_stream(&quote::quote! {"{}(array_length({}, 1) = ${})"}),
-                        query_bind_one_value_token_stream.clone(),
-                    ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan => (
-                        should_add_declaration_of_struct_ident_generic_false.clone(),
-                        pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream.clone(),
-                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        generate_query_part_one_value_token_stream(&quote::quote! {"{}(array_length({}, 1) > ${})"}),
-                        query_bind_one_value_token_stream.clone(),
-                    ),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual => generate_length_filter_pattern_token_stream(&"="),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan => generate_length_filter_pattern_token_stream(&">"),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation => generate_equal_to_encoded_string_representation_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation => generate_equal_to_encoded_string_representation_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesWithinGivenRange { ident: _ } => generate_find_ranges_within_given_range_token_stream(&PostgresqlTypePatternHandle::Standart),
