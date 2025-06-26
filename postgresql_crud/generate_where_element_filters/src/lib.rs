@@ -40,14 +40,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         },
         False,
     }
-    struct Field<'a> {
-        field_name: &'a dyn std::fmt::Display,
-        field_type: &'a dyn quote::ToTokens,
-    }
-    let value_not_zero_unsigned_part_of_std_primitive_i32_field = Field {
-        field_name: &naming::ValueSnakeCase,
-        field_type: &not_zero_unsigned_part_of_std_primitive_i32_token_stream, //todo i32 or i64 or something between? or more? or less?
-    };
     fn generate_value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream() -> proc_macro2::TokenStream {
         let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
         quote::quote! {
@@ -96,343 +88,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #maybe_pub_token_stream logical_operator: crate::LogicalOperator,
                 #struct_additional_fields_token_stream
             }
-        }
-    };
-    enum ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed {
-        True,
-        False,
-    }
-    let generate_try_new_logic_token_stream = |
-        ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-        ident_try_new_error_named: &dyn naming::StdFmtDisplayPlusQuoteToTokens,
-        should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
-        should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed,
-        enum_ident_try_new_error_named_content_token_stream: &dyn quote::ToTokens,
-        generic_requirements_token_stream: &dyn quote::ToTokens,
-        additional_input_parameters_token_stream: &dyn quote::ToTokens,
-        impl_try_new_for_ident_content_token_stream: &dyn quote::ToTokens,
-        option_additional_traits_annotations_token_stream: std::option::Option<proc_macro2::TokenStream>,
-        additional_fields: &std::vec::Vec<&Field>
-    | {
-        let generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = |should_add_declaration_of_generic_parameter_to_ident_try_new_error_named: &ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed| -> &dyn quote::ToTokens {
-            match &should_add_declaration_of_generic_parameter_to_ident_try_new_error_named {
-                ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::True => &t_annotation_generic_token_stream,
-                ShouldAddDeclarationOfGenericParameterToIdentTryNewErrorNamed::False => &proc_macro2_token_stream_new,
-            }
-        };
-        let enum_ident_try_new_error_named_token_stream = {
-            let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(should_add_declaration_of_generic_parameter_to_ident_try_new_error_named);
-            quote::quote! {
-                #[derive(
-                    Debug,
-                    Clone,
-                    serde::Serialize,
-                    serde::Deserialize,
-                    thiserror::Error,
-                    error_occurence_lib::ErrorOccurence,
-                )]
-                pub enum #ident_try_new_error_named #maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream {
-                    #enum_ident_try_new_error_named_content_token_stream
-                }
-            }
-        };
-        let impl_try_new_for_ident_token_stream = {
-            let impl_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                ShouldAddDeclarationOfStructIdentGeneric::True {
-                    maybe_additional_traits_token_stream: _
-                } => &quote::quote! {<T #generic_requirements_token_stream>},
-                ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
-            };
-            let ident_generic_token_stream: &dyn quote::ToTokens = match &should_add_declaration_of_struct_ident_generic {
-                ShouldAddDeclarationOfStructIdentGeneric::True {
-                    maybe_additional_traits_token_stream: _
-                } => &t_annotation_generic_token_stream,
-                ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
-            };
-            let maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream = generate_maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream(should_add_declaration_of_generic_parameter_to_ident_try_new_error_named);
-            quote::quote! {
-                impl #impl_generic_token_stream #ident #ident_generic_token_stream {
-                    fn try_new(
-                        logical_operator: crate::LogicalOperator,
-                        #additional_input_parameters_token_stream
-                    ) -> Result<Self, #ident_try_new_error_named #maybe_declaration_of_generic_parameter_to_ident_try_new_error_named_token_stream> {
-                        #impl_try_new_for_ident_content_token_stream
-                    }
-                }
-            }
-        };
-        let impl_serde_deserialize_for_ident_token_stream = {
-            let maybe_impl_generic_token_stream: &dyn quote::ToTokens = if option_additional_traits_annotations_token_stream.is_some() { &quote::quote! {, T} } else { &proc_macro2_token_stream_new };
-            let maybe_ident_generic_token_stream: &dyn quote::ToTokens = if option_additional_traits_annotations_token_stream.is_some() { &t_annotation_generic_token_stream } else { &proc_macro2_token_stream_new };
-            let maybe_where_generic_trait_annotation_token_stream: &dyn quote::ToTokens = match &option_additional_traits_annotations_token_stream {
-                Some(value) => &quote::quote! {
-                    where
-                        T: std::fmt::Debug + _serde::Deserialize<'de> #value,
-                },
-                None => &proc_macro2_token_stream_new,
-            };
-            let maybe_struct_visitor_where_generic_trait_annotation_token_stream = match &option_additional_traits_annotations_token_stream {
-                Some(value) => quote::quote! {
-                    where
-                        T: _serde::Deserialize<'de> #value,
-                },
-                None => proc_macro2::TokenStream::new()
-            };
-            let logical_operator_field = Field {
-                field_name: &naming::LogicalOperatorSnakeCase,
-                field_type: &quote::quote! {crate::LogicalOperator},
-            };
-            let fields = {
-                let mut acc = vec![&logical_operator_field];
-                for element in additional_fields {
-                    acc.push(element);
-                }
-                acc
-            };
-            let (struct_ident_double_quotes_token_stream, struct_ident_with_number_of_elements_double_quotes_token_stream, ident_double_quotes_token_stream) = postgresql_crud_macros_common::generate_serde_deserialize_double_quotes_token_stream(&ident, fields.len());
-            let enum_field_fields_token_stream = {
-                let value = fields.iter().enumerate().map(|(index, _)| format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap());
-                quote::quote! {#(#value),*}
-            };
-            let visit_u64_match_variants_token_stream = fields.iter().enumerate().map(|(index, _)| format!("{index}u64 => _serde::__private::Ok(__Field::__field{index})").parse::<proc_macro2::TokenStream>().unwrap());
-            let visit_str_match_variants_token_stream = fields
-                .iter()
-                .enumerate()
-                .map(|(index, element)| format!("{} => _serde::__private::Ok(__Field::__field{index})", generate_quotes::double_quotes_stringified(&element.field_name)).parse::<proc_macro2::TokenStream>().unwrap());
-            let visit_bytes_match_variants_token_stream = fields
-                .iter()
-                .enumerate()
-                .map(|(index, element)| format!("{} => _serde::__private::Ok(__Field::__field{index})", generate_quotes::binary_double_quotes_stringified(&element.field_name)).parse::<proc_macro2::TokenStream>().unwrap());
-            let visit_seq_initialization_token_stream = fields.iter().enumerate().map(|(index, element)| {
-                let field_index_token_stream = format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap();
-                let element_field_type_token_stream = &element.field_type;
-                let index_usize_token_stream = format!("{index}usize").parse::<proc_macro2::TokenStream>().unwrap();
-                quote::quote! {
-                    let #field_index_token_stream = match _serde::de::SeqAccess::next_element::<
-                        #element_field_type_token_stream,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    #index_usize_token_stream,
-                                    &#struct_ident_with_number_of_elements_double_quotes_token_stream,
-                                ),
-                            );
-                        }
-                    };
-                }
-            });
-            let visit_map_declaration_token_stream = fields.iter().enumerate().map(|(index, element)| {
-                let field_index_token_stream = format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap();
-                let element_field_type_token_stream = &element.field_type;
-                quote::quote! {
-                    let mut #field_index_token_stream: _serde::__private::Option<
-                        #element_field_type_token_stream,
-                    > = _serde::__private::None;
-                }
-            });
-            let visit_map_match_variants_token_stream = fields.iter().enumerate().map(|(index, element)| {
-                let field_index_token_stream = format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap();
-                let element_field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_name);
-                let element_field_type_token_stream = &element.field_type;
-                quote::quote! {
-                    __Field::#field_index_token_stream => {
-                        if _serde::__private::Option::is_some(&#field_index_token_stream) {
-                            return _serde::__private::Err(
-                                <__A::Error as _serde::de::Error>::duplicate_field(
-                                    #element_field_name_double_quotes_token_stream,
-                                ),
-                            );
-                        }
-                        #field_index_token_stream = _serde::__private::Some(
-                            _serde::de::MapAccess::next_value::<
-                                #element_field_type_token_stream,
-                            >(&mut __map)?,
-                        );
-                    }
-                }
-            });
-            let visit_map_initialization_token_stream = fields.iter().enumerate().map(|(index, element)| {
-                let field_index_token_stream = format!("__field{index}").parse::<proc_macro2::TokenStream>().unwrap();
-                let element_field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_name);
-                quote::quote! {
-                    let #field_index_token_stream = match #field_index_token_stream {
-                        _serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
-                        _serde::__private::None => {
-                            _serde::__private::de::missing_field(#element_field_name_double_quotes_token_stream)?
-                        }
-                    };
-                }
-            });
-            let field_names_double_quotes_token_stream = fields.iter().map(|element| generate_quotes::double_quotes_token_stream(&element.field_name));
-            let try_new_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(&ident, &enum_field_fields_token_stream);
-            quote::quote! {
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de #maybe_impl_generic_token_stream> _serde::Deserialize<'de> for #ident #maybe_ident_generic_token_stream
-                    #maybe_where_generic_trait_annotation_token_stream
-                    {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                #enum_field_fields_token_stream,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __f: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __f,
-                                        "field identifier",
-                                    )
-                                }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        #(#visit_u64_match_variants_token_stream),*,
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        #(#visit_str_match_variants_token_stream),*,
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        #(#visit_bytes_match_variants_token_stream),*,
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de #maybe_impl_generic_token_stream>
-                            #maybe_struct_visitor_where_generic_trait_annotation_token_stream
-                            {
-                                marker: _serde::__private::PhantomData<
-                                    #ident #maybe_ident_generic_token_stream,
-                                >,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            impl<'de #maybe_impl_generic_token_stream> _serde::de::Visitor<'de> for __Visitor<'de #maybe_impl_generic_token_stream>
-                            #maybe_where_generic_trait_annotation_token_stream
-                            {
-                                type Value = #ident #maybe_ident_generic_token_stream;
-                                fn expecting(
-                                    &self,
-                                    __f: &mut _serde::__private::Formatter<'_>,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __f,
-                                        #struct_ident_double_quotes_token_stream,
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-
-                                    #(#visit_seq_initialization_token_stream)*
-                                    #try_new_token_stream
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    #(#visit_map_declaration_token_stream)*
-
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            #(#visit_map_match_variants_token_stream)*
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
-                                        }
-                                    }
-                                    #(#visit_map_initialization_token_stream)*
-                                    #try_new_token_stream
-                                }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &[#(#field_names_double_quotes_token_stream),*];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                #ident_double_quotes_token_stream,
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<
-                                        #ident #maybe_ident_generic_token_stream,
-                                    >,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
-                        }
-                    }
-                };
-            }
-        };
-        quote::quote! {
-            #enum_ident_try_new_error_named_token_stream
-            #impl_try_new_for_ident_token_stream
-            #impl_serde_deserialize_for_ident_token_stream
         }
     };
     let generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = |
@@ -562,70 +217,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             };
         }
     }
-    enum IsZeroCanBeInDimensionPosition {
-        True,
-        False
-    }
-    fn generate_struct_additional_fields_token_stream<T>(value: T, is_zero_can_be_in_dimension_position: &IsZeroCanBeInDimensionPosition) -> proc_macro2::TokenStream
-    where
-        T: IntoIterator<Item = std::primitive::u8>,
-    {
-        let type_token_stream = match &is_zero_can_be_in_dimension_position {
-            IsZeroCanBeInDimensionPosition::True => generate_unsigned_part_of_std_primitive_i32_token_stream(),
-            IsZeroCanBeInDimensionPosition::False => generate_not_zero_unsigned_part_of_std_primitive_i32_token_stream()
-        };
-        let content_token_stream = value.into_iter().map(|element|{
-            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-            quote::quote! {
-                pub #dimension_number_position_token_stream: #type_token_stream,
-            }
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        quote::quote! {#(#content_token_stream)*}
-    }
-    fn generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream<T>(value: T) -> proc_macro2::TokenStream
-    where
-        T: IntoIterator<Item = std::primitive::u8>,
-    {
-        let content_token_stream = value.into_iter().map(|element|{
-            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-            let path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = generate_path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream();
-            quote::quote! {
-                #dimension_number_position_token_stream: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
-            }
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        quote::quote! {#(#content_token_stream)*}
-    }
-    fn generate_increments_initialization_token_stream<T>(value: T) -> proc_macro2::TokenStream
-    where
-        T: IntoIterator<Item = std::primitive::u8>,
-    {
-        let content_token_stream = value.into_iter().map(|element|{
-            generate_match_increment_checked_add_one_initialization_token_stream(&format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap())
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        quote::quote! {#(#content_token_stream)*}
-    }
-    fn generate_format_increments_token_stream<T>(value: T) -> proc_macro2::TokenStream
-    where
-        T: IntoIterator<Item = std::primitive::u8>,
-    {
-        let content_token_stream = value.into_iter().map(|element|{
-            let value = format!("increment{element}").parse::<proc_macro2::TokenStream>().unwrap();
-            quote::quote!{#value,}
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        quote::quote! {#(#content_token_stream)*}
-    }
-    fn generate_query_bind_dimension_position_token_stream<T>(value: T) -> proc_macro2::TokenStream
-    where
-        T: IntoIterator<Item = std::primitive::u8>,
-    {
-        let content_token_stream = value.into_iter().map(|element|{
-            let dimension_number_position_token_stream = format!("dimension{element}_position").parse::<proc_macro2::TokenStream>().unwrap();
-            quote::quote! {
-                query = query.bind(self.#dimension_number_position_token_stream);
-            }
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        quote::quote! {#(#content_token_stream)*}
-    }
     let should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone = ShouldAddDeclarationOfStructIdentGeneric::True {
         maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone})
     };
@@ -648,10 +239,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }
     }
     let query_self_value_query_bind_token_stream = generate_query_self_value_query_bind_token_stream();
-    let query_self_value_query_bind_one_by_one_token_stream = quote::quote! {
-        query = self.value.query_bind_one_by_one(query);
-        query
-    };
     #[derive(Clone)]
     enum PostgresqlTypePatternHandle {
         Standart,
@@ -767,10 +354,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }
     }
     let postgresql_type_token_stream = {
-        let is_zero_can_be_in_dimension_position_false = IsZeroCanBeInDimensionPosition::False;
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
-            let ident_try_new_error_named = naming::parameter::PostgresqlTypeWhereElementSelfTryNewErrorNamedUpperCamelCase::from_display(&filter);
             let (
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
@@ -778,58 +363,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query_part_content_token_stream,
                 query_bind_content_token_stream
             ) = {
-                let range_1_1 = 1..=1;
-                fn generate_postgresql_array_indexes_stringified<T>(value: T) -> std::string::String
-                where
-                    T: IntoIterator<Item = std::primitive::u8>,
-                {
-                    value.into_iter().fold(std::string::String::new(), |mut acc, _| {
-                        acc.push_str(&"[${}]");
-                        acc
-                    })
-                }
-                let value_t_range_1_1_declaration_token_stream = {
-                    let struct_additional_fields_token_stream = generate_struct_additional_fields_token_stream(range_1_1.clone(), &is_zero_can_be_in_dimension_position_false);
-                    quote::quote! {
-                        #struct_additional_fields_token_stream
-                        #pub_value_t_token_stream
-                    }
-                };
-                let value_t_range_1_1_default_initialization_token_stream = {
-                    let impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream = generate_impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream(
-                        range_1_1.clone()
-                    );
-                    quote::quote! {
-                        #impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    }
-                };
-                let generate_value_t_range_1_1_query_part_token_stream = |operator: &dyn std::fmt::Display|{
-                    let increments_initialization_token_stream = generate_increments_initialization_token_stream(range_1_1.clone());
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                        "{{}}({{}}{} {operator} ${{}})",
-                        generate_postgresql_array_indexes_stringified(range_1_1.clone())
-                    ));
-                    let format_increments_token_stream = generate_format_increments_token_stream(range_1_1.clone());
-                    quote::quote! {
-                        #increments_initialization_token_stream
-                        #value_match_increment_checked_add_one_initialization_token_stream
-                        Ok(format!(
-                            #format_handle_token_stream,
-                            &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            column,
-                            #format_increments_token_stream
-                            value
-                        ))
-                    }
-                };
-                let value_t_range_query_bind_content_token_stream = {
-                    let query_bind_dimension_position_token_stream = generate_query_bind_dimension_position_token_stream(range_1_1.clone());
-                    quote::quote! {
-                        #query_bind_dimension_position_token_stream
-                        #query_bind_one_value_token_stream
-                    }
-                };
                 let should_add_declaration_of_struct_ident_generic_true_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
                     maybe_additional_traits_token_stream: Some(quote::quote!{sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>})
                 };
@@ -1550,37 +1083,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &dimensions_snake_case,
                 &quote::quote!{postgresql_json_type_query_part}
             );
-            let generate_dimension_array_number_operation_token_stream = |
-                dimension_number: &DimensionNumber,
-                operator: &dyn std::fmt::Display,
-            | -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
-                (
-                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
-                            #pub_value_t_token_stream
-                        }
-                    },
-                    dimensions_default_value_default_initialization_token_stream.clone(),
-                    {
-                        let ok_format_token_stream = generate_ok_format_value_token_stream(&generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{{}} {operator} ${{}})")));
-                        quote::quote! {
-                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            #value_match_increment_checked_add_one_initialization_token_stream
-                            #ok_format_token_stream
-                        }
-                    },
-                    query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
-                )
-            };
             let generate_dimension_length_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
@@ -1848,40 +1350,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
-            let query_self_value_query_bind_token_stream = generate_query_self_value_query_bind_token_stream();
-            let generate_dimension_between_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
-                (
-                    should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_partial_ord_clone_type_encode.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
-                            #pub_value_between_t_token_stream
-                        }
-                    },
-                    dimensions_default_value_default_initialization_token_stream.clone(),
-                    {
-                        let ok_format_token_stream = generate_ok_format_value_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}({}{} {})")
-                        );
-                        quote::quote! {
-                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            #value_match_self_value_query_part_initialization_token_stream
-                            #ok_format_token_stream
-                        }
-                    },
-                    quote::quote! {
-                        #query_self_dimensions_query_bind_query_token_stream
-                        #query_self_value_query_bind_token_stream
-                    },
-                )
-            };
             let generate_between_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
                 ShouldAddDeclarationOfStructIdentGeneric,
                 proc_macro2::TokenStream,
@@ -1950,44 +1418,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_bind_sqlx_types_json_self_value_token_stream
                     }
-                )
-            };
-            let generate_dimension_in_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
-                (
-                    should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
-                            #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
-                        }
-                    },
-                    dimensions_default_value_default_initialization_token_stream.clone(),
-                    {
-                        let ok_format_token_stream = generate_ok_format_value_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}({}{} in ({}))")
-                        );
-                        let value_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
-                            &value_snake_case,
-                            &value_snake_case,
-                            &quote::quote!{query_part_one_by_one}
-                        );
-                        quote::quote! {
-                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            #value_initialization_token_stream
-                            #ok_format_token_stream
-                        }
-                    },
-                    quote::quote! {
-                        #query_self_dimensions_query_bind_query_token_stream
-                        #query_self_value_query_bind_one_by_one_token_stream
-                    },
                 )
             };
             let generate_in_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
@@ -2061,50 +1491,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     },
                     quote::quote!{
                         #maybe_dimensions_query_bind_content_token_stream
-                        #query_bind_sqlx_types_json_self_value_token_stream
+                        query = self.value.query_bind_one_by_one(query);
+                        query
                     }
-                )
-            };
-            let generate_dimension_regular_expression_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
-                (
-                    should_add_declaration_of_struct_ident_generic_false.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
-                            #regular_expression_case_and_value_declaration_token_stream
-                        }
-                    },
-                    dimensions_default_regular_expression_default_initialization_token_stream.clone(),
-                    {
-                        let dimensions_indexes_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
-                            &quote::quote!{dimensions_indexes},
-                            &dimensions_snake_case,
-                            &quote::quote!{postgresql_json_type_query_part_minus_one}
-                        );
-                        let last_dimensions_index_intialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{last_dimensions_index});
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}((trim(both '\\\"' from ({}{}->>${})::text) {} ${}))"),
-                            &quote::quote!{
-                                last_dimensions_index,
-                                self.regular_expression_case.postgreql_syntax(),
-                                value
-                            }
-                        );
-                        quote::quote! {
-                            #dimensions_indexes_initialization_token_stream
-                            #last_dimensions_index_intialization_token_stream
-                            #value_match_increment_checked_add_one_initialization_token_stream
-                            #ok_format_token_stream
-                        }
-                    },
-                    query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone(),
                 )
             };
             let generate_regular_expression_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
