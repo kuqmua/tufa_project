@@ -779,6 +779,73 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     )
                 };
+                let generate_before_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
+                    ShouldAddDeclarationOfStructIdentGeneric,
+                    proc_macro2::TokenStream,
+                    proc_macro2::TokenStream,
+                    proc_macro2::TokenStream,
+                    proc_macro2::TokenStream,
+                ) {
+                    let (
+                        maybe_dimensions_declaration_token_stream,
+                        maybe_dimensions_default_initialization_token_stream,
+                        maybe_dimensions_indexes_initialization_token_stream,
+                        postgresql_type_kind,
+                        maybe_additional_parameters_token_stream,
+                        maybe_dimensions_query_bind_content_token_stream
+                    ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
+                        (
+                            {
+                                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
+                                quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
+                            },
+                            quote::quote!{#dimensions_default_initialization_token_stream,},
+                            dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
+                            PostgresqlTypeKind::ArrayDimension,
+                            quote::quote!{dimensions_indexes,},
+                            query_self_dimensions_query_bind_query_token_stream.clone()
+                        )
+                    }
+                    else {
+                        (
+                            proc_macro2::TokenStream::new(),
+                            proc_macro2::TokenStream::new(),
+                            proc_macro2::TokenStream::new(),
+                            PostgresqlTypeKind::Standart,
+                            proc_macro2::TokenStream::new(),
+                            proc_macro2::TokenStream::new()
+                        )
+                    };
+                    (
+                        should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
+                        quote::quote! {
+                            #maybe_dimensions_declaration_token_stream
+                            #pub_value_t_token_stream
+                        },
+                        quote::quote!{
+                            #maybe_dimensions_default_initialization_token_stream
+                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                        },
+                        {
+                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} < ${{}})", postgresql_type_kind.format_argument()));
+                            quote::quote! {
+                                #maybe_dimensions_indexes_initialization_token_stream
+                                #value_match_increment_checked_add_one_initialization_token_stream
+                                Ok(format!(
+                                    #format_handle_token_stream,
+                                    &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                    column,
+                                    #maybe_additional_parameters_token_stream
+                                    value
+                                ))
+                            }
+                        },
+                        quote::quote!{
+                            #maybe_dimensions_query_bind_content_token_stream
+                            #query_bind_one_value_token_stream
+                        }
+                    )
+                };
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
@@ -790,18 +857,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn { ident: _ } => generate_in_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression => generate_regular_expression_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression => generate_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::Before { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        pub_value_t_token_stream.clone(),
-                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        generate_query_part_one_value_token_stream(
-                            &generate_before_format_handle_token_stream(&PostgresqlTypeKind::Standart)
-                        ),
-                        query_bind_one_value_token_stream.clone(),
-                    ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore { ident: _ } => generate_value_t_token_stream(
-                        &generate_before_format_handle_token_stream(&PostgresqlTypeKind::ArrayDimension)
-                    ),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::Before { ident: _ } => generate_before_token_stream(&PostgresqlTypePatternHandle::Standart),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore { ident: _ } => generate_before_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate => (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         proc_macro2_token_stream_new.clone(),
