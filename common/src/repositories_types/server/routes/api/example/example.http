@@ -46,30 +46,15 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
           [
             [
               [
-                "cat"
+                ""
               ]
             ]
           ]
         ]
       }
     },
-    "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": [
-      {
-        "start": {
-          "Included": 10
-        },
-        "end": {
-          "Excluded": 20
-        }
-      },
-      {
-        "start": {
-          "Included": 5
-        },
-        "end": {
-          "Excluded": 10
-        }
-      }
+    "vec_std_primitive_i16_as_postgresql_int2_array_not_null": [
+      2
     ]
   }
 ]
@@ -514,42 +499,26 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": {
+  "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
     "logical_operator": "Or",
     "value": [
       # {
       #   "Equal": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       {
-      #         "start": {
-      #           "Included": 10
-      #         },
-      #         "end": {
-      #           "Excluded": 20
-      #         }
-      #       }
+      #       0
       #     ]
       #   }
-      # }
-      # ,
-      {
-        "DimensionOneEqual": {
-          "logical_operator": "Or",
-          "dimensions": [
-            2
-          ],
-          "value": {
-            "start": {
-              "Included": 5
-            },
-            "end": {
-              "Excluded": 10
-            }
-          }
-        }
-      }
-      # ,
+      # },
+      # {
+      #   "DimensionOneEqual": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ],
+      #     "value": 0
+      #   }
+      # },
       # {
       #   "DimensionOneLengthEqual": {
       #     "logical_operator": "Or",
@@ -562,145 +531,37 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": 1
       #   }
       # },
+      {
+        "DimensionOneGreaterThan": {
+          "logical_operator": "Or",
+          "dimensions": [
+            1
+          ],
+          "value": 1
+        }
+      }
+      # ,
       # {
-      #   "DimensionOneFindRangesWithinGivenRange": {
+      #   "DimensionOneBetween": {
       #     "logical_operator": "Or",
       #     "dimensions": [
       #       1
       #     ],
       #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
+      #       "start": 0,
+      #       "end": 0
       #     }
       #   }
       # },
       # {
-      #   "DimensionOneFindRangesThatFullyContainTheGivenRange": {
+      #   "DimensionOneIn": {
       #     "logical_operator": "Or",
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneStrictlyToLeftOfRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneStrictlyToRightOfRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneIncludedLowerBound": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "DimensionOneExcludedUpperBound": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "DimensionOneGreaterThanIncludedLowerBound": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "DimensionOneGreaterThanExcludedUpperBound": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "DimensionOneOverlapWithRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneAdjacentWithRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneRangeLength": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": 1
+      #     "value": [
+      #       0
+      #     ]
       #   }
       # }
     ]
@@ -741,7 +602,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #   ]
     # },
     {
-      "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": {
+      "vec_std_primitive_i16_as_postgresql_int2_array_not_null": {
         "dimension1_pagination": {
           "limit": 5,
           "offset": 1
