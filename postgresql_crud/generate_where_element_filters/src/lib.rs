@@ -846,13 +846,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     )
                 };
-                let generate_current_date_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
-                    ShouldAddDeclarationOfStructIdentGeneric,
-                    proc_macro2::TokenStream,
-                    proc_macro2::TokenStream,
-                    proc_macro2::TokenStream,
-                    proc_macro2::TokenStream,
-                ) {
+                let generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, postgresql_syntax: &dyn std::fmt::Display| {
                     let (
                         maybe_dimensions_declaration_token_stream,
                         maybe_dimensions_default_initialization_token_stream,
@@ -888,7 +882,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_dimensions_declaration_token_stream,
                         maybe_dimensions_default_initialization_token_stream,
                         {
-                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} = current_date)", postgresql_type_kind.format_argument()));
+                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {postgresql_syntax})", postgresql_type_kind.format_argument()));
                             quote::quote! {
                                 #maybe_dimensions_indexes_initialization_token_stream
                                 Ok(format!(
@@ -904,6 +898,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #query_snake_case
                         }
                     )
+                };
+                let generate_current_date_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"= current_date")
                 };
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::Standart),
