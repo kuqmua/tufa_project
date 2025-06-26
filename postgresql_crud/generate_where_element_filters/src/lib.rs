@@ -860,6 +860,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let generate_current_date_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                     generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"= current_date")
                 };
+                let generate_greater_than_current_date_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"> current_date")
+                };
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
@@ -875,18 +878,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore { ident: _ } => generate_before_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentDate => generate_current_date_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentDate => generate_current_date_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate => (
-                        should_add_declaration_of_struct_ident_generic_false.clone(),
-                        proc_macro2_token_stream_new.clone(),
-                        proc_macro2_token_stream_new.clone(),
-                        generate_query_part_zero_value_token_stream(
-                            &generate_greater_than_current_date_format_handle_token_stream(&PostgresqlTypeKind::Standart)
-                        ),
-                        quote::quote! {#query_snake_case},
-                    ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentDate => generate_without_value_token_stream(
-                        &generate_greater_than_current_date_format_handle_token_stream(&PostgresqlTypeKind::ArrayDimension)
-                    ),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentDate => generate_greater_than_current_date_token_stream(&PostgresqlTypePatternHandle::Standart),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentDate => generate_greater_than_current_date_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp => (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         proc_macro2_token_stream_new.clone(),
