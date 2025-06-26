@@ -862,12 +862,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let generate_strictly_to_right_of_range_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"&>")
                 };
-                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
-                // };
-                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
-                // };
+                let generate_overlap_with_range_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                    generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"&&")
+                };
+                let generate_adjacent_with_range_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                    generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"-|-")
+                };
                 // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
                 // };
@@ -972,26 +972,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanExcludedUpperBound { ident: _ } => generate_value_t_token_stream(
                         &quote::quote!{"{}(upper({}{}) > ${})"}
                     ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        pub_value_t_token_stream.clone(),
-                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("&&")),
-                        query_bind_one_value_token_stream.clone(),
-                    ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange { ident: _ } => generate_value_t_token_stream(
-                        &quote::quote!{"{}({}{} && ${})"}
-                    ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        pub_value_t_token_stream.clone(),
-                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("-|-")),
-                        query_bind_one_value_token_stream.clone(),
-                    ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange { ident: _ } => generate_value_t_token_stream(
-                        &quote::quote!{"{}({}{} -|- ${})"}
-                    ),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange { ident: _ } => generate_overlap_with_range_token_stream(&PostgresqlTypePatternHandle::Standart),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange { ident: _ } => generate_overlap_with_range_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange { ident: _ } => generate_adjacent_with_range_token_stream(&PostgresqlTypePatternHandle::Standart),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange { ident: _ } => generate_adjacent_with_range_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength => (
                         ShouldAddDeclarationOfStructIdentGeneric::False,
                         pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream.clone(),
