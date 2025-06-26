@@ -147,8 +147,9 @@ pub struct Example {
     // ///////////////////////////
     // pub vec_std_primitive_i16_as_postgresql_int2_array_not_null: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub vec_std_string_string_as_postgresql_text_array_not_null: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullText,
-    pub column_2dc47998_5a25_42a3_9df3_d5db25683916: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNotNullTimestampTz,
+    // pub column_2dc47998_5a25_42a3_9df3_d5db25683916: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNotNullTimestampTz,
     // pub column_1ad1cb7c_b0cb_4168_96ec_464893ce9753: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4Range,
+    pub column_28f3512a_715d_40c2_87a3_2e661699172f: postgresql_crud::postgresql_type::VecOfSqlxTypesTimeDateAsNotNullArrayOfNotNullDate,
     // //63max
 }
 //todo enum tree support

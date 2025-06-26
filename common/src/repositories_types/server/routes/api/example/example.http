@@ -53,8 +53,12 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         ]
       }
     },
-    "column_2dc47998_5a25_42a3_9df3_d5db25683916": [
-      "1990-01-01T00:00:00Z"
+    "column_28f3512a_715d_40c2_87a3_2e661699172f": [
+      {
+        "year": 2025,
+        "month": 6,
+        "day": 26
+      }
     ]
   }
 ]
@@ -499,14 +503,18 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "column_2dc47998_5a25_42a3_9df3_d5db25683916": {
+  "column_28f3512a_715d_40c2_87a3_2e661699172f": {
     "logical_operator": "Or",
     "value": [
       # {
       #   "Equal": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       "1970-01-01T00:00:00Z"
+      #       {
+      #         "year": 0,
+      #         "month": 1,
+      #         "day": 1
+      #       }
       #     ]
       #   }
       # },
@@ -516,7 +524,11 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": "1970-01-01T00:00:00Z"
+      #     "value": {
+      #       "year": 0,
+      #       "month": 1,
+      #       "day": 1
+      #     }
       #   }
       # },
       # {
@@ -531,16 +543,19 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "value": 1
       #   }
       # },
-      {
-        "DimensionOneBefore": {
-          "logical_operator": "Or",
-          "dimensions": [
-            1
-          ],
-          "value": "1981-01-01T00:00:00Z"
-        }
-      }
-      # ,
+      # {
+      #   "DimensionOneGreaterThan": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ],
+      #     "value": {
+      #       "year": 0,
+      #       "month": 1,
+      #       "day": 1
+      #     }
+      #   }
+      # },
       # {
       #   "DimensionOneBetween": {
       #     "logical_operator": "Or",
@@ -548,9 +563,34 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       1
       #     ],
       #     "value": {
-      #       "start": "1970-01-01T00:00:00Z",
-      #       "end": "1970-01-01T00:00:00Z"
+      #       "start": {
+      #         "year": 0,
+      #         "month": 1,
+      #         "day": 1
+      #       },
+      #       "end": {
+      #         "year": 0,
+      #         "month": 1,
+      #         "day": 1
+      #       }
       #     }
+      #   }
+      # },
+      {
+        "DimensionOneCurrentDate": {
+          "logical_operator": "Or",
+          "dimensions": [
+            1
+          ]
+        }
+      }
+      # ,
+      # {
+      #   "DimensionOneGreaterThanCurrentDate": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ]
       #   }
       # }
     ]
@@ -591,7 +631,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #   ]
     # },
     {
-      "column_2dc47998_5a25_42a3_9df3_d5db25683916": {
+      "column_28f3512a_715d_40c2_87a3_2e661699172f": {
         "dimension1_pagination": {
           "limit": 5,
           "offset": 1
