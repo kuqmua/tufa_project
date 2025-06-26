@@ -407,12 +407,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     )
                 };
-                fn generate_before_format_handle_token_stream(value: &PostgresqlTypeKind) -> proc_macro2::TokenStream {
-                    generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} < ${{}})", value.format_argument()))
-                }
-                fn generate_current_date_format_handle_token_stream(value: &PostgresqlTypeKind) -> proc_macro2::TokenStream {
-                    generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} = current_date)", value.format_argument()))
-                }
                 fn generate_greater_than_current_date_format_handle_token_stream(value: &PostgresqlTypeKind) -> proc_macro2::TokenStream {
                     generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} > current_date)", value.format_argument()))
                 }
@@ -1249,13 +1243,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let generate_dimension_length_operation_token_stream = |
                 dimension_number: &DimensionNumber,
                 operator: &dyn std::fmt::Display,
-            | -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            | {
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
@@ -1285,13 +1273,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 let (
                     maybe_dimensions_declaration_token_stream,
                     maybe_dimensions_default_initialization_token_stream,
@@ -1352,13 +1334,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_dimension_all_elements_equal_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_dimension_all_elements_equal_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
@@ -1383,13 +1359,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 )
             };
             let generate_dimension_length_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &equal_sign);
-            let generate_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 let (
                     maybe_dimensions_declaration_token_stream,
                     maybe_dimensions_default_initialization_token_stream,
@@ -1453,13 +1423,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_dimension_contains_element_greater_than_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_dimension_contains_element_greater_than_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
@@ -1483,13 +1447,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
-            let generate_dimension_all_elements_greater_than_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_dimension_all_elements_greater_than_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     {
@@ -1513,13 +1471,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
-            let generate_between_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_between_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 let (
                     maybe_dimensions_declaration_token_stream,
                     maybe_dimensions_default_initialization_token_stream,
@@ -1583,13 +1535,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_in_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_in_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 let (
                     maybe_dimensions_declaration_token_stream,
                     maybe_dimensions_default_initialization_token_stream,
@@ -1659,13 +1605,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_regular_expression_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_regular_expression_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 let (
                     maybe_dimensions_declaration_token_stream,
                     maybe_dimensions_default_initialization_token_stream,
@@ -1747,13 +1687,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_dimension_contains_element_regular_expression_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_dimension_contains_element_regular_expression_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
@@ -1781,13 +1715,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone()
                 )
             };
-            let generate_dimension_all_elements_regular_expression_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_dimension_all_elements_regular_expression_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
                     {
@@ -1816,13 +1744,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 )
             };
             let generate_dimension_length_more_than_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &greater_than_sign);
-            let generate_dimension_contains_all_elements_of_array_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_dimension_contains_all_elements_of_array_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
@@ -1846,13 +1768,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
-            let generate_dimension_overlaps_with_array_token_stream = |dimension_number: &DimensionNumber| -> (
-                ShouldAddDeclarationOfStructIdentGeneric,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-                proc_macro2::TokenStream,
-            ) {
+            let generate_dimension_overlaps_with_array_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
                     {
