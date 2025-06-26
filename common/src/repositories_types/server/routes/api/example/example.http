@@ -53,8 +53,8 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         ]
       }
     },
-    "column_bc99bcc5_0d17_46dc_80a9_2bd6f4c366e2": [
-      "2997-01-01T00:00:00"
+    "column_ab95f432_7046_4a82_8f27_b2b0d41729fc": [
+      "15:35:01"
     ]
   }
 ]
@@ -499,14 +499,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  "column_bc99bcc5_0d17_46dc_80a9_2bd6f4c366e2": {
+  "column_ab95f432_7046_4a82_8f27_b2b0d41729fc": {
     "logical_operator": "Or",
     "value": [
       # {
       #   "Equal": {
       #     "logical_operator": "Or",
       #     "value": [
-      #       "1970-01-01T00:00:00"
+      #       "00:00:00"
       #     ]
       #   }
       # },
@@ -516,7 +516,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": "1970-01-01T00:00:00"
+      #     "value": "00:00:00"
       #   }
       # },
       # {
@@ -537,7 +537,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "dimensions": [
       #       1
       #     ],
-      #     "value": "1970-01-01T00:00:00"
+      #     "value": "00:00:00"
       #   }
       # },
       # {
@@ -547,28 +547,28 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       1
       #     ],
       #     "value": {
-      #       "start": "1970-01-01T00:00:00",
-      #       "end": "1970-01-01T00:00:00"
+      #       "start": "00:00:00",
+      #       "end": "00:00:00"
       #     }
       #   }
       # },
-      # {
-      #   "DimensionOneCurrentTimestamp": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ]
-      #   }
-      # }
-      # ,
       {
-        "DimensionOneGreaterThanCurrentTimestamp": {
+        "DimensionOneCurrentTime": {
           "logical_operator": "Or",
           "dimensions": [
             1
           ]
         }
       }
+      # ,
+      # {
+      #   "DimensionOneGreaterThanCurrentTime": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ]
+      #   }
+      # }
     ]
   },
   "select": [
@@ -607,7 +607,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     #   ]
     # },
     {
-      "column_bc99bcc5_0d17_46dc_80a9_2bd6f4c366e2": {
+      "column_ab95f432_7046_4a82_8f27_b2b0d41729fc": {
         "dimension1_pagination": {
           "limit": 5,
           "offset": 1
