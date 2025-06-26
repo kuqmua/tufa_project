@@ -54,7 +54,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
       }
     },
     "column_ab95f432_7046_4a82_8f27_b2b0d41729fc": [
-      "15:35:01"
+      "12:55:01"
     ]
   }
 ]
@@ -552,23 +552,22 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     }
       #   }
       # },
+      # {
+      #   "DimensionOneCurrentTime": {
+      #     "logical_operator": "Or",
+      #     "dimensions": [
+      #       1
+      #     ]
+      #   }
+      # },
       {
-        "DimensionOneCurrentTime": {
+        "DimensionOneGreaterThanCurrentTime": {
           "logical_operator": "Or",
           "dimensions": [
             1
           ]
         }
       }
-      # ,
-      # {
-      #   "DimensionOneGreaterThanCurrentTime": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ]
-      #   }
-      # }
     ]
   },
   "select": [
@@ -622,7 +621,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     "order": "asc"
   },
   "pagination": {
-    "limit": 5,
+    "limit": 50,
     "offset": 0
   }
 }

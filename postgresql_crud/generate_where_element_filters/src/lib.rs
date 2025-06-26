@@ -389,24 +389,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         },
                     )
                 };
-                let generate_without_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
-                    (
-                        should_add_declaration_of_struct_ident_generic_false.clone(),
-                        pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_dimension_number_one_token_stream.clone(),
-                        dimensions_default_initialization_token_stream.clone(),
-                        {
-                            let ok_format_token_stream = generate_ok_format_token_stream(&format_handle_token_stream, &proc_macro2::TokenStream::new());
-                            quote::quote! {
-                                #dimensions_indexes_postgresql_type_query_part_token_stream
-                                #ok_format_token_stream
-                            }
-                        },
-                        quote::quote!{
-                            #query_self_dimensions_query_bind_query_token_stream
-                            query
-                        }
-                    )
-                };
                 let generate_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                     let (
                         maybe_dimensions_declaration_token_stream,
@@ -860,6 +842,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let generate_current_time_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                     generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"= current_time")
                 };
+                let generate_greater_than_current_time_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"> current_time")
+                };
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
@@ -883,16 +868,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTimestamp => generate_greater_than_current_timestamp_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTime => generate_current_time_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentTime => generate_current_time_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => (
-                        should_add_declaration_of_struct_ident_generic_false.clone(),
-                        proc_macro2_token_stream_new.clone(),
-                        proc_macro2_token_stream_new.clone(),
-                        generate_query_part_zero_value_token_stream(&quote::quote! {"{}({} > current_time)"}),
-                        quote::quote! {#query_snake_case},
-                    ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTime => generate_without_value_token_stream(
-                        &quote::quote!{"{}({}{} > current_time)"}
-                    ),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTime => generate_greater_than_current_time_token_stream(&PostgresqlTypePatternHandle::Standart),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTime => generate_greater_than_current_time_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual => (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream.clone(),
