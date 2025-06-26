@@ -853,6 +853,36 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let generate_find_ranges_within_given_range_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"<@")
                 };
+                let generate_find_ranges_that_fully_contain_the_given_range_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                    generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"@>")
+                };
+                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
+                // };
+                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
+                // };
+                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
+                // };
+                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
+                // };
+                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
+                // };
+                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
+                // };
+                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
+                // };
+                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
+                // };
+                // let generate__token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                //     generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream(&postgresql_type_pattern_handle, &"")
+                // };
                 match &filter {
                     postgresql_crud_macros_common::PostgresqlTypeFilter::Equal { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual { ident: _ } => generate_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
@@ -896,16 +926,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqualToEncodedStringRepresentation => generate_equal_to_encoded_string_representation_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesWithinGivenRange { ident: _ } => generate_find_ranges_within_given_range_token_stream(&PostgresqlTypePatternHandle::Standart),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesWithinGivenRange { ident: _ } => generate_find_ranges_within_given_range_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesThatFullyContainTheGivenRange { ident: _ } => (
-                        should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        pub_value_t_token_stream.clone(),
-                        value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        generate_query_part_one_value_token_stream(&generate_format_handle_8bbcc2f2_f3a1_4aed_9c46_2992ea2e9e9b_token_stream("@>")),
-                        query_bind_one_value_token_stream.clone(),
-                    ),
-                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange { ident: _ } => generate_value_t_token_stream(
-                        &quote::quote!{"{}({}{} @> ${})"}
-                    ),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesThatFullyContainTheGivenRange { ident: _ } => generate_find_ranges_that_fully_contain_the_given_range_token_stream(&PostgresqlTypePatternHandle::Standart),
+                    postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange { ident: _ } => generate_find_ranges_that_fully_contain_the_given_range_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                     postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange { ident: _ } => (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         pub_value_t_token_stream.clone(),
