@@ -384,7 +384,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         },
                     )
                 };
-                let generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, operator: &dyn std::fmt::Display| {
+                let generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream = |
+                    postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
+                    generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> std::string::String
+                | {
                     let (
                         maybe_dimensions_declaration_token_stream,
                         maybe_dimensions_default_initialization_token_stream,
@@ -426,7 +429,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                         },
                         {
-                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {operator} ${{}})", postgresql_type_kind.format_argument()));
+                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&generate_format_handle_stringified(&postgresql_type_kind));
                             quote::quote! {
                                 #maybe_dimensions_indexes_initialization_token_stream
                                 #value_match_increment_checked_add_one_initialization_token_stream
@@ -443,6 +446,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_bind_one_value_token_stream
                         }
+                    )
+                };
+                let generate_a2ca84d5_03cc_48b6_9eb5_81b2939181d6_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, operator: &dyn std::fmt::Display| {
+                    generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream(
+                        &postgresql_type_pattern_handle,
+                        &|postgresql_type_kind: &PostgresqlTypeKind|format!("{{}}({{}}{} {operator} ${{}})", postgresql_type_kind.format_argument())
                     )
                 };
                 let generate_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
