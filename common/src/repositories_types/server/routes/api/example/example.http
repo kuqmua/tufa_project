@@ -40,6 +40,9 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
   {
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
     "animal_as_not_null_jsonb_object": {
+      "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": [
+        0
+      ],
       "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": [
         {
           "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
@@ -76,62 +79,77 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
-    "logical_operator": "Or",
-    "value": [
-      {
-        "Equal": {
-          "logical_operator": "Or",
-          "value": 0
-        }
-      },
-      {
-        "GreaterThan": {
-          "logical_operator": "Or",
-          "value": 0
-        }
-      },
-      {
-        "Between": {
-          "logical_operator": "Or",
-          "value": {
-            "start": 0,
-            "end": 0
-          }
-        }
-      },
-      {
-        "In": {
-          "logical_operator": "Or",
-          "value": [
-            0
-          ]
-        }
-      }
-    ]
-  },
+  # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
+  #   "logical_operator": "Or",
+  #   "value": [
+  #     {
+  #       "Equal": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "GreaterThan": {
+  #         "logical_operator": "Or",
+  #         "value": 0
+  #       }
+  #     },
+  #     {
+  #       "Between": {
+  #         "logical_operator": "Or",
+  #         "value": {
+  #           "start": 0,
+  #           "end": 0
+  #         }
+  #       }
+  #     },
+  #     {
+  #       "In": {
+  #         "logical_operator": "Or",
+  #         "value": [
+  #           0
+  #         ]
+  #       }
+  #     }
+  #   ]
+  # },
   "animal_as_not_null_jsonb_object": {
     "logical_operator": "Or",
     "value": [
+      # {
+      #   "Column0F498E7954404C9D90CfC32F9B7D4005": {
+      #     "logical_operator": "Or",
+      #     "value": [
+      #       {
+      #         "DimensionOneEqual": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [
+      #             0
+      #           ],
+      #           "value": 0
+      #         }
+      #       }
+      #     ]
+      #   }
+      # }
+      # ,
       {
         "VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId": {
           "logical_operator": "Or",
           "value": [
             {
-              "Equal": {
-                "logical_operator": "Or",
-                "value": [
-                  {
-                    "id": "48656a6b-e64d-4539-8d6c-3192f9e4a365",
-                    "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
-                  }
-                ]
-              }
-            },
-            {
               "Element": {
-                "logical_operator": "Or",
-                "value": "af728339-583e-4b4b-80aa-cf7f3598df72"
+                "Id": {
+                  "logical_operator": "Or",
+                  "value": [
+                    {
+                      "Equal": {
+                        "logical_operator": "Or",
+                        "value": "38266bba-13d3-4623-9d16-82c86fc7248f"
+                      }
+                    }
+                  ]
+                }
               }
             }
           ]
@@ -140,20 +158,29 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
     {
       "animal_as_not_null_jsonb_object": [
+        # {
+        #   "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": {
+        #     "dimension1_pagination": {
+        #       "limit": 5,
+        #       "offset": 0
+        #     }
+        #   }
+        # },
         {
           "vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id": {
             "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
               {
                 "id": null
-              },
-              {
-                "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
               }
+              # ,
+              # {
+              #   "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+              # }
             ],
             "dimension1_pagination": {
               "limit": 5,
