@@ -45,17 +45,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
           "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
         }
       ]
-    },
-    "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": [
-      {
-        "start": {
-          "Included": 1
-        },
-        "end": {
-          "Excluded": 3
-        }
-      }
-    ]
+    }
   }
 ]
 
@@ -120,222 +110,33 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   #     }
   #   ]
   # },
-  # "animal_as_not_null_jsonb_object": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           {
-  #             "Equal": {
-  #               "logical_operator": "Or",
-  #               "value": [
-  #                 {
-  #                   "id": "8ab75c2b-c44e-43e8-aeba-ea6a02865016",
-  #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
-  #                 }
-  #               ]
-  #             }
-  #           }
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
-  "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": {
+  "animal_as_not_null_jsonb_object": {
     "logical_operator": "Or",
     "value": [
-      # {
-      #   "Equal": {
-      #     "logical_operator": "Or",
-      #     "value": [
-      #       {
-      #         "start": {
-      #           "Included": 0
-      #         },
-      #         "end": {
-      #           "Excluded": 0
-      #         }
-      #       }
-      #     ]
-      #   }
-      # },
-      # {
-      #   "DimensionOneEqual": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneLengthEqual": {
-      #     "logical_operator": "Or",
-      #     "value": 1
-      #   }
-      # },
-      # {
-      #   "DimensionOneLengthMoreThan": {
-      #     "logical_operator": "Or",
-      #     "value": 1
-      #   }
-      # },
-      # {
-      #   "DimensionOneFindRangesWithinGivenRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneFindRangesThatFullyContainTheGivenRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneStrictlyToLeftOfRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneStrictlyToRightOfRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneIncludedLowerBound": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "DimensionOneExcludedUpperBound": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "DimensionOneGreaterThanIncludedLowerBound": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "DimensionOneGreaterThanExcludedUpperBound": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": 0
-      #   }
-      # },
-      # {
-      #   "DimensionOneOverlapWithRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
-      # {
-      #   "DimensionOneAdjacentWithRange": {
-      #     "logical_operator": "Or",
-      #     "dimensions": [
-      #       1
-      #     ],
-      #     "value": {
-      #       "start": {
-      #         "Included": 0
-      #       },
-      #       "end": {
-      #         "Excluded": 0
-      #       }
-      #     }
-      #   }
-      # },
       {
-        "DimensionOneRangeLength": {
+        "VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId": {
           "logical_operator": "Or",
-          "dimensions": [
-            1
-          ],
-          "value": 2
+          "value": [
+            {
+              "Equal": {
+                "logical_operator": "Or",
+                "value": [
+                  {
+                    "id": "8471e67a-12a6-4d9e-80ec-606e8455f8f8",
+                    "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     ]
   },
   "select": [
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
     {
       "animal_as_not_null_jsonb_object": [
         {
@@ -355,14 +156,6 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
           }
         }
       ]
-    },
-    {
-      "column_1ad1cb7c_b0cb_4168_96ec_464893ce9753": {
-        "dimension1_pagination": {
-          "limit": 5,
-          "offset": 1
-        }
-      }
     }
   ],
   "order_by": {
