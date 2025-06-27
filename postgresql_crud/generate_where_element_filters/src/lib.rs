@@ -686,11 +686,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     )
                 };
-                let generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream = |
-                    postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
-                    postgresql_syntax: &dyn std::fmt::Display,
-                    is_query_bind_mutable: postgresql_crud_macros_common::IsQueryBindMutable
-                | {
+                let generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, postgresql_syntax: &dyn std::fmt::Display| {
                     let (
                         maybe_dimensions_declaration_token_stream,
                         maybe_dimensions_default_initialization_token_stream,
@@ -734,7 +730,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
-                        is_query_bind_mutable,
+                        match &postgresql_type_pattern_handle {
+                            PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false.clone(),
+                            PostgresqlTypePatternHandle::ArrayDimension1 |
+                            PostgresqlTypePatternHandle::ArrayDimension2 |
+                            PostgresqlTypePatternHandle::ArrayDimension3 |
+                            PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone()
+                        },
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_snake_case
@@ -742,82 +744,22 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     )
                 };
                 let generate_current_date_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(
-                        &postgresql_type_pattern_handle,
-                        &"= current_date",
-                        match &postgresql_type_pattern_handle {
-                            PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false.clone(),
-                            PostgresqlTypePatternHandle::ArrayDimension1 |
-                            PostgresqlTypePatternHandle::ArrayDimension2 |
-                            PostgresqlTypePatternHandle::ArrayDimension3 |
-                            PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone()
-                        }
-                    )
+                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"= current_date")
                 };
                 let generate_greater_than_current_date_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(
-                        &postgresql_type_pattern_handle,
-                        &"> current_date",
-                        match &postgresql_type_pattern_handle {
-                            PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false.clone(),
-                            PostgresqlTypePatternHandle::ArrayDimension1 |
-                            PostgresqlTypePatternHandle::ArrayDimension2 |
-                            PostgresqlTypePatternHandle::ArrayDimension3 |
-                            PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone()
-                        }
-                    )
+                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"> current_date")
                 };
                 let generate_current_timestamp_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(
-                        &postgresql_type_pattern_handle,
-                        &"= current_timestamp",
-                        match &postgresql_type_pattern_handle {
-                            PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false.clone(),
-                            PostgresqlTypePatternHandle::ArrayDimension1 |
-                            PostgresqlTypePatternHandle::ArrayDimension2 |
-                            PostgresqlTypePatternHandle::ArrayDimension3 |
-                            PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone()
-                        }
-                    )
+                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"= current_timestamp")
                 };
                 let generate_greater_than_current_timestamp_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(
-                        &postgresql_type_pattern_handle,
-                        &"> current_timestamp",
-                        match &postgresql_type_pattern_handle {
-                            PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false.clone(),
-                            PostgresqlTypePatternHandle::ArrayDimension1 |
-                            PostgresqlTypePatternHandle::ArrayDimension2 |
-                            PostgresqlTypePatternHandle::ArrayDimension3 |
-                            PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone()
-                        }
-                    )
+                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"> current_timestamp")
                 };
                 let generate_current_time_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(
-                        &postgresql_type_pattern_handle,
-                        &"= current_time",
-                        match &postgresql_type_pattern_handle {
-                            PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false.clone(),
-                            PostgresqlTypePatternHandle::ArrayDimension1 |
-                            PostgresqlTypePatternHandle::ArrayDimension2 |
-                            PostgresqlTypePatternHandle::ArrayDimension3 |
-                            PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone()
-                        }
-                    )
+                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"= current_time")
                 };
                 let generate_greater_than_current_time_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(
-                        &postgresql_type_pattern_handle,
-                        &"> current_time",
-                        match &postgresql_type_pattern_handle {
-                            PostgresqlTypePatternHandle::Standart => is_query_bind_mutable_false.clone(),
-                            PostgresqlTypePatternHandle::ArrayDimension1 |
-                            PostgresqlTypePatternHandle::ArrayDimension2 |
-                            PostgresqlTypePatternHandle::ArrayDimension3 |
-                            PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone()
-                        }
-                    )
+                    generate_1fa0bbf4_908e_421b_ae0a_fc9e7ff95034_token_stream(&postgresql_type_pattern_handle, &"> current_time")
                 };
                 let generate_equal_to_encoded_string_representation_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                     let (
