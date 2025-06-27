@@ -461,6 +461,7 @@ impl ImportPath {
         }
     }
 }
+#[derive(Debug, Clone)]
 pub enum IsQueryBindMutable {
     True,
     False,

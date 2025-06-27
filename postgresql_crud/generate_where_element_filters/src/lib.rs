@@ -343,6 +343,8 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
         }
     };
+    let is_query_bind_mutable_true = postgresql_crud_macros_common::IsQueryBindMutable::True;
+    let is_query_bind_mutable_false = postgresql_crud_macros_common::IsQueryBindMutable::False;
     let postgresql_type_token_stream = {
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
@@ -351,6 +353,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 struct_additional_fields_token_stream,
                 impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
                 query_part_content_token_stream,
+                is_query_bind_mutable,
                 query_bind_content_token_stream
             ) = {
                 let should_add_declaration_of_struct_ident_generic_true_type_encode = ShouldAddDeclarationOfStructIdentGeneric::True {
@@ -421,6 +424,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
+                        is_query_bind_mutable_true.clone(),
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_bind_one_value_token_stream
@@ -488,6 +492,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
+                        is_query_bind_mutable_true.clone(),
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_self_value_query_bind_token_stream
@@ -558,6 +563,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
+                        is_query_bind_mutable_true.clone(),
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             for element in self.value.into_vec() {
@@ -620,6 +626,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
+                        is_query_bind_mutable_true.clone(),
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_equals_query_self_value_to_string_token_stream
@@ -672,6 +679,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
+                        is_query_bind_mutable_true.clone(),
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_bind_one_value_token_stream
@@ -722,6 +730,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
+                        is_query_bind_mutable_true.clone(),
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_snake_case
@@ -801,6 +810,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
+                        is_query_bind_mutable_true.clone(),
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             query = query.bind(self.encoded_string_representation);
@@ -834,6 +844,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         generate_query_part_one_value_token_stream(
                             &generate_quotes::double_quotes_token_stream(&format!("{{}}(array_length({{}}, 1) {operator} ${{}})"))
                         ),
+                        is_query_bind_mutable_true.clone(),
                         query_bind_one_value_token_stream.clone(),
                     )
                 };
@@ -924,6 +935,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 ))
                             }
                         },
+                        is_query_bind_mutable_true.clone(),
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_bind_one_value_token_stream
@@ -999,7 +1011,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
                 &query_part_content_token_stream,
-                &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                &is_query_bind_mutable,
                 &query_bind_content_token_stream,
             );
             let generated = quote::quote! {
@@ -1124,6 +1136,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             ))
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     quote::quote!{
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_bind_sqlx_types_json_self_value_token_stream
@@ -1148,6 +1161,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #ok_format_token_stream
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
@@ -1178,6 +1192,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #ok_format_token_stream
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     quote::quote! {
                         #query_self_dimensions_query_bind_query_token_stream
                         #query_bind_one_value_token_stream
@@ -1203,6 +1218,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #ok_format_token_stream
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
@@ -1221,6 +1237,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #ok_format_token_stream
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
@@ -1276,6 +1293,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             ))
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     quote::quote!{
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_bind_sqlx_types_json_self_value_token_stream
@@ -1339,6 +1357,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             ))
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     quote::quote!{
                         #maybe_dimensions_query_bind_content_token_stream
                         query = self.value.query_bind_one_by_one(query);
@@ -1419,6 +1438,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             ))
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     quote::quote!{
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_equals_query_self_value_to_string_token_stream
@@ -1450,6 +1470,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #ok_format_token_stream
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone()
                 )
             };
@@ -1478,6 +1499,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #ok_format_token_stream
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone()
                 )
             };
@@ -1503,6 +1525,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #ok_format_token_stream
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
@@ -1527,6 +1550,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #ok_format_token_stream
                         }
                     },
+                    is_query_bind_mutable_true.clone(),
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
@@ -1535,6 +1559,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 struct_additional_fields_token_stream,
                 impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
                 query_part_content_token_stream,
+                is_query_bind_mutable,
                 query_bind_content_token_stream
             ) = match &filter {
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::Equal {
@@ -1696,47 +1721,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => generate_dimension_overlaps_with_array_token_stream(&DimensionNumber::Four),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ObjectUuidEqual => {
-                    // let (
-                    //     maybe_dimensions_declaration_token_stream,
-                    //     maybe_dimensions_default_initialization_token_stream,
-                    //     maybe_dimensions_indexes_initialization_token_stream,
-                    //     postgresql_type_kind,
-                    //     maybe_additional_parameters_token_stream,
-                    //     maybe_dimensions_query_bind_content_token_stream
-                    // ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
-                    //     (
-                    //         generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
-                    //         dimensions_default_initialization_comma_token_stream.clone(),
-                    //         {
-                    //             let dimensions_indexes_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
-                    //                 &dimensions_indexes_snake_case,
-                    //                 &dimensions_snake_case,
-                    //                 &quote::quote!{postgresql_json_type_query_part_minus_one}
-                    //             );
-                    //             let last_dimensions_index_intialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{last_dimensions_index});
-                    //             quote::quote!{
-                    //                 #dimensions_indexes_initialization_token_stream
-                    //                 #last_dimensions_index_intialization_token_stream
-                    //             }
-                    //         },
-                    //         PostgresqlTypeKind::ArrayDimension,
-                    //         quote::quote!{
-                    //             last_dimensions_index,
-                    //             #dimensions_indexes_snake_case,
-                    //         },
-                    //         query_self_dimensions_query_bind_query_token_stream.clone()
-                    //     )
-                    // }
-                    // else {
-                    //     (
-                    //         proc_macro2::TokenStream::new(),
-                    //         proc_macro2::TokenStream::new(),
-                    //         proc_macro2::TokenStream::new(),
-                    //         PostgresqlTypeKind::Standart,
-                    //         proc_macro2::TokenStream::new(),
-                    //         proc_macro2::TokenStream::new()
-                    //     )
-                    // };
                     (
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote::quote! {
@@ -1758,6 +1742,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             // ))
                             todo!()
                         },
+                        is_query_bind_mutable_true.clone(),
                         quote::quote!{
                             // #query_equals_query_self_value_to_string_token_stream
                             todo!()
@@ -1781,7 +1766,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
                 &query_part_content_token_stream,
-                &postgresql_crud_macros_common::IsQueryBindMutable::True,
+                &is_query_bind_mutable,
                 &query_bind_content_token_stream,
             );
             let generated = quote::quote! {
