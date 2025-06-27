@@ -354,6 +354,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     generate_pub_dimensions_bounded_vec_token_stream(&vec_length_token_stream, &KindOfUnsignedPartOfStdPrimitiveI32::CanNotBeZero)
                 };
                 let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote!{pub value: crate::PostgresqlTypeNotEmptyUniqueVec<T>};
+                let generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream = |dimension_number: &DimensionNumber|{
+                    let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
+                    quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
+                };
                 let generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream = |
                     postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
                     generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> std::string::String
@@ -367,10 +371,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_dimensions_query_bind_content_token_stream
                     ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
                         (
-                            {
-                                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
-                                quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
-                            },
+                            generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
@@ -440,10 +441,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_dimensions_query_bind_content_token_stream
                     ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
                         (
-                            {
-                                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
-                                quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
-                            },
+                            generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
@@ -501,10 +499,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_dimensions_query_bind_content_token_stream
                     ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
                         (
-                            {
-                                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
-                                quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
-                            },
+                            generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
@@ -580,10 +575,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_dimensions_query_bind_content_token_stream
                     ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
                         (
-                            {
-                                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
-                                quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
-                            },
+                            generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
@@ -642,10 +634,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_dimensions_query_bind_content_token_stream
                     ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
                         (
-                            {
-                                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
-                                quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
-                            },
+                            generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
@@ -703,10 +692,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_dimensions_query_bind_content_token_stream
                     ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
                         (
-                            {
-                                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
-                                quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
-                            },
+                            generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
@@ -774,10 +760,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_dimensions_query_bind_content_token_stream
                     ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
                         (
-                            {
-                                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
-                                quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
-                            },
+                            generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
@@ -892,10 +875,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         maybe_dimensions_query_bind_content_token_stream
                     ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
                         (
-                            {
-                                let pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream());
-                                quote::quote! {#pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_token_stream,}
-                            },
+                            generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                             dimensions_default_initialization_comma_token_stream.clone(),
                             quote::quote!{
                                 #dimensions_indexes_postgresql_type_query_part_token_stream
