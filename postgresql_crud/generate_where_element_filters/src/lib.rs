@@ -331,6 +331,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         }
     }
     let dimensions_indexes_comma_token_stream = quote::quote!{#dimensions_indexes_snake_case,};
+    let generate_maybe_dimensions_declaration_pub_value_t_token_stream = |maybe_dimensions_declaration_token_stream: &dyn quote::ToTokens|{
+        quote::quote! {
+            #maybe_dimensions_declaration_token_stream
+            #pub_value_t_token_stream
+        }
+    };
     let postgresql_type_token_stream = {
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
@@ -393,10 +399,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     };
                     (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        quote::quote! {
-                            #maybe_dimensions_declaration_token_stream
-                            #pub_value_t_token_stream
-                        },
+                        generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
                         quote::quote!{
                             #maybe_dimensions_default_initialization_token_stream
                             #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
@@ -656,10 +659,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     };
                     (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
-                        quote::quote! {
-                            #maybe_dimensions_declaration_token_stream
-                            #pub_value_t_token_stream
-                        },
+                        generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
                         quote::quote!{
                             #maybe_dimensions_default_initialization_token_stream
                             #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
@@ -1110,10 +1110,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 };
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    quote::quote! {
-                        #maybe_dimensions_declaration_token_stream
-                        #pub_value_t_token_stream
-                    },
+                    generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
                     quote::quote!{
                         #maybe_dimensions_default_initialization_token_stream
                         #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
@@ -1226,10 +1223,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 };
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    quote::quote! {
-                        #maybe_dimensions_declaration_token_stream
-                        #pub_value_t_token_stream
-                    },
+                    generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
                     quote::quote!{
                         #maybe_dimensions_default_initialization_token_stream
                         #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
