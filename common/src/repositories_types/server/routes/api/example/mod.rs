@@ -148,7 +148,7 @@ pub struct Example {
     // pub vec_std_primitive_i16_as_postgresql_int2_array_not_null: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub vec_std_string_string_as_postgresql_text_array_not_null: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullText,
     // pub column_2dc47998_5a25_42a3_9df3_d5db25683916: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNotNullTimestampTz,
-    pub column_1ad1cb7c_b0cb_4168_96ec_464893ce9753: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4Range,
+    // pub column_1ad1cb7c_b0cb_4168_96ec_464893ce9753: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4Range,
     // pub column_ab95f432_7046_4a82_8f27_b2b0d41729fc: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveTimeAsNotNullArrayOfNotNullTime,
     // //63max
 }
