@@ -613,7 +613,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["dimension", "one", "overlap", "with", "range"],
     ["dimension", "one", "adjacent", "with", "range"],
     ["dimension", "one", "range", "length"],
-    ["dimensions"]
+    ["dimensions"],
+    ["dimensions", "indexes"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

@@ -4,6 +4,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
     let query_snake_case = naming::QuerySnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
     let dimensions_snake_case = naming::DimensionsSnakeCase;
+    let dimensions_indexes_snake_case = naming::DimensionsIndexesSnakeCase;
     let t_token_stream = quote::quote! {T};
     let t_annotation_generic_token_stream = quote::quote! {<#t_token_stream>};
     let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
@@ -304,7 +305,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #format_handle_token_stream,
                 &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
                 column,
-                dimensions_indexes,
+                #dimensions_indexes_snake_case,
                 #other_parameters
             ))
         }
@@ -329,6 +330,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             }
         }
     }
+    let dimensions_indexes_comma_token_stream = quote::quote!{#dimensions_indexes_snake_case,};
     let postgresql_type_token_stream = {
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
@@ -346,7 +348,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     maybe_additional_traits_token_stream: Some(quote::quote!{std::fmt::Debug + std::cmp::PartialEq + Clone + sqlx::Type<sqlx::Postgres> + for<'__> sqlx::Encode<'__, sqlx::Postgres>})
                 };
                 let dimensions_indexes_postgresql_type_query_part_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
-                    &quote::quote!{dimensions_indexes},
+                    &dimensions_indexes_snake_case,
                     &dimensions_snake_case,
                     &quote::quote!{postgresql_type_query_part}
                 );
@@ -375,7 +377,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
-                            quote::quote!{dimensions_indexes,},
+                            dimensions_indexes_comma_token_stream.clone(),
                             query_self_dimensions_query_bind_query_token_stream.clone()
                         )
                     }
@@ -445,7 +447,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
-                            quote::quote!{dimensions_indexes,},
+                            dimensions_indexes_comma_token_stream.clone(),
                             query_self_dimensions_query_bind_query_token_stream.clone()
                         )
                     }
@@ -503,7 +505,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
-                            quote::quote!{dimensions_indexes,},
+                            dimensions_indexes_comma_token_stream.clone(),
                             query_self_dimensions_query_bind_query_token_stream.clone()
                         )
                     }
@@ -579,7 +581,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
-                            quote::quote!{dimensions_indexes,},
+                            dimensions_indexes_comma_token_stream.clone(),
                             query_self_dimensions_query_bind_query_token_stream.clone()
                         )
                     }
@@ -638,7 +640,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
-                            quote::quote!{dimensions_indexes,},
+                            dimensions_indexes_comma_token_stream.clone(),
                             query_self_dimensions_query_bind_query_token_stream.clone()
                         )
                     }
@@ -696,7 +698,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
-                            quote::quote!{dimensions_indexes,},
+                            dimensions_indexes_comma_token_stream.clone(),
                             query_self_dimensions_query_bind_query_token_stream.clone()
                         )
                     }
@@ -764,7 +766,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             dimensions_default_initialization_comma_token_stream.clone(),
                             dimensions_indexes_postgresql_type_query_part_token_stream.clone(),
                             PostgresqlTypeKind::ArrayDimension,
-                            quote::quote!{dimensions_indexes,},
+                            dimensions_indexes_comma_token_stream.clone(),
                             query_self_dimensions_query_bind_query_token_stream.clone()
                         )
                     }
@@ -883,9 +885,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             },
                             PostgresqlTypeKind::ArrayDimension,
                             quote::quote!{
-                                dimensions_indexes,
+                                #dimensions_indexes_snake_case,
                                 column,
-                                dimensions_indexes,
+                                #dimensions_indexes_snake_case,
                             },
                             quote::quote!{
                                 query = self.#dimensions_snake_case.clone().query_bind(query);
@@ -1070,7 +1072,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #query_equals_query_self_value_to_string_token_stream
             };
             let dimensions_indexes_postgresql_json_type_query_part_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
-                &quote::quote!{dimensions_indexes},
+                &dimensions_indexes_snake_case,
                 &dimensions_snake_case,
                 &quote::quote!{postgresql_json_type_query_part}
             );
@@ -1092,7 +1094,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         dimensions_default_initialization_comma_token_stream.clone(),
                         dimensions_indexes_postgresql_json_type_query_part_token_stream.clone(),
                         PostgresqlTypeKind::ArrayDimension,
-                        quote::quote!{dimensions_indexes,},
+                        dimensions_indexes_comma_token_stream.clone(),
                         query_self_dimensions_query_bind_query_token_stream.clone()
                     )
                 }
@@ -1208,7 +1210,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         dimensions_default_initialization_comma_token_stream.clone(),
                         dimensions_indexes_postgresql_json_type_query_part_token_stream.clone(),
                         PostgresqlTypeKind::ArrayDimension,
-                        quote::quote!{dimensions_indexes,},
+                        dimensions_indexes_comma_token_stream.clone(),
                         query_self_dimensions_query_bind_query_token_stream.clone()
                     )
                 }
@@ -1317,7 +1319,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         dimensions_default_initialization_comma_token_stream.clone(),
                         dimensions_indexes_postgresql_json_type_query_part_token_stream.clone(),
                         PostgresqlTypeKind::ArrayDimension,
-                        quote::quote!{dimensions_indexes,},
+                        dimensions_indexes_comma_token_stream.clone(),
                         query_self_dimensions_query_bind_query_token_stream.clone()
                     )
                 }
@@ -1378,7 +1380,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         dimensions_default_initialization_comma_token_stream.clone(),
                         dimensions_indexes_postgresql_json_type_query_part_token_stream.clone(),
                         PostgresqlTypeKind::ArrayDimension,
-                        quote::quote!{dimensions_indexes,},
+                        dimensions_indexes_comma_token_stream.clone(),
                         query_self_dimensions_query_bind_query_token_stream.clone()
                     )
                 }
@@ -1445,7 +1447,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         dimensions_default_initialization_comma_token_stream.clone(),
                         {
                             let dimensions_indexes_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
-                                &quote::quote!{dimensions_indexes},
+                                &dimensions_indexes_snake_case,
                                 &dimensions_snake_case,
                                 &quote::quote!{postgresql_json_type_query_part_minus_one}
                             );
@@ -1458,7 +1460,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         PostgresqlTypeKind::ArrayDimension,
                         quote::quote!{
                             last_dimensions_index,
-                            dimensions_indexes,
+                            #dimensions_indexes_snake_case,
                         },
                         query_self_dimensions_query_bind_query_token_stream.clone()
                     )
