@@ -1695,6 +1695,75 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
                     ident: _
                 } => generate_dimension_overlaps_with_array_token_stream(&DimensionNumber::Four),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ObjectUuidEqual => {
+                    // let (
+                    //     maybe_dimensions_declaration_token_stream,
+                    //     maybe_dimensions_default_initialization_token_stream,
+                    //     maybe_dimensions_indexes_initialization_token_stream,
+                    //     postgresql_type_kind,
+                    //     maybe_additional_parameters_token_stream,
+                    //     maybe_dimensions_query_bind_content_token_stream
+                    // ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
+                    //     (
+                    //         generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
+                    //         dimensions_default_initialization_comma_token_stream.clone(),
+                    //         {
+                    //             let dimensions_indexes_initialization_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
+                    //                 &dimensions_indexes_snake_case,
+                    //                 &dimensions_snake_case,
+                    //                 &quote::quote!{postgresql_json_type_query_part_minus_one}
+                    //             );
+                    //             let last_dimensions_index_intialization_token_stream = generate_match_increment_checked_add_one_initialization_token_stream(&quote::quote!{last_dimensions_index});
+                    //             quote::quote!{
+                    //                 #dimensions_indexes_initialization_token_stream
+                    //                 #last_dimensions_index_intialization_token_stream
+                    //             }
+                    //         },
+                    //         PostgresqlTypeKind::ArrayDimension,
+                    //         quote::quote!{
+                    //             last_dimensions_index,
+                    //             #dimensions_indexes_snake_case,
+                    //         },
+                    //         query_self_dimensions_query_bind_query_token_stream.clone()
+                    //     )
+                    // }
+                    // else {
+                    //     (
+                    //         proc_macro2::TokenStream::new(),
+                    //         proc_macro2::TokenStream::new(),
+                    //         proc_macro2::TokenStream::new(),
+                    //         PostgresqlTypeKind::Standart,
+                    //         proc_macro2::TokenStream::new(),
+                    //         proc_macro2::TokenStream::new()
+                    //     )
+                    // };
+                    (
+                        should_add_declaration_of_struct_ident_generic_false.clone(),
+                        quote::quote! {
+                            // #regular_expression_case_and_value_declaration_token_stream
+                            // value: <crate::postgresql_json_type::UuidUuidAsNotNullJsonbString as crate::PostgresqlJsonType>::Select
+                            value: std::string::String
+                        },
+                        // value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
+                        quote::quote! {
+                            value: #core_default_default_default_token_stream
+                        },
+                        quote::quote! {
+                            // #value_match_increment_checked_add_one_initialization_token_stream
+                            // Ok(format!(
+                            //     "{}({}->>'id' = ${})",
+                            //     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                            //     column,
+                            //     value
+                            // ))
+                            todo!()
+                        },
+                        quote::quote!{
+                            // #query_equals_query_self_value_to_string_token_stream
+                            todo!()
+                        }
+                    )
+                }
             };
             let struct_token_stream = generate_struct_token_stream(
                 false,
