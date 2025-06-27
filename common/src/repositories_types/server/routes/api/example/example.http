@@ -76,40 +76,40 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
-  #   "logical_operator": "Or",
-  #   "value": [
-  #     {
-  #       "Equal": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "GreaterThan": {
-  #         "logical_operator": "Or",
-  #         "value": 0
-  #       }
-  #     },
-  #     {
-  #       "Between": {
-  #         "logical_operator": "Or",
-  #         "value": {
-  #           "start": 0,
-  #           "end": 0
-  #         }
-  #       }
-  #     },
-  #     {
-  #       "In": {
-  #         "logical_operator": "Or",
-  #         "value": [
-  #           0
-  #         ]
-  #       }
-  #     }
-  #   ]
-  # },
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
+    "logical_operator": "Or",
+    "value": [
+      {
+        "Equal": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      },
+      {
+        "GreaterThan": {
+          "logical_operator": "Or",
+          "value": 0
+        }
+      },
+      {
+        "Between": {
+          "logical_operator": "Or",
+          "value": {
+            "start": 0,
+            "end": 0
+          }
+        }
+      },
+      {
+        "In": {
+          "logical_operator": "Or",
+          "value": [
+            0
+          ]
+        }
+      }
+    ]
+  },
   "animal_as_not_null_jsonb_object": {
     "logical_operator": "Or",
     "value": [
@@ -122,10 +122,16 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
                 "logical_operator": "Or",
                 "value": [
                   {
-                    "id": "8471e67a-12a6-4d9e-80ec-606e8455f8f8",
+                    "id": "48656a6b-e64d-4539-8d6c-3192f9e4a365",
                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
                   }
                 ]
+              }
+            },
+            {
+              "Element": {
+                "logical_operator": "Or",
+                "value": "af728339-583e-4b4b-80aa-cf7f3598df72"
               }
             }
           ]
@@ -134,9 +140,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     ]
   },
   "select": [
-    # {
-    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    # },
+    {
+      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    },
     {
       "animal_as_not_null_jsonb_object": [
         {
