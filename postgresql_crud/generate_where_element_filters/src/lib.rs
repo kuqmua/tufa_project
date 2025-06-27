@@ -1071,6 +1071,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
                 quote::quote! {#pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,}
             };
+            let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_value_t_token_stream = |dimension_number: &DimensionNumber|{
+                let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
+                quote::quote! {
+                    #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
+                    #pub_value_t_token_stream
+                }
+            };
             let generate_7cc8e29b_53e1_4bee_9947_71987439148c_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, operator: &dyn std::fmt::Display| {
                 let (
                     maybe_dimensions_declaration_token_stream,
@@ -1129,13 +1136,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let generate_dimension_all_elements_equal_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
-                            #pub_value_t_token_stream
-                        }
-                    },
+                    generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_value_t_token_stream(&dimension_number),
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         let ok_format_token_stream = generate_ok_format_value_token_stream(
@@ -1190,13 +1191,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let generate_dimension_contains_element_greater_than_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
-                            #pub_value_t_token_stream
-                        }
-                    },
+                    generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_value_t_token_stream(&dimension_number),
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         let ok_format_token_stream = generate_ok_format_value_token_stream(
@@ -1214,13 +1209,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let generate_dimension_all_elements_greater_than_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
-                            #pub_value_t_token_stream
-                        }
-                    },
+                    generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_value_t_token_stream(&dimension_number),
                     dimensions_default_value_default_initialization_token_stream.clone(),
                     {
                         let ok_format_token_stream = generate_ok_format_value_token_stream(
