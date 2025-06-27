@@ -907,15 +907,27 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         (
                             generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                             dimensions_default_initialization_comma_token_stream.clone(),
-                            quote::quote!{
-                                #dimensions_indexes_postgresql_type_query_part_token_stream
-                                #dimensions_indexes_postgresql_type_query_part_token_stream
+                            {
+                                let dimensions_indexes1_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
+                                    &quote::quote!{dimensions_indexes1},
+                                    &dimensions_snake_case,
+                                    &quote::quote!{postgresql_type_query_part}
+                                );
+                                let dimensions_indexes2_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
+                                    &quote::quote!{dimensions_indexes2},
+                                    &dimensions_snake_case,
+                                    &quote::quote!{postgresql_type_query_part}
+                                );
+                                quote::quote!{
+                                    #dimensions_indexes1_token_stream
+                                    #dimensions_indexes2_token_stream
+                                }
                             },
                             PostgresqlTypeKind::ArrayDimension,
                             quote::quote!{
-                                #dimensions_indexes_snake_case,
+                                dimensions_indexes1,
                                 column,
-                                #dimensions_indexes_snake_case,
+                                dimensions_indexes2,
                             },
                             quote::quote!{
                                 query = self.#dimensions_snake_case.clone().query_bind(query);
