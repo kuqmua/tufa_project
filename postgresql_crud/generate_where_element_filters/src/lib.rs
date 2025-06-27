@@ -126,6 +126,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         filter_type: &FilterType,
         should_add_declaration_of_struct_ident_generic: &ShouldAddDeclarationOfStructIdentGeneric,
         ident: &dyn quote::ToTokens,
+        is_increment_parameter_underscore: &postgresql_crud_macros_common::IsIncrementParameterUnderscore,
         query_part_content_token_stream: &dyn quote::ToTokens,
         is_query_bind_mutable: &postgresql_crud_macros_common::IsQueryBindMutable,
         query_bind_content_token_stream: &dyn quote::ToTokens
@@ -153,7 +154,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream: _ } => &t_annotation_generic_token_stream,
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             },
-            &postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
+            &is_increment_parameter_underscore,
             &query_part_content_token_stream,
             is_query_bind_mutable,
             &query_bind_content_token_stream,
@@ -353,6 +354,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 should_add_declaration_of_struct_ident_generic,
                 struct_additional_fields_token_stream,
                 impl_default_but_option_is_always_some_and_vec_always_contains_one_element_additional_fields_token_stream,
+                is_increment_parameter_underscore,
                 query_part_content_token_stream,
                 is_query_bind_mutable,
                 query_bind_content_token_stream
@@ -411,6 +413,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
                         generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
+                        postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&generate_format_handle_stringified(&postgresql_type_kind));
                             quote::quote! {
@@ -479,6 +482,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_between_t_token_stream
                         },
                         generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
+                        postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {{}})", postgresql_type_kind.format_argument()));
                             quote::quote! {
@@ -535,6 +539,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_postgresql_type_not_empty_unique_vec_t_token_stream
                         },
                         generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
+                        postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} in ({{}}))", postgresql_type_kind.format_argument()));
                             quote::quote! {
@@ -612,6 +617,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #maybe_dimensions_default_initialization_token_stream
                             #regular_expression_case_and_value_default_initialization_token_stream
                         },
+                        postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {{}} ${{}})", postgresql_type_kind.format_argument()));
                             quote::quote! {
@@ -666,6 +672,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
                         generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
+                        postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} < ${{}})", postgresql_type_kind.format_argument()));
                             quote::quote! {
@@ -719,6 +726,13 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         maybe_dimensions_declaration_token_stream,
                         maybe_dimensions_default_initialization_token_stream,
+                        match &postgresql_type_pattern_handle {
+                            PostgresqlTypePatternHandle::Standart => postgresql_crud_macros_common::IsIncrementParameterUnderscore::True,
+                            PostgresqlTypePatternHandle::ArrayDimension1 |
+                            PostgresqlTypePatternHandle::ArrayDimension2 |
+                            PostgresqlTypePatternHandle::ArrayDimension3 |
+                            PostgresqlTypePatternHandle::ArrayDimension4 => postgresql_crud_macros_common::IsIncrementParameterUnderscore::False
+                        },
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {postgresql_syntax})", postgresql_type_kind.format_argument()));
                             quote::quote! {
@@ -738,7 +752,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             PostgresqlTypePatternHandle::ArrayDimension3 |
                             PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone()
                         },
-                        //here increment
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_snake_case
@@ -803,6 +816,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             encode_format: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream,
                             encoded_string_representation: #core_default_default_default_token_stream
                         },
+                        postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}(encode({{}}{}, '{{}}') = ${{}})", postgresql_type_kind.format_argument()));
                             quote::quote! {
@@ -849,6 +863,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream.clone(),
                         value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
+                        postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                         generate_query_part_one_value_token_stream(
                             &generate_quotes::double_quotes_token_stream(&format!("{{}}(array_length({{}}, 1) {operator} ${{}})"))
                         ),
@@ -925,6 +940,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream
                         },
                         generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
+                        postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                                 &format!("{{}}(upper({{}}{}) - lower({{}}{}) = ${{}})",
@@ -1018,6 +1034,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &FilterType::PostgresqlType,
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
+                &is_increment_parameter_underscore,
                 &query_part_content_token_stream,
                 &is_query_bind_mutable,
                 &query_bind_content_token_stream,
@@ -1773,6 +1790,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &FilterType::PostgresqlJsonType,
                 &should_add_declaration_of_struct_ident_generic,
                 &ident,
+                &postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                 &query_part_content_token_stream,
                 &is_query_bind_mutable,
                 &query_bind_content_token_stream,
