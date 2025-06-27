@@ -3837,6 +3837,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &quote::quote! {<'a>},
                                 &ident_standart_not_null_read_upper_camel_case,
                                 &proc_macro2::TokenStream::new(),
+                                &postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                                 &{
                                     let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
                                     quote::quote! {

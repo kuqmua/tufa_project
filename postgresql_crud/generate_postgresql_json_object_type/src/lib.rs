@@ -1506,6 +1506,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &quote::quote! {<'a>},
                         &ident_token_stream,
                         &proc_macro2::TokenStream::new(),
+                        &postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
                         &query_part_content_token_stream,
                         &is_query_bind_mutable,
                         &query_bind_content_token_stream,

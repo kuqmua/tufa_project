@@ -153,6 +153,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ShouldAddDeclarationOfStructIdentGeneric::True { maybe_additional_traits_token_stream: _ } => &t_annotation_generic_token_stream,
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             },
+            &postgresql_crud_macros_common::IsIncrementParameterUnderscore::False,
             &query_part_content_token_stream,
             is_query_bind_mutable,
             &query_bind_content_token_stream,
@@ -540,7 +541,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                                 #maybe_dimensions_indexes_initialization_token_stream
                                 let value = {
                                     let mut acc = std::string::String::default();
-                                    for element in self.value.to_vec() {
+                                    for _ in self.value.to_vec() {
                                         match increment.checked_add(1) {
                                             Some(value) => {
                                                 *increment = value;
@@ -737,6 +738,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             PostgresqlTypePatternHandle::ArrayDimension3 |
                             PostgresqlTypePatternHandle::ArrayDimension4 => is_query_bind_mutable_true.clone()
                         },
+                        //here increment
                         quote::quote!{
                             #maybe_dimensions_query_bind_content_token_stream
                             #query_snake_case
