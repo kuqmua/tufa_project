@@ -170,8 +170,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         query = query.bind(self.value.to_string());
         query
     };
-    let equal_sign = "=";
-    let greater_than_sign = ">";
     let query_bind_one_value_token_stream = quote::quote! {
         query = query.bind(self.value);
         query
@@ -1213,7 +1211,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
                 )
             };
-            let generate_dimension_length_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &equal_sign);
+            let generate_dimension_length_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &"=");
             let generate_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 let (
                     maybe_dimensions_declaration_token_stream,
@@ -1598,7 +1596,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone()
                 )
             };
-            let generate_dimension_length_more_than_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &greater_than_sign);
+            let generate_dimension_length_more_than_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &">");
             let generate_dimension_contains_all_elements_of_array_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
