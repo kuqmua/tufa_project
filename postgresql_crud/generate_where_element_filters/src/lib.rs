@@ -337,6 +337,12 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             #pub_value_t_token_stream
         }
     };
+    let generate_maybe_dimensions_default_initialization_value_default_token_stream = |maybe_dimensions_default_initialization_token_stream: &dyn quote::ToTokens|{
+        quote::quote!{
+            #maybe_dimensions_default_initialization_token_stream
+            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+        }
+    };
     let postgresql_type_token_stream = {
         let generate_filters_token_stream = |filter: &postgresql_crud_macros_common::PostgresqlTypeFilter| {
             let ident = naming::parameter::PostgresqlTypeWhereElementSelfUpperCamelCase::from_display(&filter);
@@ -400,10 +406,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
-                        quote::quote!{
-                            #maybe_dimensions_default_initialization_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        },
+                        generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&generate_format_handle_stringified(&postgresql_type_kind));
                             quote::quote! {
@@ -470,10 +473,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #maybe_dimensions_declaration_token_stream
                             #pub_value_between_t_token_stream
                         },
-                        quote::quote!{
-                            #maybe_dimensions_default_initialization_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        },
+                        generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {{}})", postgresql_type_kind.format_argument()));
                             quote::quote! {
@@ -528,10 +528,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #maybe_dimensions_declaration_token_stream
                             #pub_value_postgresql_type_not_empty_unique_vec_t_token_stream
                         },
-                        quote::quote!{
-                            #maybe_dimensions_default_initialization_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        },
+                        generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} in ({{}}))", postgresql_type_kind.format_argument()));
                             quote::quote! {
@@ -660,10 +657,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     (
                         should_add_declaration_of_struct_ident_generic_true_type_encode.clone(),
                         generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
-                        quote::quote!{
-                            #maybe_dimensions_default_initialization_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        },
+                        generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} < ${{}})", postgresql_type_kind.format_argument()));
                             quote::quote! {
@@ -911,10 +905,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                             #maybe_dimensions_declaration_token_stream
                             #pub_value_not_zero_unsigned_part_of_std_primitive_i32_declaration_token_stream
                         },
-                        quote::quote!{
-                            #maybe_dimensions_default_initialization_token_stream
-                            #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                        },
+                        generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                         {
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
                                 &format!("{{}}(upper({{}}{}) - lower({{}}{}) = ${{}})",
@@ -1111,10 +1102,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
-                    quote::quote!{
-                        #maybe_dimensions_default_initialization_token_stream
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    },
+                    generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} = ${{}})", postgresql_type_kind.format_argument()));
                         quote::quote! {
@@ -1224,10 +1212,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 (
                     should_add_declaration_of_struct_ident_generic_true_none.clone(),
                     generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
-                    quote::quote!{
-                        #maybe_dimensions_default_initialization_token_stream
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    },
+                    generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                             "{{}}({{}}{} > ${{}})",
@@ -1333,10 +1318,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         #maybe_dimensions_declaration_token_stream
                         #pub_value_between_t_token_stream
                     },
-                    quote::quote!{
-                        #maybe_dimensions_default_initialization_token_stream
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    },
+                    generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                             "{{}}({{}}{} {{}})",
@@ -1394,10 +1376,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         #maybe_dimensions_declaration_token_stream
                         #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
                     },
-                    quote::quote!{
-                        #maybe_dimensions_default_initialization_token_stream
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    },
+                    generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
                     {
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                             "{{}}({{}}{} in ({{}}))",
