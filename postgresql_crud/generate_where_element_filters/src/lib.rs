@@ -1093,39 +1093,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 &dimensions_snake_case,
                 &quote::quote!{postgresql_json_type_query_part}
             );
-            let generate_dimension_length_operation_token_stream = |
-                dimension_number: &DimensionNumber,
-                operator: &dyn std::fmt::Display,
-            | {
-                (
-                    should_add_declaration_of_struct_ident_generic_false.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
-                            pub value: #unsigned_part_of_std_primitive_i32_token_stream
-                        }
-                    },
-                    quote::quote! {
-                        #dimensions_default_initialization_token_stream,
-                        value: #core_default_default_default_token_stream
-                    },
-                    {
-                        let ok_format_token_stream = generate_ok_format_value_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{{}}) {operator} ${{}})"))
-                        );
-                        quote::quote! {
-                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            #value_match_increment_checked_add_one_initialization_token_stream
-                            #ok_format_token_stream
-                        }
-                    },
-                    quote::quote! {
-                        #query_self_dimensions_query_bind_query_token_stream
-                        #query_bind_one_value_token_stream
-                    }
-                )
-            };
             let generate_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 let (
                     maybe_dimensions_declaration_token_stream,
@@ -1209,6 +1176,39 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         }
                     },
                     query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
+                )
+            };
+            let generate_dimension_length_operation_token_stream = |
+                dimension_number: &DimensionNumber,
+                operator: &dyn std::fmt::Display,
+            | {
+                (
+                    should_add_declaration_of_struct_ident_generic_false.clone(),
+                    {
+                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
+                        quote::quote! {
+                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,
+                            pub value: #unsigned_part_of_std_primitive_i32_token_stream
+                        }
+                    },
+                    quote::quote! {
+                        #dimensions_default_initialization_token_stream,
+                        value: #core_default_default_default_token_stream
+                    },
+                    {
+                        let ok_format_token_stream = generate_ok_format_value_token_stream(
+                            &generate_quotes::double_quotes_token_stream(&format!("{{}}(jsonb_array_length({{}}{{}}) {operator} ${{}})"))
+                        );
+                        quote::quote! {
+                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
+                            #value_match_increment_checked_add_one_initialization_token_stream
+                            #ok_format_token_stream
+                        }
+                    },
+                    quote::quote! {
+                        #query_self_dimensions_query_bind_query_token_stream
+                        #query_bind_one_value_token_stream
+                    }
                 )
             };
             let generate_dimension_length_equal_token_stream = |dimension_number: &DimensionNumber|generate_dimension_length_operation_token_stream(&dimension_number, &"=");
