@@ -48,7 +48,7 @@
 pub struct Example {
     // pub vec: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
 
-    pub column_40d64ae4_a646_4394_bfce_3894bdfced87: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
+    // pub column_40d64ae4_a646_4394_bfce_3894bdfced87: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
     // pub column_ebe9a28a_eef0_4b1d_a706_8a9c363db7ab: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_b225e9b0_80ae_4aea_ab7f_2444d0b3c5fa: postgresql_crud::postgresql_type::StdPrimitiveI32AsNotNullInt4,
     // pub column_fb5fe9b0_1505_4d68_b2e1_2483bc47ab6c: postgresql_crud::postgresql_type::OptionStdPrimitiveI32AsNullableInt4,
@@ -148,7 +148,7 @@ pub struct Example {
     // pub vec_std_primitive_i16_as_postgresql_int2_array_not_null: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub vec_std_string_string_as_postgresql_text_array_not_null: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullText,
     // pub column_2dc47998_5a25_42a3_9df3_d5db25683916: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNotNullTimestampTz,
-    pub column_1ad1cb7c_b0cb_4168_96ec_464893ce9753: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4Range,
+    // pub column_1ad1cb7c_b0cb_4168_96ec_464893ce9753: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4Range,
     // pub column_ab95f432_7046_4a82_8f27_b2b0d41729fc: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveTimeAsNotNullArrayOfNotNullTime,
     // //63max
 }
@@ -346,9 +346,10 @@ pub struct Animal {
 
     // pub std_vec_vec_object_with_id: StdVecVecObjectWithIdDoggie,
     // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
-    pub doggie_as_not_null_jsonb_object: DoggieAsNotNullJsonbObject,
+    // pub doggie_as_not_null_jsonb_object: DoggieAsNotNullJsonbObject,
+    
     // pub option_doggie_as_nullable_jsonb_object: OptionDoggieAsNullableJsonbObject,
-    // pub vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     // pub option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 ///////////////////////////////////////////////////
@@ -375,9 +376,9 @@ pub struct Doggie {
     // pub column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: postgresql_crud::postgresql_json_type::VecOfStdStringStringAsNotNullArrayOfNotNullJsonbString,
 
     // pub column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: postgresql_crud::postgresql_json_type::VecOfStdStringStringAsNotNullArrayOfNotNullJsonbString,
-    pub column_32fc16eb_2641_4d65_acec_0c7addbfe338: postgresql_crud::postgresql_json_type::VecOfVecOfVecOfVecOfStdStringStringAsNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullJsonbString,
+    // pub column_32fc16eb_2641_4d65_acec_0c7addbfe338: postgresql_crud::postgresql_json_type::VecOfVecOfVecOfVecOfStdStringStringAsNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullArrayOfNotNullJsonbString,
     //
-    // pub column_113f3662_35a2_4a7a_9326_03bbd441815f: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
+    pub column_113f3662_35a2_4a7a_9326_03bbd441815f: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
     // pub column_1761f64d_b930_446b_8422_e4fa6faf8872: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
 
     // pub column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: postgresql_crud::postgresql_json_type::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
