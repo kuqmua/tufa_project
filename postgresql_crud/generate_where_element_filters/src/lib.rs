@@ -1814,6 +1814,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourEqual {
                     ident: _
                 } => generate_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::AllElementsEqual {
+                    ident: _
+                } => generate_all_elements_equal_token_stream(&PostgresqlTypePatternHandle::Standart),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsEqual {
                     ident: _
                 } => generate_all_elements_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),

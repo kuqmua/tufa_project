@@ -244,6 +244,9 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionFourEqual {
         ident: proc_macro2::TokenStream,
     },
+    AllElementsEqual {
+        ident: proc_macro2::TokenStream,
+    },
     DimensionOneAllElementsEqual {
         ident: proc_macro2::TokenStream,
     },
@@ -390,6 +393,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoEqual { ident: _ } => &naming::DimensionTwoEqualUpperCamelCase,
             Self::DimensionThreeEqual { ident: _ } => &naming::DimensionThreeEqualUpperCamelCase,
             Self::DimensionFourEqual { ident: _ } => &naming::DimensionFourEqualUpperCamelCase,
+            Self::AllElementsEqual { ident: _ } => &naming::AllElementsEqualUpperCamelCase,
             Self::DimensionOneAllElementsEqual { ident: _ } => &naming::DimensionOneAllElementsEqualUpperCamelCase,
             Self::DimensionTwoAllElementsEqual { ident: _ } => &naming::DimensionTwoAllElementsEqualUpperCamelCase,
             Self::DimensionThreeAllElementsEqual { ident: _ } => &naming::DimensionThreeAllElementsEqualUpperCamelCase,
@@ -465,6 +469,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoEqual { ident }=> Some(ident.clone()),
             Self::DimensionThreeEqual { ident }=> Some(ident.clone()),
             Self::DimensionFourEqual { ident }=> Some(ident.clone()),
+            Self::AllElementsEqual { ident }=> Some(ident.clone()),
             Self::DimensionOneAllElementsEqual { ident }=> Some(ident.clone()),
             Self::DimensionTwoAllElementsEqual { ident }=> Some(ident.clone()),
             Self::DimensionThreeAllElementsEqual { ident }=> Some(ident.clone()),
