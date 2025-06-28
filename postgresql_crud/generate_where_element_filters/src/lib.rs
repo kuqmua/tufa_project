@@ -1626,29 +1626,66 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_dimension_overlaps_with_array_token_stream = |dimension_number: &DimensionNumber| {
+            let generate_overlaps_with_array_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                let (
+                    maybe_dimensions_declaration_token_stream,
+                    maybe_dimensions_default_initialization_token_stream,
+                    maybe_dimensions_indexes_initialization_token_stream,
+                    postgresql_type_kind,
+                    maybe_additional_parameters_token_stream,
+                    maybe_dimensions_query_bind_content_token_stream
+                ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
+                    (
+                        generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
+                        dimensions_default_initialization_comma_token_stream.clone(),
+                        dimensions_indexes_postgresql_json_type_query_part_token_stream.clone(),
+                        PostgresqlTypeKind::ArrayDimension,
+                        dimensions_indexes_comma_token_stream.clone(),
+                        query_self_dimensions_query_bind_query_token_stream.clone()
+                    )
+                }
+                else {
+                    (
+                        proc_macro2::TokenStream::new(),
+                        proc_macro2::TokenStream::new(),
+                        proc_macro2::TokenStream::new(),
+                        PostgresqlTypeKind::Standart,
+                        proc_macro2::TokenStream::new(),
+                        proc_macro2::TokenStream::new()
+                    )
+                };
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
-                            #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
-                        }
+                    quote::quote! {
+                        #maybe_dimensions_declaration_token_stream
+                        #pub_value_postgresql_json_type_not_empty_unique_vec_t_token_stream
                     },
-                    dimensions_default_value_default_initialization_token_stream.clone(),
+                    quote::quote!{
+                        #maybe_dimensions_default_initialization_token_stream
+                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
+                    },
                     {
-                        let ok_format_token_stream = generate_ok_format_value_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}(exists (select 1 from jsonb_array_elements_text({}{}) as e1 join jsonb_array_elements_text({}) as e2 on e1.value = e2.value))")
-                        );
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}(exists (select 1 from jsonb_array_elements_text({{}}{}) as e1 join jsonb_array_elements_text({{}}) as e2 on e1.value = e2.value))",
+                            postgresql_type_kind.format_argument()
+                        ));
                         quote::quote! {
-                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
+                            #maybe_dimensions_indexes_initialization_token_stream
                             #value_match_self_value_query_part_initialization_token_stream
-                            #ok_format_token_stream
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #maybe_additional_parameters_token_stream
+                                value
+                            ))
                         }
                     },
                     is_query_bind_mutable_true.clone(),
-                    query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream.clone()
+                    quote::quote!{
+                        #maybe_dimensions_query_bind_content_token_stream
+                        #query_bind_sqlx_types_json_self_value_token_stream
+                    }
                 )
             };
             let (
@@ -1810,18 +1847,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     ident: _
                 } => generate_contains_all_elements_of_array_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
                 // postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainedInArray => todo!(),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::OverlapsWithArray { 
+                    ident: _
+                } => generate_overlaps_with_array_token_stream(&PostgresqlTypePatternHandle::Standart),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneOverlapsWithArray { 
                     ident: _
-                } => generate_dimension_overlaps_with_array_token_stream(&DimensionNumber::One),
+                } => generate_overlaps_with_array_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoOverlapsWithArray {
                     ident: _
-                } => generate_dimension_overlaps_with_array_token_stream(&DimensionNumber::Two),
+                } => generate_overlaps_with_array_token_stream(&PostgresqlTypePatternHandle::ArrayDimension2),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeOverlapsWithArray {
                     ident: _
-                } => generate_dimension_overlaps_with_array_token_stream(&DimensionNumber::Three),
+                } => generate_overlaps_with_array_token_stream(&PostgresqlTypePatternHandle::ArrayDimension3),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
                     ident: _
-                } => generate_dimension_overlaps_with_array_token_stream(&DimensionNumber::Four),
+                } => generate_overlaps_with_array_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
             };
             let struct_token_stream = generate_struct_token_stream(
                 false,

@@ -618,7 +618,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["object", "uuid", "equal"],
     ["length", "equal"],
     ["length", "more", "than"],
-    ["contains", "all", "elements", "of", "array"]
+    ["contains", "all", "elements", "of", "array"],
+    ["overlaps", "with", "array"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

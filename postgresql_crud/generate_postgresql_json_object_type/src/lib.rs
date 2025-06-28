@@ -1451,9 +1451,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let contains_all_elements_of_array_token_stream = quote::quote! {
                                     ContainsAllElementsOfArray(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementContainsAllElementsOfArray<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
                                 };
-                                // DimensionOneOverlapsWithArray {
-                                //     ident: proc_macro2::TokenStream,
-                                // }
+                                let overlaps_with_array_token_stream = quote::quote! {
+                                    OverlapsWithArray(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementOverlapsWithArray<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
+                                };
                                 let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element|{
                                     let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element.ident.clone().unwrap());
                                     let element_type = &element.ty;
@@ -1471,6 +1471,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     #in_token_stream
                                     #dimension_one_in_token_stream
                                     #contains_all_elements_of_array_token_stream
+                                    #overlaps_with_array_token_stream
                                     #(#element_filters_token_stream),*
                                 }
                             })
@@ -1590,6 +1591,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Self::In(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                         Self::DimensionOneIn(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                         Self::ContainsAllElementsOfArray(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                                        Self::OverlapsWithArray(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                         #(#element_filters_token_stream),*
                                     }
                                 }
@@ -1609,6 +1611,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Self::In(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
                                         Self::DimensionOneIn(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
                                         Self::ContainsAllElementsOfArray(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
+                                        Self::OverlapsWithArray(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
                                         #(#element_filters_token_stream),*
                                     }
                                 }
@@ -1668,6 +1671,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Self::In(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
                                     Self::DimensionOneIn(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
                                     Self::ContainsAllElementsOfArray(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
+                                    Self::OverlapsWithArray(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
                                     #(#element_filters_token_stream),*
                                 ]
                             }

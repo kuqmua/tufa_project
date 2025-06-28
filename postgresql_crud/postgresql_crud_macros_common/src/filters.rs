@@ -364,6 +364,9 @@ pub enum PostgresqlJsonTypeFilter {
         ident: proc_macro2::TokenStream,
     },
     // ContainedInArray,
+    OverlapsWithArray {
+        ident: proc_macro2::TokenStream,
+    },
     DimensionOneOverlapsWithArray {
         ident: proc_macro2::TokenStream,
     },
@@ -440,6 +443,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoContainsAllElementsOfArray { ident: _ } => &naming::DimensionTwoContainsAllElementsOfArrayUpperCamelCase,
             Self::DimensionThreeContainsAllElementsOfArray { ident: _ } => &naming::DimensionThreeContainsAllElementsOfArrayUpperCamelCase,
             Self::DimensionFourContainsAllElementsOfArray { ident: _ } => &naming::DimensionFourContainsAllElementsOfArrayUpperCamelCase,
+            Self::OverlapsWithArray { ident: _ } => &naming::OverlapsWithArrayUpperCamelCase,
             Self::DimensionOneOverlapsWithArray { ident: _ } => &naming::DimensionOneOverlapsWithArrayUpperCamelCase,
             Self::DimensionTwoOverlapsWithArray { ident: _ } => &naming::DimensionTwoOverlapsWithArrayUpperCamelCase,
             Self::DimensionThreeOverlapsWithArray { ident: _ } => &naming::DimensionThreeOverlapsWithArrayUpperCamelCase,
@@ -512,6 +516,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoContainsAllElementsOfArray { ident }=> Some(ident.clone()),
             Self::DimensionThreeContainsAllElementsOfArray { ident }=> Some(ident.clone()),
             Self::DimensionFourContainsAllElementsOfArray { ident }=> Some(ident.clone()),
+            Self::OverlapsWithArray { ident } => Some(ident.clone()),
             Self::DimensionOneOverlapsWithArray { ident }=> Some(ident.clone()),
             Self::DimensionTwoOverlapsWithArray { ident }=> Some(ident.clone()),
             Self::DimensionThreeOverlapsWithArray { ident }=> Some(ident.clone()),
