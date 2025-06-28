@@ -49,6 +49,12 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         },
         {
           "column_113f3662_35a2_4a7a_9326_03bbd441815f": 3
+        },
+        {
+          "column_113f3662_35a2_4a7a_9326_03bbd441815f": 3
+        },
+        {
+          "column_113f3662_35a2_4a7a_9326_03bbd441815f": 3
         }
       ]
     }
@@ -241,7 +247,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     "logical_operator": "Or",
             #     "value": [
             #       {
-            #         "id": "264ed17d-4b2c-4052-9921-da15ba000c1b",
+            #         "id": "e38987bf-6aa0-42ea-9514-0d56bb349612",
             #         "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
             #       }
             #     ]
@@ -254,15 +260,21 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #       0
             #     ],
             #     "value": {
-            #       "id": "a361b9d6-1e97-4695-89e0-86d41e887e13",
+            #       "id": "6a279fdf-54d1-4f4c-a4c7-f603651b5521",
             #       "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
             #     }
             #   }
             # },
+            # {
+            #   "LengthEqual": {
+            #     "logical_operator": "Or",
+            #     "value": 0
+            #   }
+            # },
             {
-              "LengthEqual": {
+              "LengthMoreThan": {
                 "logical_operator": "Or",
-                "value": 1
+                "value": 4
               }
             }
             # ,
@@ -273,14 +285,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #       {
             #         "Equal": {
             #           "logical_operator": "Or",
-            #           "value": "36bbeee8-926b-489c-8595-6e2373011420"
+            #           "value": "6c3490bb-95d9-454e-8b4f-78aec663d310"
             #         }
             #       },
             #       {
             #         "In": {
             #           "logical_operator": "Or",
             #           "value": [
-            #             "ffeb30da-79c1-4d5f-a892-7337c6e43505"
+            #             "1f65a933-91f1-4ebe-b691-75eac355fc7a"
             #           ]
             #         }
             #       },

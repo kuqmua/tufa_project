@@ -1443,8 +1443,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 let length_equal_token_stream = quote::quote! {
                                     LengthEqual(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementLengthEqual),
                                 };
-                                // LengthEqual,
-                                // LengthMoreThan,
+                                let length_more_than_token_stream = quote::quote! {
+                                    LengthMoreThan(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementLengthMoreThan),
+                                };
                                 // In {
                                 //     ident: proc_macro2::TokenStream,
                                 // },
@@ -1471,6 +1472,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     #equal_token_stream
                                     #dimension_one_equal_token_stream
                                     #length_equal_token_stream
+                                    #length_more_than_token_stream
                                     #(#element_filters_token_stream),*
                                 }
                             })
@@ -1586,6 +1588,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                         Self::DimensionOneEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                         Self::LengthEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                                        Self::LengthMoreThan(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                         #(#element_filters_token_stream),*
                                     }
                                 }
@@ -1601,6 +1604,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
                                         Self::DimensionOneEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
                                         Self::LengthEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
+                                        Self::LengthMoreThan(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
                                         #(#element_filters_token_stream),*
                                     }
                                 }
@@ -1656,6 +1660,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Self::Equal(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
                                     Self::DimensionOneEqual(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
                                     Self::LengthEqual(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
+                                    Self::LengthMoreThan(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
                                     #(#element_filters_token_stream),*
                                 ]
                             }
