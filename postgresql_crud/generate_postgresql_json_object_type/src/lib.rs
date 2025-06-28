@@ -1431,15 +1431,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         Equal(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_as_postgresql_json_type_table_type_declaration_token_stream>),
                                     }
                                 };
-                                // let position_equal_token_stream = {
-                                //     let ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
-                                //         &ident_with_id_standart_not_null_upper_camel_case,
-                                //         &postgresql_json_type_subtype_table_type_declaration
-                                //     );
-                                //     quote::quote! {
-                                //         PositionEqual(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
-                                //     }
-                                // };
+                                let position_equal_token_stream = {
+                                    let ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream = generate_type_as_postgresql_json_type_subtype_token_stream(
+                                        &ident_with_id_standart_not_null_upper_camel_case,
+                                        &postgresql_json_type_subtype_table_type_declaration
+                                    );
+                                    quote::quote! {
+                                        DimensionOneEqual(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementDimensionOneEqual<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
+                                    }
+                                };
                                 let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element|{
                                     let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element.ident.clone().unwrap());
                                     let element_type = &element.ty;
@@ -1451,7 +1451,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 });
                                 quote::quote! {
                                     #equal_token_stream
-                                    // #position_equal_token_stream
+                                    #position_equal_token_stream
                                     #(#element_filters_token_stream),*
                                 }
                             })
@@ -1565,7 +1565,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     };
                                     match &self {
                                         Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                        // Self::PositionEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                                        Self::DimensionOneEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
                                         #(#element_filters_token_stream),*
                                     }
                                 }
@@ -1579,7 +1579,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 quote::quote!{
                                     match self {
                                         Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                        // Self::PositionEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
+                                        Self::DimensionOneEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
                                         #(#element_filters_token_stream),*
                                     }
                                 }
@@ -1633,7 +1633,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             quote::quote!{
                                 vec![
                                     Self::Equal(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
-                                    // Self::PositionEqual(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case())
+                                    Self::DimensionOneEqual(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
                                     #(#element_filters_token_stream),*
                                 ]
                             }
