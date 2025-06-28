@@ -1264,6 +1264,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let generate_length_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 generate_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_token_stream(&postgresql_type_pattern_handle, &"=")
             };
+            let generate_length_more_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle|{
+                generate_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_token_stream(&postgresql_type_pattern_handle, &">")
+            };
             let generate_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
                 generate_7cc8e29b_53e1_4bee_9947_71987439148c_token_stream(&postgresql_type_pattern_handle, &">")
             };
@@ -1567,9 +1570,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone()
                 )
             };
-            let generate_length_more_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle|{
-                generate_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_token_stream(&postgresql_type_pattern_handle, &">")
-            };
             let generate_dimension_contains_all_elements_of_array_token_stream = |dimension_number: &DimensionNumber| {
                 (
                     should_add_declaration_of_struct_ident_generic_true_debug_partial_eq_clone.clone(),
@@ -1660,6 +1660,11 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthEqual => generate_length_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension2),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthEqual => generate_length_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension3),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthEqual => generate_length_equal_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::Standart),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension2),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension3),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::GreaterThan {
                     ident: _
                 } => generate_greater_than_token_stream(&PostgresqlTypePatternHandle::Standart),
@@ -1758,11 +1763,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
                     &DimensionNumber::Four
                 ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::Standart),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension2),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension3),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsAllElementsOfArray {
                     ident: _
                 } => generate_dimension_contains_all_elements_of_array_token_stream(&DimensionNumber::One),

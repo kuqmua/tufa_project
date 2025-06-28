@@ -261,6 +261,11 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoLengthEqual,
     DimensionThreeLengthEqual,
     DimensionFourLengthEqual,
+    LengthMoreThan,
+    DimensionOneLengthMoreThan,
+    DimensionTwoLengthMoreThan,
+    DimensionThreeLengthMoreThan,
+    DimensionFourLengthMoreThan,
     GreaterThan {
         ident: proc_macro2::TokenStream,
     },
@@ -343,11 +348,6 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoAllElementsRegularExpression,
     DimensionThreeAllElementsRegularExpression,
     DimensionFourAllElementsRegularExpression,
-    LengthMoreThan,
-    DimensionOneLengthMoreThan,
-    DimensionTwoLengthMoreThan,
-    DimensionThreeLengthMoreThan,
-    DimensionFourLengthMoreThan,
     DimensionOneContainsAllElementsOfArray {
         ident: proc_macro2::TokenStream,
     },
