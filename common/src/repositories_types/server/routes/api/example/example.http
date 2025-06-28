@@ -167,7 +167,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #       {
       #         "DimensionOneContainsAllElementsOfArray": {
       #           "logical_operator": "Or",
-      #           "dimensions": [],
+      #           "dimensions": [
+      #             0
+      #           ],
       #           "value": [
       #             0
       #           ]
@@ -247,7 +249,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     "logical_operator": "Or",
             #     "value": [
             #       {
-            #         "id": "48b4b1bb-be96-4e02-bce2-87bfc6a18125",
+            #         "id": "f419e976-1f31-4f14-9c69-170c13f82005",
             #         "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
             #       }
             #     ]
@@ -260,7 +262,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #       0
             #     ],
             #     "value": {
-            #       "id": "e679a598-331f-44e4-b8d7-7147d488e417",
+            #       "id": "09468335-b31c-4614-90ac-eb2fd6a81429",
             #       "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
             #     }
             #   }
@@ -283,20 +285,30 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #     "value": [
             #       [
             #         {
-            #           "id": "7f9a40cc-23ee-4de2-afe7-2da6c1762680",
+            #           "id": "4d3653bb-9d8b-49c8-a0c3-3f0ea15cd628",
             #           "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
             #         }
             #       ]
             #     ]
             #   }
-            # }
-            # ,
+            # },
+            # {
+            #   "DimensionOneIn": {
+            #     "logical_operator": "Or",
+            #     "dimensions": [
+            #       0
+            #     ],
+            #     "value": [
+            #       {
+            #         "id": "fb31be5b-06b9-4d82-82fe-703c14d55829",
+            #         "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+            #       }
+            #     ]
+            #   }
+            # },
             {
-              "DimensionOneIn": {
+              "ContainsAllElementsOfArray": {
                 "logical_operator": "Or",
-                "dimensions": [
-                  0
-                ],
                 "value": [
                   {
                     "id": "7f9a40cc-23ee-4de2-afe7-2da6c1762680",
@@ -313,14 +325,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             #       {
             #         "Equal": {
             #           "logical_operator": "Or",
-            #           "value": "30aca95e-db81-47eb-8984-2b76e9ebb5ce"
+            #           "value": "8c6107e7-64c3-4f27-8136-14f6c9a3819f"
             #         }
             #       },
             #       {
             #         "In": {
             #           "logical_operator": "Or",
             #           "value": [
-            #             "b3a0ef01-8cc5-4c84-bd48-5e094ace8f6d"
+            #             "79adab1f-7a92-44da-9751-f6e22015c78f"
             #           ]
             #         }
             #       },

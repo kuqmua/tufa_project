@@ -348,6 +348,9 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionTwoAllElementsRegularExpression,
     DimensionThreeAllElementsRegularExpression,
     DimensionFourAllElementsRegularExpression,
+    ContainsAllElementsOfArray {
+        ident: proc_macro2::TokenStream,
+    },
     DimensionOneContainsAllElementsOfArray {
         ident: proc_macro2::TokenStream,
     },
@@ -432,6 +435,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoLengthMoreThan => &naming::DimensionTwoLengthMoreThanUpperCamelCase,
             Self::DimensionThreeLengthMoreThan => &naming::DimensionThreeLengthMoreThanUpperCamelCase,
             Self::DimensionFourLengthMoreThan => &naming::DimensionFourLengthMoreThanUpperCamelCase,
+            Self::ContainsAllElementsOfArray { ident: _ } => &naming::ContainsAllElementsOfArrayUpperCamelCase,
             Self::DimensionOneContainsAllElementsOfArray { ident: _ } => &naming::DimensionOneContainsAllElementsOfArrayUpperCamelCase,
             Self::DimensionTwoContainsAllElementsOfArray { ident: _ } => &naming::DimensionTwoContainsAllElementsOfArrayUpperCamelCase,
             Self::DimensionThreeContainsAllElementsOfArray { ident: _ } => &naming::DimensionThreeContainsAllElementsOfArrayUpperCamelCase,
@@ -503,6 +507,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoLengthMoreThan => None,
             Self::DimensionThreeLengthMoreThan => None,
             Self::DimensionFourLengthMoreThan => None,
+            Self::ContainsAllElementsOfArray { ident }=> Some(ident.clone()),
             Self::DimensionOneContainsAllElementsOfArray { ident }=> Some(ident.clone()),
             Self::DimensionTwoContainsAllElementsOfArray { ident }=> Some(ident.clone()),
             Self::DimensionThreeContainsAllElementsOfArray { ident }=> Some(ident.clone()),
