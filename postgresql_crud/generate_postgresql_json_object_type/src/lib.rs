@@ -1867,9 +1867,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         ),
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
                             match self.0 {
-                                Some(value) => Some({
+                                Some(value) => Some(
                                     <#ident_standart_not_null_upper_camel_case as #import_path::PostgresqlJsonType>::into_inner(value)
-                                }),
+                                ),
                                 None => None
                             }
                         }
