@@ -1440,10 +1440,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 //         PositionEqual(#import_path::where_element_filters::PostgresqlJsonTypeWhereElementEqual<#ident_with_id_standart_not_null_as_postgresql_json_type_table_type_declaration_token_stream>),
                                 //     }
                                 // };
-                                //todo additional filters
+                                let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element|{
+                                    let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element.ident.clone().unwrap());
+                                    let element_type = &element.ty;
+                                    quote::quote!{
+                                        #element_ident_upper_camel_case(postgresql_crud::PostgresqlTypeWhere<
+                                            <#element_type as postgresql_crud::PostgresqlJsonType>::WhereElement
+                                        >)
+                                    }
+                                });
                                 quote::quote! {
                                     #equal_token_stream
                                     // #position_equal_token_stream
+                                    #(#element_filters_token_stream),*
                                 }
                             })
                         },
@@ -1536,17 +1545,43 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
                         },
                         PostgresqlJsonObjectTypePattern::Array => generate_impl_postgresql_type_where_filter_for_ident_token_stream(
-                            &quote::quote!{
-                                match &self {
-                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
-                                    // Self::PositionEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                            &{
+                                let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element|{
+                                    let element_ident = element.ident.clone().unwrap();
+                                    let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element_ident);
+                                    let element_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident);
+                                    quote::quote!{Self::#element_ident_upper_camel_case(value) => generate_element_query(value, &#element_ident_double_quotes_token_stream)}
+                                });
+                                quote::quote!{
+                                    let mut generate_element_query = |value: &dyn postgresql_crud::PostgresqlTypeWhereFilter<'_>, field: &std::primitive::str| -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+                                        let elem = "elem";
+                                        let value = match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, &format!("{elem}->'{field}'"), is_need_to_add_logical_operator) {
+                                            Ok(value) => value,
+                                            Err(error) => {
+                                                return Err(error);
+                                            }
+                                        };
+                                        Ok(format!("exists (select 1 from jsonb_array_elements({column}) as {elem} where {value})"))
+                                    };
+                                    match &self {
+                                        Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                                        // Self::PositionEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+                                        #(#element_filters_token_stream),*
+                                    }
                                 }
                             },
                             postgresql_crud_macros_common::IsQueryBindMutable::False,
-                            &quote::quote!{
-                                match self {
-                                    Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
-                                    // Self::PositionEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
+                            &{
+                                let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element|{
+                                    let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element.ident.clone().unwrap());
+                                    quote::quote!{Self::#element_ident_upper_camel_case(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query)}
+                                });
+                                quote::quote!{
+                                    match self {
+                                        Self::Equal(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
+                                        // Self::PositionEqual(value) => #import_path::PostgresqlTypeWhereFilter::query_bind(value, query),
+                                        #(#element_filters_token_stream),*
+                                    }
                                 }
                             },
                         )
@@ -1588,11 +1623,20 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     PostgresqlJsonObjectTypePattern::Array => postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
                         &ident_where_element_upper_camel_case,
-                        &quote::quote!{
-                            vec![
-                                Self::Equal(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
-                                // Self::PositionEqual(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case())
-                            ]
+                        &{
+                            let element_filters_token_stream = vec_syn_field_with_id.iter().map(|element|{
+                                let element_ident_upper_camel_case = naming::parameter::ElementSelfUpperCamelCase::from_tokens(&element.ident.clone().unwrap());
+                                quote::quote!{
+                                    Self::#element_ident_upper_camel_case(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case())
+                                }
+                            });
+                            quote::quote!{
+                                vec![
+                                    Self::Equal(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()),
+                                    // Self::PositionEqual(#import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case())
+                                    #(#element_filters_token_stream),*
+                                ]
+                            }
                         }
                     ),
                 };
