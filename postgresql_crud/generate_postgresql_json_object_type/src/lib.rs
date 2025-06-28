@@ -1452,7 +1452,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 // DimensionOneIn {
                                 //     ident: proc_macro2::TokenStream,
                                 // },
-                                // DimensionOneLengthMoreThan,
                                 // DimensionOneContainsAllElementsOfArray {
                                 //     ident: proc_macro2::TokenStream,
                                 // },
