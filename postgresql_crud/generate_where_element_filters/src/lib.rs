@@ -1509,33 +1509,67 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                     }
                 )
             };
-            let generate_dimension_contains_element_regular_expression_token_stream = |dimension_number: &DimensionNumber| {
+            let generate_contains_element_regular_expression_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                let (
+                    maybe_dimensions_declaration_token_stream,
+                    maybe_dimensions_default_initialization_token_stream,
+                    maybe_dimensions_indexes_initialization_token_stream,
+                    postgresql_type_kind,
+                    maybe_additional_parameters_token_stream,
+                    maybe_dimensions_query_bind_content_token_stream
+                ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
+                    (
+                        generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
+                        dimensions_default_initialization_comma_token_stream.clone(),
+                        dimensions_indexes_postgresql_json_type_query_part_token_stream.clone(),
+                        PostgresqlTypeKind::ArrayDimension,
+                        dimensions_indexes_comma_token_stream.clone(),
+                        query_self_dimensions_query_bind_query_token_stream.clone()
+                    )
+                }
+                else {
+                    (
+                        proc_macro2::TokenStream::new(),
+                        proc_macro2::TokenStream::new(),
+                        proc_macro2::TokenStream::new(),
+                        PostgresqlTypeKind::Standart,
+                        proc_macro2::TokenStream::new(),
+                        proc_macro2::TokenStream::new()
+                    )
+                };
                 (
                     should_add_declaration_of_struct_ident_generic_false.clone(),
-                    {
-                        let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
-                        quote::quote! {
-                            #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
-                            #regular_expression_case_and_value_declaration_token_stream
-                        }
+                    quote::quote! {
+                        #maybe_dimensions_declaration_token_stream
+                        #regular_expression_case_and_value_declaration_token_stream
                     },
-                    dimensions_default_regular_expression_default_initialization_token_stream.clone(),
+                    quote::quote!{
+                        #maybe_dimensions_default_initialization_token_stream
+                        #regular_expression_case_and_value_default_initialization_token_stream
+                    },
                     {
-                        let ok_format_token_stream = generate_ok_format_token_stream(
-                            &generate_quotes::double_quotes_token_stream(&"{}(exists(select 1 from jsonb_array_elements({}{}) as el where substring(el::text from 2 for length(el::text) - 2) {} ${}))"),
-                            &quote::quote!{
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                            "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where substring(el::text from 2 for length(el::text) - 2) {{}} ${{}}))",
+                            postgresql_type_kind.format_argument()
+                        ));
+                        quote::quote! {
+                            #maybe_dimensions_indexes_initialization_token_stream
+                            #value_match_increment_checked_add_one_initialization_token_stream
+                            Ok(format!(
+                                #format_handle_token_stream,
+                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
+                                column,
+                                #maybe_additional_parameters_token_stream
                                 self.regular_expression_case.postgreql_syntax(),
                                 value
-                            }
-                        );
-                        quote::quote! {
-                            #dimensions_indexes_postgresql_json_type_query_part_token_stream
-                            #value_match_increment_checked_add_one_initialization_token_stream
-                            #ok_format_token_stream
+                            ))
                         }
                     },
                     is_query_bind_mutable_true.clone(),
-                    query_dimensions_bind_query_equals_query_self_value_to_string_token_stream.clone()
+                    quote::quote!{
+                        #maybe_dimensions_query_bind_content_token_stream
+                        #query_equals_query_self_value_to_string_token_stream
+                    }
                 )
             };
             let generate_dimension_all_elements_regular_expression_token_stream = |dimension_number: &DimensionNumber| {
@@ -1807,18 +1841,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoRegularExpression => generate_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension2),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeRegularExpression => generate_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension3),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourRegularExpression => generate_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
-                    &DimensionNumber::One
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
-                    &DimensionNumber::Two
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
-                    &DimensionNumber::Three
-                ),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => generate_dimension_contains_element_regular_expression_token_stream(
-                    &DimensionNumber::Four
-                ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => generate_contains_element_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => generate_contains_element_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension2),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => generate_contains_element_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension3),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourContainsElementRegularExpression => generate_contains_element_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
                     &DimensionNumber::One
                 ),
