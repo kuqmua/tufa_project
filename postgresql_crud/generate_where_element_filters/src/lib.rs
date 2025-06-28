@@ -1758,6 +1758,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourAllElementsRegularExpression => generate_dimension_all_elements_regular_expression_token_stream(
                     &DimensionNumber::Four
                 ),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::LengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::Standart),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension2),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeLengthMoreThan => generate_length_more_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension3),

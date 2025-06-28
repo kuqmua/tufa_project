@@ -616,7 +616,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["dimensions"],
     ["dimensions", "indexes"],
     ["object", "uuid", "equal"],
-    ["length", "equal"]
+    ["length", "equal"],
+    ["length", "more", "than"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
