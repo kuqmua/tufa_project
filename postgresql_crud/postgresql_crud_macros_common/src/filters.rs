@@ -371,7 +371,6 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionFourOverlapsWithArray {
         ident: proc_macro2::TokenStream,
     },
-    ObjectUuidEqual,
 }
 impl PostgresqlFilter for PostgresqlJsonTypeFilter {
     fn upper_camel_case(&self) -> &'static dyn naming::StdFmtDisplayPlusQuoteToTokens {
@@ -437,7 +436,6 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoOverlapsWithArray { ident: _ } => &naming::DimensionTwoOverlapsWithArrayUpperCamelCase,
             Self::DimensionThreeOverlapsWithArray { ident: _ } => &naming::DimensionThreeOverlapsWithArrayUpperCamelCase,
             Self::DimensionFourOverlapsWithArray { ident: _ } => &naming::DimensionFourOverlapsWithArrayUpperCamelCase,
-            Self::ObjectUuidEqual => &naming::ObjectUuidEqualUpperCamelCase,
         }
     }
     fn prefix_where_element_self_upper_camel_case(&self) -> proc_macro2::TokenStream {
@@ -507,7 +505,6 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoOverlapsWithArray { ident }=> Some(ident.clone()),
             Self::DimensionThreeOverlapsWithArray { ident }=> Some(ident.clone()),
             Self::DimensionFourOverlapsWithArray { ident }=> Some(ident.clone()),
-            Self::ObjectUuidEqual => None
         }
     }
 }

@@ -1757,35 +1757,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourOverlapsWithArray {
                     ident: _
                 } => generate_dimension_overlaps_with_array_token_stream(&DimensionNumber::Four),
-                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ObjectUuidEqual => {
-                    (
-                        should_add_declaration_of_struct_ident_generic_false.clone(),
-                        quote::quote! {
-                            // #regular_expression_case_and_value_declaration_token_stream
-                            // value: <crate::postgresql_json_type::UuidUuidAsNotNullJsonbString as crate::PostgresqlJsonType>::Select
-                            value: std::string::String
-                        },
-                        // value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream.clone(),
-                        quote::quote! {
-                            value: #core_default_default_default_token_stream
-                        },
-                        quote::quote! {
-                            // #value_match_increment_checked_add_one_initialization_token_stream
-                            // Ok(format!(
-                            //     "{}({}->>'id' = ${})",
-                            //     &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                            //     column,
-                            //     value
-                            // ))
-                            todo!()
-                        },
-                        is_query_bind_mutable_false.clone(),
-                        quote::quote!{
-                            // #query_equals_query_self_value_to_string_token_stream
-                            todo!()
-                        }
-                    )
-                }
             };
             let struct_token_stream = generate_struct_token_stream(
                 false,
