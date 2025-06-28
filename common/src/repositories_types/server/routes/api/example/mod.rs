@@ -1700,30 +1700,36 @@ impl VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdSelect {
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
 pub enum VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement {
     Equal(postgresql_crud::where_element_filters::PostgresqlJsonTypeWhereElementEqual<<VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::TableTypeDeclaration>),
-    Element(<DoggieWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::WhereElement),//here
+    // here
+    ElementId(postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::WhereElement>),
+    ElementColumn113F366235A24A7A932603Bbd441815F(postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::WhereElement>),
 }
 impl<'a> postgresql_crud::PostgresqlTypeWhereFilter<'a> for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement {
     fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        //here
+        let mut generate_element_query = |value: &dyn postgresql_crud::PostgresqlTypeWhereFilter<'_>, field: &std::primitive::str| -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+            let elem = "elem";
+            let value = match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, &format!("{elem}->'{field}'"), is_need_to_add_logical_operator) {
+                Ok(value) => value,
+                Err(error) => {
+                    return Err(error);
+                }
+            };
+            Ok(format!("exists (select 1 from jsonb_array_elements({column}) as {elem} where {value})"))
+        };
         match &self {
             Self::Equal(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
             //here
-            Self::Element(value) => {
-                let elem = "elem";
-                let value = match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, increment, &elem, is_need_to_add_logical_operator) {
-                    Ok(value) => value,
-                    Err(error) => {
-                        return Err(error);
-                    }
-                };
-                Ok(format!("exists (select 1 from jsonb_array_elements({column}) as {elem} where {value})"))
-            },
+            Self::ElementId(value) => generate_element_query(value, &"id"),
+            Self::ElementColumn113F366235A24A7A932603Bbd441815F(value) => generate_element_query(value, &"column_113f3662_35a2_4a7a_9326_03bbd441815f"),
         }
     }
     fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
         match self {
             Self::Equal(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
             //here
-            Self::Element(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
+            Self::ElementId(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
+            Self::ElementColumn113F366235A24A7A932603Bbd441815F(value) => postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query),
         }
     }
 }
@@ -1735,20 +1741,12 @@ impl error_occurence_lib::ToStdStringString for VecOfDoggieWithIdAsNotNullArrayO
 }
 impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement {
     fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
-        let mut acc = vec![
+        vec![
             Self::Equal(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-
-        ];
-        for element in 
-        <
-            <DoggieWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::WhereElement
-            as 
-            postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-        >::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element()
-        {
-            acc.push(Self::Element(element));
-        }
-        acc
+            //here
+            Self::ElementId(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            Self::ElementColumn113F366235A24A7A932603Bbd441815F(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+        ]
     }
 }
 

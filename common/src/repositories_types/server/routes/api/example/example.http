@@ -121,6 +121,14 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #     "logical_operator": "Or",
       #     "value": [
       #       {
+      #         "Equal": {
+      #           "logical_operator": "Or",
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       },
+      #       {
       #         "DimensionOneEqual": {
       #           "logical_operator": "Or",
       #           "dimensions": [
@@ -128,30 +136,180 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
       #           ],
       #           "value": 0
       #         }
+      #       },
+      #       {
+      #         "DimensionOneLengthEqual": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [
+      #             0
+      #           ],
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "DimensionOneLengthMoreThan": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [
+      #             0
+      #           ],
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "DimensionOneContainsAllElementsOfArray": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [],
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       },
+      #       {
+      #         "DimensionOneOverlapsWithArray": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [],
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       },
+      #       {
+      #         "DimensionOneAllElementsEqual": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [],
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "DimensionOneIn": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [
+      #             0
+      #           ],
+      #           "value": [
+      #             0
+      #           ]
+      #         }
+      #       },
+      #       {
+      #         "DimensionOneGreaterThan": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [
+      #             0
+      #           ],
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "DimensionOneContainsElementGreaterThan": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [],
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "DimensionOneAllElementsGreaterThan": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [],
+      #           "value": 0
+      #         }
+      #       },
+      #       {
+      #         "DimensionOneBetween": {
+      #           "logical_operator": "Or",
+      #           "dimensions": [
+      #             0
+      #           ],
+      #           "value": {
+      #             "start": 0,
+      #             "end": 0
+      #           }
+      #         }
       #       }
       #     ]
       #   }
-      # }
-      # ,
+      # },
       {
         "VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId": {
           "logical_operator": "Or",
           "value": [
+            # {
+            #   "Equal": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       {
+            #         "id": "613d0f7c-402f-4634-80b1-1cc71fb4c1d8",
+            #         "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+            #       }
+            #     ]
+            #   }
+            # },
             {
-              "Element": {
-                "Id": {
-                  "logical_operator": "Or",
-                  "value": [
-                    {
-                      "Equal": {
-                        "logical_operator": "Or",
-                        "value": "7f9a40cc-23ee-4de2-afe7-2da6c1762680"
-                      }
+              "ElementId": {
+                "logical_operator": "Or",
+                "value": [
+                  {
+                    "Equal": {
+                      "logical_operator": "Or",
+                      "value": "7f9a40cc-23ee-4de2-afe7-2da6c1762680"
                     }
-                  ]
-                }
+                  }
+                  # ,
+                  # {
+                  #   "In": {
+                  #     "logical_operator": "Or",
+                  #     "value": [
+                  #       "59a4180a-2d96-4fc2-85ce-bc9f9a13ed73"
+                  #     ]
+                  #   }
+                  # },
+                  # {
+                  #   "RegularExpression": {
+                  #     "logical_operator": "Or",
+                  #     "regular_expression_case": "Sensitive",
+                  #     "value": ""
+                  #   }
+                  # }
+                ]
               }
             }
+            # ,
+            # {
+            #   "ElementColumn113F366235A24A7A932603Bbd441815F": {
+            #     "logical_operator": "Or",
+            #     "value": [
+            #       {
+            #         "Equal": {
+            #           "logical_operator": "Or",
+            #           "value": 0
+            #         }
+            #       },
+            #       {
+            #         "In": {
+            #           "logical_operator": "Or",
+            #           "value": [
+            #             0
+            #           ]
+            #         }
+            #       },
+            #       {
+            #         "GreaterThan": {
+            #           "logical_operator": "Or",
+            #           "value": 0
+            #         }
+            #       },
+            #       {
+            #         "Between": {
+            #           "logical_operator": "Or",
+            #           "value": {
+            #             "start": 0,
+            #             "end": 0
+            #           }
+            #         }
+            #       }
+            #     ]
+            #   }
+            # }
           ]
         }
       }
@@ -176,8 +334,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
             "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
               {
                 "id": null
-              }
-              ,
+              },
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
               }
