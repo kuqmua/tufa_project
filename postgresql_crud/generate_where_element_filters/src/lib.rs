@@ -1841,6 +1841,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoRegularExpression => generate_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension2),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeRegularExpression => generate_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension3),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourRegularExpression => generate_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementRegularExpression => generate_contains_element_regular_expression_token_stream(&PostgresqlTypePatternHandle::Standart),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementRegularExpression => generate_contains_element_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionTwoContainsElementRegularExpression => generate_contains_element_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension2),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionThreeContainsElementRegularExpression => generate_contains_element_regular_expression_token_stream(&PostgresqlTypePatternHandle::ArrayDimension3),
