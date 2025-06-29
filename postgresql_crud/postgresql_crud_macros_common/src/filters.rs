@@ -284,6 +284,9 @@ pub enum PostgresqlJsonTypeFilter {
     DimensionFourGreaterThan {
         ident: proc_macro2::TokenStream,
     },
+    ContainsElementGreaterThan {
+        ident: proc_macro2::TokenStream,
+    },
     DimensionOneContainsElementGreaterThan {
         ident: proc_macro2::TokenStream,
     },
@@ -408,6 +411,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoGreaterThan { ident: _ } => &naming::DimensionTwoGreaterThanUpperCamelCase,
             Self::DimensionThreeGreaterThan { ident: _ } => &naming::DimensionThreeGreaterThanUpperCamelCase,
             Self::DimensionFourGreaterThan { ident: _ } => &naming::DimensionFourGreaterThanUpperCamelCase,
+            Self::ContainsElementGreaterThan { ident: _ } => &naming::ContainsElementGreaterThanUpperCamelCase,
             Self::DimensionOneContainsElementGreaterThan { ident: _ } => &naming::DimensionOneContainsElementGreaterThanUpperCamelCase,
             Self::DimensionTwoContainsElementGreaterThan { ident: _ } => &naming::DimensionTwoContainsElementGreaterThanUpperCamelCase,
             Self::DimensionThreeContainsElementGreaterThan { ident: _ } => &naming::DimensionThreeContainsElementGreaterThanUpperCamelCase,
@@ -484,6 +488,7 @@ impl PostgresqlFilter for PostgresqlJsonTypeFilter {
             Self::DimensionTwoGreaterThan { ident }=> Some(ident.clone()),
             Self::DimensionThreeGreaterThan { ident }=> Some(ident.clone()),
             Self::DimensionFourGreaterThan { ident }=> Some(ident.clone()),
+            Self::ContainsElementGreaterThan { ident }=> Some(ident.clone()),
             Self::DimensionOneContainsElementGreaterThan { ident }=> Some(ident.clone()),
             Self::DimensionTwoContainsElementGreaterThan { ident }=> Some(ident.clone()),
             Self::DimensionThreeContainsElementGreaterThan { ident }=> Some(ident.clone()),

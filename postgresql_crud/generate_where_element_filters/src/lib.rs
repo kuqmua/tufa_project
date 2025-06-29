@@ -1897,8 +1897,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionFourGreaterThan {
                     ident: _
                 } => generate_greater_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension4),
-
-
+                postgresql_crud_macros_common::PostgresqlJsonTypeFilter::ContainsElementGreaterThan {
+                    ident: _
+                } => generate_contains_element_greater_than_token_stream(&PostgresqlTypePatternHandle::Standart),
                 postgresql_crud_macros_common::PostgresqlJsonTypeFilter::DimensionOneContainsElementGreaterThan {
                     ident: _
                 } => generate_contains_element_greater_than_token_stream(&PostgresqlTypePatternHandle::ArrayDimension1),
