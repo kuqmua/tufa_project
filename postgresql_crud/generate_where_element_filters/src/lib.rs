@@ -295,17 +295,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         &value_snake_case,
         &quote::quote!{query_part}
     );
-    let generate_ok_format_token_stream = |format_handle_token_stream: &dyn quote::ToTokens, other_parameters: &dyn quote::ToTokens|{
-        quote::quote!{
-            Ok(format!(
-                #format_handle_token_stream,
-                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                column,
-                #dimensions_indexes_snake_case,
-                #other_parameters
-            ))
-        }
-    };
     let dimensions_default_initialization_token_stream = quote::quote!{
         #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
     };
@@ -1089,63 +1078,10 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
                 quote::quote! {#pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,}
             };
-            let generate_7cc8e29b_53e1_4bee_9947_71987439148c_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, operator: &dyn std::fmt::Display| {
-                let (
-                    maybe_dimensions_declaration_token_stream,
-                    maybe_dimensions_default_initialization_token_stream,
-                    maybe_dimensions_indexes_initialization_token_stream,
-                    postgresql_type_kind,
-                    maybe_additional_parameters_token_stream,
-                    maybe_dimensions_query_bind_content_token_stream
-                ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
-                    (
-                        generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
-                        dimensions_default_initialization_comma_token_stream.clone(),
-                        dimensions_indexes_postgresql_json_type_query_part_token_stream.clone(),
-                        PostgresqlTypeKind::ArrayDimension,
-                        dimensions_indexes_comma_token_stream.clone(),
-                        query_self_dimensions_query_bind_query_token_stream.clone()
-                    )
-                }
-                else {
-                    (
-                        proc_macro2::TokenStream::new(),
-                        proc_macro2::TokenStream::new(),
-                        proc_macro2::TokenStream::new(),
-                        PostgresqlTypeKind::Standart,
-                        proc_macro2::TokenStream::new(),
-                        proc_macro2::TokenStream::new()
-                    )
-                };
-                (
-                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    generate_maybe_dimensions_declaration_pub_value_t_token_stream(&maybe_dimensions_declaration_token_stream),
-                    generate_maybe_dimensions_default_initialization_value_default_token_stream(&maybe_dimensions_default_initialization_token_stream),
-                    {
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}({{}}{} {operator} ${{}})", postgresql_type_kind.format_argument()));
-                        quote::quote! {
-                            #maybe_dimensions_indexes_initialization_token_stream
-                            #value_match_increment_checked_add_one_initialization_token_stream
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                #maybe_additional_parameters_token_stream
-                                value
-                            ))
-                        }
-                    },
-                    is_query_bind_mutable_true.clone(),
-                    quote::quote!{
-                        #maybe_dimensions_query_bind_content_token_stream
-                        #query_bind_sqlx_types_json_self_value_token_stream
-                    }
-                )
-            };
-            let generate_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                generate_7cc8e29b_53e1_4bee_9947_71987439148c_token_stream(&postgresql_type_pattern_handle, &"=")
-            };
-            let generate_all_elements_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+            let generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream = |
+                postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
+                generate_format_handle_stringified: &dyn Fn(&PostgresqlTypeKind) -> std::string::String
+            | {
                 let (
                     maybe_dimensions_declaration_token_stream,
                     maybe_dimensions_default_initialization_token_stream,
@@ -1184,10 +1120,9 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
                     },
                     {
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                            "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <> ${{}}))",
-                            postgresql_type_kind.format_argument()
-                        ));
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(
+                            &generate_format_handle_stringified(&postgresql_type_kind)
+                        );
                         quote::quote! {
                             #maybe_dimensions_indexes_initialization_token_stream
                             #value_match_increment_checked_add_one_initialization_token_stream
@@ -1205,6 +1140,21 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         #maybe_dimensions_query_bind_content_token_stream
                         #query_bind_sqlx_types_json_self_value_token_stream
                     }
+                )
+            };
+            let generate_7cc8e29b_53e1_4bee_9947_71987439148c_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, operator: &dyn std::fmt::Display| {
+                generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream(
+                    &postgresql_type_pattern_handle,
+                    &|postgresql_type_kind: &PostgresqlTypeKind|format!("{{}}({{}}{} {operator} ${{}})", postgresql_type_kind.format_argument())
+                )
+            };
+            let generate_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                generate_7cc8e29b_53e1_4bee_9947_71987439148c_token_stream(&postgresql_type_pattern_handle, &"=")
+            };
+            let generate_all_elements_equal_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
+                generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream(
+                    &postgresql_type_pattern_handle,
+                    &|postgresql_type_kind: &PostgresqlTypeKind|format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <> ${{}}))", postgresql_type_kind.format_argument())
                 )
             };
             let generate_ae2fa44d_9035_49fd_ba20_eed1bd4680d4_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, operation: &dyn std::fmt::Display| {
@@ -1276,127 +1226,15 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 generate_7cc8e29b_53e1_4bee_9947_71987439148c_token_stream(&postgresql_type_pattern_handle, &">")
             };
             let generate_contains_element_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                let (
-                    maybe_dimensions_declaration_token_stream,
-                    maybe_dimensions_default_initialization_token_stream,
-                    maybe_dimensions_indexes_initialization_token_stream,
-                    postgresql_type_kind,
-                    maybe_additional_parameters_token_stream,
-                    maybe_dimensions_query_bind_content_token_stream
-                ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
-                    (
-                        generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
-                        dimensions_default_initialization_comma_token_stream.clone(),
-                        dimensions_indexes_postgresql_json_type_query_part_token_stream.clone(),
-                        PostgresqlTypeKind::ArrayDimension,
-                        dimensions_indexes_comma_token_stream.clone(),
-                        query_self_dimensions_query_bind_query_token_stream.clone()
-                    )
-                }
-                else {
-                    (
-                        proc_macro2::TokenStream::new(),
-                        proc_macro2::TokenStream::new(),
-                        proc_macro2::TokenStream::new(),
-                        PostgresqlTypeKind::Standart,
-                        proc_macro2::TokenStream::new(),
-                        proc_macro2::TokenStream::new()
-                    )
-                };
-                (
-                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    quote::quote! {
-                        #maybe_dimensions_declaration_token_stream
-                        #pub_value_t_token_stream
-                    },
-                    quote::quote!{
-                        #maybe_dimensions_default_initialization_token_stream
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    },
-                    {
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                            "{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) > ${{}}))",
-                            postgresql_type_kind.format_argument()
-                        ));
-                        quote::quote! {
-                            #maybe_dimensions_indexes_initialization_token_stream
-                            #value_match_increment_checked_add_one_initialization_token_stream
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                #maybe_additional_parameters_token_stream
-                                value
-                            ))
-                        }
-                    },
-                    is_query_bind_mutable_true.clone(),
-                    quote::quote!{
-                        #maybe_dimensions_query_bind_content_token_stream
-                        #query_bind_sqlx_types_json_self_value_token_stream
-                    }
+                generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream(
+                    &postgresql_type_pattern_handle,
+                    &|postgresql_type_kind: &PostgresqlTypeKind|format!("{{}}(exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) > ${{}}))", postgresql_type_kind.format_argument())
                 )
             };
             let generate_all_elements_greater_than_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
-                let (
-                    maybe_dimensions_declaration_token_stream,
-                    maybe_dimensions_default_initialization_token_stream,
-                    maybe_dimensions_indexes_initialization_token_stream,
-                    postgresql_type_kind,
-                    maybe_additional_parameters_token_stream,
-                    maybe_dimensions_query_bind_content_token_stream
-                ) = if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
-                    (
-                        generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
-                        dimensions_default_initialization_comma_token_stream.clone(),
-                        dimensions_indexes_postgresql_json_type_query_part_token_stream.clone(),
-                        PostgresqlTypeKind::ArrayDimension,
-                        dimensions_indexes_comma_token_stream.clone(),
-                        query_self_dimensions_query_bind_query_token_stream.clone()
-                    )
-                }
-                else {
-                    (
-                        proc_macro2::TokenStream::new(),
-                        proc_macro2::TokenStream::new(),
-                        proc_macro2::TokenStream::new(),
-                        PostgresqlTypeKind::Standart,
-                        proc_macro2::TokenStream::new(),
-                        proc_macro2::TokenStream::new()
-                    )
-                };
-                (
-                    should_add_declaration_of_struct_ident_generic_true_none.clone(),
-                    quote::quote! {
-                        #maybe_dimensions_declaration_token_stream
-                        #pub_value_t_token_stream
-                    },
-                    quote::quote!{
-                        #maybe_dimensions_default_initialization_token_stream
-                        #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-                    },
-                    {
-                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                            "{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <= ${{}}))",
-                            postgresql_type_kind.format_argument()
-                        ));
-                        quote::quote! {
-                            #maybe_dimensions_indexes_initialization_token_stream
-                            #value_match_increment_checked_add_one_initialization_token_stream
-                            Ok(format!(
-                                #format_handle_token_stream,
-                                &self.logical_operator.to_query_part(is_need_to_add_logical_operator),
-                                column,
-                                #maybe_additional_parameters_token_stream
-                                value
-                            ))
-                        }
-                    },
-                    is_query_bind_mutable_true.clone(),
-                    quote::quote!{
-                        #maybe_dimensions_query_bind_content_token_stream
-                        #query_bind_sqlx_types_json_self_value_token_stream
-                    }
+                generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream(
+                    &postgresql_type_pattern_handle,
+                    &|postgresql_type_kind: &PostgresqlTypeKind|format!("{{}}(not exists(select 1 from jsonb_array_elements({{}}{}) as el where (el) <= ${{}}))", postgresql_type_kind.format_argument())
                 )
             };
             let generate_between_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle| {
