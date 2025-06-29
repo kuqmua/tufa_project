@@ -256,12 +256,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         fn dimension_token_stream(&self) -> proc_macro2::TokenStream {
             self.dimension_std_primitive_u8().to_string().parse::<proc_macro2::TokenStream>().unwrap()
         }
-        fn dimension_minus_one_token_stream(&self) -> proc_macro2::TokenStream {
-            self.dimension_std_primitive_u8().saturating_sub(1).to_string().parse::<proc_macro2::TokenStream>().unwrap()
-        }
-        // fn dimension_plus_one_token_stream(&self) -> proc_macro2::TokenStream {
-        //     self.dimension_std_primitive_u8().checked_add(1).unwrap().to_string().parse::<proc_macro2::TokenStream>().unwrap()
-        // }
     }
     enum KindOfUnsignedPartOfStdPrimitiveI32 {
         CanBeZero,
@@ -311,9 +305,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 #other_parameters
             ))
         }
-    };
-    let generate_ok_format_value_token_stream = |format_handle_token_stream: &dyn quote::ToTokens|{
-        generate_ok_format_token_stream(format_handle_token_stream, &quote::quote!{value})
     };
     let dimensions_default_initialization_token_stream = quote::quote!{
         #dimensions_snake_case: #path_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
@@ -1089,17 +1080,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream = |dimension_number: &DimensionNumber|{
                 generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_token_stream())
             };
-            let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = |dimension_number: &DimensionNumber|{
-                generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream(&dimension_number.dimension_minus_one_token_stream())
-            };
-            let dimensions_default_value_default_initialization_token_stream = quote::quote!{
-                #dimensions_default_initialization_token_stream,
-                #value_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream
-            };
-            let query_dimensions_bind_query_bind_sqlx_types_json_self_value_token_stream = quote::quote!{
-                #query_self_dimensions_query_bind_query_token_stream
-                #query_bind_sqlx_types_json_self_value_token_stream
-            };
             let dimensions_indexes_postgresql_json_type_query_part_token_stream = generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
                 &dimensions_indexes_snake_case,
                 &dimensions_snake_case,
@@ -1108,13 +1088,6 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
             let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream = |dimension_number: &DimensionNumber| {
                 let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_token_stream(&dimension_number);
                 quote::quote! {#pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,}
-            };
-            let generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_value_t_token_stream = |dimension_number: &DimensionNumber|{
-                let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream = generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream(&dimension_number);
-                quote::quote! {
-                    #pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_dimension_minus_one_token_stream,
-                    #pub_value_t_token_stream
-                }
             };
             let generate_7cc8e29b_53e1_4bee_9947_71987439148c_token_stream = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, operator: &dyn std::fmt::Display| {
                 let (
