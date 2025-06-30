@@ -908,7 +908,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => true,
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => true,
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => true,
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => true,
         };
         let not_null_or_nullable_filter = match &element.not_null_or_nullable {
             NotNullOrNullable::NotNull => true,
@@ -1236,11 +1236,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let sqlx_types_time_date_as_date = PostgresqlType::SqlxTypesTimeDateAsDate;
             let sqlx_types_big_decimal_as_numeric = PostgresqlType::SqlxTypesBigDecimalAsNumeric;
 
-            // let sqlx_types_chrono_naive_date_time_as_timestamp_field_type_token_stream = PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp.field_type_token_stream();
             let sqlx_types_time_primitive_date_time_as_timestamp_field_type_token_stream = sqlx_types_time_primitive_date_time_as_timestamp.field_type_token_stream();
-            // let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_timestamp_tz_field_type_token_stream = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz.field_type_token_stream();
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_timestamp_tz_field_type_token_stream = PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz.field_type_token_stream();
-            // let sqlx_types_chrono_naive_date_as_date_field_type_token_stream = PostgresqlType::SqlxTypesChronoNaiveDateAsDate.field_type_token_stream();
             let sqlx_types_time_date_as_date_field_type_token_stream = sqlx_types_time_date_as_date.field_type_token_stream();
             let sqlx_types_big_decimal_as_numeric_field_type_token_stream = sqlx_types_big_decimal_as_numeric.field_type_token_stream();
 
@@ -1765,7 +1761,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     )
                                 )
                             ),
-                            generate_std_collections_bound_token_stream(&sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_timestamp_tz_field_type_token_stream),
+                            generate_std_collections_bound_token_stream(
+                                &naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                                    &generate_ident_token_stream(
+                                        &PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz,
+                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                        &PostgresqlTypePattern::Standart
+                                    )
+                                )
+                            ),
                             generate_std_collections_bound_token_stream(&naming::parameter::SelfOriginUpperCamelCase::from_tokens(
                                 &generate_ident_token_stream(
                                     &PostgresqlType::SqlxTypesChronoNaiveDateAsDate,
@@ -1811,10 +1815,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = {
-                            let std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream = generate_std_collections_bound_token_stream(&sqlx_types_chrono_date_time_sqlx_types_chrono_local_as_timestamp_tz_field_type_token_stream);
-                            generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream, &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream])
-                        };
+                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                            &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream,
+                            &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_local_token_stream
+                        ]);
                         let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                         quote::quote! {
                             #fields_initialization_token_stream
