@@ -4054,66 +4054,56 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => if postgresql_type_range_try_from_postgresql_type.is_ok() {
-                                let pg_range_conversion_token_stream = generate_pg_range_conversion_value_one_token_stream(&quote::quote!{element.0});
-                                quote::quote! {
-                                    value.0.0.into_iter().map(|element|#pg_range_conversion_token_stream).collect()
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
+                                let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    generate_pg_range_conversion_value_one_token_stream(&quote::quote!{element.0})
                                 }
-                            }
-                            else {
-                                quote::quote! {value.0.0.into_iter().map(|element|element.0).collect()}
+                                else {
+                                    quote::quote! {element.0}
+                                };
+                                quote::quote! {
+                                    value.0.0.into_iter().map(|element|#content_token_stream).collect()
+                                }
                             },
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => if postgresql_type_range_try_from_postgresql_type.is_ok() {
-                                let content_token_stream = generate_pg_range_conversion_value_one_token_stream(&quote::quote!{value.0});
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    generate_pg_range_conversion_value_one_token_stream(&quote::quote!{value.0})
+                                }
+                                else {
+                                    quote::quote! {value.0}
+                                };
                                 quote::quote! {
                                     value.0.0.into_iter().map(|element| match element.0 {
                                         Some(value) => Some(#content_token_stream),
                                         None => None
                                     }).collect()
                                 }
-                            }
-                            else {
-                                quote::quote! {
-                                    value.0.0.into_iter().map(|element| match element.0 {
-                                        Some(value) => Some(value.0),
-                                        None => None
-                                    }).collect()
-                                }
                             },
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => if postgresql_type_range_try_from_postgresql_type.is_ok() {
-                                let content_token_stream = generate_pg_range_conversion_value_one_token_stream(&quote::quote!{element.0});
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
+                                let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    generate_pg_range_conversion_value_one_token_stream(&quote::quote!{element.0})
+                                }
+                                else {
+                                    quote::quote! {element.0}
+                                };
                                 quote::quote! {
                                     match value.0.0 {
                                         Some(value) => Some(value.0.into_iter().map(|element|#content_token_stream).collect()),
                                         None => None
                                     }
                                 }
-                            }
-                            else {
-                                quote::quote! {
-                                    match value.0.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element|element.0).collect()),
-                                        None => None
-                                    }
-                                }
                             },
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => if postgresql_type_range_try_from_postgresql_type.is_ok() {
-                                let content_token_stream = generate_pg_range_conversion_value_one_token_stream(&quote::quote!{value.0});
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    generate_pg_range_conversion_value_one_token_stream(&quote::quote!{value.0})
+                                }
+                                else {
+                                    quote::quote! {value.0}
+                                };
                                 quote::quote! {
                                     match value.0.0 {
                                         Some(value) => Some(value.0.into_iter().map(|element| match element.0 {
                                             Some(value) => Some(#content_token_stream),
-                                            None => None
-                                        }).collect()),
-                                        None => None
-                                    }
-                                }
-                            }
-                            else {
-                                quote::quote! {
-                                    match value.0.0 {
-                                        Some(value) => Some(value.0.into_iter().map(|element| match element.0 {
-                                            Some(value) => Some(value.0),
                                             None => None
                                         }).collect()),
                                         None => None
