@@ -876,14 +876,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         let postgresql_type_filter = match &element.postgresql_type {
             PostgresqlType::StdPrimitiveI16AsInt2 => false,
             PostgresqlType::StdPrimitiveI32AsInt4 => false,
-            PostgresqlType::StdPrimitiveI64AsInt8 => true,
+            PostgresqlType::StdPrimitiveI64AsInt8 => false,
             PostgresqlType::StdPrimitiveF32AsFloat4 => false,
             PostgresqlType::StdPrimitiveF64AsFloat8 => false,
             PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => false,
             PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => false,
             PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => true,
             PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => false,
-            PostgresqlType::SqlxTypesBigDecimalAsNumeric => false,
+            PostgresqlType::SqlxTypesBigDecimalAsNumeric => true,
             PostgresqlType::StdPrimitiveBoolAsBool => false,
             PostgresqlType::StdStringStringAsText => false,
             PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => false,
@@ -901,8 +901,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => false,
             PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => false,
             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => false,
-            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => true,//here
-            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => false,
+            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => true,
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => false,
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => false,
             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => false,
@@ -4038,7 +4038,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => if postgresql_type_range_try_from_postgresql_type_is_ok {
-                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_dot_zero_token_stream)
+                                    // generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_dot_zero_token_stream)
+                                    generate_pg_range_conversion_token_stream(
+                                        &quote::quote!{#value_dot_zero_token_stream.0},
+                                        &value_dot_zero_token_stream
+                                    )
                                 }
                                 else {
                                     quote::quote! {#value_dot_zero_token_stream.0}
