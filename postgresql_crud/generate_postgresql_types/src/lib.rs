@@ -989,6 +989,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let array_dimensions_number = postgresql_type_pattern.array_dimensions_number();
 
             let postgresql_type_range_try_from_postgresql_type = PostgresqlTypeRange::try_from(postgresql_type);
+            let postgresql_type_range_try_from_postgresql_type_is_ok = postgresql_type_range_try_from_postgresql_type.is_ok();
 
             let proc_macro2_token_stream_new = proc_macro2::TokenStream::new();
 
@@ -3066,7 +3067,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let scopes_value_token_stream = quote::quote! {(#value_snake_case)};
                         let content_token_stream = match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => if postgresql_type_range_try_from_postgresql_type_is_ok {
                                     quote::quote! {::new #scopes_value_token_stream}
                                 }
                                 else {
@@ -4036,14 +4037,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let value_dot_zero_token_stream = quote::quote!{#value_snake_case.0};
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => if postgresql_type_range_try_from_postgresql_type_is_ok {
                                     generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_dot_zero_token_stream)
                                 }
                                 else {
                                     quote::quote! {#value_dot_zero_token_stream.0}
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_snake_case)
                                     }
                                     else {
@@ -4059,7 +4060,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
-                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&element_snake_case)
                                     }
                                     else {
@@ -4070,7 +4071,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
-                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_snake_case)
                                     }
                                     else {
@@ -4084,7 +4085,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
-                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&element_snake_case)
                                     }
                                     else {
@@ -4098,7 +4099,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
-                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    let content_token_stream = if postgresql_type_range_try_from_postgresql_type_is_ok {
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_snake_case)
                                     }
                                     else {
