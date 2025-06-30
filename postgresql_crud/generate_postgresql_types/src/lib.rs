@@ -4038,19 +4038,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             else {
                                 quote::quote! {value.0.0}
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => if postgresql_type_range_try_from_postgresql_type.is_ok() {
-                                let content_token_stream = generate_pg_range_conversion_value_one_token_stream(&quote::quote!{value.0});
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
+                                    generate_pg_range_conversion_value_one_token_stream(&quote::quote!{value.0})
+                                }
+                                else {
+                                    quote::quote! {value.0}
+                                };
                                 quote::quote! {
                                     match value.0.0 {
                                         Some(value) => Some(#content_token_stream),
-                                        None => None
-                                    }
-                                }
-                            }
-                            else {
-                                quote::quote! {
-                                    match value.0.0 {
-                                        Some(value) => Some(value.0),
                                         None => None
                                     }
                                 }
