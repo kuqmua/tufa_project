@@ -3980,12 +3980,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => typical,
                     }
                 };
-                fn generate_pg_range_conversion_value_one_token_stream(match_content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
-                    generate_pg_range_conversion_token_stream(
-                        &match_content_token_stream,
-                        &quote::quote!{value.0}
-                    )
-                }
                 postgresql_crud_macros_common::generate_impl_postgresql_type_for_ident_token_stream(
                     &postgresql_crud_macros_common_import_path_crate,
                     &ident,
@@ -4039,24 +4033,25 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 )
                             }
                         };
+                        let value_dot_zero_token_stream = quote::quote!{#value_snake_case.0};
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => if postgresql_type_range_try_from_postgresql_type.is_ok() {
-                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&quote::quote!{value.0})
+                                    generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_dot_zero_token_stream)
                                 }
                                 else {
-                                    quote::quote! {value.0.0}
+                                    quote::quote! {#value_dot_zero_token_stream.0}
                                 },
                                 postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                                     let content_token_stream = if postgresql_type_range_try_from_postgresql_type.is_ok() {
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_snake_case)
                                     }
                                     else {
-                                        quote::quote! {value.0}
+                                        value_dot_zero_token_stream.clone()
                                     };
                                     quote::quote! {
-                                        match value.0.0 {
-                                            Some(value) => Some(#content_token_stream),
+                                        match #value_dot_zero_token_stream.0 {
+                                            Some(#value_snake_case) => Some(#content_token_stream),
                                             None => None
                                         }
                                     }
@@ -4068,10 +4063,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&element_snake_case)
                                     }
                                     else {
-                                        quote::quote! {element.0}
+                                        quote::quote! {#element_snake_case.0}
                                     };
                                     quote::quote! {
-                                        value.0.0.into_iter().map(|element|#content_token_stream).collect()
+                                        #value_dot_zero_token_stream.0.into_iter().map(|#element_snake_case|#content_token_stream).collect()
                                     }
                                 },
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
@@ -4079,11 +4074,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_snake_case)
                                     }
                                     else {
-                                        quote::quote! {value.0}
+                                        value_dot_zero_token_stream.clone()
                                     };
                                     quote::quote! {
-                                        value.0.0.into_iter().map(|element| match element.0 {
-                                            Some(value) => Some(#content_token_stream),
+                                        #value_dot_zero_token_stream.0.into_iter().map(|#element_snake_case| match #element_snake_case.0 {
+                                            Some(#value_snake_case) => Some(#content_token_stream),
                                             None => None
                                         }).collect()
                                     }
@@ -4093,11 +4088,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&element_snake_case)
                                     }
                                     else {
-                                        quote::quote! {element.0}
+                                        quote::quote! {#element_snake_case.0}
                                     };
                                     quote::quote! {
-                                        match value.0.0 {
-                                            Some(value) => Some(value.0.into_iter().map(|element|#content_token_stream).collect()),
+                                        match #value_dot_zero_token_stream.0 {
+                                            Some(#value_snake_case) => Some(#value_dot_zero_token_stream.into_iter().map(|element|#content_token_stream).collect()),
                                             None => None
                                         }
                                     }
@@ -4107,12 +4102,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream(&value_snake_case)
                                     }
                                     else {
-                                        quote::quote! {value.0}
+                                        value_dot_zero_token_stream.clone()
                                     };
                                     quote::quote! {
-                                        match value.0.0 {
-                                            Some(value) => Some(value.0.into_iter().map(|element| match element.0 {
-                                                Some(value) => Some(#content_token_stream),
+                                        match #value_dot_zero_token_stream.0 {
+                                            Some(#value_snake_case) => Some(#value_dot_zero_token_stream.into_iter().map(|#element_snake_case| match #element_snake_case.0 {
+                                                Some(#value_snake_case) => Some(#content_token_stream),
                                                 None => None
                                             }).collect()),
                                             None => None
