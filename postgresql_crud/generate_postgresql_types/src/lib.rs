@@ -4275,7 +4275,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     &ident_update_upper_camel_case,
-                    &postgresql_crud_macros_common::UpdateQueryPartValueUnderscore::False,
+                    &postgresql_crud_macros_common::UpdateQueryPartValueUnderscore::True,
                     &postgresql_crud_macros_common::UpdateQueryPartJsonbSetAccumulatorUnderscore::False,
                     &postgresql_crud_macros_common::UpdateQueryPartJsonbSetTargetUnderscore::False,
                     &postgresql_crud_macros_common::UpdateQueryPartJsonbSetPathUnderscore::False,
