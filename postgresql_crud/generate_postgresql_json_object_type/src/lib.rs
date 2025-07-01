@@ -647,7 +647,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 postgresql_crud_macros_common::generate_create_table_column_query_part_token_stream(
                     &ident_token_stream,
-                    postgresql_crud_macros_common::IsPrimaryKeyUsed::False,
+                    postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                     &proc_macro2::TokenStream::new(),
                     &{
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&"{column} jsonb not null check (jsonb_matches_schema('{}', {column}))".to_string());

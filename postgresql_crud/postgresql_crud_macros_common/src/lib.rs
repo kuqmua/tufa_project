@@ -761,14 +761,22 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
         }
     }
 }
-
-pub enum IsPrimaryKeyUsed {
+#[derive(Debug, Clone)]
+pub enum IsPrimaryKeyUnderscore {
     True,
     False
 }
+impl quote::ToTokens for IsPrimaryKeyUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote!{_}.to_tokens(tokens),
+            Self::False => naming::IsPrimaryKeySnakeCase.to_tokens(tokens),
+        }
+    }
+}
 pub fn generate_create_table_column_query_part_token_stream(
     ident: &dyn quote::ToTokens,
-    is_primary_key_used: IsPrimaryKeyUsed,
+    is_primary_key_underscore: IsPrimaryKeyUnderscore,
     maybe_fixed_length_parameter_token_stream: &dyn quote::ToTokens,
     content_token_stream: &dyn quote::ToTokens
 ) -> proc_macro2::TokenStream {
@@ -776,15 +784,11 @@ pub fn generate_create_table_column_query_part_token_stream(
     let column_snake_case = naming::ColumnSnakeCase;
     let std_fmt_display_token_stream = token_patterns::StdFmtDisplay;
     let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
-    let is_primary_key_or_underscore_token_stream: &dyn quote::ToTokens = match &is_primary_key_used {
-        IsPrimaryKeyUsed::True => &naming::IsPrimaryKeySnakeCase,
-        IsPrimaryKeyUsed::False => &quote::quote!{_}
-    };
     quote::quote! {
         impl #ident {
             pub fn #create_table_column_query_part_snake_case(
                 #column_snake_case: &dyn #std_fmt_display_token_stream,
-                #is_primary_key_or_underscore_token_stream: #std_primitive_bool_token_stream #maybe_fixed_length_parameter_token_stream
+                #is_primary_key_underscore: #std_primitive_bool_token_stream #maybe_fixed_length_parameter_token_stream
             ) -> impl #std_fmt_display_token_stream {
                 #content_token_stream
             }
