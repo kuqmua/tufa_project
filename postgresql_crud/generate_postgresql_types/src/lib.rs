@@ -1745,43 +1745,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         std_collections_bound_sqlx_types_time_date_as_date_token_stream,
                         std_collections_bound_sqlx_types_big_decimal_as_numeric_token_stream,
                     ) = {
+                        let generate_std_collections_bound_ident_standart_not_null_origin = |postgresql_type: &PostgresqlType|{
+                            generate_std_collections_bound_token_stream(
+                                &naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                                    &generate_ident_token_stream(
+                                        &postgresql_type,
+                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                        &PostgresqlTypePattern::Standart
+                                    )
+                                )
+                            )
+                        };
                         (
-                            generate_std_collections_bound_token_stream(
-                                //todo reuse?
-                                &naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                    &generate_ident_token_stream(
-                                        &PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &PostgresqlTypePattern::Standart
-                                    )
-                                )
-                            ),
+                            generate_std_collections_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp),
                             generate_std_collections_bound_token_stream(&sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream),
-                            generate_std_collections_bound_token_stream(
-                                &naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                    &generate_ident_token_stream(
-                                        &PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &PostgresqlTypePattern::Standart
-                                    )
-                                )
-                            ),
-                            generate_std_collections_bound_token_stream(
-                                &naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                    &generate_ident_token_stream(
-                                        &PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &PostgresqlTypePattern::Standart
-                                    )
-                                )
-                            ),
-                            generate_std_collections_bound_token_stream(&naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                &generate_ident_token_stream(
-                                    &PostgresqlType::SqlxTypesChronoNaiveDateAsDate,
-                                    &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                    &PostgresqlTypePattern::Standart
-                                )
-                            )),
+                            generate_std_collections_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
+                            generate_std_collections_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz),
+                            generate_std_collections_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate),
                             generate_std_collections_bound_token_stream(&sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream),
                             generate_std_collections_bound_token_stream(&sqlx_types_big_decimal_as_not_null_numeric_origin_upper_camel_case_token_stream),
                         )

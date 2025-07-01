@@ -1353,7 +1353,6 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     }
                                 }
                             },
-                            //todo reuse analog filters in generate_postgresql_types
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => {
                                 let array_dimension1_inner_element_ident_origin_upper_camel_case = {
                                     let value = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
