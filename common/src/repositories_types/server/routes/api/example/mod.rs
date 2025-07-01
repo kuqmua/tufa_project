@@ -76,13 +76,10 @@ pub struct Example {
     }
 }}]
 pub struct Animal {
-    pub vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-
-    // pub DoggieAsNotNullJsonbObject: DoggieAsNotNullJsonbObject,
-    // pub DoggieWithIdAsNotNullJsonbObjectWithId: DoggieWithIdAsNotNullJsonbObjectWithId,
-    // pub VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // OptionDoggieAsNullableJsonbObject,
-    // OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    pub field_0: DoggieAsNotNullJsonbObject,
+    pub field_1: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    pub field_2: OptionDoggieAsNullableJsonbObject,
+    pub field_3: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 ///////////////////////////////////////////////////
 #[cfg(test)]
