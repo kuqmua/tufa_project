@@ -76,19 +76,13 @@ pub struct Example {
     }
 }}]
 pub struct Animal {
-    pub column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: postgresql_crud::postgresql_json_type::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
-    // pub object_doggie: ObjectDoggie,
-    // pub std_option_option_object: StdOptionOptionObjectDoggie,
-    // pub std_vec_vec_object: StdVecVecObjectWithIdDoggie,
-    // pub std_option_option_std_vec_vec_object: StdOptionOptionStdVecVecObjectWithIdDoggie,
-
-    // pub std_vec_vec_object_with_id: StdVecVecObjectWithIdDoggie,
-    // pub std_option_option_std_vec_vec_object_with_id: StdOptionOptionStdVecVecObjectWithIdDoggie
-    // pub doggie_as_not_null_jsonb_object: DoggieAsNotNullJsonbObject,
-    
-    // pub option_doggie_as_nullable_jsonb_object: OptionDoggieAsNullableJsonbObject,
     pub vec_of_doggie_with_id_as_not_null_array_of_not_null_jsonb_object_with_id: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub option_vec_of_doggie_with_id_as_nullable_array_of_not_null_jsonb_object_with_id: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+
+    // pub DoggieAsNotNullJsonbObject: DoggieAsNotNullJsonbObject,
+    // pub DoggieWithIdAsNotNullJsonbObjectWithId: DoggieWithIdAsNotNullJsonbObjectWithId,
+    // pub VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    // OptionDoggieAsNullableJsonbObject,
+    // OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 ///////////////////////////////////////////////////
 #[cfg(test)]
@@ -102,14 +96,14 @@ mod tests {
 #[derive(Debug
     , postgresql_crud::GeneratePostgresqlJsonObjectType
 )]
-// #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
-#[postgresql_crud::postgresql_json_object_type_pattern{{
-    "Concrete": {
-        "not_null_or_nullable": "NotNull",
-        "postgresql_json_object_type_pattern": "Array",
-        "trait_gen": "PostgresqlJsonType"
-    }
-}}]
+#[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
+// #[postgresql_crud::postgresql_json_object_type_pattern{{
+//     "Concrete": {
+//         "not_null_or_nullable": "NotNull",
+//         "postgresql_json_object_type_pattern": "Array",
+//         "trait_gen": "PostgresqlJsonType"
+//     }
+// }}]
 pub struct Doggie {
     pub column_113f3662_35a2_4a7a_9326_03bbd441815f: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
 }

@@ -128,9 +128,21 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     //     "GeneratePostgresqlJsonObjectTypeJsonVariants",
     //     &serde_json::to_string(&postgresql_json_object_type_record_vec).unwrap(),
     // );
+
+
+    // element.iter().enumerate().fold(std::string::String::from(""), |mut acc, (index, element)| {
+    //     let element_snake_case_stringified = naming_common::AsRefStrToSnakeCaseStringified::case(element);
+    //     if index == 0 {
+    //         acc.push_str(&element_snake_case_stringified);
+    //     } else {
+    //         acc.push_str(&format!("_{element_snake_case_stringified}"));
+    //     }
+    //     acc
+    // });
     let postgresql_json_object_type_array = postgresql_json_object_type_record_vec
     .into_iter()
-    .map(|element|{
+    .enumerate()
+    .map(|(index, element)|{
         let not_null_or_nullable = &element.not_null_or_nullable;
         let postgresql_json_object_type_pattern = &element.postgresql_json_object_type_pattern;
         let trait_gen = &element.trait_gen;
@@ -3556,6 +3568,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //     }
         // }
         generated
+        // (
+        //     {
+        //         let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().unwrap();
+        //         quote::quote! {
+        //             // pub #field_ident: postgresql_crud::postgresql_json_type:: #ident,
+        //             pub #field_ident: #ident,
+        //         }
+        //     },
+        //     generated
+        // )
     });
     let generated = quote::quote!{#(#postgresql_json_object_type_array)*};
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
