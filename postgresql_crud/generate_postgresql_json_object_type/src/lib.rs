@@ -3450,6 +3450,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                 &create_query_bind_token_stream,
                 &ident_select_upper_camel_case,
+                &postgresql_crud_macros_common::SelectQueryPartValueUnderscore::False,
                 &quote::quote!{
                     format!(
                         "{} as {column}",
@@ -3467,6 +3468,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_read_inner_upper_camel_case,
                 &value_into_inner_token_stream,
                 &ident_update_upper_camel_case,
+                &postgresql_crud_macros_common::UpdateQueryPartValueUnderscore::False,
+                &postgresql_crud_macros_common::UpdateQueryPartJsonbSetAccumulatorUnderscore::False,
+                &postgresql_crud_macros_common::UpdateQueryPartJsonbSetTargetUnderscore::False,
+                &postgresql_crud_macros_common::UpdateQueryPartJsonbSetPathUnderscore::False,
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream

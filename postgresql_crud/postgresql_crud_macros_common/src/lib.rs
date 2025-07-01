@@ -603,6 +603,71 @@ impl quote::ToTokens for CreateQueryBindValueUnderscore {
         }
     }
 }
+#[derive(Debug, Clone)]
+pub enum SelectQueryPartValueUnderscore {
+    True,
+    False
+}
+impl quote::ToTokens for SelectQueryPartValueUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote!{_}.to_tokens(tokens),
+            Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+        }
+    }
+}
+#[derive(Debug, Clone)]
+pub enum UpdateQueryPartValueUnderscore {
+    True,
+    False
+}
+impl quote::ToTokens for UpdateQueryPartValueUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote!{_}.to_tokens(tokens),
+            Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+        }
+    }
+}
+#[derive(Debug, Clone)]
+pub enum UpdateQueryPartJsonbSetAccumulatorUnderscore {
+    True,
+    False
+}
+impl quote::ToTokens for UpdateQueryPartJsonbSetAccumulatorUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote!{_}.to_tokens(tokens),
+            Self::False => quote::quote!{jsonb_set_accumulator}.to_tokens(tokens),
+        }
+    }
+}
+#[derive(Debug, Clone)]
+pub enum UpdateQueryPartJsonbSetTargetUnderscore {
+    True,
+    False
+}
+impl quote::ToTokens for UpdateQueryPartJsonbSetTargetUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote!{_}.to_tokens(tokens),
+            Self::False => quote::quote!{jsonb_set_target}.to_tokens(tokens),
+        }
+    }
+}
+#[derive(Debug, Clone)]
+pub enum UpdateQueryPartJsonbSetPathUnderscore {
+    True,
+    False
+}
+impl quote::ToTokens for UpdateQueryPartJsonbSetPathUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote!{_}.to_tokens(tokens),
+            Self::False => quote::quote!{jsonb_set_path}.to_tokens(tokens),
+        }
+    }
+}
 pub fn generate_impl_postgresql_type_for_ident_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
@@ -615,12 +680,17 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     is_create_query_bind_mutable: &IsCreateQueryBindMutable,
     create_query_bind_content_token_stream: &dyn quote::ToTokens,
     ident_select_upper_camel_case: &dyn quote::ToTokens,
+    select_query_part_value_underscore: &SelectQueryPartValueUnderscore,
     select_query_part_content_token_stream: &dyn quote::ToTokens,
     ident_where_element_upper_camel_case: &dyn quote::ToTokens,
     ident_read_upper_camel_case: &dyn quote::ToTokens,
     ident_read_inner_upper_camel_case: &dyn quote::ToTokens,
     into_inner_token_stream: &dyn quote::ToTokens,
     ident_update_upper_camel_case: &dyn quote::ToTokens,
+    update_query_part_value_underscore: &UpdateQueryPartValueUnderscore,
+    update_query_part_jsonb_set_accumulator_underscore: &UpdateQueryPartJsonbSetAccumulatorUnderscore,
+    update_query_part_jsonb_set_target_underscore: &UpdateQueryPartJsonbSetTargetUnderscore,
+    update_query_part_jsonb_set_path_underscore: &UpdateQueryPartJsonbSetPathUnderscore,
     update_query_part_content_token_stream: &dyn quote::ToTokens,
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_content_token_stream: &dyn quote::ToTokens,
@@ -638,10 +708,6 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
-    let jsonb_set_accumulator_snake_case = naming::JsonbSetAccumulatorSnakeCase;
-    let jsonb_set_target_snake_case = naming::JsonbSetTargetSnakeCase;
-    let jsonb_set_path_snake_case = naming::JsonbSetPathSnakeCase;
-
     let value_snake_case = naming::ValueSnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
@@ -665,7 +731,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             }
             type #select_upper_camel_case = #ident_select_upper_camel_case;
             fn #select_query_part_snake_case(
-                #value_snake_case: &Self::#select_upper_camel_case,
+                #select_query_part_value_underscore: &Self::#select_upper_camel_case,
                 #column_snake_case: &std::primitive::str,
             ) -> #std_string_string_token_stream {
                 #select_query_part_content_token_stream
@@ -678,10 +744,10 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             }
             type #update_upper_camel_case = #ident_update_upper_camel_case;
             fn #update_query_part_snake_case(
-                #value_snake_case: &Self::#update_upper_camel_case,
-                #jsonb_set_accumulator_snake_case: &std::primitive::str,
-                #jsonb_set_target_snake_case: &std::primitive::str,
-                #jsonb_set_path_snake_case: &std::primitive::str,
+                #update_query_part_value_underscore: &Self::#update_upper_camel_case,
+                #update_query_part_jsonb_set_accumulator_underscore: &std::primitive::str,
+                #update_query_part_jsonb_set_target_underscore: &std::primitive::str,
+                #update_query_part_jsonb_set_path_underscore: &std::primitive::str,
                 #increment_snake_case: &mut std::primitive::u64
             ) -> Result<#std_string_string_token_stream, #import_path ::QueryPartErrorNamed> {
                 #update_query_part_content_token_stream
