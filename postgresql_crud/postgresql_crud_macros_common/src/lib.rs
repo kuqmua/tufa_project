@@ -590,6 +590,19 @@ impl quote::ToTokens for CreateQueryPartIncrementUnderscore {
         }
     }
 }
+#[derive(Debug, Clone)]
+pub enum CreateQueryBindValueUnderscore {
+    True,
+    False
+}
+impl quote::ToTokens for CreateQueryBindValueUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote!{_}.to_tokens(tokens),
+            Self::False => naming::ValueSnakeCase.to_tokens(tokens),
+        }
+    }
+}
 pub fn generate_impl_postgresql_type_for_ident_token_stream(
     import_path: &ImportPath,
     ident: &dyn quote::ToTokens,
@@ -598,6 +611,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     create_query_part_value_underscore: &CreateQueryPartValueUnderscore,
     create_query_part_increment_underscore: &CreateQueryPartIncrementUnderscore,
     create_query_part_content_token_stream: &dyn quote::ToTokens,
+    create_query_bind_value_underscore: &CreateQueryBindValueUnderscore,
     is_create_query_bind_mutable: &IsCreateQueryBindMutable,
     create_query_bind_content_token_stream: &dyn quote::ToTokens,
     ident_select_upper_camel_case: &dyn quote::ToTokens,
@@ -644,7 +658,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
                 #create_query_part_content_token_stream
             }
             fn #create_query_bind_snake_case(
-                #value_snake_case: Self::#create_upper_camel_case,
+                #create_query_bind_value_underscore: Self::#create_upper_camel_case,
                 #is_create_query_bind_mutable #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
             ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #create_query_bind_content_token_stream

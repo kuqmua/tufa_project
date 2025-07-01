@@ -4062,6 +4062,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                     },
                     &query_part_create_token_stream,
+                    &postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                     &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                     &bind_value_to_query_create_token_stream,
                     &ident_select_upper_camel_case,
