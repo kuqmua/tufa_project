@@ -3905,7 +3905,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &ident_standart_not_null_read_upper_camel_case,
                                 &proc_macro2::TokenStream::new(),
                                 &postgresql_crud_macros_common::IncrementParameterUnderscore::False,
-                                &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::False,
+                                &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
                                 &{
                                     let crate_query_part_error_named_checked_add_initialization_token_stream = postgresql_crud_macros_common::crate_query_part_error_named_checked_add_initialization_token_stream();
                                     quote::quote! {
@@ -4023,6 +4023,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &ident,
                     &ident_table_type_declaration_upper_camel_case,
                     &ident_create_upper_camel_case,
+                    &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::False,
+                    &postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                     &query_part_create_token_stream,
                     &postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                     &bind_value_to_query_create_token_stream,

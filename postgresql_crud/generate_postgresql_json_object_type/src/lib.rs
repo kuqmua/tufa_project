@@ -3443,6 +3443,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident,
                 &ident_table_type_declaration_upper_camel_case,
                 &ident_create_upper_camel_case,
+                &postgresql_crud_macros_common::CreateQueryPartValueUnderscore::False,
+                &postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                 &create_query_part_token_stream,
                 &postgresql_crud_macros_common::IsCreateQueryBindMutable::False,
                 &create_query_bind_token_stream,
