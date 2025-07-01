@@ -329,7 +329,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
             })
         }
     }
-    #[derive(Debug, serde::Serialize, serde::Deserialize)]
+    #[derive(Debug, serde::Deserialize)]
     enum GeneratePostgresqlJsonTypesConfig {
         All,
         Concrete(std::vec::Vec<PostgresqlJsonTypeRecord>)

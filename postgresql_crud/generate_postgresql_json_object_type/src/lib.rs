@@ -36,22 +36,26 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             })
         }
     }
+    #[derive(Debug, serde::Deserialize)]
+    enum GeneratePostgresqlJsonObjectTypeConfig {
+        All,
+        Concrete(PostgresqlJsonObjectTypeRecord)
+    }
     let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream.clone()).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let postgresql_json_object_type_record_vec = {
-        if false {
-            PostgresqlJsonObjectTypeRecord::all()
-        } else {
-            let postgresql_json_object_type_record = serde_json::from_str::<PostgresqlJsonObjectTypeRecord>(
-                &macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
-                    &{
-                        let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
-                        syn_derive_input.attrs
-                    },
-                    &"postgresql_crud::postgresql_json_object_type_pattern".to_string(),
-                )
-                .to_string()
-            ).expect("failed to get Config for generate_postgresql_json_object_type");
-            match (&postgresql_json_object_type_record.not_null_or_nullable, &postgresql_json_object_type_record.postgresql_json_object_type_pattern) {
+        let generate_postgresql_json_object_type_config = serde_json::from_str::<GeneratePostgresqlJsonObjectTypeConfig>(
+            &macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(
+                &{
+                    let syn_derive_input: syn::DeriveInput = syn::parse(input_token_stream).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
+                    syn_derive_input.attrs
+                },
+                &"postgresql_crud::postgresql_json_object_type_pattern".to_string(),
+            )
+            .to_string()
+        ).expect("failed to get Config for generate_postgresql_json_object_type");
+        match generate_postgresql_json_object_type_config {
+            GeneratePostgresqlJsonObjectTypeConfig::All => PostgresqlJsonObjectTypeRecord::all(),
+            GeneratePostgresqlJsonObjectTypeConfig::Concrete(postgresql_json_object_type_record) => match (&postgresql_json_object_type_record.not_null_or_nullable, &postgresql_json_object_type_record.postgresql_json_object_type_pattern) {
                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlJsonObjectTypePattern::Standart) => vec![postgresql_json_object_type_record],
                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, PostgresqlJsonObjectTypePattern::Standart) => vec![
                     PostgresqlJsonObjectTypeRecord {
@@ -92,7 +96,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     postgresql_json_object_type_record
                 ]
-            }
+            },
         }
     }
     // .into_iter()

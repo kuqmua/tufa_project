@@ -157,13 +157,14 @@ pub struct Example {
 #[derive(Debug
     , postgresql_crud::GeneratePostgresqlJsonObjectType
 )]
-#[postgresql_crud::postgresql_json_object_type_pattern{
-    {
-        "not_null_or_nullable": "NotNull",
-        "postgresql_json_object_type_pattern": "Standart",
-        "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-    }
-}]
+#[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
+// #[postgresql_crud::postgresql_json_object_type_pattern{{
+//     "Concrete": {
+//         "not_null_or_nullable": "NotNull",
+//         "postgresql_json_object_type_pattern": "Standart",
+//         "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+//     }
+// }}]
 pub struct Animal {
     pub column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: postgresql_crud::postgresql_json_type::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
     // pub id: postgresql_crud::postgresql_json_type::Uuid,//todo check length of uuid = 36 // must not be updatable, only readable. postgresql must create it than return object with new ids
@@ -367,13 +368,14 @@ mod tests {
 #[derive(Debug
     , postgresql_crud::GeneratePostgresqlJsonObjectType
 )]
-#[postgresql_crud::postgresql_json_object_type_pattern{
-    {
-        "not_null_or_nullable": "NotNull",
-        "postgresql_json_object_type_pattern": "Array",
-        "trait_gen": "PostgresqlJsonType"
-    }
-}]
+#[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
+// #[postgresql_crud::postgresql_json_object_type_pattern{{
+//     "Concrete": {
+//         "not_null_or_nullable": "NotNull",
+//         "postgresql_json_object_type_pattern": "Array",
+//         "trait_gen": "PostgresqlJsonType"
+//     }
+// }}]
 pub struct Doggie {
     // pub column_113f3662_35a2_4a7a_9326_03bbd441815f: postgresql_crud::postgresql_json_type::StdStringStringAsNotNullJsonbString,
     // pub column_0f498e79_5440_4c9d_90cf_c32f9b7d4005: postgresql_crud::postgresql_json_type::VecOfStdStringStringAsNotNullArrayOfNotNullJsonbString,

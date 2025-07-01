@@ -794,7 +794,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             })
         }
     }
-    #[derive(Debug, serde::Serialize, serde::Deserialize)]
+    #[derive(Debug, serde::Deserialize)]
     enum GeneratePostgresqlTypesConfig {
         All,
         Concrete(std::vec::Vec<PostgresqlTypeRecord>)
