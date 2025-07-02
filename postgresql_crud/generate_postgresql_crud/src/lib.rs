@@ -691,24 +691,36 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
                 acc
             };
-            //todo add error enum and remove .unwrap() usage
             quote::quote! {
-                pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {// -> Result<(), >
+                pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_create_table_if_not_exists_error_named_upper_camel_case> {
                     let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
                     println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
-                    // if let Err(error) = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await {
-                    //     return
-                    // }
-                    let _ = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await.unwrap();
+                    if let Err(error) = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await {
+                        return Err(#ident_create_table_if_not_exists_error_named_upper_camel_case::#create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
+                            error,
+                            code_occurence: error_occurence_lib::code_occurence!()
+                        });
+                    }
                     let create_extension_if_not_exists_uuid_ossp_query_stringified = "create extension if not exists \"uuid-ossp\"";
                     println!("{create_extension_if_not_exists_uuid_ossp_query_stringified}");
-                    let _ = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(#pool_snake_case).await.unwrap();
+                    if let Err(error) = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(#pool_snake_case).await {
+                        return Err(#ident_create_table_if_not_exists_error_named_upper_camel_case::#create_extension_if_not_exists_uuid_ossp_upper_camel_case {
+                            error,
+                            code_occurence: error_occurence_lib::code_occurence!()
+                        });
+                    }
                     let create_table_if_not_exists_query_stringified = format!(
                         #create_table_if_not_exists_double_quotes_token_stream,
                         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
                     );
                     println!("{create_table_if_not_exists_query_stringified}");
-                    let _ = sqlx::query(&create_table_if_not_exists_query_stringified).execute(#pool_snake_case).await.unwrap();
+                    if let Err(error) = sqlx::query(&create_table_if_not_exists_query_stringified).execute(#pool_snake_case).await {
+                        return Err(#ident_create_table_if_not_exists_error_named_upper_camel_case::#create_table_if_not_exists_upper_camel_case {
+                            error,
+                            code_occurence: error_occurence_lib::code_occurence!()
+                        });
+                    }
+                    Ok(())
                 }
             }
         };
