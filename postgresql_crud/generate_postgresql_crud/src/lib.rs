@@ -1439,12 +1439,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let returning_primary_key_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&returning_primary_key_stringified);
     // let postgresql_crud_snake_case = naming::PostgresqlCrudSnakeCase;
     let std_string_string_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "string", "String"]);
-    let checked_add_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::CheckedAddUpperCamelCase,
+    let query_part_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming::QueryPartUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
         vec![(
             macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-            &naming::QueryPartErrorNamedSnakeCase,
+            &naming::ErrorSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&postgresql_crud_snake_case.to_string(), &naming::QueryPartErrorNamedUpperCamelCase.to_string()]),
         )],
     );
@@ -2944,7 +2944,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
-                value.push(checked_add_syn_variant_wrapper.get_syn_variant());
+                value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(unexpected_rows_length_syn_variant_wrapper.get_syn_variant());
                 value.push(unexpected_rows_length_and_rollback_syn_variant_wrapper.get_syn_variant());
@@ -2980,7 +2980,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let column_increments_token_stream = fields.iter().map(|element| {
                         let element_field_ident = &element.field_ident;
                         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
-                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         //todo reuse create_query_part naming
                         quote::quote! {
                             match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream create_query_part(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
@@ -3188,7 +3188,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 for element in &common_route_with_row_and_rollback_syn_variants {
                     value.push(*element);
                 }
-                value.push(checked_add_syn_variant_wrapper.get_syn_variant());
+                value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &operation,
@@ -3242,7 +3242,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let query_part_token_stream = fields.iter().map(|element| {
                         let element_field_ident = &element.field_ident;
                         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
-                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream create_query_part(&#parameters_snake_case.#payload_snake_case.#element_field_ident, &mut #increment_snake_case) {
                                 Ok(#value_snake_case) => #value_snake_case,
@@ -3384,7 +3384,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
-                value.push(checked_add_syn_variant_wrapper.get_syn_variant());
+                value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 value.push(not_unique_column_syn_variant_wrapper.get_syn_variant());
                 // if contains_generic_json {
                 //     value.push(&empty_column_json_reader_syn_variant_wrapper.get_syn_variant());
@@ -3435,7 +3435,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let additional_parameters_modification_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
@@ -3468,7 +3468,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let query_vec_column_token_stream = generate_query_vec_column_token_stream(
                         // &operation
                     );
-                    let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                    let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         {
                             format!(
@@ -3793,7 +3793,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 }
                 value.push(not_unique_column_syn_variant_wrapper.get_syn_variant());
-                value.push(checked_add_syn_variant_wrapper.get_syn_variant());
+                value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 // if contains_generic_json {
                 //     value.push(&empty_column_json_reader_syn_variant_wrapper.get_syn_variant());
                 //     value.push(&not_unique_column_json_reader_syn_variant_wrapper.get_syn_variant());
@@ -3843,7 +3843,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         // &operation
                     );
                     // println!("{query_vec_column_token_stream}");
-                    let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                    let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         {
                             let mut increment: std::primitive::u64 = 0;
@@ -4060,7 +4060,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(non_existing_primary_keys_update_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(not_unique_primary_key_update_syn_variant_wrapper.get_syn_variant());
                 value.push(no_payload_fields_primary_key_syn_variant_wrapper.get_syn_variant());
-                value.push(checked_add_syn_variant_wrapper.get_syn_variant());
+                value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &operation,
@@ -4128,7 +4128,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let when_primary_key_field_ident_equals_then_token_stream = generate_quotes::double_quotes_token_stream(&format!("{} {primary_key_field_ident} = {{}} {} {{}} ", naming::WhenSnakeCase, naming::ThenSnakeCase));
                         let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
                         let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
-                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             {
                                 let mut #is_field_ident_update_exists_snake_case = false;
@@ -4182,7 +4182,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let where_primary_key_field_ident_in_primary_keys_returning_primary_key_field_ident_token_stream = {
                         let where_primary_key_field_ident_in_primary_keys_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!(" {where_snake_case} {primary_key_field_ident} {} ({{}}) {returning_snake_case} {primary_key_field_ident};", naming::InSnakeCase));
                         let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
-                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             #query_snake_case.push_str(&format!(
                                 #where_primary_key_field_ident_in_primary_keys_double_quotes_token_stream,
@@ -4444,7 +4444,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
                 value.push(no_payload_fields_primary_key_syn_variant_wrapper.get_syn_variant());
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                value.push(checked_add_syn_variant_wrapper.get_syn_variant());
+                value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &operation,
@@ -4480,7 +4480,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                             let field_ident_equals_dollar_increment_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {{{value_snake_case}}},"));
                             let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
-                            let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                            let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                             quote::quote! {
                                 if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                     match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
@@ -4504,7 +4504,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
                     let additional_parameters_primary_key_modification_token_stream = {
                         let query_part_token_stream = generate_quotes::double_quotes_token_stream(&format!(" {where_snake_case} {primary_key_field_ident} = {{{value_snake_case}}}"));
-                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             match #primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
                                 &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
@@ -4668,7 +4668,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 value.push(non_existing_primary_keys_delete_syn_variant_wrapper.get_syn_variant());
                 value.push(non_existing_primary_keys_delete_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value.push(not_unique_primary_key_update_syn_variant_wrapper.get_syn_variant());
-                value.push(checked_add_syn_variant_wrapper.get_syn_variant());
+                value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &operation,
@@ -4728,7 +4728,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let additional_parameters_modification_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &checked_add_syn_variant_wrapper, file!(), line!(), column!());
+                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
                                 match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
