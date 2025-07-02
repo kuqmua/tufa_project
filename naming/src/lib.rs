@@ -624,7 +624,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["all", "elements", "regular", "expression"],
     ["all", "elements", "equal"],
     ["contains", "element", "greater", "than"],
-    ["all", "elements", "greater", "than"]
+    ["all", "elements", "greater", "than"],
+    ["create", "extension", "if", "not", "exists", "pg", "jsonschema"],
+    ["create", "extension", "if", "not", "exists", "uuid", "ossp"],
+    ["create", "table", "if", "not", "exists"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

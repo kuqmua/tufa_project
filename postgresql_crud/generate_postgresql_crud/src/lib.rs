@@ -630,27 +630,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // };
 
     let impl_ident_token_stream = {
-        let ident_create_table_if_not_exists_error_named_token_stream = {
-            let ident_create_table_if_not_exists_error_named_upper_camel_case = naming::parameter::SelfCreateTableIfNotExistsErrorNamedUpperCamelCase::from_tokens(&ident);
-            quote::quote!{
-                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-                pub enum #ident_create_table_if_not_exists_error_named_upper_camel_case {
-                    PgJsonschemaExtension {
-                        #[eo_to_std_string_string]
-                        error: sqlx::Error,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                    UuidOsspExtension {
-                        #[eo_to_std_string_string]
-                        error: sqlx::Error,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                    CreateTable {
-                        #[eo_to_std_string_string]
-                        error: sqlx::Error,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                    },
-                }
+        let ident_create_table_if_not_exists_error_named_upper_camel_case = naming::parameter::SelfCreateTableIfNotExistsErrorNamedUpperCamelCase::from_tokens(&ident);
+        let create_extension_if_not_exists_pg_jsonschema_upper_camel_case = naming::CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase;
+        let create_extension_if_not_exists_uuid_ossp_upper_camel_case = naming::CreateExtensionIfNotExistsUuidOsspUpperCamelCase;
+        let create_table_if_not_exists_upper_camel_case = naming::CreateTableIfNotExistsUpperCamelCase;
+        let ident_create_table_if_not_exists_error_named_token_stream = quote::quote!{
+            #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+            pub enum #ident_create_table_if_not_exists_error_named_upper_camel_case {
+                #create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
+                    #[eo_to_std_string_string]
+                    error: sqlx::Error,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                },
+                #create_extension_if_not_exists_uuid_ossp_upper_camel_case {
+                    #[eo_to_std_string_string]
+                    error: sqlx::Error,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                },
+                #create_table_if_not_exists_upper_camel_case {
+                    #[eo_to_std_string_string]
+                    error: sqlx::Error,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                },
             }
         };
         let pub_fn_table_token_stream = {
@@ -692,9 +693,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             //todo add error enum and remove .unwrap() usage
             quote::quote! {
-                pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
+                pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {// -> Result<(), >
                     let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
                     println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
+                    // if let Err(error) = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await {
+                    //     return
+                    // }
                     let _ = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await.unwrap();
                     let create_extension_if_not_exists_uuid_ossp_query_stringified = "create extension if not exists \"uuid-ossp\"";
                     println!("{create_extension_if_not_exists_uuid_ossp_query_stringified}");
