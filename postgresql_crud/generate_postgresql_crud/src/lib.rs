@@ -630,6 +630,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // };
 
     let impl_ident_token_stream = {
+        let ident_create_table_if_not_exists_error_named_token_stream = {
+            let ident_create_table_if_not_exists_error_named_upper_camel_case = naming::parameter::SelfCreateTableIfNotExistsErrorNamedUpperCamelCase::from_tokens(&ident);
+            quote::quote!{
+                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                pub enum #ident_create_table_if_not_exists_error_named_upper_camel_case {
+                    PgJsonschemaExtension {
+                        #[eo_to_std_string_string]
+                        error: sqlx::Error,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    UuidOsspExtension {
+                        #[eo_to_std_string_string]
+                        error: sqlx::Error,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                    CreateTable {
+                        #[eo_to_std_string_string]
+                        error: sqlx::Error,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    },
+                }
+            }
+        };
         let pub_fn_table_token_stream = {
             let table_name_snake_case = naming::TableNameSnakeCase;
             let ident_snake_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_snake_case_stringified);
@@ -686,6 +709,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         quote::quote! {
+            #ident_create_table_if_not_exists_error_named_token_stream
             impl #ident {
                 #pub_fn_table_token_stream
                 #pub_async_fn_create_table_if_not_exists_token_stream
