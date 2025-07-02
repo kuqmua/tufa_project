@@ -1760,6 +1760,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
         )],
     );
+    let header_content_type_application_json_not_found_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming::HeaderContentTypeApplicationJsonNotFoundUpperCamelCase,
+        Some(macros_helpers::status_code::StatusCode::BadRequest400),
+        std::vec::Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
+    );
     let not_unique_primary_key_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::NotUniquePrimaryKeyUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
@@ -1877,6 +1882,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value.push(check_body_size_syn_variant_wrapper.get_syn_variant());
         value.push(postgresql_syn_variant_wrapper.get_syn_variant());
         value.push(serde_json_syn_variant_wrapper.get_syn_variant());
+        value.push(header_content_type_application_json_not_found_syn_variant_wrapper.get_syn_variant());
         for element in common_additional_error_variants_vec {
             value.push(element);
         }
@@ -2430,6 +2436,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let request_snake_case = naming::RequestSnakeCase;
         let app_state_snake_case = naming::AppStateSnakeCase;
         let request_parts_preparation_token_stream = {
+            let header_content_type_application_json_not_found_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = &generate_operation_error_initialization_eprintln_response_creation_token_stream(
+                operation,
+                &header_content_type_application_json_not_found_syn_variant_wrapper,
+                file!(),
+                line!(),
+                column!()
+            );
             let check_body_size_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = &generate_operation_error_initialization_eprintln_response_creation_token_stream(
                 operation,
                 &check_body_size_syn_variant_wrapper,
@@ -2440,6 +2453,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 let (parts, #body_snake_case) = #request_snake_case.into_parts();
                 let headers = parts.headers;
+                if !matches!(
+                    headers.get(axum::http::header::CONTENT_TYPE),
+                    Some(value) if value == axum::http::header::HeaderValue::from_static("application/json")
+                ) {
+                    #header_content_type_application_json_not_found_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
+                }
                 let body_bytes = match #postgresql_crud_snake_case::check_body_size::check_body_size(#body_snake_case, *#app_state_snake_case.get_maximum_size_of_http_body_in_bytes()).await {
                     Ok(#value_snake_case) => #value_snake_case,
                     Err(#error_0_token_stream) => {
