@@ -1442,7 +1442,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let checked_add_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::CheckedAddUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
-        std::vec::Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
+        vec![(
+            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+            &naming::QueryPartErrorNamedSnakeCase,
+            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&postgresql_crud_snake_case.to_string(), &naming::QueryPartErrorNamedUpperCamelCase.to_string()]),
+        )],
     );
     let row_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::RowAndRollbackUpperCamelCase,
