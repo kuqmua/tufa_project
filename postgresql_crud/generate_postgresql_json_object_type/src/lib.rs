@@ -139,7 +139,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
     //     }
     //     acc
     // });
-    let postgresql_json_object_type_array = postgresql_json_object_type_record_vec
+    // let postgresql_json_object_type_array
+    let (fields_token_stream, postgresql_json_object_type_array) = postgresql_json_object_type_record_vec
     .into_iter()
     .enumerate()
     .map(|(index, element)|{
@@ -3567,21 +3568,31 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         //         );
         //     }
         // }
-        generated
-        // (
-        //     {
-        //         let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().unwrap();
-        //         quote::quote! {
-        //             // pub #field_ident: postgresql_crud::postgresql_json_type:: #ident,
-        //             pub #field_ident: #ident,
-        //         }
-        //     },
-        //     generated
-        // )
-    });
-    let generated = quote::quote!{#(#postgresql_json_object_type_array)*};
+        (
+            {
+                let field_ident = format!("field_{index}").parse::<proc_macro2::TokenStream>().unwrap();
+                quote::quote! {
+                    pub #field_ident: #ident,
+                }
+            },
+            generated
+        )
+    })
+    .collect::<(std::vec::Vec<proc_macro2::TokenStream>, std::vec::Vec<proc_macro2::TokenStream>)>();
+    let example_token_stream = quote::quote! {
+        pub struct GeneratePostgresqlJsonObjectTypeExample {
+            #(#fields_token_stream)*
+        }
+    };
+    if false {
+        macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+            "GeneratePostgresqlJsonObjectTypeExample",
+            &example_token_stream,
+        );
+    }
+    let generated = quote::quote! {#(#postgresql_json_object_type_array)*};
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "PostgresqlJsonObjectTypeTokens",
+    //     "GeneratePostgresqlJsonObjectType",
     //     &generated,
     // );
     generated.into()

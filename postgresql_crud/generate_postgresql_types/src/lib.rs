@@ -982,7 +982,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     // );
     use rayon::iter::IntoParallelRefIterator;
     use rayon::iter::ParallelIterator;
-    let (postgresql_crud_table_rust_struct_fields_token_stream, postgresql_type_array) = postgresql_type_record_vec
+    let (columns_token_stream, postgresql_type_array) = postgresql_type_record_vec
         .into_iter()
         .enumerate()
         .collect::<std::vec::Vec<(std::primitive::usize, PostgresqlTypeRecord)>>()
@@ -4444,15 +4444,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         .collect::<(std::vec::Vec<String>, std::vec::Vec<String>)>();
     //this need only for better development experience
     if false {
-        let postgresql_crud_table_rust_struct_fields_token_stream = postgresql_crud_table_rust_struct_fields_token_stream
+        let columns_token_stream = columns_token_stream
             .into_iter()
             .map(|element| element.parse::<proc_macro2::TokenStream>().unwrap())
             .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
         macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-            "PostgresqlTypeTokensExampleStruct",
+            "GeneratePostgresqlTypesExample",
             &quote::quote! {
                 struct GeneratePostgresqlTypesExample {
-                    #(#postgresql_crud_table_rust_struct_fields_token_stream)*
+                    #(#columns_token_stream)*
                 }
             },
         );
@@ -4462,7 +4462,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         quote::quote! {#(#postgresql_type_array)*}
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     "PostgresqlTypeTokens",
+    //     "GeneratePostgresqlTypes",
     //     &generated,
     // );
     generated.into()
