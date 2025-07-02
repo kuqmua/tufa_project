@@ -2040,13 +2040,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let generate_filter_no_payload_fields_token_stream = |operation: &Operation, source_token_stream: &dyn quote::ToTokens| {
         let no_payload_fields_primary_key_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &no_payload_fields_primary_key_syn_variant_wrapper, file!(), line!(), column!());
-        let none_fields_named_excluding_primary_key_token_stream = fields_without_primary_key.iter().map(|_| naming::NoneUpperCamelCase);
-        let match_fields_named_excluding_primary_key_token_stream = fields_without_primary_key.iter().map(|element| {
-            let field_ident = &element.field_ident;
-            quote::quote! {&#source_token_stream.#field_ident}
-        });
+        let generate_content_token_stream = |content_token_stream: proc_macro2::TokenStream|{
+            if fields_without_primary_key.len() > 1 {
+                quote::quote!{(#content_token_stream)}
+            }
+            else {
+                content_token_stream
+            }
+        };
+        let none_fields_named_excluding_primary_key_content_token_stream = {
+            let none_fields_named_excluding_primary_key_token_stream = fields_without_primary_key.iter().map(|_| naming::NoneUpperCamelCase);
+            generate_content_token_stream(quote::quote!{#(#none_fields_named_excluding_primary_key_token_stream),*})
+        };
+        let match_fields_named_excluding_primary_key_content_token_stream = {
+            let match_fields_named_excluding_primary_key_token_stream = fields_without_primary_key.iter().map(|element| {
+                let field_ident = &element.field_ident;
+                quote::quote! {&#source_token_stream.#field_ident}
+            });
+            generate_content_token_stream(quote::quote!{#(#match_fields_named_excluding_primary_key_token_stream),*})
+        };
         quote::quote! {
-            if let (#(#none_fields_named_excluding_primary_key_token_stream),*) = (#(#match_fields_named_excluding_primary_key_token_stream),*) {
+            if let #none_fields_named_excluding_primary_key_content_token_stream = #match_fields_named_excluding_primary_key_content_token_stream {
                 let #error_0_token_stream = #source_token_stream.#primary_key_field_ident.clone();
                 #no_payload_fields_primary_key_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
             }
