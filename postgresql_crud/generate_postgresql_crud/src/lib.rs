@@ -2401,26 +2401,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &operation.desirable_status_code().to_axum_http_status_code_token_stream(),
         );
         quote::quote! {
-            // // #swagger_open_api_token_stream
-            pub async fn #try_operation_route_logic_snake_case(
-                #app_state_snake_case: axum::extract::State<crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits>,
-                #request_snake_case: axum::extract::Request,
-            ) -> axum::response::Response {
-                #request_parts_preparation_token_stream
-                #additional_validators_token_stream
-                #parameters_logic_token_stream
-                // println!("{:#?}", #parameters_snake_case);
-                #expected_updated_primary_keys_token_stream
-                let #query_string_snake_case = #query_string_token_stream;
-                println!("{}", #query_string_snake_case);
-                let #binded_query_snake_case = {
-                    #binded_query_token_stream
-                };
-                #acquire_pool_and_connection_token_stream
-                let #value_snake_case = {
-                    #postgresql_logic_token_stream
-                };
-                #wraped_into_axum_response_token_stream
+            impl #ident {
+                // // #swagger_open_api_token_stream
+                pub async fn #try_operation_route_logic_snake_case(
+                    #app_state_snake_case: axum::extract::State<crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits>,
+                    #request_snake_case: axum::extract::Request,
+                ) -> axum::response::Response {
+                    #request_parts_preparation_token_stream
+                    #additional_validators_token_stream
+                    #parameters_logic_token_stream
+                    // println!("{:#?}", #parameters_snake_case);
+                    #expected_updated_primary_keys_token_stream
+                    let #query_string_snake_case = #query_string_token_stream;
+                    println!("{}", #query_string_snake_case);
+                    let #binded_query_snake_case = {
+                        #binded_query_token_stream
+                    };
+                    #acquire_pool_and_connection_token_stream
+                    let #value_snake_case = {
+                        #postgresql_logic_token_stream
+                    };
+                    #wraped_into_axum_response_token_stream
+                }
             }
         }
     };
@@ -2603,20 +2605,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         quote::quote! {
-            pub async fn #try_operation_snake_case(
-                #server_location_snake_case: #ref_std_primitive_str,//todo rename as endpoint location
-                #parameters_snake_case: #operation_parameters_upper_camel_case #operation_parameters_lifetime_token_stream,
-            ) -> Result<#result_ok_type_token_stream, #try_operation_error_named_upper_camel_case> {
-                #payload_token_stream
-                #url_token_stream
-                #future_token_stream
-                #response_token_stream
-                #status_code_token_stream
-                #headers_token_stream
-                #response_text_token_stream
-                #expected_response_token_stream
-                #try_operation_route_logic_error_named_with_serialize_deserialize_token_stream
-                #return_error_token_stream
+            impl #ident {
+                pub async fn #try_operation_snake_case(
+                    #server_location_snake_case: #ref_std_primitive_str,//todo rename as endpoint location
+                    #parameters_snake_case: #operation_parameters_upper_camel_case #operation_parameters_lifetime_token_stream,
+                ) -> Result<#result_ok_type_token_stream, #try_operation_error_named_upper_camel_case> {
+                    #payload_token_stream
+                    #url_token_stream
+                    #future_token_stream
+                    #response_token_stream
+                    #status_code_token_stream
+                    #headers_token_stream
+                    #response_text_token_stream
+                    #expected_response_token_stream
+                    #try_operation_route_logic_error_named_with_serialize_deserialize_token_stream
+                    #return_error_token_stream
+                }
             }
         }
     };
@@ -2798,8 +2802,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &quote::quote! {axum::http::StatusCode::OK},
         );
         quote::quote! {
-            pub async fn #operation_payload_example_route_logic_snake_case() -> axum::response::Response {
-                #wraped_into_axum_response_token_stream
+            impl #ident {
+                pub async fn #operation_payload_example_route_logic_snake_case() -> axum::response::Response {
+                    #wraped_into_axum_response_token_stream
+                }
             }
         }
     };
