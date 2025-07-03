@@ -94,7 +94,7 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
         {
           "Equal": {
             "logical_operator": "Or",
-            "value": 1
+            "value": 2
           }
         }
         # ,
@@ -670,7 +670,451 @@ DELETE http://127.0.0.1:8080/example/delete_many HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
-
+{
+  "where_filter": {
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
+      "logical_operator": "Or",
+      "value": [
+        {
+          "Equal": {
+            "logical_operator": "Or",
+            "value": 2
+          }
+        }
+        # ,
+        # {
+        #   "GreaterThan": {
+        #     "logical_operator": "Or",
+        #     "value": 0
+        #   }
+        # },
+        # {
+        #   "Between": {
+        #     "logical_operator": "Or",
+        #     "value": {
+        #       "start": 0,
+        #       "end": 0
+        #     }
+        #   }
+        # },
+        # {
+        #   "In": {
+        #     "logical_operator": "Or",
+        #     "value": [
+        #       0
+        #     ]
+        #   }
+        # }
+      ]
+    }
+    # ,
+    # "animal_as_not_null_jsonb_object": {
+    #   "logical_operator": "Or",
+    #   "value": [
+    #     {
+    #       "Field0": {
+    #         "logical_operator": "Or",
+    #         "value": [
+    #           {
+    #             "Column113F366235A24A7A932603Bbd441815F": {
+    #               "logical_operator": "Or",
+    #               "value": [
+    #                 {
+    #                   "Equal": {
+    #                     "logical_operator": "Or",
+    #                     "value": 0
+    #                   }
+    #                 },
+    #                 {
+    #                   "In": {
+    #                     "logical_operator": "Or",
+    #                     "value": [
+    #                       0
+    #                     ]
+    #                   }
+    #                 },
+    #                 {
+    #                   "GreaterThan": {
+    #                     "logical_operator": "Or",
+    #                     "value": 0
+    #                   }
+    #                 },
+    #                 {
+    #                   "Between": {
+    #                     "logical_operator": "Or",
+    #                     "value": {
+    #                       "start": 0,
+    #                       "end": 0
+    #                     }
+    #                   }
+    #                 }
+    #               ]
+    #             }
+    #           }
+    #         ]
+    #       }
+    #     },
+    #     {
+    #       "Field1": {
+    #         "logical_operator": "Or",
+    #         "value": [
+    #           {
+    #             "Equal": {
+    #               "logical_operator": "Or",
+    #               "value": [
+    #                 {
+    #                   "id": "c32e6acd-63b4-4d5e-9d0f-51dfab3d63e9",
+    #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                 }
+    #               ]
+    #             }
+    #           },
+    #           {
+    #             "DimensionOneEqual": {
+    #               "logical_operator": "Or",
+    #               "dimensions": [
+    #                 0
+    #               ],
+    #               "value": {
+    #                 "id": "0446adf3-2973-461a-9c53-018d28a22970",
+    #                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #               }
+    #             }
+    #           },
+    #           {
+    #             "LengthEqual": {
+    #               "logical_operator": "Or",
+    #               "value": 0
+    #             }
+    #           },
+    #           {
+    #             "LengthMoreThan": {
+    #               "logical_operator": "Or",
+    #               "value": 0
+    #             }
+    #           },
+    #           {
+    #             "In": {
+    #               "logical_operator": "Or",
+    #               "value": [
+    #                 [
+    #                   {
+    #                     "id": "1da7944a-0877-4a10-8596-8c1e7e0c2787",
+    #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                   }
+    #                 ]
+    #               ]
+    #             }
+    #           },
+    #           {
+    #             "DimensionOneIn": {
+    #               "logical_operator": "Or",
+    #               "dimensions": [
+    #                 0
+    #               ],
+    #               "value": [
+    #                 {
+    #                   "id": "1788866c-fcec-40cc-80b3-a2690e6c4af5",
+    #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                 }
+    #               ]
+    #             }
+    #           },
+    #           {
+    #             "ContainsAllElementsOfArray": {
+    #               "logical_operator": "Or",
+    #               "value": [
+    #                 {
+    #                   "id": "3299e27c-7a1b-4fbe-a499-f2298432739a",
+    #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                 }
+    #               ]
+    #             }
+    #           },
+    #           {
+    #             "OverlapsWithArray": {
+    #               "logical_operator": "Or",
+    #               "value": [
+    #                 {
+    #                   "id": "82ff243f-a78f-447d-9e74-0973c5dcc9cf",
+    #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                 }
+    #               ]
+    #             }
+    #           },
+    #           {
+    #             "ElementId": {
+    #               "logical_operator": "Or",
+    #               "value": [
+    #                 {
+    #                   "Equal": {
+    #                     "logical_operator": "Or",
+    #                     "value": "759839ab-ab91-4393-a941-02463d4ea11a"
+    #                   }
+    #                 },
+    #                 {
+    #                   "In": {
+    #                     "logical_operator": "Or",
+    #                     "value": [
+    #                       "afb29e1c-c2ec-470f-a86f-28a075e459bd"
+    #                     ]
+    #                   }
+    #                 },
+    #                 {
+    #                   "RegularExpression": {
+    #                     "logical_operator": "Or",
+    #                     "regular_expression_case": "Sensitive",
+    #                     "value": ""
+    #                   }
+    #                 }
+    #               ]
+    #             }
+    #           },
+    #           {
+    #             "ElementColumn113F366235A24A7A932603Bbd441815F": {
+    #               "logical_operator": "Or",
+    #               "value": [
+    #                 {
+    #                   "Equal": {
+    #                     "logical_operator": "Or",
+    #                     "value": 0
+    #                   }
+    #                 },
+    #                 {
+    #                   "In": {
+    #                     "logical_operator": "Or",
+    #                     "value": [
+    #                       0
+    #                     ]
+    #                   }
+    #                 },
+    #                 {
+    #                   "GreaterThan": {
+    #                     "logical_operator": "Or",
+    #                     "value": 0
+    #                   }
+    #                 },
+    #                 {
+    #                   "Between": {
+    #                     "logical_operator": "Or",
+    #                     "value": {
+    #                       "start": 0,
+    #                       "end": 0
+    #                     }
+    #                   }
+    #                 }
+    #               ]
+    #             }
+    #           }
+    #         ]
+    #       }
+    #     },
+    #     {
+    #       "Field2": {
+    #         "logical_operator": "Or",
+    #         "value": [
+    #           [
+    #             {
+    #               "Column113F366235A24A7A932603Bbd441815F": {
+    #                 "logical_operator": "Or",
+    #                 "value": [
+    #                   {
+    #                     "Equal": {
+    #                       "logical_operator": "Or",
+    #                       "value": 0
+    #                     }
+    #                   },
+    #                   {
+    #                     "In": {
+    #                       "logical_operator": "Or",
+    #                       "value": [
+    #                         0
+    #                       ]
+    #                     }
+    #                   },
+    #                   {
+    #                     "GreaterThan": {
+    #                       "logical_operator": "Or",
+    #                       "value": 0
+    #                     }
+    #                   },
+    #                   {
+    #                     "Between": {
+    #                       "logical_operator": "Or",
+    #                       "value": {
+    #                         "start": 0,
+    #                         "end": 0
+    #                       }
+    #                     }
+    #                   }
+    #                 ]
+    #               }
+    #             }
+    #           ]
+    #         ]
+    #       }
+    #     },
+    #     {
+    #       "Field3": {
+    #         "logical_operator": "Or",
+    #         "value": [
+    #           [
+    #             {
+    #               "Equal": {
+    #                 "logical_operator": "Or",
+    #                 "value": [
+    #                   {
+    #                     "id": "3119d9de-b310-4709-b6c6-cebbd30031c0",
+    #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                   }
+    #                 ]
+    #               }
+    #             },
+    #             {
+    #               "DimensionOneEqual": {
+    #                 "logical_operator": "Or",
+    #                 "dimensions": [
+    #                   0
+    #                 ],
+    #                 "value": {
+    #                   "id": "d8160622-9bea-469b-85bd-256c4186a24b",
+    #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                 }
+    #               }
+    #             },
+    #             {
+    #               "LengthEqual": {
+    #                 "logical_operator": "Or",
+    #                 "value": 0
+    #               }
+    #             },
+    #             {
+    #               "LengthMoreThan": {
+    #                 "logical_operator": "Or",
+    #                 "value": 0
+    #               }
+    #             },
+    #             {
+    #               "In": {
+    #                 "logical_operator": "Or",
+    #                 "value": [
+    #                   [
+    #                     {
+    #                       "id": "c5460d8d-c812-466e-b0d1-22c488a72203",
+    #                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                     }
+    #                   ]
+    #                 ]
+    #               }
+    #             },
+    #             {
+    #               "DimensionOneIn": {
+    #                 "logical_operator": "Or",
+    #                 "dimensions": [
+    #                   0
+    #                 ],
+    #                 "value": [
+    #                   {
+    #                     "id": "d9a8e053-c787-499f-85b7-0119b0c6e1f5",
+    #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                   }
+    #                 ]
+    #               }
+    #             },
+    #             {
+    #               "ContainsAllElementsOfArray": {
+    #                 "logical_operator": "Or",
+    #                 "value": [
+    #                   {
+    #                     "id": "a662ae0e-b963-401a-8fa7-f3efe6d3fda7",
+    #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                   }
+    #                 ]
+    #               }
+    #             },
+    #             {
+    #               "OverlapsWithArray": {
+    #                 "logical_operator": "Or",
+    #                 "value": [
+    #                   {
+    #                     "id": "b2447856-a58a-4a9a-904a-59d2b9f923cd",
+    #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    #                   }
+    #                 ]
+    #               }
+    #             },
+    #             {
+    #               "ElementId": {
+    #                 "logical_operator": "Or",
+    #                 "value": [
+    #                   {
+    #                     "Equal": {
+    #                       "logical_operator": "Or",
+    #                       "value": "477fb107-90d6-45a7-af54-69fe20ef5657"
+    #                     }
+    #                   },
+    #                   {
+    #                     "In": {
+    #                       "logical_operator": "Or",
+    #                       "value": [
+    #                         "6ce91271-0fc2-4308-b916-fb1c64c665a2"
+    #                       ]
+    #                     }
+    #                   },
+    #                   {
+    #                     "RegularExpression": {
+    #                       "logical_operator": "Or",
+    #                       "regular_expression_case": "Sensitive",
+    #                       "value": ""
+    #                     }
+    #                   }
+    #                 ]
+    #               }
+    #             },
+    #             {
+    #               "ElementColumn113F366235A24A7A932603Bbd441815F": {
+    #                 "logical_operator": "Or",
+    #                 "value": [
+    #                   {
+    #                     "Equal": {
+    #                       "logical_operator": "Or",
+    #                       "value": 0
+    #                     }
+    #                   },
+    #                   {
+    #                     "In": {
+    #                       "logical_operator": "Or",
+    #                       "value": [
+    #                         0
+    #                       ]
+    #                     }
+    #                   },
+    #                   {
+    #                     "GreaterThan": {
+    #                       "logical_operator": "Or",
+    #                       "value": 0
+    #                     }
+    #                   },
+    #                   {
+    #                     "Between": {
+    #                       "logical_operator": "Or",
+    #                       "value": {
+    #                         "start": 0,
+    #                         "end": 0
+    #                       }
+    #                     }
+    #                   }
+    #                 ]
+    #               }
+    #             }
+    #           ]
+    #         ]
+    #       }
+    #     }
+    #   ]
+    # }
+  }
+}
 
 ###
  

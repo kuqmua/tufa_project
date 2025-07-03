@@ -2028,8 +2028,10 @@ impl Example {
 ////////
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ExampleDeleteManyPayload {
-    pub column_6e88acb0_c566_4fef_8a09_66a41338cf36: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>,
-    pub animal_as_not_null_jsonb_object: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::WhereElement>>,
+    //here
+    where_filter: ExampleWhereFilter,
+    // pub column_6e88acb0_c566_4fef_8a09_66a41338cf36: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement>>,
+    // pub animal_as_not_null_jsonb_object: std::option::Option<postgresql_crud::PostgresqlTypeWhere<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::WhereElement>>,
 }
 #[derive(Debug)]
 pub struct ExampleDeleteManyParameters {
@@ -2251,7 +2253,8 @@ impl Example {
                 let mut increment: std::primitive::u64 = 0;
                 let mut additional_parameters = std::string::String::from("where");
                 let mut is_first_push_to_additional_parameters_already_happend = false;
-                if let Some(value) = &parameters.payload.column_6e88acb0_c566_4fef_8a09_66a41338cf36 {
+                //here
+                if let Some(value) = &parameters.payload.where_filter.column_6e88acb0_c566_4fef_8a09_66a41338cf36 {
                     match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, &mut increment, &"column_6e88acb0_c566_4fef_8a09_66a41338cf36", is_first_push_to_additional_parameters_already_happend) {
                         Ok(value) => {
                             additional_parameters.push_str(&value);
@@ -2278,7 +2281,8 @@ impl Example {
                         }
                     }
                 }
-                if let Some(value) = &parameters.payload.animal_as_not_null_jsonb_object {
+                //here
+                if let Some(value) = &parameters.payload.where_filter.animal_as_not_null_jsonb_object {
                     match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, &mut increment, &"animal_as_not_null_jsonb_object", is_first_push_to_additional_parameters_already_happend) {
                         Ok(value) => {
                             additional_parameters.push_str(&value);
@@ -2310,10 +2314,12 @@ impl Example {
         println!("{}", query_string);
         let binded_query = {
             let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
-            if let Some(value) = parameters.payload.column_6e88acb0_c566_4fef_8a09_66a41338cf36 {
+            //here
+            if let Some(value) = parameters.payload.where_filter.column_6e88acb0_c566_4fef_8a09_66a41338cf36 {
                 query = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query);
             }
-            if let Some(value) = parameters.payload.animal_as_not_null_jsonb_object {
+            //here
+            if let Some(value) = parameters.payload.where_filter.animal_as_not_null_jsonb_object {
                 query = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query);
             }
             query
@@ -2689,8 +2695,10 @@ impl Example {
 impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleDeleteManyPayload {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
-            column_6e88acb0_c566_4fef_8a09_66a41338cf36: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-            animal_as_not_null_jsonb_object: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            //here
+            where_filter: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            // column_6e88acb0_c566_4fef_8a09_66a41338cf36: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            // animal_as_not_null_jsonb_object: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
         }
     }
 }
