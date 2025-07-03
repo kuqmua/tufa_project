@@ -3433,6 +3433,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::DeleteMany)
                 );
+                // let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
+                //     &UpdateManyOrDeleteMany::UpdateMany,
+                //     &expected_primary_keys_snake_case
+                // );
                 generate_try_operation_route_logic_token_stream(
                     &operation,
                     &common_additional_route_logic_token_stream,
@@ -3615,10 +3619,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #delete_one_token_stream
     };
     // if ident == "" {
-    //     macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //         "GeneratePostgresqlCrud",
-    //         &generated,
-    //     );
+        // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //     "GeneratePostgresqlCrud",
+        //     &generated,
+        // );
     // }
     generated.into()
 }
