@@ -138,7 +138,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["no", "payload", "fields"],
     ["no", "payload", "parameters"],
     ["try", "extract", "value"],
-    ["server", "location"],
+    ["endpoint", "location"],
     ["pg", "connection"],
     ["query", "string"],
     ["binded", "query"],

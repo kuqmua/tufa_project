@@ -1822,13 +1822,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let url_snake_case = naming::UrlSnakeCase;
-        let server_location_snake_case = naming::ServerLocationSnakeCase;
+        let endpoint_location_snake_case = naming::EndpointLocationSnakeCase;
         let url_token_stream = {
             let url_handle_token_stream = naming::UrlHandleSelfSnakeCaseTokenStream::url_handle_self_snake_case_token_stream(operation, &ident_snake_case_stringified);
             quote::quote! {
                 let #url_snake_case = format!(
                     #url_handle_token_stream,
-                    #server_location_snake_case,
+                    #endpoint_location_snake_case,
                 );
             }
         };
@@ -1934,7 +1934,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             impl #ident {
                 pub async fn #try_operation_snake_case(
-                    #server_location_snake_case: #ref_std_primitive_str,//todo rename as endpoint location
+                    #endpoint_location_snake_case: #ref_std_primitive_str,
                     #parameters_snake_case: #ident_operation_parameters_upper_camel_case
                 ) -> Result<#result_ok_type_token_stream, #ident_try_operation_error_named_upper_camel_case> {
                     #payload_token_stream
