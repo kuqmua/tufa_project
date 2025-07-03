@@ -304,6 +304,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let value_upper_camel_case = naming::ValueUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
     let from_snake_case = naming::FromSnakeCase;
+    let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let generate_postgresql_crud_value_declaration_token_stream = |content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case<#content_token_stream>}
     };
@@ -2140,9 +2141,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let element_field_ident = &element.field_ident;
                         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-                        //todo reuse create_query_part naming
                         quote::quote! {
-                            match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream create_query_part(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
+                            match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #create_query_part_snake_case(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
                                 Ok(#value_snake_case) => {
                                     #acc_snake_case.push_str(&format!("{value},"));
                                 },
@@ -2331,7 +2331,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
-                            match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream create_query_part(&#parameters_snake_case.#payload_snake_case.#element_field_ident, &mut #increment_snake_case) {
+                            match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #create_query_part_snake_case(&#parameters_snake_case.#payload_snake_case.#element_field_ident, &mut #increment_snake_case) {
                                 Ok(#value_snake_case) => #value_snake_case,
                                 Err(#error_0_token_stream) => {
                                     #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
