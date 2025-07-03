@@ -1308,35 +1308,31 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
     let expected_primary_keys_snake_case = naming::ExpectedPrimaryKeysSnakeCase;
-    let generate_non_existing_primary_keys_check_token_stream = |operation: &Operation, expected_primary_keys_token_stream: &dyn quote::ToTokens| {
+    enum UpdateManyOrDeleteMany {
+        UpdateMany,
+        DeleteMany
+    }
+    //todo use it for delete_many too intead of useing it only for update_many
+    let generate_non_existing_primary_keys_check_token_stream = |update_many_or_delete_many: &UpdateManyOrDeleteMany, expected_primary_keys_token_stream: &dyn quote::ToTokens| {
+        let current_operation = match update_many_or_delete_many {
+            UpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
+            UpdateManyOrDeleteMany::DeleteMany => Operation::DeleteMany,
+        };
         let non_existing_primary_keys_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
-            operation,
-            //todo refactor
-            match operation {
-                Operation::UpdateMany => &non_existing_primary_keys_update_syn_variant_wrapper,
-                Operation::DeleteMany => &non_existing_primary_keys_delete_syn_variant_wrapper,
-                Operation::CreateMany
-                | Operation::CreateOne
-                | Operation::ReadMany
-                | Operation::ReadOne
-                | Operation::UpdateOne
-                | Operation::DeleteOne => panic!("operation is not UpdateMany or DeleteMany"),
+            &current_operation,
+            match &update_many_or_delete_many {
+                UpdateManyOrDeleteMany::UpdateMany => &non_existing_primary_keys_update_syn_variant_wrapper,
+                UpdateManyOrDeleteMany::DeleteMany => &non_existing_primary_keys_delete_syn_variant_wrapper,
             },
             file!(),
             line!(),
             column!(),
         );
         let non_existing_primary_keys_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
-            operation,
-            match operation {
-                Operation::UpdateMany => &non_existing_primary_keys_update_and_rollback_syn_variant_wrapper,
-                Operation::DeleteMany => &non_existing_primary_keys_delete_and_rollback_syn_variant_wrapper,
-                Operation::CreateMany
-                | Operation::CreateOne
-                | Operation::ReadMany
-                | Operation::ReadOne
-                | Operation::UpdateOne
-                | Operation::DeleteOne => panic!("operation is not UpdateMany or DeleteMany"),
+            &current_operation,
+            match &update_many_or_delete_many {
+                UpdateManyOrDeleteMany::UpdateMany => &non_existing_primary_keys_update_and_rollback_syn_variant_wrapper,
+                UpdateManyOrDeleteMany::DeleteMany => &non_existing_primary_keys_delete_and_rollback_syn_variant_wrapper,
             },
             file!(),
             line!(),
@@ -2980,7 +2976,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation, 
                     &{
                         let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(&operation);
-                        let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(&operation, &quote::quote! {#expected_primary_keys_snake_case});
+                        let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
+                            &UpdateManyOrDeleteMany::UpdateMany,
+                            &expected_primary_keys_snake_case
+                        );
                         quote::quote! {
                             #fetch_token_stream
                             {
