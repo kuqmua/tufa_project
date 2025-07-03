@@ -590,10 +590,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let sqlx_error_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
+    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string = macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString;
+    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize = macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize;
     let postgresql_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::PostgresqlUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::InternalServerError500),
-        vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming::PostgresqlSnakeCase, sqlx_error_syn_punctuated_punctuated.clone())],
+        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &naming::PostgresqlSnakeCase, sqlx_error_syn_punctuated_punctuated.clone())],
     );
     // //todo find out how to declare lifetime on closures
     // //todo refactor as &[&'a SynRust...]
@@ -849,8 +851,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &naming::RowAndRollbackUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::InternalServerError500),
         vec![
-            (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming::RowSnakeCase, sqlx_error_syn_punctuated_punctuated.clone()),
-            (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &naming::RowSnakeCase, sqlx_error_syn_punctuated_punctuated.clone()),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
         ],
     );
     enum ReadOrUpdate {
@@ -944,7 +946,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &naming::NonExistingPrimaryKeysSnakeCase,
                 std_vec_vec_primary_key_field_type_update_syn_punctuated_punctuated.clone(),
             ),
-            (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
         ],
     );
     let non_existing_primary_keys_delete_syn_variant_wrapper = new_syn_variant_wrapper(
@@ -965,7 +967,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &naming::NonExistingPrimaryKeysSnakeCase,
                 std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated,
             ),
-            (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
+            (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
         ],
     );
     let sqlx_query_sqlx_postgres_token_stream = quote::quote! {sqlx::query::<sqlx::Postgres>};
@@ -1005,7 +1007,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &naming::NotUniqueColumnUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
         vec![(
-            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize.clone(),
             &naming::NotUniqueColumnSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&ident_select_upper_camel_case.to_string()]),
         )],
@@ -1014,7 +1016,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &naming::SerdeJsonToStringUpperCamelCase,
         None,
         vec![(
-            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
             &naming::SerdeJsonToStringSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
         )],
@@ -1024,17 +1026,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
         vec![
             (
-                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
                 &status_code_snake_case,
                 macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["http", "StatusCode"]),
             ),
             (
-                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
                 &naming::HeadersSnakeCase,
                 macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
             ),
             (
-                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
                 &naming::ReqwestSnakeCase,
                 macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
             ),
@@ -1045,22 +1047,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         None,
         vec![
             (
-                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
                 &status_code_snake_case,
                 macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["http", "StatusCode"]),
             ),
             (
-                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
                 &naming::HeadersSnakeCase,
                 macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "header", "HeaderMap"]),
             ),
             (
-                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize.clone(),
                 &naming::ResponseTextSnakeCase,
                 std_string_string_syn_punctuated_punctuated,
             ),
             (
-                macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
                 &naming::SerdeSnakeCase,
                 macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
             ),
@@ -1070,7 +1072,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &naming::ReqwestUpperCamelCase,
         None,
         vec![(
-            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
             &naming::ReqwestSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["reqwest", "Error"]),
         )],
@@ -1088,7 +1090,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         &naming::SerdeJsonUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
         vec![(
-            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+            macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
             &naming::SerdeJsonSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["serde_json", "Error"]),
         )],
@@ -1101,7 +1103,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let not_unique_primary_key_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::NotUniquePrimaryKeyUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
-        vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming::NotUniquePrimaryKeySnakeCase, {
+        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &naming::NotUniquePrimaryKeySnakeCase, {
             if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
                 value.path.segments.clone()
             } else {
@@ -1113,7 +1115,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let not_unique_primary_key_update_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::NotUniquePrimaryKeyUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
-        vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming::NotUniquePrimaryKeySnakeCase, {
+        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &naming::NotUniquePrimaryKeySnakeCase, {
             if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
                 value.path.segments.last().map_or_else(|| {panic!("no last path segment");}, |last_path_segment| {
                     let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
@@ -1137,7 +1139,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let no_payload_fields_primary_key_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::NoPayloadFieldsPrimaryKeyUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::InternalServerError500),
-        vec![(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &naming::NoPayloadFieldsPrimaryKeySnakeCase, {
+        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &naming::NoPayloadFieldsPrimaryKeySnakeCase, {
             if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
                 value.path.segments.last().map_or_else(|| {
                     panic!("no last path segment");
@@ -1641,7 +1643,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &ident_try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case,
                     None,
                     vec![(
-                        macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString,
+                        macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
                         &naming::parameter::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase::from_display(operation),
                         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&ident_try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case.to_string()]),
                     )],
@@ -2057,18 +2059,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &naming::UnexpectedRowsLengthUpperCamelCase,
             Some(macros_helpers::status_code::StatusCode::InternalServerError500),
             vec![
-                (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &expected_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
-                (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &got_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
+                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &expected_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
+                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &got_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
             ],
         );
         let unexpected_rows_length_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
             &naming::UnexpectedRowsLengthAndRollbackUpperCamelCase,
             Some(macros_helpers::status_code::StatusCode::InternalServerError500),
             vec![
-                (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &expected_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
-                (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &got_length_snake_case, std_primitive_usize_syn_punctuated_punctuated),
+                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &expected_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
+                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &got_length_snake_case, std_primitive_usize_syn_punctuated_punctuated),
                 //todo reuse vec elements
-                (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated),
+                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &rollback_snake_case, sqlx_error_syn_punctuated_punctuated),
             ],
         );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
