@@ -2240,6 +2240,12 @@ impl Example {
                 }
             },
         };
+        // let expected_primary_keys = parameters
+        //     .payload
+        //     .0
+        //     .iter()
+        //     .map(|element| element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone())
+        //     .collect::<std::vec::Vec<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update>>();
         let query_string = {
             format!("delete from example {} returning column_6e88acb0_c566_4fef_8a09_66a41338cf36", {
                 let mut increment: std::primitive::u64 = 0;
