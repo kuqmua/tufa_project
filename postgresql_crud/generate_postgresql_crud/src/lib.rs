@@ -299,7 +299,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let serde_deserialize = token_patterns::SerdeDeserialize;
     let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
     let sqlx_row = token_patterns::SqlxRow;
-    let ident_options_upper_camel_case = naming::parameter::SelfOptionsUpperCamelCase::from_tokens(&ident);
+    let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
     let postgresql_crud_snake_case = &naming::PostgresqlCrudSnakeCase;
     let value_upper_camel_case = naming::ValueUpperCamelCase;
     let value_snake_case = naming::ValueSnakeCase;
@@ -310,8 +310,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_postgresql_crud_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case{#value_snake_case: #content_token_stream}}
     };
-    //todo maybe rename to ident_read
-    let ident_options_token_stream = {
+    let ident_read_token_stream = {
         let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
         let field_option_primary_key_token_stream = {
             let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&primary_key_field_type, &naming::ReadUpperCamelCase));
@@ -331,7 +330,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         });
         quote::quote! {
             #derive_debug_serde_serialize_serde_deserialize
-            pub struct #ident_options_upper_camel_case {
+            pub struct #ident_read_upper_camel_case {
                 #field_option_primary_key_token_stream,
                 #(#fields_options_excluding_primary_key_token_stream),*
             }
@@ -827,7 +826,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #(#assignment_variants_excluding_primary_key_token_stream),*
                 }
             }
-            #ident_options_upper_camel_case {
+            #ident_read_upper_camel_case {
                 #(#option_fields_initiation_token_stream),*
             }
         }
@@ -1081,7 +1080,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         std::vec::Vec::<#primary_key_field_type_as_postgresql_type_update_token_stream>
     };
 
-    let std_vec_vec_struct_options_ident_token_stream = quote::quote! {std::vec::Vec::<#ident_options_upper_camel_case>};
+    let std_vec_vec_struct_options_ident_token_stream = quote::quote! {std::vec::Vec::<#ident_read_upper_camel_case>};
     // //todo rename not_unique_column to something what mean json tree getter too
     let not_unique_column_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::NotUniqueColumnUpperCamelCase,
@@ -3150,7 +3149,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //     postgresql_crud_common::FromOrTryFrom::From => quote::quote! {
                 //         #value_snake_case
                 //         .into_iter()
-                //         .map(|#element_snake_case| #ident_options_upper_camel_case::#from_snake_case(#element_snake_case))
+                //         .map(|#element_snake_case| #ident_read_upper_camel_case::#from_snake_case(#element_snake_case))
                 //         .collect()
                 //     },
                 //     postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {
@@ -3292,7 +3291,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
                 generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
                     &operation,
-                    &ident_options_upper_camel_case,
+                    &ident_read_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
                 );
             // println!("{try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream}");
@@ -3389,7 +3388,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &proc_macro2::TokenStream::new(),
                 &type_variants_from_request_response_syn_variants,
-                &ident_options_upper_camel_case,
+                &ident_read_upper_camel_case,
                 &{
                     //todo where logic was commented. untill rewriting better where logic there is not point to add it again
                     // let filter_not_unique_column_token_stream = generate_filter_not_unique_column_http_request_token_stream(&operation);
@@ -3398,7 +3397,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 },
                 // &match fields_named_from_or_try_from {
-                //     postgresql_crud_common::FromOrTryFrom::From => quote::quote! {#ident_options_upper_camel_case::#from_snake_case(#value_snake_case)},
+                //     postgresql_crud_common::FromOrTryFrom::From => quote::quote! {#ident_read_upper_camel_case::#from_snake_case(#value_snake_case)},
                 //     postgresql_crud_common::FromOrTryFrom::TryFrom => quote::quote! {#value_snake_case},
                 // }
                 &quote::quote! {#value_snake_case},
@@ -4464,7 +4463,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_token_stream = {
         quote::quote! {
             #impl_ident_token_stream
-            #ident_options_token_stream
+            #ident_read_token_stream
             #select_token_stream
             #ident_column_read_permission_token_stream
         }
