@@ -7,31 +7,20 @@
 //todo maybe add unnest sql types?
 //todo maybe add unnest to filter parameters if its array ?
 //todo swagger ui https://github.com/juhaku/utoipa/blob/master/examples/todo-axum/src/main.rs
-//todo test #[derive(generate_postgresql_crud::GeneratePostgresqlCrud)] for few structs in one module - will it work? fix if not will not work
 //todo derive utoipa::ToSchema for what? original structs or with serialize deserialize?
 //todo need to add utoipa::ToSchema annotation #[schema(value_type = YourToSchemaTraitImplStruct)] for all fields
 //todo remove useless derives like useless serde::Serialize and Deserialize
-//todo maybe add private generated code in specific mod in case of some compilation error - to show info like "no struct BlaBla found in mod ..." ?
-//todo add ident prefix to public functions structs and other
 //todo maybe generate compisite type for user defined type https://docs.rs/sqlx/0.7.3/sqlx/postgres/types/index.html#rust_decimal
 //todo read again some interesting thoughts about sql as api https://habr.com/ru/companies/timeweb/articles/798937/
-//todo sqlx query! macros not in actual api, but just unused function just for compile time query check
 //todo reexport all crates what logic depends on (from crates.io) (use of undeclared crate or module `time`)
-//todo write checks on fields one by one with early return. not need to check all and create combinatorial complexity
 //todo add transaction isolation level (see postgresql docs)
 //todo check on postgresql max length value of type
 //todo in few cases rows affected is usefull. (update delete for example). if 0 afftected -maybe its error? or maybe use select then update\delete?(rewrite query)
-//todo update one and delete one must be a transaction
 //todo postgresql json schema validation https://youtu.be/F6X60ln2VNc
-// SET search_path TO public;
-// DROP EXTENSION IF EXISTS "pg_jsonschema";
-// CREATE EXTENSION "pg_jsonschema";
 //todo generate json schema from rust type https://docs.rs/schemars/latest/schemars/
 //todo support read table length
 
 //todo postgresql json:
-//* define postgresql json type
-//* write checker what ensures what postgresql type equals to
 //* write json schema in postgresql
 //* validate insert json field with json schema
 //* syncronize serde json type deserialize validation with postgresql insert validation
