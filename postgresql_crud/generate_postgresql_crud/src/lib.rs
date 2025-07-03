@@ -1632,35 +1632,29 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let generate_payload_and_payload_element_token_stream = |operation: &Operation, payload_element_lifetime_token_stream: &dyn quote::ToTokens, payload_lifetime_token_stream: &dyn quote::ToTokens, fields_token_stream: &dyn quote::ToTokens| -> proc_macro2::TokenStream {
-        let ident_operation_payload_element_upper_camel_case = generate_ident_operation_payload_element_upper_camel_case(&operation);
-        let ident_operation_payload_element_token_stream = quote::quote! {
-            #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-            pub struct #ident_operation_payload_element_upper_camel_case #payload_element_lifetime_token_stream {
-                #fields_token_stream
-            }
-        };
-        let ident_operation_payload_token_stream = {
-            let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
-            quote::quote! {
-                #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
-                pub struct #ident_operation_payload_upper_camel_case #payload_lifetime_token_stream(pub std::vec::Vec<#ident_operation_payload_element_upper_camel_case #payload_element_lifetime_token_stream>);
-            }
-        };
-        quote::quote! {
-            #ident_operation_payload_element_token_stream
-            #ident_operation_payload_token_stream
-        }
-    };
     let generate_parameters_pattern_payload_and_payload_element_token_stream = |operation: &Operation, fields_token_stream: &dyn quote::ToTokens|{
         generate_parameters_pattern_token_stream(
             &operation,
-            generate_payload_and_payload_element_token_stream(
-                &operation,
-                &proc_macro2::TokenStream::new(),
-                &proc_macro2::TokenStream::new(),
-                &fields_token_stream
-            ),
+            {
+                let ident_operation_payload_element_upper_camel_case = generate_ident_operation_payload_element_upper_camel_case(&operation);
+                let ident_operation_payload_element_token_stream = quote::quote! {
+                    #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+                    pub struct #ident_operation_payload_element_upper_camel_case {
+                        #fields_token_stream
+                    }
+                };
+                let ident_operation_payload_token_stream = {
+                    let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
+                    quote::quote! {
+                        #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+                        pub struct #ident_operation_payload_upper_camel_case(pub std::vec::Vec<#ident_operation_payload_element_upper_camel_case>);
+                    }
+                };
+                quote::quote! {
+                    #ident_operation_payload_element_token_stream
+                    #ident_operation_payload_token_stream
+                }
+            }
         )
     };
     let generate_type_variants_from_request_response_syn_variants = |syn_variants: &std::vec::Vec<&syn::Variant>, operation: &Operation| -> std::vec::Vec<syn::Variant> {
