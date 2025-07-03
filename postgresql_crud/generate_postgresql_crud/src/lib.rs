@@ -1987,21 +1987,24 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
         )
     };
-    let generate_create_update_delete_one_fetch_token_stream = |operation: &Operation| {
+    enum CreateOneOrUpdateOneOrDeleteOne {
+        CreateOne,
+        UpdateOne,
+        DeleteOne
+    }
+    let generate_create_update_delete_one_fetch_token_stream = |create_one_or_update_one_or_delete_one: &CreateOneOrUpdateOneOrDeleteOne| {
+        let current_operation = match &create_one_or_update_one_or_delete_one {
+            CreateOneOrUpdateOneOrDeleteOne::CreateOne => Operation::CreateOne,
+            CreateOneOrUpdateOneOrDeleteOne::UpdateOne => Operation::UpdateOne,
+            CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Operation::DeleteOne,
+        };
         generate_fetch_one_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
-                &match operation {
-                    Operation::CreateOne | Operation::UpdateOne | Operation::DeleteOne => quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
-                    Operation::CreateMany
-                    | Operation::ReadMany
-                    | Operation::ReadOne
-                    | Operation::UpdateMany
-                    | Operation::DeleteMany => panic!("supported only CreateOne, UpdateOne, DeleteOne"),
-                },
+                &quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
                 &value_snake_case,
-                &generate_match_postgres_transaction_rollback_await_token_stream(operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
             ),
-            &generate_match_postgres_transaction_rollback_await_token_stream(operation, file!(), line!(), column!(), file!(), line!(), column!()),
+            &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
         )
     };
     let generate_operation_payload_example_route_logic_token_stream = |operation: &Operation| {
@@ -2334,7 +2337,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         query
                     }
                 };
-                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_one_fetch_token_stream(&operation));
+                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
+                    &operation,
+                    &generate_create_update_delete_one_fetch_token_stream(&CreateOneOrUpdateOneOrDeleteOne::CreateOne)
+                );
                 generate_try_operation_route_logic_token_stream(
                     &operation,
                     &common_additional_route_logic_token_stream,
@@ -3221,7 +3227,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #query_snake_case
                     }
                 };
-                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_one_fetch_token_stream(&operation));
+                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
+                    &operation,
+                    &generate_create_update_delete_one_fetch_token_stream(&CreateOneOrUpdateOneOrDeleteOne::UpdateOne)
+                );
                 generate_try_operation_route_logic_token_stream(
                     &operation,
                     &common_additional_route_logic_token_stream,
@@ -3492,7 +3501,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #query_snake_case
                     }
                 };
-                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_one_fetch_token_stream(&operation));
+                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
+                    &operation,
+                    &generate_create_update_delete_one_fetch_token_stream(&CreateOneOrUpdateOneOrDeleteOne::DeleteOne)
+                );
                 generate_try_operation_route_logic_token_stream(
                     &operation,
                     &common_additional_route_logic_token_stream,
