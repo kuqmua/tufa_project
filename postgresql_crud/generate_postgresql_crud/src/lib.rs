@@ -23,12 +23,6 @@
 //todo postgresql json:
 //* write json schema in postgresql
 //* validate insert json field with json schema
-//* syncronize serde json type deserialize validation with postgresql insert validation
-//* validate read json field - all recursive json tree variants to read
-//* generate all recursive tree variants to read in serde read variants type
-//* generate all recursive tree variants to read in postgresql query
-//* validate update json field with json schema - all recursive tree variants to update
-//* delete not need?
 
 #[proc_macro_attribute]
 pub fn create_many_additional_error_variants(_attr: proc_macro::TokenStream, item: proc_macro::TokenStream) -> proc_macro::TokenStream {
