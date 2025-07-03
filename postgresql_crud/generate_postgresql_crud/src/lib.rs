@@ -1963,23 +1963,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let generate_create_update_delete_many_fetch_token_stream = |operation: &Operation| {
+    enum CreateManyOrUpdateManyOrDeleteMany {
+        CreateMany,
+        UpdateMany,
+        DeleteMany
+    }
+    let generate_create_update_delete_many_fetch_token_stream = |create_many_or_update_many_or_delete_many: &CreateManyOrUpdateManyOrDeleteMany| {
+        let current_operation = match &create_many_or_update_many_or_delete_many {
+            CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
+            CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
+            CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Operation::DeleteMany,
+        };
         generate_fetch_token_stream(
             &generate_sqlx_row_try_get_primary_key_token_stream(
-                &match operation {
-                    Operation::CreateMany
-                    | Operation::DeleteMany => quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
-                    Operation::UpdateMany => quote::quote! {#primary_key_field_type_as_postgresql_type_update_token_stream},
-                    Operation::CreateOne
-                    | Operation::ReadMany
-                    | Operation::ReadOne
-                    | Operation::UpdateOne
-                    | Operation::DeleteOne => panic!("supported only CreateMany, UpdateMany, DeleteMany"),
+                &match &create_many_or_update_many_or_delete_many {
+                    CreateManyOrUpdateManyOrDeleteMany::CreateMany |
+                    CreateManyOrUpdateManyOrDeleteMany::DeleteMany => quote::quote! {#primary_key_field_type_as_primary_key_upper_camel_case},
+                    CreateManyOrUpdateManyOrDeleteMany::UpdateMany => quote::quote! {#primary_key_field_type_as_postgresql_type_update_token_stream},
                 },
                 &quote::quote! {Some(#value_snake_case)},
-                &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(operation, file!(), line!(), column!(), file!(), line!(), column!()),
+                &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
             ),
-            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(operation, file!(), line!(), column!(), file!(), line!(), column!()),
+            &generate_drop_rows_match_postgres_transaction_rollback_await_handle_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
         )
     };
     let generate_create_update_delete_one_fetch_token_stream = |operation: &Operation| {
@@ -2156,7 +2161,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
                     &{
-                        let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(&operation);
+                        let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(
+                            &CreateManyOrUpdateManyOrDeleteMany::CreateMany
+                        );
                         let unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
                             &unexpected_rows_length_syn_variant_wrapper,
@@ -2975,7 +2982,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation, 
                     &{
-                        let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(&operation);
+                        let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::UpdateMany);
                         let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
                             &UpdateManyOrDeleteMany::UpdateMany,
                             &expected_primary_keys_snake_case
@@ -3389,12 +3396,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
-                    &generate_create_update_delete_many_fetch_token_stream(&operation)
+                    &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::DeleteMany)
                 );
-                // let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
-                //     &UpdateManyOrDeleteMany::UpdateMany,
-                //     &expected_primary_keys_snake_case
-                // );
                 generate_try_operation_route_logic_token_stream(
                     &operation,
                     &common_additional_route_logic_token_stream,
