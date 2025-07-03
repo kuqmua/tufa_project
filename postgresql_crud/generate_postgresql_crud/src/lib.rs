@@ -310,6 +310,60 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_postgresql_crud_value_initialization_token_stream = |content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case{#value_snake_case: #content_token_stream}}
     };
+    let generate_fields_named_token_stream = |function: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
+        let fields_token_stream = fields.iter().map(function);
+        quote::quote! {#(#fields_token_stream),*}
+    };
+    let pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+        let field_ident = &element.field_ident;
+        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::WhereElementUpperCamelCase);
+        quote::quote! {
+            pub #field_ident: std::option::Option<
+                postgresql_crud::PostgresqlTypeWhere<
+                    #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
+                >
+            >
+        }
+    });
+    let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
+    let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+    let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+    let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream = |ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
+        postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+            &ident,
+            &proc_macro2::TokenStream::new(),
+            &content_token_stream
+        )
+    };
+    let ident_where_filter_upper_camel_case = naming::parameter::SelfWhereFilterUpperCamelCase::from_tokens(&ident);
+    let ident_where_filter_token_stream = {
+        let ident_where_filter_token_stream = {
+            quote::quote! {
+                #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+                pub struct #ident_where_filter_upper_camel_case {
+                    #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream
+                }
+            }
+        };
+        let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_filter_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
+            &ident_where_filter_upper_camel_case,
+            &{
+                let fields_token_stream = fields.iter().map(|element| {
+                    let field_ident = &element.field_ident;
+                    quote::quote! {
+                        #field_ident: Some(
+                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                        ),
+                    }
+                });
+                quote::quote! {Self {#(#fields_token_stream)*}}
+            }
+        );
+        quote::quote! {
+            #ident_where_filter_token_stream
+            #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_filter_token_stream
+        }
+    };
     let ident_read_token_stream = {
         let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
         let field_option_primary_key_token_stream = {
@@ -336,9 +390,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
-    let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-    let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
     let select_token_stream = {
         let ident_select_token_stream = {
@@ -1205,25 +1256,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value
     };
     let common_additional_route_logic_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute());
-    let generate_fields_named_token_stream = |function: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
-        let fields_token_stream = fields.iter().map(function);
-        quote::quote! {#(#fields_token_stream),*}
-    };
     let generate_fields_named_excluding_primary_key_token_stream = |function: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
         let fields_token_stream = fields_without_primary_key.iter().map(function);
         quote::quote! {#(#fields_token_stream),*}
     };
-    let pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
-        let field_ident = &element.field_ident;
-        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::WhereElementUpperCamelCase);
-        quote::quote! {
-            pub #field_ident: std::option::Option<
-                postgresql_crud::PostgresqlTypeWhere<
-                    #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
-                >
-            >
-        }
-    });
     let generate_pub_handle_token_stream = |is_pub: bool| if is_pub { quote::quote! {pub} } else { proc_macro2::TokenStream::new() };
     //todo check if vec is not empty
     let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
@@ -2073,13 +2109,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote!{is_first_push_to_additional_parameters_already_happend = true;}
         }
     };
-    let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream = |ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
-        postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
-            &ident,
-            &proc_macro2::TokenStream::new(),
-            &content_token_stream
-        )
-    };
     let create_many_token_stream = {
         let operation = Operation::CreateMany;
         let expected_length_snake_case = naming::ExpectedLengthSnakeCase;
@@ -2430,19 +2459,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = generate_parameters_pattern_payload_token_stream(
             &operation,
             &quote::quote! {
-                #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream,
+                pub where_filter: #ident_where_filter_upper_camel_case,
                 #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
                 pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_select_upper_camel_case>,
                 pub pagination: postgresql_crud::PaginationStartsWithZero,
             }
         );
         let try_operation_route_logic_token_stream = {
-            let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream =
-                generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
-                    &operation,
-                    &std_vec_vec_struct_options_ident_token_stream,
-                    &type_variants_from_request_response_syn_variants,
-                );
+            let try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream = generate_try_operation_route_logic_response_variants_impl_std_convert_from_try_operation_route_logic_error_named_for_try_operation_route_logic_response_variants_try_operation_route_logic_error_named_token_stream(
+                &operation,
+                &std_vec_vec_struct_options_ident_token_stream,
+                &type_variants_from_request_response_syn_variants,
+            );
             let try_operation_route_logic_token_stream = {
                 //todo maybe but checks into constructor function and use it inside deserilizaton serde impl
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
@@ -2453,7 +2481,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream(index);
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
-                            if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
+                            if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.where_filter.#field_ident {
                                 match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
                                     #value_snake_case,
                                     &mut increment,
@@ -2536,7 +2564,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         quote::quote! {
-                            if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#field_ident {
+                            if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.where_filter.#field_ident {
                                 query = #postgresql_crud_postgresql_type_where_filter_query_bind_token_stream(
                                     value,
                                     query
@@ -2611,33 +2639,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
-                &generate_ident_operation_payload_upper_camel_case(&operation),
-                &{
-                    let fields_token_stream = fields.iter().map(|element| {
-                        let field_ident = &element.field_ident;
-                        quote::quote! {
-                            #field_ident: Some(
-                                #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                            ),
-                        }
-                    });
-                    quote::quote! {
-                        Self {
-                            #(#fields_token_stream)*
-                            #select_snake_case: #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                            #order_by_snake_case: postgresql_crud::OrderBy {
-                                #column_snake_case: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
-                                    #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                ),
-                                #order_snake_case: Some(
-                                    #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                ),
-                            },
-                            pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                        }
-                    }
+            &generate_ident_operation_payload_upper_camel_case(&operation),
+            &quote::quote! {
+                Self {
+                    where_filter: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    #select_snake_case: #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    #order_by_snake_case: postgresql_crud::OrderBy {
+                        #column_snake_case: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                        ),
+                        #order_snake_case: Some(
+                            #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                        ),
+                    },
+                    pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                 }
-            );
+            }
+        );
         let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
@@ -3595,6 +3613,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_token_stream = {
         quote::quote! {
             #impl_ident_token_stream
+            #ident_where_filter_token_stream
             #ident_read_token_stream
             #select_token_stream
             #ident_column_read_permission_token_stream
@@ -3610,7 +3629,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
         #create_many_token_stream
         #create_one_token_stream
-        // #read_many_token_stream
+        #read_many_token_stream
         #read_one_token_stream
         //todo fix trait calls in update many comparing with update_one
         // #update_many_token_stream
