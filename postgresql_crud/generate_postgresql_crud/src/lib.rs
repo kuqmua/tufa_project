@@ -228,7 +228,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: std::primitive::bool| {
                     let is_primary_key_token_stream: &dyn quote::ToTokens = if is_primary_key { &naming::TrueSnakeCase } else { &naming::FalseSnakeCase };
                     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                    //todo reuse create_table_column_query_part token stream
                     quote::quote! {
                         <#field_type as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
                     }
@@ -854,7 +853,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             (macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString, &rollback_snake_case, sqlx_error_syn_punctuated_punctuated.clone()),
         ],
     );
-    let std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated = {
+    enum ReadOrUpdate {
+        Read,
+        Update
+    }
+    let generate_std_vec_vec_primary_key_field_type_syn_punctuated_punctuated = |read_or_update: &ReadOrUpdate|{
         if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
             value.path.segments.last().map_or_else(|| {
                 panic!("no last path segment");
@@ -894,7 +897,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             });
                                         }
                                         handle.push_value(syn::PathSegment {
-                                            ident: proc_macro2::Ident::new(&naming::parameter::SelfReadUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(), proc_macro2::Span::call_site()),
+                                            ident: proc_macro2::Ident::new(
+                                                &{
+                                                    let last_path_segment_ident = &last_path_segment.ident;
+                                                    match &read_or_update {
+                                                        ReadOrUpdate::Read => naming::parameter::SelfReadUpperCamelCase::from_tokens(&last_path_segment_ident).to_string(),
+                                                        ReadOrUpdate::Update => naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&last_path_segment_ident).to_string(),
+                                                    }
+                                                },
+                                                proc_macro2::Span::call_site()
+                                            ),
                                             arguments: syn::PathArguments::None,
                                         });
                                         handle
@@ -912,65 +924,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             panic!("primary key syn::Type in not syn::Type::Path");
         }
     };
-    //todo maybe reuse
-    let std_vec_vec_primary_key_field_type_update_syn_punctuated_punctuated = {
-        if let syn::Type::Path(value) = &primary_key_field.syn_field.ty {
-            value.path.segments.last().map_or_else(|| {
-                panic!("no last path segment");
-            }, |last_path_segment| {
-                let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                handle.push_value(syn::PathSegment {
-                    ident: proc_macro2::Ident::new("std", proc_macro2::Span::call_site()),
-                    arguments: syn::PathArguments::None,
-                });
-                handle.push_punct(syn::token::PathSep {
-                    spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                });
-                handle.push_value(syn::PathSegment {
-                    ident: proc_macro2::Ident::new("vec", proc_macro2::Span::call_site()),
-                    arguments: syn::PathArguments::None,
-                });
-                handle.push_punct(syn::token::PathSep {
-                    spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                });
-                handle.push_value(syn::PathSegment {
-                    ident: proc_macro2::Ident::new("Vec", proc_macro2::Span::call_site()),
-                    arguments: syn::PathArguments::AngleBracketed(syn::AngleBracketedGenericArguments {
-                        colon2_token: None,
-                        lt_token: syn::token::Lt { spans: [proc_macro2::Span::call_site()] },
-                        args: {
-                            let mut handle = syn::punctuated::Punctuated::<syn::GenericArgument, syn::token::Comma>::new();
-                            handle.push(syn::GenericArgument::Type(syn::Type::Path(syn::TypePath {
-                                qself: None,
-                                path: syn::Path {
-                                    leading_colon: None,
-                                    segments: {
-                                        let mut handle = syn::punctuated::Punctuated::<syn::PathSegment, syn::token::PathSep>::new();
-                                        for element in value.path.segments.iter().rev().skip(1).rev() {
-                                            handle.push_value(element.clone());
-                                            handle.push_punct(syn::token::PathSep {
-                                                spans: [proc_macro2::Span::call_site(), proc_macro2::Span::call_site()],
-                                            });
-                                        }
-                                        handle.push_value(syn::PathSegment {
-                                            ident: proc_macro2::Ident::new(&naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&last_path_segment.ident).to_string(), proc_macro2::Span::call_site()),
-                                            arguments: syn::PathArguments::None,
-                                        });
-                                        handle
-                                    },
-                                }
-                            })));
-                            handle
-                        },
-                        gt_token: syn::token::Gt { spans: [proc_macro2::Span::call_site()] },
-                    }),
-                });
-                handle
-            })
-        } else {
-            panic!("primary key syn::Type in not syn::Type::Path");
-        }
-    };
+    let std_vec_vec_primary_key_field_type_read_syn_punctuated_punctuated = generate_std_vec_vec_primary_key_field_type_syn_punctuated_punctuated(&ReadOrUpdate::Read);
+    let std_vec_vec_primary_key_field_type_update_syn_punctuated_punctuated = generate_std_vec_vec_primary_key_field_type_syn_punctuated_punctuated(&ReadOrUpdate::Update);
     let non_existing_primary_keys_update_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::NonExistingPrimaryKeysUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
