@@ -2080,6 +2080,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             Self{#fields_initialiation_excluding_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream}
         }
     };
+    let generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = |index: std::primitive::usize|{
+        if index == fields_len_minus_one {
+            proc_macro2::TokenStream::new()
+        }
+        else {
+            quote::quote!{is_first_push_to_additional_parameters_already_happend = true;}
+        }
+    };
     //todo generate test_token_stream
     let create_many_token_stream = {
         let operation = Operation::CreateMany;
@@ -2452,12 +2460,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let additional_parameters_modification_token_stream = fields.iter().enumerate().map(|(index, element)| {
                         let field_ident = &element.field_ident;
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                        let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = if index == fields_len_minus_one {
-                            proc_macro2::TokenStream::new()
-                        }
-                        else {
-                            quote::quote!{is_first_push_to_additional_parameters_already_happend = true;}
-                        };
+                        let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream(index);
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
@@ -3383,13 +3386,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let additional_parameters_modification_token_stream = fields.iter().enumerate().map(|(index, element)| {
                         let field_ident = &element.field_ident;
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                        //todo reuse
-                        let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = if index == fields_len_minus_one {
-                            proc_macro2::TokenStream::new()
-                        }
-                        else {
-                            quote::quote!{is_first_push_to_additional_parameters_already_happend = true;}
-                        };
+                        let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream(index);
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
