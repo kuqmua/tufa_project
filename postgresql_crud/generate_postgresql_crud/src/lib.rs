@@ -1,19 +1,9 @@
-//todo checked and for path query headers too
-//todo how to write filter logic for sqlx rust postgresql types?
 //todo decide where to do error log (maybe add in some places)
-//todo add regex filter to query parameters - now supports only in body variants
-//todo regex filter support only for string-like types postgresql
 //todo generate route what will return columns of the table and their rust and postgersql types
-//todo - check if fields for filter are unique in the input array
-//todo created at and updated at fields
+//todo created at and updated at fields + created by + updated by
 //todo attributes for activation generation crud methods(like generate create, update_one, delete_one)
 //todo authorization for returning concrete error or just minimal info(user role)
 //todo generate rules and roles
-//todo unique(meaning not primary key unique column) and nullable support
-//todo add check on max postgresql bind elements
-//todo add route name as argument for macro - generation constant and add to generation logic
-//todo make sqlx macros instead of just queries?
-//todo support for arrays as column values
 //todo maybe add unnest sql types?
 //todo maybe add unnest to filter parameters if its array ?
 //todo swagger ui https://github.com/juhaku/utoipa/blob/master/examples/todo-axum/src/main.rs
@@ -529,7 +519,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                 }
             }
-            assert!((fields.len() <= 100), "explicitly not supporting number of columns more than 100 so its less possibility to cause stack overflow or build process exit");
+            // assert!((fields.len() <= 100), "explicitly not supporting number of columns more than 100 so its less possibility to cause stack overflow or build process exit");
             (option_primary_key_field.unwrap_or_else(|| panic!("primary_key_field is None")), fields, fields_without_primary_key)
         } else {
             panic!("supports only syn::Fields::Named");
@@ -725,11 +715,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
+        let pub_fn_allow_methods_token_stream = {
+            let http_method_token_stream = quote::quote! {http::Method};
+            quote::quote! {
+                pub fn allow_methods() -> [#http_method_token_stream;4] {[
+                    #http_method_token_stream::GET,
+                    #http_method_token_stream::POST,
+                    #http_method_token_stream::PATCH,
+                    #http_method_token_stream::DELETE
+                ]}
+            }
+        };
         quote::quote! {
             #ident_create_table_if_not_exists_error_named_token_stream
             impl #ident {
                 #pub_fn_table_token_stream
                 #pub_async_fn_create_table_if_not_exists_token_stream
+                #pub_fn_allow_methods_token_stream
             }
         }
     };
@@ -1389,17 +1391,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let order_by_upper_camel_case = naming::OrderByUpperCamelCase;
     let postgresql_crud_order_by_token_stream = quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
     let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
-    let allow_methods_token_stream = {
-        let http_method_token_stream = quote::quote! {http::Method};
-        quote::quote! {
-            pub const ALLOW_METHODS: [#http_method_token_stream;4] = [
-                #http_method_token_stream::GET,
-                #http_method_token_stream::POST,
-                #http_method_token_stream::PATCH,
-                #http_method_token_stream::DELETE
-            ];//todo new axum version does not support it or something - find out
-        }
-    };
     let ident_column_read_permission_token_stream = {
         let derive_debug_clone_copy = token_patterns::DeriveDebugCloneCopy;
         let ident_column_read_permission_upper_camel_case = naming::parameter::SelfColumnReadPermissionUpperCamelCase::from_display(&ident);
@@ -5137,7 +5128,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
 
             // // #from_ident_for_ident_postgresql_json_type_read_token_stream
             #select_token_stream
-            #allow_methods_token_stream
             #ident_column_read_permission_token_stream
             // #(#reexport_postgresql_sqlx_column_types_token_stream)*
 

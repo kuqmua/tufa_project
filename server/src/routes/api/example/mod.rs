@@ -41,10 +41,11 @@ fn crud(app_state: common::repositories_types::server::routes::app_state::DynArc
         .route("/delete_many_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::Example::delete_many_payload_example_route_logic))
         .route("/delete_one", axum::routing::delete(common::repositories_types::server::routes::api::example::Example::try_delete_one_route_logic))
         .route("/delete_one_payload_example", axum::routing::get(common::repositories_types::server::routes::api::example::Example::delete_one_payload_example_route_logic))
-        //
-        // .layer(tower_http::cors::CorsLayer::new().allow_methods(
-        //     common::repositories_types::server::routes::api::example::ALLOW_METHODS,
-        // ))
+        // .layer(
+        //     tower_http::cors::CorsLayer::new().allow_methods(
+        //         common::repositories_types::server::routes::api::example::Example::allow_methods(),
+        //     )
+        // )
         // .route_layer(axum::middleware::from_fn_with_state(
         //     app_state.clone() as common::server::middleware::commit_checker::CommitCheckerAppState,
         //     common::server::middleware::commit_checker::commit_checker,
