@@ -1312,7 +1312,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         UpdateMany,
         DeleteMany
     }
-    //todo use it for delete_many too intead of useing it only for update_many
+    impl std::convert::From<&UpdateManyOrDeleteMany> for Operation {
+        fn from(value: &UpdateManyOrDeleteMany) -> Self {
+            match &value {
+                UpdateManyOrDeleteMany::UpdateMany => Self::UpdateMany,
+                UpdateManyOrDeleteMany::DeleteMany => Self::DeleteMany,
+            }
+        }
+    }
+    //todo use it for delete_many too intead of using it only for update_many
     let generate_non_existing_primary_keys_check_token_stream = |update_many_or_delete_many: &UpdateManyOrDeleteMany, expected_primary_keys_token_stream: &dyn quote::ToTokens| {
         let current_operation = match update_many_or_delete_many {
             UpdateManyOrDeleteMany::UpdateMany => Operation::UpdateMany,
@@ -1968,6 +1976,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         UpdateMany,
         DeleteMany
     }
+    impl std::convert::From<&CreateManyOrUpdateManyOrDeleteMany> for Operation {
+        fn from(value: &CreateManyOrUpdateManyOrDeleteMany) -> Self {
+            match &value {
+                CreateManyOrUpdateManyOrDeleteMany::CreateMany => Self::CreateMany,
+                CreateManyOrUpdateManyOrDeleteMany::UpdateMany => Self::UpdateMany,
+                CreateManyOrUpdateManyOrDeleteMany::DeleteMany => Self::DeleteMany,
+            }
+        }
+    }
     let generate_create_update_delete_many_fetch_token_stream = |create_many_or_update_many_or_delete_many: &CreateManyOrUpdateManyOrDeleteMany| {
         let current_operation = match &create_many_or_update_many_or_delete_many {
             CreateManyOrUpdateManyOrDeleteMany::CreateMany => Operation::CreateMany,
@@ -1991,6 +2008,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         CreateOne,
         UpdateOne,
         DeleteOne
+    }
+    impl std::convert::From<&CreateOneOrUpdateOneOrDeleteOne> for Operation {
+        fn from(value: &CreateOneOrUpdateOneOrDeleteOne) -> Self {
+            match &value {
+                CreateOneOrUpdateOneOrDeleteOne::CreateOne => Self::CreateOne,
+                CreateOneOrUpdateOneOrDeleteOne::UpdateOne => Self::UpdateOne,
+                CreateOneOrUpdateOneOrDeleteOne::DeleteOne => Self::DeleteOne,
+            }
+        }
     }
     let generate_create_update_delete_one_fetch_token_stream = |create_one_or_update_one_or_delete_one: &CreateOneOrUpdateOneOrDeleteOne| {
         let current_operation = match &create_one_or_update_one_or_delete_one {
