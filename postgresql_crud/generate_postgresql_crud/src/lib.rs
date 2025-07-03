@@ -3387,7 +3387,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #query_snake_case
                     }
                 };
-                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(&operation, &generate_create_update_delete_many_fetch_token_stream(&operation));
+                let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
+                    &operation,
+                    &generate_create_update_delete_many_fetch_token_stream(&operation)
+                );
+                // let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
+                //     &UpdateManyOrDeleteMany::UpdateMany,
+                //     &expected_primary_keys_snake_case
+                // );
                 generate_try_operation_route_logic_token_stream(
                     &operation,
                     &common_additional_route_logic_token_stream,
