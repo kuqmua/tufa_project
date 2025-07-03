@@ -104,357 +104,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::case(&ident);
-    // #[derive(Debug, Clone)]
-    // struct Generic<'a> {
-    //     syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments,
-    //     upper_camel_case_stringified: std::string::String,
-    //     reader_upper_camel_case_stringified: std::string::String,
-    //     read_upper_camel_case_stringified: std::string::String,
-    //     field_read_upper_camel_case_stringified: std::string::String,
-    //     generate_postgresql_json_object_type_from_vec_error_named_upper_camel_case_stringified: std::string::String,
-    //     generate_postgresql_json_object_type_from_vec_error_named_snake_case_stringified: std::string::String,
-    // }
-    // #[derive(Debug, Clone)]
-    // struct SynFieldWithAdditionalInfo<'a> {
-    //     field: &'a syn::Field,
-    //     field_ident: &'a syn::Ident,
-    //     // rust_sqlx_map_to_postgres_type_variant: postgresql_crud_common::RustSqlxMapToPostgresTypeVariant, //todo maybe not need to add here
-    //     original_type_token_stream: proc_macro2::TokenStream,
-    //     original_type_with_generic_token_stream: proc_macro2::TokenStream,
-    //     original_type_with_generic_reader_token_stream: proc_macro2::TokenStream,
-    //     inner_type_token_stream: proc_macro2::TokenStream,
-    //     inner_type_with_generic_token_stream: proc_macro2::TokenStream,
-    //     inner_type_with_generic_reader_token_stream: proc_macro2::TokenStream,
-    //     // where_inner_type_token_stream: proc_macro2::TokenStream,
-    //     where_inner_type_with_generic_token_stream: proc_macro2::TokenStream,
-    //     original_wrapper_type_token_stream: proc_macro2::TokenStream,
-    //     // option_generic: std::option::Option<Generic<'a>>,
-    // }
-    // impl<'a> std::convert::TryFrom<&'a syn::Field> for SynFieldWithAdditionalInfo<'a> {
-    //     type Error = std::string::String;
-    //     fn try_from(value: &'a syn::Field) -> Result<Self, Self::Error> {
-    //         let name = "SynFieldWithAdditionalInfo from syn::Field error";
-    //         let field_ident = match value.ident.as_ref() {
-    //             Some(value) => value,
-    //             None => {
-    //                 return Err(format!("{name} field ident is none"));
-    //             }
-    //         };
-    //         let
-    //         // (
-    //             rust_sqlx_map_to_postgres_type_variant
-    //             // ,
-    //             // option_generic
-    //         // )
-    //         = match &value.ty {
-    //             syn::Type::Path(value) => {
-    //                 if value.path.segments.len() != 2 {
-    //                     return Err(std::string::String::from("value.path.segments.len() != 2"));
-    //                 }
-    //                 let first = match value.path.segments.first() {
-    //                     Some(value) => value,
-    //                     None => {
-    //                         return Err(std::string::String::from("no first value in punctuated"));
-    //                     }
-    //                 };
-    //                 if first.ident != &naming::PostgresqlCrudSnakeCase.to_string() {
-    //                     return Err(format!("{name} field_type is not syn::Type::Path"));
-    //                 }
-    //                 match first.arguments {
-    //                     syn::PathArguments::None => (),
-    //                     syn::PathArguments::AngleBracketed(_) | syn::PathArguments::Parenthesized(_) => {
-    //                         return Err(format!("{name} value.path().segments[0].arguments != syn::PathArguments::None"));
-    //                     }
-    //                 }
-    //                 let second_element = match value.path.segments.iter().nth(1) {
-    //                     Some(value) => value,
-    //                     None => {
-    //                         return Err(std::string::String::from("no second element"));
-    //                     }
-    //                 };
-    //                 // let rust_sqlx_map_to_postgres_type_variant = match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(&second_element.ident.to_string()) {
-    //                 //     Ok(value) => value,
-    //                 //     Err(error) => {
-    //                 //         return Err(format!("{name} RustSqlxMapToPostgresTypeVariant::try_from failed {error}"));
-    //                 //     }
-    //                 // };
-    //                 // let option_generic = match &second_element.arguments {
-    //                 //     syn::PathArguments::None => None,
-    //                 //     syn::PathArguments::AngleBracketed(value) => Some({
-    //                 //         enum Case {
-    //                 //             UpperCamel,
-    //                 //             Snake,
-    //                 //         }
-    //                 //         let generate_generic_option_string = |syn_angle_bracketed_generic_arguments: &'a syn::AngleBracketedGenericArguments, postfix: &std::primitive::str, case: Case| -> Result<std::string::String, std::string::String> {
-    //                 //             if syn_angle_bracketed_generic_arguments.args.len() != 1 {
-    //                 //                 return Err("value.args.len() != 1".to_string());
-    //                 //             }
-    //                 //             if let Some(value) = syn_angle_bracketed_generic_arguments.args.first() {
-    //                 //                 if let syn::GenericArgument::Type(value) = value {
-    //                 //                     if let syn::Type::Path(value) = value {
-    //                 //                         if value.path.segments.len() != 1 {
-    //                 //                             return Err("value.path.segments.len() != 1".to_string());
-    //                 //                         }
-    //                 //                         if let Some(value) = value.path.segments.first() {
-    //                 //                             Ok(match case {
-    //                 //                                 Case::UpperCamel => naming::ToUpperCamelCaseStringified::to_upper_camel_case_stringified(&format!("{}{postfix}", &value.ident)),
-    //                 //                                 Case::Snake => naming::AsRefStrToSnakeCaseStringified::new(&format!("{}_{postfix}", &value.ident)),
-    //                 //                             })
-    //                 //                         } else {
-    //                 //                             return Err("value.path.segments.first() is None".to_string());
-    //                 //                         }
-    //                 //                     } else {
-    //                 //                         return Err("value is not syn::Type::Path".to_string());
-    //                 //                     }
-    //                 //                 } else {
-    //                 //                     return Err("value is not syn::GenericArgument::Type".to_string());
-    //                 //                 }
-    //                 //             } else {
-    //                 //                 return Err("value.args.first() is None".to_string());
-    //                 //             }
-    //                 //         };
-    //                 //         let upper_camel_case_stringified = match generate_generic_option_string(&value, "", Case::UpperCamel) {
-    //                 //             Ok(value) => value,
-    //                 //             Err(error) => {
-    //                 //                 return Err(error);
-    //                 //             }
-    //                 //         };
-    //                 //         let reader_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming::ReaderUpperCamelCase.to_string(), Case::UpperCamel) {
-    //                 //             Ok(value) => value,
-    //                 //             Err(error) => {
-    //                 //                 return Err(error);
-    //                 //             }
-    //                 //         };
-    //                 //         let read_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming::ReadUpperCamelCase.to_string(), Case::UpperCamel) {
-    //                 //             Ok(value) => value,
-    //                 //             Err(error) => {
-    //                 //                 return Err(error);
-    //                 //             }
-    //                 //         };
-    //                 //         let field_read_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming::FieldToReadUpperCamelCase.to_string(), Case::UpperCamel) {
-    //                 //             Ok(value) => value,
-    //                 //             Err(error) => {
-    //                 //                 return Err(error);
-    //                 //             }
-    //                 //         };
-    //                 //         let generate_postgresql_json_object_type_from_vec_error_named_upper_camel_case_stringified = match generate_generic_option_string(&value, &naming::GeneratePostgresqlJsonObjectTypeToReadFromVecErrorNamedUpperCamelCase.to_string(), Case::UpperCamel) {
-    //                 //             Ok(value) => value,
-    //                 //             Err(error) => {
-    //                 //                 return Err(error);
-    //                 //             }
-    //                 //         };
-    //                 //         let generate_postgresql_json_object_type_from_vec_error_named_snake_case_stringified = match generate_generic_option_string(&value, &naming::GeneratePostgresqlJsonObjectTypeToReadFromVecErrorNamedSnakeCase.to_string(), Case::Snake) {
-    //                 //             Ok(value) => value,
-    //                 //             Err(error) => {
-    //                 //                 return Err(error);
-    //                 //             }
-    //                 //         };
-    //                 //         Generic {
-    //                 //             syn_angle_bracketed_generic_arguments: value,
-    //                 //             upper_camel_case_stringified,
-    //                 //             reader_upper_camel_case_stringified,
-    //                 //             read_upper_camel_case_stringified,
-    //                 //             field_read_upper_camel_case_stringified,
-    //                 //             generate_postgresql_json_object_type_from_vec_error_named_upper_camel_case_stringified,
-    //                 //             generate_postgresql_json_object_type_from_vec_error_named_snake_case_stringified,
-    //                 //         }
-    //                 //     }),
-    //                 //     syn::PathArguments::Parenthesized(_) => {
-    //                 //         return Err(format!("{name} does not support syn::PathArguments::Parenthesized"));
-    //                 //     }
-    //                 // };
-    //                 // (
-    //                     rust_sqlx_map_to_postgres_type_variant
-    //                     // ,
-    //                     // option_generic
-    //                 // )
-    //             }
-    //             _ => {
-    //                 return Err(format!("{name} field_type is not syn::Type::Path"));
-    //             }
-    //         };
-    //         let original_type_token_stream = {
-    //             let value = &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""); //todo generic for json
-    //             match value.parse::<proc_macro2::TokenStream>() {
-    //                 Ok(value) => value,
-    //                 Err(error) => {
-    //                     return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //                 }
-    //             }
-    //         };
-    //         let original_type_with_generic_token_stream = {
-    //             let value = format!(
-    //                 "{}{}",
-    //                 &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""),
-    //                 match &option_generic {
-    //                     Some(value) => {
-    //                         let value = &value.syn_angle_bracketed_generic_arguments;
-    //                         quote::quote! {#value}.to_string()
-    //                     }
-    //                     None => std::string::String::default(),
-    //                 }
-    //             );
-    //             match value.parse::<proc_macro2::TokenStream>() {
-    //                 Ok(value) => value,
-    //                 Err(error) => {
-    //                     return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //                 }
-    //             }
-    //         };
-    //         let original_type_with_generic_reader_token_stream = {
-    //             let value = format!(
-    //                 "{}{}",
-    //                 &rust_sqlx_map_to_postgres_type_variant.get_original_type_stringified(""),
-    //                 match &option_generic {
-    //                     Some(value) => format!("<{}>", &value.reader_upper_camel_case_stringified),
-    //                     None => std::string::String::default(),
-    //                 }
-    //             );
-    //             match value.parse::<proc_macro2::TokenStream>() {
-    //                 Ok(value) => value,
-    //                 Err(error) => {
-    //                     return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //                 }
-    //             }
-    //         };
-    //         let inner_type_token_stream = {
-    //             let value = rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified("");
-    //             match value.parse::<proc_macro2::TokenStream>() {
-    //                 Ok(value) => value,
-    //                 Err(error) => {
-    //                     return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //                 }
-    //             }
-    //         };
-    //         let inner_type_with_generic_token_stream = {
-    //             let value = format!(
-    //                 "{}{}",
-    //                 &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
-    //                 match &option_generic {
-    //                     Some(value) => {
-    //                         let value = &value.syn_angle_bracketed_generic_arguments;
-    //                         quote::quote! {#value}.to_string()
-    //                     }
-    //                     None => std::string::String::default(),
-    //                 }
-    //             );
-    //             match value.parse::<proc_macro2::TokenStream>() {
-    //                 Ok(value) => value,
-    //                 Err(error) => {
-    //                     return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //                 }
-    //             }
-    //         };
-    //         let inner_type_with_generic_reader_token_stream = {
-    //             let value = format!(
-    //                 "{}{}",
-    //                 &rust_sqlx_map_to_postgres_type_variant.get_inner_type_stringified(""),
-    //                 match &option_generic {
-    //                     Some(value) => format!("<{}>", &value.reader_upper_camel_case_stringified),
-    //                     None => std::string::String::default(),
-    //                 }
-    //             );
-    //             match value.parse::<proc_macro2::TokenStream>() {
-    //                 Ok(value) => value,
-    //                 Err(error) => {
-    //                     return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //                 }
-    //             }
-    //         };
-    //         // let where_inner_type_token_stream = {
-    //         //     let value = &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified("");
-    //         //     match value.parse::<proc_macro2::TokenStream>() {
-    //         //         Ok(value) => value,
-    //         //         Err(error) => {
-    //         //             return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //         //         }
-    //         //     }
-    //         // };
-    //         let where_inner_type_with_generic_token_stream = {
-    //             let value = format!(
-    //                 "{}{}",
-    //                 &rust_sqlx_map_to_postgres_type_variant.get_where_inner_type_stringified(""),
-    //                 match &option_generic {
-    //                     Some(value) => {
-    //                         let value = &value.syn_angle_bracketed_generic_arguments;
-    //                         quote::quote! {#value}.to_string()
-    //                     }
-    //                     None => std::string::String::default(),
-    //                 }
-    //             );
-    //             match value.parse::<proc_macro2::TokenStream>() {
-    //                 Ok(value) => value,
-    //                 Err(error) => {
-    //                     return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //                 }
-    //             }
-    //         };
-    //         // let original_wrapper_type_token_stream = {
-    //         //     let value = postgresql_crud_common::SqlxPostgresType::from_supported_sqlx_postgres_type_removing_option(&rust_sqlx_map_to_postgres_type_variant.get_supported_sqlx_postgres_type()).get_path_stringified();
-    //         //     match value.parse::<proc_macro2::TokenStream>() {
-    //         //         Ok(value) => value,
-    //         //         Err(error) => {
-    //         //             return Err(format!("{name} {value} {} {error:#?}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE));
-    //         //         }
-    //         //     }
-    //         // };
-    //         Ok(Self {
-    //             field: value,
-    //             field_ident,
-    //             rust_sqlx_map_to_postgres_type_variant, //todo maybe not need to add here
-    //             original_type_token_stream,
-    //             original_type_with_generic_token_stream,
-    //             original_type_with_generic_reader_token_stream,
-    //             inner_type_token_stream,
-    //             inner_type_with_generic_token_stream,
-    //             inner_type_with_generic_reader_token_stream,
-    //             // where_inner_type_token_stream,
-    //             where_inner_type_with_generic_token_stream,
-    //             original_wrapper_type_token_stream,
-    //             option_generic,
-    //         })
-    //     }
-    // }
-
-    // #[allow(clippy::enum_variant_names)]
-    // #[derive(Debug, Clone, Copy)]
-    // pub enum ErrorOccurenceFieldAttribute {
-    //     EoToStdStringString,
-    // }
-    // impl std::str::FromStr for ErrorOccurenceFieldAttribute {
-    //     type Err = ();
-    //     fn from_str(value: &std::primitive::str) -> Result<Self, Self::Err> {
-    //         if value == "eo_to_std_string_string" {
-    //             Ok(Self::EoToStdStringString)
-    //         } else if value == "eo_to_std_string_string_serialize_deserialize" {
-    //             Ok(Self::EoToStdStringStringSerializeDeserialize)
-    //         } else {
-    //             Err(())
-    //         }
-    //     }
-    // }
-    // impl std::convert::From<&syn::Field> for ErrorOccurenceFieldAttribute {
-    //     fn from(value: &syn::Field) -> Self {
-    //         let mut option_attribute = None;
-    //         for attr in &value.attrs {
-    //             if attr.path().segments.len() == 1 {
-    //                 let first_segment_ident = &attr.path().segments.first().expect("no first value in punctuated").ident;
-    //                 if let Ok(value) = {
-    //                     use std::str::FromStr;
-    //                     ErrorOccurenceFieldAttribute::from_str(&first_segment_ident.to_string())
-    //                 } {
-    //                     if option_attribute.is_some() {
-    //                         panic!("two or more supported attributes!");
-    //                     } else {
-    //                         option_attribute = Some(value);
-    //                     }
-    //                 }
-    //             } //other attributes are not for this proc_macro
-    //         }
-    //         option_attribute.unwrap_or_else(|| panic!("option attribute {}", naming::IS_NONE_STRINGIFIED))
-    //     }
-    // }
-
     #[derive(Debug, Clone)]
     struct SynFieldWrapper {
         syn_field: syn::Field,
@@ -511,9 +160,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         panic!("does work only on structs!");
     };
     let fields_len_minus_one = fields.len() - 1;
-    // let fields_without_primary_key_len = fields_without_primary_key.len();
     let primary_key_field_type = &primary_key_field.syn_field.ty;
-
     let generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = |field_type: &dyn quote::ToTokens| {
         quote::quote! {<#field_type as postgresql_crud::PostgresqlType>::}
     };
@@ -522,87 +169,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&field_type);
         quote::quote! {#as_postgresql_crud_postgresql_type_postgresql_type_token_stream #tokens}
     };
-
     let primary_key_field_type_as_primary_key_upper_camel_case = quote::quote! {
         <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
     };
-    // let contains_generic_json = {
-    //     let mut contains_generic_json = false;
-    //     for element in &syn_field_with_additional_info_fields_named {
-    //         if element.option_generic.is_some() {
-    //             contains_generic_json = true;
-    //             break;
-    //         }
-    //     }
-    //     contains_generic_json
-    // };
-    // let primary_key_syn_field_with_additional_info = {
-    //     let mut primary_key_field_option = None;
-    //     for element in &syn_field_with_additional_info_fields_named {
-    //         match &element.field.ty {
-    //             syn::Type::Path(value) => {
-    //                 if value.path.segments.len() == 2 {
-    //                     assert!(
-    //                         value.path.segments.first().expect("no first value in punctuated").ident == postgresql_crud_snake_case_stringified,
-    //                         "field_type is not syn::Type::Path"
-    //                     );
-    //                     match <postgresql_crud_common::RustSqlxMapToPostgresTypeVariant as std::str::FromStr>::from_str(&value.path.segments.iter().nth(1).expect("no second element").ident.to_string()) {
-    //                         Ok(value) => {
-    //                             if postgresql_crud_common::RustSqlxMapToPostgresTypeVariantPrimaryKey::try_from(&value).is_ok() {
-    //                                 match primary_key_field_option {
-    //                                     Some(_) => panic!("must have one PrimaryKey"),
-    //                                     None => {
-    //                                         primary_key_field_option = Some(element.clone());
-    //                                     }
-    //                                 }
-    //                             }
-    //                         }
-    //                         Err(error) => panic!("RustSqlxMapToPostgresTypeVariant::try_from failed {error}"),
-    //                     }
-    //                 } else {
-    //                     panic!("field_type is not syn::Type::Path")
-    //                 }
-    //             }
-    //             _ => panic!("field_type is not syn::Type::Path"),
-    //         }
-    //     }
-    //     primary_key_field_option.map_or_else(|| panic!("no primary_key_field_option"), |value| value)
-    // };
-    // let primary_key_field = &primary_key_syn_field_with_additional_info.field;
     let primary_key_field_ident = &primary_key_field.field_ident;
     let primary_key_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&primary_key_field_ident);
     let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
-    // let primary_key_rust_sqlx_map_to_postgres_type_variant = &primary_key_syn_field_with_additional_info.rust_sqlx_map_to_postgres_type_variant;
-    // let primary_key_original_type_token_stream = &primary_key_syn_field_with_additional_info.original_type_token_stream;
-    // let primary_key_original_type_token_stream = &primary_key_field.syn_field.ty;//todo maybe remove it
-    // let primary_key_inner_type_token_stream = &primary_key_field.syn_field.ty;
     let primary_key_field_type_update_token_stream = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
-    // fn syn_ident_to_upper_camel_case_stringified(value: &syn::Ident) -> std::string::String {
-    //     naming::ToTokensToUpperCamelCaseStringified::to_upper_camel_case_stringified(&value)
-    // }
-    // let syn_ident_to_upper_camel_case_token_stream = |value: &syn::Ident| -> proc_macro2::TokenStream {
-    //     let value = syn_ident_to_upper_camel_case_stringified(value);
-    //     value
-    //         .parse::<proc_macro2::TokenStream>()
-    //         .unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-    // };
     let std_string_string = token_patterns::StdStringString;
-    // let syn_field_with_additional_info_fields_named_excluding_primary_key = syn_field_with_additional_info_fields_named.clone().into_iter().filter(|element| element.field != *primary_key_field).collect::<std::vec::Vec<SynFieldWithAdditionalInfo<'_>>>();
-    // let fields_named_len = syn_field_with_additional_info_fields_named.len();
-    // assert!(fields_named_len > 1, "false = fields_named.len() > 1");
-    // let syn_field_with_additional_info_fields_named_excluding_primary_key_len = syn_field_with_additional_info_fields_named_excluding_primary_key.len();
-    // let fields_named_from_or_try_from = {
-    //     let mut value = postgresql_crud_common::FromOrTryFrom::From;
-    //     for element in &syn_field_with_additional_info_fields_named {
-    //         let from_or_try_from = element.rust_sqlx_map_to_postgres_type_variant.inner_type_from_or_try_from_inner_type_with_serialize_deserialize();
-    //         if from_or_try_from == postgresql_crud_common::FromOrTryFrom::TryFrom {
-    //             value = from_or_try_from;
-    //             break;
-    //         }
-    //     }
-    //     value
-    // };
-
     let impl_ident_token_stream = {
         let ident_create_table_if_not_exists_error_named_upper_camel_case = naming::parameter::SelfCreateTableIfNotExistsErrorNamedUpperCamelCase::from_tokens(&ident);
         let create_extension_if_not_exists_pg_jsonschema_upper_camel_case = naming::CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase;
@@ -718,15 +292,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-
     let debug_upper_camel_case = naming::DebugUpperCamelCase;
     let error_snake_case = naming::ErrorSnakeCase;
     let eprintln_error_token_stream = quote::quote! {eprintln!("{error}");};
     let serde_serialize = token_patterns::SerdeSerialize;
     let serde_deserialize = token_patterns::SerdeDeserialize;
     let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
-    // // let from_str_upper_camel_case = naming::FromStrUpperCamelCase;
-    // // let from_str_snake_case = naming::FromStrSnakeCase;
     let sqlx_row = token_patterns::SqlxRow;
     let ident_options_upper_camel_case = naming::parameter::SelfOptionsUpperCamelCase::from_tokens(&ident);
     let postgresql_crud_snake_case = &naming::PostgresqlCrudSnakeCase;
@@ -766,64 +337,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-
-    // let from_ident_for_ident_postgresql_json_type_read_token_stream = {
-    //     let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&quote::quote! {
-    //         #primary_key_inner_type_token_stream::#from_snake_case(#value_snake_case.#primary_key_field_ident.0)
-    //     });
-    //     let ident_option_variant_primary_key_token_stream = quote::quote! {
-    //         #primary_key_field_ident: Some(#postgresql_crud_value_initialization_token_stream),
-    //     };
-    //     let ident_option_variants_excluding_primary_key_token_stream = syn_field_with_additional_info_fields_named_excluding_primary_key.iter().map(|element| {
-    //         let field_ident = &element.field_ident;
-    //         let inner_type_token_stream = &element.inner_type_token_stream;
-    //         let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&match &element.option_generic {
-    //             Some(value) => {
-    //                 let generic_option_string_reader_token_stream = value.reader_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
-    //                     panic!(
-    //                         "{} {}",
-    //                         &value.reader_upper_camel_case_stringified,
-    //                         constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-    //                     )
-    //                 });
-    //                 let generic_option_string_options_token_stream = value.read_upper_camel_case_stringified.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| {
-    //                     panic!(
-    //                         "{} {}",
-    //                         &value.read_upper_camel_case_stringified,
-    //                         constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE
-    //                     )
-    //                 });
-    //                 quote::quote! {
-    //                     #inner_type_token_stream (
-    //                         sqlx::types::Json(
-    //                             #generic_option_string_reader_token_stream(
-    //                                 #generic_option_string_options_token_stream::#from_snake_case(#value_snake_case.#field_ident.0.0.0)
-    //                             )
-    //                         )
-    //                     )
-    //                 }
-    //             }
-    //             None => quote::quote! {#inner_type_token_stream::#from_snake_case(#value_snake_case.#field_ident.0)},
-    //         });
-    //         quote::quote! {
-    //             #field_ident: Some(#postgresql_crud_value_initialization_token_stream)
-    //         }
-    //     });
-    //     quote::quote! {
-    //         impl std::convert::From<#ident> for #ident_options_upper_camel_case {
-    //             fn from(value: #ident) -> Self {
-    //                 Self {
-    //                     #ident_option_variant_primary_key_token_stream
-    //                     #(#ident_option_variants_excluding_primary_key_token_stream),*
-    //                 }
-    //             }
-    //         }
-    //     }
-    // };
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-
     let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
     let select_token_stream = {
         let ident_select_token_stream = {
@@ -902,7 +418,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #pick_select_token_stream
         }
     };
-    // println!("{column_token_stream}");
     let element_snake_case = naming::ElementSnakeCase;
     let acc_snake_case = naming::AccSnakeCase;
     let parameters_snake_case = naming::ParametersSnakeCase;
@@ -1049,48 +564,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let error_1_token_stream = token_patterns::Error1;
     let error_2_token_stream = token_patterns::Error2;
     let error_3_token_stream = token_patterns::Error3;
-    // let curly_brace_space_filter_snake_case_space_curly_braces_token_stream = quote::quote! {{ #filter_snake_case }};
-    //todo rename
-    let generate_query_vec_column_token_stream = |
-        // operation: &Operation
-    | {
+    let select_query_part_vec_column_token_stream = {
         let variants_token_stream = fields.iter().map(|element| {
             let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-            //todo refactor it. can be rewriten witout double match. just put in one struct with syn_angle_bracketed_generic_arguments and others
-            let initialization_token_stream =
-            // match &element.option_generic {
-            //     Some(value) => {
-            //         let element_field_ident = &element.field_ident;
-            //         let filter_as_field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}} as {}", &element_field_ident));
-            //         let element_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_field_ident);
-            //         let generic_syn_variant_wrapper = new_syn_variant_wrapper(
-            //             &value.generate_postgresql_json_object_type_from_vec_error_named_upper_camel_case_stringified,
-            //             Some(macros_helpers::status_code::StatusCode::InternalServerError500),
-            //             vec![(
-            //                 macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize,
-            //                 &value.generate_postgresql_json_object_type_from_vec_error_named_snake_case_stringified,
-            //                 macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&value.generate_postgresql_json_object_type_from_vec_error_named_upper_camel_case_stringified]),
-            //             )],
-            //         );
-            //         // let generic_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &generic_syn_variant_wrapper, file!(), line!(), column!());
-            //         quote::quote! {
-            //             #curly_brace_space_filter_snake_case_space_curly_braces_token_stream => format!(
-            //                 #filter_as_field_ident_string_double_quotes_token_stream,//todo should support arrays or "key: array" is enough?
-            //                 postgresql_crud::GeneratePostgresqlJsonObjectTypeToRead::generate_postgresql_json_object_type_read_from_vec(
-            //                     #filter_snake_case,
-            //                     #element_field_ident_double_quotes_token_stream,
-            //                     #element_field_ident_double_quotes_token_stream,
-            //                 ) 
-            //             )
-            //         }
-            //     }
-            //     None => {
-            //         let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-            //         quote::quote! {=> #field_ident_string_double_quotes_token_stream.to_string()}
-            //     }
-            // };
-            {
-                // let field_type = &element.syn_field.ty;
+            let initialization_token_stream = {
                 let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                 let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(
                     &element.syn_field.ty
@@ -1113,7 +590,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                     #value_snake_case.push_str(",");
                 }
-                let _: Option<char> = #value_snake_case.pop();
+                let _: std::option::Option<char> = #value_snake_case.pop();
                 #value_snake_case
             }
         }
@@ -1184,20 +661,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         DeleteMany,
         DeleteOne,
     }
-    // impl std::fmt::Display for Operation {
-    //     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-    //         match &self {
-    //             Self::CreateMany => write!(formatter, "CreateMany"),
-    //             Self::CreateOne => write!(formatter, "CreateOne"),
-    //             Self::ReadMany => write!(formatter, "ReadMany"),
-    //             Self::ReadOne => write!(formatter, "ReadOne"),
-    //             Self::UpdateMany => write!(formatter, "UpdateMany"),
-    //             Self::UpdateOne => write!(formatter, "UpdateOne"),
-    //             Self::DeleteMany => write!(formatter, "DeleteMany"),
-    //             Self::DeleteOne => write!(formatter, "DeleteOne"),
-    //         }
-    //     }
-    // }
     impl Operation {
         const fn http_method(self) -> OperationHttpMethod {
             match self {
@@ -3479,15 +2942,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             false => " ",
                         };
                     };
-                    let query_vec_column_token_stream = generate_query_vec_column_token_stream(
-                        // &operation
-                    );
                     let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         {
                             format!(
                                 #handle_token_stream,
-                                #query_vec_column_token_stream,
+                                #select_query_part_vec_column_token_stream,
                                 {
                                     #increment_initialization_token_stream
                                     //todo is all None then do not start with "where"
@@ -3853,17 +3313,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let query_token_stream = generate_quotes::double_quotes_token_stream(
                         &format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {{}}"), //{primary_key_field_ident} = $1
                     );
-                    let query_vec_column_token_stream = generate_query_vec_column_token_stream(
-                        // &operation
-                    );
-                    // println!("{query_vec_column_token_stream}");
                     let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         {
                             let mut increment: std::primitive::u64 = 0;
                             format!(
                                 #query_token_stream,
-                                #query_vec_column_token_stream,
+                                #select_query_part_vec_column_token_stream,
                                 match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
                                     &parameters.payload.#primary_key_field_ident,
                                     &mut increment,
