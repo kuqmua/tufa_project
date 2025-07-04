@@ -825,6 +825,23 @@ pub fn generate_underscore_underscore_field_index_token_stream(index: std::primi
     let value = format!("__field{index}");
     value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
+pub fn generate_visit_u64_value_enum_variants_token_stream(current_vec_syn_field_len: std::primitive::usize) -> proc_macro2::TokenStream {
+    let visit_u64_value_enum_variants_token_stream = {
+        let mut acc = vec![];
+        for index in 0..current_vec_syn_field_len {
+            let index_u64_token_stream = {
+                let value = format!("{index}u64");
+                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+            acc.push(quote::quote! {
+                #index_u64_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
+            });
+        }
+        acc
+    };
+    quote::quote! {#(#visit_u64_value_enum_variants_token_stream),*}
+}
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {

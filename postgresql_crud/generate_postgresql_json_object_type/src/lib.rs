@@ -2088,20 +2088,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                 let current_vec_syn_field_len = current_vec_syn_field.len();
                 let field_enum_variants_token_stream = postgresql_crud_macros_common::generate_field_enum_variants_token_stream(current_vec_syn_field_len);
-                let visit_u64_value_enum_variants_token_stream = {
-                    let mut acc = vec![];
-                    for index in 0..current_vec_syn_field_len {
-                        let index_u64_token_stream = {
-                            let value = format!("{index}u64");
-                            value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
-                        let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
-                        acc.push(quote::quote! {
-                            #index_u64_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
-                        });
-                    }
-                    acc
-                };
+                let visit_u64_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_u64_value_enum_variants_token_stream(current_vec_syn_field_len);
                 let generate_field_ident_double_quotes_serde_private_ok_field_token_stream = |field_name_double_quotes_token_stream: &dyn quote::ToTokens, index: std::primitive::usize| {
                     let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
                     quote::quote! {#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
@@ -2288,7 +2275,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     __E: serde::de::Error,
                                 {
                                     match __value {
-                                        #(#visit_u64_value_enum_variants_token_stream),*,
+                                        #visit_u64_value_enum_variants_token_stream,
                                         _ => serde::__private::Ok(__Field::__ignore),
                                     }
                                 }
