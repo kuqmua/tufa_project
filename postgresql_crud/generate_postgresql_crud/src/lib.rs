@@ -403,6 +403,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let impl_serde_deserialize_for_example_where_many_token_stream = {
             let field_enum_variants_token_stream = postgresql_crud_macros_common::generate_field_enum_variants_token_stream(fields_len);
             let visit_u64_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_u64_value_enum_variants_token_stream(fields_len);
+            let visit_str_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_str_value_enum_variants_token_stream(
+                fields.iter().map(|element|&element.field_ident).collect::<std::vec::Vec<&syn::Ident>>()
+            );
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -455,12 +458,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     __E: _serde::de::Error,
                                 {
                                     match __value {
-                                        "column_6e88acb0_c566_4fef_8a09_66a41338cf36" => {
-                                            _serde::__private::Ok(__Field::__field0)
-                                        }
-                                        "animal_as_not_null_jsonb_object" => {
-                                            _serde::__private::Ok(__Field::__field1)
-                                        }
+                                        #visit_str_value_enum_variants_token_stream
                                         _ => _serde::__private::Ok(__Field::__ignore),
                                     }
                                 }

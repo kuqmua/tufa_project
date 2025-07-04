@@ -842,6 +842,17 @@ pub fn generate_visit_u64_value_enum_variants_token_stream(current_vec_syn_field
     };
     quote::quote! {#(#visit_u64_value_enum_variants_token_stream),*}
 }
+pub fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(field_name_double_quotes_token_stream: &dyn quote::ToTokens, index: std::primitive::usize) -> proc_macro2::TokenStream {
+    let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+    quote::quote! {#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
+}
+pub fn generate_visit_str_value_enum_variants_token_stream(vec_ident: std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
+    let visit_str_value_enum_variants_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
+        let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
+        generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&field_name_double_quotes_token_stream, index)
+    });
+    quote::quote! {#(#visit_str_value_enum_variants_token_stream),*,}
+}
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {
