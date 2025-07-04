@@ -366,6 +366,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let pub_where_filter_ident_where_filter_upper_camel_case = quote::quote!{pub #where_filter_snake_case: #ident_where_filter_upper_camel_case};
+    let where_filter_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
+        #where_filter_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+    };
     let ident_read_token_stream = {
         let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
         let field_option_primary_key_token_stream = {
@@ -2644,7 +2647,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_ident_operation_payload_upper_camel_case(&operation),
             &quote::quote! {
                 Self {
-                    #where_filter_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    #where_filter_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     #select_snake_case: #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     #order_by_snake_case: postgresql_crud::OrderBy {
                         #column_snake_case: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
@@ -3488,26 +3491,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
             &generate_ident_operation_payload_upper_camel_case(&operation),
-            &{
-                // let primary_key_token_stream = {
-                //     quote::quote! {
-                //         #primary_key_field_ident: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
-                //     }
-                // };
-                // let fields_without_primary_key_token_stream = fields_without_primary_key.iter().map(|element| {
-                //     let field_ident = &element.field_ident;
-                //     quote::quote! {
-                //         #field_ident: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
-                //     }
-                // });
-                quote::quote! {
-                    Self {
-                        #where_filter_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                        // #primary_key_token_stream,
-                        // #(#fields_without_primary_key_token_stream),*
-                    }
-                }
-            }
+            &quote::quote!{Self {#where_filter_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}}
         );
         let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         quote::quote! {
