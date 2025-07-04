@@ -2089,30 +2089,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let current_vec_syn_field_len = current_vec_syn_field.len();
                 let field_enum_variants_token_stream = postgresql_crud_macros_common::generate_field_enum_variants_token_stream(current_vec_syn_field_len);
                 let visit_u64_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_u64_value_enum_variants_token_stream(current_vec_syn_field_len);
-                let visit_str_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_str_value_enum_variants_token_stream(
-                    current_vec_syn_field.iter().map(|element|element.ident.as_ref().unwrap()).collect::<std::vec::Vec<&syn::Ident>>()
-                );
-                let visit_bytes_value_enum_variants_token_stream = {
-                    let visit_bytes_value_enum_variants_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
-                        let b_field_name_double_quotes_token_stream = {
-                            let element_ident_double_quotes_stringified = generate_quotes::double_quotes_stringified(
-                                &element
-                                    .ident
-                                    .as_ref()
-                                    .unwrap_or_else(|| {
-                                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
-                                    })
-                                    .to_string(),
-                            );
-                            let value = format!("b{element_ident_double_quotes_stringified}");
-                            value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                        };
-                        postgresql_crud_macros_common::generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&b_field_name_double_quotes_token_stream, index)
-                    });
-                    quote::quote! {
-                        #(#visit_bytes_value_enum_variants_token_stream),*,
-                    }
-                };
+                let current_vec_syn_field_ident = current_vec_syn_field.iter().map(|element|element.ident.as_ref().unwrap()).collect::<std::vec::Vec<&syn::Ident>>();
+                let visit_str_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_str_value_enum_variants_token_stream(&current_vec_syn_field_ident);
+                let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
                 let struct_ident_options_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident_token_stream}"));
                 let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident_token_stream} with {current_vec_syn_field_len} elements"));
                 let visit_seq_fields_initialization_token_stream = {

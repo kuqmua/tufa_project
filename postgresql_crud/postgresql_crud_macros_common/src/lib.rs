@@ -846,12 +846,23 @@ pub fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(fi
     let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
     quote::quote! {#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
 }
-pub fn generate_visit_str_value_enum_variants_token_stream(vec_ident: std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
+pub fn generate_visit_str_value_enum_variants_token_stream(vec_ident: &std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
     let visit_str_value_enum_variants_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
         let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
         generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&field_name_double_quotes_token_stream, index)
     });
     quote::quote! {#(#visit_str_value_enum_variants_token_stream),*,}
+}
+pub fn generate_visit_bytes_value_enum_variants_token_stream(vec_ident: &std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
+    let visit_bytes_value_enum_variants_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
+        let b_field_name_double_quotes_token_stream = {
+            let element_ident_double_quotes_stringified = generate_quotes::double_quotes_stringified(&element.to_string());
+            let value = format!("b{element_ident_double_quotes_stringified}");
+            value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+        };
+        generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&b_field_name_double_quotes_token_stream, index)
+    });
+    quote::quote! {#(#visit_bytes_value_enum_variants_token_stream),*,}
 }
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
