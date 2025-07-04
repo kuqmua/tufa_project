@@ -408,17 +408,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
             let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_where_many_upper_camel_case);
             let current_vec_syn_field_type = fields.iter().map(|element|&element.syn_field.ty).collect::<std::vec::Vec<&syn::Type>>();
-            let visit_seq_fields_initialization_token_stream = {
-                let visit_seq_fields_initialization_token_stream = current_vec_syn_field_type.iter().enumerate().map(|(index, element)| {
-                    postgresql_crud_macros_common::visit_seq_field_initialization_token_stream(
-                        &quote::quote!{postgresql_crud::PostgresqlTypeWhere<<#element as postgresql_crud::PostgresqlType>::WhereElement>},
-                        index,
-                        &ident_where_many_upper_camel_case,
-                        fields_len
-                    )
-                });
-                quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
-            };
+            let visit_seq_fields_initialization_token_stream = postgresql_crud_macros_common::visit_seq_field_initialization_token_stream(
+                &current_vec_syn_field_type,
+                &|syn_type: &syn::Type|{
+                    quote::quote!{postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>}
+                },
+                &ident_where_many_upper_camel_case,
+                fields_len
+            );
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]

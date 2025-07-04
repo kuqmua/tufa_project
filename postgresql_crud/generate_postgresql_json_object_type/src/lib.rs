@@ -2094,20 +2094,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
                 let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_token_stream);
                 let current_vec_syn_field_type = current_vec_syn_field.iter().map(|element|&element.ty).collect::<std::vec::Vec<&syn::Type>>();
-                let visit_seq_fields_initialization_token_stream = {
-                    let visit_seq_fields_initialization_token_stream = current_vec_syn_field_type.iter().enumerate().map(|(index, element)| {
-                        postgresql_crud_macros_common::visit_seq_field_initialization_token_stream(
-                            &{
-                                let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&element);
-                                quote::quote!{#import_path::Value<#type_read_token_stream>}
-                            },
-                            index,
-                            &ident_token_stream,
-                            current_vec_syn_field_len
-                        )
-                    });
-                    quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
-                };
+                let visit_seq_fields_initialization_token_stream = postgresql_crud_macros_common::visit_seq_field_initialization_token_stream(
+                    &current_vec_syn_field_type,
+                    &|syn_type: &syn::Type|{
+                        let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&syn_type);
+                        quote::quote!{#import_path::Value<#type_read_token_stream>}
+                    },
+                    &ident_token_stream,
+                    current_vec_syn_field_len
+                );
                 let match_try_new_in_deserialize_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(
                     &ident_token_stream,
                     &{

@@ -867,22 +867,31 @@ pub fn generate_visit_bytes_value_enum_variants_token_stream(vec_ident: &std::ve
 pub fn generate_struct_ident_options_with_double_quotes_token_stream(ident: &dyn std::fmt::Display, len: std::primitive::usize) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {len} elements"))
 }
-pub fn visit_seq_field_initialization_token_stream(next_element_type_token_stream: &dyn quote::ToTokens, index: std::primitive::usize, ident: &dyn std::fmt::Display, len: std::primitive::usize) -> proc_macro2::TokenStream {
-    let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
-    let struct_ident_options_with_double_quotes_token_stream = generate_struct_ident_options_with_double_quotes_token_stream(&ident, len);
-    quote::quote! {
-        let #field_index_token_stream = match serde::de::SeqAccess::next_element::<std::option::Option<#next_element_type_token_stream>>(&mut __seq)? {
-            serde::__private::Some(__value) => __value,
-            serde::__private::None => {
-                return serde::__private::Err(
-                    serde::de::Error::invalid_length(
-                        0usize,
-                        &#struct_ident_options_with_double_quotes_token_stream,
-                    ),
-                );
-            }
-        };
-    }
+pub fn visit_seq_field_initialization_token_stream(
+    vec_type: &std::vec::Vec<&syn::Type>,
+    generate_type_token_stream: &dyn Fn(&syn::Type) -> proc_macro2::TokenStream,
+    ident: &dyn std::fmt::Display,
+    len: std::primitive::usize
+) -> proc_macro2::TokenStream {
+    let visit_seq_fields_initialization_token_stream = vec_type.iter().enumerate().map(|(index, element)| {
+        let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+        let next_element_type_token_stream = generate_type_token_stream(&element);
+        let struct_ident_options_with_double_quotes_token_stream = generate_struct_ident_options_with_double_quotes_token_stream(&ident, len);
+        quote::quote! {
+            let #field_index_token_stream = match serde::de::SeqAccess::next_element::<std::option::Option<#next_element_type_token_stream>>(&mut __seq)? {
+                serde::__private::Some(__value) => __value,
+                serde::__private::None => {
+                    return serde::__private::Err(
+                        serde::de::Error::invalid_length(
+                            0usize,
+                            &#struct_ident_options_with_double_quotes_token_stream,
+                        ),
+                    );
+                }
+            };
+        }
+    });
+    quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
 }
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
