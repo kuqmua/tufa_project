@@ -473,6 +473,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let parameters_snake_case = naming::ParametersSnakeCase;
     let payload_snake_case = naming::PayloadSnakeCase;
     let select_snake_case = naming::SelectSnakeCase;
+    let select_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
+        #select_snake_case: #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+    };
     #[derive(Debug)]
     struct SynVariantWrapper {
         variant: syn::Variant,
@@ -2648,7 +2651,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &quote::quote! {
                 Self {
                     #where_filter_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    #select_snake_case: #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    #select_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     #order_by_snake_case: postgresql_crud::OrderBy {
                         #column_snake_case: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                             #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
@@ -2800,7 +2803,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &quote::quote! {
                 Self {
                     #primary_key_field_ident: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    #select_snake_case: #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                    #select_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                 }
             },
         );
