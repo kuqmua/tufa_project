@@ -420,6 +420,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &ident_where_many_upper_camel_case,
                 fields_len
             );
+            let visit_map_fields_initialization_token_stream = postgresql_crud_macros_common::generate_visit_map_fields_initialization_token_stream(
+                &current_vec_syn_field_type,
+                &|syn_type: &syn::Type|{
+                    quote::quote!{postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>}
+                },
+            );
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -554,6 +560,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             >,
                                         >,
                                     > = _serde::__private::None;
+                                    #visit_map_fields_initialization_token_stream
                                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                                         __Field,
                                     >(&mut __map)? {

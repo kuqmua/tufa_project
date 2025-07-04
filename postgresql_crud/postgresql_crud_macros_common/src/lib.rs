@@ -911,6 +911,19 @@ pub fn generate_match_try_new_in_deserialize_ident_len_token_stream_token_stream
         }
     )
 }
+pub fn generate_visit_map_fields_initialization_token_stream(
+    vec_type: &std::vec::Vec<&syn::Type>,
+    generate_type_token_stream: &dyn Fn(&syn::Type) -> proc_macro2::TokenStream,
+) -> proc_macro2::TokenStream {
+    let content_token_stream = vec_type.iter().enumerate().map(|(index, element)| {
+        let type_token_stream = generate_type_token_stream(&element);
+        let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+        quote::quote! {
+            let mut #field_index_token_stream: serde::__private::Option<std::option::Option<#type_token_stream>> = serde::__private::None;
+        }
+    });
+    quote::quote! {#(#content_token_stream)*}
+}
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {
