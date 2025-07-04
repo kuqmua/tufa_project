@@ -314,17 +314,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_token_stream = fields.iter().map(function);
         quote::quote! {#(#fields_token_stream),*}
     };
-    let pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
-        let field_ident = &element.field_ident;
-        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::WhereElementUpperCamelCase);
-        quote::quote! {
-            pub #field_ident: std::option::Option<
-                postgresql_crud::PostgresqlTypeWhere<
-                    #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
-                >
-            >
-        }
-    });
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -335,14 +324,52 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &content_token_stream
         )
     };
+    let no_filters_provided_upper_camel_case = naming::NoFiltersProvidedUpperCamelCase;
     let where_many_snake_case = naming::WhereManySnakeCase;
     let ident_where_many_upper_camel_case = naming::parameter::SelfWhereManyUpperCamelCase::from_tokens(&ident);
+    let ident_where_many_try_new_error_named_upper_camel_case = naming::parameter::SelfWhereManyTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_where_many_token_stream = {
         let ident_where_many_token_stream = {
+            let content_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+                let field_ident = &element.field_ident;
+                let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::WhereElementUpperCamelCase);
+                quote::quote! {
+                    #field_ident: std::option::Option<
+                        postgresql_crud::PostgresqlTypeWhere<
+                            #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
+                        >
+                    >
+                }
+            });
             quote::quote! {
                 #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
                 pub struct #ident_where_many_upper_camel_case {
-                    #pub_fields_idents_std_option_option_std_vec_vec_where_inner_type_token_stream
+                    #content_token_stream
+                }
+            }
+        };
+        let ident_where_many_try_new_error_named_token_stream = {
+            quote::quote!{
+                #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                pub enum #ident_where_many_try_new_error_named_upper_camel_case {
+                    #no_filters_provided_upper_camel_case {
+                        #[eo_to_std_string_string]
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    }
+                }
+            }
+        };
+        let impl_ident_where_many_token_stream = {
+            let pub_fn_try_new_for_token_stream = {
+                quote::quote!{
+                    pub fn try_new() -> Result<#ident_where_many_upper_camel_case, #ident_where_many_try_new_error_named_upper_camel_case> {
+                        todo!()
+                    }
+                }
+            };
+            quote::quote!{
+                impl #ident_where_many_upper_camel_case {
+                    #pub_fn_try_new_for_token_stream
                 }
             }
         };
@@ -362,6 +389,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote! {
             #ident_where_many_token_stream
+            #ident_where_many_try_new_error_named_token_stream
+            #impl_ident_where_many_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_many_token_stream
         }
     };

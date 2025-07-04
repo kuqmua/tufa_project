@@ -87,42 +87,42 @@ content-type: application/json
 commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
 
 {
-  "where_filter": {
-    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
-      "logical_operator": "Or",
-      "value": [
-        {
-          "Equal": {
-            "logical_operator": "Or",
-            "value": 2
-          }
-        }
-        # ,
-        # {
-        #   "GreaterThan": {
-        #     "logical_operator": "Or",
-        #     "value": 0
-        #   }
-        # },
-        # {
-        #   "Between": {
-        #     "logical_operator": "Or",
-        #     "value": {
-        #       "start": 0,
-        #       "end": 0
-        #     }
-        #   }
-        # },
-        # {
-        #   "In": {
-        #     "logical_operator": "Or",
-        #     "value": [
-        #       0
-        #     ]
-        #   }
-        # }
-      ]
-    }
+  "where_many": {
+    # "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
+    #   "logical_operator": "Or",
+    #   "value": [
+    #     {
+    #       "Equal": {
+    #         "logical_operator": "Or",
+    #         "value": 3
+    #       }
+    #     }
+    #     # ,
+    #     # {
+    #     #   "GreaterThan": {
+    #     #     "logical_operator": "Or",
+    #     #     "value": 0
+    #     #   }
+    #     # },
+    #     # {
+    #     #   "Between": {
+    #     #     "logical_operator": "Or",
+    #     #     "value": {
+    #     #       "start": 0,
+    #     #       "end": 0
+    #     #     }
+    #     #   }
+    #     # },
+    #     # {
+    #     #   "In": {
+    #     #     "logical_operator": "Or",
+    #     #     "value": [
+    #     #       0
+    #     #     ]
+    #     #   }
+    #     # }
+    #   ]
+    # }
     # ,
     # "animal_as_not_null_jsonb_object": {
     #   "logical_operator": "Or",
@@ -533,57 +533,58 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
   "select": [
     {
       "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
-    {
-      "animal_as_not_null_jsonb_object": [
-        {
-          "field_0": [
-            {
-              "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
-            }
-          ]
-        },
-        {
-          "field_1": {
-            "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
-              {
-                "id": null
-              },
-              {
-                "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
-              }
-            ],
-            "dimension1_pagination": {
-              "limit": 5,
-              "offset": 0
-            }
-          }
-        },
-        {
-          "field_2": [
-            {
-              "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
-            }
-          ]
-        },
-        {
-          "field_3": {
-            "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
-              {
-                "id": null
-              },
-              {
-                "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
-              }
-            ],
-            "dimension1_pagination": {
-              "limit": 5,
-              "offset": 0
-            }
-          }
-        }
-      ]
     }
+    # ,
+    # {
+    #   "animal_as_not_null_jsonb_object": [
+    #     {
+    #       "field_0": [
+    #         {
+    #           "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+    #         }
+    #       ]
+    #     },
+    #     {
+    #       "field_1": {
+    #         "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
+    #           {
+    #             "id": null
+    #           },
+    #           {
+    #             "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+    #           }
+    #         ],
+    #         "dimension1_pagination": {
+    #           "limit": 5,
+    #           "offset": 0
+    #         }
+    #       }
+    #     },
+    #     {
+    #       "field_2": [
+    #         {
+    #           "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+    #         }
+    #       ]
+    #     },
+    #     {
+    #       "field_3": {
+    #         "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
+    #           {
+    #             "id": null
+    #           },
+    #           {
+    #             "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+    #           }
+    #         ],
+    #         "dimension1_pagination": {
+    #           "limit": 5,
+    #           "offset": 0
+    #         }
+    #       }
+    #     }
+    #   ]
+    # }
   ],
   "order_by": {
     "column": {
