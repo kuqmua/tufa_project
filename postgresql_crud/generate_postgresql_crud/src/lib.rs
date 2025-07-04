@@ -335,6 +335,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &content_token_stream
         )
     };
+    let where_filter_snake_case = naming::WhereFilterSnakeCase;
     let ident_where_filter_upper_camel_case = naming::parameter::SelfWhereFilterUpperCamelCase::from_tokens(&ident);
     let ident_where_filter_token_stream = {
         let ident_where_filter_token_stream = {
@@ -364,7 +365,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_filter_token_stream
         }
     };
-    let pub_where_filter_ident_where_filter_upper_camel_case = quote::quote!{pub where_filter: #ident_where_filter_upper_camel_case};
+    let pub_where_filter_ident_where_filter_upper_camel_case = quote::quote!{pub #where_filter_snake_case: #ident_where_filter_upper_camel_case};
     let ident_read_token_stream = {
         let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
         let field_option_primary_key_token_stream = {
@@ -2482,7 +2483,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream(index);
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
-                            if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.where_filter.#field_ident {
+                            if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#where_filter_snake_case.#field_ident {
                                 match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
                                     #value_snake_case,
                                     &mut increment,
@@ -2565,7 +2566,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         quote::quote! {
-                            if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.where_filter.#field_ident {
+                            if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#where_filter_snake_case.#field_ident {
                                 query = #postgresql_crud_postgresql_type_where_filter_query_bind_token_stream(
                                     value,
                                     query
@@ -2643,7 +2644,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_ident_operation_payload_upper_camel_case(&operation),
             &quote::quote! {
                 Self {
-                    where_filter: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    #where_filter_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     #select_snake_case: #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     #order_by_snake_case: postgresql_crud::OrderBy {
                         #column_snake_case: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
@@ -3395,7 +3396,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream(index);
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
-                            if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.where_filter.#field_ident {
+                            if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#where_filter_snake_case.#field_ident {
                                 match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
                                     #value_snake_case,
                                     &mut increment,
@@ -3434,7 +3435,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         quote::quote! {
-                            if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.where_filter.#field_ident {
+                            if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#where_filter_snake_case.#field_ident {
                                 query = #postgresql_crud_postgresql_type_where_filter_query_bind_token_stream(
                                     value,
                                     query
@@ -3501,7 +3502,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 // });
                 quote::quote! {
                     Self {
-                        where_filter: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                        #where_filter_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                         // #primary_key_token_stream,
                         // #(#fields_without_primary_key_token_stream),*
                     }
