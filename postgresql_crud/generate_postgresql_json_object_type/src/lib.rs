@@ -2115,8 +2115,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 );
                 let visit_map_match_variants_token_stream = {
-                    let generate_field_initialization_token_stream = |index: std::primitive::usize, field_ident_double_quotes_token_stream: &dyn quote::ToTokens, type_token_stream: &dyn quote::ToTokens| {
+                    let visit_map_match_variants_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
                         let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
+                        let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
+                        let type_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&element.ty);
                         quote::quote! {
                             __Field::#field_index_token_stream => {
                                 if serde::__private::Option::is_some(&#field_index_token_stream) {
@@ -2129,17 +2131,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 );
                             }
                         }
-                    };
-                    let visit_map_match_variants_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
-                        generate_field_initialization_token_stream(
-                            index,
-                            &generate_field_ident_double_quotes_token_stream(element),
-                            &generate_type_as_postgresql_json_type_read_token_stream(&element.ty)
-                        )
                     });
-                    quote::quote! {
-                        #(#visit_map_match_variants_token_stream)*
-                    }
+                    quote::quote! {#(#visit_map_match_variants_token_stream)*}
                 };
                 let visit_map_missing_fields_check_token_stream = {
                     let visit_map_missing_fields_check_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
