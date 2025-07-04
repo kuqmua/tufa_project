@@ -924,29 +924,29 @@ pub fn generate_visit_map_fields_initialization_token_stream(
     });
     quote::quote! {#(#content_token_stream)*}
 }
-// pub fn generate_visit_map_match_variants_token_stream(
-//     vec_ident_type: &std::vec::Vec<(&syn::Ident, &syn::Type)>,
-//     generate_type_token_stream: &dyn Fn(&syn::Type) -> proc_macro2::TokenStream,
-// ) -> proc_macro2::TokenStream {
-//     let visit_map_match_variants_token_stream = vec_ident_type.iter().enumerate().map(|(index, (element_ident, element_type))| {
-//         let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
-//         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element_ident);
-//         let type_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&element_type);
-//         quote::quote! {
-//             __Field::#field_index_token_stream => {
-//                 if serde::__private::Option::is_some(&#field_index_token_stream) {
-//                     return serde::__private::Err(
-//                         <__A::Error as serde::de::Error>::duplicate_field(#field_ident_double_quotes_token_stream),
-//                     );
-//                 }
-//                 #field_index_token_stream = serde::__private::Some(
-//                     serde::de::MapAccess::next_value::<std::option::Option<#import_path::Value<#type_token_stream>>>(&mut __map)?,
-//                 );
-//             }
-//         }
-//     });
-//     quote::quote! {#(#visit_map_match_variants_token_stream)*}
-// }
+pub fn generate_visit_map_match_variants_token_stream(
+    vec_ident_type: &std::vec::Vec<(&syn::Ident, &syn::Type)>,
+    generate_type_token_stream: &dyn Fn(&syn::Type) -> proc_macro2::TokenStream,
+) -> proc_macro2::TokenStream {
+    let visit_map_match_variants_token_stream = vec_ident_type.iter().enumerate().map(|(index, (element_ident, element_type))| {
+        let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident);
+        let type_token_stream = generate_type_token_stream(&element_type);
+        quote::quote! {
+            __Field::#field_index_token_stream => {
+                if serde::__private::Option::is_some(&#field_index_token_stream) {
+                    return serde::__private::Err(
+                        <__A::Error as serde::de::Error>::duplicate_field(#field_ident_double_quotes_token_stream),
+                    );
+                }
+                #field_index_token_stream = serde::__private::Some(
+                    serde::de::MapAccess::next_value::<#type_token_stream>(&mut __map)?,
+                );
+            }
+        }
+    });
+    quote::quote! {#(#visit_map_match_variants_token_stream)*}
+}
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {

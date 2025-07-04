@@ -426,6 +426,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
                 },
             );
+            let current_vec_syn_field_ident_type = fields.iter().map(|element|(&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>();
+            let visit_map_match_variants_token_stream = postgresql_crud_macros_common::generate_visit_map_match_variants_token_stream(
+                &current_vec_syn_field_ident_type,
+                &|syn_type: &syn::Type|{
+                    quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
+                },
+            );
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -546,61 +553,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 where
                                     __A: _serde::de::MapAccess<'de>,
                                 {
-                                    let mut __field0: _serde::__private::Option<
-                                        std::option::Option<
-                                            postgresql_crud::PostgresqlTypeWhere<
-                                                <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement,
-                                            >,
-                                        >,
-                                    > = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<
-                                        std::option::Option<
-                                            postgresql_crud::PostgresqlTypeWhere<
-                                                <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::WhereElement,
-                                            >,
-                                        >,
-                                    > = _serde::__private::None;
                                     #visit_map_fields_initialization_token_stream
                                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                                         __Field,
                                     >(&mut __map)? {
                                         match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                                            "column_6e88acb0_c566_4fef_8a09_66a41338cf36",
-                                                        ),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::option::Option<
-                                                            postgresql_crud::PostgresqlTypeWhere<
-                                                                <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement,
-                                                            >,
-                                                        >,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                                            "animal_as_not_null_jsonb_object",
-                                                        ),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::option::Option<
-                                                            postgresql_crud::PostgresqlTypeWhere<
-                                                                <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::WhereElement,
-                                                            >,
-                                                        >,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
+                                            #visit_map_match_variants_token_stream
                                             _ => {
                                                 let _ = _serde::de::MapAccess::next_value::<
                                                     _serde::de::IgnoredAny,

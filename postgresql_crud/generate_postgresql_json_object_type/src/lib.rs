@@ -2114,26 +2114,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote!{std::option::Option<#import_path::Value<#type_token_stream>>}
                     },
                 );
-                let visit_map_match_variants_token_stream = {
-                    let visit_map_match_variants_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
-                        let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
-                        let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
-                        let type_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&element.ty);
-                        quote::quote! {
-                            __Field::#field_index_token_stream => {
-                                if serde::__private::Option::is_some(&#field_index_token_stream) {
-                                    return serde::__private::Err(
-                                        <__A::Error as serde::de::Error>::duplicate_field(#field_ident_double_quotes_token_stream),
-                                    );
-                                }
-                                #field_index_token_stream = serde::__private::Some(
-                                    serde::de::MapAccess::next_value::<std::option::Option<#import_path::Value<#type_token_stream>>>(&mut __map)?,
-                                );
-                            }
-                        }
-                    });
-                    quote::quote! {#(#visit_map_match_variants_token_stream)*}
-                };
+                let current_vec_syn_field_ident_type = current_vec_syn_field.iter().map(|element|(element.ident.as_ref().unwrap(), &element.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>();
+                let visit_map_match_variants_token_stream = postgresql_crud_macros_common::generate_visit_map_match_variants_token_stream(
+                    &current_vec_syn_field_ident_type,
+                    &|syn_type: &syn::Type|{
+                        let type_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&syn_type);
+                        quote::quote!{std::option::Option<#import_path::Value<#type_token_stream>>}
+                    },
+                );
                 let visit_map_missing_fields_check_token_stream = {
                     let visit_map_missing_fields_check_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
                         let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
