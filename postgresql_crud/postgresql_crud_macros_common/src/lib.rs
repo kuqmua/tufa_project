@@ -810,162 +810,6 @@ pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(ident: &dyn qu
     }
 }
 
-pub fn generate_field_enum_variants_token_stream(len: std::primitive::usize) -> proc_macro2::TokenStream {
-    let field_enum_variants_token_stream = {
-        let mut vec = vec![];
-        for element in 0..len {
-            let value = format!("__{}{element}", naming::FieldSnakeCase);
-            vec.push(value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE)));
-        }
-        vec
-    };
-    quote::quote!{#(#field_enum_variants_token_stream),*}
-}
-pub fn generate_underscore_underscore_field_index_token_stream(index: std::primitive::usize) -> proc_macro2::TokenStream {
-    let value = format!("__field{index}");
-    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-}
-pub fn generate_visit_u64_value_enum_variants_token_stream(len: std::primitive::usize) -> proc_macro2::TokenStream {
-    let visit_u64_value_enum_variants_token_stream = {
-        let mut acc = vec![];
-        for index in 0..len {
-            let index_u64_token_stream = {
-                let value = format!("{index}u64");
-                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
-            acc.push(quote::quote! {
-                #index_u64_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
-            });
-        }
-        acc
-    };
-    quote::quote! {#(#visit_u64_value_enum_variants_token_stream),*}
-}
-pub fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(field_name_double_quotes_token_stream: &dyn quote::ToTokens, index: std::primitive::usize) -> proc_macro2::TokenStream {
-    let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
-    quote::quote! {#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
-}
-pub fn generate_visit_str_value_enum_variants_token_stream(vec_ident: &std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
-    let visit_str_value_enum_variants_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
-        let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
-        generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&field_name_double_quotes_token_stream, index)
-    });
-    quote::quote! {#(#visit_str_value_enum_variants_token_stream),*,}
-}
-pub fn generate_visit_bytes_value_enum_variants_token_stream(vec_ident: &std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
-    let visit_bytes_value_enum_variants_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
-        let b_field_name_double_quotes_token_stream = {
-            let element_ident_double_quotes_stringified = generate_quotes::double_quotes_stringified(&element.to_string());
-            let value = format!("b{element_ident_double_quotes_stringified}");
-            value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-        };
-        generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&b_field_name_double_quotes_token_stream, index)
-    });
-    quote::quote! {#(#visit_bytes_value_enum_variants_token_stream),*,}
-}
-pub fn generate_struct_ident_options_with_double_quotes_token_stream(ident: &dyn std::fmt::Display, len: std::primitive::usize) -> proc_macro2::TokenStream {
-    generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {len} elements"))
-}
-pub fn generate_visit_seq_field_initialization_token_stream(
-    vec_type: &std::vec::Vec<&syn::Type>,
-    generate_type_token_stream: &dyn Fn(&syn::Type) -> proc_macro2::TokenStream,
-    ident: &dyn std::fmt::Display,
-    len: std::primitive::usize
-) -> proc_macro2::TokenStream {
-    let visit_seq_fields_initialization_token_stream = vec_type.iter().enumerate().map(|(index, element)| {
-        let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
-        let type_token_stream = generate_type_token_stream(&element);
-        let struct_ident_options_with_double_quotes_token_stream = generate_struct_ident_options_with_double_quotes_token_stream(&ident, len);
-        quote::quote! {
-            let #field_index_token_stream = match serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? {
-                serde::__private::Some(__value) => __value,
-                serde::__private::None => {
-                    return serde::__private::Err(
-                        serde::de::Error::invalid_length(
-                            0usize,
-                            &#struct_ident_options_with_double_quotes_token_stream,
-                        ),
-                    );
-                }
-            };
-        }
-    });
-    quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
-}
-pub fn generate_match_try_new_in_deserialize_ident_len_token_stream_token_stream(
-    ident: &dyn quote::ToTokens,
-    len: std::primitive::usize
-) -> proc_macro2::TokenStream {
-    generate_match_try_new_in_deserialize_token_stream(
-        &ident,
-        &{
-            let fields_token_stream = {
-                let mut acc = vec![];
-                for element in 0..len {
-                    acc.push(generate_underscore_underscore_field_index_token_stream(element));
-                }
-                acc
-            };
-            quote::quote! {#(#fields_token_stream),*}
-        }
-    )
-}
-pub fn generate_visit_map_fields_initialization_token_stream(
-    vec_type: &std::vec::Vec<&syn::Type>,
-    generate_type_token_stream: &dyn Fn(&syn::Type) -> proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    let content_token_stream = vec_type.iter().enumerate().map(|(index, element)| {
-        let type_token_stream = generate_type_token_stream(&element);
-        let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
-        quote::quote! {
-            let mut #field_index_token_stream: serde::__private::Option<#type_token_stream> = serde::__private::None;
-        }
-    });
-    quote::quote! {#(#content_token_stream)*}
-}
-pub fn generate_visit_map_match_variants_token_stream(
-    vec_ident_type: &std::vec::Vec<(&syn::Ident, &syn::Type)>,
-    generate_type_token_stream: &dyn Fn(&syn::Type) -> proc_macro2::TokenStream,
-) -> proc_macro2::TokenStream {
-    let visit_map_match_variants_token_stream = vec_ident_type.iter().enumerate().map(|(index, (element_ident, element_type))| {
-        let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
-        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident);
-        let type_token_stream = generate_type_token_stream(&element_type);
-        quote::quote! {
-            __Field::#field_index_token_stream => {
-                if serde::__private::Option::is_some(&#field_index_token_stream) {
-                    return serde::__private::Err(
-                        <__A::Error as serde::de::Error>::duplicate_field(#field_ident_double_quotes_token_stream),
-                    );
-                }
-                #field_index_token_stream = serde::__private::Some(
-                    serde::de::MapAccess::next_value::<#type_token_stream>(&mut __map)?,
-                );
-            }
-        }
-    });
-    quote::quote! {#(#visit_map_match_variants_token_stream)*}
-}
-pub fn generate_visit_map_missing_fields_check_token_stream(vec_ident: &std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
-    let visit_map_missing_fields_check_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
-        let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
-        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
-        quote::quote! {
-            let #field_index_token_stream = match #field_index_token_stream {
-                serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
-                serde::__private::None => {
-                    serde::__private::de::missing_field(#field_ident_double_quotes_token_stream)?
-                }
-            };
-        }
-    });
-    quote::quote! {#(#visit_map_missing_fields_check_token_stream)*}
-}
-pub fn generate_fields_array_elements_token_stream(vec_ident: &std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
-    let fields_array_elements_token_stream = vec_ident.iter().map(|element|generate_quotes::double_quotes_token_stream(&element));
-    quote::quote! {#(#fields_array_elements_token_stream),*}
-}
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {
@@ -984,31 +828,144 @@ pub fn generate_impl_serde_deserialize_for_example_where_many_token_stream(
 ) -> proc_macro2::TokenStream {
     let vec_ident = vec_ident_type.iter().map(|element|element.0).collect::<std::vec::Vec<&syn::Ident>>();
     let vec_type = vec_ident_type.iter().map(|element|element.1).collect::<std::vec::Vec<&syn::Type>>();
-    let field_enum_variants_token_stream = generate_field_enum_variants_token_stream(len);
-    let visit_u64_value_enum_variants_token_stream = generate_visit_u64_value_enum_variants_token_stream(len);
-    let visit_str_value_enum_variants_token_stream = generate_visit_str_value_enum_variants_token_stream(&vec_ident);
-    let visit_bytes_value_enum_variants_token_stream = generate_visit_bytes_value_enum_variants_token_stream(&vec_ident);
+    let field_enum_variants_token_stream = {
+        let field_enum_variants_token_stream = {
+            let mut vec = vec![];
+            for element in 0..len {
+                let value = format!("__{}{element}", naming::FieldSnakeCase);
+                vec.push(value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE)));
+            }
+            vec
+        };
+        quote::quote!{#(#field_enum_variants_token_stream),*}
+    };
+    fn generate_underscore_underscore_field_index_token_stream(index: std::primitive::usize) -> proc_macro2::TokenStream {
+        let value = format!("__field{index}");
+        value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+    }
+    let visit_u64_value_enum_variants_token_stream = {
+        let visit_u64_value_enum_variants_token_stream = {
+            let mut acc = vec![];
+            for index in 0..len {
+                let index_u64_token_stream = {
+                    let value = format!("{index}u64");
+                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+                acc.push(quote::quote! {
+                    #index_u64_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
+                });
+            }
+            acc
+        };
+        quote::quote! {#(#visit_u64_value_enum_variants_token_stream),*}
+    };
+    fn generate_field_ident_double_quotes_serde_private_ok_field_token_stream(field_name_double_quotes_token_stream: &dyn quote::ToTokens, index: std::primitive::usize) -> proc_macro2::TokenStream {
+        let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+        quote::quote! {#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
+    }
+    let visit_str_value_enum_variants_token_stream = {
+        let visit_str_value_enum_variants_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
+            let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
+            generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&field_name_double_quotes_token_stream, index)
+        });
+        quote::quote! {#(#visit_str_value_enum_variants_token_stream),*,}
+    };
+    let visit_bytes_value_enum_variants_token_stream = {
+        let visit_bytes_value_enum_variants_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
+            let b_field_name_double_quotes_token_stream = {
+                let element_ident_double_quotes_stringified = generate_quotes::double_quotes_stringified(&element.to_string());
+                let value = format!("b{element_ident_double_quotes_stringified}");
+                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            generate_field_ident_double_quotes_serde_private_ok_field_token_stream(&b_field_name_double_quotes_token_stream, index)
+        });
+        quote::quote! {#(#visit_bytes_value_enum_variants_token_stream),*,}
+    };
     let struct_ident_double_quotes_token_stream = generate_struct_ident_double_quotes_token_stream(&ident);
-    let visit_seq_fields_initialization_token_stream = generate_visit_seq_field_initialization_token_stream(
-        &vec_type,
-        &generate_type_token_stream,
+    let visit_seq_fields_initialization_token_stream = {
+        let visit_seq_fields_initialization_token_stream = vec_type.iter().enumerate().map(|(index, element)| {
+            let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+            let type_token_stream = generate_type_token_stream(&element);
+            let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {len} elements"));
+            quote::quote! {
+                let #field_index_token_stream = match serde::de::SeqAccess::next_element::<#type_token_stream>(&mut __seq)? {
+                    serde::__private::Some(__value) => __value,
+                    serde::__private::None => {
+                        return serde::__private::Err(
+                            serde::de::Error::invalid_length(
+                                0usize,
+                                &#struct_ident_options_with_double_quotes_token_stream,
+                            ),
+                        );
+                    }
+                };
+            }
+        });
+        quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
+    };
+    let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_token_stream(
         &ident,
-        len
+        &{
+            let fields_token_stream = {
+                let mut acc = vec![];
+                for element in 0..len {
+                    acc.push(generate_underscore_underscore_field_index_token_stream(element));
+                }
+                acc
+            };
+            quote::quote! {#(#fields_token_stream),*}
+        }
     );
-    let match_try_new_in_deserialize_token_stream = generate_match_try_new_in_deserialize_ident_len_token_stream_token_stream(
-        &ident,
-        len
-    );
-    let visit_map_fields_initialization_token_stream = generate_visit_map_fields_initialization_token_stream(
-        &vec_type,
-        &generate_type_token_stream,
-    );
-    let visit_map_match_variants_token_stream = generate_visit_map_match_variants_token_stream(
-        &vec_ident_type,
-        &generate_type_token_stream,
-    );
-    let visit_map_missing_fields_check_token_stream = generate_visit_map_missing_fields_check_token_stream(&vec_ident);
-    let fields_array_elements_token_stream = generate_fields_array_elements_token_stream(&vec_ident);
+    let visit_map_fields_initialization_token_stream = {
+        let content_token_stream = vec_type.iter().enumerate().map(|(index, element)| {
+            let type_token_stream = generate_type_token_stream(&element);
+            let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+            quote::quote! {
+                let mut #field_index_token_stream: serde::__private::Option<#type_token_stream> = serde::__private::None;
+            }
+        });
+        quote::quote! {#(#content_token_stream)*}
+    };
+    let visit_map_match_variants_token_stream = {
+        let visit_map_match_variants_token_stream = vec_ident_type.iter().enumerate().map(|(index, (element_ident, element_type))| {
+            let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+            let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element_ident);
+            let type_token_stream = generate_type_token_stream(&element_type);
+            quote::quote! {
+                __Field::#field_index_token_stream => {
+                    if serde::__private::Option::is_some(&#field_index_token_stream) {
+                        return serde::__private::Err(
+                            <__A::Error as serde::de::Error>::duplicate_field(#field_ident_double_quotes_token_stream),
+                        );
+                    }
+                    #field_index_token_stream = serde::__private::Some(
+                        serde::de::MapAccess::next_value::<#type_token_stream>(&mut __map)?,
+                    );
+                }
+            }
+        });
+        quote::quote! {#(#visit_map_match_variants_token_stream)*}
+    };
+    let visit_map_missing_fields_check_token_stream = {
+        let visit_map_missing_fields_check_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
+            let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+            let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
+            quote::quote! {
+                let #field_index_token_stream = match #field_index_token_stream {
+                    serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
+                    serde::__private::None => {
+                        serde::__private::de::missing_field(#field_ident_double_quotes_token_stream)?
+                    }
+                };
+            }
+        });
+        quote::quote! {#(#visit_map_missing_fields_check_token_stream)*}
+    };
+    let fields_array_elements_token_stream = {
+        let fields_array_elements_token_stream = vec_ident.iter().map(|element|generate_quotes::double_quotes_token_stream(&element));
+        quote::quote! {#(#fields_array_elements_token_stream),*}
+    };
     let ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
     quote::quote!{
         const _: () = {
