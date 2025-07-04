@@ -2088,10 +2088,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                 let current_vec_syn_field_len = current_vec_syn_field.len();
                 let field_enum_variants_token_stream = postgresql_crud_macros_common::generate_field_enum_variants_token_stream(current_vec_syn_field_len);
-                let generate_field_index_token_stream = |index: std::primitive::usize| {
-                    let value = format!("__field{index}");
-                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
                 let visit_u64_value_enum_variants_token_stream = {
                     let mut acc = vec![];
                     for index in 0..current_vec_syn_field_len {
@@ -2099,7 +2095,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let value = format!("{index}u64");
                             value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
                         };
-                        let field_index_token_stream = generate_field_index_token_stream(index);
+                        let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
                         acc.push(quote::quote! {
                             #index_u64_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)
                         });
@@ -2107,7 +2103,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     acc
                 };
                 let generate_field_ident_double_quotes_serde_private_ok_field_token_stream = |field_name_double_quotes_token_stream: &dyn quote::ToTokens, index: std::primitive::usize| {
-                    let field_index_token_stream = generate_field_index_token_stream(index);
+                    let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
                     quote::quote! {#field_name_double_quotes_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
                 };
                 let visit_str_value_enum_variants_token_stream = {
@@ -2146,7 +2142,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident_token_stream} with {current_vec_syn_field_len} elements"));
                 let visit_seq_fields_initialization_token_stream = {
                     let generate_serde_de_seq_access_next_element_token_stream = |index: std::primitive::usize, type_read_token_stream: &dyn quote::ToTokens| {
-                        let field_index_token_stream = generate_field_index_token_stream(index);
+                        let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
                         quote::quote! {
                             let #field_index_token_stream = match serde::de::SeqAccess::next_element::<
                                 std::option::Option<#import_path::Value<#type_read_token_stream>>,
@@ -2179,7 +2175,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         let fields_token_stream = {
                             let mut acc = vec![];
                             for element in 0..current_vec_syn_field_len {
-                                let field_index_token_stream = generate_field_index_token_stream(element);
+                                let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(element);
                                 acc.push(quote::quote! {#field_index_token_stream});
                             }
                             acc
@@ -2189,7 +2185,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 );
                 let visit_map_fields_initialization_token_stream = {
                     let generate_mut_field_index_serde_private_option_token_stream = |index: std::primitive::usize, type_token_stream: &dyn quote::ToTokens| {
-                        let field_index_token_stream = generate_field_index_token_stream(index);
+                        let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
                         quote::quote! {
                             let mut #field_index_token_stream: serde::__private::Option<
                                 std::option::Option<#import_path::Value<#type_token_stream>>,
@@ -2208,7 +2204,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 let visit_map_match_variants_token_stream = {
                     let generate_field_initialization_token_stream = |index: std::primitive::usize, field_ident_double_quotes_token_stream: &dyn quote::ToTokens, type_token_stream: &dyn quote::ToTokens| {
-                        let field_index_token_stream = generate_field_index_token_stream(index);
+                        let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
                         quote::quote! {
                             __Field::#field_index_token_stream => {
                                 if serde::__private::Option::is_some(&#field_index_token_stream) {
@@ -2235,7 +2231,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 let visit_map_missing_fields_check_token_stream = {
                     let visit_map_missing_fields_check_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
-                        let field_index_token_stream = generate_field_index_token_stream(index);
+                        let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
                         let field_ident_double_quotes_token_stream = generate_field_ident_double_quotes_token_stream(element);
                         quote::quote! {
                             let #field_index_token_stream = match #field_index_token_stream {

@@ -821,6 +821,10 @@ pub fn generate_field_enum_variants_token_stream(current_vec_syn_field_len: std:
     };
     quote::quote!{#(#field_enum_variants_token_stream),*}
 }
+pub fn generate_underscore_underscore_field_index_token_stream(index: std::primitive::usize) -> proc_macro2::TokenStream {
+    let value = format!("__field{index}");
+    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+}
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {
