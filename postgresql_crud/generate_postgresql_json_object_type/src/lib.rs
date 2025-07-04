@@ -2095,7 +2095,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_token_stream);
                 let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident_token_stream} with {current_vec_syn_field_len} elements"));
                 let visit_seq_fields_initialization_token_stream = {
-                    let generate_serde_de_seq_access_next_element_token_stream = |index: std::primitive::usize, type_read_token_stream: &dyn quote::ToTokens| {
+                    let visit_seq_fields_initialization_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
+                        let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&element.ty);
                         let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
                         quote::quote! {
                             let #field_index_token_stream = match serde::de::SeqAccess::next_element::<
@@ -2112,16 +2113,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 }
                             };
                         }
-                    };
-                    let visit_seq_fields_initialization_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
-                        generate_serde_de_seq_access_next_element_token_stream(
-                            index,
-                            &generate_type_as_postgresql_json_type_read_token_stream(&element.ty)
-                        )
                     });
-                    quote::quote! {
-                        #(#visit_seq_fields_initialization_token_stream)*
-                    }
+                    quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
                 };
                 let match_try_new_in_deserialize_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(
                     &ident_token_stream,
