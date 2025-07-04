@@ -342,7 +342,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         });
         let ident_where_many_token_stream = quote::quote! {
-            #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+            #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
             pub struct #ident_where_many_upper_camel_case {
                 #fields_declaration_token_stream
             }
@@ -607,6 +607,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #ident_where_many_token_stream
             #ident_where_many_try_new_error_named_token_stream
             #impl_ident_where_many_token_stream
+            #impl_serde_deserialize_for_example_where_many_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_many_token_stream
         }
     };
