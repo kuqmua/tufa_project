@@ -810,6 +810,17 @@ pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(ident: &dyn qu
     }
 }
 
+pub fn generate_field_enum_variants_token_stream(current_vec_syn_field_len: std::primitive::usize) -> proc_macro2::TokenStream {
+    let field_enum_variants_token_stream = {
+        let mut vec = vec![];
+        for element in 0..current_vec_syn_field_len {
+            let value = format!("__{}{element}", naming::FieldSnakeCase);
+            vec.push(value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE)));
+        }
+        vec
+    };
+    quote::quote!{#(#field_enum_variants_token_stream),*}
+}
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {

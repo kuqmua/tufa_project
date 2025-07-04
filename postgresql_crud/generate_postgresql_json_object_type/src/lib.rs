@@ -2087,14 +2087,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let ident_token_stream = generate_ident_read_or_ident_with_id_read_upper_camel_case(&is_standart_with_id);
                 let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
                 let current_vec_syn_field_len = current_vec_syn_field.len();
-                let field_enum_variants_token_stream = {
-                    let mut vec = vec![];
-                    for element in 0..current_vec_syn_field_len {
-                        let value = format!("__{}{element}", naming::FieldSnakeCase);
-                        vec.push(value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE)));
-                    }
-                    vec
-                };
+                let field_enum_variants_token_stream = postgresql_crud_macros_common::generate_field_enum_variants_token_stream(current_vec_syn_field_len);
                 let generate_field_index_token_stream = |index: std::primitive::usize| {
                     let value = format!("__field{index}");
                     value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -2275,7 +2268,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #[allow(non_camel_case_types)]
                             #[doc(hidden)]
                             enum __Field {
-                                #(#field_enum_variants_token_stream),*,
+                                #field_enum_variants_token_stream,
                                 __ignore,
                             }
                             #[doc(hidden)]
