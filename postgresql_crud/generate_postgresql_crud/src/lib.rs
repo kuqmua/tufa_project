@@ -433,6 +433,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
                 },
             );
+            let visit_map_missing_fields_check_token_stream = postgresql_crud_macros_common::generate_visit_map_missing_fields_check_token_stream(&current_vec_syn_field_ident);
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -566,22 +567,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             }
                                         }
                                     }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field(
-                                                "column_6e88acb0_c566_4fef_8a09_66a41338cf36",
-                                            )?
-                                        }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field(
-                                                "animal_as_not_null_jsonb_object",
-                                            )?
-                                        }
-                                    };
+                                    #visit_map_missing_fields_check_token_stream
                                     #match_try_new_in_deserialize_token_stream
                                 }
                             }

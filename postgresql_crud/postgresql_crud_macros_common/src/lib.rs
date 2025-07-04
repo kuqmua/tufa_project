@@ -947,6 +947,21 @@ pub fn generate_visit_map_match_variants_token_stream(
     });
     quote::quote! {#(#visit_map_match_variants_token_stream)*}
 }
+pub fn generate_visit_map_missing_fields_check_token_stream(vec_ident: &std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
+    let visit_map_missing_fields_check_token_stream = vec_ident.iter().enumerate().map(|(index, element)| {
+        let field_index_token_stream = generate_underscore_underscore_field_index_token_stream(index);
+        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
+        quote::quote! {
+            let #field_index_token_stream = match #field_index_token_stream {
+                serde::__private::Some(#field_index_token_stream) => #field_index_token_stream,
+                serde::__private::None => {
+                    serde::__private::de::missing_field(#field_ident_double_quotes_token_stream)?
+                }
+            };
+        }
+    });
+    quote::quote! {#(#visit_map_missing_fields_check_token_stream)*}
+}
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {
