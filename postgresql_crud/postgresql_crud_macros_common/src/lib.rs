@@ -810,10 +810,10 @@ pub fn generate_impl_crate_is_string_empty_for_ident_token_stream(ident: &dyn qu
     }
 }
 
-pub fn generate_field_enum_variants_token_stream(current_vec_syn_field_len: std::primitive::usize) -> proc_macro2::TokenStream {
+pub fn generate_field_enum_variants_token_stream(len: std::primitive::usize) -> proc_macro2::TokenStream {
     let field_enum_variants_token_stream = {
         let mut vec = vec![];
-        for element in 0..current_vec_syn_field_len {
+        for element in 0..len {
             let value = format!("__{}{element}", naming::FieldSnakeCase);
             vec.push(value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE)));
         }
@@ -825,10 +825,10 @@ pub fn generate_underscore_underscore_field_index_token_stream(index: std::primi
     let value = format!("__field{index}");
     value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
 }
-pub fn generate_visit_u64_value_enum_variants_token_stream(current_vec_syn_field_len: std::primitive::usize) -> proc_macro2::TokenStream {
+pub fn generate_visit_u64_value_enum_variants_token_stream(len: std::primitive::usize) -> proc_macro2::TokenStream {
     let visit_u64_value_enum_variants_token_stream = {
         let mut acc = vec![];
-        for index in 0..current_vec_syn_field_len {
+        for index in 0..len {
             let index_u64_token_stream = {
                 let value = format!("{index}u64");
                 value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
@@ -864,6 +864,51 @@ pub fn generate_visit_bytes_value_enum_variants_token_stream(vec_ident: &std::ve
     });
     quote::quote! {#(#visit_bytes_value_enum_variants_token_stream),*,}
 }
+pub fn generate_struct_ident_options_with_double_quotes_token_stream(ident: &dyn std::fmt::Display, len: std::primitive::usize) -> proc_macro2::TokenStream {
+    generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {len} elements"))
+}
+// pub fn visit_seq_fields_initialization_token_stream(vec_type: &std::vec::Vec<&syn::Type>) -> proc_macro2::TokenStream {
+//     let visit_seq_fields_initialization_token_stream = vec_type.iter().enumerate().map(|(index, element)| {
+//         let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&element);
+//         let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
+//         quote::quote! {
+//             let #field_index_token_stream = match serde::de::SeqAccess::next_element::<
+//                 std::option::Option<#import_path::Value<#type_read_token_stream>>,
+//             >(&mut __seq)? {
+//                 serde::__private::Some(__value) => __value,
+//                 serde::__private::None => {
+//                     return serde::__private::Err(
+//                         serde::de::Error::invalid_length(
+//                             0usize,
+//                             &#struct_ident_options_with_double_quotes_token_stream,
+//                         ),
+//                     );
+//                 }
+//             };
+
+//             //
+//                                     let __field0 = match _serde::de::SeqAccess::next_element::<
+//                                         std::option::Option<
+//                                             postgresql_crud::PostgresqlTypeWhere<
+//                                                 <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement,
+//                                             >,
+//                                         >,
+//                                     >(&mut __seq)? {
+//                                         _serde::__private::Some(__value) => __value,
+//                                         _serde::__private::None => {
+//                                             return _serde::__private::Err(
+//                                                 _serde::de::Error::invalid_length(
+//                                                     0usize,
+//                                                     &"struct ExampleWhereMany with 2 elements",
+//                                                 ),
+//                                             );
+//                                         }
+//                                     };
+//             //
+//         }
+//     });
+//     quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
+// }
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {

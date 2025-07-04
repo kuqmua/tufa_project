@@ -2093,7 +2093,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let visit_str_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_str_value_enum_variants_token_stream(&current_vec_syn_field_ident);
                 let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
                 let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_token_stream);
-                let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident_token_stream} with {current_vec_syn_field_len} elements"));
+                let struct_ident_options_with_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_options_with_double_quotes_token_stream(&ident_token_stream, current_vec_syn_field_len);
                 let visit_seq_fields_initialization_token_stream = {
                     let visit_seq_fields_initialization_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
                         let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&element.ty);

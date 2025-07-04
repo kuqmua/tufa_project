@@ -407,6 +407,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let visit_str_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_str_value_enum_variants_token_stream(&current_vec_syn_field_ident);
             let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
             let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_where_many_upper_camel_case);
+            let struct_ident_options_with_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_options_with_double_quotes_token_stream(&ident_where_many_upper_camel_case, fields_len);
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -528,7 +529,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             return _serde::__private::Err(
                                                 _serde::de::Error::invalid_length(
                                                     0usize,
-                                                    &"struct ExampleWhereMany with 2 elements",
+                                                    &#struct_ident_options_with_double_quotes_token_stream,
                                                 ),
                                             );
                                         }
@@ -545,7 +546,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             return _serde::__private::Err(
                                                 _serde::de::Error::invalid_length(
                                                     1usize,
-                                                    &"struct ExampleWhereMany with 2 elements",
+                                                    &#struct_ident_options_with_double_quotes_token_stream,
                                                 ),
                                             );
                                         }
