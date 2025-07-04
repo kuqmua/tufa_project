@@ -407,7 +407,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let visit_str_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_str_value_enum_variants_token_stream(&current_vec_syn_field_ident);
             let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
             let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_where_many_upper_camel_case);
-            let struct_ident_options_with_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_options_with_double_quotes_token_stream(&ident_where_many_upper_camel_case, fields_len);
+            let current_vec_syn_field_type = fields.iter().map(|element|&element.syn_field.ty).collect::<std::vec::Vec<&syn::Type>>();
+            let visit_seq_fields_initialization_token_stream = {
+                let visit_seq_fields_initialization_token_stream = current_vec_syn_field_type.iter().enumerate().map(|(index, element)| {
+                    postgresql_crud_macros_common::visit_seq_field_initialization_token_stream(
+                        &quote::quote!{postgresql_crud::PostgresqlTypeWhere<<#element as postgresql_crud::PostgresqlType>::WhereElement>},
+                        index,
+                        &ident_where_many_upper_camel_case,
+                        fields_len
+                    )
+                });
+                quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
+            };
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -517,40 +528,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 where
                                     __A: _serde::de::SeqAccess<'de>,
                                 {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::option::Option<
-                                            postgresql_crud::PostgresqlTypeWhere<
-                                                <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement,
-                                            >,
-                                        >,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &#struct_ident_options_with_double_quotes_token_stream,
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::option::Option<
-                                            postgresql_crud::PostgresqlTypeWhere<
-                                                <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::WhereElement,
-                                            >,
-                                        >,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &#struct_ident_options_with_double_quotes_token_stream,
-                                                ),
-                                            );
-                                        }
-                                    };
+                                    #visit_seq_fields_initialization_token_stream
                                     _serde::__private::Ok(#ident_where_many_upper_camel_case {
                                         column_6e88acb0_c566_4fef_8a09_66a41338cf36: __field0,
                                         animal_as_not_null_jsonb_object: __field1,
