@@ -333,13 +333,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_declaration_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
             let field_ident = &element.field_ident;
             let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::WhereElementUpperCamelCase);
-            quote::quote! {
-                #field_ident: std::option::Option<
-                    postgresql_crud::PostgresqlTypeWhere<
-                        #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
-                    >
-                >
-            }
+            quote::quote! {#field_ident: std::option::Option<postgresql_crud::PostgresqlTypeWhere<#as_postgresql_crud_postgresql_type_postgresql_type_token_stream>>}
         });
         let ident_where_many_token_stream = quote::quote! {
             #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
@@ -400,195 +394,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
-        let impl_serde_deserialize_for_example_where_many_token_stream = {
-            let field_enum_variants_token_stream = postgresql_crud_macros_common::generate_field_enum_variants_token_stream(fields_len);
-            let visit_u64_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_u64_value_enum_variants_token_stream(fields_len);
-            let current_vec_syn_field_ident = fields.iter().map(|element|&element.field_ident).collect::<std::vec::Vec<&syn::Ident>>();
-            let visit_str_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_str_value_enum_variants_token_stream(&current_vec_syn_field_ident);
-            let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
-            let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_where_many_upper_camel_case);
-            let current_vec_syn_field_type = fields.iter().map(|element|&element.syn_field.ty).collect::<std::vec::Vec<&syn::Type>>();
-            let visit_seq_fields_initialization_token_stream = postgresql_crud_macros_common::generate_visit_seq_field_initialization_token_stream(
-                &current_vec_syn_field_type,
-                &|syn_type: &syn::Type|{
-                    quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
-                },
-                &ident_where_many_upper_camel_case,
-                fields_len
-            );
-            let match_try_new_in_deserialize_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_ident_len_token_stream_token_stream(
-                &ident_where_many_upper_camel_case,
-                fields_len
-            );
-            let visit_map_fields_initialization_token_stream = postgresql_crud_macros_common::generate_visit_map_fields_initialization_token_stream(
-                &current_vec_syn_field_type,
-                &|syn_type: &syn::Type|{
-                    quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
-                },
-            );
-            let current_vec_syn_field_ident_type = fields.iter().map(|element|(&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>();
-            let visit_map_match_variants_token_stream = postgresql_crud_macros_common::generate_visit_map_match_variants_token_stream(
-                &current_vec_syn_field_ident_type,
-                &|syn_type: &syn::Type|{
-                    quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
-                },
-            );
-            let visit_map_missing_fields_check_token_stream = postgresql_crud_macros_common::generate_visit_map_missing_fields_check_token_stream(&current_vec_syn_field_ident);
-            let fields_array_elements_token_stream = postgresql_crud_macros_common::generate_fields_array_elements_token_stream(&current_vec_syn_field_ident);
-            let ident_where_many_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_where_many_upper_camel_case);
-            quote::quote!{
-                const _: () = {
-                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                    extern crate serde as _serde;
-                    #[automatically_derived]
-                    impl<'de> _serde::Deserialize<'de> for #ident_where_many_upper_camel_case {
-                        fn deserialize<__D>(
-                            __deserializer: __D,
-                        ) -> _serde::__private::Result<Self, __D::Error>
-                        where
-                            __D: _serde::Deserializer<'de>,
-                        {
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                #field_enum_variants_token_stream,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            #[automatically_derived]
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
-                                }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        #visit_u64_value_enum_variants_token_stream,
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        #visit_str_value_enum_variants_token_stream
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        #visit_bytes_value_enum_variants_token_stream
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
-                            #[automatically_derived]
-                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                #[inline]
-                                fn deserialize<__D>(
-                                    __deserializer: __D,
-                                ) -> _serde::__private::Result<Self, __D::Error>
-                                where
-                                    __D: _serde::Deserializer<'de>,
-                                {
-                                    _serde::Deserializer::deserialize_identifier(
-                                        __deserializer,
-                                        __FieldVisitor,
-                                    )
-                                }
-                            }
-                            #[doc(hidden)]
-                            struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<#ident_where_many_upper_camel_case>,
-                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                            }
-                            #[automatically_derived]
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = #ident_where_many_upper_camel_case;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        #struct_ident_double_quotes_token_stream,
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    #visit_seq_fields_initialization_token_stream
-                                    #match_try_new_in_deserialize_token_stream
-                                }
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    #visit_map_fields_initialization_token_stream
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            #visit_map_match_variants_token_stream
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
-                                        }
-                                    }
-                                    #visit_map_missing_fields_check_token_stream
-                                    #match_try_new_in_deserialize_token_stream
-                                }
-                            }
-                            #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &[#fields_array_elements_token_stream];
-                            _serde::Deserializer::deserialize_struct(
-                                __deserializer,
-                                #ident_where_many_double_quotes_token_stream,
-                                FIELDS,
-                                __Visitor {
-                                    marker: _serde::__private::PhantomData::<#ident_where_many_upper_camel_case>,
-                                    lifetime: _serde::__private::PhantomData,
-                                },
-                            )
-                        }
-                    }
-                };
-            }
-        };
+        let impl_serde_deserialize_for_example_where_many_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_example_where_many_token_stream(
+            &ident_where_many_upper_camel_case,
+            fields.iter().map(|element|(&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(),
+            fields_len,
+            &|syn_type: &syn::Type|{
+                quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
+            },
+        );
         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_many_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
             &ident_where_many_upper_camel_case,
             &{
