@@ -411,7 +411,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let visit_seq_fields_initialization_token_stream = postgresql_crud_macros_common::generate_visit_seq_field_initialization_token_stream(
                 &current_vec_syn_field_type,
                 &|syn_type: &syn::Type|{
-                    quote::quote!{postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>}
+                    quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
                 },
                 &ident_where_many_upper_camel_case,
                 fields_len
@@ -423,7 +423,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let visit_map_fields_initialization_token_stream = postgresql_crud_macros_common::generate_visit_map_fields_initialization_token_stream(
                 &current_vec_syn_field_type,
                 &|syn_type: &syn::Type|{
-                    quote::quote!{postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>}
+                    quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
                 },
             );
             quote::quote!{

@@ -2098,7 +2098,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &current_vec_syn_field_type,
                     &|syn_type: &syn::Type|{
                         let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&syn_type);
-                        quote::quote!{#import_path::Value<#type_read_token_stream>}
+                        quote::quote!{std::option::Option<#import_path::Value<#type_read_token_stream>>}
                     },
                     &ident_token_stream,
                     current_vec_syn_field_len
@@ -2111,7 +2111,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &current_vec_syn_field_type,
                     &|syn_type: &syn::Type|{
                         let type_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&syn_type);
-                        quote::quote!{#import_path::Value<#type_token_stream>}
+                        quote::quote!{std::option::Option<#import_path::Value<#type_token_stream>>}
                     },
                 );
                 let visit_map_match_variants_token_stream = {
