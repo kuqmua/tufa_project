@@ -406,6 +406,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let current_vec_syn_field_ident = fields.iter().map(|element|&element.field_ident).collect::<std::vec::Vec<&syn::Ident>>();
             let visit_str_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_str_value_enum_variants_token_stream(&current_vec_syn_field_ident);
             let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
+            let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_where_many_upper_camel_case);
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -492,19 +493,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                             #[doc(hidden)]
                             struct __Visitor<'de> {
-                                marker: _serde::__private::PhantomData<ExampleWhereMany>,
+                                marker: _serde::__private::PhantomData<#ident_where_many_upper_camel_case>,
                                 lifetime: _serde::__private::PhantomData<&'de ()>,
                             }
                             #[automatically_derived]
                             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = ExampleWhereMany;
+                                type Value = #ident_where_many_upper_camel_case;
                                 fn expecting(
                                     &self,
                                     __formatter: &mut _serde::__private::Formatter,
                                 ) -> _serde::__private::fmt::Result {
                                     _serde::__private::Formatter::write_str(
                                         __formatter,
-                                        "struct ExampleWhereMany",
+                                        #struct_ident_double_quotes_token_stream,
                                     )
                                 }
                                 #[inline]
@@ -549,7 +550,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             );
                                         }
                                     };
-                                    _serde::__private::Ok(ExampleWhereMany {
+                                    _serde::__private::Ok(#ident_where_many_upper_camel_case {
                                         column_6e88acb0_c566_4fef_8a09_66a41338cf36: __field0,
                                         animal_as_not_null_jsonb_object: __field1,
                                     })
@@ -639,7 +640,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             )?
                                         }
                                     };
-                                    _serde::__private::Ok(ExampleWhereMany {
+                                    _serde::__private::Ok(#ident_where_many_upper_camel_case {
                                         column_6e88acb0_c566_4fef_8a09_66a41338cf36: __field0,
                                         animal_as_not_null_jsonb_object: __field1,
                                     })
@@ -655,7 +656,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 "ExampleWhereMany",
                                 FIELDS,
                                 __Visitor {
-                                    marker: _serde::__private::PhantomData::<ExampleWhereMany>,
+                                    marker: _serde::__private::PhantomData::<#ident_where_many_upper_camel_case>,
                                     lifetime: _serde::__private::PhantomData,
                                 },
                             )

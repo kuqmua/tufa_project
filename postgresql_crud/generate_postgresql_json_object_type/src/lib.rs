@@ -2092,7 +2092,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let current_vec_syn_field_ident = current_vec_syn_field.iter().map(|element|element.ident.as_ref().unwrap()).collect::<std::vec::Vec<&syn::Ident>>();
                 let visit_str_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_str_value_enum_variants_token_stream(&current_vec_syn_field_ident);
                 let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
-                let struct_ident_options_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident_token_stream}"));
+                let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_token_stream);
                 let struct_ident_options_with_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!("struct {ident_token_stream} with {current_vec_syn_field_len} elements"));
                 let visit_seq_fields_initialization_token_stream = {
                     let generate_serde_de_seq_access_next_element_token_stream = |index: std::primitive::usize, type_read_token_stream: &dyn quote::ToTokens| {
@@ -2300,7 +2300,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 ) -> serde::__private::fmt::Result {
                                     serde::__private::Formatter::write_str(
                                         __f,
-                                        #struct_ident_options_double_quotes_token_stream,
+                                        #struct_ident_double_quotes_token_stream,
                                     )
                                 }
                                 #[inline]
