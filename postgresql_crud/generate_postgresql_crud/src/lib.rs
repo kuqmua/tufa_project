@@ -435,6 +435,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             );
             let visit_map_missing_fields_check_token_stream = postgresql_crud_macros_common::generate_visit_map_missing_fields_check_token_stream(&current_vec_syn_field_ident);
             let fields_array_elements_token_stream = postgresql_crud_macros_common::generate_fields_array_elements_token_stream(&current_vec_syn_field_ident);
+            let ident_where_many_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_where_many_upper_camel_case);
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -576,7 +577,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             const FIELDS: &'static [&'static str] = &[#fields_array_elements_token_stream];
                             _serde::Deserializer::deserialize_struct(
                                 __deserializer,
-                                "ExampleWhereMany",
+                                #ident_where_many_double_quotes_token_stream,
                                 FIELDS,
                                 __Visitor {
                                     marker: _serde::__private::PhantomData::<#ident_where_many_upper_camel_case>,
