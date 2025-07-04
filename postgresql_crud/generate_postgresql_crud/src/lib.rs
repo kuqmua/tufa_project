@@ -434,6 +434,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             );
             let visit_map_missing_fields_check_token_stream = postgresql_crud_macros_common::generate_visit_map_missing_fields_check_token_stream(&current_vec_syn_field_ident);
+            let fields_array_elements_token_stream = postgresql_crud_macros_common::generate_fields_array_elements_token_stream(&current_vec_syn_field_ident);
             quote::quote!{
                 const _: () = {
                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -572,10 +573,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             }
                             #[doc(hidden)]
-                            const FIELDS: &'static [&'static str] = &[
-                                "column_6e88acb0_c566_4fef_8a09_66a41338cf36",
-                                "animal_as_not_null_jsonb_object",
-                            ];
+                            const FIELDS: &'static [&'static str] = &[#fields_array_elements_token_stream];
                             _serde::Deserializer::deserialize_struct(
                                 __deserializer,
                                 "ExampleWhereMany",

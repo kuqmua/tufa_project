@@ -962,6 +962,10 @@ pub fn generate_visit_map_missing_fields_check_token_stream(vec_ident: &std::vec
     });
     quote::quote! {#(#visit_map_missing_fields_check_token_stream)*}
 }
+pub fn generate_fields_array_elements_token_stream(vec_ident: &std::vec::Vec<&syn::Ident>) -> proc_macro2::TokenStream {
+    let fields_array_elements_token_stream = vec_ident.iter().map(|element|generate_quotes::double_quotes_token_stream(&element));
+    quote::quote! {#(#fields_array_elements_token_stream),*}
+}
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {
         match #ident::try_new(#initialization_token_stream) {

@@ -2123,12 +2123,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 );
                 let visit_map_missing_fields_check_token_stream = postgresql_crud_macros_common::generate_visit_map_missing_fields_check_token_stream(&current_vec_syn_field_ident);
-                let fields_array_elements_token_stream = {
-                    let fields_array_elements_token_stream = current_vec_syn_field.iter().map(|element| generate_field_ident_double_quotes_token_stream(element));
-                    quote::quote! {
-                        #(#fields_array_elements_token_stream),*
-                    }
-                };
+                let fields_array_elements_token_stream = postgresql_crud_macros_common::generate_fields_array_elements_token_stream(&current_vec_syn_field_ident);
                 let ident_read_or_ident_with_id_read_upper_camel_case_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_token_stream);
                 quote::quote! {
                     impl<'de> serde::Deserialize<'de> for #ident_token_stream {
