@@ -329,23 +329,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let ident_where_many_upper_camel_case = naming::parameter::SelfWhereManyUpperCamelCase::from_tokens(&ident);
     let ident_where_many_try_new_error_named_upper_camel_case = naming::parameter::SelfWhereManyTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_where_many_token_stream = {
-        let ident_where_many_token_stream = {
-            let content_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
-                let field_ident = &element.field_ident;
-                let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::WhereElementUpperCamelCase);
-                quote::quote! {
-                    #field_ident: std::option::Option<
-                        postgresql_crud::PostgresqlTypeWhere<
-                            #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
-                        >
-                    >
-                }
-            });
+        let fields_declaration_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+            let field_ident = &element.field_ident;
+            let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::WhereElementUpperCamelCase);
             quote::quote! {
-                #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
-                pub struct #ident_where_many_upper_camel_case {
-                    #content_token_stream
-                }
+                #field_ident: std::option::Option<
+                    postgresql_crud::PostgresqlTypeWhere<
+                        #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
+                    >
+                >
+            }
+        });
+        let ident_where_many_token_stream = quote::quote! {
+            #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+            pub struct #ident_where_many_upper_camel_case {
+                #fields_declaration_token_stream
             }
         };
         let ident_where_many_try_new_error_named_token_stream = {
@@ -361,9 +359,37 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let impl_ident_where_many_token_stream = {
             let pub_fn_try_new_for_token_stream = {
+                let none_token_stream = generate_fields_named_token_stream(&|_: &SynFieldWrapper| -> proc_macro2::TokenStream {
+                    quote::quote! {None}
+                });
+                enum ShouldAddBorrow {
+                    True,
+                    False
+                }
+                impl quote::ToTokens for ShouldAddBorrow {
+                    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+                        match &self {
+                            Self::True => quote::quote! {&}.to_tokens(tokens),
+                            Self::False => proc_macro2::TokenStream::new().to_tokens(tokens),
+                        }
+                    }
+                }
+                let generate_fields_token_stream = |should_add_borrow: ShouldAddBorrow|{
+                    generate_fields_named_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
+                        let field_ident = &element.field_ident;
+                        quote::quote! {#should_add_borrow #field_ident}
+                    })
+                };
+                let fields_token_stream = generate_fields_token_stream(ShouldAddBorrow::True);
+                let fields_inialization_token_stream = generate_fields_token_stream(ShouldAddBorrow::False);
                 quote::quote!{
-                    pub fn try_new() -> Result<#ident_where_many_upper_camel_case, #ident_where_many_try_new_error_named_upper_camel_case> {
-                        todo!()
+                    pub fn try_new(#fields_declaration_token_stream) -> Result<#ident_where_many_upper_camel_case, #ident_where_many_try_new_error_named_upper_camel_case> {
+                        if let (#none_token_stream) = (#fields_token_stream) {
+                            return Err(#ident_where_many_try_new_error_named_upper_camel_case::#no_filters_provided_upper_camel_case {
+                                code_occurence: error_occurence_lib::code_occurence!(),
+                            });
+                        }
+                        Ok(Self {#fields_inialization_token_stream})
                     }
                 }
             };
