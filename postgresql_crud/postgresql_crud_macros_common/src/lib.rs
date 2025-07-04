@@ -867,7 +867,7 @@ pub fn generate_visit_bytes_value_enum_variants_token_stream(vec_ident: &std::ve
 pub fn generate_struct_ident_options_with_double_quotes_token_stream(ident: &dyn std::fmt::Display, len: std::primitive::usize) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {len} elements"))
 }
-pub fn visit_seq_field_initialization_token_stream(
+pub fn generate_visit_seq_field_initialization_token_stream(
     vec_type: &std::vec::Vec<&syn::Type>,
     generate_type_token_stream: &dyn Fn(&syn::Type) -> proc_macro2::TokenStream,
     ident: &dyn std::fmt::Display,
@@ -892,6 +892,24 @@ pub fn visit_seq_field_initialization_token_stream(
         }
     });
     quote::quote! {#(#visit_seq_fields_initialization_token_stream)*}
+}
+pub fn generate_match_try_new_in_deserialize_ident_len_token_stream_token_stream(
+    ident: &dyn quote::ToTokens,
+    len: std::primitive::usize
+) -> proc_macro2::TokenStream {
+    generate_match_try_new_in_deserialize_token_stream(
+        &ident,
+        &{
+            let fields_token_stream = {
+                let mut acc = vec![];
+                for element in 0..len {
+                    acc.push(generate_underscore_underscore_field_index_token_stream(element));
+                }
+                acc
+            };
+            quote::quote! {#(#fields_token_stream),*}
+        }
+    )
 }
 pub fn generate_match_try_new_in_deserialize_token_stream(ident: &dyn quote::ToTokens, initialization_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {

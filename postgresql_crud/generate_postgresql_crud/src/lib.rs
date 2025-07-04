@@ -408,11 +408,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let visit_bytes_value_enum_variants_token_stream = postgresql_crud_macros_common::generate_visit_bytes_value_enum_variants_token_stream(&current_vec_syn_field_ident);
             let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_where_many_upper_camel_case);
             let current_vec_syn_field_type = fields.iter().map(|element|&element.syn_field.ty).collect::<std::vec::Vec<&syn::Type>>();
-            let visit_seq_fields_initialization_token_stream = postgresql_crud_macros_common::visit_seq_field_initialization_token_stream(
+            let visit_seq_fields_initialization_token_stream = postgresql_crud_macros_common::generate_visit_seq_field_initialization_token_stream(
                 &current_vec_syn_field_type,
                 &|syn_type: &syn::Type|{
                     quote::quote!{postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>}
                 },
+                &ident_where_many_upper_camel_case,
+                fields_len
+            );
+            let match_try_new_in_deserialize_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_ident_len_token_stream_token_stream(
                 &ident_where_many_upper_camel_case,
                 fields_len
             );
@@ -526,10 +530,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     __A: _serde::de::SeqAccess<'de>,
                                 {
                                     #visit_seq_fields_initialization_token_stream
-                                    _serde::__private::Ok(#ident_where_many_upper_camel_case {
-                                        column_6e88acb0_c566_4fef_8a09_66a41338cf36: __field0,
-                                        animal_as_not_null_jsonb_object: __field1,
-                                    })
+                                    #match_try_new_in_deserialize_token_stream
                                 }
                                 #[inline]
                                 fn visit_map<__A>(
@@ -616,10 +617,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             )?
                                         }
                                     };
-                                    _serde::__private::Ok(#ident_where_many_upper_camel_case {
-                                        column_6e88acb0_c566_4fef_8a09_66a41338cf36: __field0,
-                                        animal_as_not_null_jsonb_object: __field1,
-                                    })
+                                    #match_try_new_in_deserialize_token_stream
                                 }
                             }
                             #[doc(hidden)]
