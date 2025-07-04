@@ -2108,23 +2108,16 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     current_vec_syn_field_len
                 );
                 let visit_map_fields_initialization_token_stream = {
-                    let generate_mut_field_index_serde_private_option_token_stream = |index: std::primitive::usize, type_token_stream: &dyn quote::ToTokens| {
+                    let content_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
+                        let type_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&element.ty);
                         let field_index_token_stream = postgresql_crud_macros_common::generate_underscore_underscore_field_index_token_stream(index);
                         quote::quote! {
                             let mut #field_index_token_stream: serde::__private::Option<
                                 std::option::Option<#import_path::Value<#type_token_stream>>,
                             > = serde::__private::None;
                         }
-                    };
-                    let visit_map_fields_initialization_token_stream = current_vec_syn_field.iter().enumerate().map(|(index, element)| {
-                        generate_mut_field_index_serde_private_option_token_stream(
-                            index,
-                            &generate_type_as_postgresql_json_type_read_token_stream(&element.ty)
-                        )
                     });
-                    quote::quote! {
-                        #(#visit_map_fields_initialization_token_stream)*
-                    }
+                    quote::quote! {#(#content_token_stream)*}
                 };
                 let visit_map_match_variants_token_stream = {
                     let generate_field_initialization_token_stream = |index: std::primitive::usize, field_ident_double_quotes_token_stream: &dyn quote::ToTokens, type_token_stream: &dyn quote::ToTokens| {
