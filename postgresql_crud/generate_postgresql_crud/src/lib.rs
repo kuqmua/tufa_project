@@ -2498,7 +2498,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
+    //     &"create_many",
     //     &create_many_token_stream,
     // );
     let create_one_token_stream = {
@@ -2628,7 +2628,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
+    //     &"create_one",
     //     &create_one_token_stream,
     // );
     let read_many_token_stream = {
@@ -2816,8 +2816,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     // &proc_macro_name_upper_camel_case,
-    //     "read_many",
+    //     &"read_many",
     //     &read_many_token_stream,
     // );
     let read_one_token_stream = {
@@ -2959,8 +2958,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     // &proc_macro_name_upper_camel_case,
-    //     "read_one",
+    //     &"read_one",
     //     &read_one_token_stream,
     // );
     // //todo update not only with array of objects with ids but with WHERE and one object
@@ -3291,8 +3289,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     // &proc_macro_name_upper_camel_case,
-    //     "update_many",
+    //     &"update_many",
     //     &update_many_token_stream,
     // );
     // //todo WHY ITS RETURN SUCCESS EVEN IF ROW DOES NOT EXISTS?
@@ -3488,8 +3485,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     // &proc_macro_name_upper_camel_case,
-    //     "uupdate_one",
+    //     &"update_one",
     //     &update_one_token_stream,
     // );
     let delete_many_token_stream = {
@@ -3560,10 +3556,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::DeleteMany)
                 );
-                // let non_existing_primary_keys_check_token_stream = generate_non_existing_primary_keys_check_token_stream(
-                //     &UpdateManyOrDeleteMany::UpdateMany,
-                //     &expected_primary_keys_snake_case
-                // );
                 generate_try_operation_route_logic_token_stream(
                     &operation,
                     &common_additional_route_logic_token_stream,
@@ -3698,7 +3690,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &"DeleteOne",
+    //     &"delete_one",
     //     &delete_one_token_stream,
     // );
     let common_token_stream = {
