@@ -3465,12 +3465,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream(index);
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
-                            if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#where_many_snake_case.#field_ident {
-                                match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
+                            if let Some(#value_snake_case) = &#value_snake_case.#field_ident {
+                                match postgresql_crud::PostgresqlTypeWhereFilter::query_part(
                                     #value_snake_case,
                                     &mut increment,
                                     &#field_ident_double_quotes_token_stream,
-                                    is_first_push_to_additional_parameters_already_happend,//todo generate is in proc macro (first element ignore)
+                                    is_first_push_to_additional_parameters_already_happend
                                 ) {
                                     Ok(value) => {
                                         additional_parameters.push_str(&value);
@@ -3484,37 +3484,34 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     });
                     let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {{}} returning {primary_key_field_ident}"));
-                    quote::quote! {
-                        {
-                            format!(
-                                #handle_token_stream,
-                                {
-                                    #increment_initialization_token_stream
-                                    //todo is all None then do not start with "where"
-                                    let mut additional_parameters = #std_string_string::from("where");
-                                    let mut is_first_push_to_additional_parameters_already_happend = false;
-                                    #(#additional_parameters_modification_token_stream)*
-                                    additional_parameters
-                                }
-                            )
+                    quote::quote! {format!(
+                        #handle_token_stream,
+                        match &#parameters_snake_case.#payload_snake_case.#where_many_snake_case {
+                            Some(#value_snake_case) => {
+                                #increment_initialization_token_stream
+                                let mut additional_parameters = std::string::String::from("where");
+                                let mut is_first_push_to_additional_parameters_already_happend = false;
+                                #(#additional_parameters_modification_token_stream)*
+                                additional_parameters
+                            },
+                            None => std::string::String::default()
                         }
-                    }
+                    )}
                 };
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = fields.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         quote::quote! {
-                            if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#where_many_snake_case.#field_ident {
-                                query = #postgresql_crud_postgresql_type_where_filter_query_bind_token_stream(
-                                    value,
-                                    query
-                                );
+                            if let Some(#value_snake_case) = #value_snake_case.#field_ident {
+                                #query_snake_case = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(#value_snake_case, #query_snake_case);
                             }
                         }
                     });
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
-                        #(#binded_query_modifications_token_stream)*
+                        if let Some(#value_snake_case) = #parameters_snake_case.#payload_snake_case.#where_many_snake_case {
+                            #(#binded_query_modifications_token_stream)*
+                        }
                         #query_snake_case
                     }
                 };
@@ -3687,7 +3684,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //todo fix trait calls in update many comparing with update_one
         #update_many_token_stream
         #update_one_token_stream
-        // #delete_many_token_stream
+        #delete_many_token_stream
         #delete_one_token_stream
     };
     // if ident == "" {
