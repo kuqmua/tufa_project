@@ -178,6 +178,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
     let primary_key_field_type_update_token_stream = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
     let std_string_string = token_patterns::StdStringString;
+    let value_snake_case = naming::ValueSnakeCase;
+    let element_snake_case = naming::ElementSnakeCase;
+    let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
     let impl_ident_token_stream = {
         let ident_create_table_if_not_exists_error_named_upper_camel_case = naming::parameter::SelfCreateTableIfNotExistsErrorNamedUpperCamelCase::from_tokens(&ident);
         let create_extension_if_not_exists_pg_jsonschema_upper_camel_case = naming::CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase;
@@ -283,12 +286,46 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 ]}
             }
         };
+        let fn_generate_select_query_part_token_stream = {
+            let variants_token_stream = fields.iter().map(|element| {
+                let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
+                let initialization_token_stream = {
+                    let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
+                    let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(
+                        &element.syn_field.ty
+                    );
+                    quote::quote! {
+                        => #as_postgresql_crud_postgresql_type_postgresql_type_token_stream select_query_part(
+                            #value_snake_case,
+                            #field_ident_string_double_quotes_token_stream
+                        )
+                    }
+                };
+                quote::quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) #initialization_token_stream}
+            }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+            quote::quote! {
+                fn generate_select_query_part(
+                    not_empty_unique_enum_vec_example_select: &postgresql_crud::NotEmptyUniqueEnumVec<ExampleSelect>
+                ) -> std::string::String {
+                    let mut #value_snake_case = #std_string_string::default();
+                    for #element_snake_case in not_empty_unique_enum_vec_example_select.to_vec() {
+                        #value_snake_case.push_str(&match #element_snake_case {
+                            #(#variants_token_stream),*
+                        });
+                        #value_snake_case.push_str(",");
+                    }
+                    let _: std::option::Option<char> = #value_snake_case.pop();
+                    #value_snake_case
+                }
+            }
+        };
         quote::quote! {
             #ident_create_table_if_not_exists_error_named_token_stream
             impl #ident {
                 #pub_fn_table_token_stream
                 #pub_async_fn_create_table_if_not_exists_token_stream
                 #pub_fn_allow_methods_token_stream
+                #fn_generate_select_query_part_token_stream
             }
         }
     };
@@ -306,7 +343,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
     let postgresql_crud_snake_case = &naming::PostgresqlCrudSnakeCase;
     let value_upper_camel_case = naming::ValueUpperCamelCase;
-    let value_snake_case = naming::ValueSnakeCase;
     let from_snake_case = naming::FromSnakeCase;
     let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
     let generate_postgresql_crud_value_declaration_token_stream = |content_token_stream: &dyn quote::ToTokens| {
@@ -730,7 +766,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
     let select_token_stream = {
         let ident_select_token_stream = {
             let variants = fields.iter().map(|element| {
@@ -803,7 +838,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #pick_select_token_stream
         }
     };
-    let element_snake_case = naming::ElementSnakeCase;
     let acc_snake_case = naming::AccSnakeCase;
     let select_snake_case = naming::SelectSnakeCase;
     let select_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
@@ -3697,7 +3731,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &proc_macro_name_upper_camel_case,
+    //     &"common",
     //     &common_token_stream,
     // );
     //todo pub and private impl quote group
