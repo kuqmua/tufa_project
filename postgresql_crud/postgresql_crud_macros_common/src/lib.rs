@@ -1006,7 +1006,7 @@ pub fn generate_impl_serde_deserialize_for_example_where_many_token_stream(
                         type Value = __Field;
                         fn expecting(
                             &self,
-                            __formatter: &mut _serde::__private::Formatter,
+                            __formatter: &mut _serde::__private::Formatter<'_>,
                         ) -> _serde::__private::fmt::Result {
                             _serde::__private::Formatter::write_str(
                                 __formatter,
@@ -1075,7 +1075,7 @@ pub fn generate_impl_serde_deserialize_for_example_where_many_token_stream(
                         type Value = #ident;
                         fn expecting(
                             &self,
-                            __formatter: &mut _serde::__private::Formatter,
+                            __formatter: &mut _serde::__private::Formatter<'_>,
                         ) -> _serde::__private::fmt::Result {
                             _serde::__private::Formatter::write_str(
                                 __formatter,
