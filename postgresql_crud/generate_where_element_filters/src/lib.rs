@@ -156,6 +156,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 ShouldAddDeclarationOfStructIdentGeneric::False => &proc_macro2_token_stream_new,
             },
             &increment_parameter_underscore,
+            &postgresql_crud_macros_common::ColumnParameterUnderscore::False,
             &is_need_to_add_logical_operator_underscore,
             &query_part_content_token_stream,
             is_query_bind_mutable,

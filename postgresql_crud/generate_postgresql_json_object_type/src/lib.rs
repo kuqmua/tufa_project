@@ -1553,6 +1553,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         &ident_token_stream,
                         &proc_macro2::TokenStream::new(),
                         &postgresql_crud_macros_common::IncrementParameterUnderscore::False,
+                        &postgresql_crud_macros_common::ColumnParameterUnderscore::False,
                         &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::False,
                         &query_part_content_token_stream,
                         &is_query_bind_mutable,

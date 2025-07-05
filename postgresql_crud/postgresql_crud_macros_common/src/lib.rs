@@ -80,6 +80,7 @@ pub fn generate_postgresql_type_where_element_token_stream(
         &ident,
         &proc_macro2::TokenStream::new(),
         &IncrementParameterUnderscore::False,
+        &ColumnParameterUnderscore::False,
         &IsNeedToAddLogicalOperatorUnderscore::False,
         &{
             let variants_token_stream = variants.iter().map(|element| {
@@ -490,6 +491,19 @@ impl quote::ToTokens for IncrementParameterUnderscore {
     }
 }
 #[derive(Debug, Clone)]
+pub enum ColumnParameterUnderscore {
+    True,
+    False,
+}
+impl quote::ToTokens for ColumnParameterUnderscore {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        match &self {
+            Self::True => quote::quote!{_}.to_tokens(tokens),
+            Self::False => naming::ColumnSnakeCase.to_tokens(tokens),
+        }
+    }
+}
+#[derive(Debug, Clone)]
 pub enum IsNeedToAddLogicalOperatorUnderscore {
     True,
     False,
@@ -507,13 +521,13 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
     ident_token_stream: &dyn quote::ToTokens,
     ident_generic_token_stream: &dyn quote::ToTokens,
     increment_parameter_underscore: &IncrementParameterUnderscore,
+    column_parameter_underscore: &ColumnParameterUnderscore,
     is_need_to_add_logical_operator_underscore: &IsNeedToAddLogicalOperatorUnderscore,
     query_part_content_token_stream: &dyn quote::ToTokens,
     is_query_bind_mutable: &IsQueryBindMutable,
     query_bind_content_token_stream: &dyn quote::ToTokens,
     import_path: &ImportPath,
 ) -> proc_macro2::TokenStream {
-    let column_snake_case = naming::ColumnSnakeCase;
     let std_primitive_u64_token_stream = token_patterns::StdPrimitiveU64;
     let std_fmt_display_token_stream = token_patterns::StdFmtDisplay;
     let std_primitive_bool_token_stream = token_patterns::StdPrimitiveBool;
@@ -527,7 +541,7 @@ pub fn impl_postgresql_type_where_filter_for_ident_token_stream(
             fn #query_part_snake_case(
                 &self,
                 #increment_parameter_underscore: &mut #std_primitive_u64_token_stream,
-                #column_snake_case: &dyn #std_fmt_display_token_stream,
+                #column_parameter_underscore: &dyn #std_fmt_display_token_stream,
                 #is_need_to_add_logical_operator_underscore: #std_primitive_bool_token_stream
             ) -> Result<#std_string_string_token_stream, #import_path::#query_part_error_named_upper_camel_case> {
                 #query_part_content_token_stream

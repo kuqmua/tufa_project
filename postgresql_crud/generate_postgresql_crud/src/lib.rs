@@ -457,6 +457,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &std_option_option_ident_where_many_upper_camel_case,
             &proc_macro2::TokenStream::new(),
             &postgresql_crud_macros_common::IncrementParameterUnderscore::False,
+            &postgresql_crud_macros_common::ColumnParameterUnderscore::True,
             &postgresql_crud_macros_common::IsNeedToAddLogicalOperatorUnderscore::True,
             &{
                 let additional_parameters_modification_token_stream = fields.iter().enumerate().map(|(index, element)| {
