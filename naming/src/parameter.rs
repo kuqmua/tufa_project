@@ -367,5 +367,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["element", "self"],
     ["self", "create", "table", "if", "not", "exists", "error", "named"],
     ["self", "where", "many"],
-    ["self", "where", "many", "try", "new", "error", "named"]
+    ["self", "where", "many", "try", "new", "error", "named"],
+    ["std", "option", "option", "self", "where", "many"]
 ]);
