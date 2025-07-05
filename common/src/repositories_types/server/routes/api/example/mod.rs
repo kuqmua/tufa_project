@@ -1174,7 +1174,9 @@ pub struct Doggie {
 
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ExampleReadManyPayload {
-    pub where_many: std::option::Option<ExampleWhereMany>,
+    //here
+    pub where_many: StdOptionOptionExampleWhereMany,
+    //std::option::Option<ExampleWhereMany>,
     pub select: std::vec::Vec<ExampleSelect>,
     pub order_by: postgresql_crud::OrderBy<ExampleSelect>,
     pub pagination: postgresql_crud::PaginationStartsWithZero,
@@ -1355,67 +1357,95 @@ impl Example {
                 },
                 {
                     let mut increment: std::primitive::u64 = 0;
-                    let mut additional_parameters = match &parameters.payload.where_many {
-                        Some(value) => {
-                            let mut additional_parameters = std::string::String::from("where");
-                            let mut is_first_push_to_additional_parameters_already_happend = false;
-                            if let Some(value) = &value.column_6e88acb0_c566_4fef_8a09_66a41338cf36 {
-                                match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, &mut increment, &"column_6e88acb0_c566_4fef_8a09_66a41338cf36", is_first_push_to_additional_parameters_already_happend) {
-                                    Ok(value) => {
-                                        additional_parameters.push_str(&value);
-                                        is_first_push_to_additional_parameters_already_happend = true;
-                                    }
-                                    Err(error_0) => {
-                                        let error = ExampleTryReadManyRouteLogicErrorNamed::QueryPart {
-                                            error: error_0,
-                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                file!().to_owned(),
-                                                line!(),
-                                                column!(),
-                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                    line: 2549,
-                                                    column: 259,
-                                                }),
-                                            ),
-                                        };
-                                        eprintln!("{error}");
-                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryReadManyRouteLogicResponseVariants::from(error)));
-                                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                                        return response;
-                                    }
-                                }
-                            }
-                            if let Some(value) = &value.animal_as_not_null_jsonb_object {
-                                match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, &mut increment, &"animal_as_not_null_jsonb_object", is_first_push_to_additional_parameters_already_happend) {
-                                    Ok(value) => {
-                                        additional_parameters.push_str(&value);
-                                    }
-                                    Err(error_0) => {
-                                        let error = ExampleTryReadManyRouteLogicErrorNamed::QueryPart {
-                                            error: error_0,
-                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                                file!().to_owned(),
-                                                line!(),
-                                                column!(),
-                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                    line: 2549,
-                                                    column: 259,
-                                                }),
-                                            ),
-                                        };
-                                        eprintln!("{error}");
-                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryReadManyRouteLogicResponseVariants::from(error)));
-                                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                                        return response;
-                                    }
-                                }
-                            }
-                            additional_parameters
+                    //here
+                    let mut additional_parameters = match postgresql_crud::PostgresqlTypeWhereFilter::query_part(
+                        &parameters.payload.where_many,
+                        &mut increment,
+                        &"",//useless
+                        false//useless
+                    ) {
+                        Ok(value) => value,
+                        Err(error_0) => {
+                            let error = ExampleTryReadManyRouteLogicErrorNamed::QueryPart {
+                                error: error_0,
+                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                    file!().to_owned(),
+                                    line!(),
+                                    column!(),
+                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                        line: 2549,
+                                        column: 259,
+                                    }),
+                                ),
+                            };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryReadManyRouteLogicResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                            return response;
                         }
-                        None => std::string::String::default(),
                     };
+                    // let mut additional_parameters = match &parameters.payload.where_many {
+                    //     Some(value) => {
+                    //         let mut additional_parameters = std::string::String::from("where");
+                    //         let mut is_first_push_to_additional_parameters_already_happend = false;
+                    //         if let Some(value) = &value.column_6e88acb0_c566_4fef_8a09_66a41338cf36 {
+                    //             match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, &mut increment, &"column_6e88acb0_c566_4fef_8a09_66a41338cf36", is_first_push_to_additional_parameters_already_happend) {
+                    //                 Ok(value) => {
+                    //                     additional_parameters.push_str(&value);
+                    //                     is_first_push_to_additional_parameters_already_happend = true;
+                    //                 }
+                    //                 Err(error_0) => {
+                    //                     let error = ExampleTryReadManyRouteLogicErrorNamed::QueryPart {
+                    //                         error: error_0,
+                    //                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    //                             file!().to_owned(),
+                    //                             line!(),
+                    //                             column!(),
+                    //                             Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    //                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    //                                 line: 2549,
+                    //                                 column: 259,
+                    //                             }),
+                    //                         ),
+                    //                     };
+                    //                     eprintln!("{error}");
+                    //                     let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryReadManyRouteLogicResponseVariants::from(error)));
+                    //                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    //                     return response;
+                    //                 }
+                    //             }
+                    //         }
+                    //         if let Some(value) = &value.animal_as_not_null_jsonb_object {
+                    //             match postgresql_crud::PostgresqlTypeWhereFilter::query_part(value, &mut increment, &"animal_as_not_null_jsonb_object", is_first_push_to_additional_parameters_already_happend) {
+                    //                 Ok(value) => {
+                    //                     additional_parameters.push_str(&value);
+                    //                 }
+                    //                 Err(error_0) => {
+                    //                     let error = ExampleTryReadManyRouteLogicErrorNamed::QueryPart {
+                    //                         error: error_0,
+                    //                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    //                             file!().to_owned(),
+                    //                             line!(),
+                    //                             column!(),
+                    //                             Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    //                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    //                                 line: 2549,
+                    //                                 column: 259,
+                    //                             }),
+                    //                         ),
+                    //                     };
+                    //                     eprintln!("{error}");
+                    //                     let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryReadManyRouteLogicResponseVariants::from(error)));
+                    //                     *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    //                     return response;
+                    //                 }
+                    //             }
+                    //         }
+                    //         additional_parameters
+                    //     }
+                    //     None => std::string::String::default(),
+                    // };
                     {
                         let prefix = match additional_parameters.is_empty() {
                             true => "",
@@ -1464,14 +1494,16 @@ impl Example {
         println!("{}", query_string);
         let binded_query = {
             let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
-            if let Some(value) = parameters.payload.where_many {
-                if let Some(value) = value.column_6e88acb0_c566_4fef_8a09_66a41338cf36 {
-                    query = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query);
-                }
-                if let Some(value) = value.animal_as_not_null_jsonb_object {
-                    query = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query);
-                }
-            }
+            //here
+            query = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(parameters.payload.where_many, query);
+            // if let Some(value) = parameters.payload.where_many {
+            //     if let Some(value) = value.column_6e88acb0_c566_4fef_8a09_66a41338cf36 {
+            //         query = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query);
+            //     }
+            //     if let Some(value) = value.animal_as_not_null_jsonb_object {
+            //         query = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(value, query);
+            //     }
+            // }
             query = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(parameters.payload.pagination, query);
             query
         };
@@ -1793,7 +1825,9 @@ impl Example {
 impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleReadManyPayload {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self {
-            where_many: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            //here
+            where_many: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            // Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
             select: postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element(),
             order_by: postgresql_crud::OrderBy {
                 column: ExampleSelect::Column6E88Acb0C5664Fef8A0966A41338Cf36(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
