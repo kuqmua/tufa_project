@@ -321,7 +321,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-    let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+    // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream = |ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
         postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
             &ident,
@@ -806,8 +806,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let element_snake_case = naming::ElementSnakeCase;
     let acc_snake_case = naming::AccSnakeCase;
     let select_snake_case = naming::SelectSnakeCase;
-    let select_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
-        #select_snake_case: #postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+    let select_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
+        #select_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
     let generate_ident_try_operation_error_named_upper_camel_case = |operation: &Operation|{
         format!("{ident}Try{operation}ErrorNamed")
@@ -837,7 +837,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             {
                 let mut #value_snake_case = #std_string_string::default();
-                for #element_snake_case in &#parameters_snake_case.#payload_snake_case.#select_snake_case {
+                for #element_snake_case in #parameters_snake_case.#payload_snake_case.#select_snake_case.to_vec() {
                     #value_snake_case.push_str(&match #element_snake_case {
                         #(#variants_token_stream),*
                     });
@@ -1046,7 +1046,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             #declaration_primary_key_token_stream
             #(#declaration_excluding_primary_key_token_stream)*
-            for #element_snake_case in &#parameters_snake_case.#payload_snake_case.#select_snake_case {
+            for #element_snake_case in #parameters_snake_case.#payload_snake_case.#select_snake_case.to_vec() {
                 match #element_snake_case {
                     #assignment_variant_primary_key_token_stream,
                     #(#assignment_variants_excluding_primary_key_token_stream),*
@@ -1457,9 +1457,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {#(#fields_token_stream),*}
     };
     let generate_pub_handle_token_stream = |is_pub: bool| if is_pub { quote::quote! {pub} } else { proc_macro2::TokenStream::new() };
-    //todo check if vec is not empty
-    let pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream = {
-        quote::quote! {pub #select_snake_case: std::vec::Vec<#ident_select_upper_camel_case>}
+    let pub_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream = {
+        quote::quote! {pub #select_snake_case: postgresql_crud::NotEmptyUniqueEnumVec<#ident_select_upper_camel_case>}
     };
     let generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = |primary_key_type_token_stream: &dyn quote::ToTokens| {
         let is_pub = true;
@@ -2649,7 +2648,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &operation,
             &quote::quote! {
                 #pub_where_many_std_option_option_ident_where_many_token_stream,
-                #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
+                #pub_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream,
                 pub #order_by_snake_case: #postgresql_crud_order_by_token_stream<#ident_select_upper_camel_case>,
                 pub pagination: postgresql_crud::PaginationStartsWithZero,
             }
@@ -2790,7 +2789,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &quote::quote! {
                 Self {
                     #where_many_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    #select_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                    #select_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     #order_by_snake_case: postgresql_crud::OrderBy {
                         #column_snake_case: #ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                             #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
@@ -2838,7 +2837,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
                 quote::quote! {
                     #pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream,
-                    #pub_handle_select_snake_case_std_vec_vec_ident_column_upper_camel_case_token_stream,
+                    #pub_select_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream,
                 }
             }
         );
@@ -2941,7 +2940,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &quote::quote! {
                 Self {
                     #primary_key_field_ident: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                    #select_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                    #select_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
                 }
             },
         );

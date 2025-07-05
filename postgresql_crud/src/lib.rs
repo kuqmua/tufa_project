@@ -72,7 +72,7 @@ pub trait PostgresqlTypeWhereFilter<'a> {
 }
 //todo custom deserialization - must not contain more than one element
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
-pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>>);
+pub struct NullableJsonObjectPostgresqlTypeWhereFilter<T: std::fmt::Debug + PartialEq + Clone + for<'a> PostgresqlTypeWhereFilter<'a> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>(pub std::option::Option<NotEmptyUniqueEnumVec<T>>);
 impl<'a, T> PostgresqlTypeWhereFilter<'a> for NullableJsonObjectPostgresqlTypeWhereFilter<T>
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
@@ -1019,8 +1019,8 @@ pub enum NotEmptyUniqueVecTryNewErrorNamed<T> {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
-pub struct PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>(std::vec::Vec<T>);
-impl<T: std::cmp::PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueEnumVec<T> {
+pub struct NotEmptyUniqueEnumVec<T>(std::vec::Vec<T>);
+impl<T: std::cmp::PartialEq + Clone> NotEmptyUniqueEnumVec<T> {
     pub fn try_new(value: std::vec::Vec<T>) -> Result<Self, NotEmptyUniqueVecTryNewErrorNamed<T>> {
         if value.is_empty() {
             return Err(NotEmptyUniqueVecTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
@@ -1050,7 +1050,7 @@ const _: () = {
     #[expect(clippy::useless_attribute)]
     extern crate serde as _serde;
     #[automatically_derived]
-    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for PostgresqlJsonTypeNotEmptyUniqueEnumVec<T> {
+    impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::Deserialize<'de> for NotEmptyUniqueEnumVec<T> {
         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
         where
             __D: _serde::Deserializer<'de>,
@@ -1060,14 +1060,14 @@ const _: () = {
             where
                 T: _serde::Deserialize<'de>,
             {
-                marker: _serde::__private::PhantomData<PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>>,
+                marker: _serde::__private::PhantomData<NotEmptyUniqueEnumVec<T>>,
                 lifetime: _serde::__private::PhantomData<&'de ()>,
             }
             #[automatically_derived]
             impl<'de, T: std::fmt::Debug + std::cmp::PartialEq + std::clone::Clone + _serde::Deserialize<'de>> _serde::de::Visitor<'de> for __Visitor<'de, T> {
-                type Value = PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>;
+                type Value = NotEmptyUniqueEnumVec<T>;
                 fn expecting(&self, __f: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(__f, "tuple struct PostgresqlJsonTypeNotEmptyUniqueEnumVec")
+                    _serde::__private::Formatter::write_str(__f, "tuple struct NotEmptyUniqueEnumVec")
                 }
                 #[inline]
                 fn visit_newtype_struct<__E>(self, __e: __E) -> _serde::__private::Result<Self::Value, __E::Error>
@@ -1075,7 +1075,7 @@ const _: () = {
                     __E: _serde::Deserializer<'de>,
                 {
                     let __field0: std::vec::Vec<T> = <std::vec::Vec<T> as _serde::Deserialize>::deserialize(__e)?;
-                    _serde::__private::Ok(PostgresqlJsonTypeNotEmptyUniqueEnumVec(__field0))
+                    _serde::__private::Ok(NotEmptyUniqueEnumVec(__field0))
                 }
                 #[inline]
                 fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
@@ -1085,10 +1085,10 @@ const _: () = {
                     let __field0 = match _serde::de::SeqAccess::next_element::<std::vec::Vec<T>>(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
-                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct PostgresqlJsonTypeNotEmptyUniqueEnumVec with 1 element"));
+                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"tuple struct NotEmptyUniqueEnumVec with 1 element"));
                         }
                     };
-                    match PostgresqlJsonTypeNotEmptyUniqueEnumVec::try_new(__field0) {
+                    match NotEmptyUniqueEnumVec::try_new(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -1096,7 +1096,7 @@ const _: () = {
             }
             _serde::Deserializer::deserialize_newtype_struct(
                 __deserializer,
-                "PostgresqlJsonTypeNotEmptyUniqueEnumVec",
+                "NotEmptyUniqueEnumVec",
                 __Visitor {
                     marker: _serde::__private::PhantomData::<Self>,
                     lifetime: _serde::__private::PhantomData,
@@ -1105,22 +1105,22 @@ const _: () = {
         }
     }
 };
-impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for PostgresqlJsonTypeNotEmptyUniqueEnumVec<T> {
+impl<T: crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement> crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for NotEmptyUniqueEnumVec<T> {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element())
     }
 }
-impl<T> std::default::Default for PostgresqlJsonTypeNotEmptyUniqueEnumVec<T> {
+impl<T> std::default::Default for NotEmptyUniqueEnumVec<T> {
     fn default() -> Self {
         Self(std::vec::Vec::default())
     }
 }
-impl<T> std::convert::From<PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>> for Vec<T> {
-    fn from(value: PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>) -> Self {
+impl<T> std::convert::From<NotEmptyUniqueEnumVec<T>> for Vec<T> {
+    fn from(value: NotEmptyUniqueEnumVec<T>) -> Self {
         value.0
     }
 }
-impl<'a, T> PostgresqlTypeWhereFilter<'a> for PostgresqlJsonTypeNotEmptyUniqueEnumVec<T>
+impl<'a, T> PostgresqlTypeWhereFilter<'a> for NotEmptyUniqueEnumVec<T>
 where
     T: std::fmt::Debug + PartialEq + Clone + for<'b> PostgresqlTypeWhereFilter<'b> + crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement,
 {
@@ -1145,7 +1145,7 @@ where
         query
     }
 }
-//difference between PostgresqlJsonTypeNotEmptyUniqueEnumVec and PostgresqlJsonTypeNotEmptyUniqueVec only in crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement impl with different generic requirement and PostgresqlTypeWhereFilter
+//difference between NotEmptyUniqueEnumVec and PostgresqlJsonTypeNotEmptyUniqueVec only in crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement impl with different generic requirement and PostgresqlTypeWhereFilter
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PostgresqlJsonTypeNotEmptyUniqueVec<T>(std::vec::Vec<T>);
 impl<T: std::cmp::PartialEq + Clone> PostgresqlJsonTypeNotEmptyUniqueVec<T> {
