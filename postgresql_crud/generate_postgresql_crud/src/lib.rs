@@ -592,6 +592,30 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #wraped_into_axum_response_token_stream
         }
     };
+    let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| {
+        let field_ident = &element.field_ident;
+        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(
+            &element.syn_field.ty,
+            &naming::CreateUpperCamelCase
+        );
+        quote::quote! {
+            pub #field_ident: #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
+        }
+    });
+    let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
+    let ident_create_token_stream = {
+        let ident_create_token_stream = {
+            quote::quote! {
+                #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+                pub struct #ident_create_upper_camel_case {
+                    #pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream
+                }
+            }
+        };
+        quote::quote! {
+            #ident_create_token_stream
+        }
+    };
     let ident_where_many_upper_camel_case = naming::parameter::SelfWhereManyUpperCamelCase::from_tokens(&ident);
     let ident_where_many_try_new_error_named_upper_camel_case = naming::parameter::SelfWhereManyTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_where_many_token_stream = {
@@ -1918,16 +1942,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
         }
     };
-    let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_token_stream(&|element: &SynFieldWrapper| {
-        let field_ident = &element.field_ident;
-        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(
-            &element.syn_field.ty,
-            &naming::CreateUpperCamelCase
-        );
-        quote::quote! {
-            pub #field_ident: #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
-        }
-    });
     let generate_try_operation_token_stream = |
         operation: &Operation,
         type_variants_from_request_response_syn_variants: &[syn::Variant],
@@ -3488,6 +3502,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let common_token_stream = {
         quote::quote! {
             #impl_ident_token_stream
+            #ident_create_token_stream
             #ident_where_many_token_stream
             #std_option_option_ident_where_many_token_stream
             #select_token_stream
