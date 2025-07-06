@@ -181,6 +181,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let value_snake_case = naming::ValueSnakeCase;
     let element_snake_case = naming::ElementSnakeCase;
     let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
+    let generate_select_query_part_snake_case = naming::GenerateSelectQueryPartSnakeCase;
     let impl_ident_token_stream = {
         let ident_create_table_if_not_exists_error_named_upper_camel_case = naming::parameter::SelfCreateTableIfNotExistsErrorNamedUpperCamelCase::from_tokens(&ident);
         let create_extension_if_not_exists_pg_jsonschema_upper_camel_case = naming::CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase;
@@ -304,7 +305,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) #initialization_token_stream}
             }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
             quote::quote! {
-                fn generate_select_query_part(
+                fn #generate_select_query_part_snake_case(
                     not_empty_unique_enum_vec_example_select: &postgresql_crud::NotEmptyUniqueEnumVec<ExampleSelect>
                 ) -> std::string::String {
                     let mut #value_snake_case = #std_string_string::default();
@@ -329,9 +330,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let query_snake_case = naming::QuerySnakeCase;
     let parameters_snake_case = naming::ParametersSnakeCase;
     let payload_snake_case = naming::PayloadSnakeCase;
+    let select_snake_case = naming::SelectSnakeCase;
+    let generate_select_query_part_parameters_payload_select_call_token_stream = quote::quote!{
+        #ident::#generate_select_query_part_snake_case(&#parameters_snake_case.#payload_snake_case.#select_snake_case)
+    };
+    let query_snake_case = naming::QuerySnakeCase;
     let increment_snake_case = naming::IncrementSnakeCase;
     let debug_upper_camel_case = naming::DebugUpperCamelCase;
     let error_snake_case = naming::ErrorSnakeCase;
@@ -839,7 +844,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let acc_snake_case = naming::AccSnakeCase;
-    let select_snake_case = naming::SelectSnakeCase;
     let select_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
         #select_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
@@ -850,37 +854,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_ident_try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case = |operation: &Operation|{
         format!("{ident}Try{operation}RouteLogicErrorNamedWithSerializeDeserialize")
         .parse::<proc_macro2::TokenStream>().unwrap()
-    };
-    let select_query_part_vec_column_token_stream = {
-        let variants_token_stream = fields.iter().map(|element| {
-            let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-            let initialization_token_stream = {
-                let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(
-                    &element.syn_field.ty
-                );
-                quote::quote! {
-                    => #as_postgresql_crud_postgresql_type_postgresql_type_token_stream select_query_part(
-                        #value_snake_case,
-                        #field_ident_string_double_quotes_token_stream
-                    )
-                }
-            };
-            quote::quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) #initialization_token_stream}
-        }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-        quote::quote! {
-            {
-                let mut #value_snake_case = #std_string_string::default();
-                for #element_snake_case in #parameters_snake_case.#payload_snake_case.#select_snake_case.to_vec() {
-                    #value_snake_case.push_str(&match #element_snake_case {
-                        #(#variants_token_stream),*
-                    });
-                    #value_snake_case.push_str(",");
-                }
-                let _: std::option::Option<char> = #value_snake_case.pop();
-                #value_snake_case
-            }
-        }
     };
     let sqlx_error_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string = macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString;
@@ -2713,7 +2686,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             format!(
                                 #handle_token_stream,
-                                #select_query_part_vec_column_token_stream,
+                                #generate_select_query_part_parameters_payload_select_call_token_stream,
                                 {
                                     #increment_initialization_token_stream
                                     #additional_paramaters_initialization_token_stream
@@ -2897,7 +2870,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let mut increment: std::primitive::u64 = 0;
                             format!(
                                 #query_token_stream,
-                                #select_query_part_vec_column_token_stream,
+                                #generate_select_query_part_parameters_payload_select_call_token_stream,
                                 match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
                                     &parameters.payload.#primary_key_field_ident,
                                     &mut increment,
