@@ -140,8 +140,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let url_snake_case = naming::UrlSnakeCase;
     let endpoint_location_snake_case = naming::EndpointLocationSnakeCase;
     let future_snake_case = naming::FutureSnakeCase;
-    let expected_length_snake_case = naming::ExpectedLengthSnakeCase;
-    let got_length_snake_case = naming::GotLengthSnakeCase;
     let by_snake_case = naming::BySnakeCase;
     let prefix_snake_case = naming::PrefixSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
@@ -538,7 +536,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let query_part_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::QueryPartUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
-        std::vec::Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
+        vec![(
+            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
+            &naming::ErrorSnakeCase,
+            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&postgresql_crud_snake_case.to_string(), &naming::QueryPartErrorNamedUpperCamelCase.to_string()]),
+        )],
     );
     let generate_ident_try_operation_route_logic_error_named_upper_camel_case = |operation: &Operation|{
         format!("{ident}Try{operation}RouteLogicErrorNamed")
@@ -2191,7 +2193,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let increment_initialization_token_stream = quote::quote! {let mut #increment_snake_case: std::primitive::u64 = 0;};
     let create_many_token_stream = {
         let operation = Operation::CreateMany;
-        let std_primitive_usize_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "primitive", "usize"]);
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = vec![];
