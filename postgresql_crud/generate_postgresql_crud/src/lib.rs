@@ -1006,6 +1006,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalRouteLogic,
             }
         }
+        fn try_operation_route_logic_error_named_with_serialize_deserialize_snake_case(&self) -> naming::parameter::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase {
+            naming::parameter::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase::from_display(self)
+        }
     }
     impl std::fmt::Display for Operation {
         fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -1899,7 +1902,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     None,
                     vec![(
                         macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
-                        &naming::parameter::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase::from_display(operation),
+                        &operation.try_operation_route_logic_error_named_with_serialize_deserialize_snake_case(),
                         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&ident_try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case.to_string()]),
                     )],
                 )
@@ -2145,7 +2148,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_try_operation_route_logic_error_named_with_serialize_deserialize_upper_camel_case(&operation);
-        let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case = naming::parameter::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase::from_display(operation);
+        let try_operation_route_logic_error_named_with_serialize_deserialize_snake_case = &operation.try_operation_route_logic_error_named_with_serialize_deserialize_snake_case();
         let try_operation_route_logic_error_named_with_serialize_deserialize_token_stream = {
             let try_operation_route_logic_response_variants_to_try_operation_route_logic_error_named_with_serialize_deserialize = type_variants_from_request_response_syn_variants.iter().map(|element| {
                 let variant_ident = &element.ident;
