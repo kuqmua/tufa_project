@@ -532,9 +532,9 @@ commit: 72a7f5c066a08a77fb91e75abee9f6e79e00e2b8
     # }
   },
   "select": [
-    {
-      "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
-    },
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
     {
       "animal_as_not_null_jsonb_object": [
         {
@@ -609,6 +609,65 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
 POST http://127.0.0.1:8080/example/read_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
+
+{
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 10,
+  "select": [
+    # {
+    #   "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null
+    # },
+    {
+      "animal_as_not_null_jsonb_object": [
+        {
+          "field_0": [
+            {
+              "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+            }
+          ]
+        },
+        {
+          "field_1": {
+            "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
+              {
+                "id": null
+              },
+              {
+                "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+              }
+            ],
+            "dimension1_pagination": {
+              "limit": 5,
+              "offset": 0
+            }
+          }
+        },
+        {
+          "field_2": [
+            {
+              "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+            }
+          ]
+        },
+        {
+          "field_3": {
+            "doggie_with_id_as_not_null_jsonb_object_with_id_select": [
+              {
+                "id": null
+              },
+              {
+                "column_113f3662_35a2_4a7a_9326_03bbd441815f": null
+              }
+            ],
+            "dimension1_pagination": {
+              "limit": 5,
+              "offset": 0
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
 
 ###
 
