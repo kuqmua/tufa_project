@@ -404,7 +404,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote! {#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(value) #initialization_token_stream}
             }).collect::<std::vec::Vec<proc_macro2::TokenStream>>();
             quote::quote! {
-                fn #generate_select_query_part_snake_case(#select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream) -> std::string::String {
+                fn #generate_select_query_part_snake_case(#select_borrow_postgresql_crud_not_empty_unique_enum_vec_ident_select_token_stream) -> #std_string_string {
                     let mut #value_snake_case = #std_string_string::default();
                     for #element_snake_case in #select_snake_case.to_vec() {
                         #value_snake_case.push_str(&match #element_snake_case {
@@ -722,12 +722,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote!{
                     Ok(match &self.0 {
                         Some(value) => {
-                            let mut #additional_parameters_snake_case = std::string::String::from("where");
+                            let mut #additional_parameters_snake_case = #std_string_string::from("where");
                             let mut is_first_push_to_additional_parameters_already_happend = false;
                             #(#additional_parameters_modification_token_stream)*
                             #additional_parameters_snake_case
                         },
-                        None => std::string::String::default()
+                        None => #std_string_string::default()
                     })
                 }
             },
@@ -1025,7 +1025,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             });
             quote::quote! {
                 impl #ident_select_upper_camel_case {
-                    fn pick_select(&self) -> std::string::String {
+                    fn pick_select(&self) -> #std_string_string {
                         match &self {
                             #(#fields_token_stream),*
                         }
