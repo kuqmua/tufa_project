@@ -806,6 +806,121 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // //todo refactor as &[&'a SynRust...]
     let generate_self_fields_token_stream = |fields: &[&syn::Field]| -> std::vec::Vec<syn::Ident> { fields.iter().map(|field| field.ident.as_ref().unwrap_or_else(|| panic!("{}", naming::FIELD_IDENT_IS_NONE)).clone()).collect() };
     let try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case = naming::parameter::TryFromSqlxPostgresPgRowWithNotEmptyUniqueEnumVecSelfSelectSnakeCase::from_display(&ident);
+    let sqlx_error_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
+    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string = macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString;
+    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize = macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize;
+    let postgresql_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming::PostgresqlUpperCamelCase,
+        Some(macros_helpers::status_code::StatusCode::InternalServerError500),
+        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &naming::PostgresqlSnakeCase, sqlx_error_syn_punctuated_punctuated.clone())],
+    );
+    enum ReadManyOrReadOne {
+        ReadMany,
+        ReadOne
+    }
+    impl std::convert::From<&ReadManyOrReadOne> for Operation {
+        fn from(value: &ReadManyOrReadOne) -> Self {
+            match &value {
+                ReadManyOrReadOne::ReadMany => Self::ReadMany,
+                ReadManyOrReadOne::ReadOne => Self::ReadOne,
+            }
+        }
+    }
+    let generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = |read_many_or_read_one: &ReadManyOrReadOne|{
+        let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
+            &Operation::from(read_many_or_read_one),
+            &postgresql_syn_variant_wrapper,
+            file!(),
+            line!(),
+            column!()
+        );
+        quote::quote! {
+            match #ident_read_upper_camel_case::#try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case(
+                #value_snake_case,
+                &#parameters_snake_case.#payload_snake_case.#select_snake_case
+            ) {
+                Ok(#value_snake_case) => #value_snake_case,
+                Err(#error_0_token_stream) => {
+                    #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                }
+            }
+        }
+    };
+    let select_token_stream = {
+        let ident_select_token_stream = {
+            let variants = fields.iter().map(|element| {
+                let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
+                let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
+                let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::SelectUpperCamelCase);
+                quote::quote! {
+                    #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
+                    #field_ident_upper_camel_case_token_stream(
+                        #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
+                    )
+                }
+            });
+            quote::quote! {
+                #[derive(
+                    #debug_upper_camel_case,
+                    #serde_serialize,
+                    #serde_deserialize,
+                    PartialEq,
+                    Clone,
+                )]
+                pub enum #ident_select_upper_camel_case {
+                    #(#variants),*
+                }
+            }
+        };
+        let impl_std_fmt_display_for_ident_select_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
+            &proc_macro2::TokenStream::new(),
+            &ident_select_upper_camel_case,
+            &proc_macro2::TokenStream::new(),
+            &quote::quote! {write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e|format!("cannot serialize into json: {e:?}")))},
+        );
+        let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream =
+            macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self}")});
+        let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream =
+            postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &{
+                let elements_token_stream = fields.iter().map(|element| {
+                    let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
+                    quote::quote! {
+                        #ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
+                    }
+                });
+                quote::quote! {vec![#(#elements_token_stream),*]}
+            });
+        //todo this is temporary impl. maybe should write trait and implement different logic
+        let pick_select_token_stream = {
+            let fields_token_stream = fields.iter().map(|element| {
+                let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
+                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
+                quote::quote! {
+                    Self::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_token_stream.to_string()
+                }
+            });
+            quote::quote! {
+                impl #ident_select_upper_camel_case {
+                    fn pick_select(&self) -> #std_string_string {
+                        match &self {
+                            #(#fields_token_stream),*
+                        }
+                    }
+                }
+            }
+        };
+        quote::quote! {
+            #ident_select_token_stream
+            #impl_std_fmt_display_for_ident_select_token_stream
+            #impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream
+            #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
+            //todo this is temporary impl. maybe should write trait and implement different logic
+            #pick_select_token_stream
+        }
+    };
+    let select_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
+        #select_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+    };
     let ident_read_token_stream = {
         let ident_read_token_stream = {
             let field_option_primary_key_token_stream = {
@@ -926,121 +1041,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #ident_read_token_stream
             #impl_ident_read_token_stream
         }
-    };
-    let sqlx_error_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
-    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string = macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString;
-    let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize = macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringStringSerializeDeserialize;
-    let postgresql_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::PostgresqlUpperCamelCase,
-        Some(macros_helpers::status_code::StatusCode::InternalServerError500),
-        vec![(macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &naming::PostgresqlSnakeCase, sqlx_error_syn_punctuated_punctuated.clone())],
-    );
-    enum ReadManyOrReadOne {
-        ReadMany,
-        ReadOne
-    }
-    impl std::convert::From<&ReadManyOrReadOne> for Operation {
-        fn from(value: &ReadManyOrReadOne) -> Self {
-            match &value {
-                ReadManyOrReadOne::ReadMany => Self::ReadMany,
-                ReadManyOrReadOne::ReadOne => Self::ReadOne,
-            }
-        }
-    }
-    let generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = |read_many_or_read_one: &ReadManyOrReadOne|{
-        let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
-            &Operation::from(read_many_or_read_one),
-            &postgresql_syn_variant_wrapper,
-            file!(),
-            line!(),
-            column!()
-        );
-        quote::quote! {
-            match #ident_read_upper_camel_case::#try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case(
-                #value_snake_case,
-                &#parameters_snake_case.#payload_snake_case.#select_snake_case
-            ) {
-                Ok(#value_snake_case) => #value_snake_case,
-                Err(#error_0_token_stream) => {
-                    #postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                }
-            }
-        }
-    };
-    let select_token_stream = {
-        let ident_select_token_stream = {
-            let variants = fields.iter().map(|element| {
-                let serialize_deserialize_ident_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-                let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::SelectUpperCamelCase);
-                quote::quote! {
-                    #[serde(rename(serialize = #serialize_deserialize_ident_token_stream, deserialize = #serialize_deserialize_ident_token_stream))]
-                    #field_ident_upper_camel_case_token_stream(
-                        #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
-                    )
-                }
-            });
-            quote::quote! {
-                #[derive(
-                    #debug_upper_camel_case,
-                    #serde_serialize,
-                    #serde_deserialize,
-                    PartialEq,
-                    Clone,
-                )]
-                pub enum #ident_select_upper_camel_case {
-                    #(#variants),*
-                }
-            }
-        };
-        let impl_std_fmt_display_for_ident_select_token_stream = macros_helpers::generate_impl_std_fmt_display_token_stream(
-            &proc_macro2::TokenStream::new(),
-            &ident_select_upper_camel_case,
-            &proc_macro2::TokenStream::new(),
-            &quote::quote! {write!(formatter, "{}", serde_json::to_string(&self).unwrap_or_else(|e|format!("cannot serialize into json: {e:?}")))},
-        );
-        let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream =
-            macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self}")});
-        let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream =
-            postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &{
-                let elements_token_stream = fields.iter().map(|element| {
-                    let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-                    quote::quote! {
-                        #ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
-                    }
-                });
-                quote::quote! {vec![#(#elements_token_stream),*]}
-            });
-        //todo this is temporary impl. maybe should write trait and implement different logic
-        let pick_select_token_stream = {
-            let fields_token_stream = fields.iter().map(|element| {
-                let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                quote::quote! {
-                    Self::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_token_stream.to_string()
-                }
-            });
-            quote::quote! {
-                impl #ident_select_upper_camel_case {
-                    fn pick_select(&self) -> #std_string_string {
-                        match &self {
-                            #(#fields_token_stream),*
-                        }
-                    }
-                }
-            }
-        };
-        quote::quote! {
-            #ident_select_token_stream
-            #impl_std_fmt_display_for_ident_select_token_stream
-            #impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream
-            #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
-            //todo this is temporary impl. maybe should write trait and implement different logic
-            #pick_select_token_stream
-        }
-    };
-    let select_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
-        #select_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
     };
     let generate_ident_try_operation_error_named_upper_camel_case = |operation: &Operation|{
         format!("{ident}Try{operation}ErrorNamed")
@@ -3490,8 +3490,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #impl_ident_token_stream
             #ident_where_many_token_stream
             #std_option_option_ident_where_many_token_stream
-            #ident_read_token_stream
             #select_token_stream
+            #ident_read_token_stream
             #ident_column_read_permission_token_stream
         }
     };
