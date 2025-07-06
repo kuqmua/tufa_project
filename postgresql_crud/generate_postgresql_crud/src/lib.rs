@@ -538,11 +538,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let query_part_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::QueryPartUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
-        vec![(
-            macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoErrorOccurence,
-            &naming::ErrorSnakeCase,
-            macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&postgresql_crud_snake_case.to_string(), &naming::QueryPartErrorNamedUpperCamelCase.to_string()]),
-        )],
+        std::vec::Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
     );
     let generate_ident_try_operation_route_logic_error_named_upper_camel_case = |operation: &Operation|{
         format!("{ident}Try{operation}RouteLogicErrorNamed")
@@ -2196,24 +2192,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let create_many_token_stream = {
         let operation = Operation::CreateMany;
         let std_primitive_usize_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "primitive", "usize"]);
-        let unexpected_rows_length_syn_variant_wrapper = new_syn_variant_wrapper(
-            &naming::UnexpectedRowsLengthUpperCamelCase,
-            Some(macros_helpers::status_code::StatusCode::InternalServerError500),
-            vec![
-                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &expected_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
-                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &got_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
-            ],
-        );
-        let unexpected_rows_length_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
-            &naming::UnexpectedRowsLengthAndRollbackUpperCamelCase,
-            Some(macros_helpers::status_code::StatusCode::InternalServerError500),
-            vec![
-                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &expected_length_snake_case, std_primitive_usize_syn_punctuated_punctuated.clone()),
-                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &got_length_snake_case, std_primitive_usize_syn_punctuated_punctuated),
-                //todo reuse vec elements
-                (macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(), &rollback_snake_case, sqlx_error_syn_punctuated_punctuated),
-            ],
-        );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = vec![];
@@ -2222,8 +2200,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
                 value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                value.push(unexpected_rows_length_syn_variant_wrapper.get_syn_variant());
-                value.push(unexpected_rows_length_and_rollback_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &operation,
@@ -2299,45 +2275,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
-                    &{
-                        let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::CreateMany);
-                        let unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
-                            &operation,
-                            &unexpected_rows_length_syn_variant_wrapper,
-                            file!(),
-                            line!(),
-                            column!()
-                        );
-                        let unexpected_rows_length_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
-                            &operation,
-                            &unexpected_rows_length_and_rollback_syn_variant_wrapper,
-                            file!(),
-                            line!(),
-                            column!()
-                        );
-                        quote::quote! {
-                            #fetch_token_stream
-                            {
-                                let #error_1_token_stream = #value_snake_case.len();
-                                if #error_0_token_stream != #error_1_token_stream {
-                                    match #executor_snake_case.#rollback_snake_case().await {
-                                        Ok(_) => {
-                                            #unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                        }
-                                        Err(#error_2_token_stream) => {
-                                            #unexpected_rows_length_and_rollback_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::CreateMany)
                 );
                 generate_try_operation_route_logic_token_stream(
                     &operation,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &quote::quote! {let #error_0_token_stream = #parameters_snake_case.#payload_snake_case.0.len();},
+                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
