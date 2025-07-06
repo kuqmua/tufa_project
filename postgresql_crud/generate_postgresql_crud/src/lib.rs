@@ -130,7 +130,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let body_snake_case = naming::BodySnakeCase;
     let executor_snake_case = naming::ExecutorSnakeCase;
     let rows_snake_case = naming::RowsSnakeCase;
-    let expected_primary_keys_snake_case = naming::ExpectedPrimaryKeysSnakeCase;
     let begin_snake_case = naming::BeginSnakeCase;
     let commit_snake_case = naming::CommitSnakeCase;
     let desirable_upper_camel_case = naming::DesirableUpperCamelCase;
@@ -2897,14 +2896,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #filter_no_payload_fields_token_stream
                     }
                 });
-                let expected_primary_keys_token_stream = quote::quote! {
-                    let #expected_primary_keys_snake_case = #parameters_snake_case
-                        .#payload_snake_case
-                        .0
-                        .iter()
-                        .map(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone()) //todo - maybe its not a good idea to remove .clone here coz in macro dont know what type
-                        .collect::<#std_vec_vec_primary_key_field_type_as_postgresql_type_update_token_stream>();
-                };
                 let query_string_token_stream = {
                     let query_start_token_stream = generate_quotes::double_quotes_token_stream(&format!("{update_snake_case} {ident_snake_case_stringified} {set_snake_case} "));
                     let fields_named_excluding_primary_key_update_assignment_token_stream = fields_without_primary_key.iter().map(|element| {
@@ -3060,7 +3051,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &expected_primary_keys_token_stream,
+                    &proc_macro2::TokenStream::new(),
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
