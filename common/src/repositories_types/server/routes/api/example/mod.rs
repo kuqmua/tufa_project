@@ -2257,6 +2257,43 @@ pub struct ExampleRead {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub animal_as_not_null_jsonb_object: std::option::Option<postgresql_crud::Value<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Read>>,
 }
+//here
+impl ExampleRead {
+    fn try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select(
+        value: sqlx::postgres::PgRow,
+        not_empty_unique_enum_vec_ident_select: postgresql_crud::NotEmptyUniqueEnumVec<ExampleSelect>
+    ) -> Result<Self, sqlx::Error> {
+        let mut column_6e88acb0_c566_4fef_8a09_66a41338cf36: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey>> = None;
+        let mut animal_as_not_null_jsonb_object: std::option::Option<postgresql_crud::Value<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Read>> = None;
+        //here
+        for element in not_empty_unique_enum_vec_ident_select.to_vec() {
+            match element {
+                ExampleSelect::Column6E88Acb0C5664Fef8A0966A41338Cf36(_) => {
+                    match sqlx::Row::try_get::<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(&value, "column_6e88acb0_c566_4fef_8a09_66a41338cf36") {
+                        Ok(value) => {
+                            column_6e88acb0_c566_4fef_8a09_66a41338cf36 = Some(postgresql_crud::Value { value: value });
+                        }
+                        Err(error_0) => {
+                            return Err(error_0);
+                        }
+                    }
+                }
+                ExampleSelect::AnimalAsNotNullJsonbObject(_) => match sqlx::Row::try_get::<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Read, &std::primitive::str>(&value, "animal_as_not_null_jsonb_object") {
+                    Ok(value) => {
+                        animal_as_not_null_jsonb_object = Some(postgresql_crud::Value { value: value });
+                    }
+                    Err(error_0) => {
+                        return Err(error_0);
+                    }
+                },
+            }
+        }
+        Ok(Self {
+            column_6e88acb0_c566_4fef_8a09_66a41338cf36,
+            animal_as_not_null_jsonb_object,
+        })
+    }
+}
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, PartialEq, Clone)]
 pub enum ExampleSelect {
     #[serde(rename(serialize = "column_6e88acb0_c566_4fef_8a09_66a41338cf36", deserialize = "column_6e88acb0_c566_4fef_8a09_66a41338cf36"))]
