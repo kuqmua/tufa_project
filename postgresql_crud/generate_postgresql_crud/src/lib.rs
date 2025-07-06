@@ -2301,9 +2301,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
                     &{
-                        let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(
-                            &CreateManyOrUpdateManyOrDeleteMany::CreateMany
-                        );
+                        let fetch_token_stream = generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::CreateMany);
                         let unexpected_rows_length_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(
                             &operation,
                             &unexpected_rows_length_syn_variant_wrapper,
@@ -2340,9 +2338,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &common_additional_route_logic_token_stream,
                     &parameters_logic_token_stream,
-                    &quote::quote! {
-                        let #error_0_token_stream = #parameters_snake_case.#payload_snake_case.0.len();
-                    },
+                    &quote::quote! {let #error_0_token_stream = #parameters_snake_case.#payload_snake_case.0.len();},
                     &query_string_token_stream,
                     &binded_query_token_stream,
                     &postgresql_logic_token_stream,
@@ -3412,7 +3408,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     #query_postgresql_type_where_filter_query_bind_parameters_payload_where_many_query_token_stream
                     #query_snake_case
                 };
-                //todo reuse
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
                     &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::DeleteMany)
