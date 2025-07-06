@@ -170,6 +170,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let into_serialize_deserialize_version_snake_case = naming::IntoSerializeDeserializeVersionSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
+    let error_0_token_stream = token_patterns::Error0;
+    let error_1_token_stream = token_patterns::Error1;
+    let error_2_token_stream = token_patterns::Error2;
+    let error_3_token_stream = token_patterns::Error3;
+    let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
+    let derive_debug_this_error_error_occurence = token_patterns::DeriveDebugThisErrorErrorOccurence;
+    let sqlx_acquire = token_patterns::SqlxAcquire;
+    let serde_serialize = token_patterns::SerdeSerialize;
+    let serde_deserialize = token_patterns::SerdeDeserialize;
+    let derive_debug = token_patterns::DeriveDebug;
+    let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
+    let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
+    let derive_debug_clone_copy = token_patterns::DeriveDebugCloneCopy;
+    let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
+    let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
+    let sqlx_row = token_patterns::SqlxRow;
+    let std_string_string = token_patterns::StdStringString;
+    let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
+    // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let syn_derive_input: syn::DeriveInput = syn::parse(input).unwrap_or_else(|error| panic!("{}: {error}", constants::AST_PARSE_FAILED));
     let ident = &syn_derive_input.ident;
     let ident_snake_case_stringified = naming::ToTokensToSnakeCaseStringified::case(&ident);
@@ -246,7 +265,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&primary_key_field_ident);
     let primary_key_field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&primary_key_field_ident);
     let primary_key_field_type_update_token_stream = &naming::parameter::SelfUpdateUpperCamelCase::from_type_last_segment(&primary_key_field.syn_field.ty);
-    let std_string_string = token_patterns::StdStringString;
     let ident_select_upper_camel_case = naming::parameter::SelfSelectUpperCamelCase::from_tokens(&ident);
     let impl_ident_token_stream = {
         let ident_create_table_if_not_exists_error_named_upper_camel_case = naming::parameter::SelfCreateTableIfNotExistsErrorNamedUpperCamelCase::from_tokens(&ident);
@@ -395,10 +413,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #ident::#generate_select_query_part_snake_case(&#parameters_snake_case.#payload_snake_case.#select_snake_case)
     };
     let eprintln_error_token_stream = quote::quote! {eprintln!("{error}");};
-    let serde_serialize = token_patterns::SerdeSerialize;
-    let serde_deserialize = token_patterns::SerdeDeserialize;
-    let derive_debug_serde_serialize_serde_deserialize = token_patterns::DeriveDebugSerdeSerializeSerdeDeserialize;
-    let sqlx_row = token_patterns::SqlxRow;
     let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
     let generate_postgresql_crud_value_declaration_token_stream = |content_token_stream: &dyn quote::ToTokens| {
         quote::quote! {#postgresql_crud_snake_case::#value_upper_camel_case<#content_token_stream>}
@@ -410,8 +424,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let fields_token_stream = fields.iter().map(function);
         quote::quote! {#(#fields_token_stream),*}
     };
-    let postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
-    // let postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::PostgresqlCrudAllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
     let generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream = |ident: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens|{
         postgresql_crud_macros_common::generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
             &ident,
@@ -419,10 +431,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &content_token_stream
         )
     };
-    let error_0_token_stream = token_patterns::Error0;
-    let error_1_token_stream = token_patterns::Error1;
-    let error_2_token_stream = token_patterns::Error2;
-    let error_3_token_stream = token_patterns::Error3;
     let generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = |index: std::primitive::usize|{
         if index == fields_len_minus_one {
             proc_macro2::TokenStream::new()
@@ -792,7 +800,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #query_snake_case = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(#parameters_snake_case.#payload_snake_case.#where_many_snake_case, #query_snake_case);
     };
     let ident_read_token_stream = {
-        let field_attribute_serde_skip_serializing_if_option_is_none_token_stream = token_patterns::FieldAttributeSerdeSkipSerializingIfOptionIsNone;
         let field_option_primary_key_token_stream = {
             let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&primary_key_field_type, &naming::ReadUpperCamelCase));
             quote::quote! {
@@ -1030,7 +1037,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         Patch,
         Delete,
     }
-    let ref_std_primitive_str = token_patterns::RefStdPrimitiveStr;
     let generate_options_try_from_sqlx_row_token_stream = |operation: &Operation| {
         let declaration_primary_key_token_stream = {
             let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&primary_key_field_type_as_primary_key_upper_camel_case);
@@ -1115,7 +1121,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let postgresql_crud_order_by_token_stream = quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
     let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
     let ident_column_read_permission_token_stream = {
-        let derive_debug_clone_copy = token_patterns::DeriveDebugCloneCopy;
         let ident_column_read_permission_upper_camel_case = naming::parameter::SelfColumnReadPermissionUpperCamelCase::from_display(&ident);
         let fields_permission_token_stream = fields.iter().map(|element| {
             let field_ident = &element.field_ident;
@@ -1131,8 +1136,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema = token_patterns::DeriveDebugSerdeSerializeSerdeDeserializeUtoipaToSchema;
-    let derive_debug = token_patterns::DeriveDebug;
     let use_postgresql_crud_try_stream_ext_token_stream = quote::quote! {use #postgresql_crud_snake_case::TryStreamExt};
     let returning_primary_key_stringified = format!(" {returning_snake_case} {primary_key_field_ident}");
     let returning_primary_key_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&returning_primary_key_stringified);
@@ -1680,7 +1683,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let wrap_content_into_postgresql_transaction_begin_commit_value_token_stream = |operation: &Operation, content_token_stream: &dyn quote::ToTokens| {
         let postgres_transaction_begin_token_stream = {
-            let sqlx_acquire = token_patterns::SqlxAcquire;
             let postgresql_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!());
             quote::quote! {
                 let mut #executor_snake_case = match #sqlx_acquire::#begin_snake_case(#executor_snake_case).await {
@@ -1795,7 +1797,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let try_operation_route_logic_error_named_token_stream = {
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(generate_error_occurence_variant_token_stream);
-            let derive_debug_this_error_error_occurence = token_patterns::DeriveDebugThisErrorErrorOccurence;
             quote::quote! {
                 #derive_debug_this_error_error_occurence
                 pub enum #ident_try_operation_route_logic_error_named_upper_camel_case {
@@ -1809,7 +1810,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #try_operation_route_logic_error_named_token_stream
         }
     };
-    let derive_debug_thiserror_error_occurence = token_patterns::DeriveDebugThiserrorErrorOccurence;
     let generate_ident_operation_payload_element_upper_camel_case = |operation: &Operation|{
         format!("{ident}{operation}PayloadElement")
         .parse::<proc_macro2::TokenStream>().unwrap()
