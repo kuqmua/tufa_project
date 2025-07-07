@@ -1319,6 +1319,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let fn_update_query_part_token_stream = {
                 quote::quote!{
                     fn #update_query_part_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
+                        // let mut acc = std::string::String::default();
+                        // if let Some(value) = &self.animal_as_not_null_jsonb_object {
+                        //     match <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"", &"animal_as_not_null_jsonb_object", &"", increment) {
+                        //         Ok(value) => {
+                        //             acc.push_str(&format!("animal_as_not_null_jsonb_object = {value},"));
+                        //         }
+                        //         Err(error_0) => {
+                        //             return Err(error_0);
+                        //         }
+                        //     }
+                        // }
+                        // let _: Option<char> = acc.pop();
+                        // match <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(
+                        //     &self.column_6e88acb0_c566_4fef_8a09_66a41338cf36,
+                        //     &"",
+                        //     &"column_6e88acb0_c566_4fef_8a09_66a41338cf36",
+                        //     &"",
+                        //     increment,
+                        // ) {
+                        //     Ok(value) => {
+                        //         acc.push_str(&format!(" where column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {value}"));
+                        //     }
+                        //     Err(error_0) => {
+                        //         return Err(error_0);
+                        //     }
+                        // }
+                        // Ok(acc)
                         todo!()
                     }
                 }
@@ -1329,6 +1356,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         self,
                         #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                     ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        // if let Some(value) = self.animal_as_not_null_jsonb_object {
+                        //     query = <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_bind(value.value, query);
+                        // }
+                        // query = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_bind(self.column_6e88acb0_c566_4fef_8a09_66a41338cf36, query);
                         todo!()
                     }
                 }
@@ -1364,7 +1395,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote!{
             #ident_update_token_stream
-            // #impl_ident_update_token_stream
+            #impl_ident_update_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
         }
     };
