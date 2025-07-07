@@ -1285,6 +1285,63 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let update_fields_token_stream = {
+        let fields_named_excluding_primary_key_token_stream = {
+            let fields_token_stream = fields_without_primary_key.iter().map(|element: &SynFieldWrapper| {
+                let field_ident = &element.field_ident;
+                let path_value_token_stream = {
+                    let value = format!("{}::{}", naming::PostgresqlCrudSnakeCase, naming::ValueUpperCamelCase);
+                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+                };
+                let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::UpdateUpperCamelCase);
+                quote::quote! {
+                    pub #field_ident: std::option::Option<#path_value_token_stream<
+                        #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
+                    >>
+                }
+            });
+            quote::quote! {#(#fields_token_stream),*}
+        };
+        quote::quote! {
+            pub #primary_key_field_ident: #primary_key_field_type_update_token_stream,
+            #fields_named_excluding_primary_key_token_stream
+        }
+    };
+    let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
+    let ident_update_token_stream = {
+        let ident_update_token_stream = quote::quote! {
+            #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+            pub struct #ident_update_upper_camel_case {
+                #update_fields_token_stream
+            }
+        };
+        let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
+            &ident_update_upper_camel_case,
+            &{
+                let primary_key_field_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                    quote::quote! {
+                        #primary_key_field_ident: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                    }
+                };
+                let fields_without_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = fields_without_primary_key.iter().map(|element| {
+                    let field_ident = &element.field_ident;
+                    quote::quote! {
+                        #field_ident: Some(postgresql_crud::Value{
+                            #value_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                        })
+                    }
+                });
+                quote::quote! {Self{
+                    #primary_key_field_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream,
+                    #(#fields_without_primary_key_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream),*
+                }}
+            }
+        );
+        quote::quote!{
+            #ident_update_token_stream
+            #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
+        }
+    };
     let use_postgresql_crud_try_stream_ext_token_stream = quote::quote! {use #postgresql_crud_snake_case::TryStreamExt};
     let returning_primary_key_stringified = format!(" {returning_snake_case} {primary_key_field_ident}");
     let returning_primary_key_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&returning_primary_key_stringified);
@@ -1516,34 +1573,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         value
     };
     let common_additional_route_logic_token_stream = macros_helpers::get_macro_attribute::get_macro_attribute_meta_list_token_stream(&syn_derive_input.attrs, &GeneratePostgresqlCrudAttribute::CommonAdditionalRouteLogic.generate_path_to_attribute());
-    let generate_fields_named_excluding_primary_key_token_stream = |function: &dyn Fn(&SynFieldWrapper) -> proc_macro2::TokenStream| -> proc_macro2::TokenStream {
-        let fields_token_stream = fields_without_primary_key.iter().map(function);
-        quote::quote! {#(#fields_token_stream),*}
-    };
     let generate_pub_handle_token_stream = |is_pub: bool| if is_pub { quote::quote! {pub} } else { proc_macro2::TokenStream::new() };
     let generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream = |primary_key_type_token_stream: &dyn quote::ToTokens| {
         let is_pub = true;
         let pub_handle_token_stream = generate_pub_handle_token_stream(is_pub);
         quote::quote! {#pub_handle_token_stream #primary_key_field_ident: #primary_key_type_token_stream}
-    };
-    let update_fields_token_stream = {
-        let fields_named_excluding_primary_key_token_stream = generate_fields_named_excluding_primary_key_token_stream(&|element: &SynFieldWrapper| {
-            let field_ident = &element.field_ident;
-            let path_value_token_stream = {
-                let value = format!("{}::{}", naming::PostgresqlCrudSnakeCase, naming::ValueUpperCamelCase);
-                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-            };
-            let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::UpdateUpperCamelCase);
-            quote::quote! {
-                pub #field_ident: std::option::Option<#path_value_token_stream<
-                    #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
-                >>
-            }
-        });
-        quote::quote! {
-            pub #primary_key_field_ident: #primary_key_field_type_update_token_stream,
-            #fields_named_excluding_primary_key_token_stream
-        }
     };
     let generate_filter_no_payload_fields_token_stream = |operation: &Operation, source_token_stream: &dyn quote::ToTokens| {
         let no_payload_fields_primary_key_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &no_payload_fields_primary_key_syn_variant_wrapper, file!(), line!(), column!());
@@ -3505,6 +3539,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #select_token_stream
             #ident_read_token_stream
             #ident_column_read_permission_token_stream
+            #ident_update_token_stream
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
