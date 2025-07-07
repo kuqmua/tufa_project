@@ -1318,13 +1318,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let impl_ident_update_token_stream = {
             let fn_update_query_part_token_stream = {
                 quote::quote!{
-                    fn #update_query_part_snake_case(
-                        &self,
-                        jsonb_set_accumulator: &std::primitive::str,
-                        jsonb_set_target: &std::primitive::str,
-                        jsonb_set_path: &std::primitive::str,
-                        #increment_snake_case: &mut std::primitive::u64
-                    ) -> Result<std::string::String, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
+                    fn #update_query_part_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
                         todo!()
                     }
                 }
@@ -1370,7 +1364,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote!{
             #ident_update_token_stream
-            #impl_ident_update_token_stream
+            // #impl_ident_update_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
         }
     };

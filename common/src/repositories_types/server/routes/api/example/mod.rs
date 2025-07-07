@@ -1152,3 +1152,39 @@ pub struct Doggie {
 //     pub field_804: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
 //     pub field_805: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 // }
+
+impl ExampleUpdate {
+    fn update_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        if let Some(value) = &self.animal_as_not_null_jsonb_object {
+            match <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"", &"animal_as_not_null_jsonb_object", &"", increment) {
+                Ok(value) => {
+                    acc.push_str(&format!("animal_as_not_null_jsonb_object = {value},"));
+                }
+                Err(error_0) => {
+                    return Err(error_0);
+                }
+            }
+        }
+        let _: Option<char> = acc.pop();
+        match <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(
+            &self.column_6e88acb0_c566_4fef_8a09_66a41338cf36,
+            &"",
+            &"column_6e88acb0_c566_4fef_8a09_66a41338cf36",
+            &"",
+            increment,
+        ) {
+            Ok(value) => {
+                acc.push_str(&format!(" where column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {value}"));
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        Ok(acc)
+    }
+    fn update_query_bind(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        todo!()
+    }
+}
+
