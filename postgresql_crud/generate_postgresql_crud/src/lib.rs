@@ -1315,6 +1315,37 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #update_fields_token_stream
             }
         };
+        let impl_ident_update_token_stream = {
+            let fn_update_query_part_token_stream = {
+                quote::quote!{
+                    fn #update_query_part_snake_case(
+                        &self,
+                        jsonb_set_accumulator: &std::primitive::str,
+                        jsonb_set_target: &std::primitive::str,
+                        jsonb_set_path: &std::primitive::str,
+                        #increment_snake_case: &mut std::primitive::u64
+                    ) -> Result<std::string::String, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
+                        todo!()
+                    }
+                }
+            };
+            let fn_update_query_bind_token_stream = {
+                quote::quote!{
+                    fn #update_query_bind_snake_case(
+                        self,
+                        #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                    ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+                        todo!()
+                    }
+                }
+            };
+            quote::quote!{
+                impl #ident_update_upper_camel_case {
+                    #fn_update_query_part_token_stream
+                    #fn_update_query_bind_token_stream
+                }
+            }
+        };
         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
             &ident_update_upper_camel_case,
             &{
@@ -1339,6 +1370,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote!{
             #ident_update_token_stream
+            #impl_ident_update_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
         }
     };
