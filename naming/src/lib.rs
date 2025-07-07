@@ -629,7 +629,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["create", "table", "if", "not", "exists"],
     ["header", "content", "type", "application", "json", "not", "found"],
     ["where", "many"],
-    ["no", "filters", "provided"],
+    ["no", "fields", "provided"],
     ["additional", "parameters"],
     ["generate", "select", "query", "part"]
 ]);

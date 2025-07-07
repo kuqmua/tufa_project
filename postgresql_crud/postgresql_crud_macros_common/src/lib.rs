@@ -1134,3 +1134,16 @@ pub fn generate_impl_serde_deserialize_for_example_where_many_token_stream(
         };
     }
 }
+
+pub fn wrap_content_into_scopes_token_stream(content_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    quote::quote!{(#content_token_stream)}
+}
+
+pub fn maybe_wrap_into_braces_token_stream(content_token_stream: &dyn quote::ToTokens, std_primitive_bool: std::primitive::bool) -> proc_macro2::TokenStream {
+    if std_primitive_bool {
+        wrap_content_into_scopes_token_stream(&content_token_stream)
+    }
+    else {
+        quote::quote!{#content_token_stream}
+    }
+}

@@ -922,11 +922,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let self_some_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
             Self(Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream))
         };
-        let wrap_content_into_scopes_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-            quote::quote!{(#content_token_stream)}
-        };
         let wrap_content_into_scopes_dot_comma_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-            let scopes_content_token_stream = wrap_content_into_scopes_token_stream(&content_token_stream);
+            let scopes_content_token_stream = postgresql_crud_macros_common::wrap_content_into_scopes_token_stream(&content_token_stream);
             quote::quote!{#scopes_content_token_stream;}
         };
         let generate_type_as_postgresql_json_type_update_token_stream = |type_token_stream: &dyn quote::ToTokens|{
@@ -2011,24 +2008,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     IsStandartWithId::True => &ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case
                 };
                 let check_if_all_fields_are_none_token_stream = {
-                    let current_vec_syn_field_len = current_vec_syn_field.len();
-                    let nones_token_stream = {
-                        let mut acc = vec![];
-                        for _ in 0..current_vec_syn_field_len {
-                            acc.push(quote::quote! {None});
-                        }
-                        acc
+                    let (
+                        left_token_stream,
+                        right_token_stream
+                    ) = {
+                        let current_vec_syn_field_len = current_vec_syn_field.len();
+                        let maybe_wrap_into_braces_handle_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                            postgresql_crud_macros_common::maybe_wrap_into_braces_token_stream(content_token_stream, current_vec_syn_field_len > 1)
+                        };
+                        (
+                            maybe_wrap_into_braces_handle_token_stream(&{
+                                let nones_token_stream = {
+                                    let mut acc = vec![];
+                                    for _ in 0..current_vec_syn_field_len {
+                                        acc.push(quote::quote! {None});
+                                    }
+                                    acc
+                                };
+                                quote::quote!{#(#nones_token_stream),*}
+                            }),
+                            maybe_wrap_into_braces_handle_token_stream(&fields_reference_token_stream)
+                        )
                     };
-                    let maybe_wrap_into_braces_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                        if current_vec_syn_field_len > 1 {
-                            wrap_content_into_scopes_token_stream(&content_token_stream)
-                        }
-                        else {
-                            quote::quote!{#content_token_stream}
-                        }
-                    };
-                    let left_token_stream = maybe_wrap_into_braces_token_stream(&quote::quote!{#(#nones_token_stream),*});
-                    let right_token_stream = maybe_wrap_into_braces_token_stream(&fields_reference_token_stream);
                     quote::quote! {
                         if let #left_token_stream = #right_token_stream {
                             return Err(#ident_read_try_from_error_named_or_ident_with_id_read_try_from_error_named_standart_not_null_upper_camel_case::#all_fields_are_none_upper_camel_case {
