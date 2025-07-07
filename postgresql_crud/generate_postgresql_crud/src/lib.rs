@@ -1374,16 +1374,32 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             let fn_update_query_bind_token_stream = {
+                let binded_query_modifications_token_stream = fields_without_primary_key.iter().map(|element| {
+                    let field_ident = &element.field_ident;
+                    let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
+                    quote::quote! {
+                        if let Some(#value_snake_case) = self.#field_ident {
+                            #query_snake_case = #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_bind_snake_case(
+                                #value_snake_case.#value_snake_case,
+                                #query_snake_case,
+                            );
+                        }
+                    }
+                });
+                let binded_query_primary_key_modification_token_stream = quote::quote! {
+                    #query_snake_case = <#primary_key_field_type as postgresql_crud::PostgresqlType>::#update_query_bind_snake_case(
+                        self.#primary_key_field_ident,
+                        #query_snake_case
+                    );
+                };
                 quote::quote!{
                     fn #update_query_bind_snake_case(
                         self,
-                        #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
+                        mut #query_snake_case: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>
                     ) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-                        // if let Some(value) = self.animal_as_not_null_jsonb_object {
-                        //     query = <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_bind(value.value, query);
-                        // }
-                        // query = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_bind(self.column_6e88acb0_c566_4fef_8a09_66a41338cf36, query);
-                        todo!()
+                        #(#binded_query_modifications_token_stream)*
+                        #binded_query_primary_key_modification_token_stream
+                        #query_snake_case
                     }
                 }
             };
