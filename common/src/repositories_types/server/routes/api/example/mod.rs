@@ -1183,8 +1183,12 @@ impl ExampleUpdate {
         }
         Ok(acc)
     }
-    fn update_query_bind(self, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-        todo!()
+    fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        if let Some(value) = self.animal_as_not_null_jsonb_object {
+            query = <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_bind(value.value, query);
+        }
+        query = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_bind(self.column_6e88acb0_c566_4fef_8a09_66a41338cf36, query);
+        query
     }
 }
 
