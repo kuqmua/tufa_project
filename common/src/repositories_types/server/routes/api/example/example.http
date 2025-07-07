@@ -57,6 +57,27 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
         }
       ]
     }
+  },
+  {
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
+    "animal_as_not_null_jsonb_object": {
+      "field_0": {
+        "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+      },
+      "field_1": [
+        {
+          "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+        }
+      ],
+      "field_2": {
+        "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+      },
+      "field_3": [
+        {
+          "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+        }
+      ]
+    }
   }
 ]
 
@@ -72,7 +93,27 @@ POST http://127.0.0.1:8080/example/create_one HTTP/1.1
 content-type: application/json
 commit: e9e7647602a980c62e1d20c3d91cf61d3236f5f9
 
-
+{
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": null,
+  "animal_as_not_null_jsonb_object": {
+    "field_0": {
+      "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    },
+    "field_1": [
+      {
+        "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+      }
+    ],
+    "field_2": {
+      "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+    },
+    "field_3": [
+      {
+        "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+      }
+    ]
+  }
+}
 
 ###
  
