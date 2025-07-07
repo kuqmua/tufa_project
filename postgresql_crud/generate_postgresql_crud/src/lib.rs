@@ -2283,61 +2283,40 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
-                    let mut column_names = fields.iter().fold(std::string::String::default(), |mut acc, element| {
-                        acc.push_str(&format!("{}", &element.field_ident));
-                        acc.push(',');
-                        acc
-                    });
-                    let _: Option<char> = column_names.pop();
-                    let column_increments_token_stream = fields.iter().map(|element| {
-                        let element_field_ident = &element.field_ident;
-                        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
-                        let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-                        quote::quote! {
-                            match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #create_query_part_snake_case(&#element_snake_case.#element_field_ident, &mut #increment_snake_case) {
+                    let column_names = {
+                        let mut value = fields.iter().fold(std::string::String::default(), |mut acc, element| {
+                            acc.push_str(&format!("{}", &element.field_ident));
+                            acc.push(',');
+                            acc
+                        });
+                        let _: Option<char> = value.pop();
+                        value
+                    };
+                    let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let query_token_stream = generate_quotes::double_quotes_token_stream(&format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} {{values}} {returning_primary_key_stringified}"));
+                    quote::quote! {{
+                        #increment_initialization_token_stream
+                        let mut values = #std_string_string::default();
+                        for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                            match #element_snake_case.#create_query_part_snake_case(&mut #increment_snake_case) {
                                 Ok(#value_snake_case) => {
-                                    #acc_snake_case.push_str(&format!("{value},"));
+                                    values.push_str(&format!("({value}),"));
                                 },
                                 Err(#error_0_token_stream) => {
                                     #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
                             }
                         }
-                    });
-                    let query_token_stream = generate_quotes::double_quotes_token_stream(&format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} {{values}} {returning_primary_key_stringified}"));
-                    quote::quote! {
-                        {
-                            #increment_initialization_token_stream
-                            let mut values = #std_string_string::default();
-                            for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                let mut #acc_snake_case = #std_string_string::default();
-                                #(#column_increments_token_stream)*
-                                let _: Option<char> = #acc_snake_case.pop();
-                                values.push_str(&format!("({acc}),"));
-                            }
-                            let _: Option<char> = values.pop();
-                            format!(#query_token_stream)
-                        }
-                    }
+                        let _: Option<char> = values.pop();
+                        format!(#query_token_stream)
+                    }}
                 };
-                let binded_query_token_stream = {
-                    let query_bind_token_stream = fields.iter().map(|element| {
-                        let field_ident = &element.field_ident;
-                        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
-                        quote::quote! {
-                            #query_snake_case = #as_postgresql_crud_postgresql_type_postgresql_type_token_stream create_query_bind(
-                                #element_snake_case.#field_ident,
-                                #query_snake_case
-                            );
-                        }
-                    });
-                    quote::quote! {
-                        let mut #query_snake_case = sqlx::query::<sqlx::Postgres>(&#query_string_snake_case);
-                        for #element_snake_case in #parameters_snake_case.#payload_snake_case.0 {
-                            #(#query_bind_token_stream)*
-                        }
-                        #query_snake_case
+                let binded_query_token_stream = quote::quote! {
+                    let mut #query_snake_case = sqlx::query::<sqlx::Postgres>(&#query_string_snake_case);
+                    for #element_snake_case in #parameters_snake_case.#payload_snake_case.0 {
+                        #query_snake_case = #element_snake_case.#create_query_bind_snake_case(#query_snake_case);
                     }
+                    #query_snake_case
                 };
                 let postgresql_logic_token_stream = wrap_content_into_postgresql_transaction_begin_commit_value_token_stream(
                     &operation,
