@@ -1317,36 +1317,59 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let impl_ident_update_token_stream = {
             let fn_update_query_part_token_stream = {
+                let additional_parameters_modification_token_stream = fields_without_primary_key
+                    .iter()
+                    .map(|element| {
+                        let field_ident = &element.field_ident;
+                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
+                        let field_ident_equals_value_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {{{value_snake_case}}},"));
+                        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
+                        quote::quote! {
+                            if let Some(#value_snake_case) = &self.#field_ident {
+                                match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
+                                    &#value_snake_case.#value_snake_case,
+                                    &"",
+                                    &#field_ident_double_quotes_token_stream,
+                                    &"",
+                                    #increment_snake_case,
+                                ) {
+                                    Ok(#value_snake_case) => {
+                                        #acc_snake_case.push_str(&format!(#field_ident_equals_value_token_stream));
+                                    }
+                                    Err(#error_0_token_stream) => {
+                                        return Err(#error_0_token_stream);
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
+                let additional_parameters_primary_key_modification_token_stream = {
+                    let query_part_token_stream = generate_quotes::double_quotes_token_stream(&format!(" {where_snake_case} {primary_key_field_ident} = {{{value_snake_case}}}"));
+                    quote::quote! {
+                        match #primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
+                            &self.#primary_key_field_ident,
+                            &"",
+                            &#primary_key_field_ident_double_quotes_token_stream,
+                            &"",
+                            #increment_snake_case,
+                        ) {
+                            Ok(#value_snake_case) => {
+                                #acc_snake_case.push_str(&format!(#query_part_token_stream));
+                            }
+                            Err(#error_0_token_stream) => {
+                                return Err(#error_0_token_stream);
+                            }
+                        }
+                    }
+                };
                 quote::quote!{
                     fn #update_query_part_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
-                        // let mut acc = std::string::String::default();
-                        // if let Some(value) = &self.animal_as_not_null_jsonb_object {
-                        //     match <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"", &"animal_as_not_null_jsonb_object", &"", increment) {
-                        //         Ok(value) => {
-                        //             acc.push_str(&format!("animal_as_not_null_jsonb_object = {value},"));
-                        //         }
-                        //         Err(error_0) => {
-                        //             return Err(error_0);
-                        //         }
-                        //     }
-                        // }
-                        // let _: Option<char> = acc.pop();
-                        // match <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(
-                        //     &self.column_6e88acb0_c566_4fef_8a09_66a41338cf36,
-                        //     &"",
-                        //     &"column_6e88acb0_c566_4fef_8a09_66a41338cf36",
-                        //     &"",
-                        //     increment,
-                        // ) {
-                        //     Ok(value) => {
-                        //         acc.push_str(&format!(" where column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {value}"));
-                        //     }
-                        //     Err(error_0) => {
-                        //         return Err(error_0);
-                        //     }
-                        // }
-                        // Ok(acc)
-                        todo!()
+                        let mut #acc_snake_case = std::string::String::default();
+                        #(#additional_parameters_modification_token_stream)*
+                        let _: Option<char> = #acc_snake_case.pop();
+                        #additional_parameters_primary_key_modification_token_stream
+                        Ok(#acc_snake_case)
                     }
                 }
             };
@@ -3194,7 +3217,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .map(|element| {
                             let field_ident = &element.field_ident;
                             let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                            let field_ident_equals_dollar_increment_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {{{value_snake_case}}},"));
+                            let field_ident_equals_value_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {{{value_snake_case}}},"));
                             let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&element.syn_field.ty);
                             let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                             quote::quote! {
@@ -3208,7 +3231,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     ) {
                                         Ok(#value_snake_case) => {
                                             //todo fix it. its incorrect
-                                            #query_snake_case.push_str(&format!(#field_ident_equals_dollar_increment_token_stream));
+                                            #query_snake_case.push_str(&format!(#field_ident_equals_value_token_stream));
                                         }
                                         Err(#error_0_token_stream) => {
                                             #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
