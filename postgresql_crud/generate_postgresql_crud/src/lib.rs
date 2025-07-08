@@ -1472,10 +1472,35 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 }
             };
+            let update_query_part_fields_token_stream = fields_without_primary_key.iter().map(|element|{
+                let field_type = &element.syn_field.ty;
+                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
+                let update_query_part_field_ident_snake_case = naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(&element.field_ident);
+                let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&field_type);
+                println!("{field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream}");
+                quote::quote!{
+                    fn #update_query_part_field_ident_snake_case(
+                        #value_snake_case: &postgresql_crud::Value<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update>,
+                        #increment_snake_case: &mut std::primitive::u64
+                    ) -> Result<#std_string_string, postgresql_crud::QueryPartErrorNamed> {
+                        match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
+                            &#value_snake_case.#value_snake_case,
+                            &"",
+                            &#field_ident_double_quotes_token_stream,
+                            &"",
+                            #increment_snake_case
+                        ) {
+                            Ok(#value_snake_case) => Ok(#value_snake_case),
+                            Err(#error_0_token_stream) => Err(#error_0_token_stream),
+                        }
+                    }
+                }
+            });
             quote::quote!{
                 impl #ident_update_upper_camel_case {
                     #pub_fn_try_new_token_stream
                     #update_query_part_primary_key_token_stream
+                    #(#update_query_part_fields_token_stream)*
                 }
             }
         };
@@ -3640,8 +3665,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #read_many_token_stream
         #read_one_token_stream
         //todo fix trait calls in update many comparing with update_one
-        #update_many_token_stream
-        #update_one_token_stream
+        // #update_many_token_stream
+        // #update_one_token_stream
         #delete_many_token_stream
         #delete_one_token_stream
     };
