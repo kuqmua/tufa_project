@@ -631,7 +631,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["where", "many"],
     ["no", "fields", "provided"],
     ["additional", "parameters"],
-    ["generate", "select", "query", "part"]
+    ["generate", "select", "query", "part"],
+    ["update", "query", "part", "primary", "key"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

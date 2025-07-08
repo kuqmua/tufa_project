@@ -704,7 +704,10 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 3,
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 2,
+    "column_0": {
+      "value": 50
+    },
     "animal_as_not_null_jsonb_object": {
       "value": [
         {
@@ -712,7 +715,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
             "value": [
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                  "value": 20
+                  "value": 0
                 }
               }
             ]
@@ -723,23 +726,23 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
             "value": {
               "create": [
                 {
-                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 20
+                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
                 }
               ],
               "update": [
                 {
-                  "id": "ce079f16-d94c-4174-8b86-a6bba35bd12b",
+                  "id": "a54856ff-0a23-4b4d-b1ab-0d31451ce762",
                   "fields": [
                     {
                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                        "value": 20
+                        "value": 0
                       }
                     }
                   ]
                 }
               ],
               "delete": [
-                "b82577b0-77d0-4ec4-8786-99f5b3d0b043"
+                "92a7f838-7322-4616-a447-894d99542da5"
               ]
             }
           }
@@ -749,7 +752,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
             "value": [
               {
                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                  "value": 20
+                  "value": 0
                 }
               }
             ]
@@ -760,23 +763,23 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
             "value": {
               "create": [
                 {
-                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 20
+                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
                 }
               ],
               "update": [
                 {
-                  "id": "219c73c7-4c01-49bf-b540-cacb8d1359ba",
+                  "id": "a0970ed7-393a-45b4-bae7-e80acd4da9a2",
                   "fields": [
                     {
                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-                        "value": 20
+                        "value": 0
                       }
                     }
                   ]
                 }
               ],
               "delete": [
-                "ff7b26f4-732d-4634-be36-bb2671e4cb58"
+                "80f6234c-3a94-497f-9b7f-ad192ea7030c"
               ]
             }
           }
