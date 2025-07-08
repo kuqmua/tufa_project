@@ -1517,7 +1517,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote!{
             #ident_update_token_stream
             #ident_update_try_new_error_named_token_stream
-            #impl_ident_update_token_stream
+            // #impl_ident_update_token_stream
             #impl_serde_deserialize_for_ident_update_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
         }
@@ -3069,6 +3069,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 });
                 let query_string_token_stream = {
                     let query_start_token_stream = generate_quotes::double_quotes_token_stream(&format!("{update_snake_case} {ident_snake_case_stringified} {set_snake_case} "));
+                    let match_update_query_part_primary_key_token_stream = generate_match_update_query_part_primary_key_token_stream(&operation, &element_snake_case);
                     let fields_named_excluding_primary_key_update_assignment_token_stream = fields_without_primary_key.iter().map(|element| {
                         let field_ident = &element.field_ident;
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
@@ -3093,18 +3094,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
                                             #acc_snake_case.push_str(&format!(
                                                 #when_primary_key_field_ident_equals_then_token_stream,
-                                                match #primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
-                                                    &#element_snake_case.#primary_key_field_ident,
-                                                    &"",
-                                                    &#primary_key_field_ident_double_quotes_token_stream,
-                                                    &"",
-                                                    &mut #increment_snake_case,
-                                                ) {
-                                                    Ok(#value_snake_case) => #value_snake_case,
-                                                    Err(#error_0_token_stream) => {
-                                                        #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                                    }
-                                                },
+                                                #match_update_query_part_primary_key_token_stream,
                                                 match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
                                                     &#value_snake_case.#value_snake_case,
                                                     &"",
@@ -3130,7 +3120,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                     let where_primary_key_field_ident_in_primary_keys_returning_primary_key_field_ident_token_stream = {
                         let where_primary_key_field_ident_in_primary_keys_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!(" {where_snake_case} {primary_key_field_ident} {} ({{}}) {returning_primary_key_stringified}", naming::InSnakeCase));
-                        let match_update_query_part_primary_key_token_stream = generate_match_update_query_part_primary_key_token_stream(&operation, &element_snake_case);
                         quote::quote! {
                             #query_snake_case.push_str(&format!(
                                 #where_primary_key_field_ident_in_primary_keys_double_quotes_token_stream,
@@ -3318,21 +3307,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
+                                let #value_snake_case = match #as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
                                     &#value_snake_case.#value_snake_case,
                                     &"",
                                     &#field_ident_double_quotes_token_stream,
                                     &"",
                                     &mut #increment_snake_case,
                                 ) {
-                                    Ok(#value_snake_case) => {
-                                        //todo fix it. its incorrect
-                                        #query_snake_case.push_str(&format!(#field_ident_equals_value_token_stream));
-                                    }
+                                    Ok(#value_snake_case) => #value_snake_case,
                                     Err(#error_0_token_stream) => {
                                         #checked_add_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                     }
-                                }
+                                };
+                                //todo fix it. its incorrect
+                                #query_snake_case.push_str(&format!(#field_ident_equals_value_token_stream));
                             }
                         }
                     })

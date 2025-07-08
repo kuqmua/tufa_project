@@ -1153,3 +1153,28 @@ pub struct Doggie {
 //     pub field_804: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
 //     pub field_805: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 // }
+
+impl ExampleUpdate {
+    pub fn try_new(
+        column_6e88acb0_c566_4fef_8a09_66a41338cf36: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlUpdate,
+        column_0: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update>>,
+        animal_as_not_null_jsonb_object: std::option::Option<postgresql_crud::Value<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Update>>,
+    ) -> Result<ExampleUpdate, ExampleUpdateTryNewErrorNamed> {
+        if let (None, None) = (&column_0, &animal_as_not_null_jsonb_object) {
+            return Err(ExampleUpdateTryNewErrorNamed::NoFieldsProvided { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        Ok(Self {
+            column_6e88acb0_c566_4fef_8a09_66a41338cf36,
+            column_0,
+            animal_as_not_null_jsonb_object,
+        })
+    }
+    fn update_query_part_primary_key(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        match <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(&self.column_6e88acb0_c566_4fef_8a09_66a41338cf36, &"", &"column_6e88acb0_c566_4fef_8a09_66a41338cf36", &"", increment) {
+            Ok(value_snake_case) => Ok(value_snake_case),
+            Err(error_0) => Err(error_0),
+        }
+    }
+}
+
+/////////////////
