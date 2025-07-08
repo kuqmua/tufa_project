@@ -165,6 +165,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let where_snake_case = naming::WhereSnakeCase;
     let returning_snake_case = naming::ReturningSnakeCase;
     let table_name_snake_case = naming::TableNameSnakeCase;
+    let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let into_serialize_deserialize_version_snake_case = naming::IntoSerializeDeserializeVersionSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
@@ -1477,12 +1478,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                 let update_query_part_field_ident_snake_case = naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(&element.field_ident);
                 let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&field_type);
-                println!("{field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream}");
                 quote::quote!{
                     fn #update_query_part_field_ident_snake_case(
-                        #value_snake_case: &postgresql_crud::Value<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update>,
+                        #value_snake_case: &postgresql_crud::Value<#field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_upper_camel_case>,
                         #increment_snake_case: &mut std::primitive::u64
-                    ) -> Result<#std_string_string, postgresql_crud::QueryPartErrorNamed> {
+                    ) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
                         match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
                             &#value_snake_case.#value_snake_case,
                             &"",
