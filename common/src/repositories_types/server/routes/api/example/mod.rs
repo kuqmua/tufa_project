@@ -50,6 +50,7 @@
 pub struct Example {
     #[generate_postgresql_crud_primary_key]
     pub column_6e88acb0_c566_4fef_8a09_66a41338cf36: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
+    pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
     // //todo rename like postgresql types: NotNull prefix, not postfix
     pub animal_as_not_null_jsonb_object: AnimalAsNotNullJsonbObject,
     // pub option_animal_as_nullable_jsonb_object: OptionAnimalAsNullableJsonbObject,//todo double nullable problem
@@ -1153,21 +1154,35 @@ pub struct Doggie {
 //     pub field_805: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 // }
 
+
+
 impl ExampleUpdate {
     pub fn try_new(
         column_6e88acb0_c566_4fef_8a09_66a41338cf36: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlUpdate,
+        column_0: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update>>,
         animal_as_not_null_jsonb_object: std::option::Option<postgresql_crud::Value<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Update>>,
     ) -> Result<ExampleUpdate, ExampleUpdateTryNewErrorNamed> {
-        if let None = &animal_as_not_null_jsonb_object {
+        if let (None, None) = (&column_0, &animal_as_not_null_jsonb_object) {
             return Err(ExampleUpdateTryNewErrorNamed::NoFieldsProvided { code_occurence: error_occurence_lib::code_occurence!() });
         }
         Ok(Self {
             column_6e88acb0_c566_4fef_8a09_66a41338cf36,
+            column_0,
             animal_as_not_null_jsonb_object,
         })
     }
     fn update_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
         let mut acc = std::string::String::default();
+        if let Some(value) = &self.column_0 {
+            match <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"", &"column_0", &"", increment) {
+                Ok(value) => {
+                    acc.push_str(&format!("column_0 = {value},"));
+                }
+                Err(error_0) => {
+                    return Err(error_0);
+                }
+            }
+        }
         if let Some(value) = &self.animal_as_not_null_jsonb_object {
             match <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"", &"animal_as_not_null_jsonb_object", &"", increment) {
                 Ok(value) => {
@@ -1190,6 +1205,9 @@ impl ExampleUpdate {
         Ok(acc)
     }
     fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        if let Some(value) = self.column_0 {
+            query = <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_bind(value.value, query);
+        }
         if let Some(value) = self.animal_as_not_null_jsonb_object {
             query = <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_bind(value.value, query);
         }
@@ -1325,7 +1343,7 @@ impl Example {
                     column!(),
                     Some(error_occurence_lib::code_occurence::MacroOccurence {
                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2031,
+                        line: 2099,
                         column: 17,
                     }),
                 ),
@@ -1346,7 +1364,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2038,
+                            line: 2106,
                             column: 17,
                         }),
                     ),
@@ -1376,7 +1394,7 @@ impl Example {
                                         column!(),
                                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line: 2958,
+                                            line: 3026,
                                             column: 185,
                                         }),
                                     ),
@@ -1389,7 +1407,7 @@ impl Example {
                         }
                     }
                     for element in &value.0 {
-                        if let None = &element.animal_as_not_null_jsonb_object {
+                        if let (None, None) = (&element.column_0, &element.animal_as_not_null_jsonb_object) {
                             let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
                             let error = ExampleTryUpdateManyRouteLogicErrorNamed::NoPayloadFieldsPrimaryKey {
                                 no_payload_fields_primary_key: error_0,
@@ -1399,7 +1417,7 @@ impl Example {
                                     column!(),
                                     Some(error_occurence_lib::code_occurence::MacroOccurence {
                                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line: 1679,
+                                        line: 1747,
                                         column: 287,
                                     }),
                                 ),
@@ -1421,7 +1439,7 @@ impl Example {
                             column!(),
                             Some(error_occurence_lib::code_occurence::MacroOccurence {
                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 2115,
+                                line: 2183,
                                 column: 249,
                             }),
                         ),
@@ -1436,6 +1454,76 @@ impl Example {
         let query_string = {
             let mut query = std::string::String::from("update example set ");
             let mut increment: std::primitive::u64 = 0;
+            {
+                let mut is_column_0_update_exist = false;
+                for element in &parameters.payload.0 {
+                    if element.column_0.is_some() {
+                        is_column_0_update_exist = true;
+                        break;
+                    }
+                }
+                if is_column_0_update_exist {
+                    let mut acc = std::string::String::from("column_0 = case ");
+                    for element in &parameters.payload.0 {
+                        if let Some(value) = &element.column_0 {
+                            acc.push_str(&format!(
+                                "when column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {} then {} ",
+                                match <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(
+                                    &element.column_6e88acb0_c566_4fef_8a09_66a41338cf36,
+                                    &"",
+                                    &"column_6e88acb0_c566_4fef_8a09_66a41338cf36",
+                                    &"",
+                                    &mut increment,
+                                ) {
+                                    Ok(value) => value,
+                                    Err(error_0) => {
+                                        let error = ExampleTryUpdateManyRouteLogicErrorNamed::QueryPart {
+                                            error: error_0,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                                file!().to_owned(),
+                                                line!(),
+                                                column!(),
+                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                    line: 3053,
+                                                    column: 259,
+                                                }),
+                                            ),
+                                        };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                        return response;
+                                    }
+                                },
+                                match <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"", &"column_0", &"", &mut increment,) {
+                                    Ok(value) => value,
+                                    Err(error_0) => {
+                                        let error = ExampleTryUpdateManyRouteLogicErrorNamed::QueryPart {
+                                            error: error_0,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                                file!().to_owned(),
+                                                line!(),
+                                                column!(),
+                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                    line: 3053,
+                                                    column: 259,
+                                                }),
+                                            ),
+                                        };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                        return response;
+                                    }
+                                }
+                            ));
+                        }
+                    }
+                    query.push_str(&format!("{}{}", acc, "else column_0 end,"));
+                }
+            }
             {
                 let mut is_animal_as_not_null_jsonb_object_update_exist = false;
                 for element in &parameters.payload.0 {
@@ -1467,7 +1555,7 @@ impl Example {
                                                 column!(),
                                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                    line: 2985,
+                                                    line: 3053,
                                                     column: 259,
                                                 }),
                                             ),
@@ -1489,7 +1577,7 @@ impl Example {
                                                 column!(),
                                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                    line: 2985,
+                                                    line: 3053,
                                                     column: 259,
                                                 }),
                                             ),
@@ -1524,7 +1612,7 @@ impl Example {
                                     column!(),
                                     Some(error_occurence_lib::code_occurence::MacroOccurence {
                                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line: 3038,
+                                        line: 3106,
                                         column: 259,
                                     }),
                                 ),
@@ -1544,6 +1632,23 @@ impl Example {
         println!("{}", query_string);
         let binded_query = {
             let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            {
+                let mut is_column_0_update_exist = false;
+                for element in &parameters.payload.0 {
+                    if element.column_0.is_some() {
+                        is_column_0_update_exist = true;
+                        break;
+                    }
+                }
+                if is_column_0_update_exist {
+                    for element in &parameters.payload.0 {
+                        if let Some(value) = &element.column_0 {
+                            query = query.bind(element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone());
+                            query = <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_bind(value.value.clone(), query);
+                        }
+                    }
+                }
+            }
             {
                 let mut is_animal_as_not_null_jsonb_object_update_exist = false;
                 for element in &parameters.payload.0 {
@@ -1579,7 +1684,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2066,
+                            line: 2134,
                             column: 253,
                         }),
                     ),
@@ -1601,7 +1706,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2066,
+                            line: 2134,
                             column: 253,
                         }),
                     ),
@@ -1624,7 +1729,7 @@ impl Example {
                             column!(),
                             Some(error_occurence_lib::code_occurence::MacroOccurence {
                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 1801,
+                                line: 1869,
                                 column: 245,
                             }),
                         ),
@@ -1659,7 +1764,7 @@ impl Example {
                                                 column!(),
                                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                    line: 2332,
+                                                    line: 2400,
                                                     column: 137,
                                                 }),
                                             ),
@@ -1679,7 +1784,7 @@ impl Example {
                                                 column!(),
                                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                                    line: 2332,
+                                                    line: 2400,
                                                     column: 166,
                                                 }),
                                             ),
@@ -1706,7 +1811,7 @@ impl Example {
                                         column!(),
                                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line: 2334,
+                                            line: 2402,
                                             column: 133,
                                         }),
                                     ),
@@ -1726,7 +1831,7 @@ impl Example {
                                         column!(),
                                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line: 2334,
+                                            line: 2402,
                                             column: 162,
                                         }),
                                     ),
@@ -1752,7 +1857,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 1812,
+                            line: 1880,
                             column: 245,
                         }),
                     ),
@@ -1832,7 +1937,7 @@ impl Example {
                             column!(),
                             Some(error_occurence_lib::code_occurence::MacroOccurence {
                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 3159,
+                                line: 3227,
                                 column: 205,
                             }),
                         ),
@@ -1851,7 +1956,7 @@ impl Example {
                             column!(),
                             Some(error_occurence_lib::code_occurence::MacroOccurence {
                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 2146,
+                                line: 2214,
                                 column: 178,
                             }),
                         ),
@@ -1877,7 +1982,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2195,
+                            line: 2263,
                             column: 152,
                         }),
                     ),
@@ -1899,7 +2004,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2212,
+                            line: 2280,
                             column: 192,
                         }),
                     ),
@@ -1920,7 +2025,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2224,
+                            line: 2292,
                             column: 178,
                         }),
                     ),
@@ -1950,7 +2055,7 @@ impl Example {
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                    line: 2262,
+                    line: 2330,
                     column: 223,
                 }),
             ),
@@ -1971,7 +2076,8 @@ impl Example {
         return response;
     }
 }
-///////////////
+
+
 #[derive(Debug)]
 pub struct ExampleUpdateOneParameters {
     pub payload: ExampleUpdate,
@@ -2085,7 +2191,7 @@ impl Example {
                     column!(),
                     Some(error_occurence_lib::code_occurence::MacroOccurence {
                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                        line: 2031,
+                        line: 2099,
                         column: 17,
                     }),
                 ),
@@ -2106,7 +2212,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2038,
+                            line: 2106,
                             column: 17,
                         }),
                     ),
@@ -2121,7 +2227,7 @@ impl Example {
             payload: match serde_json::from_slice::<ExampleUpdate>(&body_bytes) {
                 Ok(value) => {
                     let value = ExampleUpdate::from(value);
-                    if let None = &value.animal_as_not_null_jsonb_object {
+                    if let (None, None) = (&value.column_0, &value.animal_as_not_null_jsonb_object) {
                         let error_0 = value.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
                         let error = ExampleTryUpdateOneRouteLogicErrorNamed::NoPayloadFieldsPrimaryKey {
                             no_payload_fields_primary_key: error_0,
@@ -2131,7 +2237,7 @@ impl Example {
                                 column!(),
                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line: 1679,
+                                    line: 1747,
                                     column: 287,
                                 }),
                             ),
@@ -2152,7 +2258,7 @@ impl Example {
                             column!(),
                             Some(error_occurence_lib::code_occurence::MacroOccurence {
                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 2115,
+                                line: 2183,
                                 column: 249,
                             }),
                         ),
@@ -2167,6 +2273,32 @@ impl Example {
         let query_string = {
             let mut increment: std::primitive::u64 = 0;
             let mut query = std::string::String::from("update example set ");
+            if let Some(value) = &parameters.payload.column_0 {
+                match <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"", &"column_0", &"", &mut increment) {
+                    Ok(value) => {
+                        query.push_str(&format!("column_0 = {value},"));
+                    }
+                    Err(error_0) => {
+                        let error = ExampleTryUpdateOneRouteLogicErrorNamed::QueryPart {
+                            error: error_0,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                file!().to_owned(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line: 3306,
+                                    column: 263,
+                                }),
+                            ),
+                        };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateOneRouteLogicResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                        return response;
+                    }
+                }
+            }
             if let Some(value) = &parameters.payload.animal_as_not_null_jsonb_object {
                 match <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"", &"animal_as_not_null_jsonb_object", &"", &mut increment) {
                     Ok(value) => {
@@ -2181,7 +2313,7 @@ impl Example {
                                 column!(),
                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line: 3238,
+                                    line: 3306,
                                     column: 263,
                                 }),
                             ),
@@ -2213,7 +2345,7 @@ impl Example {
                             column!(),
                             Some(error_occurence_lib::code_occurence::MacroOccurence {
                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 3262,
+                                line: 3330,
                                 column: 259,
                             }),
                         ),
@@ -2230,6 +2362,9 @@ impl Example {
         println!("{}", query_string);
         let binded_query = {
             let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            if let Some(value) = parameters.payload.column_0 {
+                query = <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_bind(value.value, query);
+            }
             if let Some(value) = parameters.payload.animal_as_not_null_jsonb_object {
                 query = <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_bind(value.value, query);
             }
@@ -2247,7 +2382,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2066,
+                            line: 2134,
                             column: 253,
                         }),
                     ),
@@ -2269,7 +2404,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2066,
+                            line: 2134,
                             column: 253,
                         }),
                     ),
@@ -2292,7 +2427,7 @@ impl Example {
                             column!(),
                             Some(error_occurence_lib::code_occurence::MacroOccurence {
                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 1801,
+                                line: 1869,
                                 column: 245,
                             }),
                         ),
@@ -2317,7 +2452,7 @@ impl Example {
                                         column!(),
                                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line: 2361,
+                                            line: 2429,
                                             column: 120,
                                         }),
                                     ),
@@ -2337,7 +2472,7 @@ impl Example {
                                         column!(),
                                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line: 2361,
+                                            line: 2429,
                                             column: 149,
                                         }),
                                     ),
@@ -2359,7 +2494,7 @@ impl Example {
                                     column!(),
                                     Some(error_occurence_lib::code_occurence::MacroOccurence {
                                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line: 2363,
+                                        line: 2431,
                                         column: 116,
                                     }),
                                 ),
@@ -2379,7 +2514,7 @@ impl Example {
                                     column!(),
                                     Some(error_occurence_lib::code_occurence::MacroOccurence {
                                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line: 2363,
+                                        line: 2431,
                                         column: 145,
                                     }),
                                 ),
@@ -2401,7 +2536,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 1812,
+                            line: 1880,
                             column: 245,
                         }),
                     ),
@@ -2474,7 +2609,7 @@ impl Example {
                             column!(),
                             Some(error_occurence_lib::code_occurence::MacroOccurence {
                                 file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 2146,
+                                line: 2214,
                                 column: 178,
                             }),
                         ),
@@ -2500,7 +2635,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2195,
+                            line: 2263,
                             column: 152,
                         }),
                     ),
@@ -2522,7 +2657,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2212,
+                            line: 2280,
                             column: 192,
                         }),
                     ),
@@ -2543,7 +2678,7 @@ impl Example {
                         column!(),
                         Some(error_occurence_lib::code_occurence::MacroOccurence {
                             file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                            line: 2224,
+                            line: 2292,
                             column: 178,
                         }),
                     ),
@@ -2572,7 +2707,7 @@ impl Example {
                 column!(),
                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                    line: 2262,
+                    line: 2330,
                     column: 223,
                 }),
             ),
