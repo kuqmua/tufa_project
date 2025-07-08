@@ -2287,8 +2287,8 @@ impl Example {
                                 column!(),
                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line: 3306,
-                                    column: 263,
+                                    line: 3304,
+                                    column: 259,
                                 }),
                             ),
                         };
@@ -2313,8 +2313,8 @@ impl Example {
                                 column!(),
                                 Some(error_occurence_lib::code_occurence::MacroOccurence {
                                     file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                    line: 3306,
-                                    column: 263,
+                                    line: 3304,
+                                    column: 259,
                                 }),
                             ),
                         };
@@ -2326,37 +2326,37 @@ impl Example {
                 }
             }
             let _: Option<char> = query.pop();
-            match <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(
-                &parameters.payload.column_6e88acb0_c566_4fef_8a09_66a41338cf36,
-                &"",
-                &"column_6e88acb0_c566_4fef_8a09_66a41338cf36",
-                &"",
-                &mut increment,
-            ) {
-                Ok(value) => {
-                    query.push_str(&format!(" where column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {value}"));
+            query.push_str(&format!(
+                " where column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {} returning column_6e88acb0_c566_4fef_8a09_66a41338cf36;",
+                match <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(
+                    &parameters.payload.column_6e88acb0_c566_4fef_8a09_66a41338cf36,
+                    &"",
+                    &"column_6e88acb0_c566_4fef_8a09_66a41338cf36",
+                    &"",
+                    &mut increment,
+                ) {
+                    Ok(value) => value,
+                    Err(error_0) => {
+                        let error = ExampleTryUpdateOneRouteLogicErrorNamed::QueryPart {
+                            error: error_0,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                file!().to_owned(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line: 3328,
+                                    column: 259,
+                                }),
+                            ),
+                        };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateOneRouteLogicResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                        return response;
+                    }
                 }
-                Err(error_0) => {
-                    let error = ExampleTryUpdateOneRouteLogicErrorNamed::QueryPart {
-                        error: error_0,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_owned(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 3330,
-                                column: 259,
-                            }),
-                        ),
-                    };
-                    eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateOneRouteLogicResponseVariants::from(error)));
-                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                    return response;
-                }
-            }
-            query.push_str(&format!(" returning column_6e88acb0_c566_4fef_8a09_66a41338cf36"));
+            ));
             query
         };
         println!("{}", query_string);
