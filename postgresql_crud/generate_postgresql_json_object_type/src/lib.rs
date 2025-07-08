@@ -2087,11 +2087,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             };
             let generate_impl_serde_deserialize_for_ident_read_token_stream = |is_standart_with_id: &IsStandartWithId| {
                 let current_vec_syn_field = get_vec_syn_field(is_standart_with_id);
-                postgresql_crud_macros_common::generate_impl_serde_deserialize_for_example_where_many_token_stream(
+                postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(
                     &generate_ident_read_or_ident_with_id_read_upper_camel_case(&is_standart_with_id),
                     current_vec_syn_field.iter().map(|element|(element.ident.as_ref().unwrap(), &element.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(),
                     current_vec_syn_field.len(),
-                    &|syn_type: &syn::Type|{
+                    &|_: &syn::Ident, syn_type: &syn::Type|{
                         let type_read_token_stream = generate_type_as_postgresql_json_type_read_token_stream(&syn_type);
                         quote::quote!{std::option::Option<#import_path::Value<#type_read_token_stream>>}
                     },

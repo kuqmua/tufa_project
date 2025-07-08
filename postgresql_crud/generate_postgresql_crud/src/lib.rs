@@ -751,11 +751,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
-        let impl_serde_deserialize_for_example_where_many_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_example_where_many_token_stream(
+        let impl_serde_deserialize_for_ident_where_many_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(
             &ident_where_many_upper_camel_case,
             fields.iter().map(|element|(&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(),
             fields_len,
-            &|syn_type: &syn::Type|{
+            &|_: &syn::Ident, syn_type: &syn::Type|{
                 quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<<#syn_type as postgresql_crud::PostgresqlType>::WhereElement>>}
             },
         );
@@ -777,7 +777,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #ident_where_many_token_stream
             #ident_where_many_try_new_error_named_token_stream
             #impl_ident_where_many_token_stream
-            #impl_serde_deserialize_for_example_where_many_token_stream
+            #impl_serde_deserialize_for_ident_where_many_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_many_token_stream
         }
     };
@@ -1294,18 +1294,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
     let ident_update_try_new_error_named_upper_camel_case = naming::parameter::SelfUpdateTryNewErrorNamedUpperCamelCase::from_tokens(&ident);
     let ident_update_token_stream = {
+        let generate_option_value_field_type_as_postgresql_type_update_token_stream = |syn_type: &syn::Type|{
+            let path_value_token_stream = {
+                let value = format!("{}::{}", naming::PostgresqlCrudSnakeCase, naming::ValueUpperCamelCase);
+                value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
+            };
+            let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&syn_type, &naming::UpdateUpperCamelCase);
+            quote::quote! {std::option::Option<#path_value_token_stream<#as_postgresql_crud_postgresql_type_postgresql_type_token_stream>>}
+        };
         let fields_declaration_token_stream = {
             let fields_named_excluding_primary_key_token_stream = generate_fields_named_without_primary_key_comma_token_stream(&|element: &SynFieldWrapper| -> proc_macro2::TokenStream {
                 let field_ident = &element.field_ident;
-                let path_value_token_stream = {
-                    let value = format!("{}::{}", naming::PostgresqlCrudSnakeCase, naming::ValueUpperCamelCase);
-                    value.parse::<proc_macro2::TokenStream>().unwrap_or_else(|_| panic!("{value} {}", constants::PARSE_PROC_MACRO2_TOKEN_STREAM_FAILED_MESSAGE))
-                };
-                let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(&element.syn_field.ty, &naming::UpdateUpperCamelCase);
+                let generate_option_value_field_type_as_postgresql_type_update_token_stream = generate_option_value_field_type_as_postgresql_type_update_token_stream(&element.syn_field.ty);
                 quote::quote! {
-                    #field_ident: std::option::Option<#path_value_token_stream<
-                        #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
-                    >>
+                    #field_ident: #generate_option_value_field_type_as_postgresql_type_update_token_stream
                 }
             });
             quote::quote! {
@@ -1314,7 +1316,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let ident_update_token_stream = quote::quote! {
-            #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+            #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
             pub struct #ident_update_upper_camel_case {
                 #fields_declaration_token_stream
             }
@@ -1461,6 +1463,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
+        let impl_serde_deserialize_for_ident_update_token_stream = postgresql_crud_macros_common::generate_impl_serde_deserialize_for_struct_token_stream(
+            &ident_update_upper_camel_case,
+            fields.iter().map(|element|(&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(),
+            fields_len,
+            &|syn_ident: &syn::Ident, syn_type: &syn::Type|{
+                if syn_ident == primary_key_field_ident {
+                    quote::quote!{#primary_key_field_type_update_token_stream}
+                }
+                else {
+                    generate_option_value_field_type_as_postgresql_type_update_token_stream(&syn_type)
+                }
+            },
+        );
         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
             &ident_update_upper_camel_case,
             &{
@@ -1487,6 +1502,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #ident_update_token_stream
             #ident_update_try_new_error_named_token_stream
             #impl_ident_update_token_stream
+            #impl_serde_deserialize_for_ident_update_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
         }
     };

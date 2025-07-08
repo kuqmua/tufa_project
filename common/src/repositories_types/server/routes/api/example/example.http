@@ -724,20 +724,81 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 1,
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 3,
     "animal_as_not_null_jsonb_object": {
       "value": [
         {
-          "doggie_as_not_null_jsonb_object": {
+          "field_0": {
             "value": [
               {
-                "column_0f498e79_5440_4c9d_90cf_c32f9b7d4005": {
-                  "value": [
-                    1
-                  ]
+                "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                  "value": 20
                 }
               }
             ]
+          }
+        },
+        {
+          "field_1": {
+            "value": {
+              "create": [
+                {
+                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 20
+                }
+              ],
+              "update": [
+                {
+                  "id": "ce079f16-d94c-4174-8b86-a6bba35bd12b",
+                  "fields": [
+                    {
+                      "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                        "value": 20
+                      }
+                    }
+                  ]
+                }
+              ],
+              "delete": [
+                "b82577b0-77d0-4ec4-8786-99f5b3d0b043"
+              ]
+            }
+          }
+        },
+        {
+          "field_2": {
+            "value": [
+              {
+                "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                  "value": 20
+                }
+              }
+            ]
+          }
+        },
+        {
+          "field_3": {
+            "value": {
+              "create": [
+                {
+                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 20
+                }
+              ],
+              "update": [
+                {
+                  "id": "219c73c7-4c01-49bf-b540-cacb8d1359ba",
+                  "fields": [
+                    {
+                      "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                        "value": 20
+                      }
+                    }
+                  ]
+                }
+              ],
+              "delete": [
+                "ff7b26f4-732d-4634-be36-bb2671e4cb58"
+              ]
+            }
           }
         }
       ]
