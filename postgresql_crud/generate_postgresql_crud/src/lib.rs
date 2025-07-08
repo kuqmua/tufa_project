@@ -1501,7 +1501,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote!{
             #ident_update_token_stream
             #ident_update_try_new_error_named_token_stream
-            #impl_ident_update_token_stream
+            // #impl_ident_update_token_stream
             #impl_serde_deserialize_for_ident_update_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_update_token_stream
         }

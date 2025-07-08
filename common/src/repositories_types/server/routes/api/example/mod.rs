@@ -1153,6 +1153,53 @@ pub struct Doggie {
 //     pub field_805: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 // }
 
+impl ExampleUpdate {
+    pub fn try_new(
+        column_6e88acb0_c566_4fef_8a09_66a41338cf36: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlUpdate,
+        animal_as_not_null_jsonb_object: std::option::Option<postgresql_crud::Value<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Update>>,
+    ) -> Result<ExampleUpdate, ExampleUpdateTryNewErrorNamed> {
+        if let None = &animal_as_not_null_jsonb_object {
+            return Err(ExampleUpdateTryNewErrorNamed::NoFieldsProvided { code_occurence: error_occurence_lib::code_occurence!() });
+        }
+        Ok(Self {
+            column_6e88acb0_c566_4fef_8a09_66a41338cf36,
+            animal_as_not_null_jsonb_object,
+        })
+    }
+    fn update_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        if let Some(value) = &self.animal_as_not_null_jsonb_object {
+            match <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_part(&value.value, &"", &"animal_as_not_null_jsonb_object", &"", increment) {
+                Ok(value) => {
+                    acc.push_str(&format!("animal_as_not_null_jsonb_object = {value},"));
+                }
+                Err(error_0) => {
+                    return Err(error_0);
+                }
+            }
+        }
+        let _: Option<char> = acc.pop();
+        match <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_part(&self.column_6e88acb0_c566_4fef_8a09_66a41338cf36, &"", &"column_6e88acb0_c566_4fef_8a09_66a41338cf36", &"", increment) {
+            Ok(value) => {
+                acc.push_str(&format!(" where column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {value}"));
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        Ok(acc)
+    }
+    fn update_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        if let Some(value) = self.animal_as_not_null_jsonb_object {
+            query = <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_bind(value.value, query);
+        }
+        query = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_bind(self.column_6e88acb0_c566_4fef_8a09_66a41338cf36, query);
+        query
+    }
+}
+
+
+
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ExampleUpdateManyPayload(pub std::vec::Vec<ExampleUpdate>);
 #[derive(Debug)]
