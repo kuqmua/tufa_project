@@ -1474,10 +1474,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             let update_query_part_fields_token_stream = fields_without_primary_key.iter().map(|element|{
-                let field_type = &element.syn_field.ty;
-                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                let update_query_part_field_ident_snake_case = naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(&element.field_ident);
-                let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&field_type);
+                let field_ident = &element.field_ident;
+                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
+                let update_query_part_field_ident_snake_case = naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(&field_ident);
+                let field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&&element.syn_field.ty);
                 quote::quote!{
                     fn #update_query_part_field_ident_snake_case(
                         #value_snake_case: &postgresql_crud::Value<#field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_upper_camel_case>,
