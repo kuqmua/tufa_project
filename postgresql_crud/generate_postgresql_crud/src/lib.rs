@@ -3014,7 +3014,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let query_string_token_stream = {
                     let query_start_token_stream = generate_quotes::double_quotes_token_stream(&format!("{update_snake_case} {ident_snake_case_stringified} {set_snake_case} "));
                     let match_update_query_part_primary_key_token_stream = generate_match_update_query_part_primary_key_token_stream(&operation, &element_snake_case);
-                    let generate_field_query_part_snake_case = naming::GenerateFieldQueryPartSnakeCase;
+                    let generate_when_column_id_then_value_snake_case = naming::GenerateWhenColumnIdThenValueSnakeCase;
                     let when_primary_key_field_ident_equals_then_token_stream = generate_quotes::double_quotes_token_stream(&format!(
                         "{} {primary_key_field_ident} = {{{id_snake_case}}} {} {{{value_snake_case}}} ",
                         naming::WhenSnakeCase,
@@ -3040,7 +3040,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let mut #acc_snake_case = #std_string_string::#from_snake_case(#field_ident_equals_case_token_stream);
                                     for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
                                         if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
-                                            #acc_snake_case.push_str(&#generate_field_query_part_snake_case(
+                                            #acc_snake_case.push_str(&#generate_when_column_id_then_value_snake_case(
                                                 #match_update_query_part_primary_key_token_stream,
                                                 match #ident_update_upper_camel_case::#update_query_part_field_ident_snake_case(&#value_snake_case, &mut #increment_snake_case) {
                                                     Ok(#value_snake_case) => #value_snake_case,
@@ -3079,9 +3079,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         {
                             let mut #query_snake_case = #std_string_string::#from_snake_case(#query_start_token_stream);
                             #increment_initialization_token_stream
-                            fn #generate_field_query_part_snake_case(#id_snake_case: #std_string_string, #value_snake_case: #std_string_string) -> #std_string_string {
+                            fn #generate_when_column_id_then_value_snake_case(#id_snake_case: #std_string_string, #value_snake_case: #std_string_string) -> #std_string_string {
                                 format!(#when_primary_key_field_ident_equals_then_token_stream)
                             }
+                            // fn generate_field_query_part(id: std::string::String, value: std::string::String) -> std::string::String {
+                            //     format!("when column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {id} then {value} ")
+                            // }
                             #fields_named_excluding_primary_key_update_assignment_token_stream
                             let _: Option<char> = #query_snake_case.pop();
                             #where_primary_key_field_ident_in_primary_keys_returning_primary_key_field_ident_token_stream
