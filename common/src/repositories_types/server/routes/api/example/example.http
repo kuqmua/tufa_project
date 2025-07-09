@@ -718,7 +718,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 2,
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 200,
     "column_0": {
       "value": 40
     },
@@ -900,7 +900,7 @@ content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
 {
-  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 2,
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 200,
   "column_0": {
     "value": 78
   }

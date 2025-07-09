@@ -2955,7 +2955,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &"read_one",
     //     &read_one_token_stream,
     // );
-    // //todo update not only with array of objects with ids but with WHERE and one object
+    //todo update not only with array of objects with ids but with WHERE and one object
     let update_many_token_stream = {
         let operation = Operation::UpdateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -3192,7 +3192,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &"update_many",
     //     &update_many_token_stream,
     // );
-    // //todo WHY ITS RETURN SUCCESS EVEN IF ROW DOES NOT EXISTS?
     let update_one_token_stream = {
         let operation = Operation::UpdateOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
