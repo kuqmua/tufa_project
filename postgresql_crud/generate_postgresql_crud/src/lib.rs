@@ -167,7 +167,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let returning_snake_case = naming::ReturningSnakeCase;
     let table_name_snake_case = naming::TableNameSnakeCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let id_snake_case = naming::IdUpperCamelCase;
+    let id_snake_case = naming::IdSnakeCase;
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let into_serialize_deserialize_version_snake_case = naming::IntoSerializeDeserializeVersionSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
