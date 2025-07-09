@@ -1153,3 +1153,774 @@ pub struct Doggie {
 //     pub field_804: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
 //     pub field_805: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 // }
+
+
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
+pub struct ExampleUpdateManyPayload(pub std::vec::Vec<ExampleUpdate>);
+#[derive(Debug)]
+pub struct ExampleUpdateManyParameters {
+    pub payload: ExampleUpdateManyPayload,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleTryUpdateManyRouteLogicResponseVariants {
+    Desirable(std::vec::Vec<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update>),
+    CheckBodySize {
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        postgresql: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        serde_json: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        row: std::string::String,
+        rollback: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniquePrimaryKey {
+        not_unique_primary_key: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoPayloadFieldsPrimaryKey {
+        no_payload_fields_primary_key: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<ExampleTryUpdateManyRouteLogicErrorNamed> for ExampleTryUpdateManyRouteLogicResponseVariants {
+    fn from(value: ExampleTryUpdateManyRouteLogicErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+            ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniquePrimaryKey { not_unique_primary_key, code_occurence } => Self::NotUniquePrimaryKey { not_unique_primary_key, code_occurence },
+            ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::NoPayloadFieldsPrimaryKey { no_payload_fields_primary_key, code_occurence } => Self::NoPayloadFieldsPrimaryKey { no_payload_fields_primary_key, code_occurence },
+            ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryUpdateManyRouteLogicErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        #[eo_to_std_string_string]
+        row: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniquePrimaryKey {
+        #[eo_to_std_string_string]
+        not_unique_primary_key: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlUpdate,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NoPayloadFieldsPrimaryKey {
+        #[eo_to_std_string_string]
+        no_payload_fields_primary_key: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlUpdate,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        #[eo_error_occurence]
+        error: postgresql_crud::QueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_update_many_route_logic(app_state: axum::extract::State<crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleTryUpdateManyRouteLogicErrorNamed::HeaderContentTypeApplicationJsonNotFound {
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line: 2070,
+                        column: 17,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleTryUpdateManyRouteLogicErrorNamed::CheckBodySize {
+                    check_body_size: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 2077,
+                            column: 17,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        let parameters = ExampleUpdateManyParameters {
+            payload: match serde_json::from_slice::<ExampleUpdateManyPayload>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleUpdateManyPayload::from(value);
+                    {
+                        let mut acc = std::vec::Vec::new();
+                        for element in &value.0 {
+                            if !acc.contains(&&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36) {
+                                acc.push(&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36);
+                            } else {
+                                let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
+                                let error = ExampleTryUpdateManyRouteLogicErrorNamed::NotUniquePrimaryKey {
+                                    not_unique_primary_key: error_0,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line: 2997,
+                                            column: 185,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                return response;
+                            }
+                        }
+                    }
+                    for element in &value.0 {
+                        if let (None, None) = (&element.column_0, &element.animal_as_not_null_jsonb_object) {
+                            let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
+                            let error = ExampleTryUpdateManyRouteLogicErrorNamed::NoPayloadFieldsPrimaryKey {
+                                no_payload_fields_primary_key: error_0,
+                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                    file!().to_owned(),
+                                    line!(),
+                                    column!(),
+                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                        line: 1715,
+                                        column: 287,
+                                    }),
+                                ),
+                            };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                    }
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleTryUpdateManyRouteLogicErrorNamed::SerdeJson {
+                        serde_json: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 2154,
+                                column: 249,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let query_string = {
+            let mut increment: std::primitive::u64 = 0;
+            let primary_key_field_name = "column_6e88acb0_c566_4fef_8a09_66a41338cf36";
+            let elements = {
+                let mut acc = std::string::String::default();
+                {
+                    let mut is_column_0_update_exist = false;
+                    for element in &parameters.payload.0 {
+                        if element.column_0.is_some() {
+                            is_column_0_update_exist = true;
+                            break;
+                        }
+                    }
+                    if is_column_0_update_exist {
+                        acc.push_str(&
+                            postgresql_crud::generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(
+                                &"column_0",
+                                {
+                                    let mut acc = std::string::String::default();
+                                    for element in &parameters.payload.0 {
+                                        if let Some(value) = &element.column_0 {
+                                            acc.push_str(&postgresql_crud::generate_when_column_id_then_value_update_many_query_part(
+                                                &primary_key_field_name,
+                                                match element.update_query_part_primary_key(&mut increment) {
+                                                    Ok(value) => value,
+                                                    Err(error_0) => {
+                                                        let error = ExampleTryUpdateManyRouteLogicErrorNamed::QueryPart {
+                                                            error: error_0,
+                                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                                                file!().to_owned(),
+                                                                line!(),
+                                                                column!(),
+                                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                                    line: 1468,
+                                                                    column: 242,
+                                                                }),
+                                                            ),
+                                                        };
+                                                        eprintln!("{error}");
+                                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                                        return response;
+                                                    }
+                                                },
+                                                match ExampleUpdate::update_query_part_column_0(&value, &mut increment) {
+                                                    Ok(value) => value,
+                                                    Err(error_0) => {
+                                                        let error = ExampleTryUpdateManyRouteLogicErrorNamed::QueryPart {
+                                                            error: error_0,
+                                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                                                file!().to_owned(),
+                                                                line!(),
+                                                                column!(),
+                                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                                    line: 3028,
+                                                                    column: 258,
+                                                                }),
+                                                            ),
+                                                        };
+                                                        eprintln!("{error}");
+                                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                                        return response;
+                                                    }
+                                                },
+                                            ));
+                                        }
+                                    }
+                                    acc
+                                }
+                            )
+                        );
+                    }
+                }
+                let _: Option<char> = acc.pop();
+                acc
+            };
+            let primary_keys = {
+                let mut acc = std::string::String::default();
+                for element in &parameters.payload.0 {
+                    acc.push_str(&format!(
+                        "{},",
+                        match element.update_query_part_primary_key(&mut increment) {
+                            Ok(value) => value,
+                            Err(error_0) => {
+                                let error = ExampleTryUpdateManyRouteLogicErrorNamed::QueryPart {
+                                    error: error_0,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line: 1468,
+                                            column: 242,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                return response;
+                            }
+                        }
+                    ));
+                }
+                let _: Option<char> = acc.pop();
+                acc
+            };
+            format!("update example set {elements} where column_6e88acb0_c566_4fef_8a09_66a41338cf36 in ({primary_keys}) returning column_6e88acb0_c566_4fef_8a09_66a41338cf36")
+        };
+        println!("{}", query_string);
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            for element in &parameters.payload.0 {
+                if let Some(value) = &element.column_0 {
+                    query = query.bind(element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone());
+                    query = <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::update_query_bind(value.value.clone(), query);
+                }
+            }
+            for element in &parameters.payload.0 {
+                if let Some(value) = &element.animal_as_not_null_jsonb_object {
+                    query = query.bind(element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone());
+                    query = <AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::update_query_bind(value.value.clone(), query);
+                }
+            }
+            for element in parameters.payload.0 {
+                query = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::update_query_bind(element.column_6e88acb0_c566_4fef_8a09_66a41338cf36, query);
+            }
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleTryUpdateManyRouteLogicErrorNamed::Postgresql {
+                    postgresql: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 2105,
+                            column: 253,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleTryUpdateManyRouteLogicErrorNamed::Postgresql {
+                    postgresql: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 2105,
+                            column: 253,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let mut executor = match sqlx::Acquire::begin(executor).await {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleTryUpdateManyRouteLogicErrorNamed::Postgresql {
+                        postgresql: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 1840,
+                                column: 245,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            };
+            let value = {
+                let mut rows = binded_query.fetch(executor.as_mut());
+                let mut acc = std::vec::Vec::new();
+                while let Some(value) = match {
+                    use postgresql_crud::TryStreamExt;
+                    rows.try_next()
+                }
+                .await
+                {
+                    Ok(value) => match value {
+                        Some(value) => match sqlx::Row::try_get::<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update, &std::primitive::str>(&value, "column_6e88acb0_c566_4fef_8a09_66a41338cf36") {
+                            Ok(value) => Some(value),
+                            Err(error_0) => {
+                                drop(rows);
+                                match executor.rollback().await {
+                                    Ok(_) => {
+                                        let error = ExampleTryUpdateManyRouteLogicErrorNamed::Postgresql {
+                                            postgresql: error_0,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                                file!().to_owned(),
+                                                line!(),
+                                                column!(),
+                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                    line: 2371,
+                                                    column: 137,
+                                                }),
+                                            ),
+                                        };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        return response;
+                                    }
+                                    Err(error_1) => {
+                                        let error = ExampleTryUpdateManyRouteLogicErrorNamed::RowAndRollback {
+                                            row: error_0,
+                                            rollback: error_1,
+                                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                                file!().to_owned(),
+                                                line!(),
+                                                column!(),
+                                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                                    line: 2371,
+                                                    column: 166,
+                                                }),
+                                            ),
+                                        };
+                                        eprintln!("{error}");
+                                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                        *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                        return response;
+                                    }
+                                }
+                            }
+                        },
+                        None => None,
+                    },
+                    Err(error_0) => {
+                        drop(rows);
+                        match executor.rollback().await {
+                            Ok(_) => {
+                                let error = ExampleTryUpdateManyRouteLogicErrorNamed::Postgresql {
+                                    postgresql: error_0,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line: 2373,
+                                            column: 133,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                            Err(error_1) => {
+                                let error = ExampleTryUpdateManyRouteLogicErrorNamed::RowAndRollback {
+                                    row: error_0,
+                                    rollback: error_1,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line: 2373,
+                                            column: 162,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        }
+                    }
+                } {
+                    acc.push(value);
+                }
+                acc
+            };
+            if let Err(error_0) = executor.commit().await {
+                let error = ExampleTryUpdateManyRouteLogicErrorNamed::Postgresql {
+                    postgresql: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 1851,
+                            column: 245,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateManyRouteLogicResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryUpdateManyErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    NotUniquePrimaryKey {
+        #[eo_to_std_string_string]
+        not_unique_primary_key: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlUpdate,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        try_update_many_route_logic_error_named_with_serialize_deserialize: ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_update_many(
+        endpoint_location: &std::primitive::str,
+        parameters: ExampleUpdateManyParameters,
+    ) -> Result<std::vec::Vec<<postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update>, ExampleTryUpdateManyErrorNamed> {
+        let payload = {
+            let mut acc = std::vec::Vec::new();
+            for element in &parameters.payload.0 {
+                if !acc.contains(&&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36) {
+                    acc.push(&element.column_6e88acb0_c566_4fef_8a09_66a41338cf36);
+                } else {
+                    let error_0 = element.column_6e88acb0_c566_4fef_8a09_66a41338cf36.clone();
+                    return Err(ExampleTryUpdateManyErrorNamed::NotUniquePrimaryKey {
+                        not_unique_primary_key: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 3163,
+                                column: 205,
+                            }),
+                        ),
+                    });
+                }
+            }
+            let value = ExampleUpdateManyPayload::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryUpdateManyErrorNamed::SerdeJsonToString {
+                        serde_json_to_string: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 2185,
+                                column: 178,
+                            }),
+                        ),
+                    });
+                }
+            }
+        };
+        let url = format!("{}/example/update_many", endpoint_location,);
+        let future = reqwest::Client::new()
+            .patch(&url)
+            .header(&postgresql_crud::CommitSnakeCase.to_string(), git_info::PROJECT_GIT_INFO.commit)
+            .header(reqwest::header::CONTENT_TYPE, "application/json")
+            .body(payload)
+            .send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryUpdateManyErrorNamed::Reqwest {
+                    reqwest: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 2234,
+                            column: 152,
+                        }),
+                    ),
+                });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryUpdateManyErrorNamed::FailedToGetResponseText {
+                    status_code: error_0,
+                    headers: error_1,
+                    reqwest: error_2,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 2251,
+                            column: 192,
+                        }),
+                    ),
+                });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleTryUpdateManyRouteLogicResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryUpdateManyErrorNamed::DeserializeResponse {
+                    status_code: error_0,
+                    headers: error_1,
+                    response_text: error_2,
+                    serde: error_3,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 2263,
+                            column: 178,
+                        }),
+                    ),
+                });
+            }
+        };
+        let try_update_many_route_logic_error_named_with_serialize_deserialize = match expected_response {
+            ExampleTryUpdateManyRouteLogicResponseVariants::Desirable(value) => {
+                let value = value;
+                return Ok(value);
+            }
+            ExampleTryUpdateManyRouteLogicResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleTryUpdateManyRouteLogicResponseVariants::Postgresql { postgresql, code_occurence } => ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleTryUpdateManyRouteLogicResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleTryUpdateManyRouteLogicResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleTryUpdateManyRouteLogicResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleTryUpdateManyRouteLogicResponseVariants::RowAndRollback { row, rollback, code_occurence } => ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence },
+            ExampleTryUpdateManyRouteLogicResponseVariants::NotUniquePrimaryKey { not_unique_primary_key, code_occurence } => ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::NotUniquePrimaryKey { not_unique_primary_key, code_occurence },
+            ExampleTryUpdateManyRouteLogicResponseVariants::NoPayloadFieldsPrimaryKey { no_payload_fields_primary_key, code_occurence } => ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::NoPayloadFieldsPrimaryKey { no_payload_fields_primary_key, code_occurence },
+            ExampleTryUpdateManyRouteLogicResponseVariants::QueryPart { error, code_occurence } => ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence },
+        };
+        Err(ExampleTryUpdateManyErrorNamed::ExampleTryUpdateManyRouteLogicErrorNamedWithSerializeDeserialize {
+            try_update_many_route_logic_error_named_with_serialize_deserialize,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_owned(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    line: 2301,
+                    column: 223,
+                }),
+            ),
+        })
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleUpdateManyPayload {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(vec![postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()])
+    }
+}
+impl Example {
+    pub async fn update_many_payload_example_route_logic() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(
+            <ExampleUpdateManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        ));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
