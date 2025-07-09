@@ -2276,3 +2276,7 @@ impl<T: Clone + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElemen
         Self(vec![<T as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(); LENGTH])
     }
 }
+
+pub fn generate_column_queals_value_comma_update_one_query_part(column: &std::primitive::str, value: std::string::String) -> std::string::String {
+    format!("{column} = {value},")
+}

@@ -1344,33 +1344,34 @@ impl Example {
         };
         let query_string = {
             let mut increment: std::primitive::u64 = 0;
-            // let mut query = std::string::String::from("update example set ");
             let columns = {
                 let mut acc = std::string::String::default();
                 if let Some(value) = &parameters.payload.column_0 {
-                    let value = match ExampleUpdate::update_query_part_column_0(&value, &mut increment) {
-                        Ok(value) => value,
-                        Err(error_0) => {
-                            let error = ExampleTryUpdateOneRouteLogicErrorNamed::QueryPart {
-                                error: error_0,
-                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                    file!().to_owned(),
-                                    line!(),
-                                    column!(),
-                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                        line: 3234,
-                                        column: 258,
-                                    }),
-                                ),
-                            };
-                            eprintln!("{error}");
-                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateOneRouteLogicResponseVariants::from(error)));
-                            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                            return response;
+                    acc.push_str(&postgresql_crud::generate_column_queals_value_comma_update_one_query_part(
+                        "column_0",
+                        match ExampleUpdate::update_query_part_column_0(&value, &mut increment) {
+                            Ok(value) => value,
+                            Err(error_0) => {
+                                let error = ExampleTryUpdateOneRouteLogicErrorNamed::QueryPart {
+                                    error: error_0,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line: 3234,
+                                            column: 258,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleTryUpdateOneRouteLogicResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                                return response;
+                            }
                         }
-                    };
-                    acc.push_str(&format!("column_0 = {value},"));
+                    ));
                 }
                 if let Some(value) = &parameters.payload.animal_as_not_null_jsonb_object {
                     let value = match ExampleUpdate::update_query_part_animal_as_not_null_jsonb_object(&value, &mut increment) {
@@ -1400,11 +1401,6 @@ impl Example {
                 let _: Option<char> = acc.pop();
                 acc
             };
-            // query.push_str(&format!(
-            //     " where column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {} returning column_6e88acb0_c566_4fef_8a09_66a41338cf36",
-
-            // ));
-            // query
             let primary_key_query_part = match parameters.payload.update_query_part_primary_key(&mut increment) {
                 Ok(value) => value,
                 Err(error_0) => {
