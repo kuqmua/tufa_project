@@ -2286,3 +2286,6 @@ pub fn generate_when_column_id_then_value_update_many_query_part(column: &std::p
 pub fn generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(column: &std::primitive::str, acc: std::string::String) -> std::string::String {
     format!("{column} = case {acc}else {column} end,")
 }
+pub fn generate_update_many_query_string(elements: std::string::String, primary_key_field_name: &std::primitive::str, primary_keys: std::string::String) -> std::string::String {
+    format!("update example set {elements} where {primary_key_field_name} in ({primary_keys}) returning {primary_key_field_name}")
+}

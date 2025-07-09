@@ -1499,7 +1499,8 @@ impl Example {
                 let _: Option<char> = acc.pop();
                 acc
             };
-            format!("update example set {elements} where column_6e88acb0_c566_4fef_8a09_66a41338cf36 in ({primary_keys}) returning column_6e88acb0_c566_4fef_8a09_66a41338cf36")
+            // format!("update example set {elements} where {primary_key_field_name} in ({primary_keys}) returning {primary_key_field_name}")
+            postgresql_crud::generate_update_many_query_string(elements, &primary_key_field_name, primary_keys)
         };
         println!("{}", query_string);
         let binded_query = {
