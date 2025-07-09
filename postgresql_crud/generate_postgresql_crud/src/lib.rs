@@ -2459,23 +2459,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-                    let query_token_stream = generate_quotes::double_quotes_token_stream(&format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} {{values}} {returning_primary_key_stringified}"));
-                    quote::quote! {{
-                        #increment_initialization_token_stream
-                        let mut values = #std_string_string::default();
-                        for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                            match #element_snake_case.#create_query_part_snake_case(&mut #increment_snake_case) {
-                                Ok(#value_snake_case) => {
-                                    values.push_str(&format!("({value}),"));
-                                },
-                                Err(#error_0_token_stream) => {
-                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                    let column_names_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&column_names);
+                    quote::quote! {#postgresql_crud_snake_case::generate_create_many_query_string(
+                        #column_names_double_quotes_token_stream,
+                        {
+                            #increment_initialization_token_stream
+                            let mut #acc_snake_case = #std_string_string::default();
+                            for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                match #element_snake_case.#create_query_part_snake_case(&mut #increment_snake_case) {
+                                    Ok(#value_snake_case) => {
+                                        #acc_snake_case.push_str(&format!("({value}),"));
+                                    },
+                                    Err(#error_0_token_stream) => {
+                                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    }
                                 }
                             }
-                        }
-                        let _: Option<char> = values.pop();
-                        format!(#query_token_stream)
-                    }}
+                            let _: Option<char> = #acc_snake_case.pop();
+                            #acc_snake_case
+                        },
+                        #primary_key_field_ident_double_quotes_token_stream
+                    )}
                 };
                 let binded_query_token_stream = quote::quote! {
                     let mut #query_snake_case = sqlx::query::<sqlx::Postgres>(&#query_string_snake_case);
