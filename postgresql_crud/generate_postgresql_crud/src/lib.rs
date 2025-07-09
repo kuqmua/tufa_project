@@ -3220,48 +3220,51 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &type_variants_from_request_response_syn_variants,
                 );
             let try_operation_route_logic_token_stream = {
-                let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &{
-                    let filter_no_payload_fields_token_stream = generate_filter_no_payload_fields_token_stream(&operation, &quote::quote! {#value_snake_case});
-                    quote::quote! {
-                        #filter_no_payload_fields_token_stream
-                    }
-                });
+                let parameters_logic_token_stream = generate_parameters_logic_token_stream(
+                    &operation,
+                    &generate_filter_no_payload_fields_token_stream(&operation, &quote::quote! {#value_snake_case})
+                );
                 let query_string_token_stream = {
-                    let query_start_token_stream = generate_quotes::double_quotes_token_stream(&format!("{update_snake_case} {ident_snake_case_stringified} {set_snake_case} "));
                     let additional_parameters_modification_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper|{
                         let field_ident = &element.field_ident;
-                        let field_ident_equals_value_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {{{value_snake_case}}},"));
+                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                         let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                        let generate_column_queals_value_comma_update_one_query_part_snake_case = naming::GenerateColumnQuealsValueCommaUpdateOneQueryPartSnakeCase;
                         let update_query_part_field_ident_snake_case = naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(&field_ident);
                         quote::quote! {
                             if let Some(#value_snake_case) = &#parameters_snake_case.#payload_snake_case.#field_ident {
-                                let #value_snake_case = match #ident_update_upper_camel_case::#update_query_part_field_ident_snake_case(&#value_snake_case, &mut #increment_snake_case) {
-                                    Ok(#value_snake_case) => #value_snake_case,
-                                    Err(#error_0_token_stream) => {
-                                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_column_queals_value_comma_update_one_query_part_snake_case(
+                                    #field_ident_double_quotes_token_stream,
+                                    match #ident_update_upper_camel_case::#update_query_part_field_ident_snake_case(&#value_snake_case, &mut #increment_snake_case) {
+                                        Ok(#value_snake_case) => #value_snake_case,
+                                        Err(#error_0_token_stream) => {
+                                            #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                        }
                                     }
-                                };
-                                //todo fix it. its incorrect
-                                #query_snake_case.push_str(&format!(#field_ident_equals_value_token_stream));
+                                ));
                             }
                         }
                     });
-                    let additional_parameters_primary_key_modification_token_stream = {
-                        let query_part_token_stream = generate_quotes::double_quotes_token_stream(&format!(" {where_snake_case} {primary_key_field_ident} = {{}} {returning_primary_key_stringified}"));
-                        let match_update_query_part_primary_key_token_stream = generate_match_update_query_part_primary_key_token_stream(
-                            &operation,
-                            &quote::quote!{#parameters_snake_case.#payload_snake_case}
-                        );
-                        quote::quote! {#query_snake_case.push_str(&format!(#query_part_token_stream, #match_update_query_part_primary_key_token_stream));}
-                    };
+                    let columns_snake_case = naming::ColumnsSnakeCase;
+                    let primary_key_query_part_snake_case = naming::PrimaryKeyQueryPartSnakeCase;
+                    let additional_parameters_primary_key_modification_token_stream = generate_match_update_query_part_primary_key_token_stream(
+                        &operation,
+                        &quote::quote!{#parameters_snake_case.#payload_snake_case}
+                    );
+                    let query_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                        "update example set {{{columns_snake_case}}} {where_snake_case} {primary_key_field_ident} = {{{primary_key_query_part_snake_case}}} {returning_primary_key_stringified}"
+                    ));
                     quote::quote! {
                         {
                             #increment_initialization_token_stream
-                            let mut #query_snake_case = #std_string_string::#from_snake_case(#query_start_token_stream);
-                            #additional_parameters_modification_token_stream
-                            let _: Option<char> = #query_snake_case.pop();
-                            #additional_parameters_primary_key_modification_token_stream
-                            #query_snake_case
+                            let #columns_snake_case = {
+                                let mut #acc_snake_case = #std_string_string::default();
+                                #additional_parameters_modification_token_stream
+                                let _: Option<char> = #acc_snake_case.pop();
+                                #acc_snake_case
+                            };
+                            let #primary_key_query_part_snake_case = #additional_parameters_primary_key_modification_token_stream;
+                            format!(#query_double_quotes_token_stream)
                         }
                     }
                 };
@@ -3327,7 +3330,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
-            // #try_operation_route_logic_token_stream
+            #try_operation_route_logic_token_stream
             #try_operation_token_stream
             #operation_payload_example_route_logic_token_stream
         }
