@@ -722,85 +722,85 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
     "column_0": {
       "value": 75
     }
-    # ,
-    # "animal_as_not_null_jsonb_object": {
-    #   "value": [
-    #     {
-    #       "field_0": {
-    #         "value": [
-    #           {
-    #             "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-    #               "value": 0
-    #             }
-    #           }
-    #         ]
-    #       }
-    #     },
-    #     {
-    #       "field_1": {
-    #         "value": {
-    #           "create": [
-    #             {
-    #               "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
-    #             }
-    #           ],
-    #           "update": [
-    #             {
-    #               "id": "4f34fb0b-36b6-443e-8b76-054f3912f977",
-    #               "fields": [
-    #                 {
-    #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-    #                     "value": 0
-    #                   }
-    #                 }
-    #               ]
-    #             }
-    #           ],
-    #           "delete": [
-    #             "e3b0d053-29f9-4c18-b5a6-fe7b6764d572"
-    #           ]
-    #         }
-    #       }
-    #     },
-    #     {
-    #       "field_2": {
-    #         "value": [
-    #           {
-    #             "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-    #               "value": 0
-    #             }
-    #           }
-    #         ]
-    #       }
-    #     },
-    #     {
-    #       "field_3": {
-    #         "value": {
-    #           "create": [
-    #             {
-    #               "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
-    #             }
-    #           ],
-    #           "update": [
-    #             {
-    #               "id": "26ea4698-8a3b-4aa7-813f-ea66c37b3306",
-    #               "fields": [
-    #                 {
-    #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
-    #                     "value": 0
-    #                   }
-    #                 }
-    #               ]
-    #             }
-    #           ],
-    #           "delete": [
-    #             "9a2b7a6b-e5c5-4b46-ae34-5c899042c4ee"
-    #           ]
-    #         }
-    #       }
-    #     }
-    #   ]
-    # }
+    ,
+    "animal_as_not_null_jsonb_object": {
+      "value": [
+        {
+          "field_0": {
+            "value": [
+              {
+                "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "field_1": {
+            "value": {
+              "create": [
+                {
+                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+                }
+              ],
+              "update": [
+                {
+                  "id": "4f34fb0b-36b6-443e-8b76-054f3912f977",
+                  "fields": [
+                    {
+                      "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                        "value": 0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "delete": [
+                "e3b0d053-29f9-4c18-b5a6-fe7b6764d572"
+              ]
+            }
+          }
+        },
+        {
+          "field_2": {
+            "value": [
+              {
+                "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "field_3": {
+            "value": {
+              "create": [
+                {
+                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+                }
+              ],
+              "update": [
+                {
+                  "id": "26ea4698-8a3b-4aa7-813f-ea66c37b3306",
+                  "fields": [
+                    {
+                      "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                        "value": 0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "delete": [
+                "9a2b7a6b-e5c5-4b46-ae34-5c899042c4ee"
+              ]
+            }
+          }
+        }
+      ]
+    }
   }
 ]
 

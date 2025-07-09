@@ -145,9 +145,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let by_snake_case = naming::BySnakeCase;
     let prefix_snake_case = naming::PrefixSnakeCase;
     let query_snake_case = naming::QuerySnakeCase;
-    let case_snake_case = naming::CaseSnakeCase;
-    let else_snake_case = naming::ElseSnakeCase;
-    let end_snake_case = naming::EndSnakeCase;
     let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
     let expected_response_snake_case = naming::ExpectedResponseSnakeCase;
@@ -157,8 +154,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let query_string_snake_case = naming::QueryStringSnakeCase;
     let binded_query_snake_case = naming::BindedQuerySnakeCase;
     let rollback_snake_case = naming::RollbackSnakeCase;
-    let update_snake_case = naming::UpdateSnakeCase;
-    let set_snake_case = naming::SetSnakeCase;
     let insert_snake_case = naming::InsertSnakeCase;
     let into_snake_case = naming::IntoSnakeCase;
     let values_snake_case = naming::ValuesSnakeCase;
@@ -167,7 +162,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let returning_snake_case = naming::ReturningSnakeCase;
     let table_name_snake_case = naming::TableNameSnakeCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
-    let id_snake_case = naming::IdSnakeCase;
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
     let into_serialize_deserialize_version_snake_case = naming::IntoSerializeDeserializeVersionSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
@@ -3012,21 +3006,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     }
                 });
                 let query_string_token_stream = {
-                    let query_start_token_stream = generate_quotes::double_quotes_token_stream(&format!("{update_snake_case} {ident_snake_case_stringified} {set_snake_case} "));
+                    let primary_key_snake_case = naming::PrimaryKeySnakeCase;
                     let match_update_query_part_primary_key_token_stream = generate_match_update_query_part_primary_key_token_stream(&operation, &element_snake_case);
-                    let generate_when_column_id_then_value_snake_case = naming::GenerateWhenColumnIdThenValueSnakeCase;
-                    let when_primary_key_field_ident_equals_then_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                        "{} {primary_key_field_ident} = {{{id_snake_case}}} {} {{{value_snake_case}}} ",
-                        naming::WhenSnakeCase,
-                        naming::ThenSnakeCase
-                    ));
                     let fields_named_excluding_primary_key_update_assignment_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper|{
                         let field_ident = &element.field_ident;
+                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
                         let is_field_ident_update_exists_snake_case = naming::parameter::IsSelfUpdateExistSnakeCase::from_tokens(&field_ident);
-                        let field_ident_equals_case_token_stream = generate_quotes::double_quotes_token_stream(&format!("{field_ident} = {case_snake_case} "));
-                        let else_field_ident_end_token_stream = generate_quotes::double_quotes_token_stream(&format!("{else_snake_case} {field_ident} {end_snake_case},"));
                         let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                         let update_query_part_field_ident_snake_case = naming::parameter::UpdateQueryPartSelfSnakeCase::from_tokens(&field_ident);
+                        let generate_when_column_id_then_value_update_many_query_part_snake_case = naming::GenerateWhenColumnIdThenValueUpdateManyQueryPartSnakeCase;
+                        let update_query_part_primary_key_snake_case = naming::UpdateQueryPartPrimaryKeySnakeCase;
                         quote::quote! {
                             {
                                 let mut #is_field_ident_update_exists_snake_case = false;
@@ -3037,58 +3026,61 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                 }
                                 if #is_field_ident_update_exists_snake_case {
-                                    let mut #acc_snake_case = #std_string_string::#from_snake_case(#field_ident_equals_case_token_stream);
-                                    for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                        if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
-                                            #acc_snake_case.push_str(&#generate_when_column_id_then_value_snake_case(
-                                                #match_update_query_part_primary_key_token_stream,
-                                                match #ident_update_upper_camel_case::#update_query_part_field_ident_snake_case(&#value_snake_case, &mut #increment_snake_case) {
-                                                    Ok(#value_snake_case) => #value_snake_case,
-                                                    Err(#error_0_token_stream) => {
-                                                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    #acc_snake_case.push_str(&
+                                        postgresql_crud::generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(
+                                            &#field_ident_double_quotes_token_stream,
+                                            {
+                                                let mut #acc_snake_case = #std_string_string::default();
+                                                for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                                    if let Some(#value_snake_case) = &#element_snake_case.#field_ident {
+                                                        #acc_snake_case.push_str(&#postgresql_crud_snake_case::#generate_when_column_id_then_value_update_many_query_part_snake_case(
+                                                            &#primary_key_snake_case,
+                                                            match #element_snake_case.#update_query_part_primary_key_snake_case(&mut #increment_snake_case) {
+                                                                Ok(#value_snake_case) => #value_snake_case,
+                                                                Err(#error_0_token_stream) => {
+                                                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                                }
+                                                            },
+                                                            match #ident_update_upper_camel_case::#update_query_part_field_ident_snake_case(&#value_snake_case, &mut #increment_snake_case) {
+                                                                Ok(#value_snake_case) => #value_snake_case,
+                                                                Err(#error_0_token_stream) => {
+                                                                    #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                                                }
+                                                            },
+                                                        ));
                                                     }
                                                 }
-                                            ));
-                                        }
-                                    }
-                                    #query_snake_case.push_str(&format!("{}{}",
-                                        #acc_snake_case,
-                                        #else_field_ident_end_token_stream
-                                    ));
+                                                #acc_snake_case
+                                            }
+                                        )
+                                    );
                                 }
                             }
                         }
                     });
-                    let where_primary_key_field_ident_in_primary_keys_returning_primary_key_field_ident_token_stream = {
-                        let where_primary_key_field_ident_in_primary_keys_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!(" {where_snake_case} {primary_key_field_ident} {} ({{}}) {returning_primary_key_stringified}", naming::InSnakeCase));
-                        quote::quote! {
-                            #query_snake_case.push_str(&format!(
-                                #where_primary_key_field_ident_in_primary_keys_double_quotes_token_stream,
-                                {
-                                    let mut #acc_snake_case = #std_string_string::default();
-                                    for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
-                                        #acc_snake_case.push_str(&format!("{},", #match_update_query_part_primary_key_token_stream));
-                                    }
-                                    let _: Option<char> = #acc_snake_case.pop();
-                                    #acc_snake_case
-                                }
-                            ));
-                        }
-                    };
                     quote::quote! {
                         {
-                            let mut #query_snake_case = #std_string_string::#from_snake_case(#query_start_token_stream);
                             #increment_initialization_token_stream
-                            fn #generate_when_column_id_then_value_snake_case(#id_snake_case: #std_string_string, #value_snake_case: #std_string_string) -> #std_string_string {
-                                format!(#when_primary_key_field_ident_equals_then_token_stream)
-                            }
-                            // fn generate_field_query_part(id: std::string::String, value: std::string::String) -> std::string::String {
-                            //     format!("when column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {id} then {value} ")
-                            // }
-                            #fields_named_excluding_primary_key_update_assignment_token_stream
-                            let _: Option<char> = #query_snake_case.pop();
-                            #where_primary_key_field_ident_in_primary_keys_returning_primary_key_field_ident_token_stream
-                            #query_snake_case
+                            let #primary_key_snake_case = #primary_key_field_ident_double_quotes_token_stream;
+                            let elements = {
+                                let mut #acc_snake_case = #std_string_string::default();
+                                #fields_named_excluding_primary_key_update_assignment_token_stream
+                                let _: Option<char> = #acc_snake_case.pop();
+                                #acc_snake_case
+                            };
+                            let primary_keys = {
+                                let mut #acc_snake_case = #std_string_string::default();
+                                for #element_snake_case in &#parameters_snake_case.#payload_snake_case.0 {
+                                    #acc_snake_case.push_str(&format!("{},", #match_update_query_part_primary_key_token_stream));
+                                }
+                                let _: Option<char> = #acc_snake_case.pop();
+                                #acc_snake_case
+                            };
+                            postgresql_crud::generate_update_many_query_string(
+                                elements,
+                                &#primary_key_snake_case,
+                                primary_keys
+                            )
                         }
                     }
                 };
@@ -3565,7 +3557,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #create_one_token_stream
         #read_many_token_stream
         #read_one_token_stream
-        // #update_many_token_stream
+        #update_many_token_stream
         #update_one_token_stream
         #delete_many_token_stream
         #delete_one_token_stream
