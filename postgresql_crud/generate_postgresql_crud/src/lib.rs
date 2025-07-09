@@ -3327,7 +3327,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let operation_payload_example_route_logic_token_stream = generate_operation_payload_example_route_logic_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
-            #try_operation_route_logic_token_stream
+            // #try_operation_route_logic_token_stream
             #try_operation_token_stream
             #operation_payload_example_route_logic_token_stream
         }
