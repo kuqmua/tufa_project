@@ -19,6 +19,7 @@
 //todo postgresql json schema validation https://youtu.be/F6X60ln2VNc
 //todo generate json schema from rust type https://docs.rs/schemars/latest/schemars/
 //todo support read table length
+//todo what is pub what is private
 
 //todo postgresql json:
 //* write json schema in postgresql
@@ -3554,7 +3555,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &"common",
     //     &common_token_stream,
     // );
-    //todo pub and private impl quote group
     let generated = quote::quote! {
         #common_token_stream
 
