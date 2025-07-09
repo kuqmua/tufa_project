@@ -154,9 +154,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let query_string_snake_case = naming::QueryStringSnakeCase;
     let binded_query_snake_case = naming::BindedQuerySnakeCase;
     let rollback_snake_case = naming::RollbackSnakeCase;
-    let insert_snake_case = naming::InsertSnakeCase;
-    let into_snake_case = naming::IntoSnakeCase;
-    let values_snake_case = naming::ValuesSnakeCase;
     let delete_snake_case = naming::DeleteSnakeCase;
     let where_snake_case = naming::WhereSnakeCase;
     let returning_snake_case = naming::ReturningSnakeCase;
@@ -2431,6 +2428,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let _: Option<char> = value.pop();
         value
     };
+    let column_names_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&column_names);
     let create_many_token_stream = {
         let operation = Operation::CreateMany;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
@@ -2459,7 +2457,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-                    let column_names_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&column_names);
                     quote::quote! {#postgresql_crud_snake_case::generate_create_many_query_string(
                         #column_names_double_quotes_token_stream,
                         {
@@ -2565,17 +2562,17 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
-                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{insert_snake_case} {into_snake_case} {ident_snake_case_stringified} ({column_names}) {values_snake_case} ({{}}) {returning_primary_key_stringified}"));
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
-                        format!(
-                            #format_handle_token_stream,
+                        #postgresql_crud_snake_case::generate_create_one_query_string(
+                            #column_names_double_quotes_token_stream,
                             match #parameters_snake_case.#payload_snake_case.#create_query_part_snake_case(&mut 0) {
                                 Ok(#value_snake_case) => #value_snake_case,
                                 Err(#error_0_token_stream) => {
                                     #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
                                 }
-                            }
+                            },
+                            #primary_key_field_ident_double_quotes_token_stream
                         )
                     }
                 };

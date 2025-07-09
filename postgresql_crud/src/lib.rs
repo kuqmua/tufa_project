@@ -2280,6 +2280,9 @@ impl<T: Clone + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElemen
 pub fn generate_create_many_query_string(columns: &std::primitive::str, values: std::string::String, primary_key_field_name: &std::primitive::str) -> std::string::String {
     format!("insert into example ({columns}) values {values} returning {primary_key_field_name}")
 }
+pub fn generate_create_one_query_string(columns: &std::primitive::str, values: std::string::String, primary_key_field_name: &std::primitive::str) -> std::string::String {
+    format!("insert into example ({columns}) values ({values}) returning {primary_key_field_name}")
+}
 
 pub fn generate_column_queals_value_comma_update_one_query_part(column: &std::primitive::str, value: std::string::String) -> std::string::String {
     format!("{column} = {value},")
