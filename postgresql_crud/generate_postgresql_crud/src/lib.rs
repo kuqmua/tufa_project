@@ -987,19 +987,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream =
             macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_select_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {format!("{self}")});
-        let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream =
-            postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(&ident_select_upper_camel_case, &{
-                let elements_token_stream = fields.iter().map(|element| {
+        let impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_token_stream(
+            &ident_select_upper_camel_case,
+            &{
+                let elements_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
                     let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                     quote::quote! {
                         #ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream)
                     }
                 });
-                quote::quote! {vec![#(#elements_token_stream),*]}
-            });
+                quote::quote! {vec![#elements_token_stream]}
+            }
+        );
         //todo this is temporary impl. maybe should write trait and implement different logic
         let pick_select_token_stream = {
-            let fields_token_stream = fields.iter().map(|element| {
+            let fields_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
                 let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                 let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                 quote::quote! {
@@ -1010,7 +1012,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 impl #ident_select_upper_camel_case {
                     fn pick_select(&self) -> #std_string_string {
                         match &self {
-                            #(#fields_token_stream),*
+                            #fields_token_stream
                         }
                     }
                 }
@@ -1132,9 +1134,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #(#assignment_variants_excluding_primary_key_token_stream),*
                             }
                         }
-                        Ok(Self {
-                            #(#option_fields_initiation_token_stream),*
-                        })
+                        Ok(Self {#(#option_fields_initiation_token_stream),*})
                     }
                 }
             };
@@ -1280,7 +1280,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
     let ident_column_read_permission_token_stream = {
         let ident_column_read_permission_upper_camel_case = naming::parameter::SelfColumnReadPermissionUpperCamelCase::from_display(&ident);
-        let fields_permission_token_stream = fields.iter().map(|element| {
+        let fields_permission_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
             let field_ident = &element.field_ident;
             //todo permissions for json
             quote::quote! {
@@ -1290,7 +1290,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             #derive_debug_clone_copy
             pub struct #ident_column_read_permission_upper_camel_case {
-                #(#fields_permission_token_stream),*
+                #fields_permission_token_stream
             }
         }
     };
