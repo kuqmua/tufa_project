@@ -609,19 +609,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             #wraped_into_axum_response_token_stream
         }
     };
-    let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
-        let field_ident = &element.field_ident;
-        let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(
-            &element.syn_field.ty,
-            &naming::CreateUpperCamelCase
-        );
-        quote::quote! {
-            pub #field_ident: #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
-        }
-    });
     let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
     let ident_create_token_stream = {
         let ident_create_token_stream = {
+            let pub_field_ident_field_type_fields_named_excluding_primary_key_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
+                let field_ident = &element.field_ident;
+                let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream(
+                    &element.syn_field.ty,
+                    &naming::CreateUpperCamelCase
+                );
+                quote::quote! {
+                    pub #field_ident: #as_postgresql_crud_postgresql_type_postgresql_type_token_stream
+                }
+            });
             quote::quote! {
                 #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
                 pub struct #ident_create_upper_camel_case {
