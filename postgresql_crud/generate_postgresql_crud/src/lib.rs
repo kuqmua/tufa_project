@@ -149,6 +149,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let update_query_bind_snake_case = naming::UpdateQueryBindSnakeCase;
     let expected_response_snake_case = naming::ExpectedResponseSnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
+    let columns_snake_case = naming::ColumnsSnakeCase;
     let order_snake_case = naming::OrderSnakeCase;
     let order_by_upper_camel_case = naming::OrderByUpperCamelCase;
     let query_string_snake_case = naming::QueryStringSnakeCase;
@@ -3239,15 +3240,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         }
                     });
-                    let columns_snake_case = naming::ColumnsSnakeCase;
                     let primary_key_query_part_snake_case = naming::PrimaryKeyQueryPartSnakeCase;
                     let additional_parameters_primary_key_modification_token_stream = generate_match_update_query_part_primary_key_token_stream(
                         &operation,
                         &quote::quote!{#parameters_snake_case.#payload_snake_case}
                     );
-                    let query_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&format!(
-                        "update example set {{{columns_snake_case}}} {where_snake_case} {primary_key_field_ident} = {{{primary_key_query_part_snake_case}}} {returning_primary_key_stringified}"
-                    ));
                     quote::quote! {
                         {
                             #increment_initialization_token_stream
@@ -3258,7 +3255,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #acc_snake_case
                             };
                             let #primary_key_query_part_snake_case = #additional_parameters_primary_key_modification_token_stream;
-                            format!(#query_double_quotes_token_stream)
+                            #postgresql_crud_snake_case::generate_update_one_query_string(
+                                &#ident_table_name_call_token_stream,
+                                #columns_snake_case,
+                                &#ident::#primary_key_snake_case(),
+                                #primary_key_query_part_snake_case
+                            )
                         }
                     }
                 };

@@ -2301,8 +2301,8 @@ pub fn generate_column_equals_case_acc_else_column_end_comma_update_many_query_p
 pub fn generate_update_many_query_string(table: &std::primitive::str, elements: std::string::String, primary_key_field_name: &std::primitive::str, primary_keys: std::string::String) -> std::string::String {
     format!("update {table} set {elements} where {primary_key_field_name} in ({primary_keys}) returning {primary_key_field_name}")
 }
-
-
-// format!("update example set {columns} where column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {primary_key_query_part} returning column_6e88acb0_c566_4fef_8a09_66a41338cf36")
+pub fn generate_update_one_query_string(table: &std::primitive::str, columns: std::string::String, primary_key_field_name: &std::primitive::str, primary_key_query_part: std::string::String) -> std::string::String {
+    format!("update {table} set {columns} where {primary_key_field_name} = {primary_key_query_part} returning {primary_key_field_name}")
+}
 
 
