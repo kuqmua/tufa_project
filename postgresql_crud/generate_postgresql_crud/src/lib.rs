@@ -3075,6 +3075,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #acc_snake_case
                             };
                             postgresql_crud::generate_update_many_query_string(
+                                &#ident_table_name_call_token_stream,
                                 elements,
                                 &#ident::#primary_key_snake_case(),
                                 primary_keys

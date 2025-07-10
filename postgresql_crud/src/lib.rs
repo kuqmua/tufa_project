@@ -2289,8 +2289,6 @@ pub fn generate_read_many_query_string(table: &std::primitive::str, select_strin
 pub fn generate_read_one_query_string(table: &std::primitive::str, select_string: std::string::String, where_string: std::string::String) -> std::string::String {
     format!("select {select_string} from {table} where {where_string}")
 }
-
-
 pub fn generate_column_queals_value_comma_update_one_query_part(column: &std::primitive::str, value: std::string::String) -> std::string::String {
     format!("{column} = {value},")
 }
@@ -2300,6 +2298,11 @@ pub fn generate_when_column_id_then_value_update_many_query_part(column: &std::p
 pub fn generate_column_equals_case_acc_else_column_end_comma_update_many_query_part(column: &std::primitive::str, acc: std::string::String) -> std::string::String {
     format!("{column} = case {acc}else {column} end,")
 }
-pub fn generate_update_many_query_string(elements: std::string::String, primary_key_field_name: &std::primitive::str, primary_keys: std::string::String) -> std::string::String {
-    format!("update example set {elements} where {primary_key_field_name} in ({primary_keys}) returning {primary_key_field_name}")
+pub fn generate_update_many_query_string(table: &std::primitive::str, elements: std::string::String, primary_key_field_name: &std::primitive::str, primary_keys: std::string::String) -> std::string::String {
+    format!("update {table} set {elements} where {primary_key_field_name} in ({primary_keys}) returning {primary_key_field_name}")
 }
+
+
+// format!("update example set {columns} where column_6e88acb0_c566_4fef_8a09_66a41338cf36 = {primary_key_query_part} returning column_6e88acb0_c566_4fef_8a09_66a41338cf36")
+
+
