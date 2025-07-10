@@ -3376,7 +3376,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
-                    let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {{}} returning {primary_key_field_ident}"));
                     let additional_paramaters_initialization_token_stream = generate_read_or_delete_many_additional_paramaters_initialization_token_stream(&ReadManyOrDeleteMany::DeleteMany);
                     quote::quote! {#postgresql_crud_snake_case::generate_delete_many_query_string(
                         &#ident_table_name_call_token_stream,
