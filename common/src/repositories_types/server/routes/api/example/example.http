@@ -1457,7 +1457,9 @@ DELETE http://127.0.0.1:8080/example/delete_one HTTP/1.1
 content-type: application/json
 commit: 7566999599814c9ebc4cacfde468ae840697173c
 
-
+{
+  "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 15
+}
 
 ###
  

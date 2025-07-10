@@ -2307,8 +2307,6 @@ pub fn generate_update_one_query_string(table: &std::primitive::str, columns: st
 pub fn generate_delete_many_query_string(table: &std::primitive::str, where_string: std::string::String, primary_key_field_name: &std::primitive::str) -> std::string::String {
     format!("delete from {table} {where_string} returning {primary_key_field_name}")
 }
-
-
-
-
-
+pub fn generate_delete_one_query_string(table: &std::primitive::str, primary_key_field_name: &std::primitive::str) -> std::string::String {
+    format!("delete from {table} where {primary_key_field_name} = $1 returning {primary_key_field_name}")
+}

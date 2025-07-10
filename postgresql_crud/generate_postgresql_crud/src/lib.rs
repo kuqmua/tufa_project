@@ -155,9 +155,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let query_string_snake_case = naming::QueryStringSnakeCase;
     let binded_query_snake_case = naming::BindedQuerySnakeCase;
     let rollback_snake_case = naming::RollbackSnakeCase;
-    let delete_snake_case = naming::DeleteSnakeCase;
-    let where_snake_case = naming::WhereSnakeCase;
-    let returning_snake_case = naming::ReturningSnakeCase;
     let table_name_snake_case = naming::TableNameSnakeCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     let query_part_error_named_upper_camel_case = naming::QueryPartErrorNamedUpperCamelCase;
@@ -1478,7 +1475,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let use_postgresql_crud_try_stream_ext_token_stream = quote::quote! {use #postgresql_crud_snake_case::TryStreamExt};
-    let returning_primary_key_stringified = format!("{returning_snake_case} {primary_key_field_ident}");
     let std_string_string_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["std", "string", "String"]);
     let row_and_rollback_syn_variant_wrapper = new_syn_variant_wrapper(
         &naming::RowAndRollbackUpperCamelCase,
@@ -3458,10 +3454,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 );
             let try_operation_route_logic_token_stream = {
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
-                let query_string_token_stream = {
-                    let query_token_stream = generate_quotes::double_quotes_token_stream(&format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {primary_key_field_ident} = $1 {returning_primary_key_stringified}"));
-                    quote::quote! {format!(#query_token_stream) }
-                };
+                let query_string_token_stream = quote::quote! {#postgresql_crud_snake_case::generate_delete_one_query_string(
+                    &#ident_table_name_call_token_stream,
+                    &#ident::#primary_key_snake_case(),
+                )};
                 let binded_query_token_stream = {
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
