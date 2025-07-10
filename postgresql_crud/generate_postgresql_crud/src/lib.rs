@@ -694,7 +694,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         );
         quote::quote! {
-            #ident_create_token_stream
+            // #ident_create_token_stream
             #impl_ident_create_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_create_token_stream 
         }
@@ -3546,16 +3546,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &common_token_stream,
     // );
     let generated = quote::quote! {
-        #common_token_stream
+        // #common_token_stream
 
-        #create_many_token_stream
-        #create_one_token_stream
-        #read_many_token_stream
-        #read_one_token_stream
-        #update_many_token_stream
-        #update_one_token_stream
-        #delete_many_token_stream
-        #delete_one_token_stream
+        // #create_many_token_stream
+        // #create_one_token_stream
+        // #read_many_token_stream
+        // #read_one_token_stream
+        // #update_many_token_stream
+        // #update_one_token_stream
+        // #delete_many_token_stream
+        // #delete_one_token_stream
     };
     // if ident == "" {
         // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
