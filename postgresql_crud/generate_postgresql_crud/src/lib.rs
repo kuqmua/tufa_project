@@ -2699,11 +2699,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         };
                     };
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-                    let column_fields_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
+                    let order_by_column_match_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
                         let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                         let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                         quote::quote! {
-                            #ident_select_upper_camel_case::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_token_stream.to_string()
+                            #ident_select_upper_camel_case::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_token_stream
                         }
                     });
                     quote::quote! {#postgresql_crud_snake_case::generate_read_many_query_string(
@@ -2722,8 +2722,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #additional_parameters_snake_case.push_str(&format!(
                                     #additional_parameters_order_by_handle_token_stream,
                                     #prefix_snake_case,
-                                    match &#value_snake_case.#column_snake_case {
-                                        #column_fields_token_stream
+                                    &match &#value_snake_case.#column_snake_case {
+                                        #order_by_column_match_token_stream
                                     },
                                     #order_snake_case,
                                 ));
