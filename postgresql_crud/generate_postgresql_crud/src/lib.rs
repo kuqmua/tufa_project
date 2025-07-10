@@ -2659,7 +2659,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 //todo maybe but checks into constructor function and use it inside deserilizaton serde impl
                 let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
-                    let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {{}}"));
                     let additional_paramaters_initialization_token_stream = generate_read_or_delete_many_additional_paramaters_initialization_token_stream(&ReadManyOrDeleteMany::ReadMany);
                     let additional_parameters_order_by_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{}}{order_snake_case} {by_snake_case} {{}} {{}}"));
                     let prefix_to_additional_parameters_token_stream = quote::quote! {
@@ -2669,52 +2668,47 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         };
                     };
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-                    quote::quote! {
+                    quote::quote! {#postgresql_crud_snake_case::generate_read_many_query_string(
+                        #generate_select_query_part_parameters_payload_select_call_token_stream,
                         {
-                            format!(
-                                #handle_token_stream,
-                                #generate_select_query_part_parameters_payload_select_call_token_stream,
-                                {
-                                    #increment_initialization_token_stream
-                                    #additional_paramaters_initialization_token_stream
-                                    {
-                                        #prefix_to_additional_parameters_token_stream
-                                        let #value_snake_case = &#parameters_snake_case.#payload_snake_case.#order_by_snake_case;
-                                        let #order_snake_case = match &#value_snake_case.#order_snake_case {
-                                            Some(#value_snake_case) => #value_snake_case.to_snake_case_stringified(),
-                                            None => #postgresql_crud_order_token_stream::default().to_snake_case_stringified(),
-                                        };
-                                        #additional_parameters_snake_case.push_str(&format!(
-                                            #additional_parameters_order_by_handle_token_stream,
-                                            #prefix_snake_case,
-                                            #value_snake_case.#column_snake_case.pick_select(),//todo refactor pick_select
-                                            #order_snake_case,
-                                        ));
-                                    }
-                                    {
-                                        #prefix_to_additional_parameters_token_stream
-                                        let #value_snake_case = match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
-                                            &#parameters_snake_case.#payload_snake_case.pagination,
-                                            &mut #increment_snake_case,
-                                            &"",
-                                            std::primitive::bool::default()
-                                        ) {
-                                            Ok(#value_snake_case) => #value_snake_case,
-                                            Err(#error_0_token_stream) => {
-                                                #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                            },
-                                        };
-                                        #additional_parameters_snake_case.push_str(&format!(
-                                            "{}{}",
-                                            #prefix_snake_case,
-                                            #value_snake_case
-                                        ));
-                                    }
-                                    #additional_parameters_snake_case
-                                }
-                            )
+                            #increment_initialization_token_stream
+                            #additional_paramaters_initialization_token_stream
+                            {
+                                #prefix_to_additional_parameters_token_stream
+                                let #value_snake_case = &#parameters_snake_case.#payload_snake_case.#order_by_snake_case;
+                                let #order_snake_case = match &#value_snake_case.#order_snake_case {
+                                    Some(#value_snake_case) => #value_snake_case.to_snake_case_stringified(),
+                                    None => #postgresql_crud_order_token_stream::default().to_snake_case_stringified(),
+                                };
+                                #additional_parameters_snake_case.push_str(&format!(
+                                    #additional_parameters_order_by_handle_token_stream,
+                                    #prefix_snake_case,
+                                    #value_snake_case.#column_snake_case.pick_select(),//todo refactor pick_select
+                                    #order_snake_case,
+                                ));
+                            }
+                            {
+                                #prefix_to_additional_parameters_token_stream
+                                let #value_snake_case = match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
+                                    &#parameters_snake_case.#payload_snake_case.pagination,
+                                    &mut #increment_snake_case,
+                                    &"",
+                                    std::primitive::bool::default()
+                                ) {
+                                    Ok(#value_snake_case) => #value_snake_case,
+                                    Err(#error_0_token_stream) => {
+                                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                                    },
+                                };
+                                #additional_parameters_snake_case.push_str(&format!(
+                                    "{}{}",
+                                    #prefix_snake_case,
+                                    #value_snake_case
+                                ));
+                            }
+                            #additional_parameters_snake_case
                         }
-                    }
+                    )}
                 };
                 let binded_query_token_stream = quote::quote! {
                     let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
