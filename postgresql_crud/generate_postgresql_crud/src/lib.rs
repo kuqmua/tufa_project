@@ -1042,32 +1042,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 quote::quote! {vec![#elements_token_stream]}
             }
         );
-        //todo this is temporary impl. maybe should write trait and implement different logic
-        let pick_select_token_stream = {
-            let fields_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
-                let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
-                let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
-                quote::quote! {
-                    Self::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_token_stream.to_string()
-                }
-            });
-            quote::quote! {
-                impl #ident_select_upper_camel_case {
-                    fn pick_select(&self) -> #std_string_string {
-                        match &self {
-                            #fields_token_stream
-                        }
-                    }
-                }
-            }
-        };
         quote::quote! {
             #ident_select_token_stream
             #impl_std_fmt_display_for_ident_select_token_stream
             #impl_error_occurence_lib_to_std_string_string_for_ident_select_token_stream
             #impl_postgresql_crud_all_enum_variants_array_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_select_token_stream
-            //todo this is temporary impl. maybe should write trait and implement different logic
-            #pick_select_token_stream
         }
     };
     let select_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = quote::quote!{
@@ -2720,6 +2699,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         };
                     };
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
+                    let column_fields_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper|{
+                        let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
+                        let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
+                        quote::quote! {
+                            #ident_select_upper_camel_case::#field_ident_upper_camel_case(_) => #field_ident_double_quotes_token_stream.to_string()
+                        }
+                    });
                     quote::quote! {#postgresql_crud_snake_case::generate_read_many_query_string(
                         &#ident_table_name_call_token_stream,
                         #generate_select_query_part_parameters_payload_select_call_token_stream,
@@ -2736,7 +2722,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #additional_parameters_snake_case.push_str(&format!(
                                     #additional_parameters_order_by_handle_token_stream,
                                     #prefix_snake_case,
-                                    #value_snake_case.#column_snake_case.pick_select(),//todo refactor pick_select
+                                    match &#value_snake_case.#column_snake_case {
+                                        #column_fields_token_stream
+                                    },
                                     #order_snake_case,
                                 ));
                             }
