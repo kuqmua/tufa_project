@@ -2846,30 +2846,22 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     quote::quote! {}
                 });
                 let query_string_token_stream = {
-                    let query_token_stream = generate_quotes::double_quotes_token_stream(
-                        &format!("{select_snake_case} {{}} {from_snake_case} {ident_snake_case_stringified} {where_snake_case} {{}}"), //{primary_key_field_ident} = $1
-                    );
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
-                    quote::quote! {
-                        {
-                            let mut increment: std::primitive::u64 = 0;
-                            format!(
-                                #query_token_stream,
-                                #generate_select_query_part_parameters_payload_select_call_token_stream,
-                                match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
-                                    &parameters.payload.#primary_key_field_ident,
-                                    &mut increment,
-                                    &#primary_key_field_ident_double_quotes_token_stream,
-                                    false
-                                ) {
-                                    Ok(value) => value,
-                                    Err(#error_0_token_stream) => {
-                                        #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
-                                    }
-                                }
-                            )
+                    quote::quote! {#postgresql_crud_snake_case::generate_read_one_query_string(
+                        &#ident_table_name_call_token_stream,
+                        #generate_select_query_part_parameters_payload_select_call_token_stream,
+                        match #postgresql_crud_postgresql_type_where_filter_query_part_token_stream(
+                            &#parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
+                            &mut 0,
+                            &#primary_key_field_ident_double_quotes_token_stream,
+                            false
+                        ) {
+                            Ok(#value_snake_case) => #value_snake_case,
+                            Err(#error_0_token_stream) => {
+                                #query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream
+                            }
                         }
-                    }
+                    )}
                 };
                 let binded_query_token_stream = {
                     let binded_query_modifications_token_stream = quote::quote! {

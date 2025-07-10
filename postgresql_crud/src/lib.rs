@@ -2286,6 +2286,9 @@ pub fn generate_create_one_query_string(table: &std::primitive::str, columns: &s
 pub fn generate_read_many_query_string(table: &std::primitive::str, select_string: std::string::String, where_string: std::string::String) -> std::string::String {
     format!("select {select_string} from {table} {where_string}")
 }
+pub fn generate_read_one_query_string(table: &std::primitive::str, select_string: std::string::String, where_string: std::string::String) -> std::string::String {
+    format!("select {select_string} from {table} where {where_string}")
+}
 
 
 pub fn generate_column_queals_value_comma_update_one_query_part(column: &std::primitive::str, value: std::string::String) -> std::string::String {
