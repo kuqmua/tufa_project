@@ -2988,13 +2988,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let parameters_token_stream = generate_parameters_pattern_token_stream(
             &operation,
             {
+                let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
                 let std_vec_vec_ident_update_token_stream = quote::quote!{std::vec::Vec<#ident_update_upper_camel_case>};
-                let ident_operation_payload_vec_token_stream = {
-                    let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
-                    quote::quote! {
-                        #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
-                        pub struct #ident_operation_payload_upper_camel_case(#std_vec_vec_ident_update_token_stream);
-                    }
+                let ident_operation_payload_vec_token_stream = quote::quote! {
+                    #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
+                    pub struct #ident_operation_payload_upper_camel_case(#std_vec_vec_ident_update_token_stream);
                 };
                 let ident_operation_payload_try_new_error_named_upper_camel_case = format!("{ident}{operation}PayloadTryNewErrorNamed").parse::<proc_macro2::TokenStream>().unwrap();
                 let not_unique_primary_key_upper_camel_case = naming::NotUniquePrimaryKeyUpperCamelCase;
@@ -3036,10 +3034,100 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     }
                 };
+                let impl_serde_deserialize_for_ident_update_many_payload_token_stream = {
+                    let tuple_struct_ident_operation_payload_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                        &format!("tuple struct {ident_operation_payload_upper_camel_case}")
+                    );
+                    let tuple_struct_ident_operation_payload_with_1_element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
+                        &format!("tuple struct {ident_operation_payload_upper_camel_case} with 1 element")
+                    );
+                    let match_ident_update_many_payload_try_new_field0_token_stream = quote::quote!{
+                        match #ident_operation_payload_upper_camel_case::try_new(__field0) {
+                            Ok(value) => _serde::__private::Ok(value),
+                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                        }
+                    };
+                    let ident_operation_payload_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_operation_payload_upper_camel_case);
+                    quote::quote! {
+                        const _: () = {
+                            #[allow(unused_extern_crates, clippy::useless_attribute)]
+                            extern crate serde as _serde;
+                            #[automatically_derived]
+                            impl<'de> _serde::Deserialize<'de> for #ident_operation_payload_upper_camel_case {
+                                fn deserialize<__D>(
+                                    __deserializer: __D,
+                                ) -> _serde::__private::Result<Self, __D::Error>
+                                where
+                                    __D: _serde::Deserializer<'de>,
+                                {
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: _serde::__private::PhantomData<#ident_operation_payload_upper_camel_case>,
+                                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = #ident_operation_payload_upper_camel_case;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter<'_>,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                #tuple_struct_ident_operation_payload_double_quotes_token_stream,
+                                            )
+                                        }
+                                        #[inline]
+                                        fn visit_newtype_struct<__E>(
+                                            self,
+                                            __e: __E,
+                                        ) -> _serde::__private::Result<Self::Value, __E::Error>
+                                        where
+                                            __E: _serde::Deserializer<'de>,
+                                        {
+                                            let __field0: #std_vec_vec_ident_update_token_stream = <#std_vec_vec_ident_update_token_stream as _serde::Deserialize>::deserialize(__e)?;
+                                            #match_ident_update_many_payload_try_new_field0_token_stream
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match _serde::de::SeqAccess::next_element::<#std_vec_vec_ident_update_token_stream>(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &#tuple_struct_ident_operation_payload_with_1_element_double_quotes_token_stream,
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            #match_ident_update_many_payload_try_new_field0_token_stream
+                                        }
+                                    }
+                                    _serde::Deserializer::deserialize_newtype_struct(
+                                        __deserializer,
+                                        #ident_operation_payload_double_quotes_token_stream,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<#ident_operation_payload_upper_camel_case>,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            }
+                        };
+                    }
+                };
                 quote::quote! {
                     #ident_operation_payload_vec_token_stream
                     #ident_operation_payload_try_new_error_named_token_stream
                     #impl_ident_operation_payload_vec_token_stream
+                    #impl_serde_deserialize_for_ident_update_many_payload_token_stream
                 }
             }
         );

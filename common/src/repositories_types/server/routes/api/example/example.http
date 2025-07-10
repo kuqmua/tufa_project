@@ -744,11 +744,10 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
 
 [
   {
-    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 2,
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 10,
     "column_0": {
-      "value": 75
-    }
-    ,
+      "value": 10
+    },
     "animal_as_not_null_jsonb_object": {
       "value": [
         {
@@ -772,7 +771,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
               ],
               "update": [
                 {
-                  "id": "4f34fb0b-36b6-443e-8b76-054f3912f977",
+                  "id": "8e16ea39-6c1a-4638-864b-4a25caa8fb09",
                   "fields": [
                     {
                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
@@ -783,7 +782,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                 }
               ],
               "delete": [
-                "e3b0d053-29f9-4c18-b5a6-fe7b6764d572"
+                "4a11b550-14eb-449c-8c4b-bd6dcd3949ab"
               ]
             }
           }
@@ -809,7 +808,7 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
               ],
               "update": [
                 {
-                  "id": "26ea4698-8a3b-4aa7-813f-ea66c37b3306",
+                  "id": "c92c6ce2-66b6-489a-b6f9-ce8142976e4d",
                   "fields": [
                     {
                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
@@ -820,7 +819,91 @@ commit: f7e8bd75a29858f2be33b8076f2ebda4bd413a70
                 }
               ],
               "delete": [
-                "9a2b7a6b-e5c5-4b46-ae34-5c899042c4ee"
+                "272c4b91-c9c4-4cb5-97da-d5bb5db8baaa"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  },
+  {
+    "column_6e88acb0_c566_4fef_8a09_66a41338cf36": 11,
+    "column_0": {
+      "value": 10
+    },
+    "animal_as_not_null_jsonb_object": {
+      "value": [
+        {
+          "field_0": {
+            "value": [
+              {
+                "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "field_1": {
+            "value": {
+              "create": [
+                {
+                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+                }
+              ],
+              "update": [
+                {
+                  "id": "8e16ea39-6c1a-4638-864b-4a25caa8fb09",
+                  "fields": [
+                    {
+                      "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                        "value": 0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "delete": [
+                "4a11b550-14eb-449c-8c4b-bd6dcd3949ab"
+              ]
+            }
+          }
+        },
+        {
+          "field_2": {
+            "value": [
+              {
+                "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                  "value": 0
+                }
+              }
+            ]
+          }
+        },
+        {
+          "field_3": {
+            "value": {
+              "create": [
+                {
+                  "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
+                }
+              ],
+              "update": [
+                {
+                  "id": "c92c6ce2-66b6-489a-b6f9-ce8142976e4d",
+                  "fields": [
+                    {
+                      "column_113f3662_35a2_4a7a_9326_03bbd441815f": {
+                        "value": 0
+                      }
+                    }
+                  ]
+                }
+              ],
+              "delete": [
+                "272c4b91-c9c4-4cb5-97da-d5bb5db8baaa"
               ]
             }
           }
