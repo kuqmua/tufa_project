@@ -3356,26 +3356,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // );
     let delete_many_token_stream = {
         let operation = Operation::DeleteMany;
-        let no_payload_fields_syn_variant_wrapper = new_syn_variant_wrapper(
-            &naming::NoPayloadFieldsUpperCamelCase,
-            Some(macros_helpers::status_code::StatusCode::BadRequest400),
-            std::vec::Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
-        );
-        let no_primary_keys_syn_variant_wrapper = new_syn_variant_wrapper(
-            &naming::NoPrimaryKeysUpperCamelCase,
-            Some(macros_helpers::status_code::StatusCode::BadRequest400),
-            std::vec::Vec::<(macros_helpers::error_occurence::ErrorOccurenceFieldAttribute, &'static dyn std::fmt::Display, syn::punctuated::Punctuated<syn::PathSegment, syn::token::PathSep>)>::default(),
-        );
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(
             &{
                 let mut value = vec![];
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
-                value.push(no_payload_fields_syn_variant_wrapper.get_syn_variant());
-                value.push(no_primary_keys_syn_variant_wrapper.get_syn_variant());
                 value.push(row_and_rollback_syn_variant_wrapper.get_syn_variant());
-                value.push(not_unique_primary_key_update_syn_variant_wrapper.get_syn_variant());
                 value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 value
             },
