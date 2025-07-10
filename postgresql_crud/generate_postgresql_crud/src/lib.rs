@@ -2124,7 +2124,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let acquire_pool_and_connection_token_stream = {
             let postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!());
             quote::quote! {
-                let mut #pool_connection_snake_case = match #app_state_snake_case.get_postgres_pool().acquire().await {//todo find out difference between acquire and try_acquire
+                let mut #pool_connection_snake_case = match #app_state_snake_case.get_postgres_pool().acquire().await {
                     Ok(#value_snake_case) => #value_snake_case,
                     Err(#error_0_token_stream) => {
                         #postgresql_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream
