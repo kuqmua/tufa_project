@@ -3378,16 +3378,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let query_string_token_stream = {
                     let handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{delete_snake_case} {from_snake_case} {ident_snake_case_stringified} {{}} returning {primary_key_field_ident}"));
                     let additional_paramaters_initialization_token_stream = generate_read_or_delete_many_additional_paramaters_initialization_token_stream(&ReadManyOrDeleteMany::DeleteMany);
-                    quote::quote! {
-                        format!(
-                            #handle_token_stream,
-                            {
-                                #increment_initialization_token_stream
-                                #additional_paramaters_initialization_token_stream
-                                #additional_parameters_snake_case
-                            }
-                        )
-                    }
+                    quote::quote! {#postgresql_crud_snake_case::generate_delete_many_query_string(
+                        &#ident_table_name_call_token_stream,
+                        {
+                            #increment_initialization_token_stream
+                            #additional_paramaters_initialization_token_stream
+                            #additional_parameters_snake_case
+                        },
+                        &#ident::#primary_key_snake_case(),
+                    )}
                 };
                 let binded_query_token_stream = quote::quote! {
                     let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);

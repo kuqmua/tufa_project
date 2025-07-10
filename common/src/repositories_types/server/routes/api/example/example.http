@@ -970,19 +970,19 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     "column_6e88acb0_c566_4fef_8a09_66a41338cf36": {
       "logical_operator": "Or",
       "value": [
-        {
-          "Equal": {
-            "logical_operator": "Or",
-            "value": 8
-          }
-        }
-        # ,
         # {
-        #   "GreaterThan": {
+        #   "Equal": {
         #     "logical_operator": "Or",
         #     "value": 0
         #   }
         # },
+        {
+          "GreaterThan": {
+            "logical_operator": "Or",
+            "value": 5
+          }
+        }
+        # ,
         # {
         #   "Between": {
         #     "logical_operator": "Or",
@@ -1003,6 +1003,40 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
       ]
     }
     # ,
+    # "column_0": {
+    #   "logical_operator": "Or",
+    #   "value": [
+    #     {
+    #       "Equal": {
+    #         "logical_operator": "Or",
+    #         "value": 0
+    #       }
+    #     },
+    #     {
+    #       "GreaterThan": {
+    #         "logical_operator": "Or",
+    #         "value": 0
+    #       }
+    #     },
+    #     {
+    #       "Between": {
+    #         "logical_operator": "Or",
+    #         "value": {
+    #           "start": 0,
+    #           "end": 0
+    #         }
+    #       }
+    #     },
+    #     {
+    #       "In": {
+    #         "logical_operator": "Or",
+    #         "value": [
+    #           0
+    #         ]
+    #       }
+    #     }
+    #   ]
+    # },
     # "animal_as_not_null_jsonb_object": {
     #   "logical_operator": "Or",
     #   "value": [
@@ -1058,7 +1092,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               "logical_operator": "Or",
     #               "value": [
     #                 {
-    #                   "id": "fe01585e-6955-4922-b818-f406bc0fd82e",
+    #                   "id": "58e967c6-53c6-4bf1-b033-c33e8c5e0aae",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                 }
     #               ]
@@ -1071,7 +1105,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 0
     #               ],
     #               "value": {
-    #                 "id": "6f22aee5-e3c7-426c-b006-8a78d1ed296b",
+    #                 "id": "b3f8d3fc-f6cf-4484-8de8-0017b8d8b14c",
     #                 "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #               }
     #             }
@@ -1094,7 +1128,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               "value": [
     #                 [
     #                   {
-    #                     "id": "bc21248f-8951-46ea-81c4-bb25a653bad1",
+    #                     "id": "dcd80011-e3a0-4b6f-8127-3c5fa57052b1",
     #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                   }
     #                 ]
@@ -1109,7 +1143,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               ],
     #               "value": [
     #                 {
-    #                   "id": "73cd320f-c4a5-4d0b-9508-126b9846f2d4",
+    #                   "id": "78cad082-5c25-46db-9f0a-b2885c0f2bc8",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                 }
     #               ]
@@ -1120,7 +1154,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               "logical_operator": "Or",
     #               "value": [
     #                 {
-    #                   "id": "b972711e-a1fd-49f1-acad-d3f13d29ff56",
+    #                   "id": "2be276d3-4499-4852-aae2-518891a62e1c",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                 }
     #               ]
@@ -1131,7 +1165,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #               "logical_operator": "Or",
     #               "value": [
     #                 {
-    #                   "id": "e8912566-384a-4aab-98ad-280da80e2924",
+    #                   "id": "10c50cb8-2e3d-492b-8196-05d3b75bff6d",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                 }
     #               ]
@@ -1144,14 +1178,14 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 {
     #                   "Equal": {
     #                     "logical_operator": "Or",
-    #                     "value": "b9335379-81c5-45e0-b157-04a7ac3d101b"
+    #                     "value": "6d286cd4-b5bd-49bb-a67e-da203455f925"
     #                   }
     #                 },
     #                 {
     #                   "In": {
     #                     "logical_operator": "Or",
     #                     "value": [
-    #                       "f2fa7cd3-ed0b-4f55-9c75-38059f285da3"
+    #                       "a29dd080-0044-46ea-9a1b-048f0aef9328"
     #                     ]
     #                   }
     #                 },
@@ -1259,7 +1293,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 "logical_operator": "Or",
     #                 "value": [
     #                   {
-    #                     "id": "8597294a-b311-4c60-9beb-95ee8d198e40",
+    #                     "id": "6fcf641f-0f8f-4c18-aa97-fa1e97b223fa",
     #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                   }
     #                 ]
@@ -1272,7 +1306,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                   0
     #                 ],
     #                 "value": {
-    #                   "id": "a8641bf7-31ac-46cb-90a2-06a6747877c5",
+    #                   "id": "48b0eea0-6f36-4c38-8e1f-7d6cf38ebb8b",
     #                   "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                 }
     #               }
@@ -1295,7 +1329,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 "value": [
     #                   [
     #                     {
-    #                       "id": "8a7c2ca4-bada-4baa-a3a6-0e3087aeec69",
+    #                       "id": "fd5856b1-3560-4887-8a34-2f7d4c817651",
     #                       "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                     }
     #                   ]
@@ -1310,7 +1344,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 ],
     #                 "value": [
     #                   {
-    #                     "id": "cb7e5353-834c-4b63-bd07-ed86ee88490f",
+    #                     "id": "fb8cce63-a377-4bf2-86f9-d908b24d6320",
     #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                   }
     #                 ]
@@ -1321,7 +1355,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 "logical_operator": "Or",
     #                 "value": [
     #                   {
-    #                     "id": "470bbc00-12eb-4d8d-8bb1-da1556842dbb",
+    #                     "id": "e06778ca-0ba1-4ef1-a304-08b24a8f69e0",
     #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                   }
     #                 ]
@@ -1332,7 +1366,7 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                 "logical_operator": "Or",
     #                 "value": [
     #                   {
-    #                     "id": "9d3a89f9-edf6-4d89-9645-4aaa78e89e37",
+    #                     "id": "27e824e3-4a37-49ee-b462-136d3fcb3c22",
     #                     "column_113f3662_35a2_4a7a_9326_03bbd441815f": 0
     #                   }
     #                 ]
@@ -1345,14 +1379,14 @@ commit: 7566999599814c9ebc4cacfde468ae840697173c
     #                   {
     #                     "Equal": {
     #                       "logical_operator": "Or",
-    #                       "value": "67ead497-70b4-4ab2-8aa3-1202646b29e8"
+    #                       "value": "129347fa-7d63-4650-b97c-ea0afe842a95"
     #                     }
     #                   },
     #                   {
     #                     "In": {
     #                       "logical_operator": "Or",
     #                       "value": [
-    #                         "a342577e-b279-418c-9b07-ddaefaa2bfb7"
+    #                         "edd1df5c-92c8-464b-9ee7-ef06a374aaf7"
     #                       ]
     #                     }
     #                   },

@@ -2304,5 +2304,11 @@ pub fn generate_update_many_query_string(table: &std::primitive::str, elements: 
 pub fn generate_update_one_query_string(table: &std::primitive::str, columns: std::string::String, primary_key_field_name: &std::primitive::str, primary_key_query_part: std::string::String) -> std::string::String {
     format!("update {table} set {columns} where {primary_key_field_name} = {primary_key_query_part} returning {primary_key_field_name}")
 }
+pub fn generate_delete_many_query_string(table: &std::primitive::str, where_string: std::string::String, primary_key_field_name: &std::primitive::str) -> std::string::String {
+    format!("delete from {table} {where_string} returning {primary_key_field_name}")
+}
+
+
+
 
 
