@@ -2175,7 +2175,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let ident_operation_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&operation);
         quote::quote! {
             let #parameters_snake_case = #ident_operation_parameters_upper_camel_case {
-                //todo maybe use serde json parsing instead of axum. (coz less info)
                 #payload_snake_case: match serde_json::from_slice::<#ident_operation_payload_upper_camel_case>(
                     &#body_bytes_snake_case,
                 ) {
