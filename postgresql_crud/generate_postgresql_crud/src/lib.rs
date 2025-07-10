@@ -2890,10 +2890,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &type_variants_from_request_response_syn_variants,
                 );
             let try_operation_route_logic_token_stream = {
-                let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &{
-                    //todo where logic was commented. untill rewriting better where logic there is not point to add it again
-                    quote::quote! {}
-                });
+                let parameters_logic_token_stream = generate_parameters_logic_token_stream(&operation, &proc_macro2::TokenStream::new());
                 let query_string_token_stream = {
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {#postgresql_crud_snake_case::generate_read_one_query_string(
@@ -2957,10 +2954,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &operation,
                 &type_variants_from_request_response_syn_variants,
                 &ident_read_upper_camel_case,
-                &{
-                    //todo where logic was commented. untill rewriting better where logic there is not point to add it again
-                    quote::quote! {}
-                },
+                &proc_macro2::TokenStream::new(),
                 &quote::quote! {#value_snake_case},
             );
             quote::quote! {
