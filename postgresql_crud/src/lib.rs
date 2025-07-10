@@ -2277,15 +2277,16 @@ impl<T: Clone + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElemen
     }
 }
 
-pub fn generate_create_many_query_string(columns: &std::primitive::str, values: std::string::String, primary_key_field_name: &std::primitive::str) -> std::string::String {
-    format!("insert into example ({columns}) values {values} returning {primary_key_field_name}")
+pub fn generate_create_many_query_string(table: &std::primitive::str, columns: &std::primitive::str, values: std::string::String, primary_key_field_name: &std::primitive::str) -> std::string::String {
+    format!("insert into {table} ({columns}) values {values} returning {primary_key_field_name}")
 }
-pub fn generate_create_one_query_string(columns: &std::primitive::str, values: std::string::String, primary_key_field_name: &std::primitive::str) -> std::string::String {
-    format!("insert into example ({columns}) values ({values}) returning {primary_key_field_name}")
+pub fn generate_create_one_query_string(table: &std::primitive::str, columns: &std::primitive::str, values: std::string::String, primary_key_field_name: &std::primitive::str) -> std::string::String {
+    format!("insert into {table} ({columns}) values ({values}) returning {primary_key_field_name}")
 }
-pub fn generate_read_many_query_string(select_string: std::string::String, where_string: std::string::String) -> std::string::String {
-    format!("select {select_string} from example {where_string}")
+pub fn generate_read_many_query_string(table: &std::primitive::str, select_string: std::string::String, where_string: std::string::String) -> std::string::String {
+    format!("select {select_string} from {table} {where_string}")
 }
+
 
 pub fn generate_column_queals_value_comma_update_one_query_part(column: &std::primitive::str, value: std::string::String) -> std::string::String {
     format!("{column} = {value},")

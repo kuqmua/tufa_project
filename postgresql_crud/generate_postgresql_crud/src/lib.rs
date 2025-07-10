@@ -436,6 +436,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let ident_table_name_call_token_stream = quote::quote!{#ident::#table_name_snake_case()};
     let generate_select_query_part_parameters_payload_select_call_token_stream = quote::quote!{
         #ident::#generate_select_query_part_snake_case(&#parameters_snake_case.#payload_snake_case.#select_snake_case)
     };
@@ -2458,6 +2459,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let query_string_token_stream = {
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {#postgresql_crud_snake_case::generate_create_many_query_string(
+                        &#ident_table_name_call_token_stream,
                         #column_names_double_quotes_token_stream,
                         {
                             #increment_initialization_token_stream
@@ -2565,6 +2567,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {
                         #postgresql_crud_snake_case::generate_create_one_query_string(
+                            &#ident_table_name_call_token_stream,
                             #column_names_double_quotes_token_stream,
                             match #parameters_snake_case.#payload_snake_case.#create_query_part_snake_case(&mut 0) {
                                 Ok(#value_snake_case) => #value_snake_case,
@@ -2669,6 +2672,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     };
                     let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
                     quote::quote! {#postgresql_crud_snake_case::generate_read_many_query_string(
+                        &#ident_table_name_call_token_stream,
                         #generate_select_query_part_parameters_payload_select_call_token_stream,
                         {
                             #increment_initialization_token_stream
