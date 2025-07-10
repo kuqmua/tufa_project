@@ -3041,12 +3041,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let tuple_struct_ident_operation_payload_with_1_element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                         &format!("tuple struct {ident_operation_payload_upper_camel_case} with 1 element")
                     );
-                    let match_ident_update_many_payload_try_new_field0_token_stream = quote::quote!{
-                        match #ident_operation_payload_upper_camel_case::try_new(__field0) {
-                            Ok(value) => _serde::__private::Ok(value),
-                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                        }
-                    };
+                    let match_ident_update_many_payload_try_new_field0_token_stream = postgresql_crud_macros_common::generate_match_try_new_in_deserialize_token_stream(
+                        &ident_operation_payload_upper_camel_case,
+                        &quote::quote!{__field0}
+                    );
                     let ident_operation_payload_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_operation_payload_upper_camel_case);
                     quote::quote! {
                         const _: () = {
