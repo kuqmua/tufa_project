@@ -462,14 +462,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &content_token_stream
         )
     };
-    let generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = |index: std::primitive::usize|{
-        if index == fields_len_without_primary_key {
-            proc_macro2::TokenStream::new()
-        }
-        else {
-            quote::quote!{is_first_push_to_additional_parameters_already_happend = true;}
-        }
-    };
     #[derive(Debug)]
     struct SynVariantWrapper {
         variant: syn::Variant,
@@ -846,14 +838,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let additional_parameters_modification_token_stream = fields.iter().enumerate().map(|(index, element)| {
                     let field_ident = &element.field_ident;
                     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                    let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = generate_maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream(index);
+                    let maybe_is_first_push_to_additional_parameters_already_happend_true_token_stream = if index == fields_len_without_primary_key {
+                        proc_macro2::TokenStream::new()
+                    }
+                    else {
+                        quote::quote!{is_first_push_to_additional_parameters_already_happend = true;}
+                    };
                     quote::quote! {
                         if let Some(#value_snake_case) = &#value_snake_case.#field_ident {
                             match postgresql_crud::PostgresqlTypeWhereFilter::query_part(
                                 #value_snake_case,
                                 increment,
                                 &#field_ident_double_quotes_token_stream,
-                                is_first_push_to_additional_parameters_already_happend, //todo generate is in proc macro (first element ignore)
+                                is_first_push_to_additional_parameters_already_happend,
                             ) {
                                 Ok(#value_snake_case) => {
                                     #additional_parameters_snake_case.push_str(&#value_snake_case);
