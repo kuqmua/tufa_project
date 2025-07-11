@@ -144,7 +144,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["binded", "query"],
     ["current", "vec", "len"],
     ["into", "inner", "type", "vec"],
-    ["not", "unique", "column"],
+    ["not", "unique", "field"],
     ["get", "axum", "http", "status", "code"],
     ["body", "bytes"],
     ["into", "response"],

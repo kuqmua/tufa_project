@@ -1522,13 +1522,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
 
     let std_vec_vec_struct_options_ident_token_stream = quote::quote! {std::vec::Vec::<#ident_read_upper_camel_case>};
-    // //todo rename not_unique_column to something what mean json tree getter too
-    let not_unique_column_syn_variant_wrapper = new_syn_variant_wrapper(
-        &naming::NotUniqueColumnUpperCamelCase,
+    let not_unique_field_syn_variant_wrapper = new_syn_variant_wrapper(
+        &naming::NotUniqueFieldUpperCamelCase,
         Some(macros_helpers::status_code::StatusCode::BadRequest400),
         vec![(
             macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string_serialize_deserialize.clone(),
-            &naming::NotUniqueColumnSnakeCase,
+            &naming::NotUniqueFieldSnakeCase,
             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&ident_select_upper_camel_case.to_string()]),
         )],
     );
@@ -2556,7 +2555,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     value.push(*element);
                 }
                 value.push(query_part_syn_variant_wrapper.get_syn_variant());
-                value.push(not_unique_column_syn_variant_wrapper.get_syn_variant());
+                value.push(not_unique_field_syn_variant_wrapper.get_syn_variant());
                 value
             },
             &operation,
@@ -2680,7 +2679,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_ident_try_operation_error_named_token_stream(&operation, &{
                 let mut value = common_http_request_syn_variants.clone();
-                value.push(not_unique_column_syn_variant_wrapper.get_syn_variant().clone());
+                value.push(not_unique_field_syn_variant_wrapper.get_syn_variant().clone());
                 value
             });
             let try_operation_token_stream = generate_try_operation_token_stream(
@@ -2741,7 +2740,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 for element in &common_route_syn_variants {
                     value.push(*element);
                 }
-                value.push(not_unique_column_syn_variant_wrapper.get_syn_variant());
+                value.push(not_unique_field_syn_variant_wrapper.get_syn_variant());
                 value.push(query_part_syn_variant_wrapper.get_syn_variant());
                 value
             },
@@ -2824,7 +2823,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let try_operation_token_stream = {
             let try_operation_error_named_token_stream = generate_ident_try_operation_error_named_token_stream(&operation, &{
                 let mut value = common_http_request_syn_variants.clone();
-                value.push(not_unique_column_syn_variant_wrapper.get_syn_variant().clone());
+                value.push(not_unique_field_syn_variant_wrapper.get_syn_variant().clone());
                 value
             });
             let try_operation_token_stream = generate_try_operation_token_stream(
