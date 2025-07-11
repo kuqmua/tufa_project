@@ -12,5 +12,4 @@ pub mod routes;
 pub mod session_state;
 pub mod telemetry;
 pub mod traits;
-pub mod try_build_server;
 pub mod utils;
