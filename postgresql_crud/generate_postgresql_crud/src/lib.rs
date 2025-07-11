@@ -580,10 +580,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let wrap_into_axum_response_token_stream = |axum_json_content_token_stream: &dyn quote::ToTokens, status_code_token_stream: &dyn quote::ToTokens| {
-        //todo make explicit serde_json::to_vec https://docs.rs/serde_json/1.0.125/serde_json/fn.to_vec.html coz axum::Json() in case of error returns http response - and that is bad
-        // proof https://docs.rs/axum/latest/src/axum/json.rs.html#182-210
         quote::quote! {
-            let mut response = axum::response::IntoResponse::into_response(axum::Json(#axum_json_content_token_stream));
+            let mut response = axum::response::IntoResponse::into_response(
+                axum::Json(#axum_json_content_token_stream)
+            );
             *response.status_mut() = #status_code_token_stream;
             return response;
         }
