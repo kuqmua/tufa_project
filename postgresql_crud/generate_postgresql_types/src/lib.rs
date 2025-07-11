@@ -1342,6 +1342,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 }
                 let ident_standart_not_null_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_standart_not_null_upper_camel_case);
+                let ident_standart_not_null_origin_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_standart_not_null_origin_upper_camel_case);
                 enum ShouldAddBorrow {
                     True,
                     False
@@ -1383,7 +1384,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     let generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_standart_not_null_double_quotes_token_stream, &#self_dot_zero_token_stream #value_token_stream)}
+                        quote::quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_standart_not_null_origin_double_quotes_token_stream, &#self_dot_zero_token_stream #value_token_stream)}
                     };
                     let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber| {
                         let parameter_number_token_stream = {
@@ -1391,7 +1392,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             quote::quote! {#(#value)*}
                         };
                         quote::quote! {
-                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_double_quotes_token_stream, false as std::primitive::usize #parameter_number_token_stream)?;
+                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_origin_double_quotes_token_stream, false as std::primitive::usize #parameter_number_token_stream)?;
                         }
                     };
                     let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Two);
@@ -1528,7 +1529,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let serde_deserialize = {
-                    let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&postgresql_type);
+                    let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                     let postgresql_type_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
 
                     let struct_visitor_token_stream = quote::quote! {
@@ -1569,7 +1570,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let serde_deserializer_deserialize_newtype_struct_token_stream = quote::quote! {
                         _serde::Deserializer::deserialize_newtype_struct(
                             __deserializer,
-                            #ident_standart_not_null_double_quotes_token_stream,
+                            #ident_standart_not_null_origin_double_quotes_token_stream,
                             __Visitor {
                                 marker: serde::__private::PhantomData::<#ident_standart_not_null_origin_upper_camel_case>,
                                 lifetime: serde::__private::PhantomData,
@@ -1687,7 +1688,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
 
                     let generate_fields_serde_de_seq_access_next_element_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
-                        let error_message_token_stream = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(&postgresql_type, vec_token_stream.len());
+                        let error_message_token_stream = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(
+                            &ident_standart_not_null_origin_upper_camel_case,
+                            vec_token_stream.len()
+                        );
                         let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
                             let field_index_token_stream = generate_field_index_token_stream(index);
                             let index_usize_token_stream = format!("{index}usize").parse::<proc_macro2::TokenStream>().unwrap();

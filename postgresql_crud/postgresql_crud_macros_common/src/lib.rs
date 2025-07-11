@@ -148,8 +148,8 @@ pub fn crate_query_part_error_named_token_stream() -> proc_macro2::TokenStream {
 pub fn generate_struct_ident_double_quotes_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_token_stream(&format!("struct {value}"))
 }
-pub fn generate_struct_ident_with_number_elements_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> proc_macro2::TokenStream {
-    generate_quotes::double_quotes_token_stream(&format!("struct {postgresql_type_ident_where_element_tokens_upper_camel_case} with {length} elements"))
+pub fn generate_struct_ident_with_number_elements_double_quotes_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> proc_macro2::TokenStream {
+    generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {length} elements"))
 }
 
 pub fn generate_sqlx_types_json_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
@@ -162,10 +162,10 @@ pub fn generate_std_vec_vec_tokens_declaration_token_stream(type_token_stream: &
     quote::quote! {std::vec::Vec<#type_token_stream>}
 }
 
-pub fn generate_serde_deserialize_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> (proc_macro2::TokenStream, proc_macro2::TokenStream, proc_macro2::TokenStream) {
-    let struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_struct_ident_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case);
-    let struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream = generate_struct_ident_with_number_elements_double_quotes_token_stream(postgresql_type_ident_where_element_tokens_upper_camel_case, length);
-    let postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&postgresql_type_ident_where_element_tokens_upper_camel_case);
+pub fn generate_serde_deserialize_double_quotes_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> (proc_macro2::TokenStream, proc_macro2::TokenStream, proc_macro2::TokenStream) {
+    let struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_struct_ident_double_quotes_token_stream(ident);
+    let struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream = generate_struct_ident_with_number_elements_double_quotes_token_stream(ident, length);
+    let postgresql_type_ident_where_element_tokens_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident);
     (
         struct_postgresql_type_ident_where_element_tokens_double_quotes_token_stream,
         struct_postgresql_type_ident_where_element_tokens_with_number_elements_double_quotes_token_stream,
