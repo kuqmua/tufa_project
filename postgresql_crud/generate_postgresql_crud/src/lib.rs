@@ -1485,7 +1485,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let generate_match_update_query_part_primary_key_token_stream = |operation: &Operation, content_token_stream: &dyn quote::ToTokens|{
-        //todo fix naming
         let query_part_syn_variant_error_initialization_eprintln_response_creation_token_stream = generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &query_part_syn_variant_wrapper, file!(), line!(), column!());
         quote::quote!{
             match #content_token_stream.#update_query_part_primary_key_snake_case(&mut #increment_snake_case) {
@@ -1514,7 +1513,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {#postgresql_crud_postgresql_type_where_filter_token_stream #query_bind_snake_case},
         )
     };
-    //todo make primarykey trait and use it here instead
     let std_vec_vec_primary_key_field_type_read_token_stream = quote::quote! {std::vec::Vec::<#primary_key_field_type_as_primary_key_upper_camel_case>};
     let primary_key_field_type_as_postgresql_type_update_token_stream = quote::quote!{<#primary_key_field_type as postgresql_crud::PostgresqlType>::Update};
     let std_vec_vec_primary_key_field_type_as_postgresql_type_update_token_stream = quote::quote! {
