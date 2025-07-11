@@ -187,12 +187,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange,
     }
+    fn wrap_into_sqlx_postgres_types_pg_range_stringified(value: &dyn std::fmt::Display) -> std::string::String {
+        format!("sqlx::postgres::types::PgRange<{value}>")
+    }
     enum CanBeNullable {
         True,
         False,
     }
-    fn wrap_into_sqlx_postgres_types_pg_range_stringified(value: &dyn std::fmt::Display) -> std::string::String {
-        format!("sqlx::postgres::types::PgRange<{value}>")
+    enum CanBeAnArrayElement {
+        True,
+        False,
     }
     impl PostgresqlType {
         fn can_be_nullable(&self) -> CanBeNullable {
@@ -232,6 +236,45 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => CanBeNullable::True,
+            }
+        }
+        fn can_be_an_array_element(&self) -> CanBeAnArrayElement {
+            match &self {
+                Self::StdPrimitiveI16AsInt2 => CanBeAnArrayElement::True,
+                Self::StdPrimitiveI32AsInt4 => CanBeAnArrayElement::True,
+                Self::StdPrimitiveI64AsInt8 => CanBeAnArrayElement::True,
+                Self::StdPrimitiveF32AsFloat4 => CanBeAnArrayElement::True,
+                Self::StdPrimitiveF64AsFloat8 => CanBeAnArrayElement::True,
+                Self::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => CanBeAnArrayElement::False,
+                Self::StdPrimitiveI32AsSerialInitializedByPostgresql => CanBeAnArrayElement::False,
+                Self::StdPrimitiveI64AsBigSerialInitializedByPostgresql => CanBeAnArrayElement::False,
+                Self::SqlxPostgresTypesPgMoneyAsMoney => CanBeAnArrayElement::True,
+                Self::SqlxTypesBigDecimalAsNumeric => CanBeAnArrayElement::True,
+                Self::StdPrimitiveBoolAsBool => CanBeAnArrayElement::True,
+                Self::StdStringStringAsText => CanBeAnArrayElement::True,
+                Self::StdVecVecStdPrimitiveU8AsBytea => CanBeAnArrayElement::True,
+                Self::SqlxTypesChronoNaiveTimeAsTime => CanBeAnArrayElement::True,
+                Self::SqlxTypesTimeTimeAsTime => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgIntervalAsInterval => CanBeAnArrayElement::True,
+                Self::SqlxTypesTimeDateAsDate => CanBeAnArrayElement::True,
+                Self::SqlxTypesChronoNaiveDateAsDate => CanBeAnArrayElement::True,
+                Self::SqlxTypesChronoNaiveDateTimeAsTimestamp => CanBeAnArrayElement::True,
+                Self::SqlxTypesTimePrimitiveDateTimeAsTimestamp => CanBeAnArrayElement::True,
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => CanBeAnArrayElement::True,
+                Self::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => CanBeAnArrayElement::True,
+                Self::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => CanBeAnArrayElement::False,
+                Self::SqlxTypesUuidUuidAsUuidInitializedByClient => CanBeAnArrayElement::True,
+                Self::SqlxTypesIpnetworkIpNetworkAsInet => CanBeAnArrayElement::True,
+                Self::SqlxTypesMacAddressMacAddressAsMacAddr => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeAnArrayElement::True,
+                Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => CanBeAnArrayElement::True,
             }
         }
         fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
@@ -480,7 +523,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_type_pattern: PostgresqlTypePattern,
     }
-    //todo impl try_new or try_from
+    impl PostgresqlTypeRecord {
+        fn try_new() -> Result<Self, String> {
+            todo!()
+        }
+    }
     const _: () = {
         #[allow(unused_extern_crates, clippy::useless_attribute)]
         extern crate serde as _serde;
@@ -770,42 +817,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     PostgresqlTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable
-                    } => match &postgresql_type {
-                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
-                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => (),//arrays if serial types not implemented in postgresql
-                        PostgresqlType::StdPrimitiveI16AsInt2 |
-                        PostgresqlType::StdPrimitiveI32AsInt4 |
-                        PostgresqlType::StdPrimitiveI64AsInt8 |
-                        PostgresqlType::StdPrimitiveF32AsFloat4 |
-                        PostgresqlType::StdPrimitiveF64AsFloat8 |
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
-                        PostgresqlType::SqlxTypesBigDecimalAsNumeric |
-                        PostgresqlType::StdPrimitiveBoolAsBool |
-                        PostgresqlType::StdStringStringAsText |
-                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime |
-                        PostgresqlType::SqlxTypesTimeTimeAsTime |
-                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
-                        PostgresqlType::SqlxTypesTimeDateAsDate |
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp |
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz |
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
-                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
-                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange |
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => match &postgresql_type.can_be_nullable() {
+                    } => match &postgresql_type.can_be_an_array_element() {
+                        CanBeAnArrayElement::True => match &postgresql_type.can_be_nullable() {
                             CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable|{
                                 acc.push(PostgresqlTypeRecord {
                                     postgresql_type: postgresql_type.clone(),
@@ -824,7 +837,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     });
                                 });
                             }
-                        }
+                        },
+                        CanBeAnArrayElement::False => ()
                     }
                 });
                 acc
