@@ -9,7 +9,6 @@ pub mod init_dbs_logic;
 // pub mod issue_delivery_worker;
 pub mod providers;
 pub mod routes;
-pub mod server_wrapper;
 pub mod session_state;
 pub mod telemetry;
 pub mod traits;
