@@ -523,11 +523,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_type_pattern: PostgresqlTypePattern,
     }
-    impl PostgresqlTypeRecord {
-        fn try_new() -> Result<Self, String> {
-            todo!()
-        }
-    }
     const _: () = {
         #[allow(unused_extern_crates, clippy::useless_attribute)]
         extern crate serde as _serde;
@@ -631,11 +626,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 return _serde::__private::Err(_serde::de::Error::invalid_length(2usize, &"struct PostgresqlTypeRecord with 3 elements"));
                             }
                         };
-                        Ok(PostgresqlTypeRecord {
-                            postgresql_type: __field0,
-                            not_null_or_nullable: __field1,
-                            postgresql_type_pattern: __field2,
-                        })
+                        Ok(PostgresqlTypeRecord::from((__field0, __field1, __field2)))
                     }
                     #[inline]
                     fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
@@ -682,11 +673,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             _serde::__private::Some(__field2) => __field2,
                             _serde::__private::None => _serde::__private::de::missing_field("postgresql_type_pattern")?,
                         };
-                        Ok(PostgresqlTypeRecord {
-                            postgresql_type: __field0,
-                            not_null_or_nullable: __field1,
-                            postgresql_type_pattern: __field2,
-                        })
+                        Ok(PostgresqlTypeRecord::from((__field0, __field1, __field2)))
                     }
                 }
                 #[doc(hidden)]
@@ -705,16 +692,27 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     };
     impl std::convert::From<(PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)> for PostgresqlTypeRecord {
         fn from(value: (PostgresqlType, postgresql_crud_macros_common::NotNullOrNullable, PostgresqlTypePattern)) -> Self {
-            let error_message = "cant support nullable variants: ";
+            let cant_support_nullable_variants_message = "cant support nullable variants: ";
+            let cant_support_array_version_message = "cant support array_version: ";
             match &value.0.can_be_nullable() {
-                CanBeNullable::True => Self {
-                    postgresql_type: value.0,
-                    not_null_or_nullable: value.1,
-                    postgresql_type_pattern: value.2,
+                CanBeNullable::True => match &value.2 {
+                    PostgresqlTypePattern::Standart => Self {
+                        postgresql_type: value.0,
+                        not_null_or_nullable: value.1,
+                        postgresql_type_pattern: value.2,
+                    },
+                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => match &value.0.can_be_an_array_element() {
+                        CanBeAnArrayElement::True => Self {
+                            postgresql_type: value.0,
+                            not_null_or_nullable: value.1,
+                            postgresql_type_pattern: value.2,
+                        },
+                        CanBeAnArrayElement::False => panic!("{cant_support_array_version_message}{value:#?}"),
+                    },
                 },
                 CanBeNullable::False => {
                     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &value.1 {
-                        panic!("{error_message}{value:#?}");
+                        panic!("{cant_support_nullable_variants_message}{value:#?}");
                     }
                     match &value.2 {
                         PostgresqlTypePattern::Standart => Self {
@@ -722,74 +720,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             not_null_or_nullable: value.1,
                             postgresql_type_pattern: value.2,
                         },
-                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => Self {
-                                postgresql_type: value.0,
-                                not_null_or_nullable: value.1,
-                                postgresql_type_pattern: value.2,
+                        PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &value.0.can_be_an_array_element() {
+                            CanBeAnArrayElement::True => match &dimension1_not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => Self {
+                                    postgresql_type: value.0,
+                                    not_null_or_nullable: value.1,
+                                    postgresql_type_pattern: value.2,
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => panic!("{cant_support_nullable_variants_message}{value:#?}"),
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => panic!("{error_message}{value:#?}"),
+                            CanBeAnArrayElement::False => panic!("{cant_support_array_version_message}{value:#?}"),
                         },
-                        // PostgresqlTypePattern::ArrayDimension2 {
-                        //     dimension1_not_null_or_nullable,
-                        //     dimension2_not_null_or_nullable,
-                        // } => {
-                        //     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
-                        //         panic!("{error_message}{value:#?}");
-                        //     }
-                        //     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {
-                        //         panic!("{error_message}{value:#?}");
-                        //     }
-                        //     Self {
-                        //         postgresql_type: value.0,
-                        //         not_null_or_nullable: value.1,
-                        //         postgresql_type_pattern: value.2,
-                        //     }
-                        // },
-                        // PostgresqlTypePattern::ArrayDimension3 {
-                        //     dimension1_not_null_or_nullable,
-                        //     dimension2_not_null_or_nullable,
-                        //     dimension3_not_null_or_nullable,
-                        // } => {
-                        //     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
-                        //         panic!("{error_message}{value:#?}");
-                        //     }
-                        //     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {
-                        //         panic!("{error_message}{value:#?}");
-                        //     }
-                        //     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {
-                        //         panic!("{error_message}{value:#?}");
-                        //     }
-                        //     Self {
-                        //         postgresql_type: value.0,
-                        //         not_null_or_nullable: value.1,
-                        //         postgresql_type_pattern: value.2,
-                        //     }
-                        // },
-                        // PostgresqlTypePattern::ArrayDimension4 {
-                        //     dimension1_not_null_or_nullable,
-                        //     dimension2_not_null_or_nullable,
-                        //     dimension3_not_null_or_nullable,
-                        //     dimension4_not_null_or_nullable,
-                        // } => {
-                        //     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
-                        //         panic!("{error_message}{value:#?}");
-                        //     }
-                        //     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension2_not_null_or_nullable {
-                        //         panic!("{error_message}{value:#?}");
-                        //     }
-                        //     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension3_not_null_or_nullable {
-                        //         panic!("{error_message}{value:#?}");
-                        //     }
-                        //     if let postgresql_crud_macros_common::NotNullOrNullable::Nullable = &dimension4_not_null_or_nullable {
-                        //         panic!("{error_message}{value:#?}");
-                        //     }
-                        //     Self {
-                        //         postgresql_type: value.0,
-                        //         not_null_or_nullable: value.1,
-                        //         postgresql_type_pattern: value.2,
-                        //     }
-                        // },
                     }
                 }
             }
