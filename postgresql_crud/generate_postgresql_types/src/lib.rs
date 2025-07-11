@@ -480,6 +480,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         not_null_or_nullable: postgresql_crud_macros_common::NotNullOrNullable,
         postgresql_type_pattern: PostgresqlTypePattern,
     }
+    //todo impl try_new or try_from
     const _: () = {
         #[allow(unused_extern_crates, clippy::useless_attribute)]
         extern crate serde as _serde;
@@ -772,7 +773,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     } => match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
                         PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
-                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => (),//arrays if serial types not implemented in postgresql
+                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => (),//arrays if serial types not implemented in postgresql
                         PostgresqlType::StdPrimitiveI16AsInt2 |
                         PostgresqlType::StdPrimitiveI32AsInt4 |
                         PostgresqlType::StdPrimitiveI64AsInt8 |
@@ -792,7 +794,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp |
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz |
-                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
@@ -4018,7 +4019,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let generate_ok_std_string_string_from_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                     quote::quote! {Ok(#std_string_string_token_stream::from(#content_token_stream))}
                 };
-                let ok_std_string_string_from_default_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"DEFAULT"});
+                let ok_std_string_string_from_default_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"default"});
                 let ok_std_string_string_from_uuid_generate_v4_token_stream = generate_ok_std_string_string_from_tokens_token_stream(&quote::quote! {"uuid_generate_v4()"});
                 let typical_query_part_token_stream = {
                     let acc_snake_case = naming::AccSnakeCase;

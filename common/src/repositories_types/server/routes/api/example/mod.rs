@@ -50,20 +50,20 @@
 pub struct Example {
     #[generate_postgresql_crud_primary_key]
     pub column_6e88acb0_c566_4fef_8a09_66a41338cf36: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
+
     pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
-    // //todo rename like postgresql types: NotNull prefix, not postfix
-    pub animal_as_not_null_jsonb_object: AnimalAsNotNullJsonbObject,
-    // pub option_animal_as_nullable_jsonb_object: OptionAnimalAsNullableJsonbObject,//todo double nullable problem
-    // // pub object_animal_as_jsonb_nullable: OptionObjectAnimalAsJsonbNullable,
+    pub column_1: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
+    pub column_2: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
+    pub column_3: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
+    pub column_4: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2,
+    pub column_5: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableInt2,
 
-    // // pub option_object_animal_as_jsonb_not_null: StdOptionOptionObjectAnimalAsJsonbNotNull,
-    // // pub option_object_animal_as_jsonb_nullable: StdOptionOptionObjectAnimalAsJsonbNullable,
+    pub column_117: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
-    // // pub std_vec_vec_object_with_id_animal_as_jsonb_not_null: StdVecVecObjectWithIdAnimalAsJsonbNotNull,
-    // // pub std_vec_vec_object_with_id_animal_as_jsonb_nullable: StdVecVecObjectWithIdAnimalAsJsonbNullable,
-
-    // // pub option_std_vec_vec_object_with_id_animal_as_jsonb_not_null: StdOptionOptionStdVecVecObjectWithIdAnimalAsJsonbNotNull,
-    // // pub option_std_vec_vec_object_with_id_animal_as_jsonb_nullable: StdOptionOptionStdVecVecObjectWithIdAnimalAsJsonbNullable,
+    // pub column_6: AnimalAsNotNullJsonbObject,
+    // pub column_7: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    // pub column_8: OptionAnimalAsNullableJsonbObject,
+    // pub column_9: OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 // todo enum tree support
 // todo generate wrapper type for all possible json type
@@ -93,20 +93,20 @@ mod tests {
     }
 }
 //////////////////
-// #[derive(Debug
-//     , postgresql_crud::GeneratePostgresqlJsonObjectType
-// )]
-// #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
-// // #[postgresql_crud::postgresql_json_object_type_pattern{{
-// //     "Concrete": {
-// //         "not_null_or_nullable": "NotNull",
-// //         "postgresql_json_object_type_pattern": "Array",
-// //         "trait_gen": "PostgresqlJsonType"
-// //     }
-// // }}]
-// pub struct Doggie {
-//     pub column_113f3662_35a2_4a7a_9326_03bbd441815f: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
-// }
+#[derive(Debug
+    , postgresql_crud::GeneratePostgresqlJsonObjectType
+)]
+#[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
+// #[postgresql_crud::postgresql_json_object_type_pattern{{
+//     "Concrete": {
+//         "not_null_or_nullable": "NotNull",
+//         "postgresql_json_object_type_pattern": "Array",
+//         "trait_gen": "PostgresqlJsonType"
+//     }
+// }}]
+pub struct Doggie {
+    pub column_113f3662_35a2_4a7a_9326_03bbd441815f: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
+}
 
 // #[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
 // #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
