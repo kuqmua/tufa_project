@@ -952,9 +952,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let query_postgresql_type_where_filter_query_bind_parameters_payload_where_many_query_token_stream = quote::quote!{
         #query_snake_case = postgresql_crud::PostgresqlTypeWhereFilter::query_bind(#parameters_snake_case.#payload_snake_case.#where_many_snake_case, #query_snake_case);
     };
-    // //todo find out how to declare lifetime on closures
-    // //todo refactor as &[&'a SynRust...]
-    let generate_self_fields_token_stream = |fields: &[&syn::Field]| -> std::vec::Vec<syn::Ident> { fields.iter().map(|field| field.ident.as_ref().unwrap_or_else(|| panic!("{}", naming::FIELD_IDENT_IS_NONE)).clone()).collect() };
     let try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case = naming::parameter::TryFromSqlxPostgresPgRowWithNotEmptyUniqueEnumVecSelfSelectSnakeCase::from_display(&ident);
     let sqlx_error_syn_punctuated_punctuated = macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&["sqlx", "Error"]);
     let macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string = macros_helpers::error_occurence::ErrorOccurenceFieldAttribute::EoToStdStringString;
@@ -1142,7 +1139,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         }
                     })
                     .collect::<std::vec::Vec<proc_macro2::TokenStream>>();
-                let option_fields_initiation_token_stream = generate_self_fields_token_stream(&fields.iter().map(|element| &element.syn_field).collect::<std::vec::Vec<&syn::Field>>());
+                let fields_initiation_token_stream = &fields.iter()
+                .map(|element| element.syn_field.ident.as_ref().unwrap_or_else(|| panic!("{}", naming::FIELD_IDENT_IS_NONE)))
+                .collect::<std::vec::Vec<&syn::Ident>>();
                 quote::quote! {
                     fn #try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_snake_case(
                         #value_snake_case: sqlx::postgres::PgRow,
@@ -1156,7 +1155,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #(#assignment_variants_without_primary_key_token_stream),*
                             }
                         }
-                        Ok(Self {#(#option_fields_initiation_token_stream),*})
+                        Ok(Self {#(#fields_initiation_token_stream),*})
                     }
                 }
             };
