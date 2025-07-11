@@ -769,24 +769,60 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     PostgresqlTypePattern::ArrayDimension1 {
                         dimension1_not_null_or_nullable
-                    } => match &postgresql_type.can_be_nullable() {
-                        CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable|{
-                            acc.push(PostgresqlTypeRecord {
-                                postgresql_type: postgresql_type.clone(),
-                                not_null_or_nullable: not_null_or_nullable.clone(),
-                                postgresql_type_pattern: postgresql_type_pattern.clone(),
-                            });
-                        }),
-                        CanBeNullable::False => if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &dimension1_not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable|{
+                    } => match &postgresql_type {
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => (),//arrays if serial types not implemented in postgresql
+                        PostgresqlType::StdPrimitiveI16AsInt2 |
+                        PostgresqlType::StdPrimitiveI32AsInt4 |
+                        PostgresqlType::StdPrimitiveI64AsInt8 |
+                        PostgresqlType::StdPrimitiveF32AsFloat4 |
+                        PostgresqlType::StdPrimitiveF64AsFloat8 |
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                        PostgresqlType::SqlxTypesBigDecimalAsNumeric |
+                        PostgresqlType::StdPrimitiveBoolAsBool |
+                        PostgresqlType::StdStringStringAsText |
+                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime |
+                        PostgresqlType::SqlxTypesTimeTimeAsTime |
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
+                        PostgresqlType::SqlxTypesTimeDateAsDate |
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp |
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz |
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange |
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => match &postgresql_type.can_be_nullable() {
+                            CanBeNullable::True => postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable|{
                                 acc.push(PostgresqlTypeRecord {
                                     postgresql_type: postgresql_type.clone(),
-                                    not_null_or_nullable: not_null_or_nullable,
-                                    postgresql_type_pattern: PostgresqlTypePattern::ArrayDimension1 {
-                                        dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
-                                    },
+                                    not_null_or_nullable: not_null_or_nullable.clone(),
+                                    postgresql_type_pattern: postgresql_type_pattern.clone(),
                                 });
-                            });
+                            }),
+                            CanBeNullable::False => if let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &dimension1_not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::into_array().into_iter().for_each(|not_null_or_nullable|{
+                                    acc.push(PostgresqlTypeRecord {
+                                        postgresql_type: postgresql_type.clone(),
+                                        not_null_or_nullable: not_null_or_nullable,
+                                        postgresql_type_pattern: PostgresqlTypePattern::ArrayDimension1 {
+                                            dimension1_not_null_or_nullable: dimension1_not_null_or_nullable.clone(),
+                                        },
+                                    });
+                                });
+                            }
                         }
                     }
                 });
