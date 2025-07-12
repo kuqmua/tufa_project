@@ -3566,27 +3566,36 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let update_one_payload_example_snake_case = update_one.operation_payload_example_snake_case();
         let delete_many_payload_example_snake_case = delete_many.operation_payload_example_snake_case();
         let delete_one_payload_example_snake_case = delete_one.operation_payload_example_snake_case();
+
+        let slash_create_many_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_many_payload_example_snake_case);
+        let slash_create_one_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_one_payload_example_snake_case);
+        let slash_read_many_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_many_payload_example_snake_case);
+        let slash_read_one_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_one_payload_example_snake_case);
+        let slash_update_many_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_many_payload_example_snake_case);
+        let slash_update_one_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_one_payload_example_snake_case);
+        let slash_delete_many_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_many_payload_example_snake_case);
+        let slash_delete_one_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one_payload_example_snake_case);
         quote::quote!{
             pub fn routes(app_state: #postgresql_crud_snake_case::DynArcCombinationOfAppStateLogicTraits) -> axum::Router {
                 axum::Router::new().nest(
                     &format!("/{}",#ident::table_name()),
                     axum::Router::new()
                     .route(#slash_create_many_double_quotes_token_stream, axum::routing::post(#ident::#create_many_snake_case_token_stream))
-                    .route("/create_many_payload_example", axum::routing::get(#ident::#create_many_payload_example_snake_case))
+                    .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(#ident::#create_many_payload_example_snake_case))
                     .route(#slash_create_one_double_quotes_token_stream, axum::routing::post(#ident::#create_one_snake_case_token_stream))
-                    .route("/create_one_payload_example", axum::routing::get(#ident::#create_one_payload_example_snake_case))
+                    .route(#slash_create_one_example_double_quotes_token_stream, axum::routing::get(#ident::#create_one_payload_example_snake_case))
                     .route(#slash_read_many_double_quotes_token_stream, axum::routing::post(#ident::#read_many_snake_case_token_stream))
-                    .route("/read_many_payload_example", axum::routing::get(#ident::#read_many_payload_example_snake_case))
+                    .route(#slash_read_many_example_double_quotes_token_stream, axum::routing::get(#ident::#read_many_payload_example_snake_case))
                     .route(#slash_read_one_double_quotes_token_stream, axum::routing::post(#ident::#read_one_snake_case_token_stream))
-                    .route("/read_one_payload_example", axum::routing::get(#ident::#read_one_payload_example_snake_case))
+                    .route(#slash_read_one_example_double_quotes_token_stream, axum::routing::get(#ident::#read_one_payload_example_snake_case))
                     .route(#slash_update_many_double_quotes_token_stream, axum::routing::patch(#ident::#update_many_snake_case_token_stream))
-                    .route("/update_many_payload_example", axum::routing::get(#ident::#update_many_payload_example_snake_case))
+                    .route(#slash_update_many_example_double_quotes_token_stream, axum::routing::get(#ident::#update_many_payload_example_snake_case))
                     .route(#slash_update_one_double_quotes_token_stream, axum::routing::patch(#ident::#update_one_snake_case_token_stream))
-                    .route("/update_one_payload_example", axum::routing::get(#ident::#update_one_payload_example_snake_case))
+                    .route(#slash_update_one_example_double_quotes_token_stream, axum::routing::get(#ident::#update_one_payload_example_snake_case))
                     .route(#slash_delete_many_double_quotes_token_stream, axum::routing::delete(#ident::#delete_many_snake_case_token_stream))
-                    .route("/delete_many_payload_example", axum::routing::get(#ident::#delete_many_payload_example_snake_case))
+                    .route(#slash_delete_many_example_double_quotes_token_stream, axum::routing::get(#ident::#delete_many_payload_example_snake_case))
                     .route(#slash_delete_one_double_quotes_token_stream, axum::routing::delete(#ident::#delete_one_snake_case_token_stream))
-                    .route("/delete_one_payload_example", axum::routing::get(#ident::#delete_one_payload_example_snake_case))
+                    .route(#slash_delete_one_example_double_quotes_token_stream, axum::routing::get(#ident::#delete_one_payload_example_snake_case))
                     // .layer(tower_http::cors::CorsLayer::new().allow_methods(#ident::allow_methods()))
                     .with_state(app_state)
                 )
