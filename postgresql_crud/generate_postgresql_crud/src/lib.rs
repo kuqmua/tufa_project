@@ -1982,6 +1982,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
+    let std_sync_arc_combination_of_app_state_logic_traits_token_stream = quote::quote!{std::sync::Arc<dyn #postgresql_crud_snake_case::CombinationOfAppStateLogicTraits>};
     let generate_operation_token_stream = |
         operation: &Operation,
         common_additional_logic_token_stream: &dyn quote::ToTokens,
@@ -2058,7 +2059,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             impl #ident {
                 pub async fn #operation_snake_case_token_stream(
-                    #app_state_snake_case: axum::extract::State<postgresql_crud::DynArcCombinationOfAppStateLogicTraits>,
+                    #app_state_snake_case: axum::extract::State<#std_sync_arc_combination_of_app_state_logic_traits_token_stream>,
                     #request_snake_case: axum::extract::Request,
                 ) -> axum::response::Response {
                     #request_parts_preparation_token_stream
@@ -3572,7 +3573,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let slash_delete_many_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_many_payload_example_snake_case);
         let slash_delete_one_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one_payload_example_snake_case);
         quote::quote!{
-            pub fn routes(app_state: #postgresql_crud_snake_case::DynArcCombinationOfAppStateLogicTraits) -> axum::Router {
+            pub fn routes(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream) -> axum::Router {
                 axum::Router::new().nest(
                     &format!("/{}",#ident::#table_name_snake_case()),
                     axum::Router::new()
@@ -3593,7 +3594,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .route(#slash_delete_one_double_quotes_token_stream, axum::routing::delete(#ident::#delete_one_snake_case_token_stream))
                     .route(#slash_delete_one_example_double_quotes_token_stream, axum::routing::get(#ident::#delete_one_payload_example_snake_case))
                     // .layer(tower_http::cors::CorsLayer::new().allow_methods(#ident::allow_methods()))
-                    .with_state(app_state)
+                    .with_state(#app_state_snake_case)
                 )
             }
         }

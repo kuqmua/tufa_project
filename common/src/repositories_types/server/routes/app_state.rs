@@ -4,7 +4,6 @@ pub struct AppState<'a> {
     pub config: &'a crate::repositories_types::server::config::Config,
     pub project_git_info: &'a git_info::ProjectGitInfo<'a>,
 }
-impl postgresql_crud::CombinationOfTraitsForPostgresqlCrudLogic for AppState<'_> {}
 impl crate::server::routes::git_info::GitInfoRouteParameters for AppState<'_> {}
 impl crate::server::routes::not_found::NotFoundRouteParameters for AppState<'_> {}
 impl postgresql_crud::CombinationOfAppStateLogicTraits for AppState<'_> {}
