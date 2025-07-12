@@ -2315,7 +2315,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_match_postgres_transaction_rollback_await_token_stream(&current_operation, file!(), line!(), column!(), file!(), line!(), column!()),
         )
     };
-    let generate_operation_payload_example_logic_token_stream = |operation: &Operation| {
+    let generate_operation_payload_example_token_stream = |operation: &Operation| {
         let operation_payload_example_logic_snake_case = naming::parameter::SelfPayloadExampleLogicSnakeCase::from_display(operation);
         let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(
             &{
@@ -2443,13 +2443,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_ident_operation_payload_upper_camel_case(&operation),
             &quote::quote! {Self(vec![#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])},
         );
-        let operation_payload_example_logic_token_stream = generate_operation_payload_example_logic_token_stream(&operation);
+        let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
-            #operation_payload_example_logic_token_stream
+            #operation_payload_example_token_stream
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -2536,12 +2536,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_token_stream
             }
         };
-        let operation_payload_example_logic_token_stream = generate_operation_payload_example_logic_token_stream(&operation);
+        let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
-            #operation_payload_example_logic_token_stream
+            #operation_payload_example_token_stream
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -2721,13 +2721,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         );
-        let operation_payload_example_logic_token_stream = generate_operation_payload_example_logic_token_stream(&operation);
+        let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
-            #operation_payload_example_logic_token_stream
+            #operation_payload_example_token_stream
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -2849,13 +2849,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             },
         );
-        let operation_payload_example_logic_token_stream = generate_operation_payload_example_logic_token_stream(&operation);
+        let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
-            #operation_payload_example_logic_token_stream
+            #operation_payload_example_token_stream
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -3180,13 +3180,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self(vec![#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream])
             },
         );
-        let operation_payload_example_logic_token_stream = generate_operation_payload_example_logic_token_stream(&operation);
+        let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
-            #operation_payload_example_logic_token_stream
+            #operation_payload_example_token_stream
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -3327,12 +3327,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_token_stream
             }
         };
-        let operation_payload_example_logic_token_stream = generate_operation_payload_example_logic_token_stream(&operation);
+        let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
-            #operation_payload_example_logic_token_stream
+            #operation_payload_example_token_stream
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -3420,13 +3420,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &generate_ident_operation_payload_upper_camel_case(&operation),
             &quote::quote!{Self {#where_many_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}}
         );
-        let operation_payload_example_logic_token_stream = generate_operation_payload_example_logic_token_stream(&operation);
+        let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
-            #operation_payload_example_logic_token_stream
+            #operation_payload_example_token_stream
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
@@ -3511,13 +3511,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         );
-        let operation_payload_example_logic_token_stream = generate_operation_payload_example_logic_token_stream(&operation);
+        let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
             #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
-            #operation_payload_example_logic_token_stream
+            #operation_payload_example_token_stream
         }
     };
     // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
