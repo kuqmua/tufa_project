@@ -609,6 +609,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         fn snake_case_token_stream(&self) -> proc_macro2::TokenStream {
             naming::AsRefStrToSnakeCaseTokenStream::case_or_panic(&self.to_string())
         }
+        fn operation_payload_example_snake_case(&self) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
+            naming::parameter::SelfPayloadExampleSnakeCase::from_display(&self)
+        }
     }
     impl std::fmt::Display for Operation {
         fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2316,7 +2319,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         )
     };
     let generate_operation_payload_example_token_stream = |operation: &Operation| {
-        let operation_payload_example_logic_snake_case = naming::parameter::SelfPayloadExampleLogicSnakeCase::from_display(operation);
+        let operation_payload_example_snake_case = operation.operation_payload_example_snake_case();
         let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(
             &{
                 let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
@@ -2326,7 +2329,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         quote::quote! {
             impl #ident {
-                pub async fn #operation_payload_example_logic_snake_case() -> axum::response::Response {
+                pub async fn #operation_payload_example_snake_case() -> axum::response::Response {
                     #wraped_into_axum_response_token_stream
                 }
             }
@@ -3554,27 +3557,36 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let update_one_snake_case_token_stream = update_one.snake_case_token_stream();
         let delete_many_snake_case_token_stream = delete_many.snake_case_token_stream();
         let delete_one_snake_case_token_stream = delete_one.snake_case_token_stream();
+
+        let create_many_payload_example_snake_case = create_many.operation_payload_example_snake_case();
+        let create_one_payload_example_snake_case = create_one.operation_payload_example_snake_case();
+        let read_many_payload_example_snake_case = read_many.operation_payload_example_snake_case();
+        let read_one_payload_example_snake_case = read_one.operation_payload_example_snake_case();
+        let update_many_payload_example_snake_case = update_many.operation_payload_example_snake_case();
+        let update_one_payload_example_snake_case = update_one.operation_payload_example_snake_case();
+        let delete_many_payload_example_snake_case = delete_many.operation_payload_example_snake_case();
+        let delete_one_payload_example_snake_case = delete_one.operation_payload_example_snake_case();
         quote::quote!{
             pub fn routes(app_state: #postgresql_crud_snake_case::DynArcCombinationOfAppStateLogicTraits) -> axum::Router {
                 axum::Router::new().nest(
                     &format!("/{}",#ident::table_name()),
                     axum::Router::new()
                     .route(#slash_create_many_double_quotes_token_stream, axum::routing::post(#ident::#create_many_snake_case_token_stream))
-                    .route("/create_many_payload_example", axum::routing::get(#ident::create_many_payload_example_logic))
+                    .route("/create_many_payload_example", axum::routing::get(#ident::#create_many_payload_example_snake_case))
                     .route(#slash_create_one_double_quotes_token_stream, axum::routing::post(#ident::#create_one_snake_case_token_stream))
-                    .route("/create_one_payload_example", axum::routing::get(#ident::create_one_payload_example_logic))
+                    .route("/create_one_payload_example", axum::routing::get(#ident::#create_one_payload_example_snake_case))
                     .route(#slash_read_many_double_quotes_token_stream, axum::routing::post(#ident::#read_many_snake_case_token_stream))
-                    .route("/read_many_payload_example", axum::routing::get(#ident::read_many_payload_example_logic))
+                    .route("/read_many_payload_example", axum::routing::get(#ident::#read_many_payload_example_snake_case))
                     .route(#slash_read_one_double_quotes_token_stream, axum::routing::post(#ident::#read_one_snake_case_token_stream))
-                    .route("/read_one_payload_example", axum::routing::get(#ident::read_one_payload_example_logic))
+                    .route("/read_one_payload_example", axum::routing::get(#ident::#read_one_payload_example_snake_case))
                     .route(#slash_update_many_double_quotes_token_stream, axum::routing::patch(#ident::#update_many_snake_case_token_stream))
-                    .route("/update_many_payload_example", axum::routing::get(#ident::update_many_payload_example_logic))
+                    .route("/update_many_payload_example", axum::routing::get(#ident::#update_many_payload_example_snake_case))
                     .route(#slash_update_one_double_quotes_token_stream, axum::routing::patch(#ident::#update_one_snake_case_token_stream))
-                    .route("/update_one_payload_example", axum::routing::get(#ident::update_one_payload_example_logic))
+                    .route("/update_one_payload_example", axum::routing::get(#ident::#update_one_payload_example_snake_case))
                     .route(#slash_delete_many_double_quotes_token_stream, axum::routing::delete(#ident::#delete_many_snake_case_token_stream))
-                    .route("/delete_many_payload_example", axum::routing::get(#ident::delete_many_payload_example_logic))
+                    .route("/delete_many_payload_example", axum::routing::get(#ident::#delete_many_payload_example_snake_case))
                     .route(#slash_delete_one_double_quotes_token_stream, axum::routing::delete(#ident::#delete_one_snake_case_token_stream))
-                    .route("/delete_one_payload_example", axum::routing::get(#ident::delete_one_payload_example_logic))
+                    .route("/delete_one_payload_example", axum::routing::get(#ident::#delete_one_payload_example_snake_case))
                     // .layer(tower_http::cors::CorsLayer::new().allow_methods(#ident::allow_methods()))
                     .with_state(app_state)
                 )
