@@ -1,3 +1,29 @@
+//todo header Retry-After logic
+pub fn routes(app_state: postgresql_crud::DynArcCombinationOfAppStateLogicTraits) -> axum::Router {
+    axum::Router::new().nest(
+        &format!("/{}", Example::table_name()),
+        axum::Router::new()
+        .route("/create_many", axum::routing::post(Example::try_create_many_route_logic))
+        .route("/create_many_payload_example", axum::routing::get(Example::create_many_payload_example_route_logic))
+        .route("/create_one", axum::routing::post(Example::try_create_one_route_logic))
+        .route("/create_one_payload_example", axum::routing::get(Example::create_one_payload_example_route_logic))
+        .route("/read_many", axum::routing::post(Example::try_read_many_route_logic))
+        .route("/read_many_payload_example", axum::routing::get(Example::read_many_payload_example_route_logic))
+        .route("/read_one", axum::routing::post(Example::try_read_one_route_logic))
+        .route("/read_one_payload_example", axum::routing::get(Example::read_one_payload_example_route_logic))
+        .route("/update_many", axum::routing::patch(Example::try_update_many_route_logic))
+        .route("/update_many_payload_example", axum::routing::get(Example::update_many_payload_example_route_logic))
+        .route("/update_one", axum::routing::patch(Example::try_update_one_route_logic))
+        .route("/update_one_payload_example", axum::routing::get(Example::update_one_payload_example_route_logic))
+        .route("/delete_many", axum::routing::delete(Example::try_delete_many_route_logic))
+        .route("/delete_many_payload_example", axum::routing::get(Example::delete_many_payload_example_route_logic))
+        .route("/delete_one", axum::routing::delete(Example::try_delete_one_route_logic))
+        .route("/delete_one_payload_example", axum::routing::get(Example::delete_one_payload_example_route_logic))
+        // .layer(tower_http::cors::CorsLayer::new().allow_methods(common::repositories_types::server::routes::api::example::Example::allow_methods()))
+        .with_state(app_state)
+    )
+}
+
 #[derive(Debug, postgresql_crud::GeneratePostgresqlCrud)]
 #[postgresql_crud::create_many_additional_error_variants{enum CreateManyAdditionalErrorVariants{}}]
 #[postgresql_crud::create_one_additional_error_variants{enum CreateOneAdditionalErrorVariants{}}]

@@ -2048,7 +2048,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {
             impl #ident {
                 pub async fn #try_operation_route_logic_snake_case(
-                    #app_state_snake_case: axum::extract::State<crate::repositories_types::server::routes::app_state::DynArcCombinationOfAppStateLogicTraits>,
+                    #app_state_snake_case: axum::extract::State<postgresql_crud::DynArcCombinationOfAppStateLogicTraits>,
                     #request_snake_case: axum::extract::Request,
                 ) -> axum::response::Response {
                     #request_parts_preparation_token_stream
@@ -3517,6 +3517,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &"delete_one",
     //     &delete_one_token_stream,
     // );
+    let _token_stream = {
+        quote::quote!{
+
+        }
+    };
     let common_token_stream = {
         quote::quote! {
             #impl_ident_token_stream

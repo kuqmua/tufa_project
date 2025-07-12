@@ -6,4 +6,3 @@ pub mod subscriptions_confirm;
 // pub use subscriptions_confirm::*;
 pub mod login;
 // pub use login::*;
-pub mod api;

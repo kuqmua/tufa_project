@@ -208,6 +208,8 @@ pub fn maybe_primary_key(is_primary_key: std::primitive::bool) -> impl std::fmt:
 }
 
 pub trait CombinationOfTraitsForPostgresqlCrudLogic: app_state::GetSourcePlaceType + app_state::GetTimezone + app_state::GetPostgresPool + Send + Sync {}
+pub type DynArcCombinationOfAppStateLogicTraits = std::sync::Arc<dyn CombinationOfAppStateLogicTraits>;//todo maybe remove
+pub trait CombinationOfAppStateLogicTraits: app_state::GetEnableApiGitCommitCheck + app_state::GetMaximumSizeOfHttpBodyInBytes + CombinationOfTraitsForPostgresqlCrudLogic + Send + Sync {}
 
 pub trait DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement: Sized {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self;
