@@ -600,8 +600,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalLogic,
             }
         }
-        fn try_operation_logic_error_named_with_serialize_deserialize_snake_case(&self) -> naming::parameter::TrySelfLogicErrorNamedWithSerializeDeserializeSnakeCase {
-            naming::parameter::TrySelfLogicErrorNamedWithSerializeDeserializeSnakeCase::from_display(self)
+        fn operation_error_named_with_serialize_deserialize_snake_case(&self) -> naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase {
+            naming::parameter::SelfErrorNamedWithSerializeDeserializeSnakeCase::from_display(self)
         }
         fn snake_case_stringified(&self) -> std::string::String {
             naming::AsRefStrToSnakeCaseStringified::case(&self.to_string())
@@ -1965,7 +1965,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     None,
                     vec![(
                         macros_helpers_error_occurence_error_occurence_field_attribute_eo_to_std_string_string.clone(),
-                        &operation.try_operation_logic_error_named_with_serialize_deserialize_snake_case(),
+                        &operation.operation_error_named_with_serialize_deserialize_snake_case(),
                         macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&ident_operation_error_named_with_serialize_deserialize_upper_camel_case.to_string()]),
                     )],
                 )
@@ -2202,7 +2202,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let try_operation_logic_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(&operation);
-        let try_operation_logic_error_named_with_serialize_deserialize_snake_case = &operation.try_operation_logic_error_named_with_serialize_deserialize_snake_case();
+        let operation_error_named_with_serialize_deserialize_snake_case = &operation.operation_error_named_with_serialize_deserialize_snake_case();
         let try_operation_logic_error_named_with_serialize_deserialize_token_stream = {
             let try_operation_logic_response_variants_to_try_operation_logic_error_named_with_serialize_deserialize = type_variants_from_request_response_syn_variants.iter().map(|element| {
                 let variant_ident = &element.ident;
@@ -2219,7 +2219,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             });
             quote::quote! {
-                let #try_operation_logic_error_named_with_serialize_deserialize_snake_case = match #expected_response_snake_case {
+                let #operation_error_named_with_serialize_deserialize_snake_case = match #expected_response_snake_case {
                     #ident_operation_response_variants_upper_camel_case::#desirable_upper_camel_case(#value_snake_case) => {
                         let #value_snake_case = #desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream;
                         return Ok(#value_snake_case);
@@ -2232,7 +2232,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_token_stream = macros_helpers::generate_field_code_occurence_new_token_stream::generate_field_code_occurence_new_token_stream(file!(), line!(), column!());
             quote::quote! {
                 Err(#ident_try_operation_error_named_upper_camel_case::#try_operation_logic_error_named_with_serialize_deserialize_upper_camel_case {
-                    #try_operation_logic_error_named_with_serialize_deserialize_snake_case,
+                    #operation_error_named_with_serialize_deserialize_snake_case,
                     #field_code_occurence_new_6ac7b78e_da5d_4274_b58c_67bb9625d008_token_stream,
                 })
             }
