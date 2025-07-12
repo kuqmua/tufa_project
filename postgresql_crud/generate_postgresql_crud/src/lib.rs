@@ -106,7 +106,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_select_query_part_snake_case = naming::GenerateSelectQueryPartSnakeCase;
     let create_extension_if_not_exists_pg_jsonschema_upper_camel_case = naming::CreateExtensionIfNotExistsPgJsonschemaUpperCamelCase;
     let create_extension_if_not_exists_uuid_ossp_upper_camel_case = naming::CreateExtensionIfNotExistsUuidOsspUpperCamelCase;
-    let create_table_if_not_exists_upper_camel_case = naming::CreateTableIfNotExistsUpperCamelCase;
+    let prepare_postgresql_upper_camel_case = naming::PreparePostgresqlUpperCamelCase;
     let pool_snake_case = naming::PoolSnakeCase;
     let value_snake_case = naming::ValueSnakeCase;
     let element_snake_case = naming::ElementSnakeCase;
@@ -295,10 +295,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote! {#(#fields_token_stream)*}
     };
     let impl_ident_token_stream = {
-        let ident_create_table_if_not_exists_error_named_upper_camel_case = naming::parameter::SelfCreateTableIfNotExistsErrorNamedUpperCamelCase::from_tokens(&ident);
-        let ident_create_table_if_not_exists_error_named_token_stream = quote::quote!{
+        let ident_prepare_postgresql_error_named_upper_camel_case = naming::parameter::SelfPreparePostgresqlErrorNamedUpperCamelCase::from_tokens(&ident);
+        let ident_prepare_postgresql_error_named_token_stream = quote::quote!{
             #[derive(Debug, thiserror::Error, error_occurence_lib::ErrorOccurence)]
-            pub enum #ident_create_table_if_not_exists_error_named_upper_camel_case {
+            pub enum #ident_prepare_postgresql_error_named_upper_camel_case {
                 #create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
                     #[eo_to_std_string_string]
                     error: sqlx::Error,
@@ -309,7 +309,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     error: sqlx::Error,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                 },
-                #create_table_if_not_exists_upper_camel_case {
+                #prepare_postgresql_upper_camel_case {
                     #[eo_to_std_string_string]
                     error: sqlx::Error,
                     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -332,8 +332,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         };
-        let pub_async_fn_create_table_if_not_exists_token_stream = {
-            let create_table_if_not_exists_double_quotes_token_stream = {
+        let pub_async_fn_prepare_postgresql_token_stream = {
+            let prepare_postgresql_double_quotes_token_stream = {
                 let acc = {
                     let mut acc = std::string::String::new();
                     for _ in &fields {
@@ -359,11 +359,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 acc
             };
             quote::quote! {
-                pub async fn create_table_if_not_exists(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_create_table_if_not_exists_error_named_upper_camel_case> {
+                pub async fn prepare_postgresql(#pool_snake_case: &sqlx::Pool<sqlx::Postgres>) -> Result<(), #ident_prepare_postgresql_error_named_upper_camel_case> {
                     let create_extension_if_not_exists_pg_jsonschema_query_stringified = "create extension if not exists pg_jsonschema";
                     println!("{create_extension_if_not_exists_pg_jsonschema_query_stringified}");
                     if let Err(error) = sqlx::query(create_extension_if_not_exists_pg_jsonschema_query_stringified).execute(#pool_snake_case).await {
-                        return Err(#ident_create_table_if_not_exists_error_named_upper_camel_case::#create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
+                        return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_pg_jsonschema_upper_camel_case {
                             error,
                             code_occurence: error_occurence_lib::code_occurence!()
                         });
@@ -371,18 +371,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     let create_extension_if_not_exists_uuid_ossp_query_stringified = "create extension if not exists \"uuid-ossp\"";
                     println!("{create_extension_if_not_exists_uuid_ossp_query_stringified}");
                     if let Err(error) = sqlx::query(create_extension_if_not_exists_uuid_ossp_query_stringified).execute(#pool_snake_case).await {
-                        return Err(#ident_create_table_if_not_exists_error_named_upper_camel_case::#create_extension_if_not_exists_uuid_ossp_upper_camel_case {
+                        return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#create_extension_if_not_exists_uuid_ossp_upper_camel_case {
                             error,
                             code_occurence: error_occurence_lib::code_occurence!()
                         });
                     }
-                    let create_table_if_not_exists_query_stringified = format!(
-                        #create_table_if_not_exists_double_quotes_token_stream,
+                    let prepare_postgresql_query_stringified = format!(
+                        #prepare_postgresql_double_quotes_token_stream,
                         #(#serde_json_to_string_schemars_schema_for_generic_unwrap_token_stream),*
                     );
-                    println!("{create_table_if_not_exists_query_stringified}");
-                    if let Err(error) = sqlx::query(&create_table_if_not_exists_query_stringified).execute(#pool_snake_case).await {
-                        return Err(#ident_create_table_if_not_exists_error_named_upper_camel_case::#create_table_if_not_exists_upper_camel_case {
+                    println!("{prepare_postgresql_query_stringified}");
+                    if let Err(error) = sqlx::query(&prepare_postgresql_query_stringified).execute(#pool_snake_case).await {
+                        return Err(#ident_prepare_postgresql_error_named_upper_camel_case::#prepare_postgresql_upper_camel_case {
                             error,
                             code_occurence: error_occurence_lib::code_occurence!()
                         });
@@ -434,11 +434,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         quote::quote! {
-            #ident_create_table_if_not_exists_error_named_token_stream
+            #ident_prepare_postgresql_error_named_token_stream
             impl #ident {
                 #pub_fn_table_token_stream
                 #fn_primary_key_token_stream
-                #pub_async_fn_create_table_if_not_exists_token_stream
+                #pub_async_fn_prepare_postgresql_token_stream
                 #pub_fn_allow_methods_token_stream
                 #fn_generate_select_query_part_token_stream
             }

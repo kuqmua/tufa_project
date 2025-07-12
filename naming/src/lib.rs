@@ -626,7 +626,7 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["all", "elements", "greater", "than"],
     ["create", "extension", "if", "not", "exists", "pg", "jsonschema"],
     ["create", "extension", "if", "not", "exists", "uuid", "ossp"],
-    ["create", "table", "if", "not", "exists"],
+    ["prepare", "postgresql"],
     ["header", "content", "type", "application", "json", "not", "found"],
     ["where", "many"],
     ["no", "fields", "provided"],

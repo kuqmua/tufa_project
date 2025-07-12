@@ -24,8 +24,7 @@ fn main() {
                 // }
                 println!("trying to create postgres pool...");
                 let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
-                //todo rename create_table_if_not_exists
-                common::repositories_types::server::routes::api::example::Example::create_table_if_not_exists(&postgres_pool).await.unwrap();
+                common::repositories_types::server::routes::api::example::Example::prepare_postgresql(&postgres_pool).await.unwrap();
                 // todo preparation logic must be enabled by default. service must check on existing database tables.
                 // println!("trying to create redis session storage...");
                 // let redis_session_storage = match {
