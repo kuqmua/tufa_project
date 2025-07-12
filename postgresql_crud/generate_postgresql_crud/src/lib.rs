@@ -1833,7 +1833,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let generate_try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream = |
+    let generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream = |
         operation: &Operation,
         desirable_type_token_stream: &dyn quote::ToTokens,
         type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>
@@ -1850,7 +1850,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         };
         let ident_operation_error_named_upper_camel_case = generate_ident_operation_error_named_upper_camel_case(&operation);
-        let impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_token_stream = {
+        let impl_std_convert_from_ident_operation_error_named_for_ident_operation_response_variants_token_stream = {
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| {
                 let variant_ident = &element.ident;
                 let syn::Fields::Named(fields_named) = &element.fields else {
@@ -1879,7 +1879,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 },
             )
         };
-        let try_operation_logic_error_named_token_stream = {
+        let ident_operation_error_named_token_stream = {
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(generate_error_occurence_variant_token_stream);
             quote::quote! {
                 #derive_debug_this_error_error_occurence
@@ -1890,8 +1890,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         quote::quote! {
             #ident_try_operation_logic_response_variants_token_stream
-            #impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_token_stream
-            #try_operation_logic_error_named_token_stream
+            #impl_std_convert_from_ident_operation_error_named_for_ident_operation_response_variants_token_stream
+            #ident_operation_error_named_token_stream
         }
     };
     let generate_ident_operation_payload_upper_camel_case = |operation: &Operation|{
@@ -2372,7 +2372,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         );
         let operation_token_stream = {
-            let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream = generate_try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream(
+            let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream = generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(
                 &operation,
                 &std_vec_vec_primary_key_field_type_read_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -2479,7 +2479,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
-                generate_try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream(
+                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(
                     &operation,
                     &primary_key_field_type_as_primary_key_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
@@ -2576,7 +2576,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         );
         let operation_token_stream = {
-            let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream = generate_try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream(
+            let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream = generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(
                 &operation,
                 &std_vec_vec_struct_options_ident_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -2766,7 +2766,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
-                generate_try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream(
+                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(
                     &operation,
                     &ident_read_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
@@ -3026,7 +3026,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         );
         let operation_token_stream = {
-            let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream = generate_try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream(
+            let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream = generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(
                 &operation,
                 &std_vec_vec_primary_key_field_type_as_postgresql_type_update_token_stream,
                 &type_variants_from_request_response_syn_variants,
@@ -3217,7 +3217,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
-                generate_try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream(
+                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(
                     &operation,
                     &primary_key_field_type_as_primary_key_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
@@ -3363,7 +3363,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
-                generate_try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream(
+                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(
                     &operation,
                     &std_vec_vec_primary_key_field_type_read_token_stream,
                     &type_variants_from_request_response_syn_variants,
@@ -3446,7 +3446,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
-                generate_try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream(
+                generate_ident_try_operation_logic_response_variants_ident_operation_error_named_convert_token_stream(
                     &operation,
                     &primary_key_field_type_as_primary_key_upper_camel_case,
                     &type_variants_from_request_response_syn_variants,
