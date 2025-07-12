@@ -1979,7 +1979,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let generate_try_operation_logic_token_stream = |
+    let generate_operation_token_stream = |
         operation: &Operation,
         common_additional_logic_token_stream: &dyn quote::ToTokens,
         parameters_logic_token_stream: &dyn quote::ToTokens,
@@ -2410,7 +2410,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::CreateMany)
                 );
-                generate_try_operation_logic_token_stream(
+                generate_operation_token_stream(
                     &operation,
                     &common_additional_logic_token_stream,
                     &parameters_logic_token_stream,
@@ -2507,7 +2507,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &generate_create_update_delete_one_fetch_token_stream(&CreateOneOrUpdateOneOrDeleteOne::CreateOne)
                 );
-                generate_try_operation_logic_token_stream(
+                generate_operation_token_stream(
                     &operation,
                     &common_additional_logic_token_stream,
                     &parameters_logic_token_stream,
@@ -2663,7 +2663,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #value_snake_case
                     }
                 };
-                generate_try_operation_logic_token_stream(
+                generate_operation_token_stream(
                     &operation,
                     &common_additional_logic_token_stream,
                     &parameters_logic_token_stream,
@@ -2807,7 +2807,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #value_snake_case
                     }
                 };
-                generate_try_operation_logic_token_stream(
+                generate_operation_token_stream(
                     &operation,
                     &common_additional_logic_token_stream,
                     &parameters_logic_token_stream,
@@ -3145,7 +3145,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation, 
                     &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::UpdateMany)
                 );
-                generate_try_operation_logic_token_stream(
+                generate_operation_token_stream(
                     &operation,
                     &common_additional_logic_token_stream,
                     &parameters_logic_token_stream,
@@ -3298,7 +3298,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &generate_create_update_delete_one_fetch_token_stream(&CreateOneOrUpdateOneOrDeleteOne::UpdateOne)
                 );
-                generate_try_operation_logic_token_stream(
+                generate_operation_token_stream(
                     &operation,
                     &common_additional_logic_token_stream,
                     &parameters_logic_token_stream,
@@ -3387,7 +3387,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &generate_create_update_delete_many_fetch_token_stream(&CreateManyOrUpdateManyOrDeleteMany::DeleteMany)
                 );
-                generate_try_operation_logic_token_stream(
+                generate_operation_token_stream(
                     &operation,
                     &common_additional_logic_token_stream,
                     &parameters_logic_token_stream,
@@ -3467,7 +3467,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     &operation,
                     &generate_create_update_delete_one_fetch_token_stream(&CreateOneOrUpdateOneOrDeleteOne::DeleteOne)
                 );
-                generate_try_operation_logic_token_stream(
+                generate_operation_token_stream(
                     &operation,
                     &common_additional_logic_token_stream,
                     &parameters_logic_token_stream,
@@ -3545,10 +3545,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let slash_update_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_one.snake_case_stringified());
         let slash_delete_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_many.snake_case_stringified());
         let slash_delete_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one.snake_case_stringified());
-
-        //
-        
-        //
 
         let try_create_many_logic_snake_case = create_many.try_operation_logic_snake_case();
         let try_create_one_logic_snake_case = create_one.try_operation_logic_snake_case();
