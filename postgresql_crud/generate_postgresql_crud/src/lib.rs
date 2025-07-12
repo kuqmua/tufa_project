@@ -3539,7 +3539,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let update_one = Operation::UpdateOne;
         let delete_many = Operation::DeleteMany;
         let delete_one = Operation::DeleteOne;
-
         let slash_create_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_many.snake_case_stringified());
         let slash_create_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_one.snake_case_stringified());
         let slash_read_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_many.snake_case_stringified());
@@ -3548,7 +3547,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let slash_update_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_one.snake_case_stringified());
         let slash_delete_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_many.snake_case_stringified());
         let slash_delete_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one.snake_case_stringified());
-
         let create_many_snake_case_token_stream = create_many.snake_case_token_stream();
         let create_one_snake_case_token_stream = create_one.snake_case_token_stream();
         let read_many_snake_case_token_stream = read_many.snake_case_token_stream();
@@ -3557,7 +3555,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let update_one_snake_case_token_stream = update_one.snake_case_token_stream();
         let delete_many_snake_case_token_stream = delete_many.snake_case_token_stream();
         let delete_one_snake_case_token_stream = delete_one.snake_case_token_stream();
-
         let create_many_payload_example_snake_case = create_many.operation_payload_example_snake_case();
         let create_one_payload_example_snake_case = create_one.operation_payload_example_snake_case();
         let read_many_payload_example_snake_case = read_many.operation_payload_example_snake_case();
@@ -3566,7 +3563,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let update_one_payload_example_snake_case = update_one.operation_payload_example_snake_case();
         let delete_many_payload_example_snake_case = delete_many.operation_payload_example_snake_case();
         let delete_one_payload_example_snake_case = delete_one.operation_payload_example_snake_case();
-
         let slash_create_many_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_many_payload_example_snake_case);
         let slash_create_one_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_one_payload_example_snake_case);
         let slash_read_many_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_many_payload_example_snake_case);
@@ -3578,7 +3574,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         quote::quote!{
             pub fn routes(app_state: #postgresql_crud_snake_case::DynArcCombinationOfAppStateLogicTraits) -> axum::Router {
                 axum::Router::new().nest(
-                    &format!("/{}",#ident::table_name()),
+                    &format!("/{}",#ident::#table_name_snake_case()),
                     axum::Router::new()
                     .route(#slash_create_many_double_quotes_token_stream, axum::routing::post(#ident::#create_many_snake_case_token_stream))
                     .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(#ident::#create_many_payload_example_snake_case))
