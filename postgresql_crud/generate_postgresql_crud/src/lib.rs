@@ -637,8 +637,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         format!("{ident}Try{operation}LogicErrorNamed")
         .parse::<proc_macro2::TokenStream>().unwrap()
     };
-    let generate_ident_try_operation_logic_response_variants_upper_camel_case = |operation: &Operation|{
-        format!("{ident}Try{operation}LogicResponseVariants")
+    let generate_ident_operation_response_variants_upper_camel_case = |operation: &Operation|{
+        format!("{ident}{operation}ResponseVariants")
         .parse::<proc_macro2::TokenStream>().unwrap()
     };
     let generate_initialization_token_stream = |syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: std::primitive::u32, column: std::primitive::u32| -> proc_macro2::TokenStream {
@@ -673,10 +673,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     };
     let generate_operation_error_initialization_eprintln_response_creation_token_stream = |operation: &Operation, syn_variant_wrapper: &SynVariantWrapper, file: &'static str, line: std::primitive::u32, column: std::primitive::u32| {
         let ident_try_operation_logic_error_named_upper_camel_case = generate_ident_try_operation_logic_error_named_upper_camel_case(&operation);
-        let ident_try_operation_logic_response_variants_upper_camel_case = generate_ident_try_operation_logic_response_variants_upper_camel_case(&operation);
+        let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(&operation);
         let syn_variant_initialization_token_stream = generate_initialization_token_stream(syn_variant_wrapper, file, line, column);
         let status_code_token_stream = syn_variant_wrapper.get_option_status_code().unwrap_or_else(|| panic!("option_status_code is None")).to_axum_http_status_code_token_stream();
-        let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(&quote::quote! {#ident_try_operation_logic_response_variants_upper_camel_case::#from_snake_case(#error_snake_case)}, &status_code_token_stream);
+        let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(&quote::quote! {#ident_operation_response_variants_upper_camel_case::#from_snake_case(#error_snake_case)}, &status_code_token_stream);
         quote::quote! {
             let #error_snake_case = #ident_try_operation_logic_error_named_upper_camel_case::#syn_variant_initialization_token_stream;
             #eprintln_error_token_stream
@@ -1838,12 +1838,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         desirable_type_token_stream: &dyn quote::ToTokens,
         type_variants_from_request_response_syn_variants: &std::vec::Vec<syn::Variant>
     | -> proc_macro2::TokenStream {
-        let ident_try_operation_logic_response_variants_upper_camel_case = generate_ident_try_operation_logic_response_variants_upper_camel_case(&operation);
+        let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(&operation);
         let ident_try_operation_logic_response_variants_token_stream = {
             let variants_token_stream = type_variants_from_request_response_syn_variants.iter().map(|element| macros_helpers::error_occurence::generate_serialize_deserialize_version_of_named_syn_variant(element));
             quote::quote! {
                 #derive_debug_serde_serialize_serde_deserialize
-                pub enum #ident_try_operation_logic_response_variants_upper_camel_case {
+                pub enum #ident_operation_response_variants_upper_camel_case {
                     #desirable_upper_camel_case(#desirable_type_token_stream),
                     #(#variants_token_stream),*
                 }
@@ -1871,7 +1871,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             });
             macros_helpers::generate_impl_std_convert_from_token_stream::generate_impl_std_convert_from_token_stream(
                 &ident_try_operation_logic_error_named_upper_camel_case,
-                &ident_try_operation_logic_response_variants_upper_camel_case,
+                &ident_operation_response_variants_upper_camel_case,
                 &quote::quote! {
                     match #value_snake_case.#into_serialize_deserialize_version_snake_case() {
                         #(#variants_token_stream),*
@@ -2051,8 +2051,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         };
         let wraped_into_axum_response_token_stream = wrap_into_axum_response_token_stream(
             &{
-                let ident_try_operation_logic_response_variants_upper_camel_case = generate_ident_try_operation_logic_response_variants_upper_camel_case(&operation);
-                quote::quote! {#ident_try_operation_logic_response_variants_upper_camel_case::#desirable_upper_camel_case(#value_snake_case)}
+                let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(&operation);
+                quote::quote! {#ident_operation_response_variants_upper_camel_case::#desirable_upper_camel_case(#value_snake_case)}
             },
             &operation.desirable_status_code().to_axum_http_status_code_token_stream(),
         );
@@ -2189,11 +2189,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
             }
         };
-        let ident_try_operation_logic_response_variants_upper_camel_case = generate_ident_try_operation_logic_response_variants_upper_camel_case(&operation);
+        let ident_operation_response_variants_upper_camel_case = generate_ident_operation_response_variants_upper_camel_case(&operation);
         let expected_response_token_stream = {
             let deserialize_response_syn_variant_initialization_token_stream = generate_initialization_token_stream(&deserialize_response_syn_variant_wrapper, file!(), line!(), column!());
             quote::quote! {
-                let #expected_response_snake_case = match serde_json::from_str::<#ident_try_operation_logic_response_variants_upper_camel_case>(&#error_2_token_stream) {
+                let #expected_response_snake_case = match serde_json::from_str::<#ident_operation_response_variants_upper_camel_case>(&#error_2_token_stream) {
                     Ok(#value_snake_case) => #value_snake_case,
                     Err(#error_3_token_stream) => {
                         return Err(#ident_try_operation_error_named_upper_camel_case::#deserialize_response_syn_variant_initialization_token_stream);
@@ -2213,14 +2213,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     panic!("expected fields would be named");
                 };
                 quote::quote! {
-                    #ident_try_operation_logic_response_variants_upper_camel_case::#variant_ident {
+                    #ident_operation_response_variants_upper_camel_case::#variant_ident {
                         #fields_idents_token_stream
                     } => #try_operation_logic_error_named_with_serialize_deserialize_upper_camel_case::#variant_ident { #fields_idents_token_stream }
                 }
             });
             quote::quote! {
                 let #try_operation_logic_error_named_with_serialize_deserialize_snake_case = match #expected_response_snake_case {
-                    #ident_try_operation_logic_response_variants_upper_camel_case::#desirable_upper_camel_case(#value_snake_case) => {
+                    #ident_operation_response_variants_upper_camel_case::#desirable_upper_camel_case(#value_snake_case) => {
                         let #value_snake_case = #desirable_from_or_try_from_desirable_with_serialize_deserialize_token_stream;
                         return Ok(#value_snake_case);
                     },
