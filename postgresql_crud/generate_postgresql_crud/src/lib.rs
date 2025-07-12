@@ -20,6 +20,7 @@
 //todo generate json schema from rust type https://docs.rs/schemars/latest/schemars/
 //todo support read table length
 //todo what is pub what is private
+//todo header Retry-After logic
 
 //todo postgresql json:
 //* write json schema in postgresql
@@ -550,6 +551,85 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             macros_helpers::generate_simple_syn_punctuated_punctuated::generate_simple_syn_punctuated_punctuated(&[&postgresql_crud_snake_case.to_string(), &query_part_error_named_upper_camel_case.to_string()]),
         )],
     );
+    #[derive(Debug, Clone, Copy, naming::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
+    enum Operation {
+        CreateMany,
+        CreateOne,
+        ReadMany,
+        ReadOne,
+        UpdateMany,
+        UpdateOne,
+        DeleteMany,
+        DeleteOne,
+    }
+    impl Operation {
+        const fn http_method(self) -> OperationHttpMethod {
+            match self {
+                Self::CreateMany | Self::CreateOne | Self::ReadMany | Self::ReadOne => OperationHttpMethod::Post,
+                Self::UpdateMany | Self::UpdateOne => OperationHttpMethod::Patch,
+                Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
+            }
+        }
+        const fn desirable_status_code(self) -> macros_helpers::status_code::StatusCode {
+            match self {
+                Self::CreateMany | Self::CreateOne => macros_helpers::status_code::StatusCode::Created201,
+                Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
+            }
+        }
+        const fn generate_postgresql_crud_attribute_additional_error_variants(self) -> GeneratePostgresqlCrudAttribute {
+            match self {
+                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
+                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
+                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalErrorVariants,
+                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalErrorVariants,
+                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalErrorVariants,
+                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalErrorVariants,
+                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalErrorVariants,
+                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
+            }
+        }
+        const fn generate_postgresql_crud_attribute_additional_route_logic(self) -> GeneratePostgresqlCrudAttribute {
+            match self {
+                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic,
+                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalRouteLogic,
+                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalRouteLogic,
+                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalRouteLogic,
+                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalRouteLogic,
+                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalRouteLogic,
+                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalRouteLogic,
+                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalRouteLogic,
+            }
+        }
+        fn try_operation_route_logic_error_named_with_serialize_deserialize_snake_case(&self) -> naming::parameter::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase {
+            naming::parameter::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase::from_display(self)
+        }
+        fn try_operation_route_logic_snake_case(&self) -> impl naming::StdFmtDisplayPlusQuoteToTokens {
+            naming::parameter::TrySelfRouteLogicSnakeCase::from_display(&self)
+        }
+        fn snake_case_stringified(&self) -> std::string::String {
+            naming::AsRefStrToSnakeCaseStringified::case(&self.to_string())
+        }
+    }
+    impl std::fmt::Display for Operation {
+        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            match &self {
+                Self::CreateMany => write!(formatter, "CreateMany"),
+                Self::CreateOne => write!(formatter, "CreateOne"),
+                Self::ReadMany => write!(formatter, "ReadMany"),
+                Self::ReadOne => write!(formatter, "ReadOne"),
+                Self::UpdateMany => write!(formatter, "UpdateMany"),
+                Self::UpdateOne => write!(formatter, "UpdateOne"),
+                Self::DeleteMany => write!(formatter, "DeleteMany"),
+                Self::DeleteOne => write!(formatter, "DeleteOne"),
+            }
+        }
+    }
+    #[derive(naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
+    enum OperationHttpMethod {
+        Post,
+        Patch,
+        Delete,
+    }
     let generate_ident_try_operation_route_logic_error_named_upper_camel_case = |operation: &Operation|{
         format!("{ident}Try{operation}RouteLogicErrorNamed")
         .parse::<proc_macro2::TokenStream>().unwrap()
@@ -1220,79 +1300,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             };
             format!("{}::{value}", naming::PostgresqlCrudSnakeCase)
         }
-    }
-    #[derive(Debug, Clone, Copy, naming::AsRefStrEnumWithUnitFieldsToUpperCamelCaseStringified, naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
-    enum Operation {
-        CreateMany,
-        CreateOne,
-        ReadMany,
-        ReadOne,
-        UpdateMany,
-        UpdateOne,
-        DeleteMany,
-        DeleteOne,
-    }
-    impl Operation {
-        const fn http_method(self) -> OperationHttpMethod {
-            match self {
-                Self::CreateMany | Self::CreateOne | Self::ReadMany | Self::ReadOne => OperationHttpMethod::Post,
-                Self::UpdateMany | Self::UpdateOne => OperationHttpMethod::Patch,
-                Self::DeleteMany | Self::DeleteOne => OperationHttpMethod::Delete,
-            }
-        }
-        const fn desirable_status_code(self) -> macros_helpers::status_code::StatusCode {
-            match self {
-                Self::CreateMany | Self::CreateOne => macros_helpers::status_code::StatusCode::Created201,
-                Self::ReadMany | Self::ReadOne | Self::UpdateMany | Self::UpdateOne | Self::DeleteMany | Self::DeleteOne => macros_helpers::status_code::StatusCode::Ok200,
-            }
-        }
-        const fn generate_postgresql_crud_attribute_additional_error_variants(self) -> GeneratePostgresqlCrudAttribute {
-            match self {
-                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalErrorVariants,
-                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalErrorVariants,
-                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalErrorVariants,
-                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalErrorVariants,
-                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalErrorVariants,
-                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalErrorVariants,
-                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalErrorVariants,
-                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalErrorVariants,
-            }
-        }
-        const fn generate_postgresql_crud_attribute_additional_route_logic(self) -> GeneratePostgresqlCrudAttribute {
-            match self {
-                Self::CreateMany => GeneratePostgresqlCrudAttribute::CreateManyAdditionalRouteLogic,
-                Self::CreateOne => GeneratePostgresqlCrudAttribute::CreateOneAdditionalRouteLogic,
-                Self::ReadMany => GeneratePostgresqlCrudAttribute::ReadManyAdditionalRouteLogic,
-                Self::ReadOne => GeneratePostgresqlCrudAttribute::ReadOneAdditionalRouteLogic,
-                Self::UpdateMany => GeneratePostgresqlCrudAttribute::UpdateManyAdditionalRouteLogic,
-                Self::UpdateOne => GeneratePostgresqlCrudAttribute::UpdateOneAdditionalRouteLogic,
-                Self::DeleteMany => GeneratePostgresqlCrudAttribute::DeleteManyAdditionalRouteLogic,
-                Self::DeleteOne => GeneratePostgresqlCrudAttribute::DeleteOneAdditionalRouteLogic,
-            }
-        }
-        fn try_operation_route_logic_error_named_with_serialize_deserialize_snake_case(&self) -> naming::parameter::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase {
-            naming::parameter::TrySelfRouteLogicErrorNamedWithSerializeDeserializeSnakeCase::from_display(self)
-        }
-    }
-    impl std::fmt::Display for Operation {
-        fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-            match &self {
-                Self::CreateMany => write!(formatter, "CreateMany"),
-                Self::CreateOne => write!(formatter, "CreateOne"),
-                Self::ReadMany => write!(formatter, "ReadMany"),
-                Self::ReadOne => write!(formatter, "ReadOne"),
-                Self::UpdateMany => write!(formatter, "UpdateMany"),
-                Self::UpdateOne => write!(formatter, "UpdateOne"),
-                Self::DeleteMany => write!(formatter, "DeleteMany"),
-                Self::DeleteOne => write!(formatter, "DeleteOne"),
-            }
-        }
-    }
-    #[derive(naming::AsRefStrEnumWithUnitFieldsToSnakeCaseStringified)]
-    enum OperationHttpMethod {
-        Post,
-        Patch,
-        Delete,
     }
     let postgresql_crud_order_by_token_stream = quote::quote! {#postgresql_crud_snake_case::#order_by_upper_camel_case};
     let postgresql_crud_order_token_stream = quote::quote! {#postgresql_crud_snake_case::Order};
@@ -1981,7 +1988,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         binded_query_token_stream: &dyn quote::ToTokens,
         postgresql_logic_token_stream: &dyn quote::ToTokens
     | -> proc_macro2::TokenStream {
-        let try_operation_route_logic_snake_case = naming::parameter::TrySelfRouteLogicSnakeCase::from_display(operation);
+        let try_operation_route_logic_snake_case = operation.try_operation_route_logic_snake_case();
         let request_parts_preparation_token_stream = {
             let header_content_type_application_json_not_found_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream = &generate_operation_error_initialization_eprintln_response_creation_token_stream(
                 operation,
@@ -3517,30 +3524,79 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     //     &"delete_one",
     //     &delete_one_token_stream,
     // );
-    let _token_stream = {
+    let routes_token_stream = {
+        let generate_slash_route_double_quotes_token_stream = |value: &dyn std::fmt::Display|{
+            generate_quotes::double_quotes_token_stream(&format!("/{value}"))
+        };
+        let create_many = Operation::CreateMany;
+        let create_one = Operation::CreateOne;
+        let read_many = Operation::ReadMany;
+        let read_one = Operation::ReadOne;
+        let update_many = Operation::UpdateMany;
+        let update_one = Operation::UpdateOne;
+        let delete_many = Operation::DeleteMany;
+        let delete_one = Operation::DeleteOne;
+
+        let slash_create_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_many.snake_case_stringified());
+        let slash_create_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&create_one.snake_case_stringified());
+        let slash_read_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_many.snake_case_stringified());
+        let slash_read_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&read_one.snake_case_stringified());
+        let slash_update_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_many.snake_case_stringified());
+        let slash_update_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&update_one.snake_case_stringified());
+        let slash_delete_many_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_many.snake_case_stringified());
+        let slash_delete_one_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one.snake_case_stringified());
+
+        //
+        // 
+
+        //
+
+        let try_create_many_route_logic_snake_case = create_many.try_operation_route_logic_snake_case();
+        let try_create_one_route_logic_snake_case = create_one.try_operation_route_logic_snake_case();
+        let try_read_many_route_logic_snake_case = read_many.try_operation_route_logic_snake_case();
+        let try_read_one_route_logic_snake_case = read_one.try_operation_route_logic_snake_case();
+        let try_update_many_route_logic_snake_case = update_many.try_operation_route_logic_snake_case();
+        let try_update_one_route_logic_snake_case = update_one.try_operation_route_logic_snake_case();
+        let try_delete_many_route_logic_snake_case = delete_many.try_operation_route_logic_snake_case();
+        let try_delete_one_route_logic_snake_case = delete_one.try_operation_route_logic_snake_case();
+
+        // let f = generate_slash_route_double_quotes_token_stream(&Operation::CreateMany.operation_payload_example_route_logic());
         quote::quote!{
-
+            pub fn routes(app_state: #postgresql_crud_snake_case::DynArcCombinationOfAppStateLogicTraits) -> axum::Router {
+                axum::Router::new().nest(
+                    &format!("/{}",#ident::table_name()),
+                    axum::Router::new()
+                    .route(#slash_create_many_double_quotes_token_stream, axum::routing::post(#ident::#try_create_many_route_logic_snake_case))
+                    .route("/create_many_payload_example", axum::routing::get(#ident::create_many_payload_example_route_logic))
+                    .route(#slash_create_one_double_quotes_token_stream, axum::routing::post(#ident::#try_create_one_route_logic_snake_case))
+                    .route("/create_one_payload_example", axum::routing::get(#ident::create_one_payload_example_route_logic))
+                    .route(#slash_read_many_double_quotes_token_stream, axum::routing::post(#ident::#try_read_many_route_logic_snake_case))
+                    .route("/read_many_payload_example", axum::routing::get(#ident::read_many_payload_example_route_logic))
+                    .route(#slash_read_one_double_quotes_token_stream, axum::routing::post(#ident::#try_read_one_route_logic_snake_case))
+                    .route("/read_one_payload_example", axum::routing::get(#ident::read_one_payload_example_route_logic))
+                    .route(#slash_update_many_double_quotes_token_stream, axum::routing::patch(#ident::#try_update_many_route_logic_snake_case))
+                    .route("/update_many_payload_example", axum::routing::get(#ident::update_many_payload_example_route_logic))
+                    .route(#slash_update_one_double_quotes_token_stream, axum::routing::patch(#ident::#try_update_one_route_logic_snake_case))
+                    .route("/update_one_payload_example", axum::routing::get(#ident::update_one_payload_example_route_logic))
+                    .route(#slash_delete_many_double_quotes_token_stream, axum::routing::delete(#ident::#try_delete_many_route_logic_snake_case))
+                    .route("/delete_many_payload_example", axum::routing::get(#ident::delete_many_payload_example_route_logic))
+                    .route(#slash_delete_one_double_quotes_token_stream, axum::routing::delete(#ident::#try_delete_one_route_logic_snake_case))
+                    .route("/delete_one_payload_example", axum::routing::get(#ident::delete_one_payload_example_route_logic))
+                    // .layer(tower_http::cors::CorsLayer::new().allow_methods(#ident::allow_methods()))
+                    .with_state(app_state)
+                )
+            }
         }
     };
-    let common_token_stream = {
-        quote::quote! {
-            #impl_ident_token_stream
-            #ident_create_token_stream
-            #ident_where_many_token_stream
-            #std_option_option_ident_where_many_token_stream
-            #select_token_stream
-            #ident_read_token_stream
-            #ident_column_read_permission_token_stream
-            #ident_update_token_stream
-        }
-    };
-    // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
-    //     &"common",
-    //     &common_token_stream,
-    // );
     let generated = quote::quote! {
-        #common_token_stream
-
+        #impl_ident_token_stream
+        #ident_create_token_stream
+        #ident_where_many_token_stream
+        #std_option_option_ident_where_many_token_stream
+        #select_token_stream
+        #ident_read_token_stream
+        #ident_column_read_permission_token_stream
+        #ident_update_token_stream
         #create_many_token_stream
         #create_one_token_stream
         #read_many_token_stream
@@ -3549,6 +3605,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #update_one_token_stream
         #delete_many_token_stream
         #delete_one_token_stream
+        #routes_token_stream
     };
     // if ident == "" {
         // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
