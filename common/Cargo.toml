@@ -46,5 +46,8 @@ config_lib = {path = "../config_lib"}
 app_state = {path = "../app_state"}
 constants = {path = "../constants"}
 
+[dev-dependencies]
+num_cpus = {version = "=1.15.0"}
+
 [lints]
 workspace = true

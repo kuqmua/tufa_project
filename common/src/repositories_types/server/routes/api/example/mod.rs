@@ -1064,8 +1064,48 @@ mod tests {
     fn test_size_of() {
         assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
     }
-    // #[test]
-    // fn test_crud() {
+    #[test]
+    fn test_crud() {
+        std::thread::Builder::new().stack_size(16 * 1024 * 1024) // 16 MB
+        .spawn(|| {
+            tokio::runtime::Builder::new_multi_thread()
+            .worker_threads(num_cpus::get())
+            .enable_all()
+            .build()
+            .unwrap()
+            .block_on(async {
+                println!("commit {}", git_info::PROJECT_GIT_INFO.commit);
+                let config = crate::repositories_types::server::config::Config {
+                    service_socket_address: <std::net::SocketAddr as std::str::FromStr>::from_str(&"127.0.0.1:8080").unwrap(),
+                    timezone: chrono::FixedOffset::east_opt(10800).unwrap(),
+                    redis_url: secrecy::Secret::new(std::string::String::default()),
+                    mongo_url: secrecy::Secret::new(std::string::String::default()),
+                    database_url: secrecy::Secret::new(std::string::String::default()),
+                    starting_check_link: std::string::String::default(),
+                    tracing_level: ::core::default::Default::default(),
+                    source_place_type: ::core::default::Default::default(),
+                    enable_api_git_commit_check: false,
+                    maximum_size_of_http_body_in_bytes: 99999999,
+                };
+                // println!("trying to create postgres pool...");
+                // let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
+                // common::repositories_types::server::routes::api::example::Example::prepare_postgresql(&postgres_pool).await.unwrap();
+                // println!("trying to up server on {}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
+                // let app_state = std::sync::Arc::new(common::repositories_types::server::routes::app_state::AppState {
+                //     postgres_pool,
+                //     config,
+                //     project_git_info: &git_info::PROJECT_GIT_INFO,
+                // });
+                // let app = axum::Router::new()
+                // .merge(common::repositories_types::server::routes::api::example::Example::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)));
 
-    // }
+                assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
+            });
+        })
+        .unwrap()
+        .join()
+        .unwrap();
+    }
 }
+
+
