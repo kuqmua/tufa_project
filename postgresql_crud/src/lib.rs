@@ -20,15 +20,15 @@ pub use generate_postgresql_crud::read_one_additional_error_variants;
 pub use generate_postgresql_crud::update_many_additional_error_variants;
 pub use generate_postgresql_crud::update_one_additional_error_variants;
 
-pub use generate_postgresql_crud::common_additional_route_logic;
-pub use generate_postgresql_crud::create_many_additional_route_logic;
-pub use generate_postgresql_crud::create_one_additional_route_logic;
-pub use generate_postgresql_crud::delete_many_additional_route_logic;
-pub use generate_postgresql_crud::delete_one_additional_route_logic;
-pub use generate_postgresql_crud::read_many_additional_route_logic;
-pub use generate_postgresql_crud::read_one_additional_route_logic;
-pub use generate_postgresql_crud::update_many_additional_route_logic;
-pub use generate_postgresql_crud::update_one_additional_route_logic;
+pub use generate_postgresql_crud::common_additional_logic;
+pub use generate_postgresql_crud::create_many_additional_logic;
+pub use generate_postgresql_crud::create_one_additional_logic;
+pub use generate_postgresql_crud::delete_many_additional_logic;
+pub use generate_postgresql_crud::delete_one_additional_logic;
+pub use generate_postgresql_crud::read_many_additional_logic;
+pub use generate_postgresql_crud::read_one_additional_logic;
+pub use generate_postgresql_crud::update_many_additional_logic;
+pub use generate_postgresql_crud::update_one_additional_logic;
 
 pub use generate_postgresql_crud::GeneratePostgresqlCrud;
 pub use generate_postgresql_json_object_type::GeneratePostgresqlJsonObjectType;
