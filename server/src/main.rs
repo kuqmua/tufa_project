@@ -51,7 +51,7 @@ fn main() {
                     tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(config)).await.unwrap(),
                     axum::Router::new()
                         .merge(common::server::routes::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
-                        .merge(common::repositories_types::server::routes::api::example::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
+                        .merge(common::repositories_types::server::routes::api::example::Example::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
                         .merge(common::server::routes::not_found::not_found_route(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
                         // .fallback_service(routes_static())
                         .layer(

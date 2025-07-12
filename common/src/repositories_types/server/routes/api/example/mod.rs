@@ -228,14 +228,6 @@ pub struct Example {
     pub column_193: OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[cfg(test)]
-mod tests {
-    #[test]
-    fn test_size_of() {
-        assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
-    }
-}
-
 #[derive(Debug
     , postgresql_crud::GeneratePostgresqlJsonObjectType
 )]
@@ -1062,4 +1054,18 @@ pub struct Animal {
 pub struct Doggie {
     pub field_0: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
     pub field_1: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
+}
+
+
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn test_size_of() {
+        assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
+    }
+    // #[test]
+    // fn test_crud() {
+
+    // }
 }

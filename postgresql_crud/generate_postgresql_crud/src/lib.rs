@@ -3573,29 +3573,31 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let slash_delete_many_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_many_payload_example_snake_case);
         let slash_delete_one_example_double_quotes_token_stream = generate_slash_route_double_quotes_token_stream(&delete_one_payload_example_snake_case);
         quote::quote!{
-            pub fn routes(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream) -> axum::Router {
-                axum::Router::new().nest(
-                    &format!("/{}",#ident::#table_name_snake_case()),
-                    axum::Router::new()
-                    .route(#slash_create_many_double_quotes_token_stream, axum::routing::post(#ident::#create_many_snake_case_token_stream))
-                    .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(#ident::#create_many_payload_example_snake_case))
-                    .route(#slash_create_one_double_quotes_token_stream, axum::routing::post(#ident::#create_one_snake_case_token_stream))
-                    .route(#slash_create_one_example_double_quotes_token_stream, axum::routing::get(#ident::#create_one_payload_example_snake_case))
-                    .route(#slash_read_many_double_quotes_token_stream, axum::routing::post(#ident::#read_many_snake_case_token_stream))
-                    .route(#slash_read_many_example_double_quotes_token_stream, axum::routing::get(#ident::#read_many_payload_example_snake_case))
-                    .route(#slash_read_one_double_quotes_token_stream, axum::routing::post(#ident::#read_one_snake_case_token_stream))
-                    .route(#slash_read_one_example_double_quotes_token_stream, axum::routing::get(#ident::#read_one_payload_example_snake_case))
-                    .route(#slash_update_many_double_quotes_token_stream, axum::routing::patch(#ident::#update_many_snake_case_token_stream))
-                    .route(#slash_update_many_example_double_quotes_token_stream, axum::routing::get(#ident::#update_many_payload_example_snake_case))
-                    .route(#slash_update_one_double_quotes_token_stream, axum::routing::patch(#ident::#update_one_snake_case_token_stream))
-                    .route(#slash_update_one_example_double_quotes_token_stream, axum::routing::get(#ident::#update_one_payload_example_snake_case))
-                    .route(#slash_delete_many_double_quotes_token_stream, axum::routing::delete(#ident::#delete_many_snake_case_token_stream))
-                    .route(#slash_delete_many_example_double_quotes_token_stream, axum::routing::get(#ident::#delete_many_payload_example_snake_case))
-                    .route(#slash_delete_one_double_quotes_token_stream, axum::routing::delete(#ident::#delete_one_snake_case_token_stream))
-                    .route(#slash_delete_one_example_double_quotes_token_stream, axum::routing::get(#ident::#delete_one_payload_example_snake_case))
-                    // .layer(tower_http::cors::CorsLayer::new().allow_methods(#ident::allow_methods()))
-                    .with_state(#app_state_snake_case)
-                )
+            impl #ident {
+                pub fn routes(#app_state_snake_case: #std_sync_arc_combination_of_app_state_logic_traits_token_stream) -> axum::Router {
+                    axum::Router::new().nest(
+                        &format!("/{}",#ident::#table_name_snake_case()),
+                        axum::Router::new()
+                        .route(#slash_create_many_double_quotes_token_stream, axum::routing::post(#ident::#create_many_snake_case_token_stream))
+                        .route(#slash_create_many_example_double_quotes_token_stream, axum::routing::get(#ident::#create_many_payload_example_snake_case))
+                        .route(#slash_create_one_double_quotes_token_stream, axum::routing::post(#ident::#create_one_snake_case_token_stream))
+                        .route(#slash_create_one_example_double_quotes_token_stream, axum::routing::get(#ident::#create_one_payload_example_snake_case))
+                        .route(#slash_read_many_double_quotes_token_stream, axum::routing::post(#ident::#read_many_snake_case_token_stream))
+                        .route(#slash_read_many_example_double_quotes_token_stream, axum::routing::get(#ident::#read_many_payload_example_snake_case))
+                        .route(#slash_read_one_double_quotes_token_stream, axum::routing::post(#ident::#read_one_snake_case_token_stream))
+                        .route(#slash_read_one_example_double_quotes_token_stream, axum::routing::get(#ident::#read_one_payload_example_snake_case))
+                        .route(#slash_update_many_double_quotes_token_stream, axum::routing::patch(#ident::#update_many_snake_case_token_stream))
+                        .route(#slash_update_many_example_double_quotes_token_stream, axum::routing::get(#ident::#update_many_payload_example_snake_case))
+                        .route(#slash_update_one_double_quotes_token_stream, axum::routing::patch(#ident::#update_one_snake_case_token_stream))
+                        .route(#slash_update_one_example_double_quotes_token_stream, axum::routing::get(#ident::#update_one_payload_example_snake_case))
+                        .route(#slash_delete_many_double_quotes_token_stream, axum::routing::delete(#ident::#delete_many_snake_case_token_stream))
+                        .route(#slash_delete_many_example_double_quotes_token_stream, axum::routing::get(#ident::#delete_many_payload_example_snake_case))
+                        .route(#slash_delete_one_double_quotes_token_stream, axum::routing::delete(#ident::#delete_one_snake_case_token_stream))
+                        .route(#slash_delete_one_example_double_quotes_token_stream, axum::routing::get(#ident::#delete_one_payload_example_snake_case))
+                        // .layer(tower_http::cors::CorsLayer::new().allow_methods(#ident::allow_methods()))
+                        .with_state(#app_state_snake_case)
+                    )
+                }
             }
         }
     };
