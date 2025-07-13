@@ -3383,9 +3383,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             },
             &operation,
         );
-        let parameters_token_stream = generate_parameters_pattern_payload_token_stream(
+        let parameters_token_stream = generate_parameters_pattern_token_stream(
             &operation,
-            &pub_where_many_std_option_option_ident_where_many_token_stream
+            {
+                let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
+                let ident_operation_payload_token_stream = quote::quote! {
+                    #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+                    pub struct #ident_operation_payload_upper_camel_case {
+                        #pub_where_many_std_option_option_ident_where_many_token_stream
+                    }
+                };
+                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
+                    &generate_ident_operation_payload_upper_camel_case(&operation),
+                    &quote::quote!{Self {#where_many_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}}
+                );
+                quote::quote! {
+                    #ident_operation_payload_token_stream
+                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
+                }
+            }
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
@@ -3446,16 +3462,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_token_stream
             }
         };
-        let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
-            &generate_ident_operation_payload_upper_camel_case(&operation),
-            &quote::quote!{Self {#where_many_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream}}
-        );
         let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
-            #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
             #operation_payload_example_token_stream
         }
     };
@@ -3466,9 +3477,41 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let delete_one_token_stream = {
         let operation = Operation::DeleteOne;
         let type_variants_from_request_response_syn_variants = generate_type_variants_from_request_response_syn_variants(&common_route_with_row_and_rollback_syn_variants, &operation);
-        let parameters_token_stream = generate_parameters_pattern_payload_token_stream(
+        let parameters_token_stream = generate_parameters_pattern_token_stream(
             &operation,
-            &generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream(&naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&primary_key_field_type))
+            {
+                let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&operation);
+                let ident_operation_payload_token_stream = {
+                    let content_token_stream = generate_pub_handle_primary_key_field_ident_primary_key_inner_type_handle_token_stream(
+                        &naming::parameter::SelfReadUpperCamelCase::from_type_last_segment(&primary_key_field_type)
+                    );
+                    quote::quote! {
+                        #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+                        pub struct #ident_operation_payload_upper_camel_case {
+                            #content_token_stream
+                        }
+                    }
+                };
+                let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
+                    &ident_operation_payload_upper_camel_case,
+                    &{
+                        let primary_key_field_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
+                            quote::quote! {
+                                #primary_key_field_ident: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                            }
+                        };
+                        quote::quote! {
+                            Self {
+                                #primary_key_field_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream,
+                            }
+                        }
+                    }
+                );
+                quote::quote! {
+                    #ident_operation_payload_token_stream
+                    #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
+                }
+            }
         );
         let operation_token_stream = {
             let try_operation_logic_response_variants_impl_std_convert_from_try_operation_logic_error_named_for_try_operation_logic_response_variants_try_operation_logic_error_named_token_stream =
@@ -3526,27 +3569,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #try_operation_token_stream
             }
         };
-        let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
-            &generate_ident_operation_payload_upper_camel_case(&operation),
-            &{
-                let primary_key_field_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream = {
-                    quote::quote! {
-                        #primary_key_field_ident: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                    }
-                };
-                quote::quote! {
-                    Self {
-                        #primary_key_field_with_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element_token_stream,
-                    }
-                }
-            }
-        );
         let operation_payload_example_token_stream = generate_operation_payload_example_token_stream(&operation);
         quote::quote! {
             #parameters_token_stream
             #operation_token_stream
             #try_operation_token_stream
-            #impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_operation_payload_token_stream
             #operation_payload_example_token_stream
         }
     };
