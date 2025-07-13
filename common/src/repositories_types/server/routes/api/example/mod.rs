@@ -1041,20 +1041,20 @@ pub struct Animal {
     // pub field_804: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNotNullJsonbString,
     // pub field_805: postgresql_crud::postgresql_json_type::OptionVecOfOptionVecOfOptionVecOfOptionVecOfOptionUuidUuidAsNullableArrayOfNullableArrayOfNullableArrayOfNullableArrayOfNullableJsonbString,
 
-    pub field_806: DoggieAsNotNullJsonbObject,
+    // pub field_806: DoggieAsNotNullJsonbObject,
     // pub field_807: VecOfDoggieWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     // pub field_808: OptionDoggieAsNullableJsonbObject,
     // pub field_809: OptionVecOfDoggieWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
-#[derive(Debug
-    , postgresql_crud::GeneratePostgresqlJsonObjectType
-)]
-#[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
-pub struct Doggie {
-    pub field_0: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
-    pub field_1: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
-}
+// #[derive(Debug
+//     , postgresql_crud::GeneratePostgresqlJsonObjectType
+// )]
+// #[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
+// pub struct Doggie {
+//     pub field_0: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
+//     pub field_1: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
+// }
 
 
 
@@ -1133,13 +1133,13 @@ mod tests {
                 //     },
                 // ).await.unwrap();
                 // println!("read_one: {read_one:#?}");
-                // let update_many = crate::repositories_types::server::routes::api::example::Example::try_update_many(
-                //     &url,
-                //     crate::repositories_types::server::routes::api::example::ExampleUpdateManyParameters {
-                //         payload: <crate::repositories_types::server::routes::api::example::ExampleUpdateManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                //     },
-                // ).await.unwrap();
-                // println!("update_many: {update_many:#?}");
+                let update_many = crate::repositories_types::server::routes::api::example::Example::try_update_many(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleUpdateManyParameters {
+                        payload: <crate::repositories_types::server::routes::api::example::ExampleUpdateManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                    },
+                ).await.unwrap();
+                println!("update_many: {update_many:#?}");
                 // let update_one = crate::repositories_types::server::routes::api::example::Example::try_update_one(
                 //     &url,
                 //     crate::repositories_types::server::routes::api::example::ExampleUpdateOneParameters {
@@ -1169,5 +1169,3 @@ mod tests {
         .unwrap();
     }
 }
-
-

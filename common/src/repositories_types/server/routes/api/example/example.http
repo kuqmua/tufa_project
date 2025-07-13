@@ -38,43 +38,7 @@ commit: 926cf2c0bac1dfbd1fd466068b2c9fc5a271bc3b
 
 [
   {
-    "column_0": 0,
-    "column_190": {
-      "field_0": 0,
-      "field_1": 0,
-      "field_806": {
-        "field_0": 0,
-        "field_1": 0
-      }
-    },
-    "column_191": [
-      {
-        "field_0": 0,
-        "field_1": 0,
-        "field_806": {
-          "field_0": 0,
-          "field_1": 0
-        }
-      }
-    ],
-    "column_192": {
-      "field_0": 0,
-      "field_1": 0,
-      "field_806": {
-        "field_0": 0,
-        "field_1": 0
-      }
-    },
-    "column_193": [
-      {
-        "field_0": 0,
-        "field_1": 0,
-        "field_806": {
-          "field_0": 0,
-          "field_1": 0
-        }
-      }
-    ]
+    "column_0": 0
   }
 ]
 

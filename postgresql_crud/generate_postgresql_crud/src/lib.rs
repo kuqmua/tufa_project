@@ -1428,7 +1428,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     ) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
                         match #field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
                             &#value_snake_case.#value_snake_case,
-                            &"",
+                            &#field_ident_double_quotes_token_stream,
                             &#field_ident_double_quotes_token_stream,
                             &"",
                             #increment_snake_case
@@ -3601,7 +3601,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             }
         }
     };
-    let generated = quote::quote! {
+    let common_token_stream = quote::quote! {
         #impl_ident_token_stream
         #ident_create_token_stream
         #ident_where_many_token_stream
@@ -3610,6 +3610,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #ident_read_token_stream
         #ident_column_read_permission_token_stream
         #ident_update_token_stream
+    };
+    // if ident == "" {
+        // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
+        //     "GeneratePostgresqlCrud",
+        //     &common_token_stream,
+        // );
+    // }
+    let generated = quote::quote! {
+        #common_token_stream
         #create_many_token_stream
         #create_one_token_stream
         #read_many_token_stream
