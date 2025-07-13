@@ -417,19 +417,6 @@ I DONT THINK ITS A GOOD IDEA
             
 * dockerfile with ARM support
 
-* rename MONGO_FOURTH_HANDLE_URL_PART and others into something more meaningfull 
-
-* vec_of_values are not filtered in
-mongo_insert_docs_in_empty_collection(
-        mongo_url,
-        db_name_handle,
-        db_collection_handle, //fix naming later
-        db_collection_document_field_name_handle,
-        vec_of_values,
-    )
-all 2200+ twitter subs inserted
-fix this by adding filter from env
-
 * early return refactoring with ok_or and ?
 example
 fn bar1(x: Option<u64>) -> Result<u64, MyErrors> {

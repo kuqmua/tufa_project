@@ -1,22 +1,4 @@
 // // use crate::write_error_posts_wrapper::write_error_posts_wrapper;
-// //     let future_possible_drop_collection = mongo_drop_collection_wrapper(
-// //         mongo_url,
-// //         db_name_handle,
-// //         &format!("{key}{db_collection_handle_second_part}"),
-// //         false,
-// //     );
-// //     match future_possible_drop_collection {
-// //         Ok(result_flag) => {
-// //             if result_flag {
-// //                 println!("drop done!");
-// //             } else {
-// //                 println!("drop fail with flag");
-// //             }
-// //         }
-// //         Err(error) => {
-// //             println!("drop fail with error {error:#?}",);
-// //         }
-// //     }
 
 // // use crate::fetch::rss_filter_fetched_and_parsed_posts::PostErrorVariant;
 // // use reqwest::StatusCode;
