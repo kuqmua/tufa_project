@@ -1119,6 +1119,20 @@ mod tests {
                     },
                 ).await.unwrap();
                 println!("create_one: {create_one:#?}");
+                // let read_many = crate::repositories_types::server::routes::api::example::Example::try_read_many(
+                //     &url,
+                //     crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
+                //         payload: <crate::repositories_types::server::routes::api::example::ExampleReadManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                //     },
+                // ).await.unwrap();
+                // println!("read_many: {read_many:#?}");
+                // let read_one = crate::repositories_types::server::routes::api::example::Example::try_read_one(
+                //     &url,
+                //     crate::repositories_types::server::routes::api::example::ExampleReadOneParameters {
+                //         payload: <crate::repositories_types::server::routes::api::example::ExampleReadOnePayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                //     },
+                // ).await.unwrap();
+                // println!("read_one: {read_one:#?}");
                 assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
             });
         })
