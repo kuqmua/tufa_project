@@ -40,14 +40,15 @@ fn main() {
             //         ))
             //     },
             // };
-            println!("trying to up server on {}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
+            let service_socket_address = app_state::GetServiceSocketAddress::get_service_socket_address(config);
+            println!("trying to up server on {service_socket_address}");
             let app_state = std::sync::Arc::new(common::repositories_types::server::routes::app_state::AppState {
                 postgres_pool,
                 config,
                 project_git_info: &git_info::PROJECT_GIT_INFO,
             });
             axum::serve(
-                tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(config)).await.unwrap(),
+                tokio::net::TcpListener::bind(service_socket_address).await.unwrap(),
                 axum::Router::new()
                     .merge(common::server::routes::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
                     .merge(common::repositories_types::server::routes::api::example::Example::routes(std::sync::Arc::<common::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
