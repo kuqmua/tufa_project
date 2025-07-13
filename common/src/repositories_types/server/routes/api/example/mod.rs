@@ -1074,11 +1074,11 @@ mod tests {
             .build()
             .unwrap()
             .block_on(async {
+                let service_socket_address_stringified = "127.0.0.1:8080";
                 let _unused = tokio::spawn(async move {
-                    println!("commit {}", git_info::PROJECT_GIT_INFO.commit);
                     static CONFIG: std::sync::OnceLock<crate::repositories_types::server::config::Config> = std::sync::OnceLock::new();
                     let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config {
-                        service_socket_address: <std::net::SocketAddr as std::str::FromStr>::from_str(&"127.0.0.1:8080").unwrap(),
+                        service_socket_address: <std::net::SocketAddr as std::str::FromStr>::from_str(&service_socket_address_stringified).unwrap(),
                         timezone: chrono::FixedOffset::east_opt(10800).unwrap(),
                         redis_url: secrecy::Secret::new(std::string::String::default()),
                         database_url: secrecy::Secret::new(std::string::String::from("postgres://postgres:postgres@127.0.0.1:5432/dev?connect_timeout=10")),
@@ -1087,18 +1087,15 @@ mod tests {
                         enable_api_git_commit_check: false,
                         maximum_size_of_http_body_in_bytes: 99999999,
                     });
-                    println!("trying to create postgres pool...");
                     let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
                     crate::repositories_types::server::routes::api::example::Example::prepare_postgresql(&postgres_pool).await.unwrap();
-                    let service_socket_address = app_state::GetServiceSocketAddress::get_service_socket_address(&config);
-                    println!("trying to up server on {service_socket_address}");
                     let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
                         postgres_pool,
                         config: &config,
                         project_git_info: &git_info::PROJECT_GIT_INFO,
                     });
                     axum::serve(
-                        tokio::net::TcpListener::bind(service_socket_address).await.unwrap(),
+                        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&config)).await.unwrap(),
                         axum::Router::new()
                             .merge(crate::repositories_types::server::routes::api::example::Example::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
                             .into_make_service(),
@@ -1106,6 +1103,22 @@ mod tests {
                     .await
                     .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                 });
+                tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+                let url = format!("http://{service_socket_address_stringified}");
+                let create_many = crate::repositories_types::server::routes::api::example::Example::try_create_many(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleCreateManyParameters {
+                        payload: <crate::repositories_types::server::routes::api::example::ExampleCreateManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                    },
+                ).await.unwrap();
+                println!("create_many: {create_many:#?}");
+                let create_one = crate::repositories_types::server::routes::api::example::Example::try_create_one(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleCreateOneParameters {
+                        payload: <crate::repositories_types::server::routes::api::example::ExampleCreate as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                    },
+                ).await.unwrap();
+                println!("create_one: {create_one:#?}");
                 assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
             });
         })
