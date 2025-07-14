@@ -1128,10 +1128,6 @@ mod tests {
                     create_many,
                     "create_many result different"
                 );
-                // assert_eq!(create_many.len(), 1, "create_many vector should have exactly one element");
-                // let expected_to_be_first_primary_key = create_many.into_iter().next().unwrap();
-                // let first_primary_key_inner = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(expected_to_be_first_primary_key);
-                // println!("first_primary_key_inner: {first_primary_key_inner:#?}");
                 let create_one = crate::repositories_types::server::routes::api::example::Example::try_create_one(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleCreateOneParameters {
@@ -1245,8 +1241,7 @@ mod tests {
                 // println!("update_many: {update_many:#?}");
                 assert_eq!(
                     vec![
-                        //todo maybe make it read? like in update_one
-                        postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin::new(1)
+                        primary_key_read1.clone()
                     ],
                     update_many,
                     "update_many result different"
