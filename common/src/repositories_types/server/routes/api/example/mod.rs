@@ -1349,7 +1349,7 @@ mod tests {
                         }
                     },
                 ).await.unwrap();
-                println!("delete_many: {delete_many:#?}");
+                // println!("delete_many: {delete_many:#?}");
                 let read_many = crate::repositories_types::server::routes::api::example::Example::try_read_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
@@ -1369,13 +1369,41 @@ mod tests {
                     read_many,
                     "read_many result different"
                 );
-                // let delete_one = crate::repositories_types::server::routes::api::example::Example::try_delete_one(
-                //     &url,
-                //     crate::repositories_types::server::routes::api::example::ExampleDeleteOneParameters {
-                //         payload: <crate::repositories_types::server::routes::api::example::ExampleDeleteOnePayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                //     },
-                // ).await.unwrap();
+                let delete_one = crate::repositories_types::server::routes::api::example::Example::try_delete_one(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleDeleteOneParameters {
+                        payload: crate::repositories_types::server::routes::api::example::ExampleDeleteOnePayload {
+                            primary_key: primary_key_read3.clone(),
+                        }
+                    },
+                ).await.unwrap();
                 // println!("delete_one: {delete_one:#?}");
+                if let Err(error) = crate::repositories_types::server::routes::api::example::Example::try_read_one(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleReadOneParameters {
+                        payload: crate::repositories_types::server::routes::api::example::ExampleReadOnePayload {
+                            primary_key: primary_key_read3.clone(),
+                            select: select_primary_key.clone(),
+                        }
+                    },
+                ).await {
+                    if let crate::repositories_types::server::routes::api::example::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize { read_one_error_named_with_serialize_deserialize, code_occurence: _ } = &error {
+                        if let crate::repositories_types::server::routes::api::example::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize {
+                            if "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
+                                panic!("wtf");
+                            }
+                        }
+                        else {
+                            panic!("wtf");
+                        }
+                    }
+                    else {
+                        panic!("wtf");
+                    }
+                }
+                else {
+                    panic!("wtf");
+                }
                 assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
             });
         })
