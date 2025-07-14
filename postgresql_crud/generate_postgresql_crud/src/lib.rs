@@ -1149,7 +1149,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             });
             quote::quote! {
-                #derive_debug_serde_serialize_serde_deserialize
+                #[derive(Debug, PartialEq, serde::Serialize, serde::Deserialize)]
                 pub struct #ident_read_upper_camel_case {
                     #field_option_primary_key_token_stream,
                     #fields_options_without_primary_key_token_stream
