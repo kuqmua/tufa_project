@@ -1390,6 +1390,11 @@ mod tests {
                     },
                 ).await.unwrap();
                 // println!("delete_one: {delete_one:#?}");
+                assert_eq!(
+                    primary_key_read3.clone(),
+                    delete_one,
+                    "delete_one result different"
+                );
                 if let Err(error) = crate::repositories_types::server::routes::api::example::Example::try_read_one(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleReadOneParameters {
