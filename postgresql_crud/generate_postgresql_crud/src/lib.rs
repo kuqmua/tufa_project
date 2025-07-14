@@ -3659,8 +3659,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 },
                             ).await.unwrap();
                             // println!("create_many: {create_many:#?}");
-                            let primary_key_read1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(one);
-                            let primary_key_read2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(two);
+                            let primary_key_read1 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::new(one);
+                            let primary_key_read2 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::new(two);
                             assert_eq!(
                                 vec![
                                     primary_key_read1.clone(),
@@ -3671,19 +3671,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                                 super::ExampleSelect::PrimaryKey(
-                                    <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()
+                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
                                 )
                             ]).unwrap();
-                            let primary_key_equal1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(
+                            let primary_key_equal1 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::WhereElement::Equal(
                                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                                    value: <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(one)
+                                    value: <#primary_key_field_type as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(one)
                                 }
                             );
-                            let primary_key_equal2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(
+                            let primary_key_equal2 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::WhereElement::Equal(
                                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                                    value: <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(two)
+                                    value: <#primary_key_field_type as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(two)
                                 }
                             );
                             let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(
@@ -3734,7 +3734,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 read_many,
                                 "read_many result different"
                             );
-                            let primary_key_read3 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(three);
+                            let primary_key_read3 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::new(three);
                             let create_one = super::Example::try_create_one(
                                 &url,
                                 super::ExampleCreateOneParameters {
@@ -3771,8 +3771,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let some_value_update_column_0 = Some(
                                 postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(modification)}
                             );
-                            let primary_key_update1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(one);
-                            let primary_key_update2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(two);
+                            let primary_key_update1 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::new(one);
+                            let primary_key_update2 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::new(two);
                             let update_many = super::#ident::try_update_many(
                                 &url,
                                 super::ExampleUpdateManyParameters {
@@ -3803,7 +3803,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                                 super::ExampleSelect::PrimaryKey(
-                                    <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()
+                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
                                 ),
                                 super::ExampleSelect::Column0(
                                     <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()
@@ -3840,7 +3840,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 read_many,
                                 "read_many result different"
                             );
-                            let primary_key_update3 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(three);
+                            let primary_key_update3 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::new(three);
                             let update_one = super::#ident::try_update_one(
                                 &url,
                                 super::ExampleUpdateOneParameters {
