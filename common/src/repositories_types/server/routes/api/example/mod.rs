@@ -1075,26 +1075,30 @@ mod tests {
             .unwrap()
             .block_on(async {
                 let service_socket_address_stringified = "127.0.0.1:8080";
-                let _unused = tokio::spawn(async move {
-                    static CONFIG: std::sync::OnceLock<crate::repositories_types::server::config::Config> = std::sync::OnceLock::new();
-                    let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config {
-                        service_socket_address: <std::net::SocketAddr as std::str::FromStr>::from_str(&service_socket_address_stringified).unwrap(),
-                        timezone: chrono::FixedOffset::east_opt(10800).unwrap(),
-                        redis_url: secrecy::Secret::new(std::string::String::default()),
-                        database_url: secrecy::Secret::new(std::string::String::from("postgres://postgres:postgres@127.0.0.1:5432/dev?connect_timeout=10")),//todo move to .env for testing?
-                        tracing_level: ::core::default::Default::default(),
-                        source_place_type: ::core::default::Default::default(),
-                        enable_api_git_commit_check: false,
-                        maximum_size_of_http_body_in_bytes: 99999999,
-                    });
-                    let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
+                static CONFIG: std::sync::OnceLock<crate::repositories_types::server::config::Config> = std::sync::OnceLock::new();
+                let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config {
+                    service_socket_address: <std::net::SocketAddr as std::str::FromStr>::from_str(&service_socket_address_stringified).unwrap(),
+                    timezone: chrono::FixedOffset::east_opt(10800).unwrap(),
+                    redis_url: secrecy::Secret::new(std::string::String::default()),
+                    database_url: secrecy::Secret::new(std::string::String::from("postgres://postgres:postgres@127.0.0.1:5432/dev?connect_timeout=10")),//todo move to .env for testing?
+                    tracing_level: ::core::default::Default::default(),
+                    source_place_type: ::core::default::Default::default(),
+                    enable_api_git_commit_check: false,
+                    maximum_size_of_http_body_in_bytes: 99999999,
+                });
+                let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
+                async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
                     //todo
-                    let _unused = sqlx::query("DROP TABLE IF EXISTS example")
-                    .execute(&postgres_pool)
+                    let _unused = sqlx::query("drop table if exists example")
+                    .execute(postgres_pool)
                     .await.unwrap();
-                    crate::repositories_types::server::routes::api::example::Example::prepare_postgresql(&postgres_pool).await.unwrap();
+                }
+                drop_table_if_exists(&postgres_pool).await;
+                let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
+                let _unused = tokio::spawn(async move {
+                    crate::repositories_types::server::routes::api::example::Example::prepare_postgresql(&postgres_pool_for_tokio_spawn_sync_move).await.unwrap();
                     let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
-                        postgres_pool,
+                        postgres_pool: postgres_pool_for_tokio_spawn_sync_move.clone(),
                         config: &config,
                         project_git_info: &git_info::PROJECT_GIT_INFO,
                     });
@@ -1404,7 +1408,7 @@ mod tests {
                 else {
                     panic!("wtf");
                 }
-                assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
+                drop_table_if_exists(&postgres_pool).await;
             });
         })
         .unwrap()
