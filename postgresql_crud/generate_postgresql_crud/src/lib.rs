@@ -3641,7 +3641,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let one: std::primitive::i64 = 1;
                             let two: std::primitive::i64 = 2;
                             let three: std::primitive::i64 = 3;
-                            let example_create = super::ExampleCreate {
+                            let example_create = super::#ident_create_upper_camel_case {
                                 column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                 column_190: <<super::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                             };
