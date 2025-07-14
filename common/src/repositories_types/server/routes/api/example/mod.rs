@@ -1147,13 +1147,13 @@ mod tests {
                 let primary_key_equal1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(
                     postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                        value: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin::new(1),//todo seems like need to remove alias and use wrapper type instead
+                        value: <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(1)
                     }
                 );
                 let primary_key_equal2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(
                     postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                        value: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin::new(2),//todo seems like need to remove alias and use wrapper type instead
+                        value: <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(2)
                     }
                 );
                 let where_many_1_and_2_primary_keys = crate::repositories_types::server::routes::api::example::StdOptionOptionExampleWhereMany(

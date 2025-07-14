@@ -1100,9 +1100,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
-            
             let ident_standart_not_null_or_nullable_upper_camel_case = generate_ident_token_stream(postgresql_type, not_null_or_nullable, &PostgresqlTypePattern::Standart);
-            let ident_standart_not_null_or_nullable_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_or_nullable_upper_camel_case);
 
             let field_type_standart_not_null = postgresql_type.field_type_token_stream();
             let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
@@ -3315,6 +3313,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident);
             let ident_table_type_declaration_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_table_type_declaration_upper_camel_case, &ident_origin_upper_camel_case);
+            let ident_standart_not_null_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
+            let ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case = naming::parameter::SelfTableTypeDeclarationUpperCamelCase::from_tokens(&ident_standart_not_null_or_nullable_upper_camel_case);
             let ident_create_upper_camel_case = naming::parameter::SelfCreateUpperCamelCase::from_tokens(&ident);
             let ident_create_token_stream = {
                 let ident_create_token_stream = {
@@ -3432,13 +3432,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => {
                             let greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThan {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                             };
                             let between = postgresql_crud_macros_common::PostgresqlTypeFilter::Between {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                             };
                             let in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::In {
-                                ident: quote::quote!{#ident_origin_upper_camel_case}
+                                ident: quote::quote!{#ident_table_type_declaration_upper_camel_case}
                             };
                             let regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::RegularExpression;
                             let equal_to_encoded_string_representation = postgresql_crud_macros_common::PostgresqlTypeFilter::EqualToEncodedStringRepresentation;
@@ -3449,7 +3449,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::CurrentTimestamp;
                             let greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanCurrentTimestamp;
                             let before = postgresql_crud_macros_common::PostgresqlTypeFilter::Before {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                             };
                             // let bit_vec_position_equal = postgresql_crud_macros_common::PostgresqlTypeFilter::BitVecPositionEqual;
                             let common_standart_postgresql_type_filters = {
@@ -3477,34 +3477,34 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let ranges_common_filter_vec = {
                                     let mut vec = common_standart_postgresql_type_filters.clone();
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesWithinGivenRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::FindRangesThatFullyContainTheGivenRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToLeftOfRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::StrictlyToRightOfRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::IncludedLowerBound {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::ExcludedUpperBound {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanIncludedLowerBound {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::GreaterThanExcludedUpperBound {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::OverlapWithRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::AdjacentWithRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::RangeLength);
                                     vec
@@ -3642,18 +3642,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         },
                         PostgresqlTypePattern::ArrayDimension1 { .. } => {
-                            let ident_standart_not_null_or_nullable_if_can_be_nullable_origin_upper_camel_case = match &postgresql_type.can_be_nullable() {
-                                CanBeNullable::True => quote::quote!{#ident_standart_not_null_or_nullable_origin_upper_camel_case},
-                                CanBeNullable::False => quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                            let ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case = match &postgresql_type.can_be_nullable() {
+                                CanBeNullable::True => quote::quote!{#ident_standart_not_null_or_nullable_table_type_declaration_upper_camel_case},
+                                CanBeNullable::False => quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                             };
                             let dimension_one_greater_than = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThan {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                             };
                             let dimension_one_between = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBetween {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                             };
                             let dimension_one_in_handle = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIn {
-                                ident: ident_standart_not_null_or_nullable_if_can_be_nullable_origin_upper_camel_case.clone()
+                                ident: ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case.clone()
                             };
                             let dimension_one_regular_expression = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRegularExpression;
                             let dimension_one_current_date = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentDate;
@@ -3663,12 +3663,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let dimension_one_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneCurrentTimestamp;
                             let dimension_one_greater_than_current_timestamp = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanCurrentTimestamp;
                             let dimension_one_before = postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneBefore {
-                                ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                             };
                             let common_array_dimension1_postgresql_type_filters = {
                                 let mut vec = common_postgresql_type_filters.clone();
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneEqual {
-                                    ident: ident_standart_not_null_or_nullable_if_can_be_nullable_origin_upper_camel_case.clone()
+                                    ident: ident_standart_not_null_or_nullable_if_can_be_nullable_table_type_declaration_upper_camel_case.clone()
                                 });
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthEqual);
                                 vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneLengthMoreThan);
@@ -3697,16 +3697,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     let range_element_ident_standart_not_null_token_stream = generate_ident_standart_not_null_token_stream(&postgresql_type_from_postgresql_type_range);
                                     let mut vec = common_array_dimension1_postgresql_type_filters.clone();
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesWithinGivenRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesThatFullyContainTheGivenRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToLeftOfRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneStrictlyToRightOfRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound {
                                         ident: quote::quote!{<#range_element_ident_standart_not_null_token_stream as crate::PostgresqlType>::Read}
@@ -3721,10 +3721,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         ident: quote::quote!{<#range_element_ident_standart_not_null_token_stream as crate::PostgresqlType>::Read}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneAdjacentWithRange {
-                                        ident: quote::quote!{#ident_standart_not_null_origin_upper_camel_case}
+                                        ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneRangeLength);
                                     vec
