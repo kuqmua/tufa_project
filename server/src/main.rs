@@ -64,6 +64,7 @@ fn main() {
                         // ])
                         .allow_origin(["http://127.0.0.1".parse().unwrap()]),
                     )
+                    //todo partialy move to generate postresql crud implementation (except git_info route)
                     .merge(utoipa_swagger_ui::SwaggerUi::new(constants::SLASH_SWAGGER_UI).url("/api-docs/openapi.json", {
                         #[derive(utoipa::OpenApi)]
                         #[openapi(
