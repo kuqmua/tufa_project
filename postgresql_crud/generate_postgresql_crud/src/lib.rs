@@ -698,7 +698,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             });
             quote::quote! {
-                #derive_debug_serde_serialize_serde_deserialize_utoipa_to_schema
+                #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
                 pub struct #ident_create_upper_camel_case {
                     #pub_field_ident_field_type_fields_named_without_primary_key_token_stream
                 }

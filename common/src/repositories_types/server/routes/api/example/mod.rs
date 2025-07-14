@@ -1105,16 +1105,15 @@ mod tests {
                 });
                 tokio::time::sleep(std::time::Duration::from_millis(200)).await;
                 let url = format!("http://{service_socket_address_stringified}");
+                let example_create = crate::repositories_types::server::routes::api::example::ExampleCreate {
+                    column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    column_190: <<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                };
                 let create_many = crate::repositories_types::server::routes::api::example::Example::try_create_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleCreateManyParameters {
                         payload: crate::repositories_types::server::routes::api::example::ExampleCreateManyPayload(
-                            vec![
-                                crate::repositories_types::server::routes::api::example::ExampleCreate {
-                                    column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                    column_190: <<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                }
-                            ]
+                            vec![example_create.clone()]
                         )
                     },
                 ).await.unwrap();
@@ -1122,7 +1121,7 @@ mod tests {
                 let create_one = crate::repositories_types::server::routes::api::example::Example::try_create_one(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleCreateOneParameters {
-                        payload: <crate::repositories_types::server::routes::api::example::ExampleCreate as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                        payload: example_create
                     },
                 ).await.unwrap();
                 println!("create_one: {create_one:#?}");
