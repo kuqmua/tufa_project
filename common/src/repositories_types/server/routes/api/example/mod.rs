@@ -1064,6 +1064,10 @@ mod tests {
     fn test_size_of() {
         assert_eq!(std::mem::size_of::<crate::repositories_types::server::routes::api::example::Example>(), 0);
     }
+}
+
+#[cfg(test)]
+mod tests_example {
     #[test]
     fn test_crud() {
         std::thread::Builder::new().stack_size(16 * 1024 * 1024) // 16 MB
