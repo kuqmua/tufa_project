@@ -1102,7 +1102,10 @@ mod tests {
                     .await
                     .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                 });
-                tokio::time::sleep(std::time::Duration::from_millis(200)).await;
+                tokio::time::sleep(std::time::Duration::from_millis(50)).await;
+                let one: std::primitive::i64 = 1;
+                let two: std::primitive::i64 = 2;
+                let three: std::primitive::i64 = 3;
                 let example_create = crate::repositories_types::server::routes::api::example::ExampleCreate {
                     column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                     column_190: <<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
@@ -1119,8 +1122,8 @@ mod tests {
                     },
                 ).await.unwrap();
                 // println!("create_many: {create_many:#?}");
-                let primary_key_read1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(1);
-                let primary_key_read2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(2);
+                let primary_key_read1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(one);
+                let primary_key_read2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(two);
                 assert_eq!(
                     vec![
                         primary_key_read1.clone(),
@@ -1137,13 +1140,13 @@ mod tests {
                 let primary_key_equal1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(
                     postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                        value: <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(1)
+                        value: <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(one)
                     }
                 );
                 let primary_key_equal2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(
                     postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                        value: <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(2)
+                        value: <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(two)
                     }
                 );
                 let where_many_1_and_2_primary_keys = crate::repositories_types::server::routes::api::example::StdOptionOptionExampleWhereMany(
@@ -1194,7 +1197,7 @@ mod tests {
                     read_many,
                     "read_many result different"
                 );
-                let primary_key_read3 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(3);
+                let primary_key_read3 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(three);
                 let create_one = crate::repositories_types::server::routes::api::example::Example::try_create_one(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleCreateOneParameters {
@@ -1227,11 +1230,12 @@ mod tests {
                     read_one,
                     "read_one result different"
                 );
+                let modification = 1;
                 let some_value_update_column_0 = Some(
-                    postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(5)}
+                    postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(modification)}
                 );
-                let primary_key_update1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(1);
-                let primary_key_update2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(2);
+                let primary_key_update1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(one);
+                let primary_key_update2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(two);
                 let update_many = crate::repositories_types::server::routes::api::example::Example::try_update_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleUpdateManyParameters {
@@ -1282,7 +1286,7 @@ mod tests {
                         }
                     },
                 ).await.unwrap();
-                let some_value_column_0_read_5 = Some(postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(5) });
+                let some_value_column_0_read_5 = Some(postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(modification) });
                 assert_eq!(
                     vec![
                         crate::repositories_types::server::routes::api::example::ExampleRead {
@@ -1299,7 +1303,7 @@ mod tests {
                     read_many,
                     "read_many result different"
                 );
-                let primary_key_update3 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(3);
+                let primary_key_update3 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(three);
                 let update_one = crate::repositories_types::server::routes::api::example::Example::try_update_one(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleUpdateOneParameters {
@@ -1312,7 +1316,7 @@ mod tests {
                 ).await.unwrap();
                 // println!("update_one: {update_one:#?}");
                 assert_eq!(
-                    postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlRead::new(3),
+                    postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlRead::new(three),
                     update_one,
                     "update_one result different"
                 );
