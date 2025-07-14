@@ -1145,6 +1145,11 @@ mod tests {
                     create_one,
                     "create_one result different"
                 );
+                let select = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                    crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(
+                        <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()
+                    )
+                ]).unwrap();
                 let read_many = crate::repositories_types::server::routes::api::example::Example::try_read_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
@@ -1174,11 +1179,7 @@ mod tests {
                                     column_190: None,
                                 })
                             ),
-                            select: postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                                crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(
-                                    <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()
-                                )
-                            ]).unwrap(),
+                            select: select.clone(),
                             order_by: postgresql_crud::OrderBy {
                                 column: crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                 order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
@@ -1205,13 +1206,25 @@ mod tests {
                     read_many,
                     "read_many result different"
                 );
-                // let read_one = crate::repositories_types::server::routes::api::example::Example::try_read_one(
-                //     &url,
-                //     crate::repositories_types::server::routes::api::example::ExampleReadOneParameters {
-                //         payload: <crate::repositories_types::server::routes::api::example::ExampleReadOnePayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                //     },
-                // ).await.unwrap();
-                // println!("read_one: {read_one:#?}");
+                let read_one = crate::repositories_types::server::routes::api::example::Example::try_read_one(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleReadOneParameters {
+                        payload: crate::repositories_types::server::routes::api::example::ExampleReadOnePayload {
+                            primary_key: primary_key_read1.clone(),
+                            select: select.clone(),
+                        }
+                    },
+                ).await.unwrap();
+                println!("read_one: {read_one:#?}");
+                assert_eq!(
+                    crate::repositories_types::server::routes::api::example::ExampleRead {
+                        primary_key: Some(postgresql_crud::Value { value: primary_key_read1.clone()}),
+                        column_0: None,
+                        column_190: None
+                    },
+                    read_one,
+                    "read_one result different"
+                );
                 let update_many = crate::repositories_types::server::routes::api::example::Example::try_update_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleUpdateManyParameters {
