@@ -223,9 +223,9 @@ pub struct Example {
 //     pub column_189: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsNullableArrayOfNullableTimestampTzRange,
 
     pub column_190: AnimalAsNotNullJsonbObject,
-    pub column_191: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    pub column_192: OptionAnimalAsNullableJsonbObject,
-    pub column_193: OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
+    // pub column_191: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
+    // pub column_192: OptionAnimalAsNullableJsonbObject,
+    // pub column_193: OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
 #[derive(Debug
@@ -1081,7 +1081,7 @@ mod tests {
                         service_socket_address: <std::net::SocketAddr as std::str::FromStr>::from_str(&service_socket_address_stringified).unwrap(),
                         timezone: chrono::FixedOffset::east_opt(10800).unwrap(),
                         redis_url: secrecy::Secret::new(std::string::String::default()),
-                        database_url: secrecy::Secret::new(std::string::String::from("postgres://postgres:postgres@127.0.0.1:5432/dev?connect_timeout=10")),
+                        database_url: secrecy::Secret::new(std::string::String::from("postgres://postgres:postgres@127.0.0.1:5432/dev?connect_timeout=10")),//todo move to .env for testing?
                         tracing_level: ::core::default::Default::default(),
                         source_place_type: ::core::default::Default::default(),
                         enable_api_git_commit_check: false,
@@ -1108,7 +1108,14 @@ mod tests {
                 let create_many = crate::repositories_types::server::routes::api::example::Example::try_create_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleCreateManyParameters {
-                        payload: <crate::repositories_types::server::routes::api::example::ExampleCreateManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                        payload: crate::repositories_types::server::routes::api::example::ExampleCreateManyPayload(
+                            vec![
+                                crate::repositories_types::server::routes::api::example::ExampleCreate {
+                                    column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                    column_190: <<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                }
+                            ]
+                        )
                     },
                 ).await.unwrap();
                 println!("create_many: {create_many:#?}");
