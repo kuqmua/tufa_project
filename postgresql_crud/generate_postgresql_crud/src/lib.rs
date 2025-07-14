@@ -3709,10 +3709,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         where_many: where_many_1_and_2_primary_keys.clone(),
                                         select: select_primary_key.clone(),
                                         order_by: postgresql_crud::OrderBy {
-                                            column: super::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                            order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                            column: super::ExampleSelect::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                            order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                         },
-                                        pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                        pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                     }
                                 },
                             ).await.unwrap();
@@ -3817,10 +3817,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         where_many: where_many_1_and_2_primary_keys.clone(),
                                         select: select_primary_key_column_0.clone(),
                                         order_by: postgresql_crud::OrderBy {
-                                            column: super::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                            order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                            column: super::ExampleSelect::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                            order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                         },
-                                        pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                        pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                     }
                                 },
                             ).await.unwrap();
@@ -3854,7 +3854,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             ).await.unwrap();
                             // println!("update_one: {update_one:#?}");
                             assert_eq!(
-                                postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlRead::new(three),
+                                <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::new(three),
                                 update_one,
                                 "update_one result different"
                             );
@@ -3901,10 +3901,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         where_many: where_many_1_and_2_primary_keys.clone(),
                                         select: select_primary_key_column_0.clone(),
                                         order_by: postgresql_crud::OrderBy {
-                                            column: super::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                            order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                            column: super::ExampleSelect::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                            order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                         },
-                                        pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                        pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                     }
                                 },
                             ).await.unwrap();
