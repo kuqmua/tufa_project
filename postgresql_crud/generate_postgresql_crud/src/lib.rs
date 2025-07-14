@@ -3593,6 +3593,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let drop_table_if_exists_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
             &format!("drop table if exists {}", naming::DisplayToSnakeCaseStringified::case(&ident))
         );
+        let ident_create_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::CreateMany);
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -3647,7 +3648,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             };
                             let create_many = super::#ident::try_create_many(
                                 &url,
-                                super::ExampleCreateManyParameters {
+                                super::#ident_create_many_parameters_upper_camel_case {
                                     payload: super::ExampleCreateManyPayload(
                                         vec![
                                             example_create.clone(),
