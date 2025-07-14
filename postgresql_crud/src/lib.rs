@@ -810,7 +810,7 @@ pub enum PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement> {
     },
 }
 impl<PostgresqlTypeWhereElement: std::cmp::PartialEq + Clone> PostgresqlTypeWhere<PostgresqlTypeWhereElement> {
-    fn try_new(logical_operator: crate::LogicalOperator, value: std::vec::Vec<PostgresqlTypeWhereElement>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement>> {
+    pub fn try_new(logical_operator: crate::LogicalOperator, value: std::vec::Vec<PostgresqlTypeWhereElement>) -> Result<Self, PostgresqlTypeWhereTryNewErrorNamed<PostgresqlTypeWhereElement>> {
         if value.is_empty() {
             return Err(PostgresqlTypeWhereTryNewErrorNamed::IsEmpty { code_occurence: error_occurence_lib::code_occurence!() });
         }

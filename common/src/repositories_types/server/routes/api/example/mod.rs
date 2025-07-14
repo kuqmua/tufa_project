@@ -1088,6 +1088,10 @@ mod tests {
                         maximum_size_of_http_body_in_bytes: 99999999,
                     });
                     let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
+                    //todo
+                    let _unused = sqlx::query("DROP TABLE IF EXISTS example")
+                    .execute(&postgres_pool)
+                    .await.unwrap();
                     crate::repositories_types::server::routes::api::example::Example::prepare_postgresql(&postgres_pool).await.unwrap();
                     let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
                         postgres_pool,
@@ -1125,13 +1129,46 @@ mod tests {
                     },
                 ).await.unwrap();
                 println!("create_one: {create_one:#?}");
-                // let read_many = crate::repositories_types::server::routes::api::example::Example::try_read_many(
-                //     &url,
-                //     crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
-                //         payload: <crate::repositories_types::server::routes::api::example::ExampleReadManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                //     },
-                // ).await.unwrap();
-                // println!("read_many: {read_many:#?}");
+                let read_many = crate::repositories_types::server::routes::api::example::Example::try_read_many(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
+                        payload: crate::repositories_types::server::routes::api::example::ExampleReadManyPayload {
+                            where_many: crate::repositories_types::server::routes::api::example::StdOptionOptionExampleWhereMany(
+                                Some(crate::repositories_types::server::routes::api::example::ExampleWhereMany {
+                                    primary_key: Some(
+                                        postgresql_crud::PostgresqlTypeWhere::try_new(
+                                            postgresql_crud::LogicalOperator::Or,
+                                            vec![
+                                                <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(
+                                                    postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                                                        logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                        value: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin::new(1),
+                                                    }
+                                                ),
+                                                <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(
+                                                    postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                                                        logical_operator: postgresql_crud::LogicalOperator::Or,
+                                                        value: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin::new(2),
+                                                    }
+                                                ),
+                                            ],
+                                        ).unwrap()
+                                    ),
+                                    column_0: None,
+                                    column_190: None,
+                                })
+                            ),
+                            select: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                            order_by: postgresql_crud::OrderBy {
+                                column: crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                            },
+                            pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                        }
+                        // <crate::repositories_types::server::routes::api::example::ExampleReadManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                    },
+                ).await.unwrap();
+                println!("read_many: {read_many:#?}");
                 // let read_one = crate::repositories_types::server::routes::api::example::Example::try_read_one(
                 //     &url,
                 //     crate::repositories_types::server::routes::api::example::ExampleReadOneParameters {
