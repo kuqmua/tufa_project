@@ -3618,7 +3618,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             drop_table_if_exists(&postgres_pool).await;
                             let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
                             let _unused = tokio::spawn(async move {
-                                super::Example::prepare_postgresql(&postgres_pool_for_tokio_spawn_sync_move).await.unwrap();
+                                super::#ident::prepare_postgresql(&postgres_pool_for_tokio_spawn_sync_move).await.unwrap();
                                 let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
                                     postgres_pool: postgres_pool_for_tokio_spawn_sync_move.clone(),
                                     config: &config,
@@ -3627,7 +3627,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 axum::serve(
                                     tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&config)).await.unwrap(),
                                     axum::Router::new()
-                                        .merge(super::Example::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
+                                        .merge(super::#ident::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
                                         .into_make_service(),
                                 )
                                 .await
@@ -3641,7 +3641,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                 column_190: <<super::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                             };
-                            let create_many = super::Example::try_create_many(
+                            let create_many = super::#ident::try_create_many(
                                 &url,
                                 super::ExampleCreateManyParameters {
                                     payload: super::ExampleCreateManyPayload(
@@ -3695,7 +3695,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     column_190: None,
                                 })
                             ); 
-                            let read_many = super::Example::try_read_many(
+                            let read_many = super::#ident::try_read_many(
                                 &url,
                                 super::ExampleReadManyParameters {
                                     payload: super::ExampleReadManyPayload {
@@ -3741,7 +3741,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 create_one,
                                 "create_one result different"
                             );
-                            let read_one = super::Example::try_read_one(
+                            let read_one = super::#ident::try_read_one(
                                 &url,
                                 super::ExampleReadOneParameters {
                                     payload: super::ExampleReadOnePayload {
@@ -3767,7 +3767,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let primary_key_update1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(one);
                             let primary_key_update2 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(two);
-                            let update_many = super::Example::try_update_many(
+                            let update_many = super::#ident::try_update_many(
                                 &url,
                                 super::ExampleUpdateManyParameters {
                                     payload: super::ExampleUpdateManyPayload::try_new(
@@ -3803,7 +3803,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()
                                 )
                             ]).unwrap();
-                            let read_many = super::Example::try_read_many(
+                            let read_many = super::#ident::try_read_many(
                                 &url,
                                 super::ExampleReadManyParameters {
                                     payload: super::ExampleReadManyPayload {
@@ -3835,7 +3835,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 "read_many result different"
                             );
                             let primary_key_update3 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(three);
-                            let update_one = super::Example::try_update_one(
+                            let update_one = super::#ident::try_update_one(
                                 &url,
                                 super::ExampleUpdateOneParameters {
                                     payload: super::ExampleUpdate::try_new(
@@ -3851,7 +3851,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 update_one,
                                 "update_one result different"
                             );
-                            let read_one = super::Example::try_read_one(
+                            let read_one = super::#ident::try_read_one(
                                 &url,
                                 super::ExampleReadOneParameters {
                                     payload: super::ExampleReadOnePayload {
@@ -3870,7 +3870,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 read_one,
                                 "read_one result different"
                             );
-                            let delete_many = super::Example::try_delete_many(
+                            let delete_many = super::#ident::try_delete_many(
                                 &url,
                                 super::ExampleDeleteManyParameters {
                                     payload: super::ExampleDeleteManyPayload {
@@ -3887,7 +3887,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 delete_many,
                                 "delete_many result different"
                             );
-                            let read_many = super::Example::try_read_many(
+                            let read_many = super::#ident::try_read_many(
                                 &url,
                                 super::ExampleReadManyParameters {
                                     payload: super::ExampleReadManyPayload {
@@ -3906,7 +3906,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 read_many,
                                 "read_many result different"
                             );
-                            let delete_one = super::Example::try_delete_one(
+                            let delete_one = super::#ident::try_delete_one(
                                 &url,
                                 super::ExampleDeleteOneParameters {
                                     payload: super::ExampleDeleteOnePayload {
@@ -3920,7 +3920,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 delete_one,
                                 "delete_one result different"
                             );
-                            if let Err(error) = super::Example::try_read_one(
+                            if let Err(error) = super::#ident::try_read_one(
                                 &url,
                                 super::ExampleReadOneParameters {
                                     payload: super::ExampleReadOnePayload {
