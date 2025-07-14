@@ -1354,6 +1354,14 @@ mod tests {
                     },
                 ).await.unwrap();
                 // println!("delete_many: {delete_many:#?}");
+                assert_eq!(
+                    vec![
+                        primary_key_read1.clone(),
+                        primary_key_read2.clone()
+                    ],
+                    delete_many,
+                    "delete_many result different"
+                );
                 let read_many = crate::repositories_types::server::routes::api::example::Example::try_read_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
