@@ -1135,7 +1135,7 @@ mod tests {
                     create_many,
                     "create_many result different"
                 );
-                let select = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                     crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(
                         <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()
                     )
@@ -1171,7 +1171,7 @@ mod tests {
                                     column_190: None,
                                 })
                             ),
-                            select: select.clone(),
+                            select: select_primary_key.clone(),
                             order_by: postgresql_crud::OrderBy {
                                 column: crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                 order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
@@ -1181,15 +1181,17 @@ mod tests {
                     },
                 ).await.unwrap();
                 // println!("read_many: {read_many:#?}");
+                let some_value_primary_key_read1 = Some(postgresql_crud::Value { value: primary_key_read1.clone()});
+                let some_value_primary_key_read2 = Some(postgresql_crud::Value { value: primary_key_read2.clone()});
                 assert_eq!(
                     vec![
                         crate::repositories_types::server::routes::api::example::ExampleRead {
-                            primary_key: Some(postgresql_crud::Value { value: primary_key_read1.clone()}),
+                            primary_key: some_value_primary_key_read1.clone(),
                             column_0: None,
                             column_190: None
                         },
                         crate::repositories_types::server::routes::api::example::ExampleRead {
-                            primary_key: Some(postgresql_crud::Value { value: primary_key_read2.clone()}),
+                            primary_key: some_value_primary_key_read2.clone(),
                             column_0: None,
                             column_190: None
                         }
@@ -1215,21 +1217,22 @@ mod tests {
                     crate::repositories_types::server::routes::api::example::ExampleReadOneParameters {
                         payload: crate::repositories_types::server::routes::api::example::ExampleReadOnePayload {
                             primary_key: primary_key_read3.clone(),
-                            select: select.clone(),
+                            select: select_primary_key.clone(),
                         }
                     },
                 ).await.unwrap();
                 // println!("read_one: {read_one:#?}");
+                let some_value_primary_key_read3 = Some(postgresql_crud::Value { value: primary_key_read3.clone()});
                 assert_eq!(
                     crate::repositories_types::server::routes::api::example::ExampleRead {
-                        primary_key: Some(postgresql_crud::Value { value: primary_key_read3.clone()}),
+                        primary_key: some_value_primary_key_read3.clone(),
                         column_0: None,
                         column_190: None
                     },
                     read_one,
                     "read_one result different"
                 );
-                let some_update_column_0 = Some(
+                let some_value_update_column_0 = Some(
                     postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(5)}
                 );
                 let primary_key_update1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(1);
@@ -1241,12 +1244,12 @@ mod tests {
                             vec![
                                 crate::repositories_types::server::routes::api::example::ExampleUpdate::try_new(
                                     primary_key_update1.clone(),
-                                    some_update_column_0.clone(),
+                                    some_value_update_column_0.clone(),
                                     None,
                                 ).unwrap(),
                                 crate::repositories_types::server::routes::api::example::ExampleUpdate::try_new(
                                     primary_key_update2.clone(),
-                                    some_update_column_0.clone(),
+                                    some_value_update_column_0.clone(),
                                     None,
                                 ).unwrap()
                             ]
@@ -1262,6 +1265,14 @@ mod tests {
                     update_many,
                     "update_many result different"
                 );
+                let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                    crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(
+                        <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()
+                    ),
+                    crate::repositories_types::server::routes::api::example::ExampleSelect::Column0(
+                        <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()
+                    )
+                ]).unwrap();
                 let read_many = crate::repositories_types::server::routes::api::example::Example::try_read_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
@@ -1281,14 +1292,7 @@ mod tests {
                                     column_190: None,
                                 })
                             ),
-                            select: postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                                crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(
-                                    <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()
-                                ),
-                                crate::repositories_types::server::routes::api::example::ExampleSelect::Column0(
-                                    <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()
-                                )
-                            ]).unwrap(),
+                            select: select_primary_key_column_0.clone(),
                             order_by: postgresql_crud::OrderBy {
                                 column: crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                 order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
@@ -1297,17 +1301,17 @@ mod tests {
                         }
                     },
                 ).await.unwrap();
-                let column_0_read_5 = <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(5);
+                let some_value_column_0_read_5 = Some(postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(5) });
                 assert_eq!(
                     vec![
                         crate::repositories_types::server::routes::api::example::ExampleRead {
-                            primary_key: Some(postgresql_crud::Value { value: primary_key_read1.clone()}),
-                            column_0: Some(postgresql_crud::Value { value: column_0_read_5.clone() }),
+                            primary_key: some_value_primary_key_read1.clone(),
+                            column_0: some_value_column_0_read_5.clone(),
                             column_190: None
                         },
                         crate::repositories_types::server::routes::api::example::ExampleRead {
-                            primary_key: Some(postgresql_crud::Value { value: primary_key_read2.clone()}),
-                            column_0: Some(postgresql_crud::Value { value: column_0_read_5.clone() }),
+                            primary_key: some_value_primary_key_read2.clone(),
+                            column_0: some_value_column_0_read_5.clone(),
                             column_190: None
                         }
                     ],
@@ -1320,7 +1324,7 @@ mod tests {
                     crate::repositories_types::server::routes::api::example::ExampleUpdateOneParameters {
                         payload: crate::repositories_types::server::routes::api::example::ExampleUpdate::try_new(
                             primary_key_update3.clone(),
-                            some_update_column_0.clone(),
+                            some_value_update_column_0.clone(),
                             None,
                         ).unwrap()
                     },
@@ -1331,8 +1335,25 @@ mod tests {
                     update_one,
                     "update_one result different"
                 );
-                //
-
+                let read_one = crate::repositories_types::server::routes::api::example::Example::try_read_one(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleReadOneParameters {
+                        payload: crate::repositories_types::server::routes::api::example::ExampleReadOnePayload {
+                            primary_key: primary_key_read3.clone(),
+                            select: select_primary_key_column_0.clone(),
+                        }
+                    },
+                ).await.unwrap();
+                // println!("read_one: {read_one:#?}");
+                assert_eq!(
+                    crate::repositories_types::server::routes::api::example::ExampleRead {
+                        primary_key: some_value_primary_key_read3.clone(),
+                        column_0: some_value_column_0_read_5.clone(),
+                        column_190: None
+                    },
+                    read_one,
+                    "read_one result different"
+                );
                 //
                 // let delete_many = crate::repositories_types::server::routes::api::example::Example::try_delete_many(
                 //     &url,
