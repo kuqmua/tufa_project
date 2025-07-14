@@ -1074,19 +1074,10 @@ mod tests {
             .build()
             .unwrap()
             .block_on(async {
-                let service_socket_address_stringified = "127.0.0.1:8080";
                 static CONFIG: std::sync::OnceLock<crate::repositories_types::server::config::Config> = std::sync::OnceLock::new();
-                let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config {
-                    service_socket_address: <std::net::SocketAddr as std::str::FromStr>::from_str(&service_socket_address_stringified).unwrap(),
-                    timezone: chrono::FixedOffset::east_opt(10800).unwrap(),
-                    redis_url: secrecy::Secret::new(std::string::String::default()),
-                    database_url: secrecy::Secret::new(std::string::String::from("postgres://postgres:postgres@127.0.0.1:5432/dev?connect_timeout=10")),//todo move to .env for testing?
-                    tracing_level: ::core::default::Default::default(),
-                    source_place_type: ::core::default::Default::default(),
-                    enable_api_git_commit_check: false,
-                    maximum_size_of_http_body_in_bytes: 99999999,
-                });
+                let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config::try_from_env().unwrap());
                 let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
+                let url = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
                 async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
                     //todo
                     let _unused = sqlx::query("drop table if exists example")
@@ -1112,7 +1103,6 @@ mod tests {
                     .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                 });
                 tokio::time::sleep(std::time::Duration::from_millis(200)).await;
-                let url = format!("http://{service_socket_address_stringified}");
                 let example_create = crate::repositories_types::server::routes::api::example::ExampleCreate {
                     column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                     column_190: <<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
