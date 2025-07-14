@@ -1225,13 +1225,32 @@ mod tests {
                     read_one,
                     "read_one result different"
                 );
+                let primary_key_update1 = <postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(1);
                 let update_many = crate::repositories_types::server::routes::api::example::Example::try_update_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleUpdateManyParameters {
-                        payload: <crate::repositories_types::server::routes::api::example::ExampleUpdateManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                        payload: crate::repositories_types::server::routes::api::example::ExampleUpdateManyPayload::try_new(
+                            vec![
+                                crate::repositories_types::server::routes::api::example::ExampleUpdate::try_new(
+                                    primary_key_update1.clone(),
+                                    Some(
+                                        postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(10)}
+                                    ),
+                                    None,
+                                ).unwrap()
+                            ]
+                        ).unwrap()
                     },
                 ).await.unwrap();
-                println!("update_many: {update_many:#?}");
+                // println!("update_many: {update_many:#?}");
+                assert_eq!(
+                    vec![
+                        //todo maybe make it read?
+                        postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin::new(1)
+                    ],
+                    update_many,
+                    "update_many result different"
+                );
                 // let update_one = crate::repositories_types::server::routes::api::example::Example::try_update_one(
                 //     &url,
                 //     crate::repositories_types::server::routes::api::example::ExampleUpdateOneParameters {
