@@ -828,7 +828,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {#field_ident: std::option::Option<postgresql_crud::PostgresqlTypeWhere<#as_postgresql_crud_postgresql_type_postgresql_type_token_stream>>}
         });
         let ident_where_many_token_stream = quote::quote! {
-            #[derive(Debug, serde::Serialize, utoipa::ToSchema)]
+            #[derive(Debug, Clone, serde::Serialize, utoipa::ToSchema)]
             pub struct #ident_where_many_upper_camel_case {
                 #fields_declaration_token_stream
             }
@@ -908,7 +908,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let std_option_option_ident_where_many_token_stream = {
         let std_option_option_ident_where_many_token_stream = {
             quote::quote! {
-                #[derive(Debug, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
+                #[derive(Debug, Clone, serde::Serialize, serde::Deserialize, utoipa::ToSchema)]
                 pub struct #std_option_option_ident_where_many_upper_camel_case(pub std::option::Option<#ident_where_many_upper_camel_case>);
             }
         };

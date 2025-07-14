@@ -1152,25 +1152,26 @@ mod tests {
                         value: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin::new(2),//todo seems like need to remove alias and use wrapper type instead
                     }
                 );
+                let where_many_1_and_2_primary_keys = crate::repositories_types::server::routes::api::example::StdOptionOptionExampleWhereMany(
+                    Some(crate::repositories_types::server::routes::api::example::ExampleWhereMany {
+                        primary_key: Some(
+                            postgresql_crud::PostgresqlTypeWhere::try_new(
+                                postgresql_crud::LogicalOperator::Or,
+                                vec![
+                                    primary_key_equal1.clone(),
+                                    primary_key_equal2.clone()
+                                ],
+                            ).unwrap()
+                        ),
+                        column_0: None,
+                        column_190: None,
+                    })
+                ); 
                 let read_many = crate::repositories_types::server::routes::api::example::Example::try_read_many(
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
                         payload: crate::repositories_types::server::routes::api::example::ExampleReadManyPayload {
-                            where_many: crate::repositories_types::server::routes::api::example::StdOptionOptionExampleWhereMany(
-                                Some(crate::repositories_types::server::routes::api::example::ExampleWhereMany {
-                                    primary_key: Some(
-                                        postgresql_crud::PostgresqlTypeWhere::try_new(
-                                            postgresql_crud::LogicalOperator::Or,
-                                            vec![
-                                                primary_key_equal1.clone(),
-                                                primary_key_equal2.clone()
-                                            ],
-                                        ).unwrap()
-                                    ),
-                                    column_0: None,
-                                    column_190: None,
-                                })
-                            ),
+                            where_many: where_many_1_and_2_primary_keys.clone(),
                             select: select_primary_key.clone(),
                             order_by: postgresql_crud::OrderBy {
                                 column: crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
@@ -1277,21 +1278,7 @@ mod tests {
                     &url,
                     crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
                         payload: crate::repositories_types::server::routes::api::example::ExampleReadManyPayload {
-                            where_many: crate::repositories_types::server::routes::api::example::StdOptionOptionExampleWhereMany(
-                                Some(crate::repositories_types::server::routes::api::example::ExampleWhereMany {
-                                    primary_key: Some(
-                                        postgresql_crud::PostgresqlTypeWhere::try_new(
-                                            postgresql_crud::LogicalOperator::Or,
-                                            vec![
-                                                primary_key_equal1,
-                                                primary_key_equal2
-                                            ],
-                                        ).unwrap()
-                                    ),
-                                    column_0: None,
-                                    column_190: None,
-                                })
-                            ),
+                            where_many: where_many_1_and_2_primary_keys.clone(),
                             select: select_primary_key_column_0.clone(),
                             order_by: postgresql_crud::OrderBy {
                                 column: crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
@@ -1354,14 +1341,34 @@ mod tests {
                     read_one,
                     "read_one result different"
                 );
-                //
-                // let delete_many = crate::repositories_types::server::routes::api::example::Example::try_delete_many(
-                //     &url,
-                //     crate::repositories_types::server::routes::api::example::ExampleDeleteManyParameters {
-                //         payload: <crate::repositories_types::server::routes::api::example::ExampleDeleteManyPayload as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                //     },
-                // ).await.unwrap();
-                // println!("delete_many: {delete_many:#?}");
+                let delete_many = crate::repositories_types::server::routes::api::example::Example::try_delete_many(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleDeleteManyParameters {
+                        payload: crate::repositories_types::server::routes::api::example::ExampleDeleteManyPayload {
+                            where_many: where_many_1_and_2_primary_keys.clone(),
+                        }
+                    },
+                ).await.unwrap();
+                println!("delete_many: {delete_many:#?}");
+                let read_many = crate::repositories_types::server::routes::api::example::Example::try_read_many(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleReadManyParameters {
+                        payload: crate::repositories_types::server::routes::api::example::ExampleReadManyPayload {
+                            where_many: where_many_1_and_2_primary_keys.clone(),
+                            select: select_primary_key_column_0.clone(),
+                            order_by: postgresql_crud::OrderBy {
+                                column: crate::repositories_types::server::routes::api::example::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                            },
+                            pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                        }
+                    },
+                ).await.unwrap();
+                assert_eq!(
+                    std::vec::Vec::<crate::repositories_types::server::routes::api::example::ExampleRead>::default(),
+                    read_many,
+                    "read_many result different"
+                );
                 // let delete_one = crate::repositories_types::server::routes::api::example::Example::try_delete_one(
                 //     &url,
                 //     crate::repositories_types::server::routes::api::example::ExampleDeleteOneParameters {
