@@ -3593,8 +3593,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let drop_table_if_exists_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
             &format!("drop table if exists {}", naming::DisplayToSnakeCaseStringified::case(&ident))
         );
+        let ident_read_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::ReadMany);
         let ident_create_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::CreateMany);
-        let ident_operation_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::CreateMany);
+        let ident_create_many_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::CreateMany);
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -3650,7 +3651,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let create_many = super::#ident::try_create_many(
                                 &url,
                                 super::#ident_create_many_parameters_upper_camel_case {
-                                    payload: super::#ident_operation_payload_upper_camel_case(
+                                    payload: super::#ident_create_many_payload_upper_camel_case(
                                         vec![
                                             example_create.clone(),
                                             example_create.clone()
@@ -3670,7 +3671,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 "create_many result different"
                             );
                             let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                                super::ExampleSelect::PrimaryKey(
+                                super::#ident_select_upper_camel_case::PrimaryKey(
                                     <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
                                 )
                             ]).unwrap();
@@ -3687,7 +3688,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                             );
                             let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(
-                                Some(super::ExampleWhereMany {
+                                Some(super::#ident_where_many_upper_camel_case {
                                     primary_key: Some(
                                         postgresql_crud::PostgresqlTypeWhere::try_new(
                                             postgresql_crud::LogicalOperator::Or,
@@ -3703,7 +3704,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             ); 
                             let read_many = super::#ident::try_read_many(
                                 &url,
-                                super::ExampleReadManyParameters {
+                                super::#ident_read_many_parameters_upper_camel_case {
                                     payload: super::ExampleReadManyPayload {
                                         where_many: where_many_1_and_2_primary_keys.clone(),
                                         select: select_primary_key.clone(),
