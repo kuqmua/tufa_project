@@ -1215,7 +1215,7 @@ mod tests {
                         }
                     },
                 ).await.unwrap();
-                println!("read_one: {read_one:#?}");
+                // println!("read_one: {read_one:#?}");
                 assert_eq!(
                     crate::repositories_types::server::routes::api::example::ExampleRead {
                         primary_key: Some(postgresql_crud::Value { value: primary_key_read1.clone()}),
@@ -1245,19 +1245,30 @@ mod tests {
                 // println!("update_many: {update_many:#?}");
                 assert_eq!(
                     vec![
-                        //todo maybe make it read?
+                        //todo maybe make it read? like in update_one
                         postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlOrigin::new(1)
                     ],
                     update_many,
                     "update_many result different"
                 );
-                // let update_one = crate::repositories_types::server::routes::api::example::Example::try_update_one(
-                //     &url,
-                //     crate::repositories_types::server::routes::api::example::ExampleUpdateOneParameters {
-                //         payload: <crate::repositories_types::server::routes::api::example::ExampleUpdate as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                //     },
-                // ).await.unwrap();
+                let update_one = crate::repositories_types::server::routes::api::example::Example::try_update_one(
+                    &url,
+                    crate::repositories_types::server::routes::api::example::ExampleUpdateOneParameters {
+                        payload: crate::repositories_types::server::routes::api::example::ExampleUpdate::try_new(
+                            primary_key_update1.clone(),
+                            Some(
+                                postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(10)}
+                            ),
+                            None,
+                        ).unwrap()
+                    },
+                ).await.unwrap();
                 // println!("update_one: {update_one:#?}");
+                assert_eq!(
+                    postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresqlRead::new(1),
+                    update_one,
+                    "update_one result different"
+                );
                 // let delete_many = crate::repositories_types::server::routes::api::example::Example::try_delete_many(
                 //     &url,
                 //     crate::repositories_types::server::routes::api::example::ExampleDeleteManyParameters {
