@@ -1170,8 +1170,8 @@ mod example_tests {
                                 column_0: None,
                                 column_190: None
                             }
-                        ].sort_by_key(|u| u.primary_key.clone().unwrap().value),
-                        read_many.sort_by_key(|u| u.primary_key.clone().unwrap().value),
+                        ].sort_by_key(|element| element.primary_key.clone().unwrap().value),
+                        read_many.sort_by_key(|element| element.primary_key.clone().unwrap().value),
                         "read_many result different"
                     );
                     let create_one = super::Example::try_create_one(
@@ -1269,8 +1269,8 @@ mod example_tests {
                                 column_0: some_value_column_0_read_5.clone(),
                                 column_190: None
                             }
-                        ].sort_by_key(|u| u.primary_key.clone().unwrap().value),
-                        read_many.sort_by_key(|u| u.primary_key.clone().unwrap().value),
+                        ].sort_by_key(|element| element.primary_key.clone().unwrap().value),
+                        read_many.sort_by_key(|element| element.primary_key.clone().unwrap().value),
                         "read_many result different"
                     );
                     let primary_key_read3_inner = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read3.clone());
