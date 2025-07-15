@@ -350,8 +350,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: std::primitive::bool| {
                     let is_primary_key_token_stream: &dyn quote::ToTokens = if is_primary_key { &naming::TrueSnakeCase } else { &naming::FalseSnakeCase };
                     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
+                    let field_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&field_type);
                     quote::quote! {
-                        <#field_type as postgresql_crud::PostgresqlType>::TableTypeDeclaration::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
+                        #field_type_postgresql_type_token_stream TableTypeDeclaration::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
                     }
                 };
                 let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&primary_key_field_type, &primary_key_field.field_ident, true)];
@@ -3658,7 +3659,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let one: std::primitive::i64 = 1;
                             let two: std::primitive::i64 = 2;
                             let three: std::primitive::i64 = 3;
-                            let example_create = super::#ident_create_upper_camel_case {
+                            let default_create = super::#ident_create_upper_camel_case {
                                 column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                 column_190: <<super::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                             };
@@ -3667,8 +3668,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 super::#ident_create_many_parameters_upper_camel_case {
                                     payload: super::#ident_create_many_payload_upper_camel_case(
                                         vec![
-                                            example_create.clone(),
-                                            example_create.clone()
+                                            default_create.clone(),
+                                            default_create.clone()
                                         ]
                                     )
                                 },
@@ -3753,7 +3754,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let create_one = super::#ident::try_create_one(
                                 &url,
                                 super::#ident_create_one_parameters_upper_camel_case {
-                                    payload: example_create
+                                    payload: default_create
                                 },
                             ).await.unwrap();
                             // println!("create_one: {create_one:#?}");
