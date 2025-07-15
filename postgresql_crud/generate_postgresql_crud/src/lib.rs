@@ -258,6 +258,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &naming::TableTypeDeclarationUpperCamelCase
         )
     };
+    let primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream = generate_as_postgresql_type_table_type_declaration_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_create_token_stream = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_token_stream(
             &field_type,
@@ -390,9 +391,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream = |field_type: &syn::Type, field_ident: &syn::Ident, is_primary_key: std::primitive::bool| {
                     let is_primary_key_token_stream: &dyn quote::ToTokens = if is_primary_key { &naming::TrueSnakeCase } else { &naming::FalseSnakeCase };
                     let field_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_ident);
-                    let field_type_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&field_type);
+                    let field_type_postgresql_type_table_type_declaration_token_stream = generate_as_postgresql_type_table_type_declaration_token_stream(&field_type);
                     quote::quote! {
-                        #field_type_postgresql_type_token_stream TableTypeDeclaration::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
+                        #field_type_postgresql_type_table_type_declaration_token_stream::create_table_column_query_part(&#field_ident_double_quotes_token_stream, #is_primary_key_token_stream)
                     }
                 };
                 let mut acc = vec![generate_field_type_as_postgresql_crud_create_table_column_query_part_create_table_query_part_token_stream(&primary_key_field_type, &primary_key_field.field_ident, true)];
@@ -3751,13 +3752,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let primary_key_equal1 = #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                                    value: #primary_key_field_type_as_postgresql_type_token_stream TableTypeDeclaration::new(one)
+                                    value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::new(one)
                                 }
                             );
                             let primary_key_equal2 = #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                                    value: #primary_key_field_type_as_postgresql_type_token_stream TableTypeDeclaration::new(two)
+                                    value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::new(two)
                                 }
                             );
                             let where_many_1_and_2_primary_keys = super::#std_option_option_ident_where_many_upper_camel_case(
