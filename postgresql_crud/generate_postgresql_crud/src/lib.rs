@@ -271,12 +271,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &naming::WhereElementUpperCamelCase
         )
     };
+    let primary_key_field_type_as_postgresql_type_where_element_token_stream = generate_as_postgresql_type_where_element_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_read_token_stream = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_token_stream(
             &field_type,
             &naming::ReadUpperCamelCase
         )
     };
+    let primary_key_field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_update_token_stream = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_token_stream(
             &field_type,
@@ -905,8 +907,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             fields.iter().map(|element|(&element.field_ident, &element.syn_field.ty)).collect::<std::vec::Vec<(&syn::Ident, &syn::Type)>>(),
             fields_len,
             &|_: &syn::Ident, syn_type: &syn::Type|{
-                let syn_type_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&syn_type);
-                quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<#syn_type_as_postgresql_type_token_stream WhereElement>>}
+                let syn_type_as_postgresql_type_where_element_token_stream = generate_as_postgresql_type_where_element_token_stream(&syn_type);
+                quote::quote!{std::option::Option<postgresql_crud::PostgresqlTypeWhere<#syn_type_as_postgresql_type_where_element_token_stream>>}
             },
         );
         let impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_ident_where_many_token_stream = generate_impl_postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_for_tokens_no_lifetime_token_stream(
@@ -3719,8 +3721,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 },
                             ).await.unwrap();
                             // println!("create_many: {create_many:#?}");
-                            let primary_key_read1 = #primary_key_field_type_as_postgresql_type_token_stream Read::new(one);
-                            let primary_key_read2 = #primary_key_field_type_as_postgresql_type_token_stream Read::new(two);
+                            let primary_key_read1 = #primary_key_field_type_as_postgresql_type_read_token_stream::new(one);
+                            let primary_key_read2 = #primary_key_field_type_as_postgresql_type_read_token_stream::new(two);
                             assert_eq!(
                                 vec![
                                     primary_key_read1.clone(),
@@ -3734,13 +3736,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     super::#ident_select_upper_camel_case::PrimaryKey(#primary_key_field_type_as_postgresql_type_select_token_stream::default())
                                 ]
                             ).unwrap();
-                            let primary_key_equal1 = #primary_key_field_type_as_postgresql_type_token_stream WhereElement::Equal(
+                            let primary_key_equal1 = #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                     logical_operator: postgresql_crud::LogicalOperator::Or,
                                     value: #primary_key_field_type_as_postgresql_type_token_stream TableTypeDeclaration::new(one)
                                 }
                             );
-                            let primary_key_equal2 = #primary_key_field_type_as_postgresql_type_token_stream WhereElement::Equal(
+                            let primary_key_equal2 = #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
                                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                     logical_operator: postgresql_crud::LogicalOperator::Or,
                                     value: #primary_key_field_type_as_postgresql_type_token_stream TableTypeDeclaration::new(two)
