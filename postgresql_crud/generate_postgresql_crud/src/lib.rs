@@ -258,16 +258,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &naming::CreateUpperCamelCase
         )
     };
-    let generate_as_postgresql_type_where_element_token_stream = |field_type: &dyn quote::ToTokens| {
-        generate_as_postgresql_type_tokens_token_stream(
-            &field_type,
-            &naming::WhereElementUpperCamelCase
-        )
-    };
     let generate_as_postgresql_type_select_token_stream = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_token_stream(
             &field_type,
             &naming::SelectUpperCamelCase
+        )
+    };
+    let generate_as_postgresql_type_where_element_token_stream = |field_type: &dyn quote::ToTokens| {
+        generate_as_postgresql_type_tokens_token_stream(
+            &field_type,
+            &naming::WhereElementUpperCamelCase
         )
     };
     let generate_as_postgresql_type_read_token_stream = |field_type: &dyn quote::ToTokens| {
@@ -3636,14 +3636,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let ident_read_one_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(&Operation::ReadOne);
         let std_option_option_ident_where_many_upper_camel_case = naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase::from_tokens(&ident);
         //todo temp
+        let std_primitive_i16_as_not_null_int2_token_stream = quote::quote!{postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2};
+        //todo temp
+        let animal_as_not_null_jsonb_object_token_stream = quote::quote!{super::AnimalAsNotNullJsonbObject};
+        //todo temp
         let std_primitive_i16_as_not_null_int2_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(
-            &quote::quote!{postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2}
+            &std_primitive_i16_as_not_null_int2_token_stream
         );
         //todo temp
-        let animal_as_not_null_jsonb_object_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(
-            &quote::quote!{super::AnimalAsNotNullJsonbObject}
+        let std_primitive_i16_as_not_null_int2_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(
+            &std_primitive_i16_as_not_null_int2_token_stream
         );
-        
+        //todo temp
+        let animal_as_not_null_jsonb_object_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(
+            &animal_as_not_null_jsonb_object_token_stream
+        );
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -3693,8 +3700,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let two: std::primitive::i64 = 2;
                             let three: std::primitive::i64 = 3;
                             let default_create = super::#ident_create_upper_camel_case {
-                                column_0: <#std_primitive_i16_as_not_null_int2_as_postgresql_type_token_stream Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                column_190: <#animal_as_not_null_jsonb_object_as_postgresql_type_token_stream Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                column_0: <#std_primitive_i16_as_not_null_int2_as_postgresql_type_create_token_stream as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                column_190: <#animal_as_not_null_jsonb_object_as_postgresql_type_create_token_stream as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                             };
                             let create_many = super::#ident::try_create_many(
                                 &url,
