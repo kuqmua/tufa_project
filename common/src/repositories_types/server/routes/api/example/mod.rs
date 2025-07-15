@@ -1095,10 +1095,6 @@ mod example_tests {
                         .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                     });
                     tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-                    // here
-                    // let one: std::primitive::i64 = 1;
-                    // let two: std::primitive::i64 = 2;
-                    // let three: std::primitive::i64 = 3;
                     let default_create = super::ExampleCreate {
                         column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                         column_190: <<super::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
@@ -1111,10 +1107,7 @@ mod example_tests {
                     )
                     .await
                     .unwrap();
-                    println!("{create_many:#?}");
-                    //here
                     assert_eq!(2, create_many.len(), "create_many result different");
-                    //here
                     let (
                         primary_key_read1,
                         primary_key_read2
@@ -1125,9 +1118,6 @@ mod example_tests {
                             iter.next().unwrap()
                         )
                     };
-                    // let primary_key_read1 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(one);
-                    // let primary_key_read2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(two);
-                    // assert_eq!(vec![primary_key_read1.clone(), primary_key_read2.clone()], create_many, "create_many result different");
                     let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::ExampleSelect::PrimaryKey(
                         <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default(),
                     )])
@@ -1137,14 +1127,12 @@ mod example_tests {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
                         //todo why its not TableTypeDeclaration ? why Origin
                         //todo impl convert function from Read to TableTypeDeclaration for primary keys i guess
-                        //here
                         value: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(primary_key_read1_inner.clone())
                     });
                     let primary_key_read2_inner = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read2.clone());
                     let primary_key_equal2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
                         //todo why its not TableTypeDeclaration ? why Origin
-                        //here
                         value: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(primary_key_read2_inner.clone())
                     });
                     let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
@@ -1191,54 +1179,12 @@ mod example_tests {
                             panic!("read_many result different");
                         }
                     }
-                    // assert_eq!(
-                    //     vec![
-                    //         ,
-                    //         super::ExampleRead {
-                    //             primary_key: some_value_primary_key_read2.clone(),
-                    //             column_0: None,
-                    //             column_190: None
-                    //         }
-                    //     ]
-                    //     .sort_by_key(
-                    //         // |a, b| 
-                    //         |p|
-                    //         {
-                    //         // let a_value = a.primary_key.unwrap();
-                    //         // let b_value = b.primary_key.unwrap();
-                    //         // a_value.value.cmp(&b_value.value)
-                    //         std::cmp::Reverse(p.primary_key.unwrap().value)
-
-                    //         // match (&a.primary_key, &b.primary_key) {
-                    //         //     (Some(a_value), Some(b_value)) => {
-
-                    //         //     },
-
-                    //         // }
-                    //         // match a.primary_key {
-                    //         //     Some(value) => {
-
-                    //         //     },
-                    //         //     None => std::cmp::Ordering::Equal
-                    //         // }
-                            
-                    //         // .then_with(|| a.name.cmp(&b.name))
-                    //     })
-                    //     //todo PartialOrd impl for primary keys types Read?
-                    //     ,
-                    //     read_many.sort(),
-                    //     "read_many result different"
-                    // );
-
-
-                    
                     let create_one = super::Example::try_create_one(
                         &url,
                         super::ExampleCreateOneParameters {
                             payload: default_create
                         }
                     ).await.unwrap();
-                    // assert_eq!(primary_key_read3.clone(), create_one, "create_one result different");
                     let primary_key_read3 = create_one.clone();
                     let read_one = super::Example::try_read_one(
                         &url,
@@ -1266,7 +1212,6 @@ mod example_tests {
                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(modification),
                     });
                     //todo convert logic
-                    //here
                     let primary_key_update1 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(
                         primary_key_read1_inner.clone()
                     );
@@ -1285,15 +1230,6 @@ mod example_tests {
                     )
                     .await
                     .unwrap();
-                    // assert_eq!(
-                    //     vec![
-                    //         primary_key_read1.clone(),
-                    //         primary_key_read2.clone()
-                    //     ],
-                    //     update_many,
-                    //     "update_many result different"
-                    // );
-                    //
                     assert_eq!(2, update_many.len(), "update_many result different");
                     {
                         if !(
@@ -1304,7 +1240,6 @@ mod example_tests {
                             panic!("update_many result different");
                         }
                     }
-                    //
                     let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                         super::ExampleSelect::PrimaryKey(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
                         super::ExampleSelect::Column0(<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()),
@@ -1329,22 +1264,6 @@ mod example_tests {
                     let some_value_column_0_read_5 = Some(postgresql_crud::Value {
                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(modification),
                     });
-                    // assert_eq!(
-                    //     vec![
-                    //         super::ExampleRead {
-                    //             primary_key: some_value_primary_key_read1.clone(),
-                    //             column_0: some_value_column_0_read_5.clone(),
-                    //             column_190: None
-                    //         },
-                    //         super::ExampleRead {
-                    //             primary_key: some_value_primary_key_read2.clone(),
-                    //             column_0: some_value_column_0_read_5.clone(),
-                    //             column_190: None
-                    //         }
-                    //     ],
-                    //     read_many,
-                    //     "read_many result different"
-                    // );
                     assert_eq!(2, read_many.len(), "read_many result different");
                     {
                         let read_struct_primary_key1 = super::ExampleRead {
@@ -1365,7 +1284,6 @@ mod example_tests {
                             panic!("read_many result different");
                         }
                     }
-                    //
                     let primary_key_read3_inner = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read3.clone());
                     let primary_key_update3 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(
                         primary_key_read3_inner.clone()
@@ -1379,7 +1297,6 @@ mod example_tests {
                     .await
                     .unwrap();
                     assert_eq!(
-                        // <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(three),
                         primary_key_read3.clone(),
                         update_one,
                         "update_one result different"
@@ -1412,7 +1329,7 @@ mod example_tests {
                     )
                     .await
                     .unwrap();
-                    // assert_eq!(vec![primary_key_read1.clone(), primary_key_read2.clone()], delete_many, "delete_many result different");
+                    assert_eq!(2, delete_many.len(), "delete_many result different");
                     {
                         if !(
                             (delete_many.get(0).unwrap() == &primary_key_read1 && delete_many.get(1).unwrap() == &primary_key_read2)
