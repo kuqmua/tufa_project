@@ -3593,9 +3593,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let drop_table_if_exists_ident_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
             &format!("drop table if exists {}", naming::DisplayToSnakeCaseStringified::case(&ident))
         );
-        let ident_read_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::ReadMany);
         let ident_create_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::CreateMany);
         let ident_create_many_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::CreateMany);
+        let std_option_option_ident_where_many_upper_camel_case = naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase::from_tokens(&ident);
+        let ident_create_one_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::CreateOne);
+        let ident_read_one_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::ReadOne);
+        let ident_read_one_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::ReadOne);
+        let ident_update_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::UpdateMany);
+        let ident_update_many_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::UpdateMany);
+        let ident_read_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::ReadMany);
+        let ident_read_many_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::ReadMany);
+        let ident_update_one_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::UpdateOne);
+        let ident_delete_many_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::DeleteMany);
+        let ident_delete_many_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::DeleteMany);
+        let ident_delete_one_parameters_upper_camel_case = generate_ident_operation_parameters_upper_camel_case(&Operation::DeleteOne);
+        let ident_delete_one_payload_upper_camel_case = generate_ident_operation_payload_upper_camel_case(&Operation::DeleteOne);
+        let ident_try_read_one_error_named_upper_camel_case = generate_ident_try_operation_error_named_upper_camel_case(&Operation::ReadOne);
+        let ident_read_one_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(&Operation::ReadOne);
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -3687,7 +3701,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     value: <#primary_key_field_type as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(two)
                                 }
                             );
-                            let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(
+                            let where_many_1_and_2_primary_keys = super::#std_option_option_ident_where_many_upper_camel_case(
                                 Some(super::#ident_where_many_upper_camel_case {
                                     primary_key: Some(
                                         postgresql_crud::PostgresqlTypeWhere::try_new(
@@ -3705,11 +3719,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let read_many = super::#ident::try_read_many(
                                 &url,
                                 super::#ident_read_many_parameters_upper_camel_case {
-                                    payload: super::ExampleReadManyPayload {
+                                    payload: super::#ident_read_many_payload_upper_camel_case {
                                         where_many: where_many_1_and_2_primary_keys.clone(),
                                         select: select_primary_key.clone(),
                                         order_by: postgresql_crud::OrderBy {
-                                            column: super::ExampleSelect::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                            column: super::#ident_select_upper_camel_case::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                             order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                         },
                                         pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -3721,12 +3735,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let some_value_primary_key_read2 = Some(postgresql_crud::Value { value: primary_key_read2.clone()});
                             assert_eq!(
                                 vec![
-                                    super::ExampleRead {
+                                    super::#ident_read_upper_camel_case {
                                         primary_key: some_value_primary_key_read1.clone(),
                                         column_0: None,
                                         column_190: None
                                     },
-                                    super::ExampleRead {
+                                    super::#ident_read_upper_camel_case {
                                         primary_key: some_value_primary_key_read2.clone(),
                                         column_0: None,
                                         column_190: None
@@ -3736,9 +3750,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 "read_many result different"
                             );
                             let primary_key_read3 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::new(three);
-                            let create_one = super::Example::try_create_one(
+                            let create_one = super::#ident::try_create_one(
                                 &url,
-                                super::ExampleCreateOneParameters {
+                                super::#ident_create_one_parameters_upper_camel_case {
                                     payload: example_create
                                 },
                             ).await.unwrap();
@@ -3750,8 +3764,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let read_one = super::#ident::try_read_one(
                                 &url,
-                                super::ExampleReadOneParameters {
-                                    payload: super::ExampleReadOnePayload {
+                                super::#ident_read_one_parameters_upper_camel_case {
+                                    payload: super::#ident_read_one_payload_upper_camel_case {
                                         primary_key: primary_key_read3.clone(),
                                         select: select_primary_key.clone(),
                                     }
@@ -3776,15 +3790,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let primary_key_update2 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::new(two);
                             let update_many = super::#ident::try_update_many(
                                 &url,
-                                super::ExampleUpdateManyParameters {
-                                    payload: super::ExampleUpdateManyPayload::try_new(
+                                super::#ident_update_many_parameters_upper_camel_case {
+                                    payload: super::#ident_update_many_payload_upper_camel_case::try_new(
                                         vec![
-                                            super::ExampleUpdate::try_new(
+                                            super::#ident_update_upper_camel_case::try_new(
                                                 primary_key_update1.clone(),
                                                 some_value_update_column_0.clone(),
                                                 None,
                                             ).unwrap(),
-                                            super::ExampleUpdate::try_new(
+                                            super::#ident_update_upper_camel_case::try_new(
                                                 primary_key_update2.clone(),
                                                 some_value_update_column_0.clone(),
                                                 None,
@@ -3803,21 +3817,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 "update_many result different"
                             );
                             let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                                super::ExampleSelect::PrimaryKey(
+                                super::#ident_select_upper_camel_case::PrimaryKey(
                                     <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
                                 ),
-                                super::ExampleSelect::Column0(
+                                super::#ident_select_upper_camel_case::Column0(
                                     <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()
                                 )
                             ]).unwrap();
                             let read_many = super::#ident::try_read_many(
                                 &url,
-                                super::ExampleReadManyParameters {
-                                    payload: super::ExampleReadManyPayload {
+                                super::#ident_read_many_parameters_upper_camel_case {
+                                    payload: super::#ident_read_many_payload_upper_camel_case {
                                         where_many: where_many_1_and_2_primary_keys.clone(),
                                         select: select_primary_key_column_0.clone(),
                                         order_by: postgresql_crud::OrderBy {
-                                            column: super::ExampleSelect::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                            column: super::#ident_select_upper_camel_case::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                             order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                         },
                                         pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -3827,12 +3841,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let some_value_column_0_read_5 = Some(postgresql_crud::Value { value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(modification) });
                             assert_eq!(
                                 vec![
-                                    super::ExampleRead {
+                                    super::#ident_read_upper_camel_case {
                                         primary_key: some_value_primary_key_read1.clone(),
                                         column_0: some_value_column_0_read_5.clone(),
                                         column_190: None
                                     },
-                                    super::ExampleRead {
+                                    super::#ident_read_upper_camel_case {
                                         primary_key: some_value_primary_key_read2.clone(),
                                         column_0: some_value_column_0_read_5.clone(),
                                         column_190: None
@@ -3844,8 +3858,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let primary_key_update3 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::new(three);
                             let update_one = super::#ident::try_update_one(
                                 &url,
-                                super::ExampleUpdateOneParameters {
-                                    payload: super::ExampleUpdate::try_new(
+                                super::#ident_update_one_parameters_upper_camel_case {
+                                    payload: super::#ident_update_upper_camel_case::try_new(
                                         primary_key_update3.clone(),
                                         some_value_update_column_0.clone(),
                                         None,
@@ -3860,8 +3874,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let read_one = super::#ident::try_read_one(
                                 &url,
-                                super::ExampleReadOneParameters {
-                                    payload: super::ExampleReadOnePayload {
+                                super::#ident_read_one_parameters_upper_camel_case {
+                                    payload: super::#ident_read_one_payload_upper_camel_case {
                                         primary_key: primary_key_read3.clone(),
                                         select: select_primary_key_column_0.clone(),
                                     }
@@ -3869,7 +3883,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             ).await.unwrap();
                             // println!("read_one: {read_one:#?}");
                             assert_eq!(
-                                super::ExampleRead {
+                                super::#ident_read_upper_camel_case {
                                     primary_key: some_value_primary_key_read3.clone(),
                                     column_0: some_value_column_0_read_5.clone(),
                                     column_190: None
@@ -3879,8 +3893,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let delete_many = super::#ident::try_delete_many(
                                 &url,
-                                super::ExampleDeleteManyParameters {
-                                    payload: super::ExampleDeleteManyPayload {
+                                super::#ident_delete_many_parameters_upper_camel_case {
+                                    payload: super::#ident_delete_many_payload_upper_camel_case {
                                         where_many: where_many_1_and_2_primary_keys.clone(),
                                     }
                                 },
@@ -3896,12 +3910,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let read_many = super::#ident::try_read_many(
                                 &url,
-                                super::ExampleReadManyParameters {
-                                    payload: super::ExampleReadManyPayload {
+                                super::#ident_read_many_parameters_upper_camel_case {
+                                    payload: super::#ident_read_many_payload_upper_camel_case {
                                         where_many: where_many_1_and_2_primary_keys.clone(),
                                         select: select_primary_key_column_0.clone(),
                                         order_by: postgresql_crud::OrderBy {
-                                            column: super::ExampleSelect::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                            column: super::#ident_select_upper_camel_case::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                             order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                         },
                                         pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -3909,14 +3923,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 },
                             ).await.unwrap();
                             assert_eq!(
-                                std::vec::Vec::<super::ExampleRead>::default(),
+                                std::vec::Vec::<super::#ident_read_upper_camel_case>::default(),
                                 read_many,
                                 "read_many result different"
                             );
                             let delete_one = super::#ident::try_delete_one(
                                 &url,
-                                super::ExampleDeleteOneParameters {
-                                    payload: super::ExampleDeleteOnePayload {
+                                super::#ident_delete_one_parameters_upper_camel_case {
+                                    payload: super::#ident_delete_one_payload_upper_camel_case {
                                         primary_key: primary_key_read3.clone(),
                                     }
                                 },
@@ -3929,15 +3943,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             if let Err(error) = super::#ident::try_read_one(
                                 &url,
-                                super::ExampleReadOneParameters {
-                                    payload: super::ExampleReadOnePayload {
+                                super::#ident_read_one_parameters_upper_camel_case {
+                                    payload: super::#ident_read_one_payload_upper_camel_case {
                                         primary_key: primary_key_read3.clone(),
                                         select: select_primary_key.clone(),
                                     }
                                 },
                             ).await {
-                                if let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize { read_one_error_named_with_serialize_deserialize, code_occurence: _ } = &error {
-                                    if let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize {
+                                if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case { read_one_error_named_with_serialize_deserialize, code_occurence: _ } = &error {
+                                    if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize {
                                         if "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
                                             panic!("wtf");
                                         }
