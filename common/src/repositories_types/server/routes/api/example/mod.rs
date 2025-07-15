@@ -1147,29 +1147,33 @@ mod example_tests {
                             <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read2.clone())
                         )
                     });
-                    // let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
-                    //     primary_key: Some(postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, vec![primary_key_equal1.clone(), primary_key_equal2.clone()]).unwrap()),
-                    //     column_0: None,
-                    //     column_190: None,
-                    // }));
-                    // let read_many = super::Example::try_read_many(
-                    //     &url,
-                    //     super::ExampleReadManyParameters {
-                    //         payload: super::ExampleReadManyPayload {
-                    //             where_many: where_many_1_and_2_primary_keys.clone(),
-                    //             select: select_primary_key.clone(),
-                    //             order_by: postgresql_crud::OrderBy {
-                    //                 column: super::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    //                 order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    //             },
-                    //             pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                    //         },
-                    //     },
+                    let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
+                        primary_key: Some(postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, vec![primary_key_equal1.clone(), primary_key_equal2.clone()]).unwrap()),
+                        column_0: None,
+                        column_190: None,
+                    }));
+                    let read_many = super::Example::try_read_many(
+                        &url,
+                        super::ExampleReadManyParameters {
+                            payload: super::ExampleReadManyPayload {
+                                where_many: where_many_1_and_2_primary_keys.clone(),
+                                select: select_primary_key.clone(),
+                                order_by: postgresql_crud::OrderBy {
+                                    column: super::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                    order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                },
+                                pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                            },
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    let some_value_primary_key_read1 = Some(postgresql_crud::Value { value: primary_key_read1.clone() });
+                    let some_value_primary_key_read2 = Some(postgresql_crud::Value { value: primary_key_read2.clone() });
+                    //todo 
+                    // if (
+                    //     read_many
                     // )
-                    // .await
-                    // .unwrap();
-                    // let some_value_primary_key_read1 = Some(postgresql_crud::Value { value: primary_key_read1.clone() });
-                    // let some_value_primary_key_read2 = Some(postgresql_crud::Value { value: primary_key_read2.clone() });
                     // assert_eq!(
                     //     vec![
                     //         super::ExampleRead {
@@ -1182,8 +1186,34 @@ mod example_tests {
                     //             column_0: None,
                     //             column_190: None
                     //         }
-                    //     ],
-                    //     read_many,
+                    //     ]
+                    //     .sort_by_key(
+                    //         // |a, b| 
+                    //         |p|
+                    //         {
+                    //         // let a_value = a.primary_key.unwrap();
+                    //         // let b_value = b.primary_key.unwrap();
+                    //         // a_value.value.cmp(&b_value.value)
+                    //         std::cmp::Reverse(p.primary_key.unwrap().value)
+
+                    //         // match (&a.primary_key, &b.primary_key) {
+                    //         //     (Some(a_value), Some(b_value)) => {
+
+                    //         //     },
+
+                    //         // }
+                    //         // match a.primary_key {
+                    //         //     Some(value) => {
+
+                    //         //     },
+                    //         //     None => std::cmp::Ordering::Equal
+                    //         // }
+                            
+                    //         // .then_with(|| a.name.cmp(&b.name))
+                    //     })
+                    //     //todo PartialOrd impl for primary keys types Read?
+                    //     ,
+                    //     read_many.sort(),
                     //     "read_many result different"
                     // );
                     // let primary_key_read3 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(three);
