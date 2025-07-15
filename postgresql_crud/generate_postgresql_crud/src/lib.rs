@@ -252,6 +252,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&field_type);
         quote::quote! {#as_postgresql_type_token_stream #tokens}
     };
+    let generate_as_postgresql_type_table_type_declaration_token_stream = |field_type: &dyn quote::ToTokens| {
+        generate_as_postgresql_type_tokens_token_stream(
+            &field_type,
+            &naming::TableTypeDeclarationUpperCamelCase
+        )
+    };
     let generate_as_postgresql_type_create_token_stream = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_token_stream(
             &field_type,
@@ -285,6 +291,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &naming::UpdateUpperCamelCase
         )
     };
+    let primary_key_field_type_as_postgresql_type_update_token_stream = generate_as_postgresql_type_update_token_stream(&primary_key_field_type);
     let primary_key_field_type_as_primary_key_upper_camel_case = quote::quote! {
         <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
     };
@@ -3643,10 +3650,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //todo temp
         let animal_as_not_null_jsonb_object_token_stream = quote::quote!{super::AnimalAsNotNullJsonbObject};
         //todo temp
-        let std_primitive_i16_as_not_null_int2_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(
-            &std_primitive_i16_as_not_null_int2_token_stream
-        );
-        //todo temp
         let std_primitive_i16_as_not_null_int2_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(
             &std_primitive_i16_as_not_null_int2_token_stream
         );
@@ -3660,6 +3663,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         );
         //todo temp
         let std_primitive_i16_as_not_null_int2_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(
+            &std_primitive_i16_as_not_null_int2_token_stream
+        );
+        //todo temp
+        let std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream = generate_as_postgresql_type_update_token_stream(
             &std_primitive_i16_as_not_null_int2_token_stream
         );
         quote::quote! {
@@ -3836,10 +3843,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let modification = 1;
                             let some_value_update_column_0 = Some(
-                                postgresql_crud::Value { value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_token_stream Update::new(modification)}
+                                postgresql_crud::Value { value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream::new(modification)}
                             );
-                            let primary_key_update1 = #primary_key_field_type_as_postgresql_type_token_stream Update::new(one);
-                            let primary_key_update2 = #primary_key_field_type_as_postgresql_type_token_stream Update::new(two);
+                            let primary_key_update1 = #primary_key_field_type_as_postgresql_type_update_token_stream::new(one);
+                            let primary_key_update2 = #primary_key_field_type_as_postgresql_type_update_token_stream::new(two);
                             let update_many = super::#ident::try_update_many(
                                 &url,
                                 super::#ident_update_many_parameters_upper_camel_case {
