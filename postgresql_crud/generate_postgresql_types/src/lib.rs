@@ -2699,6 +2699,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 }
             }
+            let maybe_derive_ord_eq_token_stream = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
+                match &can_be_primary_key {
+                    CanBePrimaryKey::True => quote::quote! {Ord, Eq,},
+                    CanBePrimaryKey::False => proc_macro2::TokenStream::new()
+                }
+            } else {
+                proc_macro2::TokenStream::new()
+            };
             let ident_origin_token_stream = {
                 let ident_origin_token_stream = {
                     let maybe_derive_partial_ord_token_stream = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
@@ -2726,7 +2734,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => partial_ord_comma_token_stream,
                             PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => partial_ord_comma_token_stream,
                             PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => partial_ord_comma_token_stream,
-                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => proc_macro2::TokenStream::new(),
+                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => partial_ord_comma_token_stream,
                             PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => proc_macro2::TokenStream::new(),
@@ -2775,6 +2783,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             Clone,
                             PartialEq,
                             #maybe_derive_partial_ord_token_stream
+                            #maybe_derive_ord_eq_token_stream
                             #maybe_derive_serde_serialize_token_stream
                             #maybe_derive_serde_deserialize_token_stream
                         )]
@@ -3871,11 +3880,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_token_stream = {
                 let ident_read_token_stream = {
+                    let maybe_derive_partial_ord_ord_eq_token_stream = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
+                        match &can_be_primary_key {
+                            CanBePrimaryKey::True => quote::quote! {PartialOrd, Ord, Eq,},
+                            CanBePrimaryKey::False => proc_macro2::TokenStream::new()
+                        }
+                    } else {
+                        proc_macro2::TokenStream::new()
+                    };
                     quote::quote! {
                         #[derive(
                             Debug,
                             Clone,
                             PartialEq,
+                            #maybe_derive_partial_ord_ord_eq_token_stream
                             serde::Serialize,
                             serde::Deserialize
                         )]

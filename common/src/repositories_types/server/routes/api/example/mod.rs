@@ -1140,7 +1140,7 @@ mod example_tests {
                         column_0: None,
                         column_190: None,
                     }));
-                    let read_many = super::Example::try_read_many(
+                    let mut read_many = super::Example::try_read_many(
                         &url,
                         super::ExampleReadManyParameters {
                             payload: super::ExampleReadManyPayload {
@@ -1158,27 +1158,22 @@ mod example_tests {
                     .unwrap();
                     let some_value_primary_key_read1 = Some(postgresql_crud::Value { value: primary_key_read1.clone() });
                     let some_value_primary_key_read2 = Some(postgresql_crud::Value { value: primary_key_read2.clone() });
-                    //todo
-                    assert_eq!(2, read_many.len(), "read_many result different");
-                    {
-                        let read_struct_primary_key1 = super::ExampleRead {
-                            primary_key: some_value_primary_key_read1.clone(),
-                            column_0: None,
-                            column_190: None
-                        };
-                        let read_struct_primary_key2 = super::ExampleRead {
-                            primary_key: some_value_primary_key_read2.clone(),
-                            column_0: None,
-                            column_190: None
-                        };
-                        if !(
-                            (read_many.get(0).unwrap() == &read_struct_primary_key1 && read_many.get(1).unwrap() == &read_struct_primary_key2)
-                            ||
-                            (read_many.get(1).unwrap() == &read_struct_primary_key1 && read_many.get(0).unwrap() == &read_struct_primary_key2)
-                        ) {
-                            panic!("read_many result different");
-                        }
-                    }
+                    assert_eq!(
+                        vec![
+                            super::ExampleRead {
+                                primary_key: some_value_primary_key_read1.clone(),
+                                column_0: None,
+                                column_190: None
+                            },
+                            super::ExampleRead {
+                                primary_key: some_value_primary_key_read2.clone(),
+                                column_0: None,
+                                column_190: None
+                            }
+                        ].sort_by_key(|u| u.primary_key.clone().unwrap().value),
+                        read_many.sort_by_key(|u| u.primary_key.clone().unwrap().value),
+                        "read_many result different"
+                    );
                     let create_one = super::Example::try_create_one(
                         &url,
                         super::ExampleCreateOneParameters {
@@ -1218,7 +1213,7 @@ mod example_tests {
                     let primary_key_update2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(
                         primary_key_read2_inner.clone()
                     );
-                    let update_many = super::Example::try_update_many(
+                    let mut update_many = super::Example::try_update_many(
                         &url,
                         super::ExampleUpdateManyParameters {
                             payload: super::ExampleUpdateManyPayload::try_new(vec![
@@ -1230,22 +1225,20 @@ mod example_tests {
                     )
                     .await
                     .unwrap();
-                    assert_eq!(2, update_many.len(), "update_many result different");
-                    {
-                        if !(
-                            (update_many.get(0).unwrap() == &primary_key_read1 && update_many.get(1).unwrap() == &primary_key_read2)
-                            ||
-                            (update_many.get(1).unwrap() == &primary_key_read1 && update_many.get(0).unwrap() == &primary_key_read2)
-                        ) {
-                            panic!("update_many result different");
-                        }
-                    }
+                    assert_eq!(
+                        vec![
+                            primary_key_read1.clone(),
+                            primary_key_read2.clone()
+                        ].sort(),
+                        update_many.sort(),
+                        "update_many result different"
+                    );
                     let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                         super::ExampleSelect::PrimaryKey(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
                         super::ExampleSelect::Column0(<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()),
                     ])
                     .unwrap();
-                    let read_many = super::Example::try_read_many(
+                    let mut read_many = super::Example::try_read_many(
                         &url,
                         super::ExampleReadManyParameters {
                             payload: super::ExampleReadManyPayload {
@@ -1264,26 +1257,22 @@ mod example_tests {
                     let some_value_column_0_read_5 = Some(postgresql_crud::Value {
                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(modification),
                     });
-                    assert_eq!(2, read_many.len(), "read_many result different");
-                    {
-                        let read_struct_primary_key1 = super::ExampleRead {
-                            primary_key: some_value_primary_key_read1.clone(),
-                            column_0: some_value_column_0_read_5.clone(),
-                            column_190: None
-                        };
-                        let read_struct_primary_key2 = super::ExampleRead {
-                            primary_key: some_value_primary_key_read2.clone(),
-                            column_0: some_value_column_0_read_5.clone(),
-                            column_190: None
-                        };
-                        if !(
-                            (read_many.get(0).unwrap() == &read_struct_primary_key1 && read_many.get(1).unwrap() == &read_struct_primary_key2)
-                            ||
-                            (read_many.get(1).unwrap() == &read_struct_primary_key1 && read_many.get(0).unwrap() == &read_struct_primary_key2)
-                        ) {
-                            panic!("read_many result different");
-                        }
-                    }
+                    assert_eq!(
+                        vec![
+                            super::ExampleRead {
+                                primary_key: some_value_primary_key_read1.clone(),
+                                column_0: some_value_column_0_read_5.clone(),
+                                column_190: None
+                            },
+                            super::ExampleRead {
+                                primary_key: some_value_primary_key_read2.clone(),
+                                column_0: some_value_column_0_read_5.clone(),
+                                column_190: None
+                            }
+                        ].sort_by_key(|u| u.primary_key.clone().unwrap().value),
+                        read_many.sort_by_key(|u| u.primary_key.clone().unwrap().value),
+                        "read_many result different"
+                    );
                     let primary_key_read3_inner = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read3.clone());
                     let primary_key_update3 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(
                         primary_key_read3_inner.clone()
@@ -1321,7 +1310,7 @@ mod example_tests {
                         read_one,
                         "read_one result different"
                     );
-                    let delete_many = super::Example::try_delete_many(
+                    let mut delete_many = super::Example::try_delete_many(
                         &url,
                         super::ExampleDeleteManyParameters {
                             payload: super::ExampleDeleteManyPayload { where_many: where_many_1_and_2_primary_keys.clone() },
@@ -1329,16 +1318,14 @@ mod example_tests {
                     )
                     .await
                     .unwrap();
-                    assert_eq!(2, delete_many.len(), "delete_many result different");
-                    {
-                        if !(
-                            (delete_many.get(0).unwrap() == &primary_key_read1 && delete_many.get(1).unwrap() == &primary_key_read2)
-                            ||
-                            (delete_many.get(1).unwrap() == &primary_key_read1 && delete_many.get(0).unwrap() == &primary_key_read2)
-                        ) {
-                            panic!("delete_many result different");
-                        }
-                    }
+                    assert_eq!(
+                        vec![
+                            primary_key_read1.clone(),
+                            primary_key_read2.clone()
+                        ].sort(),
+                        delete_many.sort(),
+                        "delete_many result different"
+                    );
                     let read_many = super::Example::try_read_many(
                         &url,
                         super::ExampleReadManyParameters {
