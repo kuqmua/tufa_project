@@ -1194,10 +1194,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 };
                 let declaration_without_primary_key_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper|{
                     let field_ident = &element.field_ident;
-                    let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(&{
-                        let element_syn_field_ty_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
-                        quote::quote! {#element_syn_field_ty_as_postgresql_type_token_stream Read}
-                    });
+                    let postgresql_crud_value_declaration_token_stream = generate_postgresql_crud_value_declaration_token_stream(
+                        &generate_as_postgresql_type_read_token_stream(&element.syn_field.ty)
+                    );
                     quote::quote! {
                         let mut #field_ident: std::option::Option<#postgresql_crud_value_declaration_token_stream> = None;
                     }
@@ -1229,10 +1228,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
                         let field_ident_string_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element.field_ident);
                         let postgresql_crud_value_initialization_token_stream = generate_postgresql_crud_value_initialization_token_stream(&value_snake_case);
-                        let element_syn_field_ty_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&element.syn_field.ty);
+                        let element_syn_field_ty_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&element.syn_field.ty);
                         quote::quote! {
                             #ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(_) => match sqlx::Row::try_get::<
-                                #element_syn_field_ty_as_postgresql_type_token_stream Read,
+                                #element_syn_field_ty_as_postgresql_type_read_token_stream,
                                 #ref_std_primitive_str
                             >(
                                 &#value_snake_case,
@@ -2693,7 +2692,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let postgresql_logic_token_stream = {
                     let fetch_token_stream = generate_fetch_token_stream(
                         &{
-                            let match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream(&ReadManyOrReadOne::ReadMany);
+                            let match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream = generate_match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream(
+                                &ReadManyOrReadOne::ReadMany
+                            );
                             quote::quote! {Some(#match_ident_read_try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_ident_select_token_stream)}
                         },
                         &generate_operation_error_initialization_eprintln_response_creation_token_stream(&operation, &postgresql_syn_variant_wrapper, file!(), line!(), column!()),
@@ -3657,6 +3658,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let std_primitive_i16_as_not_null_int2_as_postgresql_type_select_token_stream = generate_as_postgresql_type_select_token_stream(
             &std_primitive_i16_as_not_null_int2_token_stream
         );
+        //todo temp
+        let std_primitive_i16_as_not_null_int2_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(
+            &std_primitive_i16_as_not_null_int2_token_stream
+        );
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -3796,7 +3801,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 read_many,
                                 "read_many result different"
                             );
-                            let primary_key_read3 = #primary_key_field_type_as_postgresql_type_token_stream Read::new(three);
+                            let primary_key_read3 = #primary_key_field_type_as_postgresql_type_read_token_stream::new(three);
                             let create_one = super::#ident::try_create_one(
                                 &url,
                                 super::#ident_create_one_parameters_upper_camel_case {
@@ -3821,7 +3826,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             // println!("read_one: {read_one:#?}");
                             let some_value_primary_key_read3 = Some(postgresql_crud::Value { value: primary_key_read3.clone()});
                             assert_eq!(
-                                super::ExampleRead {
+                                super::#ident_read_upper_camel_case {
                                     primary_key: some_value_primary_key_read3.clone(),
                                     column_0: None,
                                     column_190: None
@@ -3885,7 +3890,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     }
                                 },
                             ).await.unwrap();
-                            let some_value_column_0_read_5 = Some(postgresql_crud::Value { value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_token_stream Read::new(modification) });
+                            let some_value_column_0_read_5 = Some(postgresql_crud::Value { value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_read_token_stream::new(modification) });
                             assert_eq!(
                                 vec![
                                     super::#ident_read_upper_camel_case {
@@ -3915,7 +3920,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             ).await.unwrap();
                             // println!("update_one: {update_one:#?}");
                             assert_eq!(
-                                #primary_key_field_type_as_postgresql_type_token_stream Read::new(three),
+                                #primary_key_field_type_as_postgresql_type_read_token_stream::new(three),
                                 update_one,
                                 "update_one result different"
                             );
