@@ -264,6 +264,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &naming::SelectUpperCamelCase
         )
     };
+    let primary_key_field_type_as_postgresql_type_select_token_stream = generate_as_postgresql_type_select_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_where_element_token_stream = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_token_stream(
             &field_type,
@@ -282,7 +283,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &naming::UpdateUpperCamelCase
         )
     };
-    //
     let primary_key_field_type_as_primary_key_upper_camel_case = quote::quote! {
         <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
     };
@@ -3651,6 +3651,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let animal_as_not_null_jsonb_object_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(
             &animal_as_not_null_jsonb_object_token_stream
         );
+        //todo temp
+        let std_primitive_i16_as_not_null_int2_as_postgresql_type_select_token_stream = generate_as_postgresql_type_select_token_stream(
+            &std_primitive_i16_as_not_null_int2_token_stream
+        );
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -3725,11 +3729,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 create_many,
                                 "create_many result different"
                             );
-                            let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                                super::#ident_select_upper_camel_case::PrimaryKey(
-                                    #primary_key_field_type_as_postgresql_type_token_stream Select::default()
-                                )
-                            ]).unwrap();
+                            let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(
+                                vec![
+                                    super::#ident_select_upper_camel_case::PrimaryKey(#primary_key_field_type_as_postgresql_type_select_token_stream::default())
+                                ]
+                            ).unwrap();
                             let primary_key_equal1 = #primary_key_field_type_as_postgresql_type_token_stream WhereElement::Equal(
                                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                     logical_operator: postgresql_crud::LogicalOperator::Or,
@@ -3859,10 +3863,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                                 super::#ident_select_upper_camel_case::PrimaryKey(
-                                    #primary_key_field_type_as_postgresql_type_token_stream Select::default()
+                                    #primary_key_field_type_as_postgresql_type_select_token_stream::default()
                                 ),
                                 super::#ident_select_upper_camel_case::Column0(
-                                    #std_primitive_i16_as_not_null_int2_as_postgresql_type_token_stream Select::default()
+                                    #std_primitive_i16_as_not_null_int2_as_postgresql_type_select_token_stream ::default()
                                 )
                             ]).unwrap();
                             let read_many = super::#ident::try_read_many(
