@@ -1094,7 +1094,7 @@ mod example_tests {
                         .await
                         .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                     });
-                    tokio::time::sleep(std::time::Duration::from_millis(50)).await;
+                    tokio::time::sleep(std::time::Duration::from_millis(100)).await;
                     // here
                     // let one: std::primitive::i64 = 1;
                     // let two: std::primitive::i64 = 2;
@@ -1132,20 +1132,20 @@ mod example_tests {
                         <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default(),
                     )])
                     .unwrap();
+                    let primary_key_read1_inner = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read1.clone());
                     let primary_key_equal1 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
+                        //todo why its not TableTypeDeclaration ? why Origin
                         //todo impl convert function from Read to TableTypeDeclaration for primary keys i guess
                         //here
-                        value: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(
-                            <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read1.clone())
-                        )
+                        value: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(primary_key_read1_inner.clone())
                     });
+                    let primary_key_read2_inner = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read2.clone());
                     let primary_key_equal2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
+                        //todo why its not TableTypeDeclaration ? why Origin
                         //here
-                        value: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(
-                            <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read2.clone())
-                        )
+                        value: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(primary_key_read2_inner.clone())
                     });
                     let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
                         primary_key: Some(postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, vec![primary_key_equal1.clone(), primary_key_equal2.clone()]).unwrap()),
@@ -1170,17 +1170,30 @@ mod example_tests {
                     .unwrap();
                     let some_value_primary_key_read1 = Some(postgresql_crud::Value { value: primary_key_read1.clone() });
                     let some_value_primary_key_read2 = Some(postgresql_crud::Value { value: primary_key_read2.clone() });
-                    //todo 
-                    // if (
-                    //     read_many
-                    // )
+                    //todo
+                    assert_eq!(2, read_many.len(), "read_many result different");
+                    {
+                        let read_struct_primary_key1 = super::ExampleRead {
+                            primary_key: some_value_primary_key_read1.clone(),
+                            column_0: None,
+                            column_190: None
+                        };
+                        let read_struct_primary_key2 = super::ExampleRead {
+                            primary_key: some_value_primary_key_read2.clone(),
+                            column_0: None,
+                            column_190: None
+                        };
+                        if !(
+                            (read_many.get(0).unwrap() == &read_struct_primary_key1 && read_many.get(1).unwrap() == &read_struct_primary_key2)
+                            ||
+                            (read_many.get(1).unwrap() == &read_struct_primary_key1 && read_many.get(0).unwrap() == &read_struct_primary_key2)
+                        ) {
+                            panic!("read_many result different");
+                        }
+                    }
                     // assert_eq!(
                     //     vec![
-                    //         super::ExampleRead {
-                    //             primary_key: some_value_primary_key_read1.clone(),
-                    //             column_0: None,
-                    //             column_190: None
-                    //         },
+                    //         ,
                     //         super::ExampleRead {
                     //             primary_key: some_value_primary_key_read2.clone(),
                     //             column_0: None,
@@ -1216,73 +1229,106 @@ mod example_tests {
                     //     read_many.sort(),
                     //     "read_many result different"
                     // );
-                    // let primary_key_read3 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(three);
-                    // let create_one = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: default_create }).await.unwrap();
+
+
+                    
+                    let create_one = super::Example::try_create_one(
+                        &url,
+                        super::ExampleCreateOneParameters {
+                            payload: default_create
+                        }
+                    ).await.unwrap();
                     // assert_eq!(primary_key_read3.clone(), create_one, "create_one result different");
-                    // let read_one = super::Example::try_read_one(
-                    //     &url,
-                    //     super::ExampleReadOneParameters {
-                    //         payload: super::ExampleReadOnePayload {
-                    //             primary_key: primary_key_read3.clone(),
-                    //             select: select_primary_key.clone(),
-                    //         },
-                    //     },
-                    // )
-                    // .await
-                    // .unwrap();
-                    // let some_value_primary_key_read3 = Some(postgresql_crud::Value { value: primary_key_read3.clone() });
+                    let primary_key_read3 = create_one.clone();
+                    let read_one = super::Example::try_read_one(
+                        &url,
+                        super::ExampleReadOneParameters {
+                            payload: super::ExampleReadOnePayload {
+                                primary_key: primary_key_read3.clone(),
+                                select: select_primary_key.clone(),
+                            },
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    let some_value_primary_key_read3 = Some(postgresql_crud::Value { value: primary_key_read3.clone() });
+                    assert_eq!(
+                        super::ExampleRead {
+                            primary_key: some_value_primary_key_read3.clone(),
+                            column_0: None,
+                            column_190: None
+                        },
+                        read_one,
+                        "read_one result different"
+                    );
+                    let modification = 1;
+                    let some_value_update_column_0 = Some(postgresql_crud::Value {
+                        value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(modification),
+                    });
+                    //todo convert logic
+                    //here
+                    let primary_key_update1 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(
+                        primary_key_read1_inner.clone()
+                    );
+                    let primary_key_update2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(
+                        primary_key_read2_inner.clone()
+                    );
+                    let update_many = super::Example::try_update_many(
+                        &url,
+                        super::ExampleUpdateManyParameters {
+                            payload: super::ExampleUpdateManyPayload::try_new(vec![
+                                super::ExampleUpdate::try_new(primary_key_update1.clone(), some_value_update_column_0.clone(), None).unwrap(),
+                                super::ExampleUpdate::try_new(primary_key_update2.clone(), some_value_update_column_0.clone(), None).unwrap(),
+                            ])
+                            .unwrap(),
+                        },
+                    )
+                    .await
+                    .unwrap();
                     // assert_eq!(
-                    //     super::ExampleRead {
-                    //         primary_key: some_value_primary_key_read3.clone(),
-                    //         column_0: None,
-                    //         column_190: None
-                    //     },
-                    //     read_one,
-                    //     "read_one result different"
+                    //     vec![
+                    //         primary_key_read1.clone(),
+                    //         primary_key_read2.clone()
+                    //     ],
+                    //     update_many,
+                    //     "update_many result different"
                     // );
-                    // let modification = 1;
-                    // let some_value_update_column_0 = Some(postgresql_crud::Value {
-                    //     value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(modification),
-                    // });
-                    // let primary_key_update1 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(one);
-                    // let primary_key_update2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(two);
-                    // let update_many = super::Example::try_update_many(
-                    //     &url,
-                    //     super::ExampleUpdateManyParameters {
-                    //         payload: super::ExampleUpdateManyPayload::try_new(vec![
-                    //             super::ExampleUpdate::try_new(primary_key_update1.clone(), some_value_update_column_0.clone(), None).unwrap(),
-                    //             super::ExampleUpdate::try_new(primary_key_update2.clone(), some_value_update_column_0.clone(), None).unwrap(),
-                    //         ])
-                    //         .unwrap(),
-                    //     },
-                    // )
-                    // .await
-                    // .unwrap();
-                    // assert_eq!(vec![primary_key_read1.clone(), primary_key_read2.clone()], update_many, "update_many result different");
-                    // let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                    //     super::ExampleSelect::PrimaryKey(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
-                    //     super::ExampleSelect::Column0(<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()),
-                    // ])
-                    // .unwrap();
-                    // let read_many = super::Example::try_read_many(
-                    //     &url,
-                    //     super::ExampleReadManyParameters {
-                    //         payload: super::ExampleReadManyPayload {
-                    //             where_many: where_many_1_and_2_primary_keys.clone(),
-                    //             select: select_primary_key_column_0.clone(),
-                    //             order_by: postgresql_crud::OrderBy {
-                    //                 column: super::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    //                 order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    //             },
-                    //             pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                    //         },
-                    //     },
-                    // )
-                    // .await
-                    // .unwrap();
-                    // let some_value_column_0_read_5 = Some(postgresql_crud::Value {
-                    //     value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(modification),
-                    // });
+                    //
+                    assert_eq!(2, update_many.len(), "update_many result different");
+                    {
+                        if !(
+                            (update_many.get(0).unwrap() == &primary_key_read1 && update_many.get(1).unwrap() == &primary_key_read2)
+                            ||
+                            (update_many.get(1).unwrap() == &primary_key_read1 && update_many.get(0).unwrap() == &primary_key_read2)
+                        ) {
+                            panic!("update_many result different");
+                        }
+                    }
+                    //
+                    let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                        super::ExampleSelect::PrimaryKey(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
+                        super::ExampleSelect::Column0(<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()),
+                    ])
+                    .unwrap();
+                    let read_many = super::Example::try_read_many(
+                        &url,
+                        super::ExampleReadManyParameters {
+                            payload: super::ExampleReadManyPayload {
+                                where_many: where_many_1_and_2_primary_keys.clone(),
+                                select: select_primary_key_column_0.clone(),
+                                order_by: postgresql_crud::OrderBy {
+                                    column: super::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                    order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                },
+                                pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                            },
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    let some_value_column_0_read_5 = Some(postgresql_crud::Value {
+                        value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(modification),
+                    });
                     // assert_eq!(
                     //     vec![
                     //         super::ExampleRead {
@@ -1299,105 +1345,139 @@ mod example_tests {
                     //     read_many,
                     //     "read_many result different"
                     // );
-                    // let primary_key_update3 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(three);
-                    // let update_one = super::Example::try_update_one(
-                    //     &url,
-                    //     super::ExampleUpdateOneParameters {
-                    //         payload: super::ExampleUpdate::try_new(primary_key_update3.clone(), some_value_update_column_0.clone(), None).unwrap(),
-                    //     },
-                    // )
-                    // .await
-                    // .unwrap();
-                    // assert_eq!(
-                    //     <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(three),
-                    //     update_one,
-                    //     "update_one result different"
-                    // );
-                    // let read_one = super::Example::try_read_one(
-                    //     &url,
-                    //     super::ExampleReadOneParameters {
-                    //         payload: super::ExampleReadOnePayload {
-                    //             primary_key: primary_key_read3.clone(),
-                    //             select: select_primary_key_column_0.clone(),
-                    //         },
-                    //     },
-                    // )
-                    // .await
-                    // .unwrap();
-                    // assert_eq!(
-                    //     super::ExampleRead {
-                    //         primary_key: some_value_primary_key_read3.clone(),
-                    //         column_0: some_value_column_0_read_5.clone(),
-                    //         column_190: None
-                    //     },
-                    //     read_one,
-                    //     "read_one result different"
-                    // );
-                    // let delete_many = super::Example::try_delete_many(
-                    //     &url,
-                    //     super::ExampleDeleteManyParameters {
-                    //         payload: super::ExampleDeleteManyPayload { where_many: where_many_1_and_2_primary_keys.clone() },
-                    //     },
-                    // )
-                    // .await
-                    // .unwrap();
+                    assert_eq!(2, read_many.len(), "read_many result different");
+                    {
+                        let read_struct_primary_key1 = super::ExampleRead {
+                            primary_key: some_value_primary_key_read1.clone(),
+                            column_0: some_value_column_0_read_5.clone(),
+                            column_190: None
+                        };
+                        let read_struct_primary_key2 = super::ExampleRead {
+                            primary_key: some_value_primary_key_read2.clone(),
+                            column_0: some_value_column_0_read_5.clone(),
+                            column_190: None
+                        };
+                        if !(
+                            (read_many.get(0).unwrap() == &read_struct_primary_key1 && read_many.get(1).unwrap() == &read_struct_primary_key2)
+                            ||
+                            (read_many.get(1).unwrap() == &read_struct_primary_key1 && read_many.get(0).unwrap() == &read_struct_primary_key2)
+                        ) {
+                            panic!("read_many result different");
+                        }
+                    }
+                    //
+                    let primary_key_read3_inner = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read3.clone());
+                    let primary_key_update3 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::new(
+                        primary_key_read3_inner.clone()
+                    );
+                    let update_one = super::Example::try_update_one(
+                        &url,
+                        super::ExampleUpdateOneParameters {
+                            payload: super::ExampleUpdate::try_new(primary_key_update3.clone(), some_value_update_column_0.clone(), None).unwrap(),
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    assert_eq!(
+                        // <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::new(three),
+                        primary_key_read3.clone(),
+                        update_one,
+                        "update_one result different"
+                    );
+                    let read_one = super::Example::try_read_one(
+                        &url,
+                        super::ExampleReadOneParameters {
+                            payload: super::ExampleReadOnePayload {
+                                primary_key: primary_key_read3.clone(),
+                                select: select_primary_key_column_0.clone(),
+                            },
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    assert_eq!(
+                        super::ExampleRead {
+                            primary_key: some_value_primary_key_read3.clone(),
+                            column_0: some_value_column_0_read_5.clone(),
+                            column_190: None
+                        },
+                        read_one,
+                        "read_one result different"
+                    );
+                    let delete_many = super::Example::try_delete_many(
+                        &url,
+                        super::ExampleDeleteManyParameters {
+                            payload: super::ExampleDeleteManyPayload { where_many: where_many_1_and_2_primary_keys.clone() },
+                        },
+                    )
+                    .await
+                    .unwrap();
                     // assert_eq!(vec![primary_key_read1.clone(), primary_key_read2.clone()], delete_many, "delete_many result different");
-                    // let read_many = super::Example::try_read_many(
-                    //     &url,
-                    //     super::ExampleReadManyParameters {
-                    //         payload: super::ExampleReadManyPayload {
-                    //             where_many: where_many_1_and_2_primary_keys.clone(),
-                    //             select: select_primary_key_column_0.clone(),
-                    //             order_by: postgresql_crud::OrderBy {
-                    //                 column: super::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    //                 order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                    //             },
-                    //             pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                    //         },
-                    //     },
-                    // )
-                    // .await
-                    // .unwrap();
-                    // assert_eq!(std::vec::Vec::<super::ExampleRead>::default(), read_many, "read_many result different");
-                    // let delete_one = super::Example::try_delete_one(
-                    //     &url,
-                    //     super::ExampleDeleteOneParameters {
-                    //         payload: super::ExampleDeleteOnePayload { primary_key: primary_key_read3.clone() },
-                    //     },
-                    // )
-                    // .await
-                    // .unwrap();
-                    // assert_eq!(primary_key_read3.clone(), delete_one, "delete_one result different");
-                    // if let Err(error) = super::Example::try_read_one(
-                    //     &url,
-                    //     super::ExampleReadOneParameters {
-                    //         payload: super::ExampleReadOnePayload {
-                    //             primary_key: primary_key_read3.clone(),
-                    //             select: select_primary_key.clone(),
-                    //         },
-                    //     },
-                    // )
-                    // .await
-                    // {
-                    //     if let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize {
-                    //         read_one_error_named_with_serialize_deserialize,
-                    //         code_occurence: _,
-                    //     } = &error
-                    //     {
-                    //         if let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize {
-                    //             if "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
-                    //                 panic!("wtf");
-                    //             }
-                    //         } else {
-                    //             panic!("wtf");
-                    //         }
-                    //     } else {
-                    //         panic!("wtf");
-                    //     }
-                    // } else {
-                    //     panic!("wtf");
-                    // }
-                    // drop_table_if_exists(&postgres_pool).await;
+                    {
+                        if !(
+                            (delete_many.get(0).unwrap() == &primary_key_read1 && delete_many.get(1).unwrap() == &primary_key_read2)
+                            ||
+                            (delete_many.get(1).unwrap() == &primary_key_read1 && delete_many.get(0).unwrap() == &primary_key_read2)
+                        ) {
+                            panic!("delete_many result different");
+                        }
+                    }
+                    let read_many = super::Example::try_read_many(
+                        &url,
+                        super::ExampleReadManyParameters {
+                            payload: super::ExampleReadManyPayload {
+                                where_many: where_many_1_and_2_primary_keys.clone(),
+                                select: select_primary_key_column_0.clone(),
+                                order_by: postgresql_crud::OrderBy {
+                                    column: super::ExampleSelect::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                    order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                },
+                                pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                            },
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    assert_eq!(std::vec::Vec::<super::ExampleRead>::default(), read_many, "read_many result different");
+                    let delete_one = super::Example::try_delete_one(
+                        &url,
+                        super::ExampleDeleteOneParameters {
+                            payload: super::ExampleDeleteOnePayload { primary_key: primary_key_read3.clone() },
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    assert_eq!(primary_key_read3.clone(), delete_one, "delete_one result different");
+                    if let Err(error) = super::Example::try_read_one(
+                        &url,
+                        super::ExampleReadOneParameters {
+                            payload: super::ExampleReadOnePayload {
+                                primary_key: primary_key_read3.clone(),
+                                select: select_primary_key.clone(),
+                            },
+                        },
+                    )
+                    .await
+                    {
+                        if let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize {
+                            read_one_error_named_with_serialize_deserialize,
+                            code_occurence: _,
+                        } = &error
+                        {
+                            if let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize {
+                                if "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
+                                    panic!("wtf");
+                                }
+                            } else {
+                                panic!("wtf");
+                            }
+                        } else {
+                            panic!("wtf");
+                        }
+                    } else {
+                        panic!("wtf");
+                    }
+                    drop_table_if_exists(&postgres_pool).await;
                 });
             })
             .unwrap()
