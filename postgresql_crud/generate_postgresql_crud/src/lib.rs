@@ -247,7 +247,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = |field_type: &dyn quote::ToTokens| {
         quote::quote! {<#field_type as postgresql_crud::PostgresqlType>::}
     };
-    let primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&primary_key_field_type);
+    let primary_key_field_type_as_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&primary_key_field_type);
     let generate_as_postgresql_crud_postgresql_type_postgresql_type_tokens_token_stream = |field_type: &dyn quote::ToTokens, tokens: &dyn quote::ToTokens| {
         let as_postgresql_crud_postgresql_type_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&field_type);
         quote::quote! {#as_postgresql_crud_postgresql_type_postgresql_type_token_stream #tokens}
@@ -1407,7 +1407,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let update_query_part_primary_key_token_stream = {
                 quote::quote!{
                     fn #update_query_part_primary_key_snake_case(&self, #increment_snake_case: &mut std::primitive::u64) -> Result<#std_string_string, #postgresql_crud_snake_case::#query_part_error_named_upper_camel_case> {
-                        match #primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_part_snake_case(
+                        match #primary_key_field_type_as_postgresql_type_token_stream #update_query_part_snake_case(
                             &self.#primary_key_field_ident,
                             &"",
                             &#ident::#primary_key_snake_case(),
@@ -3129,7 +3129,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     });
                     let primary_key_update_assignment_token_stream = quote::quote! {
                         for #element_snake_case in #parameters_snake_case.#payload_snake_case.0 {
-                            #query_snake_case = #primary_key_field_type_as_postgresql_crud_postgresql_type_postgresql_type_token_stream #update_query_bind_snake_case(
+                            #query_snake_case = #primary_key_field_type_as_postgresql_type_token_stream #update_query_bind_snake_case(
                                 #element_snake_case.#primary_key_field_ident,
                                 #query_snake_case,
                             );
@@ -3275,14 +3275,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             }
                         }
                     });
-                    let binded_query_primary_key_modification_token_stream = {
-                        let primary_key_as_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(&primary_key_field_type);
-                        quote::quote! {
-                            #query_snake_case = #primary_key_as_postgresql_type_token_stream #update_query_bind_snake_case(
-                                #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
-                                #query_snake_case,
-                            );
-                        }
+                    let binded_query_primary_key_modification_token_stream = quote::quote! {
+                        #query_snake_case = #primary_key_field_type_as_postgresql_type_token_stream #update_query_bind_snake_case(
+                            #parameters_snake_case.#payload_snake_case.#primary_key_field_ident,
+                            #query_snake_case,
+                        );
                     };
                     quote::quote! {
                         let mut #query_snake_case = #sqlx_query_sqlx_postgres_token_stream(&#query_string_snake_case);
@@ -3623,6 +3620,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let animal_as_not_null_jsonb_object_as_postgresql_type_token_stream = generate_as_postgresql_crud_postgresql_type_postgresql_type_token_stream(
             &quote::quote!{super::AnimalAsNotNullJsonbObject}
         );
+        
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -3687,8 +3685,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 },
                             ).await.unwrap();
                             // println!("create_many: {create_many:#?}");
-                            let primary_key_read1 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::new(one);
-                            let primary_key_read2 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::new(two);
+                            let primary_key_read1 = #primary_key_field_type_as_postgresql_type_token_stream Read::new(one);
+                            let primary_key_read2 = #primary_key_field_type_as_postgresql_type_token_stream Read::new(two);
                             assert_eq!(
                                 vec![
                                     primary_key_read1.clone(),
@@ -3699,19 +3697,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                                 super::#ident_select_upper_camel_case::PrimaryKey(
-                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
+                                    #primary_key_field_type_as_postgresql_type_token_stream Select::default()
                                 )
                             ]).unwrap();
-                            let primary_key_equal1 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::WhereElement::Equal(
+                            let primary_key_equal1 = #primary_key_field_type_as_postgresql_type_token_stream WhereElement::Equal(
                                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                                    value: <#primary_key_field_type as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(one)
+                                    value: #primary_key_field_type_as_postgresql_type_token_stream TableTypeDeclaration::new(one)
                                 }
                             );
-                            let primary_key_equal2 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::WhereElement::Equal(
+                            let primary_key_equal2 = #primary_key_field_type_as_postgresql_type_token_stream WhereElement::Equal(
                                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                                    value: <#primary_key_field_type as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(two)
+                                    value: #primary_key_field_type_as_postgresql_type_token_stream TableTypeDeclaration::new(two)
                                 }
                             );
                             let where_many_1_and_2_primary_keys = super::#std_option_option_ident_where_many_upper_camel_case(
@@ -3762,7 +3760,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 read_many,
                                 "read_many result different"
                             );
-                            let primary_key_read3 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::new(three);
+                            let primary_key_read3 = #primary_key_field_type_as_postgresql_type_token_stream Read::new(three);
                             let create_one = super::#ident::try_create_one(
                                 &url,
                                 super::#ident_create_one_parameters_upper_camel_case {
@@ -3799,8 +3797,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             let some_value_update_column_0 = Some(
                                 postgresql_crud::Value { value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_token_stream Update::new(modification)}
                             );
-                            let primary_key_update1 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::new(one);
-                            let primary_key_update2 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::new(two);
+                            let primary_key_update1 = #primary_key_field_type_as_postgresql_type_token_stream Update::new(one);
+                            let primary_key_update2 = #primary_key_field_type_as_postgresql_type_token_stream Update::new(two);
                             let update_many = super::#ident::try_update_many(
                                 &url,
                                 super::#ident_update_many_parameters_upper_camel_case {
@@ -3831,7 +3829,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             );
                             let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                                 super::#ident_select_upper_camel_case::PrimaryKey(
-                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select::default()
+                                    #primary_key_field_type_as_postgresql_type_token_stream Select::default()
                                 ),
                                 super::#ident_select_upper_camel_case::Column0(
                                     #std_primitive_i16_as_not_null_int2_as_postgresql_type_token_stream Select::default()
@@ -3868,7 +3866,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 read_many,
                                 "read_many result different"
                             );
-                            let primary_key_update3 = <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::new(three);
+                            let primary_key_update3 = #primary_key_field_type_as_postgresql_type_token_stream Update::new(three);
                             let update_one = super::#ident::try_update_one(
                                 &url,
                                 super::#ident_update_one_parameters_upper_camel_case {
@@ -3881,7 +3879,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             ).await.unwrap();
                             // println!("update_one: {update_one:#?}");
                             assert_eq!(
-                                <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::new(three),
+                                #primary_key_field_type_as_postgresql_type_token_stream Read::new(three),
                                 update_one,
                                 "update_one result different"
                             );
