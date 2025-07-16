@@ -708,6 +708,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     update_query_part_content_token_stream: &dyn quote::ToTokens,
     is_update_query_bind_mutable: &IsUpdateQueryBindMutable,
     update_query_bind_content_token_stream: &dyn quote::ToTokens,
+    test_cases_content_token_stream: &dyn quote::ToTokens
 ) -> proc_macro2::TokenStream {
     let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
     let table_type_declaration_upper_camel_case = naming::TableTypeDeclarationUpperCamelCase;
@@ -727,6 +728,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
     let query_snake_case = naming::QuerySnakeCase;
     let column_snake_case = naming::ColumnSnakeCase;
     let std_string_string_token_stream = token_patterns::StdStringString;
+    let test_cases_snake_case = naming::TestCasesSnakeCase;
     quote::quote! {
         impl #import_path :: #postgresql_type_upper_camel_case for #ident {
             type #table_type_declaration_upper_camel_case = #ident_table_type_declaration_upper_camel_case;
@@ -773,7 +775,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
                 #update_query_bind_content_token_stream
             }
             fn test_cases() -> std::vec::Vec<Self::#read_inner_upper_camel_case> {
-                vec![]
+                vec![#test_cases_content_token_stream]
             }
         }
     }

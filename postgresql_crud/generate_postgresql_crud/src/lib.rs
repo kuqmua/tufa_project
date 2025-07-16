@@ -162,6 +162,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let into_serialize_deserialize_version_snake_case = naming::IntoSerializeDeserializeVersionSnakeCase;
     let primary_key_snake_case = naming::PrimaryKeySnakeCase;
     let pagination_snake_case = naming::PaginationSnakeCase;
+    let test_cases_snake_case = naming::TestCasesSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -3836,10 +3837,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     ident_read_returned_from_read_one,
                                     "try_read_one result different after try_create_one"
                                 );
-                                for test_modification in 
-                                // <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::TestCases>::test_cases()
-                                vec![1]
-                                {
+                                for test_modification in <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::#test_cases_snake_case() {
                                     let some_value_update = Some(postgresql_crud::Value {
                                         value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream::new(test_modification),
                                     });
