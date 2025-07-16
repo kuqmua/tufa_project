@@ -4344,9 +4344,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
-                                PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{std::primitive::i16::MIN, 0, 1, std::primitive::i16::MAX},
-                                PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
-                                PostgresqlType::StdPrimitiveI64AsInt8 => proc_macro2::TokenStream::new(),
+                                PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{std::primitive::i16::MIN, -1, 0, 1, std::primitive::i16::MAX},
+                                PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{std::primitive::i32::MIN, -1, 0, 1, std::primitive::i32::MAX},
+                                PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{std::primitive::i64::MIN, -1, 0, 1, std::primitive::i64::MAX},
                                 PostgresqlType::StdPrimitiveF32AsFloat4 => proc_macro2::TokenStream::new(),
                                 PostgresqlType::StdPrimitiveF64AsFloat8 => proc_macro2::TokenStream::new(),
                                 PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
@@ -4387,7 +4387,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => proc_macro2::TokenStream::new(),
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => proc_macro2::TokenStream::new(),
-                            
+
                         }
                     }
                 )

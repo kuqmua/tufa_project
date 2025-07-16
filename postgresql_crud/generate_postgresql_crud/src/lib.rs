@@ -3692,6 +3692,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream = generate_as_postgresql_type_update_token_stream(
             &std_primitive_i16_as_not_null_int2_token_stream
         );
+        //todo instead of fist dropping table - check if its not exists. if exists test must fail
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
