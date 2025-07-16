@@ -3646,7 +3646,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let ident_try_read_one_error_named_upper_camel_case = generate_ident_try_operation_error_named_upper_camel_case(&Operation::ReadOne);
         let ident_read_one_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(&Operation::ReadOne);
         let std_option_option_ident_where_many_upper_camel_case = naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase::from_tokens(&ident);
-        let ident_create_default_fields_initialization_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+        let ident_create_default_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(
                 &&element.syn_field.ty
@@ -3655,20 +3655,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 #field_ident: <#field_type_as_postgresql_type_create_token_stream as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
             }
         });
-
+        let fields_none_initialization_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            quote::quote! {#field_ident: None}
+        });
 
         //todo temp
         let std_primitive_i16_as_not_null_int2_token_stream = quote::quote!{postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2};
         //todo temp
         let animal_as_not_null_jsonb_object_token_stream = quote::quote!{crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject};
-        //todo temp
-        let std_primitive_i16_as_not_null_int2_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(
-            &std_primitive_i16_as_not_null_int2_token_stream
-        );
-        //todo temp
-        let animal_as_not_null_jsonb_object_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(
-            &animal_as_not_null_jsonb_object_token_stream
-        );
         //todo temp
         let std_primitive_i16_as_not_null_int2_as_postgresql_type_select_token_stream = generate_as_postgresql_type_select_token_stream(
             &std_primitive_i16_as_not_null_int2_token_stream
@@ -3719,7 +3714,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 });
                                 tokio::time::sleep(std::time::Duration::from_millis(100)).await;
                                 let ident_create_default = super::#ident_create_upper_camel_case {
-                                    #ident_create_default_fields_initialization_token_stream
+                                    #ident_create_default_fields_initialization_without_primary_key_token_stream
                                 };
                                 let vec_of_primary_keys_returned_from_create_many = super::#ident::try_create_many(
                                     &url,
@@ -3758,8 +3753,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             })
                                         ]
                                     ).unwrap()),
-                                    column_0: None,
-                                    column_190: None,
+                                    #fields_none_initialization_token_stream
                                 }));
                                 let vec_of_ident_read_returned_from_read_many = super::#ident::try_read_many(
                                     &url,
@@ -3786,13 +3780,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
                                         super::#ident_read_upper_camel_case {
                                             primary_key: some_value_primary_key_read_returned_from_create_many1.clone(),
-                                            column_0: None,
-                                            column_190: None
+                                            #fields_none_initialization_token_stream
                                         },
                                         super::#ident_read_upper_camel_case {
                                             primary_key: some_value_primary_key_read_returned_from_create_many2.clone(),
-                                            column_0: None,
-                                            column_190: None
+                                            #fields_none_initialization_token_stream
                                         }
                                     ]),
                                     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec_of_ident_read_returned_from_read_many),
@@ -3820,8 +3812,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 assert_eq!(
                                     super::#ident_read_upper_camel_case {
                                         primary_key: some_value_primary_key_read_returned_from_create_one.clone(),
-                                        column_0: None,
-                                        column_190: None
+                                        #fields_none_initialization_token_stream
                                     },
                                     ident_read_returned_from_read_one,
                                     "try_read_one result different after try_create_one"
