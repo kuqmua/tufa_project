@@ -285,7 +285,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             &naming::ReadUpperCamelCase
         )
     };
-    let primary_key_field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&primary_key_field_type);
+    // let primary_key_field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_update_token_stream = |field_type: &dyn quote::ToTokens| {
         generate_as_postgresql_type_tokens_token_stream(
             &field_type,
@@ -3677,363 +3677,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 fn test_size_of() {
                     assert_eq!(std::mem::size_of::<super::#ident>(), 0);
                 }
-                // #[test]
-                // fn test_crud() {
-                //     std::thread::Builder::new().stack_size(16 * 1024 * 1024) // 16 MB
-                //     .spawn(|| {
-                //         tokio::runtime::Builder::new_multi_thread()
-                //         .worker_threads(num_cpus::get())
-                //         .enable_all()
-                //         .build()
-                //         .unwrap()
-                //         .block_on(async {
-                //             static CONFIG: std::sync::OnceLock<crate::repositories_types::server::config::Config> = std::sync::OnceLock::new();
-                //             let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config::try_from_env().unwrap());
-                //             let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
-                //             let url = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
-                //             async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
-                //                 let _unused = sqlx::query(#drop_table_if_exists_ident_double_quotes_token_stream)
-                //                 .execute(postgres_pool)
-                //                 .await.unwrap();
-                //             }
-                //             drop_table_if_exists(&postgres_pool).await;
-                //             let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
-                //             let _unused = tokio::spawn(async move {
-                //                 super::#ident::prepare_postgresql(&postgres_pool_for_tokio_spawn_sync_move).await.unwrap();
-                //                 let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
-                //                     postgres_pool: postgres_pool_for_tokio_spawn_sync_move.clone(),
-                //                     config: &config,
-                //                     project_git_info: &git_info::PROJECT_GIT_INFO,
-                //                 });
-                //                 axum::serve(
-                //                     tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&config)).await.unwrap(),
-                //                     axum::Router::new()
-                //                         .merge(super::#ident::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state)))
-                //                         .into_make_service(),
-                //                 )
-                //                 .await
-                //                 .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
-                //             });
-                //             tokio::time::sleep(std::time::Duration::from_millis(50)).await;
-                //             let one: std::primitive::i64 = 1;
-                //             let two: std::primitive::i64 = 2;
-                //             let three: std::primitive::i64 = 3;
-                //             let default_create = super::#ident_create_upper_camel_case {
-                //                 column_0: <#std_primitive_i16_as_not_null_int2_as_postgresql_type_create_token_stream as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                //                 column_190: <#animal_as_not_null_jsonb_object_as_postgresql_type_create_token_stream as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                //             };
-                //             let create_many = super::#ident::try_create_many(
-                //                 &url,
-                //                 super::#ident_create_many_parameters_upper_camel_case {
-                //                     payload: super::#ident_create_many_payload_upper_camel_case(
-                //                         vec![
-                //                             default_create.clone(),
-                //                             default_create.clone()
-                //                         ]
-                //                     )
-                //                 },
-                //             ).await.unwrap();
-                //             // println!("create_many: {create_many:#?}");
-                //             let primary_key_read1 = #primary_key_field_type_as_postgresql_type_read_token_stream::new(one);
-                //             let primary_key_read2 = #primary_key_field_type_as_postgresql_type_read_token_stream::new(two);
-                //             assert_eq!(
-                //                 vec![
-                //                     primary_key_read1.clone(),
-                //                     primary_key_read2.clone()
-                //                 ],
-                //                 create_many,
-                //                 "create_many result different"
-                //             );
-                //             let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(
-                //                 vec![
-                //                     super::#ident_select_upper_camel_case::PrimaryKey(#primary_key_field_type_as_postgresql_type_select_token_stream::default())
-                //                 ]
-                //             ).unwrap();
-                //             let primary_key_equal1 = #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
-                //                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
-                //                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                //                     value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::new(one)
-                //                 }
-                //             );
-                //             let primary_key_equal2 = #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(
-                //                 postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
-                //                     logical_operator: postgresql_crud::LogicalOperator::Or,
-                //                     value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::new(two)
-                //                 }
-                //             );
-                //             let where_many_1_and_2_primary_keys = super::#std_option_option_ident_where_many_upper_camel_case(
-                //                 Some(super::#ident_where_many_upper_camel_case {
-                //                     primary_key: Some(
-                //                         postgresql_crud::PostgresqlTypeWhere::try_new(
-                //                             postgresql_crud::LogicalOperator::Or,
-                //                             vec![
-                //                                 primary_key_equal1.clone(),
-                //                                 primary_key_equal2.clone()
-                //                             ],
-                //                         ).unwrap()
-                //                     ),
-                //                     column_0: None,
-                //                     column_190: None,
-                //                 })
-                //             ); 
-                //             let read_many = super::#ident::try_read_many(
-                //                 &url,
-                //                 super::#ident_read_many_parameters_upper_camel_case {
-                //                     payload: super::#ident_read_many_payload_upper_camel_case {
-                //                         where_many: where_many_1_and_2_primary_keys.clone(),
-                //                         select: select_primary_key.clone(),
-                //                         order_by: postgresql_crud::OrderBy {
-                //                             column: super::#ident_select_upper_camel_case::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                //                             order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                //                         },
-                //                         pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                //                     }
-                //                 },
-                //             ).await.unwrap();
-                //             // println!("read_many: {read_many:#?}");
-                //             let some_value_primary_key_read1 = Some(postgresql_crud::Value { value: primary_key_read1.clone()});
-                //             let some_value_primary_key_read2 = Some(postgresql_crud::Value { value: primary_key_read2.clone()});
-                //             assert_eq!(
-                //                 vec![
-                //                     super::#ident_read_upper_camel_case {
-                //                         primary_key: some_value_primary_key_read1.clone(),
-                //                         column_0: None,
-                //                         column_190: None
-                //                     },
-                //                     super::#ident_read_upper_camel_case {
-                //                         primary_key: some_value_primary_key_read2.clone(),
-                //                         column_0: None,
-                //                         column_190: None
-                //                     }
-                //                 ],
-                //                 read_many,
-                //                 "read_many result different"
-                //             );
-                //             let primary_key_read3 = #primary_key_field_type_as_postgresql_type_read_token_stream::new(three);
-                //             let create_one = super::#ident::try_create_one(
-                //                 &url,
-                //                 super::#ident_create_one_parameters_upper_camel_case {
-                //                     payload: default_create
-                //                 },
-                //             ).await.unwrap();
-                //             // println!("create_one: {create_one:#?}");
-                //             assert_eq!(
-                //                 primary_key_read3.clone(),
-                //                 create_one,
-                //                 "create_one result different"
-                //             );
-                //             let read_one = super::#ident::try_read_one(
-                //                 &url,
-                //                 super::#ident_read_one_parameters_upper_camel_case {
-                //                     payload: super::#ident_read_one_payload_upper_camel_case {
-                //                         primary_key: primary_key_read3.clone(),
-                //                         select: select_primary_key.clone(),
-                //                     }
-                //                 },
-                //             ).await.unwrap();
-                //             // println!("read_one: {read_one:#?}");
-                //             let some_value_primary_key_read3 = Some(postgresql_crud::Value { value: primary_key_read3.clone()});
-                //             assert_eq!(
-                //                 super::#ident_read_upper_camel_case {
-                //                     primary_key: some_value_primary_key_read3.clone(),
-                //                     column_0: None,
-                //                     column_190: None
-                //                 },
-                //                 read_one,
-                //                 "read_one result different"
-                //             );
-                //             let modification = 1;
-                //             let some_value_update_column_0 = Some(
-                //                 postgresql_crud::Value { value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream::new(modification)}
-                //             );
-                //             let primary_key_update1 = #primary_key_field_type_as_postgresql_type_update_token_stream::new(one);
-                //             let primary_key_update2 = #primary_key_field_type_as_postgresql_type_update_token_stream::new(two);
-                //             let update_many = super::#ident::try_update_many(
-                //                 &url,
-                //                 super::#ident_update_many_parameters_upper_camel_case {
-                //                     payload: super::#ident_update_many_payload_upper_camel_case::try_new(
-                //                         vec![
-                //                             super::#ident_update_upper_camel_case::try_new(
-                //                                 primary_key_update1.clone(),
-                //                                 some_value_update_column_0.clone(),
-                //                                 None,
-                //                             ).unwrap(),
-                //                             super::#ident_update_upper_camel_case::try_new(
-                //                                 primary_key_update2.clone(),
-                //                                 some_value_update_column_0.clone(),
-                //                                 None,
-                //                             ).unwrap()
-                //                         ]
-                //                     ).unwrap()
-                //                 },
-                //             ).await.unwrap();
-                //             // println!("update_many: {update_many:#?}");
-                //             assert_eq!(
-                //                 vec![
-                //                     primary_key_read1.clone(),
-                //                     primary_key_read2.clone()
-                //                 ],
-                //                 update_many,
-                //                 "update_many result different"
-                //             );
-                //             let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                //                 super::#ident_select_upper_camel_case::PrimaryKey(
-                //                     #primary_key_field_type_as_postgresql_type_select_token_stream::default()
-                //                 ),
-                //                 super::#ident_select_upper_camel_case::Column0(
-                //                     #std_primitive_i16_as_not_null_int2_as_postgresql_type_select_token_stream ::default()
-                //                 )
-                //             ]).unwrap();
-                //             let read_many = super::#ident::try_read_many(
-                //                 &url,
-                //                 super::#ident_read_many_parameters_upper_camel_case {
-                //                     payload: super::#ident_read_many_payload_upper_camel_case {
-                //                         where_many: where_many_1_and_2_primary_keys.clone(),
-                //                         select: select_primary_key_column_0.clone(),
-                //                         order_by: postgresql_crud::OrderBy {
-                //                             column: super::#ident_select_upper_camel_case::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                //                             order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                //                         },
-                //                         pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                //                     }
-                //                 },
-                //             ).await.unwrap();
-                //             let some_value_column_0_read_5 = Some(postgresql_crud::Value { value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_read_token_stream::new(modification) });
-                //             assert_eq!(
-                //                 vec![
-                //                     super::#ident_read_upper_camel_case {
-                //                         primary_key: some_value_primary_key_read1.clone(),
-                //                         column_0: some_value_column_0_read_5.clone(),
-                //                         column_190: None
-                //                     },
-                //                     super::#ident_read_upper_camel_case {
-                //                         primary_key: some_value_primary_key_read2.clone(),
-                //                         column_0: some_value_column_0_read_5.clone(),
-                //                         column_190: None
-                //                     }
-                //                 ],
-                //                 read_many,
-                //                 "read_many result different"
-                //             );
-                //             let primary_key_update3 = #primary_key_field_type_as_postgresql_type_token_stream Update::new(three);
-                //             let update_one = super::#ident::try_update_one(
-                //                 &url,
-                //                 super::#ident_update_one_parameters_upper_camel_case {
-                //                     payload: super::#ident_update_upper_camel_case::try_new(
-                //                         primary_key_update3.clone(),
-                //                         some_value_update_column_0.clone(),
-                //                         None,
-                //                     ).unwrap()
-                //                 },
-                //             ).await.unwrap();
-                //             // println!("update_one: {update_one:#?}");
-                //             assert_eq!(
-                //                 #primary_key_field_type_as_postgresql_type_read_token_stream::new(three),
-                //                 update_one,
-                //                 "update_one result different"
-                //             );
-                //             let read_one = super::#ident::try_read_one(
-                //                 &url,
-                //                 super::#ident_read_one_parameters_upper_camel_case {
-                //                     payload: super::#ident_read_one_payload_upper_camel_case {
-                //                         primary_key: primary_key_read3.clone(),
-                //                         select: select_primary_key_column_0.clone(),
-                //                     }
-                //                 },
-                //             ).await.unwrap();
-                //             // println!("read_one: {read_one:#?}");
-                //             assert_eq!(
-                //                 super::#ident_read_upper_camel_case {
-                //                     primary_key: some_value_primary_key_read3.clone(),
-                //                     column_0: some_value_column_0_read_5.clone(),
-                //                     column_190: None
-                //                 },
-                //                 read_one,
-                //                 "read_one result different"
-                //             );
-                //             let delete_many = super::#ident::try_delete_many(
-                //                 &url,
-                //                 super::#ident_delete_many_parameters_upper_camel_case {
-                //                     payload: super::#ident_delete_many_payload_upper_camel_case {
-                //                         where_many: where_many_1_and_2_primary_keys.clone(),
-                //                     }
-                //                 },
-                //             ).await.unwrap();
-                //             // println!("delete_many: {delete_many:#?}");
-                //             assert_eq!(
-                //                 vec![
-                //                     primary_key_read1.clone(),
-                //                     primary_key_read2.clone()
-                //                 ],
-                //                 delete_many,
-                //                 "delete_many result different"
-                //             );
-                //             let read_many = super::#ident::try_read_many(
-                //                 &url,
-                //                 super::#ident_read_many_parameters_upper_camel_case {
-                //                     payload: super::#ident_read_many_payload_upper_camel_case {
-                //                         where_many: where_many_1_and_2_primary_keys.clone(),
-                //                         select: select_primary_key_column_0.clone(),
-                //                         order_by: postgresql_crud::OrderBy {
-                //                             column: super::#ident_select_upper_camel_case::PrimaryKey(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                //                             order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                //                         },
-                //                         pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                //                     }
-                //                 },
-                //             ).await.unwrap();
-                //             assert_eq!(
-                //                 std::vec::Vec::<super::#ident_read_upper_camel_case>::default(),
-                //                 read_many,
-                //                 "read_many result different"
-                //             );
-                //             let delete_one = super::#ident::try_delete_one(
-                //                 &url,
-                //                 super::#ident_delete_one_parameters_upper_camel_case {
-                //                     payload: super::#ident_delete_one_payload_upper_camel_case {
-                //                         primary_key: primary_key_read3.clone(),
-                //                     }
-                //                 },
-                //             ).await.unwrap();
-                //             // println!("delete_one: {delete_one:#?}");
-                //             assert_eq!(
-                //                 primary_key_read3.clone(),
-                //                 delete_one,
-                //                 "delete_one result different"
-                //             );
-                //             if let Err(error) = super::#ident::try_read_one(
-                //                 &url,
-                //                 super::#ident_read_one_parameters_upper_camel_case {
-                //                     payload: super::#ident_read_one_payload_upper_camel_case {
-                //                         primary_key: primary_key_read3.clone(),
-                //                         select: select_primary_key.clone(),
-                //                     }
-                //                 },
-                //             ).await {
-                //                 if let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case { read_one_error_named_with_serialize_deserialize, code_occurence: _ } = &error {
-                //                     if let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize {
-                //                         if "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
-                //                             panic!("wtf");
-                //                         }
-                //                     }
-                //                     else {
-                //                         panic!("wtf");
-                //                     }
-                //                 }
-                //                 else {
-                //                     panic!("wtf");
-                //                 }
-                //             }
-                //             else {
-                //                 panic!("wtf");
-                //             }
-                //             drop_table_if_exists(&postgres_pool).await;
-                //         });
-                //     })
-                //     .unwrap()
-                //     .join()
-                //     .unwrap();
-                // }
                 #[test]
                 fn test_crud() {
                     std::thread::Builder::new()
@@ -4045,7 +3688,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
                                 let url = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
                                 async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
-                                    let _unused = sqlx::query("drop table if exists example").execute(postgres_pool).await.unwrap();
+                                    let _unused = sqlx::query(#drop_table_if_exists_ident_double_quotes_token_stream).execute(postgres_pool).await.unwrap();
                                 }
                                 drop_table_if_exists(&postgres_pool).await;
                                 let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
@@ -4065,8 +3708,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 });
                                 tokio::time::sleep(std::time::Duration::from_millis(100)).await;
                                 let default_create = super::#ident_create_upper_camel_case {
-                                    column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                    column_190: <<super::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                    column_0: <#std_primitive_i16_as_not_null_int2_as_postgresql_type_create_token_stream as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                    column_190: <#animal_as_not_null_jsonb_object_as_postgresql_type_create_token_stream as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                                 };
                                 let vec_of_primary_keys_returned_from_create_many = super::#ident::try_create_many(
                                     &url,
@@ -4088,20 +3731,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     )
                                 };
                                 let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::#ident_select_upper_camel_case::PrimaryKey(
-                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default(),
+                                    #primary_key_field_type_as_postgresql_type_select_token_stream::default(),
                                 )])
                                 .unwrap();
                                 let where_many_1_and_2_primary_keys = super::#std_option_option_ident_where_many_upper_camel_case(Some(super::#ident_where_many_upper_camel_case {
                                     primary_key: Some(postgresql_crud::PostgresqlTypeWhere::try_new(
                                         postgresql_crud::LogicalOperator::Or,
                                         vec![
-                                            <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                                            #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read_returned_from_create_many1.clone())
+                                                value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::from(primary_key_read_returned_from_create_many1.clone())
                                             }),
                                             <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read_returned_from_create_many2.clone())
+                                                value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::from(primary_key_read_returned_from_create_many2.clone())
                                             })
                                         ]
                                     ).unwrap()),
@@ -4175,19 +3818,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 );
                                 let modification = 1;
                                 let some_value_update_column_0 = Some(postgresql_crud::Value {
-                                    value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(modification),
+                                    value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream::new(modification),
                                 });
                                 let mut vec_of_primary_keys_returned_from_update_many = super::#ident::try_update_many(
                                     &url,
                                     super::#ident_update_many_parameters_upper_camel_case {
                                         payload: super::#ident_update_many_payload_upper_camel_case::try_new(vec![
                                             super::#ident_update_upper_camel_case::try_new(
-                                                <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many1.clone()),
+                                                #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_many1.clone()),
                                                 some_value_update_column_0.clone(),
                                                 None
                                             ).unwrap(),
                                             super::#ident_update_upper_camel_case::try_new(
-                                                <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many2.clone()),
+                                                #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_many2.clone()),
                                                 some_value_update_column_0.clone(),
                                                 None
                                             ).unwrap(),
@@ -4206,8 +3849,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     "try_update_many result different"
                                 );
                                 let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                                    super::#ident_select_upper_camel_case::PrimaryKey(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
-                                    super::#ident_select_upper_camel_case::Column0(<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()),
+                                    super::#ident_select_upper_camel_case::PrimaryKey(#primary_key_field_type_as_postgresql_type_select_token_stream::default()),
+                                    super::#ident_select_upper_camel_case::Column0(#std_primitive_i16_as_not_null_int2_as_postgresql_type_select_token_stream::default()),
                                 ])
                                 .unwrap();
                                 let vec_of_ident_read_returned_from_read_many = super::#ident::try_read_many(
@@ -4227,7 +3870,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 .await
                                 .unwrap();
                                 let some_value_column_0_read_5 = Some(postgresql_crud::Value {
-                                    value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(modification),
+                                    value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_read_token_stream::new(modification),
                                 });
                                 assert_eq!(
                                     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
@@ -4249,7 +3892,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     &url,
                                     super::#ident_update_one_parameters_upper_camel_case {
                                         payload: super::#ident_update_upper_camel_case::try_new(
-                                            <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_one.clone()),
+                                            #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_one.clone()),
                                             some_value_update_column_0.clone(),
                                             None
                                         ).unwrap(),
