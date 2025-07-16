@@ -2699,13 +2699,26 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 }
             }
-            let maybe_derive_ord_eq_token_stream = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
-                match &can_be_primary_key {
-                    CanBePrimaryKey::True => quote::quote! {Ord, Eq,},
-                    CanBePrimaryKey::False => proc_macro2::TokenStream::new()
-                }
+            enum IsNotNullStandartCanBePrimaryKey {
+                True,
+                False
+            }
+            let is_not_null_standart_can_be_primary_key = if let (
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                PostgresqlTypePattern::Standart,
+                CanBePrimaryKey::True
+            ) = (
+                &not_null_or_nullable,
+                &postgresql_type_pattern,
+                &can_be_primary_key
+            ) {
+                IsNotNullStandartCanBePrimaryKey::True
             } else {
-                proc_macro2::TokenStream::new()
+                IsNotNullStandartCanBePrimaryKey::False
+            };
+            let maybe_derive_ord_eq_token_stream = match &is_not_null_standart_can_be_primary_key {
+                IsNotNullStandartCanBePrimaryKey::True => quote::quote! {Ord, Eq,},
+                IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
             };
             let ident_origin_token_stream = {
                 let ident_origin_token_stream = {
@@ -3880,13 +3893,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_token_stream = {
                 let ident_read_token_stream = {
-                    let maybe_derive_partial_ord_ord_eq_token_stream = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
-                        match &can_be_primary_key {
-                            CanBePrimaryKey::True => quote::quote! {PartialOrd, Ord, Eq,},
-                            CanBePrimaryKey::False => proc_macro2::TokenStream::new()
-                        }
-                    } else {
-                        proc_macro2::TokenStream::new()
+                    let maybe_derive_partial_ord_ord_eq_token_stream = match &is_not_null_standart_can_be_primary_key {
+                        IsNotNullStandartCanBePrimaryKey::True => quote::quote! {PartialOrd, Ord, Eq,},
+                        IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
                     };
                     quote::quote! {
                         #[derive(
