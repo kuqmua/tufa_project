@@ -1122,18 +1122,17 @@ mod example_tests {
                         <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default(),
                     )])
                     .unwrap();
+                    // todo convert from Read into TableTypeDeclaration
+                    // todo convert from Read into Update
                     let primary_key_read1_inner = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read1.clone());
                     let primary_key_equal1 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                        //todo why its not TableTypeDeclaration ? why Origin
-                        //todo impl convert function from Read to TableTypeDeclaration for primary keys i guess
-                        value: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(primary_key_read1_inner.clone())
+                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(primary_key_read1_inner.clone())
                     });
                     let primary_key_read2_inner = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::into_inner(primary_key_read2.clone());
                     let primary_key_equal2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                         logical_operator: postgresql_crud::LogicalOperator::Or,
-                        //todo why its not TableTypeDeclaration ? why Origin
-                        value: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlOrigin::new(primary_key_read2_inner.clone())
+                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::new(primary_key_read2_inner.clone())
                     });
                     let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
                         primary_key: Some(postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, vec![primary_key_equal1.clone(), primary_key_equal2.clone()]).unwrap()),
