@@ -1180,7 +1180,7 @@ mod example_tests {
                         }
                     ).await.unwrap();
                     let primary_key_read_returned_from_create_one = primary_key_returned_from_create_one;
-                    let read_one = super::Example::try_read_one(
+                    let ident_read_returned_from_read_one = super::Example::try_read_one(
                         &url,
                         super::ExampleReadOneParameters {
                             payload: super::ExampleReadOnePayload {
@@ -1198,21 +1198,27 @@ mod example_tests {
                             column_0: None,
                             column_190: None
                         },
-                        read_one,
-                        "read_one result different"
+                        ident_read_returned_from_read_one,
+                        "try_read_one result different"
                     );
                     let modification = 1;
                     let some_value_update_column_0 = Some(postgresql_crud::Value {
                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(modification),
                     });
-                    let primary_key_update1 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many1.clone());
-                    let primary_key_update2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many2.clone());
                     let mut update_many = super::Example::try_update_many(
                         &url,
                         super::ExampleUpdateManyParameters {
                             payload: super::ExampleUpdateManyPayload::try_new(vec![
-                                super::ExampleUpdate::try_new(primary_key_update1.clone(), some_value_update_column_0.clone(), None).unwrap(),
-                                super::ExampleUpdate::try_new(primary_key_update2.clone(), some_value_update_column_0.clone(), None).unwrap(),
+                                super::ExampleUpdate::try_new(
+                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many1.clone()),
+                                    some_value_update_column_0.clone(),
+                                    None
+                                ).unwrap(),
+                                super::ExampleUpdate::try_new(
+                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many2.clone()),
+                                    some_value_update_column_0.clone(),
+                                    None
+                                ).unwrap(),
                             ])
                             .unwrap(),
                         },
