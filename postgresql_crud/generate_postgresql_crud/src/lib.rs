@@ -3836,9 +3836,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     ident_read_returned_from_read_one,
                                     "try_read_one result different after try_create_one"
                                 );
-                                let modification = 1;
+                                let column_0_test_modification = 1;
                                 let some_value_update_column_0 = Some(postgresql_crud::Value {
-                                    value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream::new(modification),
+                                    value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream::new(column_0_test_modification),
                                 });
                                 let mut vec_of_primary_keys_returned_from_update_many = super::#ident::try_update_many(
                                     &url,
@@ -3891,7 +3891,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 .await
                                 .unwrap();
                                 let some_value_column_0_read_5 = Some(postgresql_crud::Value {
-                                    value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_read_token_stream::new(modification),
+                                    value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_read_token_stream::new(column_0_test_modification),
                                 });
                                 assert_eq!(
                                     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
