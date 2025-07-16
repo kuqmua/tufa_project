@@ -1139,7 +1139,7 @@ mod example_tests {
                         column_0: None,
                         column_190: None,
                     }));
-                    let mut read_many = super::Example::try_read_many(
+                    let mut vec_of_element_returned_from_read_many = super::Example::try_read_many(
                         &url,
                         super::ExampleReadManyParameters {
                             payload: super::ExampleReadManyPayload {
@@ -1170,8 +1170,8 @@ mod example_tests {
                                 column_190: None
                             }
                         ].sort_by_key(|element| element.primary_key.clone().unwrap().value),
-                        read_many.sort_by_key(|element| element.primary_key.clone().unwrap().value),
-                        "read_many result different"
+                        vec_of_element_returned_from_read_many.sort_by_key(|element| element.primary_key.clone().unwrap().value),
+                        "try_read_many result different"
                     );
                     let create_one = super::Example::try_create_one(
                         &url,
