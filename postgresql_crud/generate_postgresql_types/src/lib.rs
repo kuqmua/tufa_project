@@ -2716,10 +2716,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             } else {
                 IsNotNullStandartCanBePrimaryKey::False
             };
-            let maybe_derive_ord_eq_token_stream = match &is_not_null_standart_can_be_primary_key {
-                IsNotNullStandartCanBePrimaryKey::True => quote::quote! {Ord, Eq,},
-                IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
-            };
+            let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_origin_token_stream = {
                 let ident_origin_token_stream = {
                     let maybe_derive_partial_ord_token_stream = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
@@ -2763,6 +2760,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     } else {
                         proc_macro2::TokenStream::new()
+                    };
+                    let maybe_derive_ord_eq_token_stream = match &is_not_null_standart_can_be_primary_key {
+                        IsNotNullStandartCanBePrimaryKey::True => quote::quote! {Ord, Eq,},
+                        IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
                     };
                     let maybe_derive_serde_serialize_token_stream = match &serde_serialize {
                         postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Serialize,},
@@ -3295,6 +3296,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                 );
+                let maybe_impl_std_convert_from_ident_read_for_ident_origin_token_stream = match &is_not_null_standart_can_be_primary_key {
+                    IsNotNullStandartCanBePrimaryKey::True => quote::quote! {
+                        impl std::convert::From<#ident_standart_not_null_read_upper_camel_case> for #ident_origin_upper_camel_case {
+                            fn from(#value_snake_case: #ident_standart_not_null_read_upper_camel_case) -> Self {
+                                Self::new(<#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::into_inner(#value_snake_case))
+                            }
+                        }
+                    },
+                    IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new()
+                };
                 quote::quote! {
                     #ident_origin_token_stream
                     #impl_ident_origin_token_stream
@@ -3309,6 +3320,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #impl_sqlx_decode_sqlx_postgres_for_ident_origin_token_stream
                     #impl_sqlx_postgres_pg_has_array_type_for_ident_origin_token_stream
                     #impl_create_table_column_query_part_for_ident_origin_token_stream
+                    #maybe_impl_std_convert_from_ident_read_for_ident_origin_token_stream
                 }
             };
             enum ImplDefault {
@@ -3890,7 +3902,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 &postgresql_crud_macros_common::IsQueryBindMutable::False
             );
             let ident_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident);
-            let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_read_token_stream = {
                 let ident_read_token_stream = {
                     let maybe_derive_partial_ord_ord_eq_token_stream = match &is_not_null_standart_can_be_primary_key {
