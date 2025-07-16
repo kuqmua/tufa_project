@@ -1201,7 +1201,6 @@ mod example_tests {
                     let some_value_update_column_0 = Some(postgresql_crud::Value {
                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(modification),
                     });
-                    //todo convert logic
                     let primary_key_update1 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read1.clone());
                     let primary_key_update2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read2.clone());
                     let mut update_many = super::Example::try_update_many(
@@ -1348,26 +1347,14 @@ mod example_tests {
                                 select: select_primary_key.clone(),
                             },
                         },
-                    )
-                    .await
-                    {
-                        if let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize {
-                            read_one_error_named_with_serialize_deserialize,
-                            code_occurence: _,
-                        } = &error
-                        {
-                            if let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize {
-                                if "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
-                                    panic!("wtf");
-                                }
-                            } else {
-                                panic!("wtf");
-                            }
-                        } else {
-                            panic!("wtf");
-                        }
-                    } else {
-                        panic!("wtf");
+                    ).await &&
+                    let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize {
+                        read_one_error_named_with_serialize_deserialize,
+                        code_occurence: _,
+                    } = &error &&
+                    let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize &&
+                    "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
+                        panic!("read_one result different");
                     }
                     drop_table_if_exists(&postgres_pool).await;
                 });
