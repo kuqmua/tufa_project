@@ -1205,7 +1205,7 @@ mod example_tests {
                     let some_value_update_column_0 = Some(postgresql_crud::Value {
                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(modification),
                     });
-                    let mut update_many = super::Example::try_update_many(
+                    let mut vec_of_primary_keys_returned_from_update_many = super::Example::try_update_many(
                         &url,
                         super::ExampleUpdateManyParameters {
                             payload: super::ExampleUpdateManyPayload::try_new(vec![
@@ -1230,15 +1230,15 @@ mod example_tests {
                             primary_key_read_returned_from_create_many1.clone(),
                             primary_key_read_returned_from_create_many2.clone()
                         ].sort(),
-                        update_many.sort(),
-                        "update_many result different"
+                        vec_of_primary_keys_returned_from_update_many.sort(),
+                        "try_update_many result different"
                     );
                     let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                         super::ExampleSelect::PrimaryKey(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
                         super::ExampleSelect::Column0(<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()),
                     ])
                     .unwrap();
-                    let mut read_many = super::Example::try_read_many(
+                    let mut vec_of_ident_read_returned_from_read_many = super::Example::try_read_many(
                         &url,
                         super::ExampleReadManyParameters {
                             payload: super::ExampleReadManyPayload {
@@ -1270,24 +1270,27 @@ mod example_tests {
                                 column_190: None
                             }
                         ].sort_by_key(|element| element.primary_key.clone().unwrap().value),
-                        read_many.sort_by_key(|element| element.primary_key.clone().unwrap().value),
-                        "read_many result different"
+                        vec_of_ident_read_returned_from_read_many.sort_by_key(|element| element.primary_key.clone().unwrap().value),
+                        "try_read_many result different"
                     );
-                    let primary_key_update3 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_one.clone());
-                    let update_one = super::Example::try_update_one(
+                    let primary_key_returned_from_update_one = super::Example::try_update_one(
                         &url,
                         super::ExampleUpdateOneParameters {
-                            payload: super::ExampleUpdate::try_new(primary_key_update3.clone(), some_value_update_column_0.clone(), None).unwrap(),
+                            payload: super::ExampleUpdate::try_new(
+                                <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_one.clone()),
+                                some_value_update_column_0.clone(),
+                                None
+                            ).unwrap(),
                         },
                     )
                     .await
                     .unwrap();
                     assert_eq!(
                         primary_key_read_returned_from_create_one.clone(),
-                        update_one,
-                        "update_one result different"
+                        primary_key_returned_from_update_one,
+                        "try_update_one result different"
                     );
-                    let read_one = super::Example::try_read_one(
+                    let ident_read_returned_from_read_one = super::Example::try_read_one(
                         &url,
                         super::ExampleReadOneParameters {
                             payload: super::ExampleReadOnePayload {
@@ -1304,10 +1307,10 @@ mod example_tests {
                             column_0: some_value_column_0_read_5.clone(),
                             column_190: None
                         },
-                        read_one,
-                        "read_one result different"
+                        ident_read_returned_from_read_one,
+                        "try_read_one result different"
                     );
-                    let mut delete_many = super::Example::try_delete_many(
+                    let mut vec_of_primary_keys_returned_from_delete_many = super::Example::try_delete_many(
                         &url,
                         super::ExampleDeleteManyParameters {
                             payload: super::ExampleDeleteManyPayload { where_many: where_many_1_and_2_primary_keys.clone() },
@@ -1320,10 +1323,10 @@ mod example_tests {
                             primary_key_read_returned_from_create_many1.clone(),
                             primary_key_read_returned_from_create_many2.clone()
                         ].sort(),
-                        delete_many.sort(),
-                        "delete_many result different"
+                        vec_of_primary_keys_returned_from_delete_many.sort(),
+                        "try_delete_many result different"
                     );
-                    let read_many = super::Example::try_read_many(
+                    let vec_of_ident_read_returned_from_read_many = super::Example::try_read_many(
                         &url,
                         super::ExampleReadManyParameters {
                             payload: super::ExampleReadManyPayload {
@@ -1339,8 +1342,8 @@ mod example_tests {
                     )
                     .await
                     .unwrap();
-                    assert_eq!(std::vec::Vec::<super::ExampleRead>::default(), read_many, "read_many result different");
-                    let delete_one = super::Example::try_delete_one(
+                    assert_eq!(std::vec::Vec::<super::ExampleRead>::default(), vec_of_ident_read_returned_from_read_many, "try_read_many result different");
+                    let primary_key_returned_from_delete_one = super::Example::try_delete_one(
                         &url,
                         super::ExampleDeleteOneParameters {
                             payload: super::ExampleDeleteOnePayload { primary_key: primary_key_read_returned_from_create_one.clone() },
@@ -1348,7 +1351,7 @@ mod example_tests {
                     )
                     .await
                     .unwrap();
-                    assert_eq!(primary_key_read_returned_from_create_one.clone(), delete_one, "delete_one result different");
+                    assert_eq!(primary_key_read_returned_from_create_one.clone(), primary_key_returned_from_delete_one, "try_delete_one result different");
                     if let Err(error) = super::Example::try_read_one(
                         &url,
                         super::ExampleReadOneParameters {
@@ -1364,7 +1367,7 @@ mod example_tests {
                     } = &error &&
                     let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize &&
                     "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
-                        panic!("read_one result different");
+                        panic!("try_read_one result different");
                     }
                     drop_table_if_exists(&postgres_pool).await;
                 });
