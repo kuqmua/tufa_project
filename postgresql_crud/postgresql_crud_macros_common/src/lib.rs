@@ -772,6 +772,9 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
             ) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
                 #update_query_bind_content_token_stream
             }
+            fn test_cases() -> std::vec::Vec<Self::#read_inner_upper_camel_case> {
+                vec![]
+            }
         }
     }
 }

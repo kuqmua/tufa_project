@@ -3836,9 +3836,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     ident_read_returned_from_read_one,
                                     "try_read_one result different after try_create_one"
                                 );
-                                for column_0_test_modification in vec![1] {
-                                    let some_value_update_column_0 = Some(postgresql_crud::Value {
-                                        value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream::new(column_0_test_modification),
+                                for test_modification in 
+                                // <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::TestCases>::test_cases()
+                                vec![1]
+                                {
+                                    let some_value_update = Some(postgresql_crud::Value {
+                                        value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_update_token_stream::new(test_modification),
                                     });
                                     let mut vec_of_primary_keys_returned_from_update_many = super::#ident::try_update_many(
                                         &url,
@@ -3846,12 +3849,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             payload: super::#ident_update_many_payload_upper_camel_case::try_new(vec![
                                                 super::#ident_update_upper_camel_case::try_new(
                                                     #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_many1.clone()),
-                                                    some_value_update_column_0.clone(),
+                                                    some_value_update.clone(),
                                                     None
                                                 ).unwrap(),
                                                 super::#ident_update_upper_camel_case::try_new(
                                                     #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_many2.clone()),
-                                                    some_value_update_column_0.clone(),
+                                                    some_value_update.clone(),
                                                     None
                                                 ).unwrap(),
                                             ])
@@ -3891,7 +3894,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     .await
                                     .unwrap();
                                     let some_value_column_0_read_5 = Some(postgresql_crud::Value {
-                                        value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_read_token_stream::new(column_0_test_modification),
+                                        value: #std_primitive_i16_as_not_null_int2_as_postgresql_type_read_token_stream::new(test_modification),
                                     });
                                     assert_eq!(
                                         vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
@@ -3918,7 +3921,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         super::#ident_update_one_parameters_upper_camel_case {
                                             payload: super::#ident_update_upper_camel_case::try_new(
                                                 #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_one.clone()),
-                                                some_value_update_column_0.clone(),
+                                                some_value_update.clone(),
                                                 None
                                             ).unwrap(),
                                         },
