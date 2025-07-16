@@ -1139,7 +1139,7 @@ mod example_tests {
                         column_0: None,
                         column_190: None,
                     }));
-                    let mut vec_of_ident_read_returned_from_read_many = super::Example::try_read_many(
+                    let vec_of_ident_read_returned_from_read_many = super::Example::try_read_many(
                         &url,
                         super::ExampleReadManyParameters {
                             payload: super::ExampleReadManyPayload {
@@ -1157,8 +1157,11 @@ mod example_tests {
                     .unwrap();
                     let some_value_primary_key_read_returned_from_create_many1 = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many1.clone() });
                     let some_value_primary_key_read_returned_from_create_many2 = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many2.clone() });
+                    let vec_of_ident_read_with_primary_key_sort_by_primary_key = |mut vec: std::vec::Vec<super::ExampleRead>|{
+                        vec.sort_by_key(|element| element.primary_key.clone().unwrap().value)
+                    };
                     assert_eq!(
-                        vec![
+                        vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
                             super::ExampleRead {
                                 primary_key: some_value_primary_key_read_returned_from_create_many1.clone(),
                                 column_0: None,
@@ -1169,8 +1172,8 @@ mod example_tests {
                                 column_0: None,
                                 column_190: None
                             }
-                        ].sort_by_key(|element| element.primary_key.clone().unwrap().value),
-                        vec_of_ident_read_returned_from_read_many.sort_by_key(|element| element.primary_key.clone().unwrap().value),
+                        ]),
+                        vec_of_ident_read_with_primary_key_sort_by_primary_key(vec_of_ident_read_returned_from_read_many),
                         "try_read_many result different after try_create_many"
                     );
                     let primary_key_returned_from_create_one = super::Example::try_create_one(
@@ -1238,7 +1241,7 @@ mod example_tests {
                         super::ExampleSelect::Column0(<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()),
                     ])
                     .unwrap();
-                    let mut vec_of_ident_read_returned_from_read_many = super::Example::try_read_many(
+                    let vec_of_ident_read_returned_from_read_many = super::Example::try_read_many(
                         &url,
                         super::ExampleReadManyParameters {
                             payload: super::ExampleReadManyPayload {
@@ -1258,7 +1261,7 @@ mod example_tests {
                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(modification),
                     });
                     assert_eq!(
-                        vec![
+                        vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
                             super::ExampleRead {
                                 primary_key: some_value_primary_key_read_returned_from_create_many1.clone(),
                                 column_0: some_value_column_0_read_5.clone(),
@@ -1269,8 +1272,8 @@ mod example_tests {
                                 column_0: some_value_column_0_read_5.clone(),
                                 column_190: None
                             }
-                        ].sort_by_key(|element| element.primary_key.clone().unwrap().value),
-                        vec_of_ident_read_returned_from_read_many.sort_by_key(|element| element.primary_key.clone().unwrap().value),
+                        ]),
+                        vec_of_ident_read_with_primary_key_sort_by_primary_key(vec_of_ident_read_returned_from_read_many),
                         "try_read_many result different after try_update_many"
                     );
                     let primary_key_returned_from_update_one = super::Example::try_update_one(
