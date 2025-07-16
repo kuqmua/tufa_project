@@ -1202,77 +1202,90 @@ mod example_tests {
                         ident_read_returned_from_read_one,
                         "try_read_one result different after try_create_one"
                     );
-                    let column_0_test_modification = 1;
-                    let some_value_update_column_0 = Some(postgresql_crud::Value {
-                        value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(column_0_test_modification),
-                    });
-                    let mut vec_of_primary_keys_returned_from_update_many = super::Example::try_update_many(
-                        &url,
-                        super::ExampleUpdateManyParameters {
-                            payload: super::ExampleUpdateManyPayload::try_new(vec![
-                                super::ExampleUpdate::try_new(
-                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many1.clone()),
-                                    some_value_update_column_0.clone(),
-                                    None,
-                                )
-                                .unwrap(),
-                                super::ExampleUpdate::try_new(
-                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many2.clone()),
-                                    some_value_update_column_0.clone(),
-                                    None,
-                                )
-                                .unwrap(),
-                            ])
-                            .unwrap(),
-                        },
-                    )
-                    .await
-                    .unwrap();
-                    assert_eq!(
-                        vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()].sort(),
-                        vec_of_primary_keys_returned_from_update_many.sort(),
-                        "try_update_many result different"
-                    );
+                    //here move
                     let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                         super::ExampleSelect::PrimaryKeySss(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default()),
                         super::ExampleSelect::Column0(<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select::default()),
                     ])
                     .unwrap();
-                    let vec_of_ident_read_returned_from_read_many = super::Example::try_read_many(
-                        &url,
-                        super::ExampleReadManyParameters {
-                            payload: super::ExampleReadManyPayload {
-                                where_many: where_many_1_and_2_primary_keys.clone(),
-                                select: select_primary_key_column_0.clone(),
-                                order_by: postgresql_crud::OrderBy {
-                                    column: super::ExampleSelect::PrimaryKeySss(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                    order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                },
-                                pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    //here
+                    for column_0_test_modification in vec![1] {
+                        let some_value_update_column_0 = Some(postgresql_crud::Value {
+                            value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(column_0_test_modification),
+                        });
+                        let mut vec_of_primary_keys_returned_from_update_many = super::Example::try_update_many(
+                            &url,
+                            super::ExampleUpdateManyParameters {
+                                payload: super::ExampleUpdateManyPayload::try_new(vec![
+                                    super::ExampleUpdate::try_new(
+                                        <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many1.clone()),
+                                        some_value_update_column_0.clone(),
+                                        None,
+                                    )
+                                    .unwrap(),
+                                    super::ExampleUpdate::try_new(
+                                        <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many2.clone()),
+                                        some_value_update_column_0.clone(),
+                                        None,
+                                    )
+                                    .unwrap(),
+                                ])
+                                .unwrap(),
                             },
-                        },
-                    )
-                    .await
-                    .unwrap();
+                        )
+                        .await
+                        .unwrap();
+                        assert_eq!(
+                            vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()].sort(),
+                            vec_of_primary_keys_returned_from_update_many.sort(),
+                            "try_update_many result different"
+                        );
+                        //here move
+                        let vec_of_ident_read_returned_from_read_many = super::Example::try_read_many(
+                            &url,
+                            super::ExampleReadManyParameters {
+                                payload: super::ExampleReadManyPayload {
+                                    where_many: where_many_1_and_2_primary_keys.clone(),
+                                    select: select_primary_key_column_0.clone(),
+                                    order_by: postgresql_crud::OrderBy {
+                                        column: super::ExampleSelect::PrimaryKeySss(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                        order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                    },
+                                    pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                },
+                            },
+                        )
+                        .await
+                        .unwrap();
+                        let some_value_column_0_read_5 = Some(postgresql_crud::Value {
+                            value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(column_0_test_modification),
+                        });
+                        assert_eq!(
+                            vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
+                                super::ExampleRead {
+                                    primary_key_sss: some_value_primary_key_read_returned_from_create_many1.clone(),
+                                    column_0: some_value_column_0_read_5.clone(),
+                                    column_6: None
+                                },
+                                super::ExampleRead {
+                                    primary_key_sss: some_value_primary_key_read_returned_from_create_many2.clone(),
+                                    column_0: some_value_column_0_read_5.clone(),
+                                    column_6: None
+                                }
+                            ]),
+                            vec_of_ident_read_with_primary_key_sort_by_primary_key(vec_of_ident_read_returned_from_read_many),
+                            "try_read_many result different after try_update_many"
+                        );
+                    }
+                    //here copy
+                    let column_0_test_modification = 1;
+                    let some_value_update_column_0 = Some(postgresql_crud::Value {
+                        value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Update::new(column_0_test_modification),
+                    });
                     let some_value_column_0_read_5 = Some(postgresql_crud::Value {
                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read::new(column_0_test_modification),
                     });
-                    assert_eq!(
-                        vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
-                            super::ExampleRead {
-                                primary_key_sss: some_value_primary_key_read_returned_from_create_many1.clone(),
-                                column_0: some_value_column_0_read_5.clone(),
-                                column_6: None
-                            },
-                            super::ExampleRead {
-                                primary_key_sss: some_value_primary_key_read_returned_from_create_many2.clone(),
-                                column_0: some_value_column_0_read_5.clone(),
-                                column_6: None
-                            }
-                        ]),
-                        vec_of_ident_read_with_primary_key_sort_by_primary_key(vec_of_ident_read_returned_from_read_many),
-                        "try_read_many result different after try_update_many"
-                    );
+                    //here copy end
                     let primary_key_returned_from_update_one = super::Example::try_update_one(
                         &url,
                         super::ExampleUpdateOneParameters {
