@@ -3898,14 +3898,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         super::#ident_read_upper_camel_case {
                                             #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many1.clone(),
                                             column_0: some_value_column_0_read_5.clone(),
-                                            column_190: None
+                                            column_6: None
 
                                             // #read_fields_initialization_token_stream
                                         },
                                         super::#ident_read_upper_camel_case {
                                             #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many2.clone(),
                                             column_0: some_value_column_0_read_5.clone(),
-                                            column_190: None
+                                            column_6: None
 
                                             // #read_fields_initialization_token_stream
                                         }
@@ -3945,7 +3945,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     super::#ident_read_upper_camel_case {
                                         #primary_key_field_ident: some_value_primary_key_read_returned_from_create_one.clone(),
                                         column_0: some_value_column_0_read_5.clone(),
-                                        column_190: None
+                                        column_6: None
 
                                         // #read_fields_initialization_token_stream
                                     },
@@ -4058,7 +4058,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        #ident_tests_token_stream
+        // #ident_tests_token_stream
     };
     // if ident == "" {
         // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
