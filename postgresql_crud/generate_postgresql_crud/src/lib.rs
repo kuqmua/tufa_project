@@ -3663,8 +3663,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         //todo temp
         let std_primitive_i16_as_not_null_int2_token_stream = quote::quote!{postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2};
         //todo temp
-        let animal_as_not_null_jsonb_object_token_stream = quote::quote!{crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject};
-        //todo temp
         let std_primitive_i16_as_not_null_int2_as_postgresql_type_select_token_stream = generate_as_postgresql_type_select_token_stream(
             &std_primitive_i16_as_not_null_int2_token_stream
         );
@@ -3694,7 +3692,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
                                 let url = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
                                 async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
-                                    let _unused = sqlx::query(#drop_table_if_exists_ident_double_quotes_token_stream).execute(postgres_pool).await.unwrap();
+                                    let query = #drop_table_if_exists_ident_double_quotes_token_stream;
+                                    println!("{query}");
+                                    let _unused = sqlx::query(query).execute(postgres_pool).await.unwrap();
                                 }
                                 drop_table_if_exists(&postgres_pool).await;
                                 let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
@@ -3740,7 +3740,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 )])
                                 .unwrap();
                                 let where_many_1_and_2_primary_keys = super::#std_option_option_ident_where_many_upper_camel_case(Some(super::#ident_where_many_upper_camel_case {
-                                    primary_key: Some(postgresql_crud::PostgresqlTypeWhere::try_new(
+                                    #primary_key_field_ident: Some(postgresql_crud::PostgresqlTypeWhere::try_new(
                                         postgresql_crud::LogicalOperator::Or,
                                         vec![
                                             #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
@@ -3779,11 +3779,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 assert_eq!(
                                     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
                                         super::#ident_read_upper_camel_case {
-                                            primary_key: some_value_primary_key_read_returned_from_create_many1.clone(),
+                                            #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many1.clone(),
                                             #fields_none_initialization_token_stream
                                         },
                                         super::#ident_read_upper_camel_case {
-                                            primary_key: some_value_primary_key_read_returned_from_create_many2.clone(),
+                                            #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many2.clone(),
                                             #fields_none_initialization_token_stream
                                         }
                                     ]),
@@ -3811,7 +3811,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let some_value_primary_key_read_returned_from_create_one = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_one.clone() });
                                 assert_eq!(
                                     super::#ident_read_upper_camel_case {
-                                        primary_key: some_value_primary_key_read_returned_from_create_one.clone(),
+                                        #primary_key_field_ident: some_value_primary_key_read_returned_from_create_one.clone(),
                                         #fields_none_initialization_token_stream
                                     },
                                     ident_read_returned_from_read_one,
@@ -3876,12 +3876,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 assert_eq!(
                                     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
                                         super::#ident_read_upper_camel_case {
-                                            primary_key: some_value_primary_key_read_returned_from_create_many1.clone(),
+                                            #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many1.clone(),
                                             column_0: some_value_column_0_read_5.clone(),
                                             column_190: None
                                         },
                                         super::#ident_read_upper_camel_case {
-                                            primary_key: some_value_primary_key_read_returned_from_create_many2.clone(),
+                                            #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many2.clone(),
                                             column_0: some_value_column_0_read_5.clone(),
                                             column_190: None
                                         }
@@ -3919,7 +3919,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 .unwrap();
                                 assert_eq!(
                                     super::#ident_read_upper_camel_case {
-                                        primary_key: some_value_primary_key_read_returned_from_create_one.clone(),
+                                        #primary_key_field_ident: some_value_primary_key_read_returned_from_create_one.clone(),
                                         column_0: some_value_column_0_read_5.clone(),
                                         column_190: None
                                     },
