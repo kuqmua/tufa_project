@@ -3735,7 +3735,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         iter.next().unwrap()
                                     )
                                 };
-                                let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::#ident_select_upper_camel_case::PrimaryKey(
+                                let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                                     #primary_key_field_type_as_postgresql_type_select_token_stream::default(),
                                 )])
                                 .unwrap();
@@ -3762,7 +3762,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             where_many: where_many_1_and_2_primary_keys.clone(),
                                             select: select_primary_key.clone(),
                                             order_by: postgresql_crud::OrderBy {
-                                                column: super::#ident_select_upper_camel_case::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                                column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                                 order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                             },
                                             pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
@@ -3774,7 +3774,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let some_value_primary_key_read_returned_from_create_many1 = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many1.clone() });
                                 let some_value_primary_key_read_returned_from_create_many2 = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many2.clone() });
                                 let vec_of_ident_read_with_primary_key_sort_by_primary_key = |mut vec: std::vec::Vec<super::#ident_read_upper_camel_case>|{
-                                    vec.sort_by_key(|element| element.primary_key.clone().unwrap().value)
+                                    vec.sort_by_key(|element| element.#primary_key_field_ident.clone().unwrap().value)
                                 };
                                 assert_eq!(
                                     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
@@ -3801,7 +3801,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     &url,
                                     super::#ident_read_one_parameters_upper_camel_case {
                                         payload: super::#ident_read_one_payload_upper_camel_case {
-                                            primary_key: primary_key_read_returned_from_create_one.clone(),
+                                            #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
                                             select: select_primary_key.clone(),
                                         },
                                     },
@@ -3850,7 +3850,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     "try_update_many result different"
                                 );
                                 let select_primary_key_column_0 = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                                    super::#ident_select_upper_camel_case::PrimaryKey(#primary_key_field_type_as_postgresql_type_select_token_stream::default()),
+                                    super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#primary_key_field_type_as_postgresql_type_select_token_stream::default()),
                                     super::#ident_select_upper_camel_case::Column0(#std_primitive_i16_as_not_null_int2_as_postgresql_type_select_token_stream::default()),
                                 ])
                                 .unwrap();
@@ -3861,7 +3861,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             where_many: where_many_1_and_2_primary_keys.clone(),
                                             select: select_primary_key_column_0.clone(),
                                             order_by: postgresql_crud::OrderBy {
-                                                column: super::#ident_select_upper_camel_case::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                                column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                                 order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                             },
                                             pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
@@ -3910,7 +3910,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     &url,
                                     super::#ident_read_one_parameters_upper_camel_case {
                                         payload: super::#ident_read_one_payload_upper_camel_case {
-                                            primary_key: primary_key_read_returned_from_create_one.clone(),
+                                            #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
                                             select: select_primary_key_column_0.clone(),
                                         },
                                     },
@@ -3949,7 +3949,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             where_many: where_many_1_and_2_primary_keys.clone(),
                                             select: select_primary_key_column_0.clone(),
                                             order_by: postgresql_crud::OrderBy {
-                                                column: super::#ident_select_upper_camel_case::PrimaryKey(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                                column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                                 order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
                                             },
                                             pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
@@ -3966,7 +3966,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let primary_key_returned_from_delete_one = super::#ident::try_delete_one(
                                     &url,
                                     super::#ident_delete_one_parameters_upper_camel_case {
-                                        payload: super::#ident_delete_one_payload_upper_camel_case { primary_key: primary_key_read_returned_from_create_one.clone() },
+                                        payload: super::#ident_delete_one_payload_upper_camel_case { #primary_key_field_ident: primary_key_read_returned_from_create_one.clone() },
                                     },
                                 )
                                 .await
@@ -3976,7 +3976,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     &url,
                                     super::#ident_read_one_parameters_upper_camel_case {
                                         payload: super::#ident_read_one_payload_upper_camel_case {
-                                            primary_key: primary_key_read_returned_from_create_one.clone(),
+                                            #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
                                             select: select_primary_key.clone(),
                                         },
                                     },

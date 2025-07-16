@@ -31,7 +31,7 @@ pub struct Example {
     // #[generate_postgresql_crud_primary_key]
     // pub primary_key: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
     #[generate_postgresql_crud_primary_key]
-    pub primary_key: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
+    pub primary_key_sss: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
     pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
     // pub column_1: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
