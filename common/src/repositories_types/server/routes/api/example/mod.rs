@@ -1099,7 +1099,7 @@ mod example_tests {
                         column_0: <<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                         column_190: <<super::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
                     };
-                    let create_many = super::Example::try_create_many(
+                    let vec_of_ids_returned_from_create_many = super::Example::try_create_many(
                         &url,
                         super::ExampleCreateManyParameters {
                             payload: super::ExampleCreateManyPayload(vec![default_create.clone(), default_create.clone()]),
@@ -1107,12 +1107,12 @@ mod example_tests {
                     )
                     .await
                     .unwrap();
-                    assert_eq!(2, create_many.len(), "create_many result different");
+                    assert_eq!(2, vec_of_ids_returned_from_create_many.len(), "try_create_many result different");
                     let (
                         primary_key_read1,
                         primary_key_read2
                     ) = {
-                        let mut iter = create_many.into_iter();
+                        let mut iter = vec_of_ids_returned_from_create_many.into_iter();
                         (
                             iter.next().unwrap(),
                             iter.next().unwrap()
@@ -1122,16 +1122,20 @@ mod example_tests {
                         <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default(),
                     )])
                     .unwrap();
-                    let primary_key_equal1 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
-                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read1.clone())
-                    });
-                    let primary_key_equal2 = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
-                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read2.clone())
-                    });
                     let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
-                        primary_key: Some(postgresql_crud::PostgresqlTypeWhere::try_new(postgresql_crud::LogicalOperator::Or, vec![primary_key_equal1.clone(), primary_key_equal2.clone()]).unwrap()),
+                        primary_key: Some(postgresql_crud::PostgresqlTypeWhere::try_new(
+                            postgresql_crud::LogicalOperator::Or,
+                            vec![
+                                <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                                    logical_operator: postgresql_crud::LogicalOperator::Or,
+                                    value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read1.clone())
+                                }),
+                                <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                                    logical_operator: postgresql_crud::LogicalOperator::Or,
+                                    value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read2.clone())
+                                })
+                            ]
+                        ).unwrap()),
                         column_0: None,
                         column_190: None,
                     }));
