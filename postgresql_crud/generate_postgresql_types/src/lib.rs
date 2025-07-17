@@ -4460,7 +4460,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     sqlx::types::time::Time::from_hms(18, 45, 0).unwrap(), // evening
                                     sqlx::types::time::Time::from_hms_nano(0, 0, 1, 1).unwrap(),// just after midnight
                                 },
-                                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{},
+                                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{
+                                    sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 0 }, // zero interval
+                                    sqlx::postgres::types::PgInterval { months: 1, days: 0, microseconds: 0 }, // 1 month
+                                    sqlx::postgres::types::PgInterval { months: 0, days: 7, microseconds: 0 }, // 1 week
+                                    sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 1_000_000 }, // 1 second
+                                    sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 60_000_000 }, // 1 minute
+                                    sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 3_600_000_000 }, // 1 hour
+                                    sqlx::postgres::types::PgInterval { months: 12, days: 30, microseconds: 86_400_000_000 }, // 1 year + 30 days + 1 day
+                                    sqlx::postgres::types::PgInterval { months: -1, days: -10, microseconds: -1_000_000 }, // negative interval
+                                    sqlx::postgres::types::PgInterval { months: 2, days: 15, microseconds: 123_456_789 }, // mixed parts
+                                    sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: std::primitive::i64::MAX }, // extreme positive micros
+                                    sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: std::primitive::i64::MIN + 1 }, // extreme negative micros
+                                },
                                 PostgresqlType::SqlxTypesTimeDateAsDate => quote::quote!{},
                                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{},
                                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{},
