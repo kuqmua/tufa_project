@@ -4387,7 +4387,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => quote::quote!{},//todo
                                 PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{},//todo
                                 PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{
-                                    // #sqlx_postgres_types_pg_money_field_type_token_stream()
+                                    #sqlx_postgres_types_pg_money_field_type_token_stream(std::primitive::i64::MIN),
+                                    #sqlx_postgres_types_pg_money_field_type_token_stream(-1),
+                                    #sqlx_postgres_types_pg_money_field_type_token_stream(0),
+                                    #sqlx_postgres_types_pg_money_field_type_token_stream(1),
+                                    #sqlx_postgres_types_pg_money_field_type_token_stream(std::primitive::i64::MAX)
                                 },
                                 PostgresqlType::SqlxTypesBigDecimalAsNumeric => quote::quote!{},
                                 PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{},
