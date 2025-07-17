@@ -4562,7 +4562,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::new(std::net::Ipv6Addr::LOCALHOST, 128).unwrap()),
                                     sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::new("2001:db8::".parse().unwrap(), 32).unwrap()),
                                 },
-                                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote::quote!{},
+                                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote::quote!{
+                                    sqlx::types::mac_address::MacAddress::new([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]), // All zeros
+                                    sqlx::types::mac_address::MacAddress::new([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]), // All ones (broadcast address)
+                                    sqlx::types::mac_address::MacAddress::new([0x02, 0x00, 0x00, 0x00, 0x00, 0x01]), // Locally administered address
+                                    sqlx::types::mac_address::MacAddress::new([0x00, 0x1A, 0x2B, 0x3C, 0x4D, 0x5E]), // Universally administered address
+                                    sqlx::types::mac_address::MacAddress::new([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
+                                    sqlx::types::mac_address::MacAddress::new([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
+                                },
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => quote::quote!{},
