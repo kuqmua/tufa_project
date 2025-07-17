@@ -3736,8 +3736,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         #try_update_many_result_different_for_field_ident_field_type_double_quotes_token_stream
                     );
                     let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
-                        super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#primary_key_field_type_as_postgresql_type_select_token_stream::default()),
-                        super::#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(#field_type_as_postgresql_type_select_token_stream::default()),
+                        super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                            <
+                                #primary_key_field_type_as_postgresql_type_select_token_stream as #postgresql_crud_snake_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
+                            >::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()
+                        ),
+                        super::#ident_select_upper_camel_case::#field_ident_upper_camel_case_token_stream(
+                            <
+                                #field_type_as_postgresql_type_select_token_stream as #postgresql_crud_snake_case::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case
+                            >::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case()
+                        ),
                     ])
                     .unwrap();
                     let vec_of_ident_read_returned_from_read_many = super::#ident::try_read_many(

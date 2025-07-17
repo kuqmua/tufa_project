@@ -311,7 +311,7 @@ pub struct OrderBy<ColumnGeneric> {
     pub order: Option<Order>,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize, utoipa::ToSchema, schemars::JsonSchema)]
 pub struct PaginationBase {
     limit: std::primitive::i64,
     offset: std::primitive::i64,
@@ -354,6 +354,11 @@ impl<'a> crate::PostgresqlTypeWhereFilter<'a> for PaginationBase {
         query = query.bind(self.limit);
         query = query.bind(self.offset);
         query
+    }
+}
+impl std::default::Default for PaginationBase {
+    fn default() -> Self {
+        Self { limit: DEFAULT_PAGINATION_LIMIT, offset: 0 }
     }
 }
 
