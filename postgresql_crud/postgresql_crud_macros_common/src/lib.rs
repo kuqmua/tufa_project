@@ -775,7 +775,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
                 #update_query_bind_content_token_stream
             }
             fn #test_cases_snake_case() -> std::vec::Vec<Self::#read_inner_upper_camel_case> {
-                vec![#test_cases_content_token_stream]
+                #test_cases_content_token_stream
             }
         }
     }
