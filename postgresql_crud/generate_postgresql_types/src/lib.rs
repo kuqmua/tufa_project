@@ -4694,7 +4694,68 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 4, 4).unwrap()),
                                     }
                                 },
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{},
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 1).unwrap(),
+                                        )),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2020, 5, 20).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2020, 5, 20).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(12, 0, 0).unwrap(),
+                                        )),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2022, 12, 31).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2023, 1, 1).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        )),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(6, 0, 0).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(18, 0, 0).unwrap(),
+                                        )),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                           sqlx::types::chrono::NaiveDate::from_ymd_opt(2030, 1, 1).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2030, 1, 1).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        )),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(12, 34, 56, 123456).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(12, 34, 56, 654321).unwrap(),
+                                        )),
+                                    },
+                                },
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => quote::quote!{},
