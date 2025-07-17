@@ -3707,7 +3707,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 for #element_snake_case in #field_type_as_postgresql_type_token_stream #test_cases_snake_case() {
                     let some_value_update = Some(postgresql_crud::Value {
-                        value: #field_type_as_postgresql_type_update_token_stream::new(#element_snake_case),
+                        value: #field_type_as_postgresql_type_update_token_stream::new(#element_snake_case.clone()),
                     });
                     let mut vec_of_primary_keys_returned_from_update_many = super::#ident::try_update_many(
                         &url,
