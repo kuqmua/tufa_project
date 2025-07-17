@@ -4546,7 +4546,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{},
-                                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{},
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{
+                                    sqlx::types::Uuid::new_v4()
+                                },
                                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => quote::quote!{},
                                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{},
