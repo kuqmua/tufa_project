@@ -4393,7 +4393,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #sqlx_postgres_types_pg_money_field_type_token_stream(1),
                                     #sqlx_postgres_types_pg_money_field_type_token_stream(std::primitive::i64::MAX)
                                 },
-                                PostgresqlType::SqlxTypesBigDecimalAsNumeric => quote::quote!{},
+                                PostgresqlType::SqlxTypesBigDecimalAsNumeric => quote::quote!{
+                                    sqlx::types::BigDecimal::from(0),
+                                    sqlx::types::BigDecimal::from(1),
+                                    sqlx::types::BigDecimal::from(-1),
+                                    sqlx::types::BigDecimal::from(1000),
+                                    sqlx::types::BigDecimal::from(-1000),
+                                    <sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.00000001").unwrap(),
+                                    <sqlx::types::BigDecimal as std::str::FromStr>::from_str("-0.00000001").unwrap(),
+                                    <sqlx::types::BigDecimal as std::str::FromStr>::from_str("12345678901234567890.123456789").unwrap(),
+                                    <sqlx::types::BigDecimal as std::str::FromStr>::from_str("-98765432109876543210.987654321").unwrap(),
+                                    <sqlx::types::BigDecimal as std::str::FromStr>::from_str("1.000000000000000000").unwrap(),
+                                    <sqlx::types::BigDecimal as std::str::FromStr>::from_str("1e-100").unwrap(),
+                                    <sqlx::types::BigDecimal as std::str::FromStr>::from_str("1e100").unwrap()
+                                },
                                 PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{},
                                 PostgresqlType::StdStringStringAsText => quote::quote!{},
                                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{},
