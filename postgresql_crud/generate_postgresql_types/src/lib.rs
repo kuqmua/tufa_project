@@ -4342,6 +4342,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &postgresql_crud_macros_common::IsUpdateQueryBindMutable::True,
                     &typical_query_bind_token_stream,
                     &match &postgresql_type_pattern {
+                        //todo additional values for test
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
                                 PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{std::primitive::i16::MIN, -1, 0, 1, std::primitive::i16::MAX},
@@ -4407,8 +4408,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     <sqlx::types::BigDecimal as std::str::FromStr>::from_str("1e-100").unwrap(),
                                     <sqlx::types::BigDecimal as std::str::FromStr>::from_str("1e100").unwrap()
                                 },
-                                PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{},
-                                PostgresqlType::StdStringStringAsText => quote::quote!{},
+                                PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{true, false},
+                                PostgresqlType::StdStringStringAsText => quote::quote!{
+                                    "".to_string(), // empty
+                                    "a".to_string(), // single character
+                                    "Hello, world!".to_string(), // basic ASCII
+                                    "   ".to_string(), // spaces only
+                                    "\n\r\t".to_string(), // escape/control characters
+                                    "1234567890".to_string(), // numeric string
+                                    "😀".to_string(), // emoji
+                                    "こんにちは".to_string(), // Japanese
+                                    "🌍🚀✨ Rust 💖🦀".to_string(), // mixed emoji + text
+                                    "null\0byte".to_string(), // contains null byte (valid in Rust)
+                                    "a".repeat(1024), // long string (1 KB of 'a')
+                                    "line1\nline2\nline3".to_string(), // multi-line
+                                    String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
+                                },
                                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{},
                                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{},
                                 PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{},
