@@ -4549,7 +4549,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{
                                     sqlx::types::Uuid::new_v4()
                                 },
-                                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => quote::quote!{},
+                                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => quote::quote!{
+                                    <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("192.168.0.0/24").unwrap(),
+                                    <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("10.0.0.0/8").unwrap(),
+                                    <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("172.16.0.0/12").unwrap(),
+                                    <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("127.0.0.1/32").unwrap(),
+                                    <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("::1/128").unwrap(),
+                                    <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("2001:db8::/32").unwrap(),
+                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(std::net::Ipv4Addr::new(192, 168, 0, 0), 24).unwrap()),
+                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(std::net::Ipv4Addr::new(10, 0, 0, 0), 8).unwrap()),
+                                    sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(std::net::Ipv4Addr::new(127, 0, 0, 1), 32).unwrap()),
+                                    sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::new(std::net::Ipv6Addr::LOCALHOST, 128).unwrap()),
+                                    sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::new("2001:db8::".parse().unwrap(), 32).unwrap()),
+                                },
                                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{},
