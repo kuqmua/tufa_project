@@ -4484,7 +4484,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     sqlx::types::time::Date::from_calendar_date(2025, time::Month::January, 1).unwrap().into(), // Start of year
                                     sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap().into(), // Mid-year
                                 },
-                                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{},
+                                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(), // Unix epoch
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 2, 29).unwrap(), // Leap year
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 12, 31).unwrap(), // End of year
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(1, 1, 1).unwrap(), // Minimum valid date
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(9999, 12, 31).unwrap(), // Maximum valid date
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(), // Arbitrary mid-year
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(1900, 3, 1).unwrap(), // Pre-epoch date
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2023, 6, 15).unwrap(), // Recent date
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 1, 1).unwrap(), // Start of year
+                                },
                                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{},
                                 PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => quote::quote!{},
                                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{},
