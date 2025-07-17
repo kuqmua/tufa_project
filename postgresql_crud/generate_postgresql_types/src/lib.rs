@@ -4808,7 +4808,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         )),
                                     },
                                 },
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{},
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Excluded(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC),
+                                    }
+                                },
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => quote::quote!{},
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{},
