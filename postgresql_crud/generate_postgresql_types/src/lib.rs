@@ -4756,7 +4756,58 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         )),
                                     },
                                 },
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => quote::quote!{},
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => quote::quote!{
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
+                                            sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
+                                            sqlx::types::time::Time::from_hms(0, 0, 1).unwrap(),
+                                        )),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap(),
+                                            sqlx::types::time::Time::from_hms(6, 30, 15).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap(),
+                                            sqlx::types::time::Time::from_hms(18, 0, 0).unwrap(),
+                                        )),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap(),
+                                            sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 16).unwrap(),
+                                            sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
+                                        )),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2030, time::Month::December, 25).unwrap(),
+                                            sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_000).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2030, time::Month::December, 26).unwrap(),
+                                            sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
+                                        )),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2040, time::Month::January, 1).unwrap(),
+                                            sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(),
+                                        )),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2040, time::Month::January, 1).unwrap(),
+                                            sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(),
+                                        )),
+                                    },
+                                },
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => quote::quote!{},
                             },
