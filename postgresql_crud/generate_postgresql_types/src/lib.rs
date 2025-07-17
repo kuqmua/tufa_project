@@ -4495,7 +4495,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     sqlx::types::chrono::NaiveDate::from_ymd_opt(2023, 6, 15).unwrap(), // Recent date
                                     sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 1, 1).unwrap(), // Start of year
                                 },
-                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{},
+                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{
+                                    sqlx::types::chrono::NaiveDateTime::new(
+                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
+                                        sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap()
+                                    )
+                                },
                                 PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => quote::quote!{},
                                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{},
                                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => quote::quote!{},
