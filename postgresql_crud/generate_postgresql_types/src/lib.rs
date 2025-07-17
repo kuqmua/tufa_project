@@ -1011,6 +1011,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let microseconds_snake_case = naming::MicrosecondsSnakeCase;
             let as_upper_camel_case = naming::AsUpperCamelCase;
             let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
+            let test_cases_snake_case = naming::TestCasesSnakeCase;
 
             let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
             let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
@@ -3300,6 +3301,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     IsNotNullStandartCanBePrimaryKey::True => quote::quote! {
                         impl std::convert::From<#ident_standart_not_null_read_upper_camel_case> for #ident_origin_upper_camel_case {
                             fn from(#value_snake_case: #ident_standart_not_null_read_upper_camel_case) -> Self {
+                                //todo reuse as crate::PostgresqlType
                                 Self::new(<#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::into_inner(#value_snake_case))
                             }
                         }
@@ -4834,7 +4836,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 ]},
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{vec![]},
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
+                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::#test_cases_snake_case()
+                                .into_iter()
+                                .map(|element|Some(element))
+                                .collect::<std::vec::Vec<
+                                    std::option::Option<
+                                        <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
+                                    >
+                                >>();
+                                acc.push(None);
+                                acc
+                            },
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{vec![]},
