@@ -4531,7 +4531,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::types::time::Time::from_hms_nano(23, 59, 59, 999_999_999).unwrap()
                                     ), // Edge of nanosecond precision
                                 },
-                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{},
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{
+                                    sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC,
+                                    sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC
+                                },
                                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => quote::quote!{},
                                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{},
                                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{},
