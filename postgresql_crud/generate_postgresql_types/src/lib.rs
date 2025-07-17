@@ -4570,7 +4570,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     sqlx::types::mac_address::MacAddress::new([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
                                     sqlx::types::mac_address::MacAddress::new([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                                 },
-                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{},
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{
+                                    sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded },
+                                    sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(1), end: std::ops::Bound::Excluded(10)},
+                                    sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(1), end: std::ops::Bound::Included(10) },
+                                    sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(1), end: std::ops::Bound::Included(10) },
+                                    sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(1), end: std::ops::Bound::Excluded(10) },
+                                    sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(100), end: std::ops::Bound::Unbounded },
+                                    sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(100) },
+                                    sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(5), end: std::ops::Bound::Included(5) },
+                                    sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(5), end: std::ops::Bound::Excluded(5) },
+                                },
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => quote::quote!{},
