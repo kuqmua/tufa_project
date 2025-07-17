@@ -4592,7 +4592,44 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
                                     sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
                                 },
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => quote::quote!{},
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => quote::quote!{
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("1.1").unwrap()),
+                                        end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("2.2").unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.0").unwrap()),
+                                        end: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("10.0").unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("123456789.123456789").unwrap()),
+                                        end: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("987654321.987654321").unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("-100.5").unwrap()),
+                                        end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("100.5").unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.0").unwrap()),
+                                        end: std::ops::Bound::Unbounded,
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Unbounded,
+                                        end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.0").unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Unbounded,
+                                        end: std::ops::Bound::Unbounded,
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
+                                        end: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
+                                        end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
+                                    }
+                                },
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{},
