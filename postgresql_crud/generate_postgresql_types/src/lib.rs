@@ -4814,7 +4814,25 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         end: std::ops::Bound::Excluded(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC),
                                     }
                                 },
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => quote::quote!{},
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => quote::quote!{
+                                    sqlx::postgres::types::PgRange {
+                                        //todo reuse
+                                        start: std::ops::Bound::Excluded({
+                                            let date_time_local = sqlx::types::chrono::Local::now();
+                                            sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                                                date_time_local.naive_utc(),
+                                                date_time_local.offset().clone()
+                                            )
+                                        }),
+                                        end: std::ops::Bound::Included({
+                                            let date_time_local = sqlx::types::chrono::Local::now();
+                                            sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                                                date_time_local.naive_utc(),
+                                                date_time_local.offset().clone()
+                                            )
+                                        }),
+                                    }
+                                },
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{},
                         },
