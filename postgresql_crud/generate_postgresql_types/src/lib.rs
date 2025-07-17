@@ -4630,8 +4630,43 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
                                     }
                                 },
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => quote::quote!{},
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{},
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => quote::quote!{
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2000, time::Month::January, 1).unwrap()),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2001, time::Month::January, 1).unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap()),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 2).unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2023, time::Month::December, 31).unwrap()),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::January, 1).unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 1).unwrap()),
+                                        end: std::ops::Bound::Unbounded,
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Unbounded,
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(1999, time::Month::December, 31).unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Unbounded,
+                                        end: std::ops::Bound::Unbounded,
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap()),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::March, 1).unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::April, 4).unwrap()),
+                                        end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::April, 4).unwrap()),
+                                    },
+                                },
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{
+                                    
+                                },
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{},
