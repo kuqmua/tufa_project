@@ -4348,19 +4348,47 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{std::primitive::i32::MIN, -1, 0, 1, std::primitive::i32::MAX},
                                 PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{std::primitive::i64::MIN, -1, 0, 1, std::primitive::i64::MAX},
                                 PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{
-                                    0.0, -0.0, 1.0, -1.0, 3.1415, -3.1415, std::primitive::f32::MIN, std::primitive::f32::MAX,
-                                    std::primitive::f32::EPSILON, std::primitive::f32::INFINITY, std::primitive::f32::NEG_INFINITY,
-                                    std::primitive::f32::NAN, 1e-30, -1e-30, 1e30, -1e30
+                                    std::primitive::f32::EPSILON,
+                                    std::primitive::f32::INFINITY,
+                                    std::primitive::f32::MAX,
+                                    std::primitive::f32::MIN,
+                                    std::primitive::f32::MIN_POSITIVE,
+                                    std::primitive::f32::NAN,//todo check with .is_nan()
+                                    std::primitive::f32::NEG_INFINITY,
+                                    -1e30,
+                                    -1e-30,
+                                    -1.0,
+                                    -0.0,
+                                    0.0,
+                                    1.0,
+                                    3.1415,
+                                    -3.1415,
+                                    1e-30,
+                                    1e30
                                 },
                                 PostgresqlType::StdPrimitiveF64AsFloat8 => quote::quote!{
-                                    0.0, -0.0, 1.0, -1.0, 3.1415, -3.1415, std::primitive::f64::MIN, std::primitive::f64::MAX,
-                                    std::primitive::f64::EPSILON, std::primitive::f64::INFINITY, std::primitive::f64::NEG_INFINITY,
-                                    std::primitive::f64::NAN, 1e-30, -1e-30, 1e30, -1e30
+                                    std::primitive::f64::EPSILON,
+                                    std::primitive::f64::INFINITY,
+                                    std::primitive::f64::MAX,
+                                    std::primitive::f64::MIN,
+                                    std::primitive::f64::MIN_POSITIVE,
+                                    std::primitive::f64::NAN,//todo check with .is_nan()
+                                    std::primitive::f64::NEG_INFINITY,
+                                    -1e300,
+                                    -1e-300,
+                                    -1.0,
+                                    -0.0,
+                                    0.0,
+                                    1.0,
+                                    1e-300,
+                                    1e300
                                 },
                                 PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => quote::quote!{},//todo
                                 PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => quote::quote!{},//todo
                                 PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{},//todo
-                                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{},
+                                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{
+                                    // #sqlx_postgres_types_pg_money_field_type_token_stream()
+                                },
                                 PostgresqlType::SqlxTypesBigDecimalAsNumeric => quote::quote!{},
                                 PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{},
                                 PostgresqlType::StdStringStringAsText => quote::quote!{},
