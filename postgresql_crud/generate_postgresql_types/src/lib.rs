@@ -4439,7 +4439,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     vec![1; 1024], // long vec (1KB of ones)
                                     vec![0xDE, 0xAD, 0xBE, 0xEF], // hex pattern (e.g. binary signature)
                                 },
-                                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{},
+                                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{
+                                    sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(), // Midnight
+                                    sqlx::types::chrono::NaiveTime::from_hms_opt(12, 0, 0).unwrap(), // Noon
+                                    sqlx::types::chrono::NaiveTime::from_hms_opt(23, 59, 59).unwrap(), // One second before midnight
+                                    sqlx::types::chrono::NaiveTime::from_hms_nano_opt(23, 59, 59, 999_999_999).unwrap(), // Max valid nanosecond
+                                    sqlx::types::chrono::NaiveTime::from_hms_opt(6, 30, 0).unwrap(), // Morning time
+                                    sqlx::types::chrono::NaiveTime::from_hms_opt(18, 45, 15).unwrap(), // Evening with seconds
+                                    sqlx::types::chrono::NaiveTime::from_hms_milli_opt(10, 5, 3, 250).unwrap(), // Millisecond precision
+                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(14, 22, 33, 123_456).unwrap(), // Microsecond precision
+                                    sqlx::types::chrono::NaiveTime::from_hms_nano_opt(1, 2, 3, 4).unwrap(),// Very low nanosecond value
+                                },
                                 PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{},
                                 PostgresqlType::SqlxTypesTimeDateAsDate => quote::quote!{},
