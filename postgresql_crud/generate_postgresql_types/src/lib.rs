@@ -4850,7 +4850,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             },
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{vec![]},
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{
+                                <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::#test_cases_snake_case()
+                                .into_iter()
+                                .map(|element|vec![element])
+                                .collect::<std::vec::Vec<
+                                    std::vec::Vec<
+                                        <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
+                                    >
+                                >>()
+                            },
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{vec![]},
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{vec![]},
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{vec![]},
