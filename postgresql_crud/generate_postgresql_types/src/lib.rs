@@ -4665,7 +4665,34 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                 },
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{
-                                    
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 1, 1).unwrap()),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2001, 1, 1).unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap()),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 2).unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap()),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 3, 1).unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 1).unwrap()),
+                                        end: std::ops::Bound::Unbounded,
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Unbounded,
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(1999, 12, 31).unwrap()),
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Unbounded,
+                                        end: std::ops::Bound::Unbounded,
+                                    },
+                                    sqlx::postgres::types::PgRange {
+                                        start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 4, 4).unwrap()),
+                                        end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 4, 4).unwrap()),
+                                    }
                                 },
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{},
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => quote::quote!{},
