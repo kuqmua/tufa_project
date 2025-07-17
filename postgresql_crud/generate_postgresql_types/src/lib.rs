@@ -4533,9 +4533,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 },
                                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{
                                     sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC,
-                                    sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC
+                                    sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC,
+                                    sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::UNIX_EPOCH
                                 },
-                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => quote::quote!{},
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => quote::quote!{
+
+                                },
                                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{},
                                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{},
                                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => quote::quote!{},
