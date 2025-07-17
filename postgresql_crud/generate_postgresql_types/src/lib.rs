@@ -4888,7 +4888,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 acc.push(None);
                                 acc
                             },
-                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{vec![]},
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{
+                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::#test_cases_snake_case()
+                                .into_iter()
+                                .map(|element|Some(vec![Some(element)]))
+                                .collect::<std::vec::Vec<
+                                    std::option::Option<
+                                        std::vec::Vec<
+                                            std::option::Option<
+                                                <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
+                                            >
+                                        >
+                                    >
+                                >>();
+                                acc.push(None);
+                                acc.push(Some(vec![None]));
+                                acc
+                            },
 
                         }
                     }
