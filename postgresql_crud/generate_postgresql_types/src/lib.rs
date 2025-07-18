@@ -2806,145 +2806,210 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let impl_ident_origin_token_stream = {
-                    let pub_fn_new_token_stream = {
-                        let content_token_stream = {
-                            let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                                quote::quote! {match value {
-                                    Some(value) => Some(#type_token_stream::new(value)),
-                                    None => None
-                                }}
-                            };
-                            let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::new(element)).collect()},
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
-                            };
-                            match &postgresql_type_pattern {
-                                PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => if let Ok(ref value) = postgresql_type_range_try_from_postgresql_type {
-                                        generate_pg_range_conversion_token_stream(
-                                            &value_snake_case,
-                                            &{
-                                                let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(
-                                                    &generate_ident_stringified(
-                                                        &PostgresqlType::from(value),
-                                                        &not_null_or_nullable,
-                                                        &postgresql_type_pattern
-                                                    )
-                                                );
-                                                quote::quote!{#range_postgresql_type_ident_origin::new(value)}
-                                            }
-                                        )
-                                    }
-                                    else {
-                                        quote::quote! {#value_snake_case}
+                    let pub_fn_new_or_try_new_token_stream = {
+                        let pub_fn_new_token_stream = {
+                            let content_token_stream = {
+                                let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
+                                    quote::quote! {match value {
+                                        Some(value) => Some(#type_token_stream::new(value)),
+                                        None => None
+                                    }}
+                                };
+                                let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::new(element)).collect()},
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
+                                };
+                                match &postgresql_type_pattern {
+                                    PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => if let Ok(ref value) = postgresql_type_range_try_from_postgresql_type {
+                                            generate_pg_range_conversion_token_stream(
+                                                &value_snake_case,
+                                                &{
+                                                    let range_postgresql_type_ident_origin = naming::parameter::SelfOriginUpperCamelCase::from_display(
+                                                        &generate_ident_stringified(
+                                                            &PostgresqlType::from(value),
+                                                            &not_null_or_nullable,
+                                                            &postgresql_type_pattern
+                                                        )
+                                                    );
+                                                    quote::quote!{#range_postgresql_type_ident_origin::new(value)}
+                                                }
+                                            )
+                                        }
+                                        else {
+                                            quote::quote! {#value_snake_case}
+                                        },
+                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
                                     },
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
-                                },
-                                PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
-                                    let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, dimension1_not_null_or_nullable),
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                                    };
-                                    generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable)
-                                }),
-                                // PostgresqlTypePattern::ArrayDimension2{
-                                //     dimension1_not_null_or_nullable,
-                                //     dimension2_not_null_or_nullable,
-                                // } => generate_array_dimensions_initialization_token_stream(&{
-                                //     let (
-                                //         current_postgresql_type_pattern,
-                                //         current_not_null_or_nullable,
-                                //     ): (
-                                //         &PostgresqlTypePattern,
-                                //         &postgresql_crud_macros_common::NotNullOrNullable,
-                                //     ) = match &not_null_or_nullable {
-                                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
-                                //             &PostgresqlTypePattern::ArrayDimension1 {
-                                //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                //             },
-                                //             &dimension1_not_null_or_nullable,
-                                //         ),
-                                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
-                                //             &postgresql_type_pattern,
-                                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                //         )
-                                //     };
-                                //     generate_current_ident_origin_non_wrapping(
-                                //         &current_postgresql_type_pattern,
-                                //         &current_not_null_or_nullable
-                                //     )
-                                // }),
-                                // PostgresqlTypePattern::ArrayDimension3{
-                                //     dimension1_not_null_or_nullable,
-                                //     dimension2_not_null_or_nullable,
-                                //     dimension3_not_null_or_nullable,
-                                // } => generate_array_dimensions_initialization_token_stream(&{
-                                //     let (
-                                //         current_postgresql_type_pattern,
-                                //         current_not_null_or_nullable,
-                                //     ): (
-                                //         &PostgresqlTypePattern,
-                                //         &postgresql_crud_macros_common::NotNullOrNullable,
-                                //     ) = match &not_null_or_nullable {
-                                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
-                                //             &PostgresqlTypePattern::ArrayDimension2 {
-                                //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                //                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                //             },
-                                //             &dimension1_not_null_or_nullable,
-                                //         ),
-                                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
-                                //             &postgresql_type_pattern,
-                                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                //         )
-                                //     };
-                                //     generate_current_ident_origin_non_wrapping(
-                                //         &current_postgresql_type_pattern,
-                                //         &current_not_null_or_nullable
-                                //     )
-                                // }),
-                                // PostgresqlTypePattern::ArrayDimension4{
-                                //     dimension1_not_null_or_nullable,
-                                //     dimension2_not_null_or_nullable,
-                                //     dimension3_not_null_or_nullable,
-                                //     dimension4_not_null_or_nullable,
-                                // } => generate_array_dimensions_initialization_token_stream(&{
-                                //     let (
-                                //         current_postgresql_type_pattern,
-                                //         current_not_null_or_nullable,
-                                //     ): (
-                                //         &PostgresqlTypePattern,
-                                //         &postgresql_crud_macros_common::NotNullOrNullable,
-                                //     ) = match &not_null_or_nullable {
-                                //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
-                                //             &PostgresqlTypePattern::ArrayDimension3 {
-                                //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
-                                //                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
-                                //                 dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
-                                //             },
-                                //             &dimension1_not_null_or_nullable,
-                                //         ),
-                                //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
-                                //             &postgresql_type_pattern,
-                                //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                //         )
-                                //     };
-                                //     generate_current_ident_origin_non_wrapping(
-                                //         &current_postgresql_type_pattern,
-                                //         &current_not_null_or_nullable
-                                //     )
-                                // }),
+                                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
+                                        let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
+                                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, dimension1_not_null_or_nullable),
+                                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
+                                        };
+                                        generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable)
+                                    }),
+                                    // PostgresqlTypePattern::ArrayDimension2{
+                                    //     dimension1_not_null_or_nullable,
+                                    //     dimension2_not_null_or_nullable,
+                                    // } => generate_array_dimensions_initialization_token_stream(&{
+                                    //     let (
+                                    //         current_postgresql_type_pattern,
+                                    //         current_not_null_or_nullable,
+                                    //     ): (
+                                    //         &PostgresqlTypePattern,
+                                    //         &postgresql_crud_macros_common::NotNullOrNullable,
+                                    //     ) = match &not_null_or_nullable {
+                                    //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                                    //             &PostgresqlTypePattern::ArrayDimension1 {
+                                    //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                    //             },
+                                    //             &dimension1_not_null_or_nullable,
+                                    //         ),
+                                    //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
+                                    //             &postgresql_type_pattern,
+                                    //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    //         )
+                                    //     };
+                                    //     generate_current_ident_origin_non_wrapping(
+                                    //         &current_postgresql_type_pattern,
+                                    //         &current_not_null_or_nullable
+                                    //     )
+                                    // }),
+                                    // PostgresqlTypePattern::ArrayDimension3{
+                                    //     dimension1_not_null_or_nullable,
+                                    //     dimension2_not_null_or_nullable,
+                                    //     dimension3_not_null_or_nullable,
+                                    // } => generate_array_dimensions_initialization_token_stream(&{
+                                    //     let (
+                                    //         current_postgresql_type_pattern,
+                                    //         current_not_null_or_nullable,
+                                    //     ): (
+                                    //         &PostgresqlTypePattern,
+                                    //         &postgresql_crud_macros_common::NotNullOrNullable,
+                                    //     ) = match &not_null_or_nullable {
+                                    //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                                    //             &PostgresqlTypePattern::ArrayDimension2 {
+                                    //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                    //                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                    //             },
+                                    //             &dimension1_not_null_or_nullable,
+                                    //         ),
+                                    //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
+                                    //             &postgresql_type_pattern,
+                                    //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    //         )
+                                    //     };
+                                    //     generate_current_ident_origin_non_wrapping(
+                                    //         &current_postgresql_type_pattern,
+                                    //         &current_not_null_or_nullable
+                                    //     )
+                                    // }),
+                                    // PostgresqlTypePattern::ArrayDimension4{
+                                    //     dimension1_not_null_or_nullable,
+                                    //     dimension2_not_null_or_nullable,
+                                    //     dimension3_not_null_or_nullable,
+                                    //     dimension4_not_null_or_nullable,
+                                    // } => generate_array_dimensions_initialization_token_stream(&{
+                                    //     let (
+                                    //         current_postgresql_type_pattern,
+                                    //         current_not_null_or_nullable,
+                                    //     ): (
+                                    //         &PostgresqlTypePattern,
+                                    //         &postgresql_crud_macros_common::NotNullOrNullable,
+                                    //     ) = match &not_null_or_nullable {
+                                    //         postgresql_crud_macros_common::NotNullOrNullable::NotNull => (
+                                    //             &PostgresqlTypePattern::ArrayDimension3 {
+                                    //                 dimension1_not_null_or_nullable: dimension2_not_null_or_nullable.clone(),
+                                    //                 dimension2_not_null_or_nullable: dimension3_not_null_or_nullable.clone(),
+                                    //                 dimension3_not_null_or_nullable: dimension4_not_null_or_nullable.clone(),
+                                    //             },
+                                    //             &dimension1_not_null_or_nullable,
+                                    //         ),
+                                    //         postgresql_crud_macros_common::NotNullOrNullable::Nullable => (
+                                    //             &postgresql_type_pattern,
+                                    //             &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                                    //         )
+                                    //     };
+                                    //     generate_current_ident_origin_non_wrapping(
+                                    //         &current_postgresql_type_pattern,
+                                    //         &current_not_null_or_nullable
+                                    //     )
+                                    // }),
+                                }
+                            };
+                            quote::quote! {
+                                pub fn new(value: #impl_new_for_ident_origin_type_token_stream) -> Self {
+                                    Self(#content_token_stream)
+                                }
                             }
                         };
-                        quote::quote! {
-                            pub fn new(value: #impl_new_for_ident_origin_type_token_stream) -> Self {
-                                Self(#content_token_stream)
+                        if let (
+                            postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                            PostgresqlTypePattern::Standart,
+                        ) = (
+                            &not_null_or_nullable,
+                            &postgresql_type_pattern
+                        ) {
+                            match &postgresql_type {
+                                PostgresqlType::StdPrimitiveI16AsInt2 => pub_fn_new_token_stream,
+                                PostgresqlType::StdPrimitiveI32AsInt4 => pub_fn_new_token_stream,
+                                PostgresqlType::StdPrimitiveI64AsInt8 => pub_fn_new_token_stream,
+                                PostgresqlType::StdPrimitiveF32AsFloat4 => pub_fn_new_token_stream,
+                                PostgresqlType::StdPrimitiveF64AsFloat8 => pub_fn_new_token_stream,
+                                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => pub_fn_new_token_stream,
+                                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => pub_fn_new_token_stream,
+                                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesBigDecimalAsNumeric => pub_fn_new_token_stream,
+                                PostgresqlType::StdPrimitiveBoolAsBool => pub_fn_new_token_stream,
+                                PostgresqlType::StdStringStringAsText => {
+                                    // #[derive(serde::Deserialize)]
+                                    // pub struct StdStringStringAsNotNullTextOrigin(std::string::String);
+                                    
+                                    // let ident_origin_try_new_error_named_token_stream = {
+                                    //     quote::quote! {
+
+                                    //     }
+                                    // };
+                                    // quote::quote! {
+                                    //     pub fn try_new(value: #impl_new_for_ident_origin_type_token_stream) -> Self {
+                                    //         Self(#content_token_stream)
+                                    //     }
+                                    // }
+                                    pub_fn_new_token_stream
+                                },
+                                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesTimeTimeAsTime => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesTimeDateAsDate => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => pub_fn_new_token_stream,
+                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => pub_fn_new_token_stream,
                             }
+                        }
+                        else {
+                            pub_fn_new_token_stream
                         }
                     };
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
-                            #pub_fn_new_token_stream
+                            #pub_fn_new_or_try_new_token_stream
                         }
                     }
                 };
