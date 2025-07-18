@@ -1384,7 +1384,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(   &sqlx_types_time_primitive_date_time_as_timestamp));
                     let sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_time_date_as_date));
                     let sqlx_types_big_decimal_as_not_null_numeric_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_big_decimal_as_numeric));
-
                     let self_dot_zero_token_stream = quote::quote! {#self_snake_case.0};
                     enum ParameterNumber {
                         One,
@@ -1510,8 +1509,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #serde_ser_serialize_struct_end_token_stream
                             }
                         };
-                        let impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream =
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream);
+                        let impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream = generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(
+                            &serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream
+                        );
                         let impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4(&quote::quote! {.to_string()}));
                         match &postgresql_type {
                             PostgresqlType::StdPrimitiveI16AsInt2 => postgresql_crud_macros_common::DeriveOrImpl::Derive,
@@ -1600,7 +1600,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let serde_deserialize = {
                         let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                         let postgresql_type_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
-
                         let struct_visitor_token_stream = quote::quote! {
                             #[doc(hidden)]
                             struct __Visitor<'de> {
@@ -1608,12 +1607,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 lifetime: serde::__private::PhantomData<&'de ()>,
                             }
                         };
-
                         let digits_scale_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&digits_snake_case, &scale_snake_case];
                         let year_month_day_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&year_snake_case, &month_snake_case, &day_snake_case];
                         let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&start_snake_case, &end_snake_case];
                         let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&months_snake_case, &days_snake_case, &microseconds_snake_case];
-
                         let (serde_deserializer_deserialize_struct_visitor_token_stream, serde_deserializer_deserialize_struct_ident_visitor_token_stream) = {
                             let generate_serde_deserializer_deserialize_struct_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                                 quote::quote! {
@@ -1635,7 +1632,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_serde_deserializer_deserialize_struct_visitor_token_stream(&postgresql_type_visitor_upper_camel_case),
                             )
                         };
-
                         let serde_deserializer_deserialize_newtype_struct_token_stream = quote::quote! {
                             _serde::Deserializer::deserialize_newtype_struct(
                                 __deserializer,
@@ -1646,7 +1642,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 },
                             )
                         };
-
                         let generate_impl_serde_deserialize_for_tokens_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 const _: () = {
@@ -1666,12 +1661,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                             }
                         };
-
                         let parameter_number_two = ParameterNumber::Two;
                         let parameter_number_three = ParameterNumber::Three;
-
                         let generate_field_index_token_stream = |index: std::primitive::usize| format!("__{}{index}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().unwrap();
-
                         let (enum_field_two_token_stream, enum_field_three_token_stream) = {
                             let generate_enum_field_token_stream = |parameter_number: &ParameterNumber| {
                                 let fields_token_stream = {
@@ -1689,7 +1681,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             };
                             (generate_enum_field_token_stream(&parameter_number_two), generate_enum_field_token_stream(&parameter_number_three))
                         };
-
                         let (fn_expecting_struct_ident_double_quotes_token_stream, fn_expecting_field_identifier_token_stream, fn_expecting_months_or_days_or_microseconds_token_stream, fn_expecting_start_or_end_token_stream) = {
                             let generate_fn_expecting_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                                 quote::quote! {
@@ -1705,16 +1696,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_fn_expecting_token_stream(&quote::quote! {"`start` or `end`"}),
                             )
                         };
-
                         let field_0_token_stream = generate_field_index_token_stream(ParameterNumber::One.get_index());
                         let field_1_token_stream = generate_field_index_token_stream(ParameterNumber::Two.get_index());
                         let field_2_token_stream = generate_field_index_token_stream(ParameterNumber::Three.get_index());
-
                         let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {serde::__private::Ok(#content_token_stream)}
                         };
                         let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_standart_not_null_origin_upper_camel_case(#content_token_stream)});
-
                         let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #sqlx_types_uuid_uuid_field_type_token_stream::try_parse(&#field_0_token_stream) {
                             Ok(value) => value,
                             Err(error) => {
@@ -1743,7 +1731,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_fn_visit_newtype_struct_token_stream(&array_std_primitive_u8_6_token_stream, &sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream),
                             )
                         };
-
                         let generate_fn_visit_seq_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 #[inline]
@@ -1755,7 +1742,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         };
-
                         let generate_fields_serde_de_seq_access_next_element_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
                             let error_message_token_stream = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(
                                 &ident_standart_not_null_origin_upper_camel_case,
@@ -1775,12 +1761,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             });
                             quote::quote! {#(#fields_initialization_token_stream)*}
                         };
-
                         let serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#sqlx_types_big_decimal_as_numeric_field_type_token_stream::new(
                             #field_0_token_stream.0,
                             #field_1_token_stream
                         )});
-
                         let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&{
                             let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_primitive_i64_token_stream]);
                             let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#sqlx_postgres_types_pg_money_field_type_token_stream(#field_0_token_stream)});
@@ -1796,7 +1780,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #serde_private_ok_postgresql_type_sqlx_types_big_decimal_new_field0_field1_token_stream
                             }
                         });
-
                         let sqlx_types_time_date_specific_initialization = quote::quote! {
                             match sqlx::types::time::Date::from_calendar_date(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
                                 Ok(value) => {
@@ -1810,7 +1793,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 Err(value) => Err(_serde::de::Error::custom(format!("SqlxTypesTimeDate from calendar date {value:?}")))
                             }
                         };
-
                         let (seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream, seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream, seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream) = {
                             let generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream = |parameter_number: &ParameterNumber| {
                                 let index_token_stream = match &parameter_number {
@@ -1827,7 +1809,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             )
                         };
                         let fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream = generate_fn_visit_seq_token_stream(&{
-                            let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(&proc_macro2_token_stream_new, &proc_macro2_token_stream_new, &proc_macro2_token_stream_new));
+                            let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
+                                &proc_macro2_token_stream_new,
+                                &proc_macro2_token_stream_new,
+                                &proc_macro2_token_stream_new
+                            ));
                             quote::quote! {
                                 let #months_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
                                 let #days_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
@@ -1971,7 +1957,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #serde_private_ok_postgresql_type_token_stream
                             }
                         });
-
                         let (fn_visit_u64_two_token_stream, fn_visit_u64_three_token_stream) = {
                             let generate_fn_visit_u64_token_stream = |parameter_number: &ParameterNumber| {
                                 let fields_token_stream = {
@@ -2025,7 +2010,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_fn_visit_str_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                             )
                         };
-
                         let (fn_visit_str_field_months_days_microseconds_token_stream, fn_visit_str_field_start_end_token_stream) = {
                             let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                                 let fields_token_stream = vec_token_stream.iter().map(|element| {
@@ -2050,7 +2034,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_fn_visit_str_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                             )
                         };
-
                         let (fn_visit_bytes_digits_scale_token_stream, fn_visit_bytes_year_month_day_token_stream, fn_visit_bytes_start_end_token_stream) = {
                             let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                                 let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2078,14 +2061,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_fn_visit_bytes_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                             )
                         };
-
                         let serde_deserializer_deserialize_identifier_token_stream = quote::quote! {
                             _serde::Deserializer::deserialize_identifier(
                                 __deserializer,
                                 __FieldVisitor,
                             )
                         };
-
                         let impl_serde_deserialize_for_field_token_stream = quote::quote! {
                             impl<'de> _serde::Deserialize<'de> for __Field {
                                 #[inline]
@@ -2099,7 +2080,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         };
-
                         let (
                             fn_visit_map_sqlx_types_big_decimal_token_stream,
                             fn_visit_map_sqlx_types_time_date_token_stream,
@@ -2111,22 +2091,25 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                             fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
                         ) = {
-                            let generate_fn_visit_map_token_stream =
-                                |field_option_none_initialization_token_stream: &dyn quote::ToTokens, while_some_next_key_field_token_stream: &dyn quote::ToTokens, match_field_initialization_token_stream: &dyn quote::ToTokens, serde_private_ok_token_stream: &dyn quote::ToTokens| {
-                                    quote::quote! {
-                                        #[inline]
-                                        fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                        where
-                                            __A: serde::de::MapAccess<'de>,
-                                        {
-                                            #field_option_none_initialization_token_stream
-                                            #while_some_next_key_field_token_stream
-                                            #match_field_initialization_token_stream
-                                            #serde_private_ok_token_stream
-                                        }
+                            let generate_fn_visit_map_token_stream = |
+                                field_option_none_initialization_token_stream: &dyn quote::ToTokens,
+                                while_some_next_key_field_token_stream: &dyn quote::ToTokens,
+                                match_field_initialization_token_stream: &dyn quote::ToTokens,
+                                serde_private_ok_token_stream: &dyn quote::ToTokens
+                            | {
+                                quote::quote! {
+                                    #[inline]
+                                    fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                    where
+                                        __A: serde::de::MapAccess<'de>,
+                                    {
+                                        #field_option_none_initialization_token_stream
+                                        #while_some_next_key_field_token_stream
+                                        #match_field_initialization_token_stream
+                                        #serde_private_ok_token_stream
                                     }
-                                };
-
+                                }
+                            };
                             let (
                                 field_option_none_initialization_sqlx_types_big_decimal_token_stream,
                                 field_option_none_initialization_sqlx_types_time_date_token_stream,
@@ -2159,7 +2142,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     generate_field_option_none_initialization_token_stream(&[&std_collections_bound_sqlx_types_big_decimal_as_numeric_token_stream, &std_collections_bound_sqlx_types_big_decimal_as_numeric_token_stream]),
                                 )
                             };
-
                             let (
                                 while_some_next_key_field_sqlx_types_big_decimal_token_stream,
                                 while_some_next_key_field_sqlx_types_time_date_token_stream,
@@ -2217,7 +2199,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     generate_while_some_next_key_field_token_stream(&[(&start_snake_case, &std_collections_bound_sqlx_types_big_decimal_as_numeric_token_stream), (&end_snake_case, &std_collections_bound_sqlx_types_big_decimal_as_numeric_token_stream)]),
                                 )
                             };
-
                             let (match_field_initialization_sqlx_types_big_decimal_token_stream, match_field_initialization_sqlx_types_time_date_token_stream, match_field_initialization_start_end_token_stream) = {
                                 let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                                     let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2238,7 +2219,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     generate_match_field_initialization_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                                 )
                             };
-
                             let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                             let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
                             (
@@ -2298,25 +2278,27 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 ),
                             )
                         };
-
                         let (fn_visit_map_sqlx_postgres_types_pg_interval_token_stream, fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream) = {
-                            let generate_fn_visit_map_token_stream =
-                                |field_option_none_initialization_token_stream: &dyn quote::ToTokens, while_some_next_key_field_token_stream: &dyn quote::ToTokens, match_field_initialization_token_stream: &dyn quote::ToTokens, serde_private_ok_token_stream: &dyn quote::ToTokens| {
-                                    let serde_private_ok_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&serde_private_ok_token_stream);
-                                    quote::quote! {
-                                        #[inline]
-                                        fn visit_map<V>(self, mut map: V) -> Result<#ident_standart_not_null_origin_upper_camel_case, V::Error>
-                                        where
-                                            V: serde::de::MapAccess<'de>,
-                                        {
-                                            #field_option_none_initialization_token_stream
-                                            #while_some_next_key_field_token_stream
-                                            #match_field_initialization_token_stream
-                                            #serde_private_ok_token_stream
-                                        }
+                            let generate_fn_visit_map_token_stream = |
+                                field_option_none_initialization_token_stream: &dyn quote::ToTokens,
+                                while_some_next_key_field_token_stream: &dyn quote::ToTokens,
+                                match_field_initialization_token_stream: &dyn quote::ToTokens,
+                                serde_private_ok_token_stream: &dyn quote::ToTokens
+                            | {
+                                let serde_private_ok_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&serde_private_ok_token_stream);
+                                quote::quote! {
+                                    #[inline]
+                                    fn visit_map<V>(self, mut map: V) -> Result<#ident_standart_not_null_origin_upper_camel_case, V::Error>
+                                    where
+                                        V: serde::de::MapAccess<'de>,
+                                    {
+                                        #field_option_none_initialization_token_stream
+                                        #while_some_next_key_field_token_stream
+                                        #match_field_initialization_token_stream
+                                        #serde_private_ok_token_stream
                                     }
-                                };
-
+                                }
+                            };
                             let (field_option_none_initialization_months_days_microseconds_token_stream, field_option_none_initialization_start_end_token_stream) = {
                                 let generate_field_option_none_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
                                     let fields_initialization_token_stream = vec_token_stream.iter().map(|element| {
@@ -2331,7 +2313,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     generate_field_option_none_initialization_token_stream(&[&start_snake_case, &end_snake_case]),
                                 )
                             };
-
                             let (while_some_next_key_field_months_days_microseconds_token_stream, while_some_next_key_field_start_end_token_stream) = {
                                 let generate_while_some_next_key_field_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                                     let fields_initialization_token_stream = vec_token_stream.iter().map(|element| {
@@ -2359,7 +2340,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     generate_while_some_next_key_field_token_stream(&[&start_snake_case, &end_snake_case]),
                                 )
                             };
-
                             let (match_field_initialization_months_days_microseconds_token_stream, match_field_initialization_start_end_token_stream) = {
                                 let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                                     let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2395,7 +2375,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 ),
                             )
                         };
-
                         let (field_months_days_microseconds_token_stream, field_start_end_token_stream) = {
                             let generate_field_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                                 let variants_token_stream = vec_token_stream.iter().map(|element| naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element));
@@ -2410,7 +2389,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_field_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                             )
                         };
-
                         let (const_fields_sqlx_types_big_decimal_token_stream, const_fields_sqlx_types_time_date_token_stream, const_fields_sqlx_postgres_types_pg_interval_token_stream, const_fields_start_end_token_stream) = {
                             let generate_const_fields_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                                 let field_names_token_stream = vec_token_stream.iter().map(|element| generate_quotes::double_quotes_token_stream(&element));
@@ -2426,7 +2404,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_const_fields_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                             )
                         };
-
                         let (
                             impl_serde_de_visitor_for_visitor_pg_money_token_stream,
                             impl_serde_de_visitor_for_visitor_sqlx_types_big_decimal_token_stream,
@@ -2484,7 +2461,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_mac_address_token_stream, &fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream),
                             )
                         };
-
                         let generate_impl_serde_de_visitor_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 impl<'de> _serde::de::Visitor<'de> for #ident_token_stream {
@@ -2492,7 +2468,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         };
-
                         let (
                             impl_serde_de_visitor_for_field_visitor_token_stream_8ae918a4_5464_4f56_8078_ab475f269079,
                             impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2,
@@ -2543,7 +2518,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }),
                             )
                         };
-
                         let (impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream, impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream) = {
                             let generate_impl_serde_de_visitor_for_ident_visitor_token_stream = |first_token_stream: &dyn quote::ToTokens, second_token_stream: &dyn quote::ToTokens| {
                                 let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(
@@ -2565,7 +2539,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_impl_serde_de_visitor_for_ident_visitor_token_stream(&fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream, &fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream),
                             )
                         };
-
                         let (impl_serde_deserialize_for_field_sqlx_postgres_types_pg_interval_token_stream, impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_stream) = {
                             let generate_impl_serde_deserialize_for_field_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                                 quote::quote! {
