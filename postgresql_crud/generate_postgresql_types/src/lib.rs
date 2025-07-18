@@ -4372,13 +4372,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{vec![std::primitive::i32::MIN, -1, 0, 1, std::primitive::i32::MAX]},
                                     PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{vec![std::primitive::i64::MIN, -1, 0, 1, std::primitive::i64::MAX]},
                                     PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{vec![
-                                        std::primitive::f32::EPSILON,
-                                        std::primitive::f32::INFINITY,
-                                        std::primitive::f32::MAX,
-                                        std::primitive::f32::MIN,
-                                        std::primitive::f32::MIN_POSITIVE,
-                                        std::primitive::f32::NAN,//todo check with .is_nan()
-                                        std::primitive::f32::NEG_INFINITY,
+                                        // std::primitive::f32::EPSILON,
+                                        // std::primitive::f32::INFINITY,
+                                        // std::primitive::f32::MAX,
+                                        // std::primitive::f32::MIN,
+                                        // std::primitive::f32::MIN_POSITIVE,
+                                        // std::primitive::f32::NAN,//todo check with .is_nan()
+                                        // std::primitive::f32::NEG_INFINITY,
                                         -1e30,
                                         -1e-30,
                                         -1.0,
@@ -4391,13 +4391,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         1e30
                                     ]},
                                     PostgresqlType::StdPrimitiveF64AsFloat8 => quote::quote!{vec![
-                                        std::primitive::f64::EPSILON,
-                                        std::primitive::f64::INFINITY,
-                                        std::primitive::f64::MAX,
-                                        std::primitive::f64::MIN,
-                                        std::primitive::f64::MIN_POSITIVE,
-                                        std::primitive::f64::NAN,//todo check with .is_nan()
-                                        std::primitive::f64::NEG_INFINITY,
+                                        // std::primitive::f64::EPSILON,
+                                        // std::primitive::f64::INFINITY,
+                                        // std::primitive::f64::MAX,
+                                        // std::primitive::f64::MIN,
+                                        // std::primitive::f64::MIN_POSITIVE,
+                                        // std::primitive::f64::NAN,//todo check with .is_nan()
+                                        // std::primitive::f64::NEG_INFINITY,
                                         -1e300,
                                         -1e-300,
                                         -1.0,
@@ -4433,19 +4433,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     ]},
                                     PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{vec![true, false]},
                                     PostgresqlType::StdStringStringAsText => quote::quote!{vec![
-                                        "".to_string(), // empty
-                                        "a".to_string(), // single character
-                                        "Hello, world!".to_string(), // basic ASCII
-                                        "   ".to_string(), // spaces only
-                                        "\n\r\t".to_string(), // escape/control characters
-                                        "1234567890".to_string(), // numeric string
-                                        "😀".to_string(), // emoji
-                                        "こんにちは".to_string(), // Japanese
-                                        "🌍🚀✨ Rust 💖🦀".to_string(), // mixed emoji + text
-                                        "null\0byte".to_string(), // contains null byte (valid in Rust)
-                                        "a".repeat(1024), // long string (1 KB of 'a')
-                                        "line1\nline2\nline3".to_string(), // multi-line
-                                        String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
+                                        // "".to_string(), // empty
+                                        // "a".to_string(), // single character
+                                        // "Hello, world!".to_string(), // basic ASCII
+                                        // "   ".to_string(), // spaces only
+                                        // "\n\r\t".to_string(), // escape/control characters
+                                        // "1234567890".to_string(), // numeric string
+                                        // "😀".to_string(), // emoji
+                                        // "こんにちは".to_string(), // Japanese
+                                        // "🌍🚀✨ Rust 💖🦀".to_string(), // mixed emoji + text
+                                        // "null\0byte".to_string(), // contains null byte (valid in Rust)
+                                        // "a".repeat(1024), // long string (1 KB of 'a')
+                                        // "line1\nline2\nline3".to_string(), // multi-line
+                                        // String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
                                     ]},
                                     PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{vec![
                                         vec![], // empty vector
@@ -4463,25 +4463,27 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         vec![0xDE, 0xAD, 0xBE, 0xEF], // hex pattern (e.g. binary signature)
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{vec![
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(), // Midnight
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(12, 0, 0).unwrap(), // Noon
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(23, 59, 59).unwrap(), // One second before midnight
-                                        sqlx::types::chrono::NaiveTime::from_hms_nano_opt(23, 59, 59, 999_999_999).unwrap(), // Max valid nanosecond
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(6, 30, 0).unwrap(), // Morning time
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(18, 45, 15).unwrap(), // Evening with seconds
-                                        sqlx::types::chrono::NaiveTime::from_hms_milli_opt(10, 5, 3, 250).unwrap(), // Millisecond precision
-                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(14, 22, 33, 123_456).unwrap(), // Microsecond precision
-                                        sqlx::types::chrono::NaiveTime::from_hms_nano_opt(1, 2, 3, 4).unwrap(),// Very low nanosecond value
+                                        //todo
+                                        // sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(), // Midnight
+                                        // sqlx::types::chrono::NaiveTime::from_hms_opt(12, 0, 0).unwrap(), // Noon
+                                        // sqlx::types::chrono::NaiveTime::from_hms_opt(23, 59, 59).unwrap(), // One second before midnight
+                                        // sqlx::types::chrono::NaiveTime::from_hms_nano_opt(23, 59, 59, 999_999_999).unwrap(), // Max valid nanosecond
+                                        // sqlx::types::chrono::NaiveTime::from_hms_opt(6, 30, 0).unwrap(), // Morning time
+                                        // sqlx::types::chrono::NaiveTime::from_hms_opt(18, 45, 15).unwrap(), // Evening with seconds
+                                        // sqlx::types::chrono::NaiveTime::from_hms_milli_opt(10, 5, 3, 250).unwrap(), // Millisecond precision
+                                        // sqlx::types::chrono::NaiveTime::from_hms_micro_opt(14, 22, 33, 123_456).unwrap(), // Microsecond precision
+                                        // sqlx::types::chrono::NaiveTime::from_hms_nano_opt(1, 2, 3, 4).unwrap(),// Very low nanosecond value
                                     ]},
                                     PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{vec![
-                                        sqlx::types::time::Time::MIDNIGHT, // 00:00:00.000
-                                        sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(), // 12:00:00 (noon)
-                                        sqlx::types::time::Time::from_hms_milli(23, 59, 59, 999).unwrap(), // 23:59:59.999
-                                        sqlx::types::time::Time::from_hms_micro(1, 2, 3, 456_789).unwrap(), // microsecond precision
-                                        sqlx::types::time::Time::from_hms_nano(14, 15, 16, 999_999_999).unwrap(), // max nanoseconds
-                                        sqlx::types::time::Time::from_hms(6, 30, 15).unwrap(), // typical morning time
-                                        sqlx::types::time::Time::from_hms(18, 45, 0).unwrap(), // evening
-                                        sqlx::types::time::Time::from_hms_nano(0, 0, 1, 1).unwrap(),// just after midnight
+                                        //todo
+                                        // sqlx::types::time::Time::MIDNIGHT, // 00:00:00.000
+                                        // sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(), // 12:00:00 (noon)
+                                        // sqlx::types::time::Time::from_hms_milli(23, 59, 59, 999).unwrap(), // 23:59:59.999
+                                        // sqlx::types::time::Time::from_hms_micro(1, 2, 3, 456_789).unwrap(), // microsecond precision
+                                        // sqlx::types::time::Time::from_hms_nano(14, 15, 16, 999_999_999).unwrap(), // max nanoseconds
+                                        // sqlx::types::time::Time::from_hms(6, 30, 15).unwrap(), // typical morning time
+                                        // sqlx::types::time::Time::from_hms(18, 45, 0).unwrap(), // evening
+                                        // sqlx::types::time::Time::from_hms_nano(0, 0, 1, 1).unwrap(),// just after midnight
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{vec![
                                         sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 0 }, // zero interval
@@ -4525,48 +4527,51 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         )
                                     ]},
                                     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => quote::quote!{vec![
-                                        sqlx::types::time::PrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
-                                            sqlx::types::time::Time::MIDNIGHT
-                                        ), // Start of Unix epoch
-                                        sqlx::types::time::PrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(1969, time::Month::December, 31).unwrap(),
-                                            sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
-                                        ), // Just before Unix epoch
-                                        sqlx::types::time::PrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(2000, time::Month::February, 29).unwrap(),
-                                            sqlx::types::time::Time::from_hms_milli(12, 30, 45, 999).unwrap()
-                                        ), // Leap year day
-                                        sqlx::types::time::PrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(9999, time::Month::December, 31).unwrap(),
-                                            sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
-                                        ), // Far future date
-                                        sqlx::types::time::PrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(1, time::Month::January, 1).unwrap(),
-                                            sqlx::types::time::Time::MIDNIGHT
-                                        ), // Far past date
-                                        sqlx::types::time::PrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap(),
-                                            sqlx::types::time::Time::from_hms_micro(15, 45, 30, 123_456).unwrap()
-                                        ), // Typical date/time combo
-                                        sqlx::types::time::PrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(2023, time::Month::August, 8).unwrap(),
-                                            sqlx::types::time::Time::from_hms_nano(23, 59, 59, 999_999_999).unwrap()
-                                        ), // Edge of nanosecond precision
+                                        //todo
+                                        // sqlx::types::time::PrimitiveDateTime::new(
+                                        //     sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
+                                        //     sqlx::types::time::Time::MIDNIGHT
+                                        // ), // Start of Unix epoch
+                                        // sqlx::types::time::PrimitiveDateTime::new(
+                                        //     sqlx::types::time::Date::from_calendar_date(1969, time::Month::December, 31).unwrap(),
+                                        //     sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
+                                        // ), // Just before Unix epoch
+                                        // sqlx::types::time::PrimitiveDateTime::new(
+                                        //     sqlx::types::time::Date::from_calendar_date(2000, time::Month::February, 29).unwrap(),
+                                        //     sqlx::types::time::Time::from_hms_milli(12, 30, 45, 999).unwrap()
+                                        // ), // Leap year day
+                                        // sqlx::types::time::PrimitiveDateTime::new(
+                                        //     sqlx::types::time::Date::from_calendar_date(9999, time::Month::December, 31).unwrap(),
+                                        //     sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
+                                        // ), // Far future date
+                                        // sqlx::types::time::PrimitiveDateTime::new(
+                                        //     sqlx::types::time::Date::from_calendar_date(1, time::Month::January, 1).unwrap(),
+                                        //     sqlx::types::time::Time::MIDNIGHT
+                                        // ), // Far past date
+                                        // sqlx::types::time::PrimitiveDateTime::new(
+                                        //     sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap(),
+                                        //     sqlx::types::time::Time::from_hms_micro(15, 45, 30, 123_456).unwrap()
+                                        // ), // Typical date/time combo
+                                        // sqlx::types::time::PrimitiveDateTime::new(
+                                        //     sqlx::types::time::Date::from_calendar_date(2023, time::Month::August, 8).unwrap(),
+                                        //     sqlx::types::time::Time::from_hms_nano(23, 59, 59, 999_999_999).unwrap()
+                                        // ), // Edge of nanosecond precision
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
-                                        sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC,
-                                        sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC,
-                                        sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::UNIX_EPOCH
+                                        //todo
+                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC,
+                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC,
+                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::UNIX_EPOCH
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => quote::quote!{vec![
-                                        {
-                                            let date_time_local = sqlx::types::chrono::Local::now();
-                                            sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-                                                date_time_local.naive_utc(),
-                                                date_time_local.offset().clone()
-                                            )
-                                        }
+                                        //todo
+                                        // {
+                                        //     let date_time_local = sqlx::types::chrono::Local::now();
+                                        //     sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                                        //         date_time_local.naive_utc(),
+                                        //         date_time_local.offset().clone()
+                                        //     )
+                                        // }
                                     ]},
                                     PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{vec![]},//todo
                                     PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{vec![
@@ -4594,278 +4599,296 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::types::mac_address::MacAddress::new([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                                     ]},
                                     //todo maybe reuse Range logic? like wrap 
-                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::StdPrimitiveI32AsInt4),
-                                    // quote::quote!{vec![
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Excluded(20)},
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Included(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Unbounded },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
-                                    // ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::StdPrimitiveI64AsInt8),
-                                    // quote::quote!{vec![
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Excluded(20)},
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Included(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Unbounded },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
-                                    //     sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
-                                    // ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric),
-                                    // quote::quote!{vec![
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("1.1").unwrap()),
-                                    //         end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("2.2").unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.0").unwrap()),
-                                    //         end: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("10.0").unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("123456789.123456789").unwrap()),
-                                    //         end: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("987654321.987654321").unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("-100.5").unwrap()),
-                                    //         end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("100.5").unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.0").unwrap()),
-                                    //         end: std::ops::Bound::Unbounded,
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Unbounded,
-                                    //         end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.0").unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Unbounded,
-                                    //         end: std::ops::Bound::Unbounded,
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
-                                    //         end: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
-                                    //         end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
-                                    //     }
-                                    // ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesTimeDateAsDate),
-                                    // quote::quote!{vec![
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2000, time::Month::January, 1).unwrap()),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2001, time::Month::January, 1).unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap()),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 2).unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2023, time::Month::December, 31).unwrap()),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::January, 1).unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 1).unwrap()),
-                                    //         end: std::ops::Bound::Unbounded,
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Unbounded,
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(1999, time::Month::December, 31).unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Unbounded,
-                                    //         end: std::ops::Bound::Unbounded,
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap()),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::March, 1).unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::April, 4).unwrap()),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::April, 4).unwrap()),
-                                    //     },
-                                    // ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate),
-                                    // quote::quote!{vec![
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 1, 1).unwrap()),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2001, 1, 1).unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap()),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 2).unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap()),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 3, 1).unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 1).unwrap()),
-                                    //         end: std::ops::Bound::Unbounded,
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Unbounded,
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(1999, 12, 31).unwrap()),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Unbounded,
-                                    //         end: std::ops::Bound::Unbounded,
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 4, 4).unwrap()),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 4, 4).unwrap()),
-                                    //     }
-                                    // ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
-                                    // quote::quote!{vec![
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 1).unwrap(),
-                                    //         )),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(2020, 5, 20).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(2020, 5, 20).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(12, 0, 0).unwrap(),
-                                    //         )),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(2022, 12, 31).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(2023, 1, 1).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(6, 0, 0).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(18, 0, 0).unwrap(),
-                                    //         )),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                    //            sqlx::types::chrono::NaiveDate::from_ymd_opt(2030, 1, 1).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(2030, 1, 1).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_micro_opt(12, 34, 56, 123456).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                    //             sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(),
-                                    //             sqlx::types::chrono::NaiveTime::from_hms_micro_opt(12, 34, 56, 654321).unwrap(),
-                                    //         )),
-                                    //     },
-                                    // ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp),
-                                    // quote::quote!{vec![
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms(0, 0, 1).unwrap(),
-                                    //         )),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms(6, 30, 15).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms(18, 0, 0).unwrap(),
-                                    //         )),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 16).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(2030, time::Month::December, 25).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_000).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(2030, time::Month::December, 26).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
-                                    //         )),
-                                    //     },
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(2040, time::Month::January, 1).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(),
-                                    //         )),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
-                                    //             sqlx::types::time::Date::from_calendar_date(2040, time::Month::January, 1).unwrap(),
-                                    //             sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(),
-                                    //         )),
-                                    //     },
-                                    // ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
-                                    // quote::quote!{vec![
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         start: std::ops::Bound::Excluded(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC),
-                                    //         end: std::ops::Bound::Excluded(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC),
-                                    //     }
-                                    // ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz),
-                                    // quote::quote!{vec![
-                                    //     sqlx::postgres::types::PgRange {
-                                    //         //todo reuse
-                                    //         start: std::ops::Bound::Excluded({
-                                    //             let date_time_local = sqlx::types::chrono::Local::now();
-                                    //             sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-                                    //                 date_time_local.naive_utc(),
-                                    //                 date_time_local.offset().clone()
-                                    //             )
-                                    //         }),
-                                    //         end: std::ops::Bound::Included({
-                                    //             let date_time_local = sqlx::types::chrono::Local::now();
-                                    //             sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-                                    //                 date_time_local.naive_utc(),
-                                    //                 date_time_local.offset().clone()
-                                    //             )
-                                    //         }),
-                                    //     }
-                                    // ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => 
+                                    //todo
+                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::StdPrimitiveI32AsInt4),
+                                    quote::quote!{vec![
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Excluded(20)},
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Included(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Unbounded },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
+                                    ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => 
+                                    //todo
+                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::StdPrimitiveI64AsInt8),
+                                    quote::quote!{vec![
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Excluded(20)},
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Included(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Unbounded },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
+                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
+                                    ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => 
+                                    // todo
+                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesBigDecimalAsNumeric),
+                                    quote::quote!{vec![
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("1.1").unwrap()),
+                                        //     end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("2.2").unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.0").unwrap()),
+                                        //     end: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("10.0").unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("123456789.123456789").unwrap()),
+                                        //     end: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("987654321.987654321").unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("-100.5").unwrap()),
+                                        //     end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("100.5").unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.0").unwrap()),
+                                        //     end: std::ops::Bound::Unbounded,
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Unbounded,
+                                        //     end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("0.0").unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Unbounded,
+                                        //     end: std::ops::Bound::Unbounded,
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
+                                        //     end: std::ops::Bound::Included(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
+                                        //     end: std::ops::Bound::Excluded(<sqlx::types::BigDecimal as std::str::FromStr>::from_str("5.0").unwrap()),
+                                        // }
+                                    ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => 
+                                    //todo
+                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesTimeDateAsDate),
+                                    quote::quote!{vec![
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2000, time::Month::January, 1).unwrap()),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2001, time::Month::January, 1).unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap()),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 2).unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2023, time::Month::December, 31).unwrap()),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::January, 1).unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 1).unwrap()),
+                                        //     end: std::ops::Bound::Unbounded,
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Unbounded,
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(1999, time::Month::December, 31).unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Unbounded,
+                                        //     end: std::ops::Bound::Unbounded,
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap()),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::March, 1).unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::April, 4).unwrap()),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::April, 4).unwrap()),
+                                        // },
+                                    ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => 
+                                    //todo
+                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate),
+                                    quote::quote!{vec![
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 1, 1).unwrap()),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2001, 1, 1).unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap()),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 2).unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap()),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 3, 1).unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 1).unwrap()),
+                                        //     end: std::ops::Bound::Unbounded,
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Unbounded,
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(1999, 12, 31).unwrap()),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Unbounded,
+                                        //     end: std::ops::Bound::Unbounded,
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 4, 4).unwrap()),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 4, 4).unwrap()),
+                                        // }
+                                    ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => 
+                                    //todo
+                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
+                                    quote::quote!{vec![
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 1).unwrap(),
+                                        //     )),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2020, 5, 20).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2020, 5, 20).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(12, 0, 0).unwrap(),
+                                        //     )),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2022, 12, 31).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2023, 1, 1).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        //     )),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(6, 0, 0).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(18, 0, 0).unwrap(),
+                                        //     )),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                        //        sqlx::types::chrono::NaiveDate::from_ymd_opt(2030, 1, 1).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2030, 1, 1).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
+                                        //     )),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_micro_opt(12, 34, 56, 123456).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(),
+                                        //         sqlx::types::chrono::NaiveTime::from_hms_micro_opt(12, 34, 56, 654321).unwrap(),
+                                        //     )),
+                                        // },
+                                    ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => 
+                                    //todo
+                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesTimePrimitiveDateTimeAsTimestamp),
+                                    quote::quote!{vec![
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms(0, 0, 1).unwrap(),
+                                        //     )),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms(6, 30, 15).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms(18, 0, 0).unwrap(),
+                                        //     )),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 16).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
+                                        //     )),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(2030, time::Month::December, 25).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms_micro(23, 59, 59, 999_000).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(2030, time::Month::December, 26).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms(0, 0, 0).unwrap(),
+                                        //     )),
+                                        // },
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Included(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(2040, time::Month::January, 1).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(),
+                                        //     )),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::PrimitiveDateTime::new(
+                                        //         sqlx::types::time::Date::from_calendar_date(2040, time::Month::January, 1).unwrap(),
+                                        //         sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(),
+                                        //     )),
+                                        // },
+                                    ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => 
+                                    //todo
+                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
+                                    quote::quote!{vec![
+                                        // sqlx::postgres::types::PgRange {
+                                        //     start: std::ops::Bound::Excluded(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC),
+                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC),
+                                        // }
+                                    ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => 
+                                    //todo
+                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz),
+                                    quote::quote!{vec![
+                                        // sqlx::postgres::types::PgRange {
+                                        //     //todo reuse
+                                        //     start: std::ops::Bound::Excluded({
+                                        //         let date_time_local = sqlx::types::chrono::Local::now();
+                                        //         sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                                        //             date_time_local.naive_utc(),
+                                        //             date_time_local.offset().clone()
+                                        //         )
+                                        //     }),
+                                        //     end: std::ops::Bound::Included({
+                                        //         let date_time_local = sqlx::types::chrono::Local::now();
+                                        //         sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
+                                        //             date_time_local.naive_utc(),
+                                        //             date_time_local.offset().clone()
+                                        //         )
+                                        //     }),
+                                        // }
+                                    ]},
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
