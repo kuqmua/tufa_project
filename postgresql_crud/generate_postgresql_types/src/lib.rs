@@ -1090,7 +1090,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 generate_ident_stringified(&postgresql_type, &not_null_or_nullable, &postgresql_type_pattern).parse::<proc_macro2::TokenStream>().unwrap()
             };
             let ident = &generate_ident_token_stream(postgresql_type, not_null_or_nullable, postgresql_type_pattern);
-            
+            enum IsStandartNotNull {
+                True,
+                False
+            }
+            let is_standart_not_null = if let (
+                PostgresqlTypePattern::Standart,
+                postgresql_crud_macros_common::NotNullOrNullable::NotNull
+            ) = (
+                &postgresql_type_pattern,
+                &not_null_or_nullable
+            ) {
+                IsStandartNotNull::True
+            }
+            else {
+                IsStandartNotNull::False
+            };
             let generate_ident_standart_not_null_token_stream = |postgresql_type: &PostgresqlType| generate_ident_token_stream(postgresql_type, &postgresql_crud_macros_common::NotNullOrNullable::NotNull, &PostgresqlTypePattern::Standart);
             let ident_standart_not_null_upper_camel_case = generate_ident_standart_not_null_token_stream(postgresql_type);
             let ident_token_stream = {
@@ -1265,7 +1280,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #microseconds_snake_case #microseconds_token_stream
                 }}
             };
-
+            // enum ShouldImplSerdeSerialize {
+            //     True,
+            //     False
+            // }
+            // let should_impl_serde_serialize = match &is_standart_not_null {
+            //     IsStandartNotNull::True => ,
+            //     IsStandartNotNull::False => ShouldImplSerdeSerialize::False,
+            // };
+            // enum ShouldImplSerdeDeserialize {
+            //     True,
+            //     False
+            // }
+            // let should_impl_serde_deserialize = match &is_standart_not_null {
+            //     IsStandartNotNull::True => ,
+            //     IsStandartNotNull::False => ShouldImplSerdeDeserialize::False,
+            // };
             let (serde_serialize, serde_deserialize) = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
                 let sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_time_primitive_date_time_as_timestamp));
                 let sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_time_date_as_date));
