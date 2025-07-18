@@ -4561,7 +4561,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::UNIX_EPOCH
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => quote::quote!{vec![
-                                        //todo
+                                        //todo failed - precision is cut off
                                         // {
                                         //     let date_time_local = sqlx::types::chrono::Local::now();
                                         //     sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
@@ -4570,7 +4570,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         //     )
                                         // }
                                     ]},
-                                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{vec![]},//todo
+                                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => quote::quote!{vec![]},
                                     PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => quote::quote!{vec![
                                         sqlx::types::Uuid::new_v4()
                                     ]},
