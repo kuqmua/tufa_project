@@ -2770,7 +2770,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Serialize,},
                         postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new(),
                     };
-                    let maybe_derive_serde_deserialize_token_stream = match &serde_serialize {
+                    let maybe_derive_serde_deserialize_token_stream = match &serde_deserialize {
                         postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Deserialize,},
                         postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new(),
                     };
