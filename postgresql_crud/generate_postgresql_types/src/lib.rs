@@ -4407,9 +4407,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         1e-300,
                                         1e300
                                     ]},
-                                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => quote::quote!{vec![]},//todo
-                                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => quote::quote!{vec![]},//todo
-                                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{vec![]},//todo
+                                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => quote::quote!{vec![]},
+                                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => quote::quote!{vec![]},
+                                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{vec![]},
                                     PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{vec![
                                         #sqlx_postgres_types_pg_money_field_type_token_stream(std::primitive::i64::MIN),
                                         #sqlx_postgres_types_pg_money_field_type_token_stream(-1),
@@ -4433,19 +4433,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     ]},
                                     PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{vec![true, false]},
                                     PostgresqlType::StdStringStringAsText => quote::quote!{vec![
-                                        // "".to_string(), // empty
-                                        // "a".to_string(), // single character
-                                        // "Hello, world!".to_string(), // basic ASCII
-                                        // "   ".to_string(), // spaces only
-                                        // "\n\r\t".to_string(), // escape/control characters
-                                        // "1234567890".to_string(), // numeric string
-                                        // "😀".to_string(), // emoji
-                                        // "こんにちは".to_string(), // Japanese
-                                        // "🌍🚀✨ Rust 💖🦀".to_string(), // mixed emoji + text
-                                        // "null\0byte".to_string(), // contains null byte (valid in Rust)
-                                        // "a".repeat(1024), // long string (1 KB of 'a')
-                                        // "line1\nline2\nline3".to_string(), // multi-line
-                                        // String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
+                                        "".to_string(), // empty
+                                        "a".to_string(), // single character
+                                        "Hello, world!".to_string(), // basic ASCII
+                                        "   ".to_string(), // spaces only
+                                        "\n\r\t".to_string(), // escape/control characters
+                                        "1234567890".to_string(), // numeric string
+                                        "😀".to_string(), // emoji
+                                        "こんにちは".to_string(), // Japanese
+                                        "🌍🚀✨ Rust 💖🦀".to_string(), // mixed emoji + text
+                                        // "null\0byte".to_string(), // contains null byte (valid in Rust) //todo failed
+                                        "a".repeat(1024), // long string (1 KB of 'a')
+                                        "line1\nline2\nline3".to_string(), // multi-line
+                                        String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
                                     ]},
                                     PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{vec![
                                         vec![], // empty vector
