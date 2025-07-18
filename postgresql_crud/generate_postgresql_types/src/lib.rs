@@ -1280,22 +1280,94 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #microseconds_snake_case #microseconds_token_stream
                 }}
             };
-            // enum ShouldImplSerdeSerialize {
-            //     True,
-            //     False
-            // }
-            // let should_impl_serde_serialize = match &is_standart_not_null {
-            //     IsStandartNotNull::True => ,
-            //     IsStandartNotNull::False => ShouldImplSerdeSerialize::False,
-            // };
-            // enum ShouldImplSerdeDeserialize {
-            //     True,
-            //     False
-            // }
-            // let should_impl_serde_deserialize = match &is_standart_not_null {
-            //     IsStandartNotNull::True => ,
-            //     IsStandartNotNull::False => ShouldImplSerdeDeserialize::False,
-            // };
+            enum ShouldImplSerdeSerialize {
+                True,
+                False
+            }
+            let should_impl_serde_serialize = match &is_standart_not_null {
+                IsStandartNotNull::True => match &postgresql_type {
+                    PostgresqlType::StdPrimitiveI16AsInt2 => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::StdPrimitiveI32AsInt4 => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::StdPrimitiveI64AsInt8 => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::StdPrimitiveF32AsFloat4 => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::StdPrimitiveF64AsFloat8 => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxTypesBigDecimalAsNumeric => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::StdPrimitiveBoolAsBool => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::StdStringStringAsText => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxTypesTimeTimeAsTime => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxTypesTimeDateAsDate => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => ShouldImplSerdeSerialize::False,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ShouldImplSerdeSerialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => ShouldImplSerdeSerialize::True,
+                },
+                IsStandartNotNull::False => ShouldImplSerdeSerialize::False,
+            };
+            enum ShouldImplSerdeDeserialize {
+                True,
+                False
+            }
+            let should_impl_serde_deserialize = match &is_standart_not_null {
+                IsStandartNotNull::True => match &postgresql_type {
+                    PostgresqlType::StdPrimitiveI16AsInt2 => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::StdPrimitiveI32AsInt4 => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::StdPrimitiveI64AsInt8 => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::StdPrimitiveF32AsFloat4 => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::StdPrimitiveF64AsFloat8 => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxTypesBigDecimalAsNumeric => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::StdPrimitiveBoolAsBool => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::StdStringStringAsText => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxTypesTimeTimeAsTime => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxTypesTimeDateAsDate => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => ShouldImplSerdeDeserialize::False,
+                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ShouldImplSerdeDeserialize::True,
+                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => ShouldImplSerdeDeserialize::True,
+                },
+                IsStandartNotNull::False => ShouldImplSerdeDeserialize::False,
+            };
             let (serde_serialize, serde_deserialize) = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
                 let sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_time_primitive_date_time_as_timestamp));
                 let sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_time_date_as_date));
