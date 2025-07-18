@@ -4474,15 +4474,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         // sqlx::types::chrono::NaiveTime::from_hms_nano_opt(1, 2, 3, 4).unwrap(),// Very low nanosecond value //todo failed
                                     ]},
                                     PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{vec![
-                                        //todo
-                                        // sqlx::types::time::Time::MIDNIGHT, // 00:00:00.000
-                                        // sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(), // 12:00:00 (noon)
-                                        // sqlx::types::time::Time::from_hms_milli(23, 59, 59, 999).unwrap(), // 23:59:59.999
-                                        // sqlx::types::time::Time::from_hms_micro(1, 2, 3, 456_789).unwrap(), // microsecond precision
-                                        // sqlx::types::time::Time::from_hms_nano(14, 15, 16, 999_999_999).unwrap(), // max nanoseconds
-                                        // sqlx::types::time::Time::from_hms(6, 30, 15).unwrap(), // typical morning time
-                                        // sqlx::types::time::Time::from_hms(18, 45, 0).unwrap(), // evening
-                                        // sqlx::types::time::Time::from_hms_nano(0, 0, 1, 1).unwrap(),// just after midnight
+                                        sqlx::types::time::Time::MIDNIGHT, // 00:00:00.000
+                                        sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(), // 12:00:00 (noon)
+                                        sqlx::types::time::Time::from_hms_milli(23, 59, 59, 999).unwrap(), // 23:59:59.999
+                                        sqlx::types::time::Time::from_hms_micro(1, 2, 3, 456_789).unwrap(), // microsecond precision
+                                        // sqlx::types::time::Time::from_hms_nano(14, 15, 16, 999_999_999).unwrap(), // max nanoseconds //todo failed
+                                        sqlx::types::time::Time::from_hms(6, 30, 15).unwrap(), // typical morning time
+                                        sqlx::types::time::Time::from_hms(18, 45, 0).unwrap(), // evening
+                                        // sqlx::types::time::Time::from_hms_nano(0, 0, 1, 1).unwrap(),// just after midnight //todo failed
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{vec![
                                         sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 0 }, // zero interval
