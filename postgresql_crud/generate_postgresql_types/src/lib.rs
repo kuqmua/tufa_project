@@ -4525,41 +4525,40 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         )
                                     ]},
                                     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => quote::quote!{vec![
-                                        //todo
-                                        // sqlx::types::time::PrimitiveDateTime::new(
-                                        //     sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
-                                        //     sqlx::types::time::Time::MIDNIGHT
-                                        // ), // Start of Unix epoch
-                                        // sqlx::types::time::PrimitiveDateTime::new(
-                                        //     sqlx::types::time::Date::from_calendar_date(1969, time::Month::December, 31).unwrap(),
-                                        //     sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
-                                        // ), // Just before Unix epoch
-                                        // sqlx::types::time::PrimitiveDateTime::new(
-                                        //     sqlx::types::time::Date::from_calendar_date(2000, time::Month::February, 29).unwrap(),
-                                        //     sqlx::types::time::Time::from_hms_milli(12, 30, 45, 999).unwrap()
-                                        // ), // Leap year day
-                                        // sqlx::types::time::PrimitiveDateTime::new(
-                                        //     sqlx::types::time::Date::from_calendar_date(9999, time::Month::December, 31).unwrap(),
-                                        //     sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
-                                        // ), // Far future date
-                                        // sqlx::types::time::PrimitiveDateTime::new(
-                                        //     sqlx::types::time::Date::from_calendar_date(1, time::Month::January, 1).unwrap(),
-                                        //     sqlx::types::time::Time::MIDNIGHT
-                                        // ), // Far past date
-                                        // sqlx::types::time::PrimitiveDateTime::new(
-                                        //     sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap(),
-                                        //     sqlx::types::time::Time::from_hms_micro(15, 45, 30, 123_456).unwrap()
-                                        // ), // Typical date/time combo
+                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
+                                            sqlx::types::time::Time::MIDNIGHT
+                                        ), // Start of Unix epoch
+                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(1969, time::Month::December, 31).unwrap(),
+                                            sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
+                                        ), // Just before Unix epoch
+                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2000, time::Month::February, 29).unwrap(),
+                                            sqlx::types::time::Time::from_hms_milli(12, 30, 45, 999).unwrap()
+                                        ), // Leap year day
+                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(9999, time::Month::December, 31).unwrap(),
+                                            sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
+                                        ), // Far future date
+                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(1, time::Month::January, 1).unwrap(),
+                                            sqlx::types::time::Time::MIDNIGHT
+                                        ), // Far past date
+                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap(),
+                                            sqlx::types::time::Time::from_hms_micro(15, 45, 30, 123_456).unwrap()
+                                        ), // Typical date/time combo
+                                        //todo failed
                                         // sqlx::types::time::PrimitiveDateTime::new(
                                         //     sqlx::types::time::Date::from_calendar_date(2023, time::Month::August, 8).unwrap(),
                                         //     sqlx::types::time::Time::from_hms_nano(23, 59, 59, 999_999_999).unwrap()
                                         // ), // Edge of nanosecond precision
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
-                                        //todo
-                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC,
-                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC,
-                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::UNIX_EPOCH
+                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC, //todo failed
+                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC, //todo failed
+                                        sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::UNIX_EPOCH
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => quote::quote!{vec![
                                         //todo
