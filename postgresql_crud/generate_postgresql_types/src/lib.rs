@@ -4372,13 +4372,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{vec![std::primitive::i32::MIN, -1, 0, 1, std::primitive::i32::MAX]},
                                     PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{vec![std::primitive::i64::MIN, -1, 0, 1, std::primitive::i64::MAX]},
                                     PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{vec![
-                                        // std::primitive::f32::EPSILON,
-                                        // std::primitive::f32::INFINITY,
-                                        // std::primitive::f32::MAX,
-                                        // std::primitive::f32::MIN,
-                                        // std::primitive::f32::MIN_POSITIVE,
-                                        // std::primitive::f32::NAN,//todo check with .is_nan()
-                                        // std::primitive::f32::NEG_INFINITY,
+                                        std::primitive::f32::EPSILON,
+                                        // std::primitive::f32::INFINITY,//todo failed
+                                        std::primitive::f32::MAX,
+                                        std::primitive::f32::MIN,
+                                        std::primitive::f32::MIN_POSITIVE,
+                                        // std::primitive::f32::NAN,//todo failed - check with .is_nan()
+                                        // std::primitive::f32::NEG_INFINITY,//todo failed
                                         -1e30,
                                         -1e-30,
                                         -1.0,
@@ -4391,13 +4391,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         1e30
                                     ]},
                                     PostgresqlType::StdPrimitiveF64AsFloat8 => quote::quote!{vec![
-                                        // std::primitive::f64::EPSILON,
-                                        // std::primitive::f64::INFINITY,
-                                        // std::primitive::f64::MAX,
-                                        // std::primitive::f64::MIN,
-                                        // std::primitive::f64::MIN_POSITIVE,
-                                        // std::primitive::f64::NAN,//todo check with .is_nan()
-                                        // std::primitive::f64::NEG_INFINITY,
+                                        std::primitive::f64::EPSILON,
+                                        // std::primitive::f64::INFINITY,//todo failed
+                                        std::primitive::f64::MAX,
+                                        std::primitive::f64::MIN,
+                                        std::primitive::f64::MIN_POSITIVE,
+                                        // std::primitive::f64::NAN,//todo failed - check with .is_nan()
+                                        // std::primitive::f64::NEG_INFINITY,//todo failed
                                         -1e300,
                                         -1e-300,
                                         -1.0,
