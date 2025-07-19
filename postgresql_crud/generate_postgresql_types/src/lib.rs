@@ -1380,7 +1380,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_origin_token_stream = {
-                let (serde_serialize, serde_deserialize) = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
+                let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
                     let sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(   &sqlx_types_time_primitive_date_time_as_timestamp));
                     let sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_time_date_as_date));
                     let sqlx_types_big_decimal_as_not_null_numeric_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_big_decimal_as_numeric));
@@ -1433,7 +1433,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let generate_std_collections_bound_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {std::collections::Bound<#type_token_stream>}
                     };
-                    let serde_serialize = {
+                    let serde_serialize_derive_or_impl = {
                         let generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 const _: () = {
@@ -1597,7 +1597,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     };
-                    let serde_deserialize = {
+                    let serde_deserialize_derive_or_impl = {
                         let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                         let postgresql_type_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
                         let struct_visitor_token_stream = quote::quote! {
@@ -2686,7 +2686,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }),
                         }
                     };
-                    (serde_serialize, serde_deserialize)
+                    (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl)
                 } else {
                     (postgresql_crud_macros_common::DeriveOrImpl::Derive, postgresql_crud_macros_common::DeriveOrImpl::Derive)
                 };
@@ -2737,11 +2737,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         IsNotNullStandartCanBePrimaryKey::True => quote::quote! {Ord, Eq,},
                         IsNotNullStandartCanBePrimaryKey::False => proc_macro2::TokenStream::new(),
                     };
-                    let maybe_derive_serde_serialize_token_stream = match &serde_serialize {
+                    let maybe_derive_serde_serialize_token_stream = match &serde_serialize_derive_or_impl {
                         postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Serialize,},
                         postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new(),
                     };
-                    let maybe_derive_serde_deserialize_token_stream = match &serde_deserialize {
+                    let maybe_derive_serde_deserialize_token_stream = match &serde_deserialize_derive_or_impl {
                         postgresql_crud_macros_common::DeriveOrImpl::Derive => quote::quote! {serde::Deserialize,},
                         postgresql_crud_macros_common::DeriveOrImpl::Impl(_) => proc_macro2::TokenStream::new(),
                     };
@@ -2917,9 +2917,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         if let (
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                             PostgresqlTypePattern::Standart,
+                            postgresql_crud_macros_common::DeriveOrImpl::Impl(_),
                         ) = (
                             &not_null_or_nullable,
-                            &postgresql_type_pattern
+                            &postgresql_type_pattern,
+                            &serde_deserialize_derive_or_impl
                         ) {
                             match &postgresql_type {
                                 PostgresqlType::StdPrimitiveI16AsInt2 => pub_fn_new_token_stream,
@@ -3029,11 +3031,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 } else {
                     proc_macro2::TokenStream::new()
                 };
-                let maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream = match serde_serialize {
+                let maybe_impl_serde_serialize_for_ident_standart_not_null_origin_token_stream = match serde_serialize_derive_or_impl {
                     postgresql_crud_macros_common::DeriveOrImpl::Derive => proc_macro2::TokenStream::new(),
                     postgresql_crud_macros_common::DeriveOrImpl::Impl(value) => value,
                 };
-                let maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream = match serde_deserialize {
+                let maybe_impl_serde_deserialize_for_ident_standart_not_null_origin_token_stream = match serde_deserialize_derive_or_impl {
                     postgresql_crud_macros_common::DeriveOrImpl::Derive => proc_macro2::TokenStream::new(),
                     postgresql_crud_macros_common::DeriveOrImpl::Impl(value) => value,
                 };
