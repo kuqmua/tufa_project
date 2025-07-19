@@ -1264,7 +1264,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #microseconds_snake_case #microseconds_token_stream
                 }}
             };
-            let impl_new_for_ident_origin_type_token_stream = match &element.postgresql_type_pattern {
+            let ident_inner_type_token_stream = match &element.postgresql_type_pattern {
                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#field_type_standart_not_null>},
@@ -1380,6 +1380,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_origin_token_stream = {
+                let ident_standart_not_null_origin_try_new_error_named_upper_camel_case = naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
                 let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
                     let sqlx_types_time_primitive_date_time_as_not_null_timestamp_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(   &sqlx_types_time_primitive_date_time_as_timestamp));
                     let sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_time_date_as_date));
@@ -2909,7 +2910,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             };
                             quote::quote! {
-                                pub fn new(value: #impl_new_for_ident_origin_type_token_stream) -> Self {
+                                pub fn new(value: #ident_inner_type_token_stream) -> Self {
                                     Self(#content_token_stream)
                                 }
                             }
@@ -2936,20 +2937,35 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlType::SqlxTypesBigDecimalAsNumeric => pub_fn_new_token_stream,
                                 PostgresqlType::StdPrimitiveBoolAsBool => pub_fn_new_token_stream,
                                 PostgresqlType::StdStringStringAsText => {
-                                    // #[derive(serde::Deserialize)]
-                                    // pub struct StdStringStringAsNotNullTextOrigin(std::string::String);
-                                    
-                                    // let ident_origin_try_new_error_named_token_stream = {
-                                    //     quote::quote! {
-
-                                    //     }
-                                    // };
-                                    // quote::quote! {
-                                    //     pub fn try_new(value: #impl_new_for_ident_origin_type_token_stream) -> Self {
-                                    //         Self(#content_token_stream)
-                                    //     }
-                                    // }
-                                    pub_fn_new_token_stream
+                                    let contains_null_byte_upper_camel_case = naming::ContainsNullByteUpperCamelCase;
+                                    let ident_standart_not_null_origin_try_new_error_named_token_stream = {
+                                        quote::quote! {
+                                            #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
+                                            pub enum #ident_standart_not_null_origin_try_new_error_named_upper_camel_case {
+                                                #contains_null_byte_upper_camel_case {
+                                                    #[eo_to_std_string_string_serialize_deserialize]
+                                                    #value_snake_case: #ident_inner_type_token_stream,
+                                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                                },
+                                            }
+                                        }
+                                    };
+                                    let pub_fn_try_new_token_stream = quote::quote! {
+                                        pub fn try_new(#value_snake_case: #ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                                            if #value_snake_case.find('\0').is_some() {
+                                                Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#contains_null_byte_upper_camel_case {
+                                                    #value_snake_case,
+                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                })
+                                            } else {
+                                                Ok(Self(#value_snake_case))
+                                            }
+                                        }
+                                    };
+                                    quote::quote! {
+                                        #ident_standart_not_null_origin_try_new_error_named_token_stream
+                                        #pub_fn_try_new_token_stream
+                                    }
                                 },
                                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => pub_fn_new_token_stream,
                                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => pub_fn_new_token_stream,
@@ -3962,7 +3978,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 let impl_ident_read_token_stream = {
                     let pub_fn_new_token_stream = quote::quote! {
-                        pub fn new(#value_snake_case: #impl_new_for_ident_origin_type_token_stream) -> Self {
+                        pub fn new(#value_snake_case: #ident_inner_type_token_stream) -> Self {
                             Self(#ident_origin_upper_camel_case::new(#value_snake_case))
                         }
                     };
@@ -4088,7 +4104,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
             let ident_read_inner_token_stream = quote::quote!{
-                pub type #ident_read_inner_upper_camel_case = #impl_new_for_ident_origin_type_token_stream;
+                pub type #ident_read_inner_upper_camel_case = #ident_inner_type_token_stream;
             };
             let ident_update_upper_camel_case = naming::parameter::SelfUpdateUpperCamelCase::from_tokens(&ident);
             let ident_update_token_stream = macros_helpers::generate_pub_type_alias_token_stream::generate_pub_type_alias_token_stream(&ident_update_upper_camel_case, &ident_origin_upper_camel_case);
