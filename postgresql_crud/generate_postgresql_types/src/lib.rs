@@ -4136,12 +4136,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     //todo maybe put into test module?
-                    let pub_fn_new_or_try_new_unwraped_for_test_token_stream = {
+                    let maybe_pub_fn_new_or_try_new_unwraped_for_test_token_stream = if let (
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull,
+                        PostgresqlTypePattern::Standart
+                    ) = (&not_null_or_nullable, &postgresql_type_pattern) {
                         quote::quote!{
                             pub fn #new_or_try_new_unwraped_for_test_snake_case(#value_snake_case: #ident_inner_type_token_stream) -> Self {
                                 Self(#ident_standart_not_null_origin_upper_camel_case::#new_or_try_new_unwraped_for_test_snake_case(#value_snake_case))
                             }
                         }
+                    }
+                    else {
+                        proc_macro2::TokenStream::new()
                     };
                     //todo maybe need, maybe not
                     // let maybe_pub_fn_normalize_to_postgresql_range_token_stream = if let (
@@ -4187,7 +4193,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     quote::quote! {
                         impl #ident_read_upper_camel_case {
                             #pub_fn_new_or_try_new_token_stream
-                            #pub_fn_new_or_try_new_unwraped_for_test_token_stream
+                            #maybe_pub_fn_new_or_try_new_unwraped_for_test_token_stream
                             // #maybe_pub_fn_normalize_to_postgresql_range_token_stream
                         }
                     }
@@ -4718,7 +4724,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(), // Midnight
                                         sqlx::types::chrono::NaiveTime::from_hms_opt(12, 0, 0).unwrap(), // Noon
                                         sqlx::types::chrono::NaiveTime::from_hms_opt(23, 59, 59).unwrap(), // One second before midnight
-                                        // sqlx::types::chrono::NaiveTime::from_hms_nano_opt(23, 59, 59, 999_999_999).unwrap(), // Max valid nanosecond //todo failed
+                                        sqlx::types::chrono::NaiveTime::from_hms_nano_opt(23, 59, 59, 999_999_999).unwrap(), // Max valid nanosecond //todo failed
                                         sqlx::types::chrono::NaiveTime::from_hms_opt(6, 30, 0).unwrap(), // Morning time
                                         sqlx::types::chrono::NaiveTime::from_hms_opt(18, 45, 15).unwrap(), // Evening with seconds
                                         sqlx::types::chrono::NaiveTime::from_hms_milli_opt(10, 5, 3, 250).unwrap(), // Millisecond precision
