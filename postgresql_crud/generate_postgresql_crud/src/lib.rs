@@ -3658,6 +3658,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_ident = &element.field_ident;
             quote::quote! {#field_ident: None}
         });
+        let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
         //todo instead of first dropping table - check if its not exists. if exists test must fail
         let update_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
@@ -3707,7 +3708,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {
                 for #element_snake_case in #field_type_as_postgresql_type_token_stream #test_cases_snake_case() {
                     let some_value_update = Some(postgresql_crud::Value {
-                        value: #field_type_as_postgresql_type_update_token_stream::new(#element_snake_case.clone()),
+                        value: #field_type_as_postgresql_type_update_token_stream::#new_or_try_new_unwraped_for_test_snake_case(#element_snake_case.clone()),
                     });
                     let mut vec_of_primary_keys_returned_from_update_many = super::#ident::try_update_many(
                         &url,
@@ -3765,7 +3766,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .await
                     .unwrap();
                     let some_value_field_ident_read = Some(postgresql_crud::Value {
-                        value: #field_type_as_postgresql_type_read_token_stream::new(#element_snake_case),
+                        value: #field_type_as_postgresql_type_read_token_stream::#new_or_try_new_unwraped_for_test_snake_case(#element_snake_case),
                     });
                     assert_eq!(
                         vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![

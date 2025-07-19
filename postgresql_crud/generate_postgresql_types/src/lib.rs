@@ -1059,6 +1059,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
             let test_cases_snake_case = naming::TestCasesSnakeCase;
             let error_snake_case = naming::ErrorSnakeCase;
+            let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
 
             let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
             let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
@@ -3116,9 +3117,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     };
+                    //todo maybe move to test module
+                    let pub_fn_new_or_try_new_unwraped_for_test_token_stream = {
+                        let content_token_stream = if let PostgresqlTypeStandartNotNullExplicitDeserializationInitializationWithTryNew::Some(_) = &postgresql_type_standart_not_null_explicit_deserialization_initialization_with_try_new {
+                            quote::quote! {try_new(#value_snake_case).unwrap()}
+                        }
+                        else {
+                            quote::quote! {new(#value_snake_case)}
+                        };
+                        quote::quote! {
+                            pub fn #new_or_try_new_unwraped_for_test_snake_case(#value_snake_case: #ident_inner_type_token_stream) -> Self {
+                                Self::#content_token_stream
+                            }
+                        }
+                    };
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
                             #pub_fn_new_or_try_new_token_stream
+                            #pub_fn_new_or_try_new_unwraped_for_test_token_stream
                         }
                     }
                 };
@@ -4098,8 +4114,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let impl_ident_read_token_stream = {
-                    let pub_fn_new_or_try_new_token_stream = 
-                    if let PostgresqlTypeStandartNotNullExplicitDeserializationInitializationWithTryNew::Some(postgresql_type_initialization_with_try_new) = &postgresql_type_standart_not_null_explicit_deserialization_initialization_with_try_new {
+                    let pub_fn_new_or_try_new_token_stream = if let PostgresqlTypeStandartNotNullExplicitDeserializationInitializationWithTryNew::Some(postgresql_type_initialization_with_try_new) = &postgresql_type_standart_not_null_explicit_deserialization_initialization_with_try_new {
                         match &postgresql_type_initialization_with_try_new {
                             PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => {
                                 quote::quote! {
@@ -4117,6 +4132,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         quote::quote! {
                             pub fn new(#value_snake_case: #ident_inner_type_token_stream) -> Self {
                                 Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                            }
+                        }
+                    };
+                    //todo maybe put into test module?
+                    let pub_fn_new_or_try_new_unwraped_for_test_token_stream = {
+                        quote::quote!{
+                            pub fn #new_or_try_new_unwraped_for_test_snake_case(#value_snake_case: #ident_inner_type_token_stream) -> Self {
+                                Self(#ident_standart_not_null_origin_upper_camel_case::#new_or_try_new_unwraped_for_test_snake_case(#value_snake_case))
                             }
                         }
                     };
@@ -4164,6 +4187,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     quote::quote! {
                         impl #ident_read_upper_camel_case {
                             #pub_fn_new_or_try_new_token_stream
+                            #pub_fn_new_or_try_new_unwraped_for_test_token_stream
                             // #maybe_pub_fn_normalize_to_postgresql_range_token_stream
                         }
                     }
@@ -4671,7 +4695,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         "😀".to_string(), // emoji
                                         "こんにちは".to_string(), // Japanese
                                         "🌍🚀✨ Rust 💖🦀".to_string(), // mixed emoji + text
-                                        // "null\0byte".to_string(), // contains null byte (valid in Rust) //todo failed
                                         "a".repeat(1024), // long string (1 KB of 'a')
                                         "line1\nline2\nline3".to_string(), // multi-line
                                         String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
