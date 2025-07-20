@@ -793,7 +793,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     enum PostgresqlTypeInitializationWithTryNew {
         StdStringStringAsText,
-        // SqlxTypesChronoNaiveTimeAsTime
     }
     impl std::convert::TryFrom<&PostgresqlType> for PostgresqlTypeInitializationWithTryNew {
         type Error = ();
@@ -813,7 +812,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::StdStringStringAsText => Ok(Self::StdStringStringAsText),
                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Err(()),
-                // Ok(Self::SqlxTypesChronoNaiveTimeAsTime),
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Err(()),
                 PostgresqlType::SqlxTypesTimeDateAsDate => Err(()),
@@ -2941,7 +2939,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let contains_null_byte_upper_camel_case = naming::ContainsNullByteUpperCamelCase;
-                // let invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case = naming::InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase;
                 let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if let PostgresqlTypeStandartNotNullExplicitDeserializationInitializationWithTryNew::Some(postgresql_type_initialization_with_try_new) = postgresql_type_standart_not_null_explicit_deserialization_initialization_with_try_new {
                     let content_token_stream = match &postgresql_type_initialization_with_try_new {
                         PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => {
@@ -2953,21 +2950,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         }
-                        // PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveTimeAsTime => {
-                        //     //todo initialize with better values 
-                        //     // hour: u32,
-                        //     // min: u32,
-                        //     // sec: u32,
-                        //     // micro: u32,
-                        //     // hour must be 0..59 or 1..60 etc.  why u32?
-                        //     quote::quote! {
-                        //         // #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
-                        //         //     #[eo_to_std_string_string_serialize_deserialize]
-                        //         //     #value_snake_case: #ident_inner_type_token_stream,
-                        //         //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                        //         // }
-                        //     }
-                        // }
                     };
                     quote::quote! {
                         #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]

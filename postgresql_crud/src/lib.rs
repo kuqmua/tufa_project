@@ -2345,6 +2345,12 @@ impl Hour {
             })
         }
     }
+    pub fn get(&self) -> std::primitive::u8 {
+        self.0
+    }
+    pub fn into_std_primitive_u32(&self) -> std::primitive::u32 {
+        self.0.into()
+    }
 }
 const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -2450,6 +2456,12 @@ impl Minute {
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
+    }
+    pub fn get(&self) -> std::primitive::u8 {
+        self.0
+    }
+    pub fn into_std_primitive_u32(&self) -> std::primitive::u32 {
+        self.0.into()
     }
 }
 const _: () = {
@@ -2557,6 +2569,12 @@ impl Second {
             })
         }
     }
+    pub fn get(&self) -> std::primitive::u8 {
+        self.0
+    }
+    pub fn into_std_primitive_u32(&self) -> std::primitive::u32 {
+        self.0.into()
+    }
 }
 const _: () = {
     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -2662,6 +2680,12 @@ impl Microsecond {
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
+    }
+    pub fn get(&self) -> std::primitive::u32 {
+        self.0
+    }
+    pub fn into_std_primitive_u32(&self) -> std::primitive::u32 {
+        self.0.into()
     }
 }
 const _: () = {
