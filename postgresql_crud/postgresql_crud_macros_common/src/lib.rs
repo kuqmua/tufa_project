@@ -780,6 +780,27 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
         }
     }
 }
+
+pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
+    import_path: &ImportPath,
+    ident: &dyn quote::ToTokens,
+    test_cases_content_token_stream: &dyn quote::ToTokens
+) -> proc_macro2::TokenStream {
+    let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
+    let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
+    let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
+    let test_cases_snake_case = naming::TestCasesSnakeCase;
+    let element_upper_camel_case = naming::ElementUpperCamelCase;
+    quote::quote! {
+        impl #import_path::tests::#postgresql_type_test_cases_upper_camel_case for #ident {
+            type #element_upper_camel_case = Self;
+            fn #test_cases_snake_case() -> std::vec::Vec<<Self::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_inner_upper_camel_case> {
+                #test_cases_content_token_stream
+            }
+        }
+    }
+}
+
 #[derive(Debug, Clone)]
 pub enum IsPrimaryKeyUnderscore {
     True,

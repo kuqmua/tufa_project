@@ -1,6 +1,7 @@
 pub mod postgresql_json_type;
 pub mod postgresql_type;
 pub mod where_element_filters;
+pub mod tests;
 
 pub use futures::TryStreamExt;
 pub use http_logic;
