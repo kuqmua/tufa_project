@@ -3663,7 +3663,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let update_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type = &element.syn_field.ty;
-            let field_type_as_postgresql_type_token_stream = generate_as_postgresql_type_token_stream(&field_type);
             let field_type_as_postgresql_type_update_token_stream = generate_as_postgresql_type_update_token_stream(
                 &field_type
             );
@@ -3705,8 +3704,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let try_read_one_result_different_after_try_update_one_for_field_ident_field_type_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                 &format!("try_read_one result different after try_update_one for {field_ident}: {}", quote::quote!{#field_type})
             );
+            let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
             quote::quote! {
-                for #element_snake_case in #field_type_as_postgresql_type_token_stream #test_cases_snake_case() {
+                for #element_snake_case in <#field_type as postgresql_crud::tests::#postgresql_type_test_cases_upper_camel_case>:: #test_cases_snake_case() {
                     let some_value_update = Some(postgresql_crud::Value {
                         value: #field_type_as_postgresql_type_update_token_stream::#new_or_try_new_unwraped_for_test_snake_case(#element_snake_case.clone()),
                     });
