@@ -3176,7 +3176,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &update_query_part_token_stream,
                 &postgresql_crud_macros_common::IsUpdateQueryBindMutable::False,
                 &update_query_bind_token_stream,
-                &quote::quote!{vec![]}//todo
             );
             match &trait_gen {
                 TraitGen::PostgresqlTypeAndPostgresqlJsonType => (
