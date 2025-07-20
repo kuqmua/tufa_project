@@ -2348,7 +2348,7 @@ impl Hour {
     pub fn get(&self) -> std::primitive::u8 {
         self.0
     }
-    pub fn into_std_primitive_u32(&self) -> std::primitive::u32 {
+    pub fn to_std_primitive_u32(&self) -> std::primitive::u32 {
         self.0.into()
     }
 }
@@ -2434,6 +2434,11 @@ const _: () = {
         }
     }
 };
+impl error_occurence_lib::ToStdStringString for Hour {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
 pub struct Minute(std::primitive::u8);
@@ -2460,7 +2465,7 @@ impl Minute {
     pub fn get(&self) -> std::primitive::u8 {
         self.0
     }
-    pub fn into_std_primitive_u32(&self) -> std::primitive::u32 {
+    pub fn to_std_primitive_u32(&self) -> std::primitive::u32 {
         self.0.into()
     }
 }
@@ -2546,6 +2551,11 @@ const _: () = {
         }
     }
 };
+impl error_occurence_lib::ToStdStringString for Minute {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
 pub struct Second(std::primitive::u8);
@@ -2572,7 +2582,7 @@ impl Second {
     pub fn get(&self) -> std::primitive::u8 {
         self.0
     }
-    pub fn into_std_primitive_u32(&self) -> std::primitive::u32 {
+    pub fn to_std_primitive_u32(&self) -> std::primitive::u32 {
         self.0.into()
     }
 }
@@ -2658,6 +2668,11 @@ const _: () = {
         }
     }
 };
+impl error_occurence_lib::ToStdStringString for Second {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
 pub struct Microsecond(std::primitive::u32);
@@ -2684,7 +2699,7 @@ impl Microsecond {
     pub fn get(&self) -> std::primitive::u32 {
         self.0
     }
-    pub fn into_std_primitive_u32(&self) -> std::primitive::u32 {
+    pub fn to_std_primitive_u32(&self) -> std::primitive::u32 {
         self.0.into()
     }
 }
@@ -2770,6 +2785,12 @@ const _: () = {
         }
     }
 };
+impl error_occurence_lib::ToStdStringString for Microsecond {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
+
 
 ///////////
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, schemars::JsonSchema)]

@@ -641,7 +641,12 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["test", "cases"],
     ["contains", "null", "byte"],
     ["new", "or", "try", "new", "unwraped", "for", "test"],
-    ["postgresql", "type", "test", "cases"]
+    ["postgresql", "type", "test", "cases"],
+    ["hour"],
+    ["minute"],
+    ["second"],
+    ["microsecond"],
+    ["invalid", "hour", "or", "minute", "or", "second", "or", "microsecond"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
