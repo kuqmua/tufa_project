@@ -2428,3 +2428,321 @@ const _: () = {
         }
     }
 };
+
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
+pub struct Minute(std::primitive::u8);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum MinuteTryNewErrorNamed {
+    MinuteOutOfRange {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u8,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl Minute {
+    pub fn try_new(value: std::primitive::u8) -> Result<Self, MinuteTryNewErrorNamed> {
+        if value <= 59 {
+            Ok(Self(value))
+        }
+        else {
+            Err(MinuteTryNewErrorNamed::MinuteOutOfRange {
+                value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for Minute {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<Minute>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = Minute;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct Minute",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(
+                    self,
+                    __e: __E,
+                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::primitive::u8 = <std::primitive::u8 as _serde::Deserialize>::deserialize(
+                        __e,
+                    )?;
+                    match Minute::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::primitive::u8,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"tuple struct Minute with 1 element",
+                                ),
+                            );
+                        }
+                    };
+                    match Minute::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "Minute",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<Minute>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
+pub struct Second(std::primitive::u8);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum SecondTryNewErrorNamed {
+    SecondOutOfRange {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u8,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl Second {
+    pub fn try_new(value: std::primitive::u8) -> Result<Self, SecondTryNewErrorNamed> {
+        if value <= 59 {
+            Ok(Self(value))
+        }
+        else {
+            Err(SecondTryNewErrorNamed::SecondOutOfRange {
+                value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for Second {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<Second>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = Second;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct Second",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(
+                    self,
+                    __e: __E,
+                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::primitive::u8 = <std::primitive::u8 as _serde::Deserialize>::deserialize(
+                        __e,
+                    )?;
+                    match Second::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::primitive::u8,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"tuple struct Second with 1 element",
+                                ),
+                            );
+                        }
+                    };
+                    match Second::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "Second",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<Second>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
+pub struct Microsecond(std::primitive::u32);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum MicrosecondTryNewErrorNamed {
+    MicrosecondOutOfRange {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl Microsecond {
+    pub fn try_new(value: std::primitive::u32) -> Result<Self, MicrosecondTryNewErrorNamed> {
+        if value <= 999_999 {
+            Ok(Self(value))
+        }
+        else {
+            Err(MicrosecondTryNewErrorNamed::MicrosecondOutOfRange {
+                value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for Microsecond {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<Microsecond>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = Microsecond;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct Microsecond",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(
+                    self,
+                    __e: __E,
+                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(
+                        __e,
+                    )?;
+                    match Microsecond::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        std::primitive::u32,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"tuple struct Microsecond with 1 element",
+                                ),
+                            );
+                        }
+                    };
+                    match Microsecond::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "Microsecond",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<Microsecond>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
