@@ -1293,7 +1293,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let sqlx_postgres_types_pg_interval_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval.field_type_token_stream();
 
             let time_month_token_stream = quote::quote! {time::Month};
-            let crate_postgresql_type_postgresql_type_num_bigint_big_int_token_stream = quote::quote! {crate::postgresql_type::NumBigintBigInt};
+            let crate_postgresql_type_postgresql_type_num_bigint_big_int_token_stream = quote::quote! {crate::NumBigintBigInt};
             let sqlx_postgres_types_pg_range_token_stream = quote::quote! {sqlx::postgres::types::PgRange};
             let sqlx_types_time_time_midnight_token_stream = token_patterns::SqlxTypesTimeTimeMidnight;
 

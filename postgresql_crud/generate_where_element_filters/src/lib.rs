@@ -698,7 +698,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                         should_add_declaration_of_struct_ident_generic_false.clone(),
                         quote::quote! {
                             #maybe_dimensions_declaration_token_stream
-                            pub encode_format: crate::postgresql_type::EncodeFormat,
+                            pub encode_format: crate::EncodeFormat,
                             pub encoded_string_representation: std::string::String,
                         },
                         quote::quote!{
