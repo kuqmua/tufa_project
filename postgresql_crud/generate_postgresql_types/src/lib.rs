@@ -4961,7 +4961,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
                                         // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC, //todo failed
                                         // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC, //todo failed
-                                        sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::UNIX_EPOCH
+                                        sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::UNIX_EPOCH,
+                                        // sqlx::types::chrono::DateTime::
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => quote::quote!{vec![
                                         //todo failed - precision is cut off
