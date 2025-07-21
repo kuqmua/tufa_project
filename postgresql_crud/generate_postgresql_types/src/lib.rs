@@ -295,7 +295,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
                 let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
-                let sqlx_types_time_primitive_date_time_stringified = "sqlx::types::time::PrimitiveDateTime".to_string();
+                let sqlx_types_time_primitive_date_time_stringified = "crate::SqlxTypesTimePrimitiveDateTime".to_string();
                 let (sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified, sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified) = {
                     let wrap_into_sqlx_types_chrono_date_time_stringified = |value: &dyn std::fmt::Display| format!("sqlx::types::chrono::DateTime<{value}>");
                     (wrap_into_sqlx_types_chrono_date_time_stringified(&"sqlx::types::chrono::Utc"), wrap_into_sqlx_types_chrono_date_time_stringified(&"sqlx::types::chrono::Local"))
@@ -3252,14 +3252,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         1,
                     ).unwrap()//todo
                 };
-
-                let sqlx_types_time_primitive_date_time_new_token_stream = {
-                    let sqlx_types_time_time_midnight_token_stream = token_patterns::SqlxTypesTimeTimeMidnight;
-                    quote::quote! {#sqlx_types_time_primitive_date_time_as_timestamp_field_type_token_stream::new(
-                        #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-                        #sqlx_types_time_time_midnight_token_stream,
-                    )}
-                };
                 // fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
                 //     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
                 // }
@@ -3300,7 +3292,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &core_default_default_default_token_stream,
-                                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => &sqlx_types_time_primitive_date_time_new_token_stream,
+                                        PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
                                         | PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz
                                         | PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql
@@ -4902,35 +4894,69 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         )
                                     ]},
                                     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => quote::quote!{vec![
-                                        sqlx::types::time::PrimitiveDateTime::new(
+                                        crate::SqlxTypesTimePrimitiveDateTime::new(
                                             sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
-                                            sqlx::types::time::Time::MIDNIGHT
-                                        ), // Start of Unix epoch
-                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            crate::SqlxTypesTimeTime::try_new(
+                                                crate::Hour::try_new(0).unwrap(),
+                                                crate::Minute::try_new(0).unwrap(),
+                                                crate::Second::try_new(0).unwrap(),
+                                                crate::Microsecond::try_new(0).unwrap(),
+                                            ).unwrap(),
+                                        ),
+                                        crate::SqlxTypesTimePrimitiveDateTime::new(
                                             sqlx::types::time::Date::from_calendar_date(1969, time::Month::December, 31).unwrap(),
-                                            sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
-                                        ), // Just before Unix epoch
-                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            crate::SqlxTypesTimeTime::try_new(
+                                                crate::Hour::try_new(23).unwrap(),
+                                                crate::Minute::try_new(59).unwrap(),
+                                                crate::Second::try_new(59).unwrap(),
+                                                crate::Microsecond::try_new(0).unwrap(),
+                                            ).unwrap(),
+                                        ),
+                                        crate::SqlxTypesTimePrimitiveDateTime::new(
                                             sqlx::types::time::Date::from_calendar_date(2000, time::Month::February, 29).unwrap(),
-                                            sqlx::types::time::Time::from_hms_milli(12, 30, 45, 999).unwrap()
-                                        ), // Leap year day
-                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            crate::SqlxTypesTimeTime::try_new(
+                                                crate::Hour::try_new(12).unwrap(),
+                                                crate::Minute::try_new(30).unwrap(),
+                                                crate::Second::try_new(45).unwrap(),
+                                                crate::Microsecond::try_new(999).unwrap(),
+                                            ).unwrap(),
+                                        ),
+                                        crate::SqlxTypesTimePrimitiveDateTime::new(
                                             sqlx::types::time::Date::from_calendar_date(9999, time::Month::December, 31).unwrap(),
-                                            sqlx::types::time::Time::from_hms(23, 59, 59).unwrap()
-                                        ), // Far future date
-                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            crate::SqlxTypesTimeTime::try_new(
+                                                crate::Hour::try_new(23).unwrap(),
+                                                crate::Minute::try_new(59).unwrap(),
+                                                crate::Second::try_new(59).unwrap(),
+                                                crate::Microsecond::try_new(999_999).unwrap(),
+                                            ).unwrap(),
+                                        ),
+                                        crate::SqlxTypesTimePrimitiveDateTime::new(
                                             sqlx::types::time::Date::from_calendar_date(1, time::Month::January, 1).unwrap(),
-                                            sqlx::types::time::Time::MIDNIGHT
-                                        ), // Far past date
-                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            crate::SqlxTypesTimeTime::try_new(
+                                                crate::Hour::try_new(0).unwrap(),
+                                                crate::Minute::try_new(0).unwrap(),
+                                                crate::Second::try_new(0).unwrap(),
+                                                crate::Microsecond::try_new(0).unwrap(),
+                                            ).unwrap(),
+                                        ),
+                                        crate::SqlxTypesTimePrimitiveDateTime::new(
                                             sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap(),
-                                            sqlx::types::time::Time::from_hms_micro(15, 45, 30, 123_456).unwrap()
-                                        ), // Typical date/time combo
-                                        //todo failed
-                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            crate::SqlxTypesTimeTime::try_new(
+                                                crate::Hour::try_new(15).unwrap(),
+                                                crate::Minute::try_new(45).unwrap(),
+                                                crate::Second::try_new(30).unwrap(),
+                                                crate::Microsecond::try_new(123_456).unwrap(),
+                                            ).unwrap(),
+                                        ),
+                                        crate::SqlxTypesTimePrimitiveDateTime::new(
                                             sqlx::types::time::Date::from_calendar_date(2023, time::Month::August, 8).unwrap(),
-                                            sqlx::types::time::Time::from_hms_nano(23, 59, 59, 999_999_999).unwrap()
-                                        ), // Edge of nanosecond precision
+                                            crate::SqlxTypesTimeTime::try_new(
+                                                crate::Hour::try_new(23).unwrap(),
+                                                crate::Minute::try_new(59).unwrap(),
+                                                crate::Second::try_new(59).unwrap(),
+                                                crate::Microsecond::try_new(999_999).unwrap(),
+                                            ).unwrap(),
+                                        ),
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
                                         // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC, //todo failed
