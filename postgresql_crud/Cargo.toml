@@ -11,6 +11,7 @@ futures = {version = "=0.3.28"}
 uuid = {version = "=1.10.0", features = ["serde", "v4"]}
 utoipa = {version = "=4.1.0", features = ["axum_extras"]}
 sqlx = {version = "=0.8.5", features = ["postgres", "uuid", "bigdecimal", "rust_decimal", "chrono", "time", "bit-vec", "runtime-tokio", "ipnetwork", "mac_address", "bit-vec", "json"]}
+chrono = {version = "=0.4", features = ["serde"]}
 serde = {version = "=1.0", features = ["derive"]}
 num-bigint = {version = "=0.4.4"}
 thiserror = {version = "=1.0.48"}

@@ -291,7 +291,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
                 let sqlx_types_time_date_stringified = "sqlx::types::time::Date".to_string();
                 let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
-                let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_string();
+                let sqlx_types_chrono_naive_time_stringified = "crate::SqlxTypesChronoNaiveTime".to_string();
                 let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
                 let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
@@ -794,7 +794,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     #[derive(Debug)]
     enum PostgresqlTypeInitializationWithTryNew {
         StdStringStringAsText,
-        SqlxTypesChronoNaiveTimeAsTime,
     }
     impl std::convert::TryFrom<&PostgresqlType> for PostgresqlTypeInitializationWithTryNew {
         type Error = ();
@@ -813,7 +812,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::StdPrimitiveBoolAsBool => Err(()),
                 PostgresqlType::StdStringStringAsText => Ok(Self::StdStringStringAsText),
                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => Err(()),
-                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Ok(Self::SqlxTypesChronoNaiveTimeAsTime),
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Err(()),
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Err(()),
                 PostgresqlType::SqlxTypesTimeDateAsDate => Err(()),
@@ -1062,15 +1061,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let test_cases_snake_case = naming::TestCasesSnakeCase;
             let error_snake_case = naming::ErrorSnakeCase;
             let acc_snake_case = naming::AccSnakeCase;
-
-            let hour_upper_camel_case = naming::HourUpperCamelCase;
-            let hour_snake_case = naming::HourSnakeCase;
-            let minute_upper_camel_case = naming::MinuteUpperCamelCase;
-            let minute_snake_case = naming::MinuteSnakeCase;
-            let second_upper_camel_case = naming::SecondUpperCamelCase;
-            let second_snake_case = naming::SecondSnakeCase;
-            let microsecond_upper_camel_case = naming::MicrosecondUpperCamelCase;
-            let microsecond_snake_case = naming::MicrosecondSnakeCase;
             
             let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
 
@@ -2766,324 +2756,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }),
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::DeriveOrImpl::Derive,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            //todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
-                                        fn deserialize<__D>(
-                                            __deserializer: __D,
-                                        ) -> _serde::__private::Result<Self, __D::Error>
-                                        where
-                                            __D: _serde::Deserializer<'de>,
-                                        {
-                                            #[allow(non_camel_case_types)]
-                                            #[doc(hidden)]
-                                            enum __Field {
-                                                __field0,
-                                                __field1,
-                                                __field2,
-                                                __field3,
-                                                __ignore,
-                                            }
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = __Field;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "field identifier",
-                                                    )
-                                                }
-                                                fn visit_u64<__E>(
-                                                    self,
-                                                    __value: u64,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                                        2u64 => _serde::__private::Ok(__Field::__field2),
-                                                        3u64 => _serde::__private::Ok(__Field::__field3),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_str<__E>(
-                                                    self,
-                                                    __value: &str,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        "hour" => _serde::__private::Ok(__Field::__field0),
-                                                        "minute" => _serde::__private::Ok(__Field::__field1),
-                                                        "second" => _serde::__private::Ok(__Field::__field2),
-                                                        "microsecond" => _serde::__private::Ok(__Field::__field3),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_bytes<__E>(
-                                                    self,
-                                                    __value: &[u8],
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        b"hour" => _serde::__private::Ok(__Field::__field0),
-                                                        b"minute" => _serde::__private::Ok(__Field::__field1),
-                                                        b"second" => _serde::__private::Ok(__Field::__field2),
-                                                        b"microsecond" => _serde::__private::Ok(__Field::__field3),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                                #[inline]
-                                                fn deserialize<__D>(
-                                                    __deserializer: __D,
-                                                ) -> _serde::__private::Result<Self, __D::Error>
-                                                where
-                                                    __D: _serde::Deserializer<'de>,
-                                                {
-                                                    _serde::Deserializer::deserialize_identifier(
-                                                        __deserializer,
-                                                        __FieldVisitor,
-                                                    )
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: _serde::__private::PhantomData<
-                                                    SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
-                                                >,
-                                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin",
-                                                    )
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(
-                                                    self,
-                                                    mut __seq: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                                        crate::Hour,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    0usize,
-                                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                                        crate::Minute,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    1usize,
-                                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field2 = match _serde::de::SeqAccess::next_element::<
-                                                        crate::Second,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    2usize,
-                                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field3 = match _serde::de::SeqAccess::next_element::<
-                                                        crate::Microsecond,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    3usize,
-                                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(
-                                                        __field0,
-                                                        __field1,
-                                                        __field2,
-                                                        __field3,
-                                                    ) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                                #[inline]
-                                                fn visit_map<__A>(
-                                                    self,
-                                                    mut __map: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut __field0: _serde::__private::Option<crate::Hour> = _serde::__private::None;
-                                                    let mut __field1: _serde::__private::Option<crate::Minute> = _serde::__private::None;
-                                                    let mut __field2: _serde::__private::Option<crate::Second> = _serde::__private::None;
-                                                    let mut __field3: _serde::__private::Option<crate::Microsecond> = _serde::__private::None;
-                                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                                        __Field,
-                                                    >(&mut __map)? {
-                                                        match __key {
-                                                            __Field::__field0 => {
-                                                                if _serde::__private::Option::is_some(&__field0) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("hour"),
-                                                                    );
-                                                                }
-                                                                __field0 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        crate::Hour,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field1 => {
-                                                                if _serde::__private::Option::is_some(&__field1) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("minute"),
-                                                                    );
-                                                                }
-                                                                __field1 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        crate::Minute,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field2 => {
-                                                                if _serde::__private::Option::is_some(&__field2) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("second"),
-                                                                    );
-                                                                }
-                                                                __field2 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        crate::Second,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field3 => {
-                                                                if _serde::__private::Option::is_some(&__field3) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                                                            "microsecond",
-                                                                        ),
-                                                                    );
-                                                                }
-                                                                __field3 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        crate::Microsecond,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            _ => {
-                                                                let _ = _serde::de::MapAccess::next_value::<
-                                                                    _serde::de::IgnoredAny,
-                                                                >(&mut __map)?;
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = match __field0 {
-                                                        _serde::__private::Some(__field0) => __field0,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("hour")?
-                                                        }
-                                                    };
-                                                    let __field1 = match __field1 {
-                                                        _serde::__private::Some(__field1) => __field1,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("minute")?
-                                                        }
-                                                    };
-                                                    let __field2 = match __field2 {
-                                                        _serde::__private::Some(__field2) => __field2,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("second")?
-                                                        }
-                                                    };
-                                                    let __field3 = match __field3 {
-                                                        _serde::__private::Some(__field3) => __field3,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("microsecond")?
-                                                        }
-                                                    };
-                                                    match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(
-                                                        __field0,
-                                                        __field1,
-                                                        __field2,
-                                                        __field3,
-                                                    ) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &[
-                                                "hour",
-                                                "minute",
-                                                "second",
-                                                "microsecond",
-                                            ];
-                                            _serde::Deserializer::deserialize_struct(
-                                                __deserializer,
-                                                "SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin",
-                                                FIELDS,
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<
-                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
-                                                    >,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
-                                            )
-                                        }
-                                    }
-                                };
-                            }
-                        }),
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         //default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
                         PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&{
@@ -3179,6 +2852,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             else {
                 PostgresqlTypeStandartNotNullExplicitDeserializationInitializationWithTryNew::None
             };
+            let value_ident_inner_type_token_stream = quote::quote!{#value_snake_case: #ident_inner_type_token_stream};
             let ident_standart_not_null_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
             let ident_standart_not_null_origin_try_new_error_named_upper_camel_case = naming::parameter::SelfOriginTryNewErrorNamedUpperCamelCase::from_display(&ident_standart_not_null_upper_camel_case);
             let ident_origin_token_stream = {
@@ -3269,7 +2943,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let contains_null_byte_upper_camel_case = naming::ContainsNullByteUpperCamelCase;
-                let invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case = naming::InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase;
                 let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if let PostgresqlTypeStandartNotNullExplicitDeserializationInitializationWithTryNew::Some(postgresql_type_initialization_with_try_new) = postgresql_type_standart_not_null_explicit_deserialization_initialization_with_try_new {
                     let content_token_stream = match &postgresql_type_initialization_with_try_new {
                         PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => {
@@ -3281,21 +2954,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         },
-                        PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveTimeAsTime => {
-                            quote::quote! {
-                                #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    #hour_snake_case: crate::#hour_upper_camel_case,
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    #minute_snake_case: crate::#minute_upper_camel_case,
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    #second_snake_case: crate::#second_upper_camel_case,
-                                    #[eo_to_std_string_string_serialize_deserialize]
-                                    #microsecond_snake_case: crate::#microsecond_upper_camel_case,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                }
-                            }
-                        }
                     };
                     quote::quote! {
                         #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -3310,60 +2968,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let impl_ident_origin_token_stream = {
                     let pub_fn_new_or_try_new_token_stream = {
                         if let Ok(postgresql_type_initialization_with_try_new) = &postgresql_type_initialization_with_try_new_try_from_postgresql_type {
-                            let initialization_parameters_token_stream = {
-                                let value_ident_inner_type_token_stream = quote::quote!{value: #ident_inner_type_token_stream};
-                                match &postgresql_type_pattern {
-                                    PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
-                                            PostgresqlType::StdPrimitiveI16AsInt2 => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdPrimitiveI32AsInt4 => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdPrimitiveI64AsInt8 => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdPrimitiveF32AsFloat4 => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdPrimitiveF64AsFloat8 => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesBigDecimalAsNumeric => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdPrimitiveBoolAsBool => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdStringStringAsText => value_ident_inner_type_token_stream,
-                                            PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{
-                                                #hour_snake_case: crate::#hour_upper_camel_case,
-                                                #minute_snake_case: crate::#minute_upper_camel_case,
-                                                #second_snake_case: crate::#second_upper_camel_case,
-                                                #microsecond_snake_case: crate::#microsecond_upper_camel_case,
-                                            },
-                                            PostgresqlType::SqlxTypesTimeTimeAsTime => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesTimeDateAsDate => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesChronoNaiveDateAsDate => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesBigDecimalAsNumRange => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => value_ident_inner_type_token_stream,
-                                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTzRange => value_ident_inner_type_token_stream,
-                                        },
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => value_ident_inner_type_token_stream,
-                                    },
-                                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match &dimension1_not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => value_ident_inner_type_token_stream,
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => value_ident_inner_type_token_stream,
-                                    },
-                                }
-                            };
                             let content_token_stream = {
                                 let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                                     quote::quote! {Ok(Self(match #value_snake_case {
@@ -3410,25 +3014,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     }
                                                 }
                                             },
-                                            PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveTimeAsTime => {
-                                                quote::quote! {
-                                                    match sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
-                                                        #hour_snake_case.to_std_primitive_u32(),
-                                                        #minute_snake_case.to_std_primitive_u32(),
-                                                        #second_snake_case.to_std_primitive_u32(),
-                                                        #microsecond_snake_case.to_std_primitive_u32()
-                                                    ) {
-                                                        Some(#value_snake_case) => Ok(Self(#value_snake_case)),
-                                                        None => Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
-                                                            #hour_snake_case,
-                                                            #minute_snake_case,
-                                                            #second_snake_case,
-                                                            #microsecond_snake_case,
-                                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                                        })
-                                                    }
-                                                }
-                                            },
                                         },
                                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
                                     },
@@ -3442,7 +3027,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             };
                             quote::quote!{
-                                pub fn try_new(#initialization_parameters_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                                pub fn try_new(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
                                     #content_token_stream
                                 }
                             }
@@ -3593,7 +3178,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             quote::quote! {new(#value_snake_case)}
                         };
                         quote::quote! {
-                            pub fn #new_or_try_new_unwraped_for_test_snake_case(#value_snake_case: #ident_inner_type_token_stream) -> Self {
+                            pub fn #new_or_try_new_unwraped_for_test_snake_case(#value_ident_inner_type_token_stream) -> Self {
                                 Self::#content_token_stream
                             }
                         }
@@ -3710,7 +3295,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             )
                                         },
                                         PostgresqlType::SqlxTypesTimeDateAsDate => &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate | PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &core_default_default_default_token_stream,
+                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
+                                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => &sqlx_types_time_primitive_date_time_new_token_stream,
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
@@ -4583,7 +4169,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let impl_ident_read_token_stream = {
                     let pub_fn_new_or_try_new_token_stream = if postgresql_type_initialization_with_try_new_try_from_postgresql_type.is_ok() {
                         quote::quote! {
-                            pub fn try_new(#value_snake_case: #ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                            pub fn try_new(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
                                 match #ident_origin_upper_camel_case::try_new(#value_snake_case) {
                                     Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
                                     Err(#error_snake_case) => Err(#error_snake_case)
@@ -4593,14 +4179,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                     else {
                         quote::quote! {
-                            pub fn new(#value_snake_case: #ident_inner_type_token_stream) -> Self {
+                            pub fn new(#value_ident_inner_type_token_stream) -> Self {
                                 Self(#ident_origin_upper_camel_case::new(#value_snake_case))
                             }
                         }
                     };
                     //todo maybe put into test module?
                     let maybe_pub_fn_new_or_try_new_unwraped_for_test_token_stream = quote::quote!{
-                        pub fn #new_or_try_new_unwraped_for_test_snake_case(#value_snake_case: #ident_inner_type_token_stream) -> Self {
+                        pub fn #new_or_try_new_unwraped_for_test_snake_case(#value_ident_inner_type_token_stream) -> Self {
                             Self(#ident_origin_upper_camel_case::#new_or_try_new_unwraped_for_test_snake_case(#value_snake_case))
                         }
                     };
@@ -5185,15 +4771,48 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         vec![0xDE, 0xAD, 0xBE, 0xEF], // hex pattern (e.g. binary signature)
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{vec![
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(), // Midnight
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(12, 0, 0).unwrap(), // Noon
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(23, 59, 59).unwrap(), // One second before midnight
-                                        sqlx::types::chrono::NaiveTime::from_hms_nano_opt(23, 59, 59, 999_999_999).unwrap(), // Max valid nanosecond //todo failed
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(6, 30, 0).unwrap(), // Morning time
-                                        sqlx::types::chrono::NaiveTime::from_hms_opt(18, 45, 15).unwrap(), // Evening with seconds
-                                        sqlx::types::chrono::NaiveTime::from_hms_milli_opt(10, 5, 3, 250).unwrap(), // Millisecond precision
-                                        sqlx::types::chrono::NaiveTime::from_hms_micro_opt(14, 22, 33, 123_456).unwrap(), // Microsecond precision
-                                        // sqlx::types::chrono::NaiveTime::from_hms_nano_opt(1, 2, 3, 4).unwrap(),// Very low nanosecond value //todo failed
+                                        crate::SqlxTypesChronoNaiveTime::try_new(
+                                            crate::Hour::try_new(0).unwrap(),
+                                            crate::Minute::try_new(0).unwrap(),
+                                            crate::Second::try_new(0).unwrap(),
+                                            crate::Microsecond::try_new(0).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesChronoNaiveTime::try_new(
+                                            crate::Hour::try_new(12).unwrap(),
+                                            crate::Minute::try_new(0).unwrap(),
+                                            crate::Second::try_new(0).unwrap(),
+                                            crate::Microsecond::try_new(0).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesChronoNaiveTime::try_new(
+                                            crate::Hour::try_new(23).unwrap(),
+                                            crate::Minute::try_new(59).unwrap(),
+                                            crate::Second::try_new(59).unwrap(),
+                                            crate::Microsecond::try_new(999_999).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesChronoNaiveTime::try_new(
+                                            crate::Hour::try_new(6).unwrap(),
+                                            crate::Minute::try_new(30).unwrap(),
+                                            crate::Second::try_new(0).unwrap(),
+                                            crate::Microsecond::try_new(0).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesChronoNaiveTime::try_new(
+                                            crate::Hour::try_new(18).unwrap(),
+                                            crate::Minute::try_new(45).unwrap(),
+                                            crate::Second::try_new(15).unwrap(),
+                                            crate::Microsecond::try_new(0).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesChronoNaiveTime::try_new(
+                                            crate::Hour::try_new(10).unwrap(),
+                                            crate::Minute::try_new(5).unwrap(),
+                                            crate::Second::try_new(3).unwrap(),
+                                            crate::Microsecond::try_new(250).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesChronoNaiveTime::try_new(
+                                            crate::Hour::try_new(14).unwrap(),
+                                            crate::Minute::try_new(22).unwrap(),
+                                            crate::Second::try_new(33).unwrap(),
+                                            crate::Microsecond::try_new(123_456).unwrap(),
+                                        ).unwrap(),
                                     ]},
                                     PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{vec![
                                         sqlx::types::time::Time::MIDNIGHT, // 00:00:00.000
