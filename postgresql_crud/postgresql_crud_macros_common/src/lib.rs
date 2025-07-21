@@ -559,7 +559,7 @@ pub fn generate_impl_sqlx_type_sqlx_postgres_for_ident_token_stream(ident_token_
             fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
                <#type_token_stream as sqlx::Type<sqlx::Postgres>>::type_info()
             }
-            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> bool {
+            fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
                 <#type_token_stream as sqlx::Type<sqlx::Postgres>>::compatible(ty)
             }
         }
