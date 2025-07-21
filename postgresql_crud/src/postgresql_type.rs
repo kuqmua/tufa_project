@@ -65,51 +65,51 @@ generate_postgresql_types::generate_postgresql_types!("All");
 //         // },
 
 //         {
-//             "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
+//             "postgresql_type": "SqlxTypesTimeTimeAsTime",
 //             "not_null_or_nullable": "NotNull",
 //             "postgresql_type_pattern": "Standart"
 //         },
-//         // {
-//         //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
-//         //     "not_null_or_nullable": "Nullable",
-//         //     "postgresql_type_pattern": "Standart"
-//         // },
-//         // {
-//         //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
-//         //     "not_null_or_nullable": "NotNull",
-//         //     "postgresql_type_pattern": {
-//         //         "ArrayDimension1": {
-//         //             "dimension1_not_null_or_nullable": "NotNull"
-//         //         }
-//         //     }
-//         // },
-//         // {
-//         //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
-//         //     "not_null_or_nullable": "NotNull",
-//         //     "postgresql_type_pattern": {
-//         //         "ArrayDimension1": {
-//         //             "dimension1_not_null_or_nullable": "Nullable"
-//         //         }
-//         //     }
-//         // },
-//         // {
-//         //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
-//         //     "not_null_or_nullable": "Nullable",
-//         //     "postgresql_type_pattern": {
-//         //         "ArrayDimension1": {
-//         //             "dimension1_not_null_or_nullable": "NotNull"
-//         //         }
-//         //     }
-//         // },
-//         // {
-//         //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
-//         //     "not_null_or_nullable": "Nullable",
-//         //     "postgresql_type_pattern": {
-//         //         "ArrayDimension1": {
-//         //             "dimension1_not_null_or_nullable": "Nullable"
-//         //         }
-//         //     }
-//         // },
+//         {
+//             "postgresql_type": "SqlxTypesTimeTimeAsTime",
+//             "not_null_or_nullable": "Nullable",
+//             "postgresql_type_pattern": "Standart"
+//         },
+//         {
+//             "postgresql_type": "SqlxTypesTimeTimeAsTime",
+//             "not_null_or_nullable": "NotNull",
+//             "postgresql_type_pattern": {
+//                 "ArrayDimension1": {
+//                     "dimension1_not_null_or_nullable": "NotNull"
+//                 }
+//             }
+//         },
+//         {
+//             "postgresql_type": "SqlxTypesTimeTimeAsTime",
+//             "not_null_or_nullable": "NotNull",
+//             "postgresql_type_pattern": {
+//                 "ArrayDimension1": {
+//                     "dimension1_not_null_or_nullable": "Nullable"
+//                 }
+//             }
+//         },
+//         {
+//             "postgresql_type": "SqlxTypesTimeTimeAsTime",
+//             "not_null_or_nullable": "Nullable",
+//             "postgresql_type_pattern": {
+//                 "ArrayDimension1": {
+//                     "dimension1_not_null_or_nullable": "NotNull"
+//                 }
+//             }
+//         },
+//         {
+//             "postgresql_type": "SqlxTypesTimeTimeAsTime",
+//             "not_null_or_nullable": "Nullable",
+//             "postgresql_type_pattern": {
+//                 "ArrayDimension1": {
+//                     "dimension1_not_null_or_nullable": "Nullable"
+//                 }
+//             }
+//         },
 //         // {
 //         //     "postgresql_type": "StdPrimitiveI64AsBigSerialInitializedByPostgresql",
 //         //     "not_null_or_nullable": "NotNull",

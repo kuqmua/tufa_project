@@ -292,7 +292,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let sqlx_types_time_date_stringified = "sqlx::types::time::Date".to_string();
                 let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
                 let sqlx_types_chrono_naive_time_stringified = "crate::SqlxTypesChronoNaiveTime".to_string();
-                let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
+                let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
                 let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
                 let sqlx_types_time_primitive_date_time_stringified = "sqlx::types::time::PrimitiveDateTime".to_string();
@@ -1297,7 +1297,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let time_month_token_stream = quote::quote! {time::Month};
             let crate_postgresql_type_postgresql_type_num_bigint_big_int_token_stream = quote::quote! {crate::NumBigintBigInt};
             let sqlx_postgres_types_pg_range_token_stream = quote::quote! {sqlx::postgres::types::PgRange};
-            let sqlx_types_time_time_midnight_token_stream = token_patterns::SqlxTypesTimeTimeMidnight;
 
             let generate_qlx_postgres_types_pg_range_start_end_token_stream = |start_token_stream: &dyn quote::ToTokens, end_token_stream: &dyn quote::ToTokens| {
                 quote::quote! {#sqlx_postgres_types_pg_range_token_stream {
@@ -3254,10 +3253,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     ).unwrap()//todo
                 };
 
-                let sqlx_types_time_primitive_date_time_new_token_stream = quote::quote! {#sqlx_types_time_primitive_date_time_as_timestamp_field_type_token_stream::new(
-                    #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
-                    #sqlx_types_time_time_midnight_token_stream,
-                )};
+                let sqlx_types_time_primitive_date_time_new_token_stream = {
+                    let sqlx_types_time_time_midnight_token_stream = token_patterns::SqlxTypesTimeTimeMidnight;
+                    quote::quote! {#sqlx_types_time_primitive_date_time_as_timestamp_field_type_token_stream::new(
+                        #sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+                        #sqlx_types_time_time_midnight_token_stream,
+                    )}
+                };
                 // fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
                 //     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
                 // }
@@ -3285,7 +3287,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         | PostgresqlType::StdPrimitiveBoolAsBool
                                         | PostgresqlType::StdStringStringAsText => &core_default_default_default_token_stream,
                                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote::quote! {vec![#core_default_default_default_token_stream]},
-                                        PostgresqlType::SqlxTypesTimeTimeAsTime => &quote::quote! {#sqlx_types_time_time_midnight_token_stream},
+                                        PostgresqlType::SqlxTypesTimeTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => &{
                                             let double_dots_space_core_default_default_default_token_stream = generate_double_dot_space_tokens_token_stream(&core_default_default_default_token_stream);
                                             generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
@@ -4815,14 +4817,48 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         ).unwrap(),
                                     ]},
                                     PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{vec![
-                                        sqlx::types::time::Time::MIDNIGHT, // 00:00:00.000
-                                        sqlx::types::time::Time::from_hms(12, 0, 0).unwrap(), // 12:00:00 (noon)
-                                        sqlx::types::time::Time::from_hms_milli(23, 59, 59, 999).unwrap(), // 23:59:59.999
-                                        sqlx::types::time::Time::from_hms_micro(1, 2, 3, 456_789).unwrap(), // microsecond precision
-                                        sqlx::types::time::Time::from_hms_nano(14, 15, 16, 999_999_999).unwrap(), // max nanoseconds //todo failed
-                                        sqlx::types::time::Time::from_hms(6, 30, 15).unwrap(), // typical morning time
-                                        sqlx::types::time::Time::from_hms(18, 45, 0).unwrap(), // evening
-                                        // sqlx::types::time::Time::from_hms_nano(0, 0, 1, 1).unwrap(),// just after midnight //todo failed
+                                        crate::SqlxTypesTimeTime::try_new(
+                                            crate::Hour::try_new(0).unwrap(),
+                                            crate::Minute::try_new(0).unwrap(),
+                                            crate::Second::try_new(0).unwrap(),
+                                            crate::Microsecond::try_new(0).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesTimeTime::try_new(
+                                            crate::Hour::try_new(12).unwrap(),
+                                            crate::Minute::try_new(0).unwrap(),
+                                            crate::Second::try_new(0).unwrap(),
+                                            crate::Microsecond::try_new(0).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesTimeTime::try_new(
+                                            crate::Hour::try_new(23).unwrap(),
+                                            crate::Minute::try_new(59).unwrap(),
+                                            crate::Second::try_new(59).unwrap(),
+                                            crate::Microsecond::try_new(999).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesTimeTime::try_new(
+                                            crate::Hour::try_new(1).unwrap(),
+                                            crate::Minute::try_new(2).unwrap(),
+                                            crate::Second::try_new(3).unwrap(),
+                                            crate::Microsecond::try_new(456_789).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesTimeTime::try_new(
+                                            crate::Hour::try_new(14).unwrap(),
+                                            crate::Minute::try_new(15).unwrap(),
+                                            crate::Second::try_new(16).unwrap(),
+                                            crate::Microsecond::try_new(999_999).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesTimeTime::try_new(
+                                            crate::Hour::try_new(6).unwrap(),
+                                            crate::Minute::try_new(30).unwrap(),
+                                            crate::Second::try_new(15).unwrap(),
+                                            crate::Microsecond::try_new(0).unwrap(),
+                                        ).unwrap(),
+                                        crate::SqlxTypesTimeTime::try_new(
+                                            crate::Hour::try_new(18).unwrap(),
+                                            crate::Minute::try_new(45).unwrap(),
+                                            crate::Second::try_new(0).unwrap(),
+                                            crate::Microsecond::try_new(0).unwrap(),
+                                        ).unwrap(),
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{vec![
                                         sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 0 }, // zero interval
