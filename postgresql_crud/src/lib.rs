@@ -4088,5 +4088,67 @@ impl sqlx::postgres::PgHasArrayType for SqlxTypesTimeTime {
     }
 }
 
-
-// SqlxTypesTimePrimitiveDateTime
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime);
+impl SqlxTypesTimePrimitiveDateTime {
+    pub fn new(
+        date: sqlx::types::time::Date,
+        time: crate::SqlxTypesTimeTime,
+    ) -> Self {
+        Self(sqlx::types::time::PrimitiveDateTime::new(
+            date,
+            time.into()
+        ))
+    }
+    pub fn get(&self) -> &sqlx::types::time::PrimitiveDateTime {
+        &self.0
+    }
+}
+impl std::convert::Into<sqlx::types::time::PrimitiveDateTime> for SqlxTypesTimePrimitiveDateTime {
+    fn into(self) -> sqlx::types::time::PrimitiveDateTime {
+        self.0
+    }
+}
+impl error_occurence_lib::ToStdStringString for SqlxTypesTimePrimitiveDateTime {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesTimePrimitiveDateTime {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(sqlx::types::time::PrimitiveDateTime::new(
+            sqlx::types::time::Date::from_calendar_date(
+                0,
+                time::Month::January,
+                1,
+            ).unwrap(),
+            <crate::SqlxTypesTimeTime as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into()
+        ))
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::time::PrimitiveDateTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesTimePrimitiveDateTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::time::PrimitiveDateTime as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::postgres::PgHasArrayType for SqlxTypesTimePrimitiveDateTime {
+    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+        <sqlx::types::time::PrimitiveDateTime as sqlx::postgres::PgHasArrayType>::array_type_info()
+    }
+}
