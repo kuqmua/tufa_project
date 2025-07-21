@@ -4087,3 +4087,6 @@ impl sqlx::postgres::PgHasArrayType for SqlxTypesTimeTime {
         <sqlx::types::time::Time as sqlx::postgres::PgHasArrayType>::array_type_info()
     }
 }
+
+
+// SqlxTypesTimePrimitiveDateTime

@@ -4927,10 +4927,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             sqlx::types::time::Time::from_hms_micro(15, 45, 30, 123_456).unwrap()
                                         ), // Typical date/time combo
                                         //todo failed
-                                        // sqlx::types::time::PrimitiveDateTime::new(
-                                        //     sqlx::types::time::Date::from_calendar_date(2023, time::Month::August, 8).unwrap(),
-                                        //     sqlx::types::time::Time::from_hms_nano(23, 59, 59, 999_999_999).unwrap()
-                                        // ), // Edge of nanosecond precision
+                                        sqlx::types::time::PrimitiveDateTime::new(
+                                            sqlx::types::time::Date::from_calendar_date(2023, time::Month::August, 8).unwrap(),
+                                            sqlx::types::time::Time::from_hms_nano(23, 59, 59, 999_999_999).unwrap()
+                                        ), // Edge of nanosecond precision
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
                                         // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC, //todo failed
