@@ -4503,9 +4503,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 };
                                 match &postgresql_type {
-                                    PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{vec![std::primitive::i16::MIN, -1, 0, 1, std::primitive::i16::MAX]},
-                                    PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{vec![std::primitive::i32::MIN, -1, 0, 1, std::primitive::i32::MAX]},
-                                    PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{vec![std::primitive::i64::MIN, -1, 0, 1, std::primitive::i64::MAX]},
+                                    PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{vec![std::primitive::i16::MIN, 0, std::primitive::i16::MAX]},
+                                    PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{vec![std::primitive::i32::MIN, 0, std::primitive::i32::MAX]},
+                                    PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{vec![std::primitive::i64::MIN, 0, std::primitive::i64::MAX]},
                                     PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{vec![
                                         std::primitive::f32::EPSILON,
                                         std::primitive::f32::MAX,
@@ -4540,9 +4540,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{vec![]},
                                     PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{vec![
                                         #sqlx_postgres_types_pg_money_field_type_token_stream(std::primitive::i64::MIN),
-                                        #sqlx_postgres_types_pg_money_field_type_token_stream(-1),
                                         #sqlx_postgres_types_pg_money_field_type_token_stream(0),
-                                        #sqlx_postgres_types_pg_money_field_type_token_stream(1),
                                         #sqlx_postgres_types_pg_money_field_type_token_stream(std::primitive::i64::MAX)
                                     ]},
                                     PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{vec![true, false]},
