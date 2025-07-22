@@ -4615,6 +4615,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 crate::Second::try_new(0).unwrap(),
                                                 crate::Microsecond::try_new(0).unwrap(),
                                             ).unwrap()
+                                        ),
+                                        crate::SqlxTypesChronoNaiveDateTime::new(
+                                            crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::MAX).unwrap(),
+                                            crate::SqlxTypesChronoNaiveTime::try_new(
+                                                crate::Hour::try_new(23).unwrap(),
+                                                crate::Minute::try_new(59).unwrap(),
+                                                crate::Second::try_new(59).unwrap(),
+                                                crate::Microsecond::try_new(999_999).unwrap(),
+                                            ).unwrap()
                                         )
                                     ]},
                                     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => quote::quote!{vec![
