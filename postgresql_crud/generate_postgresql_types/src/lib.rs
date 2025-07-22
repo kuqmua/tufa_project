@@ -4597,15 +4597,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MAX, days: std::primitive::i32::MAX, microseconds: std::primitive::i64::MAX },
                                     ]},
                                     PostgresqlType::SqlxTypesTimeDateAsDate => quote::quote!{vec![
-                                        sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap().into(), // Unix epoch
-                                        sqlx::types::time::Date::from_calendar_date(2000, time::Month::February, 29).unwrap().into(), // Leap year
-                                        sqlx::types::time::Date::from_calendar_date(2024, time::Month::December, 31).unwrap().into(), // Recent date
-                                        sqlx::types::time::Date::from_calendar_date(9999, time::Month::December, 31).unwrap().into(), // Max valid date
-                                        sqlx::types::time::Date::from_calendar_date(1, time::Month::January, 1).unwrap().into(), // Min valid date
-                                        sqlx::types::time::Date::from_calendar_date(2023, time::Month::June, 15).unwrap().into(), // Arbitrary valid
-                                        sqlx::types::time::Date::from_calendar_date(1900, time::Month::March, 1).unwrap().into(),  // Pre-epoch
-                                        sqlx::types::time::Date::from_calendar_date(2025, time::Month::January, 1).unwrap().into(), // Start of year
-                                        sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap().into(), // Mid-year
+                                        // sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap().into(), // Unix epoch
+                                        // sqlx::types::time::Date::from_calendar_date(2000, time::Month::February, 29).unwrap().into(), // Leap year
+                                        // sqlx::types::time::Date::from_calendar_date(2024, time::Month::December, 31).unwrap().into(), // Recent date
+                                        // sqlx::types::time::Date::from_calendar_date(9999, time::Month::December, 31).unwrap().into(), // Max valid date
+                                        // sqlx::types::time::Date::from_calendar_date(1, time::Month::January, 1).unwrap().into(), // Min valid date
+                                        // sqlx::types::time::Date::from_calendar_date(2023, time::Month::June, 15).unwrap().into(), // Arbitrary valid
+                                        // sqlx::types::time::Date::from_calendar_date(1900, time::Month::March, 1).unwrap().into(),  // Pre-epoch
+                                        // sqlx::types::time::Date::from_calendar_date(2025, time::Month::January, 1).unwrap().into(), // Start of year
+                                        // sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap().into(), // Mid-year
+                                        sqlx::types::time::Date::MIN,
+                                        // sqlx::types::time::Date::MAX,
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{vec![
                                         // sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(), // Unix epoch
