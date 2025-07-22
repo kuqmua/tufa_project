@@ -10,7 +10,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         StdPrimitiveF32,
         StdPrimitiveF64,
         SqlxPostgresTypesPgMoney,
-        SqlxTypesBigDecimal,
         StdPrimitiveBool,
         StdStringString,
         StdVecVecStdPrimitiveU8,
@@ -28,7 +27,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxTypesMacAddressMacAddress,
         SqlxPostgresTypesPgRangeStdPrimitiveI32,
         SqlxPostgresTypesPgRangeStdPrimitiveI64,
-        SqlxPostgresTypesPgRangeSqlxTypesBigDecimal,
         SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
@@ -86,7 +84,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SerialInitializedByPostgresql,
         BigSerialInitializedByPostgresql,
         Money,
-        Numeric,
         Bool,
         Text,
         Bytea,
@@ -101,7 +98,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         MacAddr,
         Int4Range,
         Int8Range,
-        NumRange,
         DateRange,
         TimestampRange,
         TimestampTzRange,
@@ -276,7 +272,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let std_primitive_f32_stringified = "std::primitive::f32".to_string();
                 let std_primitive_f64_stringified = "std::primitive::f64".to_string();
                 let sqlx_postgres_types_pg_money_stringified = "sqlx::postgres::types::PgMoney".to_string();
-                let sqlx_types_big_decimal_stringified = "sqlx::types::BigDecimal".to_string();
                 let std_primitive_bool_stringified = "std::primitive::bool".to_string();
                 let std_string_string_stringified = "std::string::String".to_string();
                 let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
@@ -1027,8 +1022,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let increment_snake_case = naming::IncrementSnakeCase;
             let start_snake_case = naming::StartSnakeCase;
             let end_snake_case = naming::EndSnakeCase;
-            let digits_snake_case = naming::DigitsSnakeCase;
-            let scale_snake_case = naming::ScaleSnakeCase;
             let year_snake_case = naming::YearSnakeCase;
             let month_snake_case = naming::MonthSnakeCase;
             let day_snake_case = naming::DaySnakeCase;
@@ -1271,7 +1264,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let sqlx_postgres_types_pg_interval_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval.field_type_token_stream();
 
             let time_month_token_stream = quote::quote! {time::Month};
-            let crate_postgresql_type_postgresql_type_num_bigint_big_int_token_stream = quote::quote! {crate::NumBigintBigInt};
             let sqlx_postgres_types_pg_range_token_stream = quote::quote! {sqlx::postgres::types::PgRange};
 
             let generate_qlx_postgres_types_pg_range_start_end_token_stream = |start_token_stream: &dyn quote::ToTokens, end_token_stream: &dyn quote::ToTokens| {
@@ -1506,18 +1498,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_ser_serialize_struct_end_token_stream
                         }
                     };
-                    enum IsNeedToBeCloned {
-                        True,
-                        False,
-                    }
-                    let generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25 = |is_need_to_be_cloned: IsNeedToBeCloned| {
-                        let maybe_clone_token_stream: &dyn quote::ToTokens = match &is_need_to_be_cloned {
-                            IsNeedToBeCloned::True => &quote::quote! {.clone()},
-                            IsNeedToBeCloned::False => &proc_macro2_token_stream_new,
-                        };
+                    let serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25 = {
                         let generate_self_zero_match_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens| {
                             let token_stream = generate_match_std_collections_bound_token_stream(
-                                &quote::quote! {#self_dot_zero_token_stream.#value_token_stream #maybe_clone_token_stream},
+                                &quote::quote! {#self_dot_zero_token_stream.#value_token_stream},
                                 &value_snake_case,
                                 &ShouldAddBorrow::True
                             );
@@ -1591,12 +1575,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(IsNeedToBeCloned::False))
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25)
                         }),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimePrimitiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&generate_serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25(IsNeedToBeCloned::False))
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25)
                         }),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => {
                             postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream)
@@ -1616,7 +1600,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             lifetime: serde::__private::PhantomData<&'de ()>,
                         }
                     };
-                    let digits_scale_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&digits_snake_case, &scale_snake_case];
                     let year_month_day_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&year_snake_case, &month_snake_case, &day_snake_case];
                     let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&start_snake_case, &end_snake_case];
                     let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&months_snake_case, &days_snake_case, &microseconds_snake_case];
@@ -1965,7 +1948,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         (generate_fn_visit_u64_token_stream(&ParameterNumber::Two), generate_fn_visit_u64_token_stream(&ParameterNumber::Three))
                     };
-                    let (fn_visit_str_value_digits_scale_token_stream, fn_visit_str_value_year_month_day_token_stream, fn_visit_str_value_start_end_token_stream) = {
+                    let (fn_visit_str_value_year_month_day_token_stream, fn_visit_str_value_start_end_token_stream) = {
                         let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
                                 let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
@@ -1990,7 +1973,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         (
-                            generate_fn_visit_str_token_stream(&digits_scale_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_str_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_str_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                         )
@@ -2019,7 +2001,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_fn_visit_str_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
-                    let (fn_visit_bytes_digits_scale_token_stream, fn_visit_bytes_year_month_day_token_stream, fn_visit_bytes_start_end_token_stream) = {
+                    let (fn_visit_bytes_year_month_day_token_stream, fn_visit_bytes_start_end_token_stream) = {
                         let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
                                 let b_element_double_quotes_token_stream = format!("b{}", generate_quotes::double_quotes_stringified(&element)).parse::<proc_macro2::TokenStream>().unwrap();
@@ -2041,7 +2023,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         (
-                            generate_fn_visit_bytes_token_stream(&digits_scale_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_bytes_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_bytes_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                         )
@@ -2094,7 +2075,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         let (
-                            field_option_none_initialization_sqlx_types_big_decimal_token_stream,
                             field_option_none_initialization_sqlx_types_time_date_token_stream,
                             field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                             field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
@@ -2113,7 +2093,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 quote::quote! {#(#fields_initialization_token_stream)*}
                             };
                             (
-                                generate_field_option_none_initialization_token_stream(&[&crate_postgresql_type_postgresql_type_num_bigint_big_int_token_stream, &std_primitive_i64_token_stream]),
                                 generate_field_option_none_initialization_token_stream(&[&std_primitive_i32_token_stream, &time_month_token_stream, &std_primitive_u8_token_stream]),
                                 generate_field_option_none_initialization_token_stream(&[&std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream]),
                                 generate_field_option_none_initialization_token_stream(&[&std_collections_bound_sqlx_types_time_primitive_date_time_as_timestamp_token_stream, &std_collections_bound_sqlx_types_time_primitive_date_time_as_timestamp_token_stream]),
@@ -2124,7 +2103,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             )
                         };
                         let (
-                            while_some_next_key_field_sqlx_types_big_decimal_token_stream,
                             while_some_next_key_field_sqlx_types_time_date_token_stream,
                             while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                             while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_time_primitive_date_time_token_stream,
@@ -2159,7 +2137,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             };
                             (
-                                generate_while_some_next_key_field_token_stream(&[(&digits_snake_case, &crate_postgresql_type_postgresql_type_num_bigint_big_int_token_stream), (&scale_snake_case, &std_primitive_i64_token_stream)]),
                                 generate_while_some_next_key_field_token_stream(&[(&year_snake_case, &std_primitive_i32_token_stream), (&month_snake_case, &time_month_token_stream), (&day_snake_case, &std_primitive_u8_token_stream)]),
                                 generate_while_some_next_key_field_token_stream(&[(&start_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream), (&end_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream)]),
                                 generate_while_some_next_key_field_token_stream(&[
@@ -2178,7 +2155,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_while_some_next_key_field_token_stream(&[(&start_snake_case, &std_collections_bound_sqlx_types_time_date_as_date_token_stream), (&end_snake_case, &std_collections_bound_sqlx_types_time_date_as_date_token_stream)]),
                             )
                         };
-                        let (match_field_initialization_sqlx_types_big_decimal_token_stream, match_field_initialization_sqlx_types_time_date_token_stream, match_field_initialization_start_end_token_stream) = {
+                        let (match_field_initialization_sqlx_types_time_date_token_stream, match_field_initialization_start_end_token_stream) = {
                             let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
                                     let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element);
@@ -2193,7 +2170,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 quote::quote! {#(#fields_initialization_token_stream)*}
                             };
                             (
-                                generate_match_field_initialization_token_stream(&digits_scale_std_fmt_display_plus_quote_to_tokens_array),
                                 generate_match_field_initialization_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
                                 generate_match_field_initialization_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                             )
@@ -2356,7 +2332,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_field_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
-                    let (const_fields_sqlx_types_big_decimal_token_stream, const_fields_sqlx_types_time_date_token_stream, const_fields_sqlx_postgres_types_pg_interval_token_stream, const_fields_start_end_token_stream) = {
+                    let (const_fields_sqlx_types_time_date_token_stream, const_fields_sqlx_postgres_types_pg_interval_token_stream, const_fields_start_end_token_stream) = {
                         let generate_const_fields_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let field_names_token_stream = vec_token_stream.iter().map(|element| generate_quotes::double_quotes_token_stream(&element));
                             quote::quote! {
@@ -2365,7 +2341,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         (
-                            generate_const_fields_token_stream(&digits_scale_std_fmt_display_plus_quote_to_tokens_array),
                             generate_const_fields_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
                             generate_const_fields_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
                             generate_const_fields_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
@@ -2432,7 +2407,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     let (
-                        impl_serde_de_visitor_for_field_visitor_token_stream_8ae918a4_5464_4f56_8078_ab475f269079,
                         impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2,
                         impl_serde_de_visitor_for_field_visitor_token_stream_31609291_37e6_427f_8d04_d19e2af929f8,
                         impl_serde_de_visitor_for_field_visitor_token_stream_ca843915_2330_4969_8bc8_8b33bff7a565,
@@ -2448,13 +2422,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         (
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
-                                type Value = __Field;
-                                #fn_expecting_field_identifier_token_stream
-                                #fn_visit_u64_two_token_stream
-                                #fn_visit_str_value_digits_scale_token_stream
-                                #fn_visit_bytes_digits_scale_token_stream
-                            }),
                             generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
                                 type Value = __Field;
                                 #fn_expecting_field_identifier_token_stream
@@ -3625,7 +3592,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let (
                                 where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                                where_element_sqlx_postgres_types_pg_range_sqlx_types_big_decimal_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
@@ -3669,7 +3635,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     vec
                                 };
                                 (
-                                    ranges_common_filter_vec.clone(),
                                     ranges_common_filter_vec.clone(),
                                     ranges_common_filter_vec.clone(),
                                     ranges_common_filter_vec.clone(),
@@ -4662,41 +4627,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             crate::Microsecond::try_new(0).unwrap(),
                                         ).unwrap(),
                                         crate::SqlxTypesTimeTime::try_new(
-                                            crate::Hour::try_new(12).unwrap(),
-                                            crate::Minute::try_new(0).unwrap(),
-                                            crate::Second::try_new(0).unwrap(),
-                                            crate::Microsecond::try_new(0).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesTimeTime::try_new(
                                             crate::Hour::try_new(23).unwrap(),
                                             crate::Minute::try_new(59).unwrap(),
                                             crate::Second::try_new(59).unwrap(),
-                                            crate::Microsecond::try_new(999).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesTimeTime::try_new(
-                                            crate::Hour::try_new(1).unwrap(),
-                                            crate::Minute::try_new(2).unwrap(),
-                                            crate::Second::try_new(3).unwrap(),
-                                            crate::Microsecond::try_new(456_789).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesTimeTime::try_new(
-                                            crate::Hour::try_new(14).unwrap(),
-                                            crate::Minute::try_new(15).unwrap(),
-                                            crate::Second::try_new(16).unwrap(),
                                             crate::Microsecond::try_new(999_999).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesTimeTime::try_new(
-                                            crate::Hour::try_new(6).unwrap(),
-                                            crate::Minute::try_new(30).unwrap(),
-                                            crate::Second::try_new(15).unwrap(),
-                                            crate::Microsecond::try_new(0).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesTimeTime::try_new(
-                                            crate::Hour::try_new(18).unwrap(),
-                                            crate::Minute::try_new(45).unwrap(),
-                                            crate::Second::try_new(0).unwrap(),
-                                            crate::Microsecond::try_new(0).unwrap(),
-                                        ).unwrap(),
+                                        ).unwrap()
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{vec![
                                         sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 0 }, // zero interval
