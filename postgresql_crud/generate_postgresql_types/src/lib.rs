@@ -4649,19 +4649,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
                                         crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc::new(
                                             crate::ChronoNaiveDate::try_new(
-                                                chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap()
-                                            ).unwrap(),
-                                            crate::SqlxTypesChronoNaiveTime::try_new(
-                                                crate::Hour::try_new(0).unwrap(),
-                                                crate::Minute::try_new(0).unwrap(),
-                                                crate::Second::try_new(0).unwrap(),
-                                                crate::Microsecond::try_new(0).unwrap(),
-                                            ).unwrap().into(),
-                                        ),
-                                        crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc::new(
-                                            crate::ChronoNaiveDate::try_new(
                                                 chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap()
-                                            ).unwrap(),
+                                            ).unwrap().into(),
                                             crate::SqlxTypesChronoNaiveTime::try_new(
                                                 crate::Hour::try_new(0).unwrap(),
                                                 crate::Minute::try_new(0).unwrap(),
@@ -4671,8 +4660,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         ),
                                         crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc::new(
                                             crate::ChronoNaiveDate::try_new(
-                                                chrono::NaiveDate::from_ymd_opt(262142, 12, 31).unwrap()
-                                            ).unwrap(),
+                                                chrono::NaiveDate::MAX
+                                            ).unwrap().into(),
                                             crate::SqlxTypesChronoNaiveTime::try_new(
                                                 crate::Hour::try_new(23).unwrap(),
                                                 crate::Minute::try_new(59).unwrap(),

@@ -88,11 +88,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //     "not_null_or_nullable": "NotNull",
         //     "postgresql_type_pattern": "Standart"
         // },
-        // {
-        //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
+        {
+            "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        },
         // {
         //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
         //     "not_null_or_nullable": "Nullable",
@@ -166,15 +166,15 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        {
-            "postgresql_type": "SqlxTypesTimePrimitiveDateTimeAsTimestamp",
-            "not_null_or_nullable": "NotNull",
-            "postgresql_type_pattern": {
-                "ArrayDimension1": {
-                    "dimension1_not_null_or_nullable": "NotNull"
-                }
-            }
-        },
+        // {
+        //     "postgresql_type": "SqlxTypesTimePrimitiveDateTimeAsTimestamp",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "NotNull"
+        //         }
+        //     }
+        // },
         // {
         //     "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
         //     "not_null_or_nullable": "NotNull",
