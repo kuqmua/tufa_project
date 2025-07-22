@@ -4861,6 +4861,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::postgres::types::PgInterval { months: 2, days: 15, microseconds: 123_456_789 }, // mixed parts
                                         sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: std::primitive::i64::MAX }, // extreme positive micros
                                         sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: std::primitive::i64::MIN + 1 }, // extreme negative micros
+                                        sqlx::postgres::types::PgInterval { months: std::primitive::i32::MIN, days: std::primitive::i32::MIN, microseconds: std::primitive::i64::MIN },
+                                        sqlx::postgres::types::PgInterval { months: std::primitive::i32::MAX, days: std::primitive::i32::MAX, microseconds: std::primitive::i64::MAX },
                                     ]},
                                     PostgresqlType::SqlxTypesTimeDateAsDate => quote::quote!{vec![
                                         sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap().into(), // Unix epoch
