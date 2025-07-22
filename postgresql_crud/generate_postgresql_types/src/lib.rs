@@ -4572,41 +4572,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             crate::Microsecond::try_new(0).unwrap(),
                                         ).unwrap(),
                                         crate::SqlxTypesChronoNaiveTime::try_new(
-                                            crate::Hour::try_new(12).unwrap(),
-                                            crate::Minute::try_new(0).unwrap(),
-                                            crate::Second::try_new(0).unwrap(),
-                                            crate::Microsecond::try_new(0).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesChronoNaiveTime::try_new(
                                             crate::Hour::try_new(23).unwrap(),
                                             crate::Minute::try_new(59).unwrap(),
                                             crate::Second::try_new(59).unwrap(),
                                             crate::Microsecond::try_new(999_999).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesChronoNaiveTime::try_new(
-                                            crate::Hour::try_new(6).unwrap(),
-                                            crate::Minute::try_new(30).unwrap(),
-                                            crate::Second::try_new(0).unwrap(),
-                                            crate::Microsecond::try_new(0).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesChronoNaiveTime::try_new(
-                                            crate::Hour::try_new(18).unwrap(),
-                                            crate::Minute::try_new(45).unwrap(),
-                                            crate::Second::try_new(15).unwrap(),
-                                            crate::Microsecond::try_new(0).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesChronoNaiveTime::try_new(
-                                            crate::Hour::try_new(10).unwrap(),
-                                            crate::Minute::try_new(5).unwrap(),
-                                            crate::Second::try_new(3).unwrap(),
-                                            crate::Microsecond::try_new(250).unwrap(),
-                                        ).unwrap(),
-                                        crate::SqlxTypesChronoNaiveTime::try_new(
-                                            crate::Hour::try_new(14).unwrap(),
-                                            crate::Minute::try_new(22).unwrap(),
-                                            crate::Second::try_new(33).unwrap(),
-                                            crate::Microsecond::try_new(123_456).unwrap(),
-                                        ).unwrap(),
+                                        ).unwrap()
                                     ]},
                                     PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{vec![
                                         crate::SqlxTypesTimeTime::try_new(
@@ -4623,17 +4593,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         ).unwrap()
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{vec![
-                                        sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 0 }, // zero interval
-                                        sqlx::postgres::types::PgInterval { months: 1, days: 0, microseconds: 0 }, // 1 month
-                                        sqlx::postgres::types::PgInterval { months: 0, days: 7, microseconds: 0 }, // 1 week
-                                        sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 1_000_000 }, // 1 second
-                                        sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 60_000_000 }, // 1 minute
-                                        sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: 3_600_000_000 }, // 1 hour
-                                        sqlx::postgres::types::PgInterval { months: 12, days: 30, microseconds: 86_400_000_000 }, // 1 year + 30 days + 1 day
-                                        sqlx::postgres::types::PgInterval { months: -1, days: -10, microseconds: -1_000_000 }, // negative interval
-                                        sqlx::postgres::types::PgInterval { months: 2, days: 15, microseconds: 123_456_789 }, // mixed parts
-                                        sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: std::primitive::i64::MAX }, // extreme positive micros
-                                        sqlx::postgres::types::PgInterval { months: 0, days: 0, microseconds: std::primitive::i64::MIN + 1 }, // extreme negative micros
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MIN, days: std::primitive::i32::MIN, microseconds: std::primitive::i64::MIN },
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MAX, days: std::primitive::i32::MAX, microseconds: std::primitive::i64::MAX },
                                     ]},
