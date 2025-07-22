@@ -4674,9 +4674,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         //todo failed - precision is cut off
                                         {
                                             let date_time_local = sqlx::types::chrono::Local::now();
+                                            println!("111 {date_time_local:#?}");
+                                            let date_time_local_naive_utc = date_time_local.naive_utc();
+                                            println!("222 {date_time_local_naive_utc:#?}");
+                                            let date_time_local_offset = date_time_local.offset().clone();
+                                            println!("333 {date_time_local_offset:#?}");
+                                            // 111 2025-07-22T23:36:04.084884884+03:00
+                                            // 222 2025-07-22T20:36:04.084884884
+                                            // 333 +03:00
                                             sqlx::types::chrono::DateTime::<sqlx::types::chrono::Local>::from_naive_utc_and_offset(
-                                                date_time_local.naive_utc(),
-                                                date_time_local.offset().clone()
+                                                date_time_local_naive_utc,
+                                                date_time_local_offset
                                             )
                                         }
                                     ]},
