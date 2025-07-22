@@ -275,7 +275,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let std_primitive_bool_stringified = "std::primitive::bool".to_string();
                 let std_string_string_stringified = "std::string::String".to_string();
                 let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
-                let sqlx_types_time_date_stringified = "sqlx::types::time::Date".to_string();
+                let sqlx_types_time_date_stringified = "crate::SqlxTypesTimeDate".to_string();//sqlx::types::time::Date
                 let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
                 let sqlx_types_chrono_naive_time_stringified = "crate::SqlxTypesChronoNaiveTime".to_string();
                 let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
@@ -1548,19 +1548,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #serde_ser_serialize_struct_end_token_stream
                             }
                         })),
-                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                            let generate_self_zero_tokens_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value()});
-                            let year_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&year_snake_case);
-                            let month_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&month_snake_case);
-                            let day_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&day_snake_case);
-                            quote::quote! {
-                                #serde_state_initialization_three_fields_token_stream
-                                #year_serialize_field_token_stream
-                                #month_serialize_field_token_stream
-                                #day_serialize_field_token_stream
-                                #serde_ser_serialize_struct_end_token_stream
-                            }
-                        })),
+                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
+                        // Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                        //     let generate_self_zero_tokens_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value()});
+                        //     let year_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&year_snake_case);
+                        //     let month_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&month_snake_case);
+                        //     let day_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&day_snake_case);
+                        //     quote::quote! {
+                        //         #serde_state_initialization_three_fields_token_stream
+                        //         #year_serialize_field_token_stream
+                        //         #month_serialize_field_token_stream
+                        //         #day_serialize_field_token_stream
+                        //         #serde_ser_serialize_struct_end_token_stream
+                        //     }
+                        // })),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Derive,
@@ -2627,17 +2628,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         //default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
-                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                            quote::quote! {
-                                #enum_field_three_token_stream
-                                #impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2
-                                #impl_serde_deserialize_for_field_token_stream
-                                #struct_visitor_token_stream
-                                #impl_serde_de_visitor_for_visitor_sqlx_types_time_date_token_stream
-                                #const_fields_sqlx_types_time_date_token_stream
-                                #serde_deserializer_deserialize_struct_visitor_token_stream
-                            }
-                        })),
+                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
+                        // Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                        //     quote::quote! {
+                        //         #enum_field_three_token_stream
+                        //         #impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2
+                        //         #impl_serde_deserialize_for_field_token_stream
+                        //         #struct_visitor_token_stream
+                        //         #impl_serde_de_visitor_for_visitor_sqlx_types_time_date_token_stream
+                        //         #const_fields_sqlx_types_time_date_token_stream
+                        //         #serde_deserializer_deserialize_struct_visitor_token_stream
+                        //     }
+                        // })),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Derive,
@@ -3149,7 +3151,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 &double_dots_space_core_default_default_default_token_stream,
                                             )
                                         },
-                                        PostgresqlType::SqlxTypesTimeDateAsDate => &sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream,
+                                        PostgresqlType::SqlxTypesTimeDateAsDate => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &core_default_default_default_token_stream,
@@ -4597,17 +4599,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MAX, days: std::primitive::i32::MAX, microseconds: std::primitive::i64::MAX },
                                     ]},
                                     PostgresqlType::SqlxTypesTimeDateAsDate => quote::quote!{vec![
-                                        // sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap().into(), // Unix epoch
-                                        // sqlx::types::time::Date::from_calendar_date(2000, time::Month::February, 29).unwrap().into(), // Leap year
-                                        // sqlx::types::time::Date::from_calendar_date(2024, time::Month::December, 31).unwrap().into(), // Recent date
-                                        // sqlx::types::time::Date::from_calendar_date(9999, time::Month::December, 31).unwrap().into(), // Max valid date
-                                        // sqlx::types::time::Date::from_calendar_date(1, time::Month::January, 1).unwrap().into(), // Min valid date
-                                        // sqlx::types::time::Date::from_calendar_date(2023, time::Month::June, 15).unwrap().into(), // Arbitrary valid
-                                        // sqlx::types::time::Date::from_calendar_date(1900, time::Month::March, 1).unwrap().into(),  // Pre-epoch
-                                        // sqlx::types::time::Date::from_calendar_date(2025, time::Month::January, 1).unwrap().into(), // Start of year
-                                        // sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap().into(), // Mid-year
-                                        sqlx::types::time::Date::MIN,
-                                        // sqlx::types::time::Date::MAX,
+                                        crate::SqlxTypesTimeDate::try_new(-4713, time::Month::December, 31).unwrap(),
+                                        crate::SqlxTypesTimeDate::try_new(9999, time::Month::December, 31).unwrap()
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{vec![
                                         // sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(), // Unix epoch
