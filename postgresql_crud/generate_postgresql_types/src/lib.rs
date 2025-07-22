@@ -296,10 +296,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
                 let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
                 let sqlx_types_time_primitive_date_time_stringified = "crate::SqlxTypesTimePrimitiveDateTime".to_string();
-                let (sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified, sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified) = {
-                    let wrap_into_sqlx_types_chrono_date_time_stringified = |value: &dyn std::fmt::Display| format!("sqlx::types::chrono::DateTime<{value}>");
-                    (wrap_into_sqlx_types_chrono_date_time_stringified(&"sqlx::types::chrono::Utc"), wrap_into_sqlx_types_chrono_date_time_stringified(&"sqlx::types::chrono::Local"))
-                };
+                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc".to_string();
+                let sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified = "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>".to_string();
                 let sqlx_types_uuid_uuid_stringified = "sqlx::types::uuid::Uuid".to_string();
                 let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_string();
                 let sqlx_types_mac_address_mac_address_stringified = "sqlx::types::mac_address::MacAddress".to_string();
@@ -1285,7 +1283,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let sqlx_types_time_date_as_date = PostgresqlType::SqlxTypesTimeDateAsDate;
             let sqlx_types_big_decimal_as_numeric = PostgresqlType::SqlxTypesBigDecimalAsNumeric;
 
-            let sqlx_types_time_primitive_date_time_as_timestamp_field_type_token_stream = sqlx_types_time_primitive_date_time_as_timestamp.field_type_token_stream();
             let sqlx_types_time_date_as_date_field_type_token_stream = sqlx_types_time_date_as_date.field_type_token_stream();
             let sqlx_types_big_decimal_as_numeric_field_type_token_stream = sqlx_types_big_decimal_as_numeric.field_type_token_stream();
 
@@ -3293,8 +3290,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz
-                                        | PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz
+                                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz
                                         | PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql
                                         | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => &quote::quote! {
@@ -4959,10 +4956,39 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         ),
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
-                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MIN_UTC, //todo failed
-                                        // sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::MAX_UTC, //todo failed
-                                        sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::UNIX_EPOCH,
-                                        // sqlx::types::chrono::DateTime::
+                                        crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc::new(
+                                            crate::ChronoNaiveDate::try_new(
+                                                chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap()
+                                            ).unwrap(),
+                                            crate::SqlxTypesChronoNaiveTime::try_new(
+                                                crate::Hour::try_new(0).unwrap(),
+                                                crate::Minute::try_new(0).unwrap(),
+                                                crate::Second::try_new(0).unwrap(),
+                                                crate::Microsecond::try_new(0).unwrap(),
+                                            ).unwrap().into(),
+                                        ),
+                                        crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc::new(
+                                            crate::ChronoNaiveDate::try_new(
+                                                chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap()
+                                            ).unwrap(),
+                                            crate::SqlxTypesChronoNaiveTime::try_new(
+                                                crate::Hour::try_new(0).unwrap(),
+                                                crate::Minute::try_new(0).unwrap(),
+                                                crate::Second::try_new(0).unwrap(),
+                                                crate::Microsecond::try_new(0).unwrap(),
+                                            ).unwrap().into(),
+                                        ),
+                                        crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc::new(
+                                            crate::ChronoNaiveDate::try_new(
+                                                chrono::NaiveDate::from_ymd_opt(262142, 12, 31).unwrap()
+                                            ).unwrap(),
+                                            crate::SqlxTypesChronoNaiveTime::try_new(
+                                                crate::Hour::try_new(23).unwrap(),
+                                                crate::Minute::try_new(59).unwrap(),
+                                                crate::Second::try_new(59).unwrap(),
+                                                crate::Microsecond::try_new(999_999).unwrap(),
+                                            ).unwrap().into(),
+                                        ),
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz => quote::quote!{vec![
                                         //todo failed - precision is cut off

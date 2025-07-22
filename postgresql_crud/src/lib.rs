@@ -4152,3 +4152,192 @@ impl sqlx::postgres::PgHasArrayType for SqlxTypesTimePrimitiveDateTime {
         <sqlx::types::time::PrimitiveDateTime as sqlx::postgres::PgHasArrayType>::array_type_info()
     }
 }
+
+//todo cannot create more than 262143-12-31. postgresql supports 294276-12-31. need to find better solution
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize)]
+pub struct ChronoNaiveDate(chrono::NaiveDate);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum ChronoNaiveDateTryNewErrorNamed {
+    CannotCreateDateEarlier {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::string::String,
+        #[eo_to_std_string_string_serialize_deserialize]
+        earliest_supported_date: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl ChronoNaiveDate {
+    pub fn try_new(value: chrono::NaiveDate) -> Result<Self, ChronoNaiveDateTryNewErrorNamed> {
+        let earliest_supported_date = chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap();
+        if value < earliest_supported_date {
+            return Err(ChronoNaiveDateTryNewErrorNamed::CannotCreateDateEarlier {
+                value: value.to_string(),
+                earliest_supported_date: earliest_supported_date.to_string(),
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        Ok(Self(value))
+    }
+    pub fn get(&self) -> &chrono::NaiveDate {
+        &self.0
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for ChronoNaiveDate {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<ChronoNaiveDate>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = ChronoNaiveDate;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "tuple struct ChronoNaiveDate",
+                    )
+                }
+                #[inline]
+                fn visit_newtype_struct<__E>(
+                    self,
+                    __e: __E,
+                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                where
+                    __E: _serde::Deserializer<'de>,
+                {
+                    let __field0: chrono::NaiveDate = <chrono::NaiveDate as _serde::Deserialize>::deserialize(
+                        __e,
+                    )?;
+                    match ChronoNaiveDate::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        chrono::NaiveDate,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"tuple struct ChronoNaiveDate with 1 element",
+                                ),
+                            );
+                        }
+                    };
+                    match ChronoNaiveDate::try_new(__field0) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+            }
+            _serde::Deserializer::deserialize_newtype_struct(
+                __deserializer,
+                "ChronoNaiveDate",
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<ChronoNaiveDate>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl std::convert::Into<chrono::NaiveDate> for ChronoNaiveDate {
+    fn into(self) -> chrono::NaiveDate {
+        self.0
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ChronoNaiveDate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(chrono::NaiveDate::default())
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, serde::Deserialize)]
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtc(sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>);
+impl SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    pub fn new(
+        naive_date: crate::ChronoNaiveDate,
+        sqlx_types_chrono_naive_time: crate::SqlxTypesChronoNaiveTime
+    ) -> Self {
+        Self(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+            chrono::NaiveDateTime::new(
+                naive_date.into(),
+                sqlx_types_chrono_naive_time.into(),
+            ),
+            sqlx::types::chrono::Utc
+        ))
+    }
+    pub fn get(&self) -> &sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> {
+        &self.0
+    }
+}
+impl std::convert::Into<sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn into(self) -> sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> {
+        self.0
+    }
+}
+impl error_occurence_lib::ToStdStringString for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+            chrono::NaiveDateTime::new(
+                <crate::ChronoNaiveDate as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into(),
+                <crate::SqlxTypesChronoNaiveTime as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into(),
+            ),
+            sqlx::types::chrono::Utc
+        ))
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoDateTimeSqlxTypesChronoUtc {
+    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::postgres::PgHasArrayType>::array_type_info()
+    }
+}
