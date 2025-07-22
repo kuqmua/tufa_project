@@ -275,8 +275,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let std_primitive_bool_stringified = "std::primitive::bool".to_string();
                 let std_string_string_stringified = "std::string::String".to_string();
                 let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
-                let sqlx_types_time_date_stringified = "crate::SqlxTypesTimeDate".to_string();//sqlx::types::time::Date
-                let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
+                let sqlx_types_time_date_stringified = "crate::SqlxTypesTimeDate".to_string();
+                let sqlx_types_chrono_naive_date_stringified = "crate::SqlxTypesChronoNaiveDate".to_string();
                 let sqlx_types_chrono_naive_time_stringified = "crate::SqlxTypesChronoNaiveTime".to_string();
                 let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
@@ -3152,7 +3152,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             )
                                         },
                                         PostgresqlType::SqlxTypesTimeDateAsDate => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
+                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -4603,18 +4603,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         crate::SqlxTypesTimeDate::try_new(9999, time::Month::December, 31).unwrap()
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{vec![
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(), // Unix epoch
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 2, 29).unwrap(), // Leap year
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 12, 31).unwrap(), // End of year
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(1, 1, 1).unwrap(), // Minimum valid date
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(9999, 12, 31).unwrap(), // Maximum valid date
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(), // Arbitrary mid-year
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(1900, 3, 1).unwrap(), // Pre-epoch date
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(2023, 6, 15).unwrap(), // Recent date
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 1, 1).unwrap(), // Start of year
-                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap(),
-                                        // sqlx::types::chrono::NaiveDate::from_ymd_opt(-26214, 1, 1).unwrap(),
-                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                        crate::SqlxTypesChronoNaiveDate::try_new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()
+                                        ).unwrap(),
+                                        crate::SqlxTypesChronoNaiveDate::try_new(
+                                            sqlx::types::chrono::NaiveDate::MAX
+                                        ).unwrap()
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{vec![
                                         sqlx::types::chrono::NaiveDateTime::new(
