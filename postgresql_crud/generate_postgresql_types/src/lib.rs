@@ -4603,12 +4603,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         crate::SqlxTypesTimeDate::try_new(9999, time::Month::December, 31).unwrap()
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{vec![
-                                        crate::SqlxTypesChronoNaiveDate::try_new(
-                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()
-                                        ).unwrap(),
-                                        crate::SqlxTypesChronoNaiveDate::try_new(
-                                            sqlx::types::chrono::NaiveDate::MAX
-                                        ).unwrap()
+                                        crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()).unwrap(),
+                                        crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::MAX).unwrap()
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{vec![
                                         sqlx::types::chrono::NaiveDateTime::new(
