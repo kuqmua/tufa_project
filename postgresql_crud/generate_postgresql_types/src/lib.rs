@@ -4628,7 +4628,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     ]},
                                     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => quote::quote!{vec![
                                         crate::SqlxTypesTimePrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap(),
+                                            crate::SqlxTypesTimeDate::try_new(-4713, time::Month::December, 31).unwrap(),
                                             crate::SqlxTypesTimeTime::try_new(
                                                 crate::Hour::try_new(0).unwrap(),
                                                 crate::Minute::try_new(0).unwrap(),
@@ -4637,52 +4637,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             ).unwrap(),
                                         ),
                                         crate::SqlxTypesTimePrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(1969, time::Month::December, 31).unwrap(),
-                                            crate::SqlxTypesTimeTime::try_new(
-                                                crate::Hour::try_new(23).unwrap(),
-                                                crate::Minute::try_new(59).unwrap(),
-                                                crate::Second::try_new(59).unwrap(),
-                                                crate::Microsecond::try_new(0).unwrap(),
-                                            ).unwrap(),
-                                        ),
-                                        crate::SqlxTypesTimePrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(2000, time::Month::February, 29).unwrap(),
-                                            crate::SqlxTypesTimeTime::try_new(
-                                                crate::Hour::try_new(12).unwrap(),
-                                                crate::Minute::try_new(30).unwrap(),
-                                                crate::Second::try_new(45).unwrap(),
-                                                crate::Microsecond::try_new(999).unwrap(),
-                                            ).unwrap(),
-                                        ),
-                                        crate::SqlxTypesTimePrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(9999, time::Month::December, 31).unwrap(),
-                                            crate::SqlxTypesTimeTime::try_new(
-                                                crate::Hour::try_new(23).unwrap(),
-                                                crate::Minute::try_new(59).unwrap(),
-                                                crate::Second::try_new(59).unwrap(),
-                                                crate::Microsecond::try_new(999_999).unwrap(),
-                                            ).unwrap(),
-                                        ),
-                                        crate::SqlxTypesTimePrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(1, time::Month::January, 1).unwrap(),
-                                            crate::SqlxTypesTimeTime::try_new(
-                                                crate::Hour::try_new(0).unwrap(),
-                                                crate::Minute::try_new(0).unwrap(),
-                                                crate::Second::try_new(0).unwrap(),
-                                                crate::Microsecond::try_new(0).unwrap(),
-                                            ).unwrap(),
-                                        ),
-                                        crate::SqlxTypesTimePrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 15).unwrap(),
-                                            crate::SqlxTypesTimeTime::try_new(
-                                                crate::Hour::try_new(15).unwrap(),
-                                                crate::Minute::try_new(45).unwrap(),
-                                                crate::Second::try_new(30).unwrap(),
-                                                crate::Microsecond::try_new(123_456).unwrap(),
-                                            ).unwrap(),
-                                        ),
-                                        crate::SqlxTypesTimePrimitiveDateTime::new(
-                                            sqlx::types::time::Date::from_calendar_date(2023, time::Month::August, 8).unwrap(),
+                                            crate::SqlxTypesTimeDate::try_new(9999, time::Month::December, 31).unwrap(),
                                             crate::SqlxTypesTimeTime::try_new(
                                                 crate::Hour::try_new(23).unwrap(),
                                                 crate::Minute::try_new(59).unwrap(),

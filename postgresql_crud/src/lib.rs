@@ -4377,11 +4377,11 @@ impl sqlx::postgres::PgHasArrayType for SqlxTypesTimeTime {
 pub struct SqlxTypesTimePrimitiveDateTime(sqlx::types::time::PrimitiveDateTime);
 impl SqlxTypesTimePrimitiveDateTime {
     pub fn new(
-        date: sqlx::types::time::Date,
+        date: crate::SqlxTypesTimeDate,
         time: crate::SqlxTypesTimeTime,
     ) -> Self {
         Self(sqlx::types::time::PrimitiveDateTime::new(
-            date,
+            date.into(),
             time.into()
         ))
     }
@@ -4402,11 +4402,7 @@ impl error_occurence_lib::ToStdStringString for SqlxTypesTimePrimitiveDateTime {
 impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesTimePrimitiveDateTime {
     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
         Self(sqlx::types::time::PrimitiveDateTime::new(
-            sqlx::types::time::Date::from_calendar_date(
-                0,
-                time::Month::January,
-                1,
-            ).unwrap(),
+            <crate::SqlxTypesTimeDate as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into(),
             <crate::SqlxTypesTimeTime as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into()
         ))
     }
