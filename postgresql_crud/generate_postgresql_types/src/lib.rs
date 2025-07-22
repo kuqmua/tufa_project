@@ -280,7 +280,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let sqlx_types_chrono_naive_time_stringified = "crate::SqlxTypesChronoNaiveTime".to_string();
                 let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
-                let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
+                let sqlx_types_chrono_naive_date_time_stringified = "crate::SqlxTypesChronoNaiveDateTime".to_string();
                 let sqlx_types_time_primitive_date_time_stringified = "crate::SqlxTypesTimePrimitiveDateTime".to_string();
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc".to_string();
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_local_stringified = "sqlx::types::chrono::DateTime<sqlx::types::chrono::Local>".to_string();
@@ -3154,7 +3154,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesTimeDateAsDate => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &core_default_default_default_token_stream,
+                                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz
@@ -4607,9 +4607,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::MAX).unwrap()
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{vec![
-                                        sqlx::types::chrono::NaiveDateTime::new(
-                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
-                                            sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap()
+                                        crate::SqlxTypesChronoNaiveDateTime::new(
+                                            crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()).unwrap(),
+                                            crate::SqlxTypesChronoNaiveTime::try_new(
+                                                crate::Hour::try_new(0).unwrap(),
+                                                crate::Minute::try_new(0).unwrap(),
+                                                crate::Second::try_new(0).unwrap(),
+                                                crate::Microsecond::try_new(0).unwrap(),
+                                            ).unwrap()
                                         )
                                     ]},
                                     PostgresqlType::SqlxTypesTimePrimitiveDateTimeAsTimestamp => quote::quote!{vec![
