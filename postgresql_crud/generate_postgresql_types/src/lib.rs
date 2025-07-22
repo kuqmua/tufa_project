@@ -4559,19 +4559,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
                                     ]},
                                     PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{vec![
-                                        vec![], // empty vector
-                                        vec![0], // single element: null byte
-                                        vec![255], // max u8 value
-                                        vec![1, 2, 3, 4, 5], // simple sequence
-                                        vec![0, 0, 0, 0], // repeated zeros
-                                        vec![10, 20, 30, 40, 50], // small range
-                                        vec![b'a', b'b', b'c'], // ASCII string as bytes
-                                        vec![b'\n', b'\r', b'\t'], // control characters
-                                        b"Hello, world!".to_vec(), // UTF-8 text
-                                        vec![0, 255, 127, 128], // boundary values
-                                        (0u8..=255).collect(), // all possible u8 values
-                                        vec![1; 1024], // long vec (1KB of ones)
-                                        vec![0xDE, 0xAD, 0xBE, 0xEF], // hex pattern (e.g. binary signature)
+                                        vec![],
+                                        (0u8..=255).collect(),
+                                        vec![0; 1024],
+                                        vec![0; 1024 * 1024 * 2],
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => quote::quote!{vec![
                                         crate::SqlxTypesChronoNaiveTime::try_new(
