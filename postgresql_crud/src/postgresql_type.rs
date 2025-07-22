@@ -63,7 +63,6 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-
         {
             "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
             "not_null_or_nullable": "NotNull",
