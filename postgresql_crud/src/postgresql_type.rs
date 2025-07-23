@@ -83,13 +83,8 @@ generate_postgresql_types::generate_postgresql_types!({
         //     "not_null_or_nullable": "NotNull",
         //     "postgresql_type_pattern": "Standart"
         // },
-        // {
-        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
         {
-            "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoLocalAsTimestampTz",
+            "postgresql_type": "SqlxTypesTimeTimeAsTime",
             "not_null_or_nullable": "NotNull",
             "postgresql_type_pattern": "Standart"
         },
