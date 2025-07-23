@@ -4494,39 +4494,125 @@ impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoNaiveDateTime {
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange<std::primitive::i32>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed {
-    InvalidHourOrMinuteOrSecondOrMicrosecond {
+    IncludedStartEqualsToIncludedEnd {
         #[eo_to_std_string_string_serialize_deserialize]
-        hour: Hour,
-        #[eo_to_std_string_string_serialize_deserialize]
-        minute: Minute,
-        #[eo_to_std_string_string_serialize_deserialize]
-        second: Second,
-        #[eo_to_std_string_string_serialize_deserialize]
-        microsecond: Microsecond,
-        #[eo_to_std_string_string_serialize_deserialize]
-        error: std::string::String,
+        value: std::primitive::i32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
+    },
+    IncludedStartEqualsToExcludedEnd {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExcludedStartEqualsToIncludedEnd {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExcludedStartEqualsToExcludedEnd {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    IncludedStartLessThanIncludedEnd {
+        #[eo_to_std_string_string_serialize_deserialize]
+        start: std::primitive::i32,
+        #[eo_to_std_string_string_serialize_deserialize]
+        end: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    IncludedStartLessThanExcludedEnd {
+        #[eo_to_std_string_string_serialize_deserialize]
+        start: std::primitive::i32,
+        #[eo_to_std_string_string_serialize_deserialize]
+        end: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExcludedStartLessThanIncludedEnd {
+        #[eo_to_std_string_string_serialize_deserialize]
+        start: std::primitive::i32,
+        #[eo_to_std_string_string_serialize_deserialize]
+        end: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExcludedStartLessThanExcludedEnd {
+        #[eo_to_std_string_string_serialize_deserialize]
+        start: std::primitive::i32,
+        #[eo_to_std_string_string_serialize_deserialize]
+        end: std::primitive::i32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
 }
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     pub fn try_new(value: sqlx::postgres::types::PgRange<std::primitive::i32>) -> Result<Self, SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed> {
-        // match sqlx::postgres::types::PgRange<std::primitive::i32>::from_hms_micro(
-        //     hour.to_std_primitive_u8(),
-        //     minute.to_std_primitive_u8(),
-        //     second.to_std_primitive_u8(),
-        //     microsecond.to_std_primitive_u32(),
-        // ) {
-        //     Ok(value) => Ok(Self(value)),
-        //     Err(error) => Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
-        //         hour,
-        //         minute,
-        //         second,
-        //         microsecond,
-        //         error: error.to_string(),
-        //         code_occurence: error_occurence_lib::code_occurence!(),
-        //     })
-        // }
-        todo!()
+        match (&value.start, &value.end) {
+            (std::ops::Bound::Included(start), std::ops::Bound::Included(end)) => {
+                if start == end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartEqualsToIncludedEnd {
+                        value: *start,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else if start > end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartLessThanIncludedEnd {
+                        start: *start,
+                        end: *end,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            },
+            (std::ops::Bound::Included(start), std::ops::Bound::Excluded(end)) => {
+                if start == end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartEqualsToExcludedEnd {
+                        value: *start,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else if start > end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartLessThanExcludedEnd {
+                        start: *start,
+                        end: *end,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            },
+            (std::ops::Bound::Included(start), std::ops::Bound::Unbounded) => (),
+            (std::ops::Bound::Excluded(start), std::ops::Bound::Included(end)) => {
+                if start == end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartEqualsToIncludedEnd {
+                        value: *start,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else if start > end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartLessThanIncludedEnd {
+                        start: *start,
+                        end: *end,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            },
+            (std::ops::Bound::Excluded(start), std::ops::Bound::Excluded(end)) => {
+                if start == end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartEqualsToExcludedEnd {
+                        value: *start,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+                else if start > end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartLessThanExcludedEnd {
+                        start: *start,
+                        end: *end,
+                        code_occurence: error_occurence_lib::code_occurence!(),
+                    });
+                }
+            },
+            (std::ops::Bound::Excluded(start), std::ops::Bound::Unbounded) => (),
+            (std::ops::Bound::Unbounded, std::ops::Bound::Included(end)) => (),
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end)) => (),
+            (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => (),
+        }
+        Ok(Self(value))
     }
     pub fn get(&self) -> &sqlx::postgres::types::PgRange<std::primitive::i32> {
         &self.0
