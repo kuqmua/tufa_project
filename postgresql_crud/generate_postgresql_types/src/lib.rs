@@ -16,7 +16,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxTypesChronoNaiveTime,
         SqlxTypesTimeTime,
         SqlxPostgresTypesPgInterval,
-        SqlxTypesTimeDate,
         SqlxTypesChronoNaiveDate,
         SqlxTypesChronoNaiveDateTime,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
@@ -25,7 +24,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxTypesMacAddressMacAddress,
         SqlxPostgresTypesPgRangeStdPrimitiveI32,
         SqlxPostgresTypesPgRangeStdPrimitiveI64,
-        SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
@@ -48,7 +46,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Self::SqlxTypesChronoNaiveTime,
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Self::SqlxTypesTimeTime,
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::SqlxPostgresTypesPgInterval,
-                PostgresqlType::SqlxTypesTimeDateAsDate => Self::SqlxTypesTimeDate,
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDate,
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::SqlxTypesChronoNaiveDateTime,
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtc,
@@ -58,7 +55,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::SqlxTypesMacAddressMacAddress,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64,
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDate,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDate,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTime,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtc,
@@ -112,7 +108,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Self::Time,
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Self::Time,
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::Interval,
-                PostgresqlType::SqlxTypesTimeDateAsDate => Self::Date,
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::Date,
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::Timestamp,
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::TimestampTz,
@@ -122,7 +117,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::MacAddr,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::Int4Range,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::Int8Range,
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => Self::DateRange,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::DateRange,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::TimestampRange,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::TimestampTzRange,
@@ -147,7 +141,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxTypesChronoNaiveTimeAsTime,
         SqlxTypesTimeTimeAsTime,
         SqlxPostgresTypesPgIntervalAsInterval,
-        SqlxTypesTimeDateAsDate,
         SqlxTypesChronoNaiveDateAsDate,
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
@@ -157,7 +150,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         SqlxTypesMacAddressMacAddressAsMacAddr,
         SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
         SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
-        SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange,
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
         SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
@@ -191,7 +183,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::SqlxTypesChronoNaiveTimeAsTime => CanBeNullable::True,
                 Self::SqlxTypesTimeTimeAsTime => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgIntervalAsInterval => CanBeNullable::True,
-                Self::SqlxTypesTimeDateAsDate => CanBeNullable::True,
                 Self::SqlxTypesChronoNaiveDateAsDate => CanBeNullable::True,
                 Self::SqlxTypesChronoNaiveDateTimeAsTimestamp => CanBeNullable::True,
                 Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => CanBeNullable::True,
@@ -201,7 +192,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::SqlxTypesMacAddressMacAddressAsMacAddr => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => CanBeNullable::True,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => CanBeNullable::True,
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeNullable::True,
@@ -224,7 +214,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::SqlxTypesChronoNaiveTimeAsTime => CanBeAnArrayElement::True,
                 Self::SqlxTypesTimeTimeAsTime => CanBeAnArrayElement::True,
                 Self::SqlxPostgresTypesPgIntervalAsInterval => CanBeAnArrayElement::True,
-                Self::SqlxTypesTimeDateAsDate => CanBeAnArrayElement::True,
                 Self::SqlxTypesChronoNaiveDateAsDate => CanBeAnArrayElement::True,
                 Self::SqlxTypesChronoNaiveDateTimeAsTimestamp => CanBeAnArrayElement::True,
                 Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => CanBeAnArrayElement::True,
@@ -234,7 +223,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::SqlxTypesMacAddressMacAddressAsMacAddr => CanBeAnArrayElement::True,
                 Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => CanBeAnArrayElement::True,
                 Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => CanBeAnArrayElement::True,
-                Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => CanBeAnArrayElement::True,
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => CanBeAnArrayElement::True,
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => CanBeAnArrayElement::True,
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeAnArrayElement::True,
@@ -251,7 +239,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let std_primitive_bool_stringified = "std::primitive::bool".to_string();
                 let std_string_string_stringified = "std::string::String".to_string();
                 let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
-                let sqlx_types_time_date_stringified = "crate::SqlxTypesTimeDate".to_string();
                 let sqlx_types_chrono_naive_date_stringified = "crate::SqlxTypesChronoNaiveDate".to_string();
                 let sqlx_types_chrono_naive_time_stringified = "crate::SqlxTypesChronoNaiveTime".to_string();
                 let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
@@ -277,7 +264,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     Self::SqlxTypesChronoNaiveTimeAsTime => sqlx_types_chrono_naive_time_stringified,
                     Self::SqlxTypesTimeTimeAsTime => sqlx_types_time_time_stringified,
                     Self::SqlxPostgresTypesPgIntervalAsInterval => sqlx_postgres_types_pg_interval_stringified,
-                    Self::SqlxTypesTimeDateAsDate => sqlx_types_time_date_stringified,
                     Self::SqlxTypesChronoNaiveDateAsDate => sqlx_types_chrono_naive_date_stringified,
                     Self::SqlxTypesChronoNaiveDateTimeAsTimestamp => sqlx_types_chrono_naive_date_time_stringified,
                     Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified,
@@ -287,7 +273,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     Self::SqlxTypesMacAddressMacAddressAsMacAddr => sqlx_types_mac_address_mac_address_stringified,
                     Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i32_stringified),
                     Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i64_stringified),
-                    Self::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_time_date_stringified),
                     Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_stringified),
                     Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_time_stringified),
                     Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_postgres_types_pg_range_stringified(
@@ -308,7 +293,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             match value {
                 PostgresqlTypeRange::StdPrimitiveI32AsInt4 => Self::StdPrimitiveI32AsInt4,
                 PostgresqlTypeRange::StdPrimitiveI64AsInt8 => Self::StdPrimitiveI64AsInt8,
-                PostgresqlTypeRange::SqlxTypesTimeDateAsDate => Self::SqlxTypesTimeDateAsDate,
                 PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
                 PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsTimestamp,
                 PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
@@ -318,7 +302,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     enum PostgresqlTypeRange {
         StdPrimitiveI32AsInt4,
         StdPrimitiveI64AsInt8,
-        SqlxTypesTimeDateAsDate,
         SqlxTypesChronoNaiveDateAsDate,
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
@@ -342,7 +325,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Err(()),
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Err(()),
-                PostgresqlType::SqlxTypesTimeDateAsDate => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Err(()),
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Err(()),
@@ -352,7 +334,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Ok(Self::StdPrimitiveI32AsInt4),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Ok(Self::StdPrimitiveI64AsInt8),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => Ok(Self::SqlxTypesTimeDateAsDate),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Ok(Self::SqlxTypesChronoNaiveDateAsDate),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Ok(Self::SqlxTypesChronoNaiveDateTimeAsTimestamp),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
@@ -752,7 +733,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Err(()),
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Err(()),
-                PostgresqlType::SqlxTypesTimeDateAsDate => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Err(()),
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Err(()),
@@ -762,7 +742,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Err(()),
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Err(()),
@@ -864,7 +843,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     //         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => true,
     //         PostgresqlType::SqlxTypesTimeTimeAsTime => true,
     //         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => true,
-    //         PostgresqlType::SqlxTypesTimeDateAsDate => true,
     //         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => true,
     //         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => true,
     //         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => true,
@@ -874,7 +852,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     //         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => true,
     //         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => true,
     //         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => true,
-    //         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => true,
     //         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => true,
     //         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => true,
     //         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => true,
@@ -988,9 +965,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             
             let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
 
-            let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
             let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
-            let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
             let std_string_string_token_stream = token_patterns::StdStringString;
 
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
@@ -1205,16 +1180,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let typical_query_bind_token_stream = generate_typical_query_bind_token_stream(&value_snake_case);
 
-            let sqlx_types_time_date_as_date = PostgresqlType::SqlxTypesTimeDateAsDate;
-
-            let sqlx_types_time_date_as_date_field_type_token_stream = sqlx_types_time_date_as_date.field_type_token_stream();
-
             let sqlx_postgres_types_pg_money_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney.field_type_token_stream();
             let sqlx_types_uuid_uuid_field_type_token_stream = PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient.field_type_token_stream();
             let sqlx_types_mac_address_mac_address_field_type_token_stream = PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr.field_type_token_stream();
             let sqlx_postgres_types_pg_interval_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval.field_type_token_stream();
 
-            let time_month_token_stream = quote::quote! {time::Month};
             let sqlx_postgres_types_pg_range_token_stream = quote::quote! {sqlx::postgres::types::PgRange};
 
             let generate_qlx_postgres_types_pg_range_start_end_token_stream = |start_token_stream: &dyn quote::ToTokens, end_token_stream: &dyn quote::ToTokens| {
@@ -1293,7 +1263,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => CanBePrimaryKey::False,
                 PostgresqlType::SqlxTypesTimeTimeAsTime => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => CanBePrimaryKey::False,
-                PostgresqlType::SqlxTypesTimeDateAsDate => CanBePrimaryKey::False,
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => CanBePrimaryKey::False,
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => CanBePrimaryKey::False,
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => CanBePrimaryKey::False,
@@ -1303,7 +1272,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => CanBePrimaryKey::False,
-                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => CanBePrimaryKey::False,
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBePrimaryKey::False,
@@ -1342,7 +1310,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 IsNotNullStandartCanBePrimaryKey::False
             };
             let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
-                let sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(&sqlx_types_time_date_as_date));
                 let self_dot_zero_token_stream = quote::quote! {#self_snake_case.0};
                 enum ParameterNumber {
                     One,
@@ -1492,7 +1459,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #serde_ser_serialize_struct_end_token_stream
                             }
                         })),
-                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         // Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                         //     let generate_self_zero_tokens_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value()});
                         //     let year_serialize_field_token_stream = generate_self_zero_tokens_token_stream(&year_snake_case);
@@ -1517,9 +1483,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25)
-                        }),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => {
@@ -1698,19 +1661,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_private_ok_postgresql_type_token_stream
                         }
                     });
-                    let sqlx_types_time_date_specific_initialization = quote::quote! {
-                        match sqlx::types::time::Date::from_calendar_date(#field_0_token_stream, #field_1_token_stream, #field_2_token_stream) {
-                            Ok(value) => {
-                                let minimum = sqlx::types::time::Date::from_calendar_date(-4713, time::Month::December, 31).unwrap();
-                                if minimum > value {
-                                    Err(_serde::de::Error::custom(format!("SqlxTypesTimeDate less than minimum postgresql value {value:?}")))
-                                } else {
-                                    _serde::__private::Ok(#ident_standart_not_null_origin_upper_camel_case(value))
-                                }
-                            },
-                            Err(value) => Err(_serde::de::Error::custom(format!("SqlxTypesTimeDate from calendar date {value:?}")))
-                        }
-                    };
                     let (seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream, seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream, seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream) = {
                         let generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream = |parameter_number: &ParameterNumber| {
                             let index_token_stream = match &parameter_number {
@@ -1756,7 +1706,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream,
                         std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                         std_collections_bound_sqlx_types_chrono_naive_date_token_stream,
-                        std_collections_bound_sqlx_types_time_date_as_date_token_stream,
                     ) = {
                         let generate_std_collections_bound_ident_standart_not_null_origin = |postgresql_type: &PostgresqlType|{
                             generate_std_collections_bound_token_stream(
@@ -1773,7 +1722,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_std_collections_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp),
                             generate_std_collections_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
                             generate_std_collections_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate),
-                            generate_std_collections_bound_token_stream(&sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream),
                         )
                     };
                     let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
@@ -1804,17 +1752,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             &std_collections_bound_sqlx_types_chrono_naive_date_token_stream
                         ]);
                         let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
-                        quote::quote! {
-                            #fields_initialization_token_stream
-                            #serde_private_ok_postgresql_type_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = {
-                            let std_collections_bound_sqlx_types_time_date_as_date_token_stream = generate_std_collections_bound_token_stream(&sqlx_types_time_date_as_not_null_date_origin_upper_camel_case_token_stream);
-                            generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_collections_bound_sqlx_types_time_date_as_date_token_stream, &std_collections_bound_sqlx_types_time_date_as_date_token_stream])
-                        };
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
                         quote::quote! {
                             #fields_initialization_token_stream
                             #serde_private_ok_postgresql_type_token_stream
@@ -1958,11 +1895,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     let (
-                        fn_visit_map_sqlx_types_time_date_token_stream,
                         fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                         fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                         fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                        fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                     ) = {
                         let generate_fn_visit_map_token_stream = |
                             field_option_none_initialization_token_stream: &dyn quote::ToTokens,
@@ -1984,11 +1919,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         let (
-                            field_option_none_initialization_sqlx_types_time_date_token_stream,
                             field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                             field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                             field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                            field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                         ) = {
                             let generate_field_option_none_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
                                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2000,19 +1933,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 quote::quote! {#(#fields_initialization_token_stream)*}
                             };
                             (
-                                generate_field_option_none_initialization_token_stream(&[&std_primitive_i32_token_stream, &time_month_token_stream, &std_primitive_u8_token_stream]),
                                 generate_field_option_none_initialization_token_stream(&[&std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream]),
                                 generate_field_option_none_initialization_token_stream(&[&std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream, &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream]),
                                 generate_field_option_none_initialization_token_stream(&[&std_collections_bound_sqlx_types_chrono_naive_date_token_stream, &std_collections_bound_sqlx_types_chrono_naive_date_token_stream]),
-                                generate_field_option_none_initialization_token_stream(&[&std_collections_bound_sqlx_types_time_date_as_date_token_stream, &std_collections_bound_sqlx_types_time_date_as_date_token_stream]),
                             )
                         };
                         let (
-                            while_some_next_key_field_sqlx_types_time_date_token_stream,
                             while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                             while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                             while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                            while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                         ) = {
                             let generate_while_some_next_key_field_token_stream = |vec_token_stream: &[(&dyn std::fmt::Display, &dyn quote::ToTokens)]| {
                                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2040,44 +1969,30 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             };
                             (
-                                generate_while_some_next_key_field_token_stream(&[(&year_snake_case, &std_primitive_i32_token_stream), (&month_snake_case, &time_month_token_stream), (&day_snake_case, &std_primitive_u8_token_stream)]),
                                 generate_while_some_next_key_field_token_stream(&[(&start_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream), (&end_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream)]),
                                 generate_while_some_next_key_field_token_stream(&[
                                     (&start_snake_case, &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream),
                                     (&end_snake_case, &std_collections_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream),
                                 ]),
                                 generate_while_some_next_key_field_token_stream(&[(&start_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_token_stream), (&end_snake_case, &std_collections_bound_sqlx_types_chrono_naive_date_token_stream)]),
-                                generate_while_some_next_key_field_token_stream(&[(&start_snake_case, &std_collections_bound_sqlx_types_time_date_as_date_token_stream), (&end_snake_case, &std_collections_bound_sqlx_types_time_date_as_date_token_stream)]),
                             )
                         };
-                        let (match_field_initialization_sqlx_types_time_date_token_stream, match_field_initialization_start_end_token_stream) = {
-                            let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                                let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
-                                    let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element);
-                                    let field_index_name_token_stream = generate_field_index_token_stream(index);
-                                    quote::quote! {
-                                        let #field_index_name_token_stream = match #field_index_name_token_stream {
-                                            serde::__private::Some(#field_index_name_token_stream) => #field_index_name_token_stream,
-                                            serde::__private::None => serde::__private::de::missing_field(#field_name_double_quotes_token_stream)?,
-                                        };
-                                    }
-                                });
-                                quote::quote! {#(#fields_initialization_token_stream)*}
-                            };
-                            (
-                                generate_match_field_initialization_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
-                                generate_match_field_initialization_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
-                            )
+                        let match_field_initialization_start_end_token_stream = {
+                            let fields_initialization_token_stream = start_end_std_fmt_display_plus_quote_to_tokens_array.iter().enumerate().map(|(index, element)| {
+                                let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element);
+                                let field_index_name_token_stream = generate_field_index_token_stream(index);
+                                quote::quote! {
+                                    let #field_index_name_token_stream = match #field_index_name_token_stream {
+                                        serde::__private::Some(#field_index_name_token_stream) => #field_index_name_token_stream,
+                                        serde::__private::None => serde::__private::de::missing_field(#field_name_double_quotes_token_stream)?,
+                                    };
+                                }
+                            });
+                            quote::quote! {#(#fields_initialization_token_stream)*}
                         };
                         let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
                         let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_bound_start_end_token_stream);
                         (
-                            generate_fn_visit_map_token_stream(
-                                &field_option_none_initialization_sqlx_types_time_date_token_stream,
-                                &while_some_next_key_field_sqlx_types_time_date_token_stream,
-                                &match_field_initialization_sqlx_types_time_date_token_stream,
-                                &sqlx_types_time_date_specific_initialization,
-                            ),
                             generate_fn_visit_map_token_stream(
                                 &field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                                 &while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
@@ -2095,12 +2010,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                                 &match_field_initialization_start_end_token_stream,
                                 &serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream,
-                            ),
-                            generate_fn_visit_map_token_stream(
-                                &field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-                                &while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-                                &match_field_initialization_start_end_token_stream,
-                                &serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_bound_start_end_token_stream,
                             ),
                         )
                     };
@@ -2215,7 +2124,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_field_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
-                    let (const_fields_sqlx_types_time_date_token_stream, const_fields_sqlx_postgres_types_pg_interval_token_stream, const_fields_start_end_token_stream) = {
+                    let (const_fields_sqlx_postgres_types_pg_interval_token_stream, const_fields_start_end_token_stream) = {
                         let generate_const_fields_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let field_names_token_stream = vec_token_stream.iter().map(|element| generate_quotes::double_quotes_token_stream(&element));
                             quote::quote! {
@@ -2224,18 +2133,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         (
-                            generate_const_fields_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
                             generate_const_fields_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
                             generate_const_fields_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
                     let (
                         impl_serde_de_visitor_for_visitor_pg_money_token_stream,
-                        impl_serde_de_visitor_for_visitor_sqlx_types_time_date_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
-                        impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                         impl_serde_de_visitor_for_visitor_uuid_uuid_token_stream,
                         impl_serde_de_visitor_for_visitor_mac_address_mac_address_token_stream,
                     ) = {
@@ -2251,23 +2157,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         (
                             generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_pg_money_token_stream, &fn_visit_seq_pg_money_token_stream),
-                            generate_impl_serde_de_visitor_for_visitor_token_stream(
-                                &generate_fn_visit_seq_token_stream(&{
-                                    let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_primitive_i32_token_stream, &time_month_token_stream, &std_primitive_u8_token_stream]);
-                                    quote::quote! {
-                                        #fields_initialization_token_stream
-                                        #sqlx_types_time_date_specific_initialization
-                                    }
-                                }),
-                                &fn_visit_map_sqlx_types_time_date_token_stream,
-                            ),
                             generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream, &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream),
                             generate_impl_serde_de_visitor_for_visitor_token_stream(
                                 &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                                 &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                             ),
                             generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream, &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream),
-                            generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream, &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream),
                             generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_uuid_token_stream, &fn_visit_seq_sqlx_types_uuid_uuid_token_stream),
                             generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_mac_address_token_stream, &fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream),
                         )
@@ -2499,19 +2394,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
-                        //default deserialize impl can cause an postgresql error "date of out range". pub const fn from_ordinal_date( do it too. if u want to check it just use sqlx::types::time::Date::MIN
-                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
-                        // Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                        //     quote::quote! {
-                        //         #enum_field_three_token_stream
-                        //         #impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2
-                        //         #impl_serde_deserialize_for_field_token_stream
-                        //         #struct_visitor_token_stream
-                        //         #impl_serde_de_visitor_for_visitor_sqlx_types_time_date_token_stream
-                        //         #const_fields_sqlx_types_time_date_token_stream
-                        //         #serde_deserializer_deserialize_struct_visitor_token_stream
-                        //     }
-                        // })),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Derive,
@@ -2536,9 +2418,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         })),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_token_stream),
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(
-                            &impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
-                        )),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(
                             &impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                         )),
@@ -2606,7 +2485,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => partial_ord_comma_token_stream,
                             PostgresqlType::SqlxTypesTimeTimeAsTime => partial_ord_comma_token_stream,
                             PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => proc_macro2::TokenStream::new(),
-                            PostgresqlType::SqlxTypesTimeDateAsDate => partial_ord_comma_token_stream,
                             PostgresqlType::SqlxTypesChronoNaiveDateAsDate => partial_ord_comma_token_stream,
                             PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => partial_ord_comma_token_stream,
                             PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => partial_ord_comma_token_stream,
@@ -2616,7 +2494,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
@@ -2934,7 +2811,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesTimeTimeAsTime => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => proc_macro2::TokenStream::new(),
-                            PostgresqlType::SqlxTypesTimeDateAsDate => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesChronoNaiveDateAsDate => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => proc_macro2::TokenStream::new(),
@@ -2944,7 +2820,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => impl_is_string_empty_for_ident_origin_token_stream,
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => proc_macro2::TokenStream::new(),
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
@@ -2966,12 +2841,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let impl_error_occurence_lib_to_std_string_string_for_ident_origin_token_stream =
                     macros_helpers::generate_impl_error_occurence_lib_to_std_string_string_token_stream(&proc_macro2::TokenStream::new(), &ident_origin_upper_camel_case, &proc_macro2::TokenStream::new(), &quote::quote! {self.to_string()});
 
-                let sqlx_types_time_date_from_ordinal_date_core_default_default_default_one_unwrap_token_stream = quote::quote! {
-                    #sqlx_types_time_date_as_date_field_type_token_stream::from_ordinal_date(
-                        #core_default_default_default_token_stream,
-                        1,
-                    ).unwrap()//todo
-                };
                 // fn std_net_ip_addr_v4_std_net_ipv4_addr_unspecified_token_stream() -> proc_macro2::TokenStream {
                 //     quote::quote! {std::net::IpAddr::V4(std::net::Ipv4Addr::UNSPECIFIED)}
                 // }
@@ -3007,7 +2876,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 &double_dots_space_core_default_default_default_token_stream,
                                             )
                                         },
-                                        PostgresqlType::SqlxTypesTimeDateAsDate => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -3020,7 +2888,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
                                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range |
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange |
                                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
                                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
                                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &sqlx_postgres_types_pg_range_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
@@ -3100,7 +2967,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
@@ -3110,7 +2976,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::IsPrimaryKeyUnderscore::True,
@@ -3131,7 +2996,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => &proc_macro2_token_stream_new,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &proc_macro2_token_stream_new,
@@ -3141,7 +3005,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &proc_macro2_token_stream_new,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &proc_macro2_token_stream_new,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &proc_macro2_token_stream_new,
@@ -3163,7 +3026,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => "time",
                             PostgresqlType::SqlxTypesTimeTimeAsTime => "time",
                             PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => "interval",
-                            PostgresqlType::SqlxTypesTimeDateAsDate => "date",
                             PostgresqlType::SqlxTypesChronoNaiveDateAsDate => "date",
                             PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => "timestamp",
                             PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => "timestamptz",
@@ -3173,7 +3035,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => "macaddr",
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => "int4range",
                             PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => "int8range",
-                            PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => "daterange",
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => "daterange",
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => "tsrange",
                             PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => "tstzrange",
@@ -3313,7 +3174,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => alias_token_stream,
                     PostgresqlType::SqlxTypesTimeTimeAsTime => alias_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => alias_token_stream,
-                    PostgresqlType::SqlxTypesTimeDateAsDate => alias_token_stream,
                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => alias_token_stream,
                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => alias_token_stream,
                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => alias_token_stream,
@@ -3323,7 +3183,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => alias_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => alias_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => alias_token_stream,
-                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => alias_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => alias_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => alias_token_stream,
                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => alias_token_stream,
@@ -3430,7 +3289,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let (
                                 where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                                where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
@@ -3471,7 +3329,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     vec
                                 };
                                 (
-                                    ranges_common_filter_vec.clone(),
                                     ranges_common_filter_vec.clone(),
                                     ranges_common_filter_vec.clone(),
                                     ranges_common_filter_vec.clone(),
@@ -3521,14 +3378,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     vec
                                 },
                                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => common_standart_postgresql_type_filters,
-                                PostgresqlType::SqlxTypesTimeDateAsDate => {
-                                    let mut vec = common_standart_postgresql_type_filters.clone();
-                                    vec.push(greater_than.clone());
-                                    vec.push(between.clone());
-                                    vec.push(current_date.clone());
-                                    vec.push(greater_than_current_date.clone());
-                                    vec
-                                },
                                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => {
                                     let mut vec = common_standart_postgresql_type_filters.clone();
                                     vec.push(greater_than.clone());
@@ -3570,7 +3419,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 },
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
@@ -3619,7 +3467,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let (
                                 where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                                where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                                 where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
@@ -3664,7 +3511,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 (
                                     generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI32AsInt4),
                                     generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::StdPrimitiveI64AsInt8),
-                                    generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesTimeDateAsDate),
                                     generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate),
                                     generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
                                     generate_where_element_sqlx_postgres_types_pg_range_filter_token_stream(PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
@@ -3712,14 +3558,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     vec
                                 },
                                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => common_array_dimension1_postgresql_type_filters,
-                                PostgresqlType::SqlxTypesTimeDateAsDate => {
-                                    let mut vec = common_array_dimension1_postgresql_type_filters.clone();
-                                    vec.push(dimension_one_greater_than.clone());
-                                    vec.push(dimension_one_between.clone());
-                                    vec.push(dimension_one_current_date.clone());
-                                    vec.push(dimension_one_greater_than_current_date.clone());
-                                    vec
-                                },
                                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => {
                                     let mut vec = common_array_dimension1_postgresql_type_filters.clone();
                                     vec.push(dimension_one_greater_than.clone());
@@ -3761,7 +3599,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 },
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => where_element_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_time_date_token_stream,
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => where_element_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
@@ -3831,7 +3668,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
                     //         },
                     //         PostgresqlTypeRange::StdPrimitiveI64AsInt8 => quote::quote!{},
-                    //         PostgresqlTypeRange::SqlxTypesTimeDateAsDate => quote::quote!{},
                     //         PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => quote::quote!{},
                     //         PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{},
                     //         PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{},
@@ -3987,7 +3823,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => typical,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => typical,
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => typical,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => typical,
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => typical,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => typical,
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => typical,
@@ -3997,7 +3832,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => typical,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => typical,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => typical,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => typical,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => typical,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => typical,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => typical,
@@ -4025,7 +3859,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
@@ -4035,7 +3868,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::CreateQueryPartIncrementUnderscore::False,
@@ -4057,7 +3889,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
@@ -4067,7 +3898,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::CreateQueryBindValueUnderscore::False,
@@ -4088,7 +3918,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxTypesTimeDateAsDate => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
@@ -4098,7 +3927,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
-                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::IsCreateQueryBindMutable::True,
@@ -4379,10 +4207,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MIN, days: std::primitive::i32::MIN, microseconds: std::primitive::i64::MIN },
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MAX, days: std::primitive::i32::MAX, microseconds: std::primitive::i64::MAX },
                                     ]},
-                                    PostgresqlType::SqlxTypesTimeDateAsDate => quote::quote!{vec![
-                                        crate::SqlxTypesTimeDate::try_new(-4713, time::Month::December, 31).unwrap(),
-                                        crate::SqlxTypesTimeDate::try_new(9999, time::Month::December, 31).unwrap()
-                                    ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{vec![
                                         crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()).unwrap(),
                                         crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::MAX).unwrap()
@@ -4485,43 +4309,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         // sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(20) },
                                         // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
                                         // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
-                                    ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange => 
-                                    //todo
-                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesTimeDateAsDate),
-                                    quote::quote!{vec![
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2000, time::Month::January, 1).unwrap()),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2001, time::Month::January, 1).unwrap()),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 1).unwrap()),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(1970, time::Month::January, 2).unwrap()),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2023, time::Month::December, 31).unwrap()),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::January, 1).unwrap()),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2025, time::Month::July, 1).unwrap()),
-                                        //     end: std::ops::Bound::Unbounded,
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Unbounded,
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(1999, time::Month::December, 31).unwrap()),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Unbounded,
-                                        //     end: std::ops::Bound::Unbounded,
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::time::Date::from_calendar_date(2024, time::Month::February, 29).unwrap()),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::March, 1).unwrap()),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::April, 4).unwrap()),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::time::Date::from_calendar_date(2024, time::Month::April, 4).unwrap()),
-                                        // },
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => 
                                     //todo
@@ -4725,7 +4512,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             //     // PostgresqlType::SqlxTypesChronoNaiveTimeAsTime,
             //     // PostgresqlType::SqlxTypesTimeTimeAsTime,
             //     // PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval,
-            //     // PostgresqlType::SqlxTypesTimeDateAsDate,
             //     // PostgresqlType::SqlxTypesChronoNaiveDateAsDate,
             //     // PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp,
             //     // PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
@@ -4735,7 +4521,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             //     // PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr,
             //     // PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
             //     // PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
-            //     // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesTimeDateAsDateRange,
             //     // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
             //     // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange,
             //     // PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange,
