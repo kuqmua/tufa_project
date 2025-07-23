@@ -4574,6 +4574,23 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
         // Row: TestRange { id: 22, range_column: PgRange { start: Unbounded, end: Unbounded } }
         // Row: TestRange { id: 23, range_column: PgRange { start: Unbounded, end: Unbounded } }
         // Row: TestRange { id: 24, range_column: PgRange { start: Unbounded, end: Unbounded } }
+        // Row: TestRange { id: 25, range_column: PgRange { start: Included(-2147483647), end: Excluded(0) } }
+        // Row: TestRange { id: 26, range_column: PgRange { start: Included(-2147483648), end: Excluded(0) } }
+        // Row: TestRange { id: 27, range_column: PgRange { start: Included(-2147483647), end: Excluded(1) } }
+        // Row: TestRange { id: 28, range_column: PgRange { start: Included(-2147483648), end: Excluded(1) } }
+        // Row: TestRange { id: 29, range_column: PgRange { start: Included(-2147483647), end: Excluded(2147483647) } }
+        // Row: TestRange { id: 30, range_column: PgRange { start: Included(-2147483647), end: Excluded(2147483647) } }
+        // Row: TestRange { id: 31, range_column: PgRange { start: Included(-2147483647), end: Excluded(2147483647) } }
+        // Row: TestRange { id: 32, range_column: PgRange { start: Included(-2147483648), end: Excluded(2147483647) } }
+        // Row: TestRange { id: 33, range_column: PgRange { start: Included(-2147483648), end: Excluded(2147483647) } }
+        // Row: TestRange { id: 34, range_column: PgRange { start: Included(0), end: Excluded(2147483647) } }
+        // Row: TestRange { id: 35, range_column: PgRange { start: Unbounded, end: Unbounded } }
+        // Row: TestRange { id: 36, range_column: PgRange { start: Unbounded, end: Unbounded } }
+        // Row: TestRange { id: 37, range_column: PgRange { start: Unbounded, end: Unbounded } }
+        // Row: TestRange { id: 38, range_column: PgRange { start: Unbounded, end: Unbounded } }
+        // Row: TestRange { id: 39, range_column: PgRange { start: Unbounded, end: Unbounded } }
+        // Row: TestRange { id: 40, range_column: PgRange { start: Included(-2147483647), end: Excluded(0) } }
+        // Row: TestRange { id: 41, range_column: PgRange { start: Included(-2147483648), end: Excluded(0) } }
         match (&value.start, &value.end) {
             (std::ops::Bound::Included(start), std::ops::Bound::Included(end)) => {
                 if start == end {
