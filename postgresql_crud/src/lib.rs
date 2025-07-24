@@ -4494,48 +4494,28 @@ impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoNaiveDateTime {
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange<std::primitive::i32>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed {
-    IncludedStartEqualsToIncludedEnd {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::i32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    IncludedStartEqualsToExcludedEnd {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::i32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ExcludedStartEqualsToIncludedEnd {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::i32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    ExcludedStartEqualsToExcludedEnd {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::i32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    IncludedStartLessThanIncludedEnd {
+    IncludedStartMoreThanIncludedEnd {
         #[eo_to_std_string_string_serialize_deserialize]
         start: std::primitive::i32,
         #[eo_to_std_string_string_serialize_deserialize]
         end: std::primitive::i32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    IncludedStartLessThanExcludedEnd {
+    IncludedStartMoreThanExcludedEnd {
         #[eo_to_std_string_string_serialize_deserialize]
         start: std::primitive::i32,
         #[eo_to_std_string_string_serialize_deserialize]
         end: std::primitive::i32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    ExcludedStartLessThanIncludedEnd {
+    ExcludedStartMoreThanIncludedEnd {
         #[eo_to_std_string_string_serialize_deserialize]
         start: std::primitive::i32,
         #[eo_to_std_string_string_serialize_deserialize]
         end: std::primitive::i32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
-    ExcludedStartLessThanExcludedEnd {
+    ExcludedStartMoreThanExcludedEnd {
         #[eo_to_std_string_string_serialize_deserialize]
         start: std::primitive::i32,
         #[eo_to_std_string_string_serialize_deserialize]
@@ -4550,63 +4530,16 @@ pub enum SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed {
 }
 impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
     pub fn try_new(value: sqlx::postgres::types::PgRange<std::primitive::i32>) -> Result<Self, SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed> {
-        // Row: TestRange { id: 1, range_column: PgRange { start: Included(1), end: Excluded(2) } }
-        // Row: TestRange { id: 2, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 3, range_column: PgRange { start: Included(2), end: Excluded(3) } }
-        // Row: TestRange { id: 4, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 5, range_column: PgRange { start: Included(1), end: Excluded(2) } }
-        // Row: TestRange { id: 6, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 7, range_column: PgRange { start: Unbounded, end: Excluded(10) } }
-        // Row: TestRange { id: 8, range_column: PgRange { start: Included(5), end: Unbounded } }
-        // Row: TestRange { id: 9, range_column: PgRange { start: Unbounded, end: Excluded(10) } }
-        // Row: TestRange { id: 10, range_column: PgRange { start: Unbounded, end: Excluded(-2147483648) } }
-        // Row: TestRange { id: 11, range_column: PgRange { start: Unbounded, end: Excluded(-2147483648) } }
-        // Row: TestRange { id: 12, range_column: PgRange { start: Included(-2147483648), end: Unbounded } }
-        // Row: TestRange { id: 13, range_column: PgRange { start: Included(-2147483648), end: Unbounded } }
-        // Row: TestRange { id: 14, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 15, range_column: PgRange { start: Unbounded, end: Excluded(2147483647) } }
-        // Row: TestRange { id: 16, range_column: PgRange { start: Unbounded, end: Excluded(2147483647) } }
-        // Row: TestRange { id: 17, range_column: PgRange { start: Included(2147483647), end: Unbounded } }
-        // Row: TestRange { id: 18, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 19, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 20, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 21, range_column: PgRange { start: Included(-2147483648), end: Excluded(-2147483647) } }
-        // Row: TestRange { id: 22, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 23, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 24, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 25, range_column: PgRange { start: Included(-2147483647), end: Excluded(0) } }
-        // Row: TestRange { id: 26, range_column: PgRange { start: Included(-2147483648), end: Excluded(0) } }
-        // Row: TestRange { id: 27, range_column: PgRange { start: Included(-2147483647), end: Excluded(1) } }
-        // Row: TestRange { id: 28, range_column: PgRange { start: Included(-2147483648), end: Excluded(1) } }
-        // Row: TestRange { id: 29, range_column: PgRange { start: Included(-2147483647), end: Excluded(2147483647) } }
-        // Row: TestRange { id: 30, range_column: PgRange { start: Included(-2147483647), end: Excluded(2147483647) } }
-        // Row: TestRange { id: 31, range_column: PgRange { start: Included(-2147483647), end: Excluded(2147483647) } }
-        // Row: TestRange { id: 32, range_column: PgRange { start: Included(-2147483648), end: Excluded(2147483647) } }
-        // Row: TestRange { id: 33, range_column: PgRange { start: Included(-2147483648), end: Excluded(2147483647) } }
-        // Row: TestRange { id: 34, range_column: PgRange { start: Included(0), end: Excluded(2147483647) } }
-        // Row: TestRange { id: 35, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 36, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 37, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 38, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 39, range_column: PgRange { start: Unbounded, end: Unbounded } }
-        // Row: TestRange { id: 40, range_column: PgRange { start: Included(-2147483647), end: Excluded(0) } }
-        // Row: TestRange { id: 41, range_column: PgRange { start: Included(-2147483648), end: Excluded(0) } }
         match (&value.start, &value.end) {
             (std::ops::Bound::Included(start), std::ops::Bound::Included(end)) => {
-                if start == end {
-                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartEqualsToIncludedEnd {
-                        value: *start,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else if start > end {
-                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartLessThanIncludedEnd {
+                if start > end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartMoreThanIncludedEnd {
                         start: *start,
                         end: *end,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 }
-                else if *end == std::primitive::i32::MAX {
+                if *end == std::primitive::i32::MAX {
                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedEndCannotBeStdPrimitiveI32Max {
                         end: *end,
                         code_occurence: error_occurence_lib::code_occurence!(),
@@ -4614,36 +4547,24 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
                 }
             },
             (std::ops::Bound::Included(start), std::ops::Bound::Excluded(end)) => {
-                if start == end {
-                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartEqualsToExcludedEnd {
-                        value: *start,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else if start > end {
-                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartLessThanExcludedEnd {
+                if start > end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartMoreThanExcludedEnd {
                         start: *start,
                         end: *end,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 }
             },
-            (std::ops::Bound::Included(start), std::ops::Bound::Unbounded) => (),
+            (std::ops::Bound::Included(_), std::ops::Bound::Unbounded) => (),
             (std::ops::Bound::Excluded(start), std::ops::Bound::Included(end)) => {
-                if start == end {
-                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartEqualsToIncludedEnd {
-                        value: *start,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else if start > end {
-                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartLessThanIncludedEnd {
+                if start > end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartMoreThanIncludedEnd {
                         start: *start,
                         end: *end,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 }
-                else if *end == std::primitive::i32::MAX {
+                if *end == std::primitive::i32::MAX {
                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedEndCannotBeStdPrimitiveI32Max {
                         end: *end,
                         code_occurence: error_occurence_lib::code_occurence!(),
@@ -4651,21 +4572,15 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
                 }
             },
             (std::ops::Bound::Excluded(start), std::ops::Bound::Excluded(end)) => {
-                if start == end {
-                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartEqualsToExcludedEnd {
-                        value: *start,
-                        code_occurence: error_occurence_lib::code_occurence!(),
-                    });
-                }
-                else if start > end {
-                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartLessThanExcludedEnd {
+                if start > end {
+                    return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartMoreThanExcludedEnd {
                         start: *start,
                         end: *end,
                         code_occurence: error_occurence_lib::code_occurence!(),
                     });
                 }
             },
-            (std::ops::Bound::Excluded(start), std::ops::Bound::Unbounded) => (),
+            (std::ops::Bound::Excluded(_), std::ops::Bound::Unbounded) => (),
             (std::ops::Bound::Unbounded, std::ops::Bound::Included(end)) => {
                 if *end == std::primitive::i32::MAX {
                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedEndCannotBeStdPrimitiveI32Max {
@@ -4674,7 +4589,7 @@ impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
                     });
                 }
             },
-            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end)) => (),
+            (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(_)) => (),
             (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => (),
         }
         Ok(Self(value))
