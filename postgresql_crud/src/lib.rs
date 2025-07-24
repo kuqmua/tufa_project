@@ -4489,7 +4489,6 @@ impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoNaiveDateTime {
     }
 }
 
-//////////
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange<std::primitive::i32>);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
