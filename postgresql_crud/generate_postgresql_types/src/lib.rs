@@ -2726,7 +2726,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 let range_inner_ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
                                                     &generate_ident_standart_not_null_token_stream(&temp_range_type.to_range_inner_postgresql_type())
                                                 );
+                                                let max_value_token_stream = match &temp_range_type {
+                                                    TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{std::primitive::i32::MAX},
+                                                    TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{std::primitive::i64::MAX},
+                                                };
                                                 quote::quote! {
+                                                    let max = #max_value_token_stream;
                                                     let (#start_snake_case, #end_snake_case) = match (&#value_snake_case.#start_snake_case, &#value_snake_case.#end_snake_case) {
                                                         (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
                                                             if #start_snake_case > #end_snake_case {
@@ -2736,7 +2741,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
-                                                            if *#end_snake_case == std::primitive::i32::MAX {
+                                                            if *#end_snake_case == max {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
                                                                     #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -2774,7 +2779,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
-                                                            if *#end_snake_case == std::primitive::i32::MAX {
+                                                            if *#end_snake_case == max {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
                                                                     #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -2805,7 +2810,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             )
                                                         },
                                                         (std::ops::Bound::Unbounded, std::ops::Bound::Included(#end_snake_case)) => {
-                                                            if *#end_snake_case == std::primitive::i32::MAX {
+                                                            if *#end_snake_case == max {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
                                                                     #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
@@ -4360,10 +4365,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                                 match &postgresql_type {
                                     PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{vec![std::primitive::i16::MIN, 0, std::primitive::i16::MAX]},
-                                    PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{vec![
-                                        // std::primitive::i32::MIN, 0, std::primitive::i32::MAX
-                                        8
-                                    ]},
+                                    PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{vec![std::primitive::i32::MIN, 0, std::primitive::i32::MAX]},
                                     PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{vec![std::primitive::i64::MIN, 0, std::primitive::i64::MAX]},
                                     PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{vec![
                                         std::primitive::f32::EPSILON,
