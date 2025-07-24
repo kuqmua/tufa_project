@@ -710,7 +710,8 @@ generate_postgresql_types::generate_postgresql_types!({
             "postgresql_type": "SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql",
             "not_null_or_nullable": "NotNull",
             "postgresql_type_pattern": "Standart"
-        },
+        }
+        ,
         // {
         //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
         //     "not_null_or_nullable": "NotNull",
@@ -1624,3 +1625,6 @@ impl sqlx::postgres::PgHasArrayType for SqlxPostgresTypesPgRangeStdPrimitiveI32 
         <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::postgres::PgHasArrayType>::array_type_info()
     }
 }
+
+
+////////////////////

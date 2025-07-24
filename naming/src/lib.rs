@@ -639,7 +639,12 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["test", "cases"],
     ["contains", "null", "byte"],
     ["new", "or", "try", "new", "unwraped", "for", "test"],
-    ["postgresql", "type", "test", "cases"]
+    ["postgresql", "type", "test", "cases"],
+    ["included", "start", "more", "than", "included", "end"],
+    ["included", "start", "more", "than", "excluded", "end"],
+    ["excluded", "start", "more", "than", "included", "end"],
+    ["excluded", "start", "more", "than", "excluded", "end"],
+    ["included", "end", "cannot", "be", "max"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
