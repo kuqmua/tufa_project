@@ -3172,13 +3172,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                 postgresql_crud_macros_common::NotNullOrNullable::NotNull => if let Ok(value) = &postgresql_type_range_try_from_postgresql_type {
                                     match &value {
-                                        PostgresqlTypeRange::StdPrimitiveI32AsInt4 => quote::quote! {
+                                        PostgresqlTypeRange::StdPrimitiveI32AsInt4 |
+                                        PostgresqlTypeRange::StdPrimitiveI64AsInt8 => quote::quote! {
                                             match Self::try_new #scopes_value_token_stream {
                                                 Ok(#value_snake_case) => Ok(#value_snake_case),
                                                 Err(#error_snake_case) => Err(std::boxed::Box::new(error)),
                                             }
                                         },
-                                        PostgresqlTypeRange::StdPrimitiveI64AsInt8 |
                                         PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate |
                                         PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp |
                                         PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote! {Ok(Self::new #scopes_value_token_stream)},
