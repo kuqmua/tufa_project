@@ -1628,3 +1628,4 @@ impl sqlx::postgres::PgHasArrayType for SqlxPostgresTypesPgRangeStdPrimitiveI32 
 
 
 ////////////////////
+
