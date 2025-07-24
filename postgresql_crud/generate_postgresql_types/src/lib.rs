@@ -714,6 +714,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     enum PostgresqlTypeInitializationWithTryNew {
         StdStringStringAsText,
         SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
+        SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
     }
     impl std::convert::TryFrom<&PostgresqlType> for PostgresqlTypeInitializationWithTryNew {
         type Error = ();
@@ -742,7 +743,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Err(()),
                 PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
-                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Err(()),
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Ok(Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Err(()),
@@ -754,6 +755,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             match value {
                 PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => Self::StdStringStringAsText,
                 PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
+                PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
             }
         }
     }
@@ -2598,20 +2600,62 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let excluded_start_more_than_included_end_upper_camel_case = naming::ExcludedStartMoreThanIncludedEndUpperCamelCase;
                 let excluded_start_more_than_excluded_end_upper_camel_case = naming::ExcludedStartMoreThanExcludedEndUpperCamelCase;
                 let included_end_cannot_be_max_upper_camel_case = naming::IncludedEndCannotBeMaxUpperCamelCase;
+                //todo after all ranges checks rename it
+                enum TempRangeType {
+                    SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
+                    SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
+                }
+                impl TempRangeType {
+                    fn to_range_inner_postgresql_type(&self) -> PostgresqlType {
+                        match &self {
+                            TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => PostgresqlType::StdPrimitiveI32AsInt4,
+                            TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => PostgresqlType::StdPrimitiveI64AsInt8,
+                        }
+                    }
+                }
                 let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if let PostgresqlTypeStandartNotNullExplicitDeserializationInitializationWithTryNew::Some(postgresql_type_initialization_with_try_new) = postgresql_type_standart_not_null_explicit_deserialization_initialization_with_try_new {
                     let content_token_stream = {
-                        //todo after all ranges checks rename it
-                        // enum TempRangeType {
-                        //     StdPrimitiveI32,
-                        //     StdPrimitiveI64
-                        // }
-                        // let generate_range_i32_or_i64_error_variants_token_stream = |temp_range: &TempRange|{
-
-                        // };
-                        //todo somehow convert it with from or try from
-                        let range_inner_ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                            &generate_ident_standart_not_null_token_stream(&PostgresqlType::StdPrimitiveI32AsInt4)
-                        );
+                        let generate_temp_range_type_error_variants_token_stream = |temp_range_type: &TempRangeType|{
+                            //todo somehow convert it with from or try from
+                            let range_inner_ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                                &generate_ident_standart_not_null_token_stream(&temp_range_type.to_range_inner_postgresql_type())
+                            );
+                            quote::quote! {
+                                #included_start_more_than_included_end_upper_camel_case {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                #included_start_more_than_excluded_end_upper_camel_case {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                #excluded_start_more_than_included_end_upper_camel_case {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                #excluded_start_more_than_excluded_end_upper_camel_case {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                                #included_end_cannot_be_max_upper_camel_case {
+                                    #[eo_to_std_string_string_serialize_deserialize]
+                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                },
+                            }
+                        };
                         match &postgresql_type_initialization_with_try_new {
                             PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => {
                                 quote::quote! {
@@ -2622,43 +2666,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 }
                             },
-                            PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => {
-                                quote::quote! {
-                                    #included_start_more_than_included_end_upper_camel_case {
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    },
-                                    #included_start_more_than_excluded_end_upper_camel_case {
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    },
-                                    #excluded_start_more_than_included_end_upper_camel_case {
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    },
-                                    #excluded_start_more_than_excluded_end_upper_camel_case {
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    },
-                                    #included_end_cannot_be_max_upper_camel_case {
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    },
-                                }
-                            },
+                            PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_temp_range_type_error_variants_token_stream(
+                                &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
+                            ),
+                            PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_temp_range_type_error_variants_token_stream(
+                                &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
+                            ),
                         }
                     };
                     quote::quote! {
@@ -2707,117 +2720,106 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                                 match &postgresql_type_pattern {
                                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type_initialization_with_try_new {
-                                            PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => {
-                                                quote::quote! {
-                                                    if #value_snake_case.find('\0').is_some() {
-                                                        Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#contains_null_byte_upper_camel_case {
-                                                            #value_snake_case,
-                                                            code_occurence: error_occurence_lib::code_occurence!(),
-                                                        })
-                                                    } else {
-                                                        Ok(Self(#value_snake_case))
-                                                    }
-                                                }
-                                            },
-                                            PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => {
-                                                let range_inner_ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                                    &generate_ident_standart_not_null_token_stream(&PostgresqlType::StdPrimitiveI32AsInt4)
+                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
+                                            let generate_temp_range_check_token_stream = |temp_range_type: &TempRangeType|{
+                                                //todo somehow convert it with from or try from
+                                                let range_inner_ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                                                    &generate_ident_standart_not_null_token_stream(&temp_range_type.to_range_inner_postgresql_type())
                                                 );
                                                 quote::quote! {
                                                     let (#start_snake_case, #end_snake_case) = match (&#value_snake_case.#start_snake_case, &#value_snake_case.#end_snake_case) {
                                                         (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
                                                             if #start_snake_case > #end_snake_case {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_included_end_upper_camel_case {
-                                                                    #start_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#start_snake_case),
-                                                                    #end_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#end_snake_case),
+                                                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case),
+                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             if *#end_snake_case == std::primitive::i32::MAX {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
-                                                                    #end_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#end_snake_case),
+                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             (
-                                                                std::ops::Bound::Included(#range_inner_ident_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Included(#range_inner_ident_origin_upper_camel_case::new(*#end_snake_case))
+                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
+                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
                                                             )
                                                         },
                                                         (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
                                                             if #start_snake_case > #end_snake_case {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_excluded_end_upper_camel_case {
-                                                                    #start_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#start_snake_case),
-                                                                    #end_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#end_snake_case),
+                                                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case),
+                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             (
-                                                                std::ops::Bound::Included(#range_inner_ident_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Excluded(#range_inner_ident_origin_upper_camel_case::new(*#end_snake_case))
+                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
+                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
                                                             )
                                                         },
                                                         (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Unbounded) => {
                                                             (
-                                                                std::ops::Bound::Included(#range_inner_ident_origin_upper_camel_case::new(*#start_snake_case)),
+                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
                                                                 std::ops::Bound::Unbounded
                                                             )
                                                         },
                                                         (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
                                                             if #start_snake_case > #end_snake_case {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_included_end_upper_camel_case {
-                                                                    #start_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#start_snake_case),
-                                                                    #end_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#end_snake_case),
+                                                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case),
+                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             if *#end_snake_case == std::primitive::i32::MAX {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
-                                                                    #end_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#end_snake_case),
+                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             (
-                                                                std::ops::Bound::Excluded(#range_inner_ident_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Included(#range_inner_ident_origin_upper_camel_case::new(*#end_snake_case))
+                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
+                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
                                                             )
                                                         },
                                                         (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
                                                             if #start_snake_case > #end_snake_case {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_excluded_end_upper_camel_case {
-                                                                    #start_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#start_snake_case),
-                                                                    #end_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#end_snake_case),
+                                                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case),
+                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             (
-                                                                std::ops::Bound::Excluded(#range_inner_ident_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Excluded(#range_inner_ident_origin_upper_camel_case::new(*#end_snake_case))
+                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
+                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
                                                             )
                                                         },
                                                         (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Unbounded) => {
                                                             (
-                                                                std::ops::Bound::Excluded(#range_inner_ident_origin_upper_camel_case::new(*#start_snake_case)),
+                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
                                                                 std::ops::Bound::Unbounded
                                                             )
                                                         },
                                                         (std::ops::Bound::Unbounded, std::ops::Bound::Included(#end_snake_case)) => {
                                                             if *#end_snake_case == std::primitive::i32::MAX {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
-                                                                    #end_snake_case: #range_inner_ident_origin_upper_camel_case::new(*#end_snake_case),
+                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
                                                                     code_occurence: error_occurence_lib::code_occurence!(),
                                                                 });
                                                             }
                                                             (
                                                                 std::ops::Bound::Unbounded,
-                                                                std::ops::Bound::Included(#range_inner_ident_origin_upper_camel_case::new(*#end_snake_case))
+                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
                                                             )
                                                         },
                                                         (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#end_snake_case)) => {
                                                             (
                                                                 std::ops::Bound::Unbounded,
-                                                                std::ops::Bound::Excluded(#range_inner_ident_origin_upper_camel_case::new(*#end_snake_case))
+                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
                                                             )
                                                         },
                                                         (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
@@ -2832,7 +2834,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         #end_snake_case
                                                     }))
                                                 }
-                                            },
+                                            };
+                                            match &postgresql_type_initialization_with_try_new {
+                                                PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => {
+                                                    quote::quote! {
+                                                        if #value_snake_case.find('\0').is_some() {
+                                                            Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#contains_null_byte_upper_camel_case {
+                                                                #value_snake_case,
+                                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                                            })
+                                                        } else {
+                                                            Ok(Self(#value_snake_case))
+                                                        }
+                                                    }
+                                                },
+                                                PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_temp_range_check_token_stream(&TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
+                                                PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_temp_range_check_token_stream(&TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
+                                            }
                                         },
                                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
                                     },
