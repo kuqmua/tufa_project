@@ -239,7 +239,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let std_primitive_bool_stringified = "std::primitive::bool".to_string();
                 let std_string_string_stringified = "std::string::String".to_string();
                 let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
-                let sqlx_types_chrono_naive_date_stringified = "crate::SqlxTypesChronoNaiveDate".to_string();
+                let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
                 let sqlx_types_chrono_naive_time_stringified = "crate::SqlxTypesChronoNaiveTime".to_string();
                 let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
@@ -713,6 +713,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     #[derive(Debug)]
     enum PostgresqlTypeInitializationWithTryNew {
         StdStringStringAsText,
+        SqlxTypesChronoNaiveDateAsDate,
         SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
         SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
     }
@@ -735,7 +736,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Err(()),
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Err(()),
-                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Err(()),
+                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Ok(Self::SqlxTypesChronoNaiveDateAsDate),
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Err(()),
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Err(()),
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Err(()),
@@ -754,6 +755,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         fn from(value: &PostgresqlTypeInitializationWithTryNew) -> PostgresqlType {
             match value {
                 PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => Self::StdStringStringAsText,
+                PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
                 PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
                 PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
             }
@@ -2444,7 +2446,93 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
-                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Impl({
+                            // todo
+                            quote::quote!{
+                                const _: () = {
+                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
+                                    extern crate serde as _serde;
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de> for SqlxTypesChronoNaiveDateAsNotNullDateOrigin {
+                                        fn deserialize<__D>(
+                                            __deserializer: __D,
+                                        ) -> _serde::__private::Result<Self, __D::Error>
+                                        where
+                                            __D: _serde::Deserializer<'de>,
+                                        {
+                                            #[doc(hidden)]
+                                            struct __Visitor<'de> {
+                                                marker: _serde::__private::PhantomData<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>,
+                                                lifetime: _serde::__private::PhantomData<&'de ()>,
+                                            }
+                                            #[automatically_derived]
+                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                                type Value = SqlxTypesChronoNaiveDateAsNotNullDateOrigin;
+                                                fn expecting(
+                                                    &self,
+                                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                                ) -> _serde::__private::fmt::Result {
+                                                    _serde::__private::Formatter::write_str(
+                                                        __formatter,
+                                                        "tuple struct SqlxTypesChronoNaiveDateAsNotNullDateOrigin",
+                                                    )
+                                                }
+                                                #[inline]
+                                                fn visit_newtype_struct<__E>(
+                                                    self,
+                                                    __e: __E,
+                                                ) -> _serde::__private::Result<Self::Value, __E::Error>
+                                                where
+                                                    __E: _serde::Deserializer<'de>,
+                                                {
+                                                    let __field0: sqlx::types::chrono::NaiveDate = <sqlx::types::chrono::NaiveDate as _serde::Deserialize>::deserialize(
+                                                        __e,
+                                                    )?;
+                                                    match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(__field0) {
+                                                        Ok(value) => _serde::__private::Ok(value),
+                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                                    }
+                                                }
+                                                #[inline]
+                                                fn visit_seq<__A>(
+                                                    self,
+                                                    mut __seq: __A,
+                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                                where
+                                                    __A: _serde::de::SeqAccess<'de>,
+                                                {
+                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                        sqlx::types::chrono::NaiveDate,
+                                                    >(&mut __seq)? {
+                                                        _serde::__private::Some(__value) => __value,
+                                                        _serde::__private::None => {
+                                                            return _serde::__private::Err(
+                                                                _serde::de::Error::invalid_length(
+                                                                    0usize,
+                                                                    &"tuple struct SqlxTypesChronoNaiveDateAsNotNullDateOrigin with 1 element",
+                                                                ),
+                                                            );
+                                                        }
+                                                    };
+                                                    match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(__field0) {
+                                                        Ok(value) => _serde::__private::Ok(value),
+                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                                    }
+                                                }
+                                            }
+                                            _serde::Deserializer::deserialize_newtype_struct(
+                                                __deserializer,
+                                                "SqlxTypesChronoNaiveDateAsNotNullDateOrigin",
+                                                __Visitor {
+                                                    marker: _serde::__private::PhantomData::<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>,
+                                                    lifetime: _serde::__private::PhantomData,
+                                                },
+                                            )
+                                        }
+                                    }
+                                };
+                            }
+                        }),
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream),
@@ -2595,6 +2683,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 };
                 let contains_null_byte_upper_camel_case = naming::ContainsNullByteUpperCamelCase;
+                let earlier_date_not_supported_upper_camel_case = naming::EarlierDateNotSupportedUpperCamelCase;
+                let earliest_supported_date_snake_case = naming::EarliestSupportedDateSnakeCase;
                 let included_start_more_than_included_end_upper_camel_case = naming::IncludedStartMoreThanIncludedEndUpperCamelCase;
                 let included_start_more_than_excluded_end_upper_camel_case = naming::IncludedStartMoreThanExcludedEndUpperCamelCase;
                 let excluded_start_more_than_included_end_upper_camel_case = naming::ExcludedStartMoreThanIncludedEndUpperCamelCase;
@@ -2662,6 +2752,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #contains_null_byte_upper_camel_case {
                                         #[eo_to_std_string_string_serialize_deserialize]
                                         #value_snake_case: #ident_inner_type_token_stream,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    }
+                                }
+                            },
+                            PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveDateAsDate => {
+                                quote::quote! {
+                                    #earlier_date_not_supported_upper_camel_case {
+                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        #value_snake_case: #std_string_string_token_stream,
+                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        #earliest_supported_date_snake_case: #std_string_string_token_stream,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     }
                                 }
@@ -2850,6 +2951,21 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             })
                                                         } else {
                                                             Ok(Self(#value_snake_case))
+                                                        }
+                                                    }
+                                                },
+                                                PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveDateAsDate => {
+                                                    quote::quote! {
+                                                        let #earliest_supported_date_snake_case = sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 1, 1).unwrap();
+                                                        if #value_snake_case > #earliest_supported_date_snake_case {
+                                                            Ok(Self(#value_snake_case))
+                                                        }
+                                                        else {
+                                                            Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#earlier_date_not_supported_upper_camel_case {
+                                                                #value_snake_case: #value_snake_case.to_string(),
+                                                                #earliest_supported_date_snake_case: #earliest_supported_date_snake_case.to_string(),
+                                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                                            })
                                                         }
                                                     }
                                                 },
@@ -3119,7 +3235,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 &double_dots_space_core_default_default_default_token_stream,
                                             )
                                         },
-                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &quote::quote! {sqlx::types::chrono::NaiveDate::default()},
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
@@ -3168,28 +3284,46 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &field_type_handle,
                     &{
                         let scopes_value_token_stream = quote::quote! {(#value_snake_case)};
+                        let ok_self_scopes_value_token_stream = quote::quote! {Ok(Self #scopes_value_token_stream)};
                         match &postgresql_type_pattern {
                             PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => if let Ok(value) = &postgresql_type_range_try_from_postgresql_type {
-                                    match &value {
-                                        PostgresqlTypeRange::StdPrimitiveI32AsInt4 |
-                                        PostgresqlTypeRange::StdPrimitiveI64AsInt8 => quote::quote! {
-                                            match Self::try_new #scopes_value_token_stream {
-                                                Ok(#value_snake_case) => Ok(#value_snake_case),
-                                                Err(#error_snake_case) => Err(std::boxed::Box::new(error)),
-                                            }
-                                        },
-                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate |
-                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp |
-                                        PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote! {Ok(Self::new #scopes_value_token_stream)},
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
+                                    PostgresqlType::StdPrimitiveI16AsInt2 |
+                                    PostgresqlType::StdPrimitiveI32AsInt4 |
+                                    PostgresqlType::StdPrimitiveI64AsInt8 |
+                                    PostgresqlType::StdPrimitiveF32AsFloat4 |
+                                    PostgresqlType::StdPrimitiveF64AsFloat8 |
+                                    PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql |
+                                    PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql |
+                                    PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql |
+                                    PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney |
+                                    PostgresqlType::StdPrimitiveBoolAsBool |
+                                    PostgresqlType::StdStringStringAsText |
+                                    PostgresqlType::StdVecVecStdPrimitiveU8AsBytea |
+                                    PostgresqlType::SqlxTypesChronoNaiveTimeAsTime |
+                                    PostgresqlType::SqlxTypesTimeTimeAsTime |
+                                    PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval |
+                                    PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp |
+                                    PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz |
+                                    PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql |
+                                    PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient |
+                                    PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet |
+                                    PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr |
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange |
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange |
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => ok_self_scopes_value_token_stream,
+                                    PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote! {
+                                        match Self::try_new #scopes_value_token_stream {
+                                            Ok(#value_snake_case) => Ok(#value_snake_case),
+                                            Err(#error_snake_case) => Err(std::boxed::Box::new(error)),
+                                        }
                                     }
-                                }
-                                else {
-                                    quote::quote! {Ok(Self #scopes_value_token_stream)}
                                 },
-                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {Ok(Self #scopes_value_token_stream)}
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => ok_self_scopes_value_token_stream
                             },
-                            PostgresqlTypePattern::ArrayDimension1 {..} => quote::quote! {Ok(Self #scopes_value_token_stream)}
+                            PostgresqlTypePattern::ArrayDimension1 {..} => ok_self_scopes_value_token_stream
                         }
                     }
                 );
@@ -4458,8 +4592,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MAX, days: std::primitive::i32::MAX, microseconds: std::primitive::i64::MAX },
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{vec![
-                                        crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()).unwrap(),
-                                        crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::MAX).unwrap()
+                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                        sqlx::types::chrono::NaiveDate::MAX
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{vec![
                                         crate::SqlxTypesChronoNaiveDateTime::new(

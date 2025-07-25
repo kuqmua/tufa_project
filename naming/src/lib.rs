@@ -644,7 +644,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["included", "start", "more", "than", "excluded", "end"],
     ["excluded", "start", "more", "than", "included", "end"],
     ["excluded", "start", "more", "than", "excluded", "end"],
-    ["included", "end", "cannot", "be", "max"]
+    ["included", "end", "cannot", "be", "max"],
+    ["earlier", "date", "not", "supported"],
+    ["earliest", "supported", "date"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
