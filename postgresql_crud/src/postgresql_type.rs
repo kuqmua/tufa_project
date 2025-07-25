@@ -1947,6 +1947,10 @@ impl SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin {
             naive_time
         )
     }
+    // SqlxTypesChronoNaiveDateTimeAsNotNullTimestampTestCasesInitialization
+    pub fn new_or_try_new_unwraped_for_test_two(value: <SqlxTypesChronoNaiveDateTimeAsNotNullTimestamp as crate::tests::PostgresqlTypeTestCasesTwo>::VecElement) -> Self {
+        Self(value.into())
+    }
 }
 impl std::fmt::Display for SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin {
     fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
@@ -2059,6 +2063,9 @@ impl SqlxTypesChronoNaiveDateTimeAsNotNullTimestampRead {
     pub fn new_or_try_new_unwraped_for_test(naive_date: crate::SqlxTypesChronoNaiveDate, naive_time: crate::SqlxTypesChronoNaiveTime) -> Self {
         Self(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_or_try_new_unwraped_for_test(naive_date, naive_time))
     }
+    pub fn new_or_try_new_unwraped_for_test_two(value: <SqlxTypesChronoNaiveDateTimeAsNotNullTimestamp as crate::tests::PostgresqlTypeTestCasesTwo>::VecElement) -> Self {
+        Self(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_or_try_new_unwraped_for_test_two(value))
+    }
 }
 impl error_occurence_lib::ToStdStringString for SqlxTypesChronoNaiveDateTimeAsNotNullTimestampRead {
     fn to_std_string_string(&self) -> std::string::String {
@@ -2154,6 +2161,36 @@ impl crate::tests::PostgresqlTypeTestCases for SqlxTypesChronoNaiveDateTimeAsNot
                 crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::MAX).unwrap(),
                 crate::SqlxTypesChronoNaiveTime::try_new(crate::Hour::try_new(23).unwrap(), crate::Minute::try_new(59).unwrap(), crate::Second::try_new(59).unwrap(), crate::Microsecond::try_new(999_999).unwrap()).unwrap(),
             )),
+        ]
+    }
+}
+////
+#[derive(Clone)]
+pub struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampTestCasesInitialization {
+    naive_date: crate::SqlxTypesChronoNaiveDate,
+    naive_time: crate::SqlxTypesChronoNaiveTime
+}
+impl std::convert::Into<sqlx::types::chrono::NaiveDateTime> for SqlxTypesChronoNaiveDateTimeAsNotNullTimestampTestCasesInitialization {
+    fn into(self) -> sqlx::types::chrono::NaiveDateTime {
+        sqlx::types::chrono::NaiveDateTime::new(
+            self.naive_date.into(),
+            self.naive_time.into()
+        )
+    }
+}
+impl crate::tests::PostgresqlTypeTestCasesTwo for SqlxTypesChronoNaiveDateTimeAsNotNullTimestamp {
+    type SelfHandle = SqlxTypesChronoNaiveDateTimeAsNotNullTimestamp;
+    type VecElement = SqlxTypesChronoNaiveDateTimeAsNotNullTimestampTestCasesInitialization;
+    fn test_cases_two() -> std::vec::Vec<Self::VecElement> {
+        vec![
+            SqlxTypesChronoNaiveDateTimeAsNotNullTimestampTestCasesInitialization {
+                naive_date: crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()).unwrap(),
+                naive_time: crate::SqlxTypesChronoNaiveTime::try_new(crate::Hour::try_new(0).unwrap(), crate::Minute::try_new(0).unwrap(), crate::Second::try_new(0).unwrap(), crate::Microsecond::try_new(0).unwrap()).unwrap()
+            },
+            SqlxTypesChronoNaiveDateTimeAsNotNullTimestampTestCasesInitialization {
+                naive_date: crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::MAX).unwrap(),
+                naive_time: crate::SqlxTypesChronoNaiveTime::try_new(crate::Hour::try_new(23).unwrap(), crate::Minute::try_new(59).unwrap(), crate::Second::try_new(59).unwrap(), crate::Microsecond::try_new(999_999).unwrap()).unwrap()
+            }
         ]
     }
 }
