@@ -4095,7 +4095,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
         // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
