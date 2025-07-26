@@ -3251,420 +3251,7 @@ impl error_occurence_lib::ToStdStringString for Microsecond {
     }
 }
 
-//postgresql does not support nanoseconds. whats why this type exists
-#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Ord)]
-pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum SqlxTypesChronoNaiveTimeTryNewErrorNamed {
-    InvalidHourOrMinuteOrSecondOrMicrosecond {
-        #[eo_to_std_string_string_serialize_deserialize]
-        hour: Hour,
-        #[eo_to_std_string_string_serialize_deserialize]
-        minute: Minute,
-        #[eo_to_std_string_string_serialize_deserialize]
-        second: Second,
-        #[eo_to_std_string_string_serialize_deserialize]
-        microsecond: Microsecond,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-impl SqlxTypesChronoNaiveTime {
-    pub fn try_new(hour: Hour, minute: Minute, second: Second, microsecond: Microsecond) -> Result<Self, SqlxTypesChronoNaiveTimeTryNewErrorNamed> {
-        match sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
-            hour.to_std_primitive_u32(),
-            minute.to_std_primitive_u32(),
-            second.to_std_primitive_u32(),
-            microsecond.to_std_primitive_u32(),
-        ) {
-            Some(value) => Ok(Self(value)),
-            None => Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
-                hour,
-                minute,
-                second,
-                microsecond,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub fn get(&self) -> &sqlx::types::chrono::NaiveTime {
-        &self.0
-    }
-}
-const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl _serde::Serialize for SqlxTypesChronoNaiveTime {
-        fn serialize<__S>(
-            &self,
-            __serializer: __S,
-        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-        where
-            __S: _serde::Serializer,
-        {
-            let mut __serde_state = _serde::Serializer::serialize_struct(
-                __serializer,
-                "SqlxTypesChronoNaiveTime",
-                false as usize + 1 + 1 + 1 + 1,
-            )?;
-            _serde::ser::SerializeStruct::serialize_field(
-                &mut __serde_state,
-                "hour",
-                &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::hour(&self.0),
-            )?;
-            _serde::ser::SerializeStruct::serialize_field(
-                &mut __serde_state,
-                "minute",
-                &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&self.0),
-            )?;
-            _serde::ser::SerializeStruct::serialize_field(
-                &mut __serde_state,
-                "second",
-                &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&self.0),
-            )?;
-            _serde::ser::SerializeStruct::serialize_field(
-                &mut __serde_state,
-                "microsecond",
-                &(<sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&self.0) / 1000),
-            )?;
-            _serde::ser::SerializeStruct::end(__serde_state)
-        }
-    }
-};
-const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for SqlxTypesChronoNaiveTime {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
-        where
-            __D: _serde::Deserializer<'de>,
-        {
-            #[allow(non_camel_case_types)]
-            #[doc(hidden)]
-            enum __Field {
-                __field0,
-                __field1,
-                __field2,
-                __field3,
-                __ignore,
-            }
-            #[doc(hidden)]
-            struct __FieldVisitor;
-            #[automatically_derived]
-            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                type Value = __Field;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "field identifier",
-                    )
-                }
-                fn visit_u64<__E>(
-                    self,
-                    __value: u64,
-                ) -> _serde::__private::Result<Self::Value, __E>
-                where
-                    __E: _serde::de::Error,
-                {
-                    match __value {
-                        0u64 => _serde::__private::Ok(__Field::__field0),
-                        1u64 => _serde::__private::Ok(__Field::__field1),
-                        2u64 => _serde::__private::Ok(__Field::__field2),
-                        3u64 => _serde::__private::Ok(__Field::__field3),
-                        _ => _serde::__private::Ok(__Field::__ignore),
-                    }
-                }
-                fn visit_str<__E>(
-                    self,
-                    __value: &str,
-                ) -> _serde::__private::Result<Self::Value, __E>
-                where
-                    __E: _serde::de::Error,
-                {
-                    match __value {
-                        "hour" => _serde::__private::Ok(__Field::__field0),
-                        "minute" => _serde::__private::Ok(__Field::__field1),
-                        "second" => _serde::__private::Ok(__Field::__field2),
-                        "microsecond" => _serde::__private::Ok(__Field::__field3),
-                        _ => _serde::__private::Ok(__Field::__ignore),
-                    }
-                }
-                fn visit_bytes<__E>(
-                    self,
-                    __value: &[u8],
-                ) -> _serde::__private::Result<Self::Value, __E>
-                where
-                    __E: _serde::de::Error,
-                {
-                    match __value {
-                        b"hour" => _serde::__private::Ok(__Field::__field0),
-                        b"minute" => _serde::__private::Ok(__Field::__field1),
-                        b"second" => _serde::__private::Ok(__Field::__field2),
-                        b"microsecond" => _serde::__private::Ok(__Field::__field3),
-                        _ => _serde::__private::Ok(__Field::__ignore),
-                    }
-                }
-            }
-            #[automatically_derived]
-            impl<'de> _serde::Deserialize<'de> for __Field {
-                #[inline]
-                fn deserialize<__D>(
-                    __deserializer: __D,
-                ) -> _serde::__private::Result<Self, __D::Error>
-                where
-                    __D: _serde::Deserializer<'de>,
-                {
-                    _serde::Deserializer::deserialize_identifier(
-                        __deserializer,
-                        __FieldVisitor,
-                    )
-                }
-            }
-            #[doc(hidden)]
-            struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<SqlxTypesChronoNaiveTime>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = SqlxTypesChronoNaiveTime;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "struct SqlxTypesChronoNaiveTime",
-                    )
-                }
-                #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        Hour,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"struct SqlxTypesChronoNaiveTime with 4 elements",
-                                ),
-                            );
-                        }
-                    };
-                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                        Minute,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    1usize,
-                                    &"struct SqlxTypesChronoNaiveTime with 4 elements",
-                                ),
-                            );
-                        }
-                    };
-                    let __field2 = match _serde::de::SeqAccess::next_element::<
-                        Second,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    2usize,
-                                    &"struct SqlxTypesChronoNaiveTime with 4 elements",
-                                ),
-                            );
-                        }
-                    };
-                    let __field3 = match _serde::de::SeqAccess::next_element::<
-                        Microsecond,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    3usize,
-                                    &"struct SqlxTypesChronoNaiveTime with 4 elements",
-                                ),
-                            );
-                        }
-                    };
-                    match SqlxTypesChronoNaiveTime::try_new(__field0, __field1, __field2, __field3) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-                #[inline]
-                fn visit_map<__A>(
-                    self,
-                    mut __map: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::MapAccess<'de>,
-                {
-                    let mut __field0: _serde::__private::Option<Hour> = _serde::__private::None;
-                    let mut __field1: _serde::__private::Option<Minute> = _serde::__private::None;
-                    let mut __field2: _serde::__private::Option<Second> = _serde::__private::None;
-                    let mut __field3: _serde::__private::Option<Microsecond> = _serde::__private::None;
-                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                        __Field,
-                    >(&mut __map)? {
-                        match __key {
-                            __Field::__field0 => {
-                                if _serde::__private::Option::is_some(&__field0) {
-                                    return _serde::__private::Err(
-                                        <__A::Error as _serde::de::Error>::duplicate_field("hour"),
-                                    );
-                                }
-                                __field0 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<Hour>(&mut __map)?,
-                                );
-                            }
-                            __Field::__field1 => {
-                                if _serde::__private::Option::is_some(&__field1) {
-                                    return _serde::__private::Err(
-                                        <__A::Error as _serde::de::Error>::duplicate_field("minute"),
-                                    );
-                                }
-                                __field1 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<Minute>(&mut __map)?,
-                                );
-                            }
-                            __Field::__field2 => {
-                                if _serde::__private::Option::is_some(&__field2) {
-                                    return _serde::__private::Err(
-                                        <__A::Error as _serde::de::Error>::duplicate_field("second"),
-                                    );
-                                }
-                                __field2 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<Second>(&mut __map)?,
-                                );
-                            }
-                            __Field::__field3 => {
-                                if _serde::__private::Option::is_some(&__field3) {
-                                    return _serde::__private::Err(
-                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                            "microsecond",
-                                        ),
-                                    );
-                                }
-                                __field3 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<
-                                        Microsecond,
-                                    >(&mut __map)?,
-                                );
-                            }
-                            _ => {
-                                let _ = _serde::de::MapAccess::next_value::<
-                                    _serde::de::IgnoredAny,
-                                >(&mut __map)?;
-                            }
-                        }
-                    }
-                    let __field0 = match __field0 {
-                        _serde::__private::Some(__field0) => __field0,
-                        _serde::__private::None => {
-                            _serde::__private::de::missing_field("hour")?
-                        }
-                    };
-                    let __field1 = match __field1 {
-                        _serde::__private::Some(__field1) => __field1,
-                        _serde::__private::None => {
-                            _serde::__private::de::missing_field("minute")?
-                        }
-                    };
-                    let __field2 = match __field2 {
-                        _serde::__private::Some(__field2) => __field2,
-                        _serde::__private::None => {
-                            _serde::__private::de::missing_field("second")?
-                        }
-                    };
-                    let __field3 = match __field3 {
-                        _serde::__private::Some(__field3) => __field3,
-                        _serde::__private::None => {
-                            _serde::__private::de::missing_field("microsecond")?
-                        }
-                    };
-                    match SqlxTypesChronoNaiveTime::try_new(__field0, __field1, __field2, __field3) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-            }
-            #[doc(hidden)]
-            const FIELDS: &'static [&'static str] = &[
-                "hour",
-                "minute",
-                "second",
-                "microsecond",
-            ];
-            _serde::Deserializer::deserialize_struct(
-                __deserializer,
-                "SqlxTypesChronoNaiveTime",
-                FIELDS,
-                __Visitor {
-                    marker: _serde::__private::PhantomData::<SqlxTypesChronoNaiveTime>,
-                    lifetime: _serde::__private::PhantomData,
-                },
-            )
-        }
-    }
-};
-impl std::convert::Into<sqlx::types::chrono::NaiveTime> for SqlxTypesChronoNaiveTime {
-    fn into(self) -> sqlx::types::chrono::NaiveTime {
-        self.0
-    }
-}
-impl error_occurence_lib::ToStdStringString for SqlxTypesChronoNaiveTime {
-    fn to_std_string_string(&self) -> std::string::String {
-        self.0.to_string()
-    }
-}
-impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoNaiveTime {
-    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-        Self(sqlx::types::chrono::NaiveTime::default())
-    }
-}
-impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveTime {
-    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-        <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::type_info()
-    }
-    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-        <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-    }
-}
-impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
-    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-    }
-}
-impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
-    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-        match <sqlx::types::chrono::NaiveTime as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-            Ok(value) => Ok(Self(value)),
-            Err(error) => Err(error),
-        }
-    }
-}
-impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoNaiveTime {
-    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-        <sqlx::types::chrono::NaiveTime as sqlx::postgres::PgHasArrayType>::array_type_info()
-    }
-}
+
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
@@ -4101,11 +3688,32 @@ pub enum ChronoNaiveDateTryNewErrorNamed {
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum ChronoNaiveDateTryNewForDeserializeErrorNamed {
+    CannotCreateDateEarlier {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::string::String,
+        #[eo_to_std_string_string_serialize_deserialize]
+        earliest_supported_date: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
 impl ChronoNaiveDate {
     pub fn try_new(value: chrono::NaiveDate) -> Result<Self, ChronoNaiveDateTryNewErrorNamed> {
         let earliest_supported_date = chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap();
         if value < earliest_supported_date {
             return Err(ChronoNaiveDateTryNewErrorNamed::CannotCreateDateEarlier {
+                value: value.to_string(),
+                earliest_supported_date: earliest_supported_date.to_string(),
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        Ok(Self(value))
+    }
+    pub fn try_new_for_deserialize(value: chrono::NaiveDate) -> Result<Self, ChronoNaiveDateTryNewForDeserializeErrorNamed> {
+        let earliest_supported_date = chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap();
+        if value < earliest_supported_date {
+            return Err(ChronoNaiveDateTryNewForDeserializeErrorNamed::CannotCreateDateEarlier {
                 value: value.to_string(),
                 earliest_supported_date: earliest_supported_date.to_string(),
                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -4156,7 +3764,7 @@ const _: () = {
                     let __field0: chrono::NaiveDate = <chrono::NaiveDate as _serde::Deserialize>::deserialize(
                         __e,
                     )?;
-                    match ChronoNaiveDate::try_new(__field0) {
+                    match ChronoNaiveDate::try_new_for_deserialize(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -4182,7 +3790,7 @@ const _: () = {
                             );
                         }
                     };
-                    match ChronoNaiveDate::try_new(__field0) {
+                    match ChronoNaiveDate::try_new_for_deserialize(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -4429,6 +4037,457 @@ impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveDate {
 impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoNaiveDate {
     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
         <sqlx::types::chrono::NaiveDate as sqlx::postgres::PgHasArrayType>::array_type_info()
+    }
+}
+
+//postgresql does not support nanoseconds. whats why this type exists
+#[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Ord)]
+pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum SqlxTypesChronoNaiveTimeTryNewErrorNamed {
+    InvalidHourOrMinuteOrSecondOrMicrosecond {
+        #[eo_to_std_string_string_serialize_deserialize]
+        hour: Hour,
+        #[eo_to_std_string_string_serialize_deserialize]
+        minute: Minute,
+        #[eo_to_std_string_string_serialize_deserialize]
+        second: Second,
+        #[eo_to_std_string_string_serialize_deserialize]
+        microsecond: Microsecond,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum SqlxTypesChronoNaiveTimeTryNewForDeserializeErrorNamed {
+    InvalidHourOrMinuteOrSecondOrMicrosecond {
+        #[eo_to_std_string_string_serialize_deserialize]
+        hour: Hour,
+        #[eo_to_std_string_string_serialize_deserialize]
+        minute: Minute,
+        #[eo_to_std_string_string_serialize_deserialize]
+        second: Second,
+        #[eo_to_std_string_string_serialize_deserialize]
+        microsecond: Microsecond,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+impl SqlxTypesChronoNaiveTime {
+    pub fn try_new(value: sqlx::types::chrono::NaiveTime) -> Result<Self, SqlxTypesChronoNaiveTimeTryNewErrorNamed> {
+        let hour = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::hour(&value);
+        let minute = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&value);
+        let second = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&value);
+        let nanosecond = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&value);
+        // match sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+        //     hour.to_std_primitive_u32(),
+        //     minute.to_std_primitive_u32(),
+        //     second.to_std_primitive_u32(),
+        //     microsecond.to_std_primitive_u32(),
+        // ) {
+        //     Some(value) => Ok(Self(value)),
+        //     None => Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
+        //         hour,
+        //         minute,
+        //         second,
+        //         microsecond,
+        //         code_occurence: error_occurence_lib::code_occurence!(),
+        //     })
+        // }
+        todo!()
+    }
+    fn try_new_for_deserialize(hour: Hour, minute: Minute, second: Second, microsecond: Microsecond) -> Result<Self, SqlxTypesChronoNaiveTimeTryNewForDeserializeErrorNamed> {
+        match sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+            hour.to_std_primitive_u32(),
+            minute.to_std_primitive_u32(),
+            second.to_std_primitive_u32(),
+            microsecond.to_std_primitive_u32(),
+        ) {
+            Some(value) => Ok(Self(value)),
+            None => Err(SqlxTypesChronoNaiveTimeTryNewForDeserializeErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
+                hour,
+                minute,
+                second,
+                microsecond,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+    pub fn get(&self) -> &sqlx::types::chrono::NaiveTime {
+        &self.0
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl _serde::Serialize for SqlxTypesChronoNaiveTime {
+        fn serialize<__S>(
+            &self,
+            __serializer: __S,
+        ) -> _serde::__private::Result<__S::Ok, __S::Error>
+        where
+            __S: _serde::Serializer,
+        {
+            let mut __serde_state = _serde::Serializer::serialize_struct(
+                __serializer,
+                "SqlxTypesChronoNaiveTime",
+                false as usize + 1 + 1 + 1 + 1,
+            )?;
+            _serde::ser::SerializeStruct::serialize_field(
+                &mut __serde_state,
+                "hour",
+                &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::hour(&self.0),
+            )?;
+            _serde::ser::SerializeStruct::serialize_field(
+                &mut __serde_state,
+                "minute",
+                &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&self.0),
+            )?;
+            _serde::ser::SerializeStruct::serialize_field(
+                &mut __serde_state,
+                "second",
+                &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&self.0),
+            )?;
+            _serde::ser::SerializeStruct::serialize_field(
+                &mut __serde_state,
+                "microsecond",
+                &(<sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&self.0) / 1000),
+            )?;
+            _serde::ser::SerializeStruct::end(__serde_state)
+        }
+    }
+};
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de> for SqlxTypesChronoNaiveTime {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[allow(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                __field0,
+                __field1,
+                __field2,
+                __field3,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "field identifier",
+                    )
+                }
+                fn visit_u64<__E>(
+                    self,
+                    __value: u64,
+                ) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        0u64 => _serde::__private::Ok(__Field::__field0),
+                        1u64 => _serde::__private::Ok(__Field::__field1),
+                        2u64 => _serde::__private::Ok(__Field::__field2),
+                        3u64 => _serde::__private::Ok(__Field::__field3),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(
+                    self,
+                    __value: &str,
+                ) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        "hour" => _serde::__private::Ok(__Field::__field0),
+                        "minute" => _serde::__private::Ok(__Field::__field1),
+                        "second" => _serde::__private::Ok(__Field::__field2),
+                        "microsecond" => _serde::__private::Ok(__Field::__field3),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(
+                    self,
+                    __value: &[u8],
+                ) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        b"hour" => _serde::__private::Ok(__Field::__field0),
+                        b"minute" => _serde::__private::Ok(__Field::__field1),
+                        b"second" => _serde::__private::Ok(__Field::__field2),
+                        b"microsecond" => _serde::__private::Ok(__Field::__field3),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+            }
+            #[automatically_derived]
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(
+                    __deserializer: __D,
+                ) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(
+                        __deserializer,
+                        __FieldVisitor,
+                    )
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<SqlxTypesChronoNaiveTime>,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = SqlxTypesChronoNaiveTime;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "struct SqlxTypesChronoNaiveTime",
+                    )
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        Hour,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"struct SqlxTypesChronoNaiveTime with 4 elements",
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        Minute,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &"struct SqlxTypesChronoNaiveTime with 4 elements",
+                                ),
+                            );
+                        }
+                    };
+                    let __field2 = match _serde::de::SeqAccess::next_element::<
+                        Second,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    2usize,
+                                    &"struct SqlxTypesChronoNaiveTime with 4 elements",
+                                ),
+                            );
+                        }
+                    };
+                    let __field3 = match _serde::de::SeqAccess::next_element::<
+                        Microsecond,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    3usize,
+                                    &"struct SqlxTypesChronoNaiveTime with 4 elements",
+                                ),
+                            );
+                        }
+                    };
+                    match SqlxTypesChronoNaiveTime::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+                #[inline]
+                fn visit_map<__A>(
+                    self,
+                    mut __map: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut __field0: _serde::__private::Option<Hour> = _serde::__private::None;
+                    let mut __field1: _serde::__private::Option<Minute> = _serde::__private::None;
+                    let mut __field2: _serde::__private::Option<Second> = _serde::__private::None;
+                    let mut __field3: _serde::__private::Option<Microsecond> = _serde::__private::None;
+                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                        __Field,
+                    >(&mut __map)? {
+                        match __key {
+                            __Field::__field0 => {
+                                if _serde::__private::Option::is_some(&__field0) {
+                                    return _serde::__private::Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field("hour"),
+                                    );
+                                }
+                                __field0 = _serde::__private::Some(
+                                    _serde::de::MapAccess::next_value::<Hour>(&mut __map)?,
+                                );
+                            }
+                            __Field::__field1 => {
+                                if _serde::__private::Option::is_some(&__field1) {
+                                    return _serde::__private::Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field("minute"),
+                                    );
+                                }
+                                __field1 = _serde::__private::Some(
+                                    _serde::de::MapAccess::next_value::<Minute>(&mut __map)?,
+                                );
+                            }
+                            __Field::__field2 => {
+                                if _serde::__private::Option::is_some(&__field2) {
+                                    return _serde::__private::Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field("second"),
+                                    );
+                                }
+                                __field2 = _serde::__private::Some(
+                                    _serde::de::MapAccess::next_value::<Second>(&mut __map)?,
+                                );
+                            }
+                            __Field::__field3 => {
+                                if _serde::__private::Option::is_some(&__field3) {
+                                    return _serde::__private::Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field(
+                                            "microsecond",
+                                        ),
+                                    );
+                                }
+                                __field3 = _serde::__private::Some(
+                                    _serde::de::MapAccess::next_value::<
+                                        Microsecond,
+                                    >(&mut __map)?,
+                                );
+                            }
+                            _ => {
+                                let _ = _serde::de::MapAccess::next_value::<
+                                    _serde::de::IgnoredAny,
+                                >(&mut __map)?;
+                            }
+                        }
+                    }
+                    let __field0 = match __field0 {
+                        _serde::__private::Some(__field0) => __field0,
+                        _serde::__private::None => {
+                            _serde::__private::de::missing_field("hour")?
+                        }
+                    };
+                    let __field1 = match __field1 {
+                        _serde::__private::Some(__field1) => __field1,
+                        _serde::__private::None => {
+                            _serde::__private::de::missing_field("minute")?
+                        }
+                    };
+                    let __field2 = match __field2 {
+                        _serde::__private::Some(__field2) => __field2,
+                        _serde::__private::None => {
+                            _serde::__private::de::missing_field("second")?
+                        }
+                    };
+                    let __field3 = match __field3 {
+                        _serde::__private::Some(__field3) => __field3,
+                        _serde::__private::None => {
+                            _serde::__private::de::missing_field("microsecond")?
+                        }
+                    };
+                    match SqlxTypesChronoNaiveTime::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
+                        Ok(value) => _serde::__private::Ok(value),
+                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    }
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &'static [&'static str] = &[
+                "hour",
+                "minute",
+                "second",
+                "microsecond",
+            ];
+            _serde::Deserializer::deserialize_struct(
+                __deserializer,
+                "SqlxTypesChronoNaiveTime",
+                FIELDS,
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<SqlxTypesChronoNaiveTime>,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl std::convert::Into<sqlx::types::chrono::NaiveTime> for SqlxTypesChronoNaiveTime {
+    fn into(self) -> sqlx::types::chrono::NaiveTime {
+        self.0
+    }
+}
+impl error_occurence_lib::ToStdStringString for SqlxTypesChronoNaiveTime {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoNaiveTime {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(sqlx::types::chrono::NaiveTime::default())
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveTime {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::chrono::NaiveTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTime {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::chrono::NaiveTime as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoNaiveTime {
+    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+        <sqlx::types::chrono::NaiveTime as sqlx::postgres::PgHasArrayType>::array_type_info()
     }
 }
 

@@ -35,7 +35,7 @@ pub struct Example {
     #[generate_postgresql_crud_primary_key]
     pub primary_key_column: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
-    // pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
+    pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
     // pub column_1: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_2: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub column_3: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
@@ -116,7 +116,7 @@ pub struct Example {
     // pub column_78: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoNaiveDateAsNullableArrayOfNotNullDate,
     // pub column_79: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesChronoNaiveDateAsNotNullArrayOfNullableDate,
     // pub column_80: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesChronoNaiveDateAsNullableArrayOfNullableDate,
-    pub column_81: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveDateTimeAsNotNullTimestamp,
+    // pub column_81: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveDateTimeAsNotNullTimestamp,
     // pub column_82: postgresql_crud::postgresql_type::OptionSqlxTypesChronoNaiveDateTimeAsNullableTimestamp,
     // pub column_83: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveDateTimeAsNotNullArrayOfNotNullTimestamp,
     // pub column_84: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoNaiveDateTimeAsNullableArrayOfNotNullTimestamp,
