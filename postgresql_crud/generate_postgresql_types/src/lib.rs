@@ -1488,7 +1488,42 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         //     }
                         // })),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Derive,
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl({
+                            //todo
+                            quote::quote!{
+                                const _: () = {
+                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
+                                    extern crate serde as _serde;
+                                    #[automatically_derived]
+                                    impl _serde::Serialize for SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin {
+                                        fn serialize<__S>(
+                                            &self,
+                                            __serializer: __S,
+                                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                                        where
+                                            __S: _serde::Serializer,
+                                        {
+                                            let mut __serde_state = _serde::Serializer::serialize_struct(
+                                                __serializer,
+                                                "SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
+                                                false as usize + 1 + 1,
+                                            )?;
+                                            _serde::ser::SerializeStruct::serialize_field(
+                                                &mut __serde_state,
+                                                "naive_date",
+                                                &crate::SqlxTypesChronoNaiveDate::try_new(self.0.date()).unwrap()
+                                            )?;
+                                            _serde::ser::SerializeStruct::serialize_field(
+                                                &mut __serde_state,
+                                                "naive_time",
+                                                &crate::SqlxTypesChronoNaiveTime::try_new(self.0.time()).unwrap()
+                                            )?;
+                                            _serde::ser::SerializeStruct::end(__serde_state)
+                                        }
+                                    }
+                                };
+                            }
+                        }),
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream),
@@ -1633,7 +1668,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         (
-                            generate_fn_visit_newtype_struct_token_stream(&std_primitive_i64_token_stream, &quote::quote! {#sqlx_postgres_types_pg_money_field_type_token_stream(#field_0_token_stream)}),
+                            generate_fn_visit_newtype_struct_token_stream(&std_primitive_i64_token_stream, &quote::quote! {#field_type_standart_not_null(#field_0_token_stream)}),
                             generate_fn_visit_newtype_struct_token_stream(&std_string_string_token_stream, &match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream),
                             generate_fn_visit_newtype_struct_token_stream(&array_std_primitive_u8_6_token_stream, &sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream),
                         )
@@ -1670,7 +1705,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_primitive_i64_token_stream]);
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#sqlx_postgres_types_pg_money_field_type_token_stream(#field_0_token_stream)});
+                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#field_type_standart_not_null(#field_0_token_stream)});
                         quote::quote! {
                             #fields_initialization_token_stream
                             #serde_private_ok_postgresql_type_token_stream
@@ -3548,7 +3583,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         | PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql
                                         | PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql
                                         | PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => &core_default_default_default_token_stream,
-                                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => &quote::quote! {#sqlx_postgres_types_pg_money_field_type_token_stream(#core_default_default_default_token_stream)},
+                                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => &quote::quote! {#field_type_standart_not_null(#core_default_default_default_token_stream)},
                                         PostgresqlType::StdPrimitiveBoolAsBool
                                         | PostgresqlType::StdStringStringAsText => &core_default_default_default_token_stream,
                                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote::quote! {vec![#core_default_default_default_token_stream]},
@@ -4866,9 +4901,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => quote::quote!{vec![]},
                                     PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => quote::quote!{vec![]},
                                     PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{vec![
-                                        #sqlx_postgres_types_pg_money_field_type_token_stream(std::primitive::i64::MIN),
-                                        #sqlx_postgres_types_pg_money_field_type_token_stream(0),
-                                        #sqlx_postgres_types_pg_money_field_type_token_stream(std::primitive::i64::MAX)
+                                        #field_type_standart_not_null(std::primitive::i64::MIN),
+                                        #field_type_standart_not_null(0),
+                                        #field_type_standart_not_null(std::primitive::i64::MAX)
                                     ]},
                                     PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{vec![true, false]},
                                     PostgresqlType::StdStringStringAsText => quote::quote!{vec![

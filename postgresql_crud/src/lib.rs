@@ -3206,7 +3206,20 @@ impl std::convert::Into<std::primitive::u32> for Second {
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, schemars::JsonSchema)]
 pub struct Microsecond(std::primitive::u32);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum MicrosecondTryNewErrorNamed {
+pub enum MicrosecondTryNewFromMicrosecondErrorNamed {
+    MicrosecondOutOfRange {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum MicrosecondTryNewFromNanosecondErrorNamed {
+    NanosecondPrecisionIsNotSupported {
+        #[eo_to_std_string_string_serialize_deserialize]
+        nanosecond: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
     MicrosecondOutOfRange {
         #[eo_to_std_string_string_serialize_deserialize]
         value: std::primitive::u32,
@@ -3214,12 +3227,30 @@ pub enum MicrosecondTryNewErrorNamed {
     }
 }
 impl Microsecond {
-    pub fn try_new(value: std::primitive::u32) -> Result<Self, MicrosecondTryNewErrorNamed> {
+    pub fn try_new_from_microsecond(value: std::primitive::u32) -> Result<Self, MicrosecondTryNewFromMicrosecondErrorNamed> {
         if value <= 999_999 {
             Ok(Self(value))
         }
         else {
-            Err(MicrosecondTryNewErrorNamed::MicrosecondOutOfRange {
+            Err(MicrosecondTryNewFromMicrosecondErrorNamed::MicrosecondOutOfRange {
+                value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+    pub fn try_new_from_nanosecond(value: std::primitive::u32) -> Result<Self, MicrosecondTryNewFromNanosecondErrorNamed> {
+        let thousand = 1000;
+        if value % thousand != 0 {
+            return Err(MicrosecondTryNewFromNanosecondErrorNamed::NanosecondPrecisionIsNotSupported {
+                nanosecond: value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        if value <= 999_999_000 {
+            Ok(Self(value / thousand))
+        }
+        else {
+            Err(MicrosecondTryNewFromNanosecondErrorNamed::MicrosecondOutOfRange {
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
@@ -3271,7 +3302,7 @@ const _: () = {
                     let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(
                         __e,
                     )?;
-                    match Microsecond::try_new(__field0) {
+                    match Microsecond::try_new_from_microsecond(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -3297,7 +3328,7 @@ const _: () = {
                             );
                         }
                     };
-                    match Microsecond::try_new(__field0) {
+                    match Microsecond::try_new_from_microsecond(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -4145,7 +4176,7 @@ pub enum SqlxTypesChronoNaiveTimeTryNewErrorNamed {
     },
     InvalidMicrosecond {
         #[eo_error_occurence]
-        microsecond_error: MicrosecondTryNewErrorNamed,
+        microsecond_error: MicrosecondTryNewFromNanosecondErrorNamed,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     },
     InvalidHourOrMinuteOrSecondOrMicrosecond {
@@ -4216,7 +4247,7 @@ impl SqlxTypesChronoNaiveTime {
                 });
             }
         };
-        let microsecond = match Microsecond::try_new(nanosecond_handle) {
+        let microsecond = match Microsecond::try_new_from_nanosecond(nanosecond_handle) {
             Ok(value) => value,
             Err(error) => {
                 return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidMicrosecond {
