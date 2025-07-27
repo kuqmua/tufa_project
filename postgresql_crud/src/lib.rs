@@ -2762,27 +2762,43 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, schemars::JsonSchema)]
 pub struct Hour(std::primitive::u8);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum HourTryNewErrorNamed {
+pub enum HourTryNewFromU8ErrorNamed {
     HourOutOfRange {
         #[eo_to_std_string_string_serialize_deserialize]
         value: std::primitive::u8,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum HourTryNewFromU32ErrorNamed {
+    HourOutOfRange {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
 impl Hour {
-    pub fn try_new(value: std::primitive::u8) -> Result<Self, HourTryNewErrorNamed> {
+    pub fn try_new_from_u8(value: std::primitive::u8) -> Result<Self, HourTryNewFromU8ErrorNamed> {
         if value <= 23 {
             Ok(Self(value))
         }
         else {
-            Err(HourTryNewErrorNamed::HourOutOfRange {
+            Err(HourTryNewFromU8ErrorNamed::HourOutOfRange {
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
     }
-    pub fn get(&self) -> std::primitive::u8 {
-        self.0
+    pub fn try_new_from_u32(value: std::primitive::u32) -> Result<Self, HourTryNewFromU32ErrorNamed> {
+        if value <= 23 {
+            Ok(Self(value as std::primitive::u8))
+        }
+        else {
+            Err(HourTryNewFromU32ErrorNamed::HourOutOfRange {
+                value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
     }
     pub fn to_std_primitive_u8(&self) -> std::primitive::u8 {
         self.0
@@ -2830,7 +2846,7 @@ const _: () = {
                     let __field0: std::primitive::u8 = <std::primitive::u8 as _serde::Deserialize>::deserialize(
                         __e,
                     )?;
-                    match Hour::try_new(__field0) {
+                    match Hour::try_new_from_u8(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -2856,7 +2872,7 @@ const _: () = {
                             );
                         }
                     };
-                    match Hour::try_new(__field0) {
+                    match Hour::try_new_from_u8(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -2883,24 +2899,48 @@ impl std::convert::Into<std::primitive::u8> for Hour {
         self.0
     }
 }
+impl std::convert::Into<std::primitive::u32> for Hour {
+    fn into(self) -> std::primitive::u32 {
+        self.0.into()
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, schemars::JsonSchema)]
 pub struct Minute(std::primitive::u8);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum MinuteTryNewErrorNamed {
+pub enum MinuteTryNewFromU8ErrorNamed {
     MinuteOutOfRange {
         #[eo_to_std_string_string_serialize_deserialize]
         value: std::primitive::u8,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum MinuteTryNewFromU32ErrorNamed {
+    MinuteOutOfRange {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
 impl Minute {
-    pub fn try_new(value: std::primitive::u8) -> Result<Self, MinuteTryNewErrorNamed> {
+    pub fn try_new_from_u8(value: std::primitive::u8) -> Result<Self, MinuteTryNewFromU8ErrorNamed> {
         if value <= 59 {
             Ok(Self(value))
         }
         else {
-            Err(MinuteTryNewErrorNamed::MinuteOutOfRange {
+            Err(MinuteTryNewFromU8ErrorNamed::MinuteOutOfRange {
+                value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+    pub fn try_new_from_u32(value: std::primitive::u32) -> Result<Self, MinuteTryNewFromU32ErrorNamed> {
+        if value <= 59 {
+            Ok(Self(value as std::primitive::u8))
+        }
+        else {
+            Err(MinuteTryNewFromU32ErrorNamed::MinuteOutOfRange {
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
@@ -2955,7 +2995,7 @@ const _: () = {
                     let __field0: std::primitive::u8 = <std::primitive::u8 as _serde::Deserialize>::deserialize(
                         __e,
                     )?;
-                    match Minute::try_new(__field0) {
+                    match Minute::try_new_from_u8(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -2981,7 +3021,7 @@ const _: () = {
                             );
                         }
                     };
-                    match Minute::try_new(__field0) {
+                    match Minute::try_new_from_u8(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -3008,24 +3048,48 @@ impl std::convert::Into<std::primitive::u8> for Minute {
         self.0
     }
 }
+impl std::convert::Into<std::primitive::u32> for Minute {
+    fn into(self) -> std::primitive::u32 {
+        self.0.into()
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, schemars::JsonSchema)]
 pub struct Second(std::primitive::u8);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum SecondTryNewErrorNamed {
+pub enum SecondTryNewFromU8ErrorNamed {
     SecondOutOfRange {
         #[eo_to_std_string_string_serialize_deserialize]
         value: std::primitive::u8,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
+#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
+pub enum SecondTryNewFromU32ErrorNamed {
+    SecondOutOfRange {
+        #[eo_to_std_string_string_serialize_deserialize]
+        value: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    }
+}
 impl Second {
-    pub fn try_new(value: std::primitive::u8) -> Result<Self, SecondTryNewErrorNamed> {
+    pub fn try_new_from_u8(value: std::primitive::u8) -> Result<Self, SecondTryNewFromU8ErrorNamed> {
         if value <= 59 {
             Ok(Self(value))
         }
         else {
-            Err(SecondTryNewErrorNamed::SecondOutOfRange {
+            Err(SecondTryNewFromU8ErrorNamed::SecondOutOfRange {
+                value,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
+    }
+    pub fn try_new_from_u32(value: std::primitive::u32) -> Result<Self, SecondTryNewFromU32ErrorNamed> {
+        if value <= 59 {
+            Ok(Self(value as std::primitive::u8))
+        }
+        else {
+            Err(SecondTryNewFromU32ErrorNamed::SecondOutOfRange {
                 value,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
@@ -3080,7 +3144,7 @@ const _: () = {
                     let __field0: std::primitive::u8 = <std::primitive::u8 as _serde::Deserialize>::deserialize(
                         __e,
                     )?;
-                    match Second::try_new(__field0) {
+                    match Second::try_new_from_u8(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -3106,7 +3170,7 @@ const _: () = {
                             );
                         }
                     };
-                    match Second::try_new(__field0) {
+                    match Second::try_new_from_u8(__field0) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -3131,6 +3195,11 @@ impl error_occurence_lib::ToStdStringString for Second {
 impl std::convert::Into<std::primitive::u8> for Second {
     fn into(self) -> std::primitive::u8 {
         self.0
+    }
+}
+impl std::convert::Into<std::primitive::u32> for Second {
+    fn into(self) -> std::primitive::u32 {
+        self.0.into()
     }
 }
 
@@ -3250,8 +3319,11 @@ impl error_occurence_lib::ToStdStringString for Microsecond {
         self.0.to_string()
     }
 }
-
-
+impl std::convert::Into<std::primitive::u32> for Microsecond {
+    fn into(self) -> std::primitive::u32 {
+        self.0
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
@@ -4045,6 +4117,37 @@ impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoNaiveDate {
 pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum SqlxTypesChronoNaiveTimeTryNewErrorNamed {
+    NanosecondPrecisionIsNotSupported {
+        #[eo_to_std_string_string_serialize_deserialize]
+        hour: std::primitive::u32,
+        #[eo_to_std_string_string_serialize_deserialize]
+        minute: std::primitive::u32,
+        #[eo_to_std_string_string_serialize_deserialize]
+        second: std::primitive::u32,
+        #[eo_to_std_string_string_serialize_deserialize]
+        nanosecond: std::primitive::u32,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    InvalidHour {
+        #[eo_error_occurence]
+        hour_error: HourTryNewFromU32ErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    InvalidMinute {
+        #[eo_error_occurence]
+        minute_error: MinuteTryNewFromU32ErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    InvalidSecond {
+        #[eo_error_occurence]
+        second_error: SecondTryNewFromU32ErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    InvalidMicrosecond {
+        #[eo_error_occurence]
+        microsecond_error: MicrosecondTryNewErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
     InvalidHourOrMinuteOrSecondOrMicrosecond {
         #[eo_to_std_string_string_serialize_deserialize]
         hour: Hour,
@@ -4073,26 +4176,70 @@ pub enum SqlxTypesChronoNaiveTimeTryNewForDeserializeErrorNamed {
 }
 impl SqlxTypesChronoNaiveTime {
     pub fn try_new(value: sqlx::types::chrono::NaiveTime) -> Result<Self, SqlxTypesChronoNaiveTimeTryNewErrorNamed> {
-        let hour = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::hour(&value);
-        let minute = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&value);
-        let second = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&value);
-        let nanosecond = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&value);
-        // match sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
-        //     hour.to_std_primitive_u32(),
-        //     minute.to_std_primitive_u32(),
-        //     second.to_std_primitive_u32(),
-        //     microsecond.to_std_primitive_u32(),
-        // ) {
-        //     Some(value) => Ok(Self(value)),
-        //     None => Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
-        //         hour,
-        //         minute,
-        //         second,
-        //         microsecond,
-        //         code_occurence: error_occurence_lib::code_occurence!(),
-        //     })
-        // }
-        todo!()
+        let hour_handle = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::hour(&value);
+        let minute_handle = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&value);
+        let second_handle = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&value);
+        let nanosecond_handle = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&value);
+        if nanosecond_handle % 1000 != 0 {
+            return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::NanosecondPrecisionIsNotSupported {
+                hour: hour_handle,
+                minute: minute_handle,
+                second: second_handle,
+                nanosecond: nanosecond_handle,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        let hour = match Hour::try_new_from_u32(hour_handle) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidHour {
+                    hour_error: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        let minute = match Minute::try_new_from_u32(minute_handle) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidMinute {
+                    minute_error: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        let second = match Second::try_new_from_u32(second_handle) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidSecond {
+                    second_error: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        let microsecond = match Microsecond::try_new(nanosecond_handle) {
+            Ok(value) => value,
+            Err(error) => {
+                return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidMicrosecond {
+                    microsecond_error: error,
+                    code_occurence: error_occurence_lib::code_occurence!(),
+                });
+            }
+        };
+        match sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+            hour.to_std_primitive_u32(),
+            minute.to_std_primitive_u32(),
+            second.to_std_primitive_u32(),
+            microsecond.to_std_primitive_u32(),
+        ) {
+            Some(value) => Ok(Self(value)),
+            None => Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
+                hour,
+                minute,
+                second,
+                microsecond,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            })
+        }
     }
     fn try_new_for_deserialize(hour: Hour, minute: Minute, second: Second, microsecond: Microsecond) -> Result<Self, SqlxTypesChronoNaiveTimeTryNewForDeserializeErrorNamed> {
         match sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
