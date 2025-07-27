@@ -62,11 +62,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //     "not_null_or_nullable": "NotNull",
         //     "postgresql_type_pattern": "Standart"
         // },
-        {
-            "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
-            "not_null_or_nullable": "NotNull",
-            "postgresql_type_pattern": "Standart"
-        },
+        // {
+        //     "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // },
         // {
         //     "postgresql_type": "StdPrimitiveI32AsInt4",
         //     "not_null_or_nullable": "Nullable",
@@ -261,11 +261,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //     "not_null_or_nullable": "NotNull",
         //     "postgresql_type_pattern": "Standart"
         // },
-        {
-            "postgresql_type": "SqlxPostgresTypesPgMoneyAsMoney",
-            "not_null_or_nullable": "NotNull",
-            "postgresql_type_pattern": "Standart"
-        },
+        // {
+        //     "postgresql_type": "SqlxPostgresTypesPgMoneyAsMoney",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // },
         // {
         //     "postgresql_type": "SqlxPostgresTypesPgMoneyAsMoney",
         //     "not_null_or_nullable": "Nullable",
@@ -537,11 +537,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        {
-            "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
-            "not_null_or_nullable": "NotNull",
-            "postgresql_type_pattern": "Standart"
-        },
+        // {
+        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // },
         // {
         //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
         //     "not_null_or_nullable": "Nullable",
@@ -726,7 +726,7 @@ generate_postgresql_types::generate_postgresql_types!({
             "not_null_or_nullable": "NotNull",
             "postgresql_type_pattern": "Standart"
         }
-        ,
+        // ,
         // {
         //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
         //     "not_null_or_nullable": "NotNull",
@@ -819,11 +819,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        {
-            "postgresql_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
-            "not_null_or_nullable": "NotNull",
-            "postgresql_type_pattern": "Standart"
-        }
+        // {
+        //     "postgresql_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // }
         // ,
         // {
         //     "postgresql_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
