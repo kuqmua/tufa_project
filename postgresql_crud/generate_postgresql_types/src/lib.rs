@@ -1195,11 +1195,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let typical_query_bind_token_stream = generate_typical_query_bind_token_stream(&value_snake_case);
 
-            let sqlx_postgres_types_pg_money_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney.field_type_token_stream();
-            let sqlx_types_uuid_uuid_field_type_token_stream = PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient.field_type_token_stream();
-            let sqlx_types_mac_address_mac_address_field_type_token_stream = PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr.field_type_token_stream();
-            let sqlx_postgres_types_pg_interval_field_type_token_stream = PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval.field_type_token_stream();
-
             let sqlx_postgres_types_pg_range_token_stream = quote::quote! {sqlx::postgres::types::PgRange};
 
             let generate_qlx_postgres_types_pg_range_start_end_token_stream = |start_token_stream: &dyn quote::ToTokens, end_token_stream: &dyn quote::ToTokens| {
@@ -1212,7 +1207,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 quote::quote! {: #value}
             };
             let generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream = |months_token_stream: &dyn quote::ToTokens, days_token_stream: &dyn quote::ToTokens, microseconds_token_stream: &dyn quote::ToTokens| {
-                quote::quote! {#sqlx_postgres_types_pg_interval_field_type_token_stream {
+                quote::quote! {#field_type_standart_not_null {
                     #months_snake_case #months_token_stream,
                     #days_snake_case #days_token_stream,
                     #microseconds_snake_case #microseconds_token_stream
@@ -1645,13 +1640,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         quote::quote! {serde::__private::Ok(#content_token_stream)}
                     };
                     let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_standart_not_null_origin_upper_camel_case(#content_token_stream)});
-                    let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #sqlx_types_uuid_uuid_field_type_token_stream::try_parse(&#field_0_token_stream) {
+                    let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #field_type_standart_not_null::try_parse(&#field_0_token_stream) {
                         Ok(value) => value,
                         Err(error) => {
                             return Err(serde::de::Error::custom(error));
                         }
                     }};
-                    let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#sqlx_types_mac_address_mac_address_field_type_token_stream::new(#field_0_token_stream)};
+                    let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#field_type_standart_not_null::new(#field_0_token_stream)};
                     let array_std_primitive_u8_6_token_stream = quote::quote! {[std::primitive::u8; 6]};
                     let (fn_visit_newtype_struct_pg_money_token_stream, fn_visit_newtype_struct_uuid_token_stream, fn_visit_newtype_struct_mac_address_token_stream) = {
                         let generate_fn_visit_newtype_struct_token_stream = |type_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
@@ -2165,11 +2160,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &field_option_none_initialization_months_days_microseconds_token_stream,
                                 &while_some_next_key_field_months_days_microseconds_token_stream,
                                 &match_field_initialization_months_days_microseconds_token_stream,
-                                &generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
+                                &generate_serde_private_ok_postgresql_type_token_stream(&generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
                                     &generate_double_dot_space_tokens_token_stream(&field_0_token_stream),
                                     &generate_double_dot_space_tokens_token_stream(&field_1_token_stream),
                                     &generate_double_dot_space_tokens_token_stream(&field_2_token_stream),
-                                ),
+                                )),
                             ),
                             generate_fn_visit_map_token_stream(
                                 &field_option_none_initialization_start_end_token_stream,

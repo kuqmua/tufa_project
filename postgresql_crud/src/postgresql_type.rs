@@ -537,11 +537,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        // {
-        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
+        {
+            "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        },
         // {
         //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
         //     "not_null_or_nullable": "Nullable",
@@ -726,104 +726,105 @@ generate_postgresql_types::generate_postgresql_types!({
             "not_null_or_nullable": "NotNull",
             "postgresql_type_pattern": "Standart"
         }
+        ,
+        // {
+        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": "Standart"
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "NotNull"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "NotNull"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "Nullable"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "Nullable"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": "Standart"
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "NotNull"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "NotNull"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "Nullable"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "Nullable"
+        //         }
+        //     }
+        // },
+        {
+            "postgresql_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        }
         // ,
-        // {
-        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": "Standart"
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesUuidUuidAsUuidInitializedByClient",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": "Standart"
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesIpnetworkIpNetworkAsInet",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
         // {
         //     "postgresql_type": "SqlxTypesMacAddressMacAddressAsMacAddr",
         //     "not_null_or_nullable": "Nullable",
