@@ -768,11 +768,77 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         New,
         TryNew,
     }
+    impl std::convert::From<&PostgresqlType> for PostgresqlTypeInitializationNewOrTryNew {
+        fn from(value: &PostgresqlType) -> PostgresqlTypeInitializationNewOrTryNew {
+            match value {
+                PostgresqlType::StdPrimitiveI16AsInt2 => Self::New,
+                PostgresqlType::StdPrimitiveI32AsInt4 => Self::New,
+                PostgresqlType::StdPrimitiveI64AsInt8 => Self::New,
+                PostgresqlType::StdPrimitiveF32AsFloat4 => Self::New,
+                PostgresqlType::StdPrimitiveF64AsFloat8 => Self::New,
+                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => Self::New,
+                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => Self::New,
+                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => Self::New,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => Self::New,
+                PostgresqlType::StdPrimitiveBoolAsBool => Self::New,
+                PostgresqlType::StdStringStringAsText => Self::TryNew,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => Self::New,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Self::New,
+                PostgresqlType::SqlxTypesTimeTimeAsTime => Self::New,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::New,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::TryNew,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::TryNew,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::New,
+                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Self::New,
+                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Self::New,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Self::New,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::New,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::TryNew,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::TryNew,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::New,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::New,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::New,
+            }
+        }
+    }
     #[derive(Debug)]
     enum PostgresqlTypeDeserialize {
         Derive,
         ImplNewFromDeserialize,
         ImplTryNewFromDeserialize,
+    }
+    impl std::convert::From<&PostgresqlType> for PostgresqlTypeDeserialize {
+        fn from(value: &PostgresqlType) -> PostgresqlTypeDeserialize {
+            match value {
+                PostgresqlType::StdPrimitiveI16AsInt2 => Self::Derive,
+                PostgresqlType::StdPrimitiveI32AsInt4 => Self::Derive,
+                PostgresqlType::StdPrimitiveI64AsInt8 => Self::Derive,
+                PostgresqlType::StdPrimitiveF32AsFloat4 => Self::Derive,
+                PostgresqlType::StdPrimitiveF64AsFloat8 => Self::Derive,
+                PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => Self::Derive,
+                PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => Self::Derive,
+                PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => Self::Derive,
+                PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => Self::Derive,
+                PostgresqlType::StdPrimitiveBoolAsBool => Self::Derive,
+                PostgresqlType::StdStringStringAsText => Self::ImplTryNewFromDeserialize,
+                PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => Self::Derive,
+                PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Self::Derive,
+                PostgresqlType::SqlxTypesTimeTimeAsTime => Self::Derive,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::Derive,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::ImplTryNewFromDeserialize,
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::ImplTryNewFromDeserialize,
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::Derive,
+                PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Self::Derive,
+                PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Self::Derive,
+                PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Self::Derive,
+                PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => Self::Derive,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::ImplTryNewFromDeserialize,
+                PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::ImplTryNewFromDeserialize,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => Self::Derive,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => Self::Derive,
+                PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => Self::Derive,
+            }
+        }
     }
     let postgresql_type_record_vec = {
         let generate_postgresql_types_config = serde_json::from_str::<GeneratePostgresqlTypesConfig>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_type");
