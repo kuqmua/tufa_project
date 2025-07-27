@@ -2759,631 +2759,37 @@ impl<'de> serde::Deserialize<'de> for NumBigintSign {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, schemars::JsonSchema)]
-pub struct Hour(std::primitive::u8);
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum HourTryNewFromU8ErrorNamed {
-    HourOutOfRange {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::u8,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum HourTryNewFromU32ErrorNamed {
-    HourOutOfRange {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::u32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-impl Hour {
-    pub fn try_new_from_u8(value: std::primitive::u8) -> Result<Self, HourTryNewFromU8ErrorNamed> {
-        if value <= 23 {
-            Ok(Self(value))
-        }
-        else {
-            Err(HourTryNewFromU8ErrorNamed::HourOutOfRange {
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub fn try_new_from_u32(value: std::primitive::u32) -> Result<Self, HourTryNewFromU32ErrorNamed> {
-        if value <= 23 {
-            Ok(Self(value as std::primitive::u8))
-        }
-        else {
-            Err(HourTryNewFromU32ErrorNamed::HourOutOfRange {
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub fn to_std_primitive_u8(&self) -> std::primitive::u8 {
-        self.0
-    }
-    pub fn to_std_primitive_u32(&self) -> std::primitive::u32 {
-        self.0.into()
-    }
-}
-const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for Hour {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
-        where
-            __D: _serde::Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<Hour>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = Hour;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct Hour",
-                    )
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
-                where
-                    __E: _serde::Deserializer<'de>,
-                {
-                    let __field0: std::primitive::u8 = <std::primitive::u8 as _serde::Deserialize>::deserialize(
-                        __e,
-                    )?;
-                    match Hour::try_new_from_u8(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-                #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u8,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct Hour with 1 element",
-                                ),
-                            );
-                        }
-                    };
-                    match Hour::try_new_from_u8(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-            }
-            _serde::Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "Hour",
-                __Visitor {
-                    marker: _serde::__private::PhantomData::<Hour>,
-                    lifetime: _serde::__private::PhantomData,
-                },
-            )
-        }
-    }
-};
-impl error_occurence_lib::ToStdStringString for Hour {
-    fn to_std_string_string(&self) -> std::string::String {
-        self.0.to_string()
-    }
-}
-impl std::convert::Into<std::primitive::u8> for Hour {
-    fn into(self) -> std::primitive::u8 {
-        self.0
-    }
-}
-impl std::convert::Into<std::primitive::u32> for Hour {
-    fn into(self) -> std::primitive::u32 {
-        self.0.into()
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, schemars::JsonSchema)]
-pub struct Minute(std::primitive::u8);
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum MinuteTryNewFromU8ErrorNamed {
-    MinuteOutOfRange {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::u8,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum MinuteTryNewFromU32ErrorNamed {
-    MinuteOutOfRange {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::u32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-impl Minute {
-    pub fn try_new_from_u8(value: std::primitive::u8) -> Result<Self, MinuteTryNewFromU8ErrorNamed> {
-        if value <= 59 {
-            Ok(Self(value))
-        }
-        else {
-            Err(MinuteTryNewFromU8ErrorNamed::MinuteOutOfRange {
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub fn try_new_from_u32(value: std::primitive::u32) -> Result<Self, MinuteTryNewFromU32ErrorNamed> {
-        if value <= 59 {
-            Ok(Self(value as std::primitive::u8))
-        }
-        else {
-            Err(MinuteTryNewFromU32ErrorNamed::MinuteOutOfRange {
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub fn get(&self) -> std::primitive::u8 {
-        self.0
-    }
-    pub fn to_std_primitive_u8(&self) -> std::primitive::u8 {
-        self.0
-    }
-    pub fn to_std_primitive_u32(&self) -> std::primitive::u32 {
-        self.0.into()
-    }
-}
-const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for Minute {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
-        where
-            __D: _serde::Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<Minute>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = Minute;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct Minute",
-                    )
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
-                where
-                    __E: _serde::Deserializer<'de>,
-                {
-                    let __field0: std::primitive::u8 = <std::primitive::u8 as _serde::Deserialize>::deserialize(
-                        __e,
-                    )?;
-                    match Minute::try_new_from_u8(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-                #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u8,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct Minute with 1 element",
-                                ),
-                            );
-                        }
-                    };
-                    match Minute::try_new_from_u8(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-            }
-            _serde::Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "Minute",
-                __Visitor {
-                    marker: _serde::__private::PhantomData::<Minute>,
-                    lifetime: _serde::__private::PhantomData,
-                },
-            )
-        }
-    }
-};
-impl error_occurence_lib::ToStdStringString for Minute {
-    fn to_std_string_string(&self) -> std::string::String {
-        self.0.to_string()
-    }
-}
-impl std::convert::Into<std::primitive::u8> for Minute {
-    fn into(self) -> std::primitive::u8 {
-        self.0
-    }
-}
-impl std::convert::Into<std::primitive::u32> for Minute {
-    fn into(self) -> std::primitive::u32 {
-        self.0.into()
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, schemars::JsonSchema)]
-pub struct Second(std::primitive::u8);
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum SecondTryNewFromU8ErrorNamed {
-    SecondOutOfRange {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::u8,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum SecondTryNewFromU32ErrorNamed {
-    SecondOutOfRange {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::u32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-impl Second {
-    pub fn try_new_from_u8(value: std::primitive::u8) -> Result<Self, SecondTryNewFromU8ErrorNamed> {
-        if value <= 59 {
-            Ok(Self(value))
-        }
-        else {
-            Err(SecondTryNewFromU8ErrorNamed::SecondOutOfRange {
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub fn try_new_from_u32(value: std::primitive::u32) -> Result<Self, SecondTryNewFromU32ErrorNamed> {
-        if value <= 59 {
-            Ok(Self(value as std::primitive::u8))
-        }
-        else {
-            Err(SecondTryNewFromU32ErrorNamed::SecondOutOfRange {
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub fn get(&self) -> std::primitive::u8 {
-        self.0
-    }
-    pub fn to_std_primitive_u8(&self) -> std::primitive::u8 {
-        self.0
-    }
-    pub fn to_std_primitive_u32(&self) -> std::primitive::u32 {
-        self.0.into()
-    }
-}
-const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for Second {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
-        where
-            __D: _serde::Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<Second>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = Second;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct Second",
-                    )
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
-                where
-                    __E: _serde::Deserializer<'de>,
-                {
-                    let __field0: std::primitive::u8 = <std::primitive::u8 as _serde::Deserialize>::deserialize(
-                        __e,
-                    )?;
-                    match Second::try_new_from_u8(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-                #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u8,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct Second with 1 element",
-                                ),
-                            );
-                        }
-                    };
-                    match Second::try_new_from_u8(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-            }
-            _serde::Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "Second",
-                __Visitor {
-                    marker: _serde::__private::PhantomData::<Second>,
-                    lifetime: _serde::__private::PhantomData,
-                },
-            )
-        }
-    }
-};
-impl error_occurence_lib::ToStdStringString for Second {
-    fn to_std_string_string(&self) -> std::string::String {
-        self.0.to_string()
-    }
-}
-impl std::convert::Into<std::primitive::u8> for Second {
-    fn into(self) -> std::primitive::u8 {
-        self.0
-    }
-}
-impl std::convert::Into<std::primitive::u32> for Second {
-    fn into(self) -> std::primitive::u32 {
-        self.0.into()
-    }
-}
-
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, serde::Serialize, schemars::JsonSchema)]
-pub struct Microsecond(std::primitive::u32);
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum MicrosecondTryNewFromMicrosecondErrorNamed {
-    MicrosecondOutOfRange {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::u32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum MicrosecondTryNewFromNanosecondErrorNamed {
-    NanosecondPrecisionIsNotSupported {
-        #[eo_to_std_string_string_serialize_deserialize]
-        nanosecond: std::primitive::u32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    MicrosecondOutOfRange {
-        #[eo_to_std_string_string_serialize_deserialize]
-        value: std::primitive::u32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-impl Microsecond {
-    pub fn try_new_from_microsecond(value: std::primitive::u32) -> Result<Self, MicrosecondTryNewFromMicrosecondErrorNamed> {
-        if value <= 999_999 {
-            Ok(Self(value))
-        }
-        else {
-            Err(MicrosecondTryNewFromMicrosecondErrorNamed::MicrosecondOutOfRange {
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub fn try_new_from_nanosecond(value: std::primitive::u32) -> Result<Self, MicrosecondTryNewFromNanosecondErrorNamed> {
-        let thousand = 1000;
-        if value % thousand != 0 {
-            return Err(MicrosecondTryNewFromNanosecondErrorNamed::NanosecondPrecisionIsNotSupported {
-                nanosecond: value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        if value <= 999_999_000 {
-            Ok(Self(value / thousand))
-        }
-        else {
-            Err(MicrosecondTryNewFromNanosecondErrorNamed::MicrosecondOutOfRange {
-                value,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
-    }
-    pub fn get(&self) -> std::primitive::u32 {
-        self.0
-    }
-    pub fn to_std_primitive_u32(&self) -> std::primitive::u32 {
-        self.0.into()
-    }
-}
-const _: () = {
-    #[allow(unused_extern_crates, clippy::useless_attribute)]
-    extern crate serde as _serde;
-    #[automatically_derived]
-    impl<'de> _serde::Deserialize<'de> for Microsecond {
-        fn deserialize<__D>(
-            __deserializer: __D,
-        ) -> _serde::__private::Result<Self, __D::Error>
-        where
-            __D: _serde::Deserializer<'de>,
-        {
-            #[doc(hidden)]
-            struct __Visitor<'de> {
-                marker: _serde::__private::PhantomData<Microsecond>,
-                lifetime: _serde::__private::PhantomData<&'de ()>,
-            }
-            #[automatically_derived]
-            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                type Value = Microsecond;
-                fn expecting(
-                    &self,
-                    __formatter: &mut _serde::__private::Formatter<'_>,
-                ) -> _serde::__private::fmt::Result {
-                    _serde::__private::Formatter::write_str(
-                        __formatter,
-                        "tuple struct Microsecond",
-                    )
-                }
-                #[inline]
-                fn visit_newtype_struct<__E>(
-                    self,
-                    __e: __E,
-                ) -> _serde::__private::Result<Self::Value, __E::Error>
-                where
-                    __E: _serde::Deserializer<'de>,
-                {
-                    let __field0: std::primitive::u32 = <std::primitive::u32 as _serde::Deserialize>::deserialize(
-                        __e,
-                    )?;
-                    match Microsecond::try_new_from_microsecond(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-                #[inline]
-                fn visit_seq<__A>(
-                    self,
-                    mut __seq: __A,
-                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                where
-                    __A: _serde::de::SeqAccess<'de>,
-                {
-                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                        std::primitive::u32,
-                    >(&mut __seq)? {
-                        _serde::__private::Some(__value) => __value,
-                        _serde::__private::None => {
-                            return _serde::__private::Err(
-                                _serde::de::Error::invalid_length(
-                                    0usize,
-                                    &"tuple struct Microsecond with 1 element",
-                                ),
-                            );
-                        }
-                    };
-                    match Microsecond::try_new_from_microsecond(__field0) {
-                        Ok(value) => _serde::__private::Ok(value),
-                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                    }
-                }
-            }
-            _serde::Deserializer::deserialize_newtype_struct(
-                __deserializer,
-                "Microsecond",
-                __Visitor {
-                    marker: _serde::__private::PhantomData::<Microsecond>,
-                    lifetime: _serde::__private::PhantomData,
-                },
-            )
-        }
-    }
-};
-impl error_occurence_lib::ToStdStringString for Microsecond {
-    fn to_std_string_string(&self) -> std::string::String {
-        self.0.to_string()
-    }
-}
-impl std::convert::Into<std::primitive::u32> for Microsecond {
-    fn into(self) -> std::primitive::u32 {
-        self.0
-    }
-}
-
 #[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct SqlxTypesTimeTime(sqlx::types::time::Time);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum SqlxTypesTimeTimeTryNewErrorNamed {
+pub enum SqlxTypesTimeTimeTryNewFromDeserializeErrorNamed {
     InvalidHourOrMinuteOrSecondOrMicrosecond {
         #[eo_to_std_string_string_serialize_deserialize]
-        hour: Hour,
+        hour: std::primitive::u8,
         #[eo_to_std_string_string_serialize_deserialize]
-        minute: Minute,
+        minute: std::primitive::u8,
         #[eo_to_std_string_string_serialize_deserialize]
-        second: Second,
+        second: std::primitive::u8,
         #[eo_to_std_string_string_serialize_deserialize]
-        microsecond: Microsecond,
+        microsecond: std::primitive::u32,
         #[eo_to_std_string_string_serialize_deserialize]
         error: std::string::String,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
 impl SqlxTypesTimeTime {
-    pub fn try_new(hour: Hour, minute: Minute, second: Second, microsecond: Microsecond) -> Result<Self, SqlxTypesTimeTimeTryNewErrorNamed> {
+    pub fn new(value: sqlx::types::time::Time) -> Self {
+        Self(value)
+    }
+    fn try_new_from_deserialize(hour: std::primitive::u8, minute: std::primitive::u8, second: std::primitive::u8, microsecond: std::primitive::u32) -> Result<Self, SqlxTypesTimeTimeTryNewFromDeserializeErrorNamed> {
         match sqlx::types::time::Time::from_hms_micro(
-            hour.to_std_primitive_u8(),
-            minute.to_std_primitive_u8(),
-            second.to_std_primitive_u8(),
-            microsecond.to_std_primitive_u32(),
+            hour,
+            minute,
+            second,
+            microsecond,
         ) {
             Ok(value) => Ok(Self(value)),
-            Err(error) => Err(SqlxTypesTimeTimeTryNewErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
+            Err(error) => Err(SqlxTypesTimeTimeTryNewFromDeserializeErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
                 hour,
                 minute,
                 second,
@@ -3559,7 +2965,7 @@ const _: () = {
                     __A: _serde::de::SeqAccess<'de>,
                 {
                     let __field0 = match _serde::de::SeqAccess::next_element::<
-                        Hour,
+                        std::primitive::u8,
                     >(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
@@ -3572,7 +2978,7 @@ const _: () = {
                         }
                     };
                     let __field1 = match _serde::de::SeqAccess::next_element::<
-                        Minute,
+                        std::primitive::u8,
                     >(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
@@ -3585,7 +2991,7 @@ const _: () = {
                         }
                     };
                     let __field2 = match _serde::de::SeqAccess::next_element::<
-                        Second,
+                        std::primitive::u8,
                     >(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
@@ -3598,7 +3004,7 @@ const _: () = {
                         }
                     };
                     let __field3 = match _serde::de::SeqAccess::next_element::<
-                        Microsecond,
+                        std::primitive::u32,
                     >(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
@@ -3610,7 +3016,7 @@ const _: () = {
                             );
                         }
                     };
-                    match SqlxTypesTimeTime::try_new(__field0, __field1, __field2, __field3) {
+                    match SqlxTypesTimeTime::try_new_from_deserialize(__field0, __field1, __field2, __field3) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -3623,10 +3029,10 @@ const _: () = {
                 where
                     __A: _serde::de::MapAccess<'de>,
                 {
-                    let mut __field0: _serde::__private::Option<Hour> = _serde::__private::None;
-                    let mut __field1: _serde::__private::Option<Minute> = _serde::__private::None;
-                    let mut __field2: _serde::__private::Option<Second> = _serde::__private::None;
-                    let mut __field3: _serde::__private::Option<Microsecond> = _serde::__private::None;
+                    let mut __field0: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                    let mut __field1: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                    let mut __field2: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                    let mut __field3: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                         __Field,
                     >(&mut __map)? {
@@ -3638,7 +3044,9 @@ const _: () = {
                                     );
                                 }
                                 __field0 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<Hour>(&mut __map)?,
+                                    _serde::de::MapAccess::next_value::<
+                                        std::primitive::u8,
+                                    >(&mut __map)?,
                                 );
                             }
                             __Field::__field1 => {
@@ -3648,7 +3056,9 @@ const _: () = {
                                     );
                                 }
                                 __field1 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<Minute>(&mut __map)?,
+                                    _serde::de::MapAccess::next_value::<
+                                        std::primitive::u8,
+                                    >(&mut __map)?,
                                 );
                             }
                             __Field::__field2 => {
@@ -3658,7 +3068,9 @@ const _: () = {
                                     );
                                 }
                                 __field2 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<Second>(&mut __map)?,
+                                    _serde::de::MapAccess::next_value::<
+                                        std::primitive::u8,
+                                    >(&mut __map)?,
                                 );
                             }
                             __Field::__field3 => {
@@ -3671,7 +3083,7 @@ const _: () = {
                                 }
                                 __field3 = _serde::__private::Some(
                                     _serde::de::MapAccess::next_value::<
-                                        Microsecond,
+                                        std::primitive::u32,
                                     >(&mut __map)?,
                                 );
                             }
@@ -3706,7 +3118,7 @@ const _: () = {
                             _serde::__private::de::missing_field("microsecond")?
                         }
                     };
-                    match SqlxTypesTimeTime::try_new(__field0, __field1, __field2, __field3) {
+                    match SqlxTypesTimeTime::try_new_from_deserialize(__field0, __field1, __field2, __field3) {
                         Ok(value) => _serde::__private::Ok(value),
                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                     }
@@ -4147,144 +3559,41 @@ impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoNaiveDate {
 #[derive(Debug, Default, Clone, PartialEq, Eq, PartialOrd, Ord)]
 pub struct SqlxTypesChronoNaiveTime(sqlx::types::chrono::NaiveTime);
 #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-pub enum SqlxTypesChronoNaiveTimeTryNewErrorNamed {
-    NanosecondPrecisionIsNotSupported {
-        #[eo_to_std_string_string_serialize_deserialize]
-        hour: std::primitive::u32,
-        #[eo_to_std_string_string_serialize_deserialize]
-        minute: std::primitive::u32,
-        #[eo_to_std_string_string_serialize_deserialize]
-        second: std::primitive::u32,
-        #[eo_to_std_string_string_serialize_deserialize]
-        nanosecond: std::primitive::u32,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    InvalidHour {
-        #[eo_error_occurence]
-        hour_error: HourTryNewFromU32ErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    InvalidMinute {
-        #[eo_error_occurence]
-        minute_error: MinuteTryNewFromU32ErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    InvalidSecond {
-        #[eo_error_occurence]
-        second_error: SecondTryNewFromU32ErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    InvalidMicrosecond {
-        #[eo_error_occurence]
-        microsecond_error: MicrosecondTryNewFromNanosecondErrorNamed,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    },
-    InvalidHourOrMinuteOrSecondOrMicrosecond {
-        #[eo_to_std_string_string_serialize_deserialize]
-        hour: Hour,
-        #[eo_to_std_string_string_serialize_deserialize]
-        minute: Minute,
-        #[eo_to_std_string_string_serialize_deserialize]
-        second: Second,
-        #[eo_to_std_string_string_serialize_deserialize]
-        microsecond: Microsecond,
-        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-    }
-}
-#[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
 pub enum SqlxTypesChronoNaiveTimeTryNewForDeserializeErrorNamed {
     InvalidHourOrMinuteOrSecondOrMicrosecond {
         #[eo_to_std_string_string_serialize_deserialize]
-        hour: Hour,
+        hour: std::primitive::u32,
         #[eo_to_std_string_string_serialize_deserialize]
-        minute: Minute,
+        min: std::primitive::u32,
         #[eo_to_std_string_string_serialize_deserialize]
-        second: Second,
+        sec: std::primitive::u32,
         #[eo_to_std_string_string_serialize_deserialize]
-        microsecond: Microsecond,
+        micro: std::primitive::u32,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
     }
 }
 impl SqlxTypesChronoNaiveTime {
-    pub fn try_new(value: sqlx::types::chrono::NaiveTime) -> Result<Self, SqlxTypesChronoNaiveTimeTryNewErrorNamed> {
-        let hour_handle = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::hour(&value);
-        let minute_handle = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&value);
-        let second_handle = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&value);
-        let nanosecond_handle = <sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&value);
-        if nanosecond_handle % 1000 != 0 {
-            return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::NanosecondPrecisionIsNotSupported {
-                hour: hour_handle,
-                minute: minute_handle,
-                second: second_handle,
-                nanosecond: nanosecond_handle,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            });
-        }
-        let hour = match Hour::try_new_from_u32(hour_handle) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidHour {
-                    hour_error: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        let minute = match Minute::try_new_from_u32(minute_handle) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidMinute {
-                    minute_error: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        let second = match Second::try_new_from_u32(second_handle) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidSecond {
-                    second_error: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        let microsecond = match Microsecond::try_new_from_nanosecond(nanosecond_handle) {
-            Ok(value) => value,
-            Err(error) => {
-                return Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidMicrosecond {
-                    microsecond_error: error,
-                    code_occurence: error_occurence_lib::code_occurence!(),
-                });
-            }
-        };
-        match sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
-            hour.to_std_primitive_u32(),
-            minute.to_std_primitive_u32(),
-            second.to_std_primitive_u32(),
-            microsecond.to_std_primitive_u32(),
-        ) {
-            Some(value) => Ok(Self(value)),
-            None => Err(SqlxTypesChronoNaiveTimeTryNewErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
-                hour,
-                minute,
-                second,
-                microsecond,
-                code_occurence: error_occurence_lib::code_occurence!(),
-            })
-        }
+    pub fn new(value: sqlx::types::chrono::NaiveTime) -> Self {
+        Self(value)
     }
-    fn try_new_for_deserialize(hour: Hour, minute: Minute, second: Second, microsecond: Microsecond) -> Result<Self, SqlxTypesChronoNaiveTimeTryNewForDeserializeErrorNamed> {
+    fn try_new_for_deserialize(
+        hour: std::primitive::u32,
+        min: std::primitive::u32,
+        sec: std::primitive::u32,
+        micro: std::primitive::u32
+    ) -> Result<Self, SqlxTypesChronoNaiveTimeTryNewForDeserializeErrorNamed> {
         match sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
-            hour.to_std_primitive_u32(),
-            minute.to_std_primitive_u32(),
-            second.to_std_primitive_u32(),
-            microsecond.to_std_primitive_u32(),
+            hour,
+            min,
+            sec,
+            micro,
         ) {
             Some(value) => Ok(Self(value)),
             None => Err(SqlxTypesChronoNaiveTimeTryNewForDeserializeErrorNamed::InvalidHourOrMinuteOrSecondOrMicrosecond {
                 hour,
-                minute,
-                second,
-                microsecond,
+                min,
+                sec,
+                micro,
                 code_occurence: error_occurence_lib::code_occurence!(),
             })
         }
@@ -4317,17 +3626,17 @@ const _: () = {
             )?;
             _serde::ser::SerializeStruct::serialize_field(
                 &mut __serde_state,
-                "minute",
+                "min",
                 &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&self.0),
             )?;
             _serde::ser::SerializeStruct::serialize_field(
                 &mut __serde_state,
-                "second",
+                "sec",
                 &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&self.0),
             )?;
             _serde::ser::SerializeStruct::serialize_field(
                 &mut __serde_state,
-                "microsecond",
+                "micro",
                 &(<sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&self.0) / 1000),
             )?;
             _serde::ser::SerializeStruct::end(__serde_state)
@@ -4392,9 +3701,9 @@ const _: () = {
                 {
                     match __value {
                         "hour" => _serde::__private::Ok(__Field::__field0),
-                        "minute" => _serde::__private::Ok(__Field::__field1),
-                        "second" => _serde::__private::Ok(__Field::__field2),
-                        "microsecond" => _serde::__private::Ok(__Field::__field3),
+                        "min" => _serde::__private::Ok(__Field::__field1),
+                        "sec" => _serde::__private::Ok(__Field::__field2),
+                        "micro" => _serde::__private::Ok(__Field::__field3),
                         _ => _serde::__private::Ok(__Field::__ignore),
                     }
                 }
@@ -4407,9 +3716,9 @@ const _: () = {
                 {
                     match __value {
                         b"hour" => _serde::__private::Ok(__Field::__field0),
-                        b"minute" => _serde::__private::Ok(__Field::__field1),
-                        b"second" => _serde::__private::Ok(__Field::__field2),
-                        b"microsecond" => _serde::__private::Ok(__Field::__field3),
+                        b"min" => _serde::__private::Ok(__Field::__field1),
+                        b"sec" => _serde::__private::Ok(__Field::__field2),
+                        b"micro" => _serde::__private::Ok(__Field::__field3),
                         _ => _serde::__private::Ok(__Field::__ignore),
                     }
                 }
@@ -4455,7 +3764,7 @@ const _: () = {
                     __A: _serde::de::SeqAccess<'de>,
                 {
                     let __field0 = match _serde::de::SeqAccess::next_element::<
-                        Hour,
+                        std::primitive::u32,
                     >(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
@@ -4468,7 +3777,7 @@ const _: () = {
                         }
                     };
                     let __field1 = match _serde::de::SeqAccess::next_element::<
-                        Minute,
+                        std::primitive::u32,
                     >(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
@@ -4481,7 +3790,7 @@ const _: () = {
                         }
                     };
                     let __field2 = match _serde::de::SeqAccess::next_element::<
-                        Second,
+                        std::primitive::u32,
                     >(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
@@ -4494,7 +3803,7 @@ const _: () = {
                         }
                     };
                     let __field3 = match _serde::de::SeqAccess::next_element::<
-                        Microsecond,
+                        std::primitive::u32,
                     >(&mut __seq)? {
                         _serde::__private::Some(__value) => __value,
                         _serde::__private::None => {
@@ -4519,10 +3828,10 @@ const _: () = {
                 where
                     __A: _serde::de::MapAccess<'de>,
                 {
-                    let mut __field0: _serde::__private::Option<Hour> = _serde::__private::None;
-                    let mut __field1: _serde::__private::Option<Minute> = _serde::__private::None;
-                    let mut __field2: _serde::__private::Option<Second> = _serde::__private::None;
-                    let mut __field3: _serde::__private::Option<Microsecond> = _serde::__private::None;
+                    let mut __field0: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
+                    let mut __field1: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
+                    let mut __field2: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
+                    let mut __field3: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                         __Field,
                     >(&mut __map)? {
@@ -4534,40 +3843,44 @@ const _: () = {
                                     );
                                 }
                                 __field0 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<Hour>(&mut __map)?,
+                                    _serde::de::MapAccess::next_value::<
+                                        std::primitive::u32,
+                                    >(&mut __map)?,
                                 );
                             }
                             __Field::__field1 => {
                                 if _serde::__private::Option::is_some(&__field1) {
                                     return _serde::__private::Err(
-                                        <__A::Error as _serde::de::Error>::duplicate_field("minute"),
+                                        <__A::Error as _serde::de::Error>::duplicate_field("min"),
                                     );
                                 }
                                 __field1 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<Minute>(&mut __map)?,
+                                    _serde::de::MapAccess::next_value::<
+                                        std::primitive::u32,
+                                    >(&mut __map)?,
                                 );
                             }
                             __Field::__field2 => {
                                 if _serde::__private::Option::is_some(&__field2) {
                                     return _serde::__private::Err(
-                                        <__A::Error as _serde::de::Error>::duplicate_field("second"),
+                                        <__A::Error as _serde::de::Error>::duplicate_field("sec"),
                                     );
                                 }
                                 __field2 = _serde::__private::Some(
-                                    _serde::de::MapAccess::next_value::<Second>(&mut __map)?,
+                                    _serde::de::MapAccess::next_value::<
+                                        std::primitive::u32,
+                                    >(&mut __map)?,
                                 );
                             }
                             __Field::__field3 => {
                                 if _serde::__private::Option::is_some(&__field3) {
                                     return _serde::__private::Err(
-                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                            "microsecond",
-                                        ),
+                                        <__A::Error as _serde::de::Error>::duplicate_field("micro"),
                                     );
                                 }
                                 __field3 = _serde::__private::Some(
                                     _serde::de::MapAccess::next_value::<
-                                        Microsecond,
+                                        std::primitive::u32,
                                     >(&mut __map)?,
                                 );
                             }
@@ -4587,19 +3900,19 @@ const _: () = {
                     let __field1 = match __field1 {
                         _serde::__private::Some(__field1) => __field1,
                         _serde::__private::None => {
-                            _serde::__private::de::missing_field("minute")?
+                            _serde::__private::de::missing_field("min")?
                         }
                     };
                     let __field2 = match __field2 {
                         _serde::__private::Some(__field2) => __field2,
                         _serde::__private::None => {
-                            _serde::__private::de::missing_field("second")?
+                            _serde::__private::de::missing_field("sec")?
                         }
                     };
                     let __field3 = match __field3 {
                         _serde::__private::Some(__field3) => __field3,
                         _serde::__private::None => {
-                            _serde::__private::de::missing_field("microsecond")?
+                            _serde::__private::de::missing_field("micro")?
                         }
                     };
                     match SqlxTypesChronoNaiveTime::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
@@ -4609,12 +3922,7 @@ const _: () = {
                 }
             }
             #[doc(hidden)]
-            const FIELDS: &'static [&'static str] = &[
-                "hour",
-                "minute",
-                "second",
-                "microsecond",
-            ];
+            const FIELDS: &'static [&'static str] = &["hour", "min", "sec", "micro"];
             _serde::Deserializer::deserialize_struct(
                 __deserializer,
                 "SqlxTypesChronoNaiveTime",

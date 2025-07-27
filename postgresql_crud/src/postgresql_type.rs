@@ -2140,22 +2140,22 @@ impl crate::tests::PostgresqlTypeTestCases for SqlxTypesChronoNaiveTimeAsNotNull
     type Element = Self;
     fn test_cases() -> std::vec::Vec<<Self::Element as crate::PostgresqlType>::ReadInner> {
         vec![
-            crate::SqlxTypesChronoNaiveTime::try_new(
+            crate::SqlxTypesChronoNaiveTime::new(
                 sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
                     0,
                     0,
                     0,
                     0,
                 ).unwrap()
-            ).unwrap(),
-            crate::SqlxTypesChronoNaiveTime::try_new(
+            ),
+            crate::SqlxTypesChronoNaiveTime::new(
                 sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
                     23,
                     59,
                     59,
                     999_999,
                 ).unwrap()
-            ).unwrap(),
+            ),
         ]
     }
 }
