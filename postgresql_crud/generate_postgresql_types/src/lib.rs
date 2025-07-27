@@ -763,6 +763,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             }
         }
     }
+    #[derive(Debug)]
+    enum PostgresqlTypeInitializationNewOrTryNew {
+        New,
+        TryNew,
+    }
+    #[derive(Debug)]
+    enum PostgresqlTypeDeserialize {
+        Derive,
+        ImplNewFromDeserialize,
+        ImplTryNewFromDeserialize,
+    }
     let postgresql_type_record_vec = {
         let generate_postgresql_types_config = serde_json::from_str::<GeneratePostgresqlTypesConfig>(&input_token_stream.to_string()).expect("failed to get Config for generate_postgresql_type");
         let postgresql_type_record_vec = match generate_postgresql_types_config {
