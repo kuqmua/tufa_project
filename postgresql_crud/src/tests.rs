@@ -33,3 +33,17 @@ pub trait PostgresqlTypeTestCases {
     // pub fn new_or_try_new_unwraped_for_test_two(value: <SqlxTypesChronoNaiveDateTimeAsNotNullTimestamp as crate::tests::PostgresqlTypeTestCasesTwo>::VecElement) -> Self {
     //     Self(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_or_try_new_unwraped_for_test_two(value))
     // }
+////
+// #[derive(Clone)]
+// pub struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampTestCasesInitialization {
+//     naive_date: crate::SqlxTypesChronoNaiveDate,
+//     naive_time: crate::SqlxTypesChronoNaiveTime
+// }
+// impl std::convert::Into<sqlx::types::chrono::NaiveDateTime> for SqlxTypesChronoNaiveDateTimeAsNotNullTimestampTestCasesInitialization {
+//     fn into(self) -> sqlx::types::chrono::NaiveDateTime {
+//         sqlx::types::chrono::NaiveDateTime::new(
+//             self.naive_date.into(),
+//             self.naive_time.into()
+//         )
+//     }
+// }
