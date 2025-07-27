@@ -243,7 +243,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let sqlx_types_chrono_naive_time_stringified = "crate::SqlxTypesChronoNaiveTime".to_string();
                 let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
-                let sqlx_types_chrono_naive_date_time_stringified = "crate::SqlxTypesChronoNaiveDateTime".to_string();
+                let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc".to_string();
                 let sqlx_types_uuid_uuid_stringified = "sqlx::types::uuid::Uuid".to_string();
                 let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_string();
@@ -714,6 +714,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     enum PostgresqlTypeInitializationWithTryNew {
         StdStringStringAsText,
         SqlxTypesChronoNaiveDateAsDate,
+        SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
         SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
     }
@@ -737,7 +738,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxTypesTimeTimeAsTime => Err(()),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Ok(Self::SqlxTypesChronoNaiveDateAsDate),
-                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Err(()),
+                PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Ok(Self::SqlxTypesChronoNaiveDateTimeAsTimestamp),
                 PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Err(()),
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Err(()),
                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Err(()),
@@ -756,6 +757,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             match value {
                 PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => Self::StdStringStringAsText,
                 PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
+                PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsTimestamp,
                 PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
                 PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
             }
@@ -2533,7 +2535,237 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                             }
                         }),
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Derive,
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl({
+                            quote::quote!{
+                                const _: () = {
+                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
+                                    extern crate serde as _serde;
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de>
+                                    for SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin {
+                                        fn deserialize<__D>(
+                                            __deserializer: __D,
+                                        ) -> _serde::__private::Result<Self, __D::Error>
+                                        where
+                                            __D: _serde::Deserializer<'de>,
+                                        {
+                                            #[allow(non_camel_case_types)]
+                                            #[doc(hidden)]
+                                            enum __Field {
+                                                __field0,
+                                                __field1,
+                                                __ignore,
+                                            }
+                                            #[doc(hidden)]
+                                            struct __FieldVisitor;
+                                            #[automatically_derived]
+                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                                type Value = __Field;
+                                                fn expecting(
+                                                    &self,
+                                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                                ) -> _serde::__private::fmt::Result {
+                                                    _serde::__private::Formatter::write_str(
+                                                        __formatter,
+                                                        "field identifier",
+                                                    )
+                                                }
+                                                fn visit_u64<__E>(
+                                                    self,
+                                                    __value: u64,
+                                                ) -> _serde::__private::Result<Self::Value, __E>
+                                                where
+                                                    __E: _serde::de::Error,
+                                                {
+                                                    match __value {
+                                                        0u64 => _serde::__private::Ok(__Field::__field0),
+                                                        1u64 => _serde::__private::Ok(__Field::__field1),
+                                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                                    }
+                                                }
+                                                fn visit_str<__E>(
+                                                    self,
+                                                    __value: &str,
+                                                ) -> _serde::__private::Result<Self::Value, __E>
+                                                where
+                                                    __E: _serde::de::Error,
+                                                {
+                                                    match __value {
+                                                        "naive_date" => _serde::__private::Ok(__Field::__field0),
+                                                        "naive_time" => _serde::__private::Ok(__Field::__field1),
+                                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                                    }
+                                                }
+                                                fn visit_bytes<__E>(
+                                                    self,
+                                                    __value: &[u8],
+                                                ) -> _serde::__private::Result<Self::Value, __E>
+                                                where
+                                                    __E: _serde::de::Error,
+                                                {
+                                                    match __value {
+                                                        b"naive_date" => _serde::__private::Ok(__Field::__field0),
+                                                        b"naive_time" => _serde::__private::Ok(__Field::__field1),
+                                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                                    }
+                                                }
+                                            }
+                                            #[automatically_derived]
+                                            impl<'de> _serde::Deserialize<'de> for __Field {
+                                                #[inline]
+                                                fn deserialize<__D>(
+                                                    __deserializer: __D,
+                                                ) -> _serde::__private::Result<Self, __D::Error>
+                                                where
+                                                    __D: _serde::Deserializer<'de>,
+                                                {
+                                                    _serde::Deserializer::deserialize_identifier(
+                                                        __deserializer,
+                                                        __FieldVisitor,
+                                                    )
+                                                }
+                                            }
+                                            #[doc(hidden)]
+                                            struct __Visitor<'de> {
+                                                marker: _serde::__private::PhantomData<
+                                                    SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
+                                                >,
+                                                lifetime: _serde::__private::PhantomData<&'de ()>,
+                                            }
+                                            #[automatically_derived]
+                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                                type Value = SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin;
+                                                fn expecting(
+                                                    &self,
+                                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                                ) -> _serde::__private::fmt::Result {
+                                                    _serde::__private::Formatter::write_str(
+                                                        __formatter,
+                                                        "struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
+                                                    )
+                                                }
+                                                #[inline]
+                                                fn visit_seq<__A>(
+                                                    self,
+                                                    mut __seq: __A,
+                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                                where
+                                                    __A: _serde::de::SeqAccess<'de>,
+                                                {
+                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                        crate::SqlxTypesChronoNaiveDate,
+                                                    >(&mut __seq)? {
+                                                        _serde::__private::Some(__value) => __value,
+                                                        _serde::__private::None => {
+                                                            return _serde::__private::Err(
+                                                                _serde::de::Error::invalid_length(
+                                                                    0usize,
+                                                                    &"struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin with 2 elements",
+                                                                ),
+                                                            );
+                                                        }
+                                                    };
+                                                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                                                        crate::SqlxTypesChronoNaiveTime,
+                                                    >(&mut __seq)? {
+                                                        _serde::__private::Some(__value) => __value,
+                                                        _serde::__private::None => {
+                                                            return _serde::__private::Err(
+                                                                _serde::de::Error::invalid_length(
+                                                                    1usize,
+                                                                    &"struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin with 2 elements",
+                                                                ),
+                                                            );
+                                                        }
+                                                    };
+                                                    _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
+                                                }
+                                                #[inline]
+                                                fn visit_map<__A>(
+                                                    self,
+                                                    mut __map: __A,
+                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                                where
+                                                    __A: _serde::de::MapAccess<'de>,
+                                                {
+                                                    let mut __field0: _serde::__private::Option<
+                                                        crate::SqlxTypesChronoNaiveDate,
+                                                    > = _serde::__private::None;
+                                                    let mut __field1: _serde::__private::Option<
+                                                        crate::SqlxTypesChronoNaiveTime,
+                                                    > = _serde::__private::None;
+                                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                                        __Field,
+                                                    >(&mut __map)? {
+                                                        match __key {
+                                                            __Field::__field0 => {
+                                                                if _serde::__private::Option::is_some(&__field0) {
+                                                                    return _serde::__private::Err(
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field(
+                                                                            "naive_date",
+                                                                        ),
+                                                                    );
+                                                                }
+                                                                __field0 = _serde::__private::Some(
+                                                                    _serde::de::MapAccess::next_value::<
+                                                                        crate::SqlxTypesChronoNaiveDate,
+                                                                    >(&mut __map)?,
+                                                                );
+                                                            }
+                                                            __Field::__field1 => {
+                                                                if _serde::__private::Option::is_some(&__field1) {
+                                                                    return _serde::__private::Err(
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field(
+                                                                            "naive_time",
+                                                                        ),
+                                                                    );
+                                                                }
+                                                                __field1 = _serde::__private::Some(
+                                                                    _serde::de::MapAccess::next_value::<
+                                                                        crate::SqlxTypesChronoNaiveTime,
+                                                                    >(&mut __map)?,
+                                                                );
+                                                            }
+                                                            _ => {
+                                                                let _ = _serde::de::MapAccess::next_value::<
+                                                                    _serde::de::IgnoredAny,
+                                                                >(&mut __map)?;
+                                                            }
+                                                        }
+                                                    }
+                                                    let __field0 = match __field0 {
+                                                        _serde::__private::Some(__field0) => __field0,
+                                                        _serde::__private::None => {
+                                                            _serde::__private::de::missing_field("naive_date")?
+                                                        }
+                                                    };
+                                                    let __field1 = match __field1 {
+                                                        _serde::__private::Some(__field1) => __field1,
+                                                        _serde::__private::None => {
+                                                            _serde::__private::de::missing_field("naive_time")?
+                                                        }
+                                                    };
+                                                    _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
+                                                }
+                                            }
+                                            #[doc(hidden)]
+                                            const FIELDS: &'static [&'static str] = &["naive_date", "naive_time"];
+                                            _serde::Deserializer::deserialize_struct(
+                                                __deserializer,
+                                                "SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
+                                                FIELDS,
+                                                __Visitor {
+                                                    marker: _serde::__private::PhantomData::<
+                                                        SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
+                                                    >,
+                                                    lifetime: _serde::__private::PhantomData,
+                                                },
+                                            )
+                                        }
+                                    }
+                                };
+                            }
+                        }),
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream),
@@ -2685,6 +2917,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let contains_null_byte_upper_camel_case = naming::ContainsNullByteUpperCamelCase;
                 let earlier_date_not_supported_upper_camel_case = naming::EarlierDateNotSupportedUpperCamelCase;
                 let earliest_supported_date_snake_case = naming::EarliestSupportedDateSnakeCase;
+                let naive_date_upper_camel_case = naming::NaiveDateUpperCamelCase;
+                let naive_time_upper_camel_case = naming::NaiveTimeUpperCamelCase;
                 let included_start_more_than_included_end_upper_camel_case = naming::IncludedStartMoreThanIncludedEndUpperCamelCase;
                 let included_start_more_than_excluded_end_upper_camel_case = naming::IncludedStartMoreThanExcludedEndUpperCamelCase;
                 let excluded_start_more_than_included_end_upper_camel_case = naming::ExcludedStartMoreThanIncludedEndUpperCamelCase;
@@ -2765,6 +2999,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         #earliest_supported_date_snake_case: #std_string_string_token_stream,
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     }
+                                }
+                            },
+                            PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
+                                quote::quote! {
+                                    #naive_date_upper_camel_case {
+                                        #[eo_error_occurence]
+                                        #error_snake_case: crate::SqlxTypesChronoNaiveDateTryNewErrorNamed,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
+                                    #naive_time_upper_camel_case {
+                                        #[eo_error_occurence]
+                                        #error_snake_case: crate::SqlxTypesChronoNaiveTimeTryNewErrorNamed,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
                                 }
                             },
                             PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_temp_range_type_error_variants_token_stream(
@@ -2956,7 +3204,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 },
                                                 PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveDateAsDate => {
                                                     quote::quote! {
-                                                        let #earliest_supported_date_snake_case = sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 1, 1).unwrap();
+                                                        let #earliest_supported_date_snake_case = #field_type_standart_not_null::from_ymd_opt(-4713, 1, 1).unwrap();
                                                         if #value_snake_case > #earliest_supported_date_snake_case {
                                                             Ok(Self(#value_snake_case))
                                                         }
@@ -2967,6 +3215,32 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                                             })
                                                         }
+                                                    }
+                                                },
+                                                PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
+                                                    quote::quote! {
+                                                        let date = match crate::SqlxTypesChronoNaiveDate::try_new(#value_snake_case.date()) {
+                                                            Ok(#value_snake_case) => #value_snake_case,
+                                                            Err(#error_snake_case) => {
+                                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#naive_date_upper_camel_case {
+                                                                    #error_snake_case,
+                                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                                });
+                                                            }
+                                                        };
+                                                        let time = match crate::SqlxTypesChronoNaiveTime::try_new(#value_snake_case.time()) {
+                                                            Ok(#value_snake_case) => #value_snake_case,
+                                                            Err(#error_snake_case) => {
+                                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#naive_time_upper_camel_case {
+                                                                    #error_snake_case,
+                                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                                });
+                                                            }
+                                                        };
+                                                        Ok(Self(#field_type_standart_not_null::new(
+                                                            date.into(),
+                                                            time.into()
+                                                        )))
                                                     }
                                                 },
                                                 PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_temp_range_check_token_stream(&TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
@@ -3127,208 +3401,51 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     };
-                    let pub_fn_try_new_for_deserialize_token = {
+                    let pub_fn_new_or_try_new_for_deserialize_token = {
                         if let Ok(postgresql_type_initialization_with_try_new) = &postgresql_type_initialization_with_try_new_try_from_postgresql_type {
-                            let content_token_stream = {
-                                let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                                    quote::quote! {Ok(Self(match #value_snake_case {
-                                        Some(#value_snake_case) => Some(match #type_token_stream::try_new(#value_snake_case) {
-                                            Ok(#value_snake_case) => #value_snake_case,
-                                            Err(#error_snake_case) => {
-                                                return Err(#error_snake_case);
-                                            },
-                                        }),
-                                        None => None
-                                    }))}
-                                };
-                                let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {
-                                        Ok(Self({
-                                            let mut #acc_snake_case = vec![];
-                                            for #element_snake_case in #value_snake_case {
-                                                match #type_token_stream::try_new(#element_snake_case) {
-                                                    Ok(#value_snake_case) => {
-                                                        #acc_snake_case.push(#value_snake_case);
-                                                    },
-                                                    Err(#error_snake_case) => {
-                                                        return Err(#error_snake_case);
-                                                    }
+                            match &postgresql_type_pattern {
+                                PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => match &postgresql_type {
+                                        PostgresqlType::StdPrimitiveI16AsInt2 => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdPrimitiveI32AsInt4 => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdPrimitiveI64AsInt8 => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdPrimitiveF32AsFloat4 => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdPrimitiveF64AsFloat8 => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdPrimitiveBoolAsBool => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdStringStringAsText => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxTypesTimeTimeAsTime => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
+                                            quote::quote!{
+                                                pub fn new_for_deserialize(naive_date: crate::SqlxTypesChronoNaiveDate, naive_time: crate::SqlxTypesChronoNaiveTime) -> Self {
+                                                    Self(sqlx::types::chrono::NaiveDateTime::new(
+                                                        naive_date.into(),
+                                                        naive_time.into()
+                                                    ))
                                                 }
-                                            }
-                                            #acc_snake_case
-                                        }))
-                                    },
-                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
-                                };
-                                match &postgresql_type_pattern {
-                                    PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                            let generate_temp_range_check_token_stream = |temp_range_type: &TempRangeType|{
-                                                //todo somehow convert it with from or try from
-                                                let range_inner_ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                                    &generate_ident_standart_not_null_token_stream(&temp_range_type.to_range_inner_postgresql_type())
-                                                );
-                                                let max_value_token_stream = match &temp_range_type {
-                                                    TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{std::primitive::i32::MAX},
-                                                    TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{std::primitive::i64::MAX},
-                                                };
-                                                quote::quote! {
-                                                    let max = #max_value_token_stream;
-                                                    let (#start_snake_case, #end_snake_case) = match (&#value_snake_case.#start_snake_case, &#value_snake_case.#end_snake_case) {
-                                                        (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
-                                                            if #start_snake_case > #end_snake_case {
-                                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_included_end_upper_camel_case {
-                                                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case),
-                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
-                                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                                });
-                                                            }
-                                                            if *#end_snake_case == max {
-                                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
-                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
-                                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                                });
-                                                            }
-                                                            (
-                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
-                                                            )
-                                                        },
-                                                        (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
-                                                            if #start_snake_case > #end_snake_case {
-                                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_excluded_end_upper_camel_case {
-                                                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case),
-                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
-                                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                                });
-                                                            }
-                                                            (
-                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
-                                                            )
-                                                        },
-                                                        (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Unbounded) => {
-                                                            (
-                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Unbounded
-                                                            )
-                                                        },
-                                                        (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
-                                                            if #start_snake_case > #end_snake_case {
-                                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_included_end_upper_camel_case {
-                                                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case),
-                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
-                                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                                });
-                                                            }
-                                                            if *#end_snake_case == max {
-                                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
-                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
-                                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                                });
-                                                            }
-                                                            (
-                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
-                                                            )
-                                                        },
-                                                        (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
-                                                            if #start_snake_case > #end_snake_case {
-                                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_excluded_end_upper_camel_case {
-                                                                    #start_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case),
-                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
-                                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                                });
-                                                            }
-                                                            (
-                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
-                                                            )
-                                                        },
-                                                        (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Unbounded) => {
-                                                            (
-                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#start_snake_case)),
-                                                                std::ops::Bound::Unbounded
-                                                            )
-                                                        },
-                                                        (std::ops::Bound::Unbounded, std::ops::Bound::Included(#end_snake_case)) => {
-                                                            if *#end_snake_case == max {
-                                                                return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
-                                                                    #end_snake_case: #range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case),
-                                                                    code_occurence: error_occurence_lib::code_occurence!(),
-                                                                });
-                                                            }
-                                                            (
-                                                                std::ops::Bound::Unbounded,
-                                                                std::ops::Bound::Included(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
-                                                            )
-                                                        },
-                                                        (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#end_snake_case)) => {
-                                                            (
-                                                                std::ops::Bound::Unbounded,
-                                                                std::ops::Bound::Excluded(#range_inner_ident_standart_not_null_origin_upper_camel_case::new(*#end_snake_case))
-                                                            )
-                                                        },
-                                                        (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
-                                                            (
-                                                                std::ops::Bound::Unbounded,
-                                                                std::ops::Bound::Unbounded
-                                                            )
-                                                        },
-                                                    };
-                                                    Ok(Self(sqlx::postgres::types::PgRange {
-                                                        #start_snake_case,
-                                                        #end_snake_case
-                                                    }))
-                                                }
-                                            };
-                                            match &postgresql_type_initialization_with_try_new {
-                                                PostgresqlTypeInitializationWithTryNew::StdStringStringAsText => {
-                                                    quote::quote! {
-                                                        if #value_snake_case.find('\0').is_some() {
-                                                            Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#contains_null_byte_upper_camel_case {
-                                                                #value_snake_case,
-                                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                                            })
-                                                        } else {
-                                                            Ok(Self(#value_snake_case))
-                                                        }
-                                                    }
-                                                },
-                                                PostgresqlTypeInitializationWithTryNew::SqlxTypesChronoNaiveDateAsDate => {
-                                                    quote::quote! {
-                                                        let #earliest_supported_date_snake_case = sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 1, 1).unwrap();
-                                                        if #value_snake_case > #earliest_supported_date_snake_case {
-                                                            Ok(Self(#value_snake_case))
-                                                        }
-                                                        else {
-                                                            Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#earlier_date_not_supported_upper_camel_case {
-                                                                #value_snake_case: #value_snake_case.to_string(),
-                                                                #earliest_supported_date_snake_case: #earliest_supported_date_snake_case.to_string(),
-                                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                                            })
-                                                        }
-                                                    }
-                                                },
-                                                PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_temp_range_check_token_stream(&TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
-                                                PostgresqlTypeInitializationWithTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_temp_range_check_token_stream(&TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
                                             }
                                         },
-                                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&ident_standart_not_null_origin_upper_camel_case),
+                                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => proc_macro2::TokenStream::new(),
+                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => proc_macro2::TokenStream::new(),
                                     },
-                                    PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => generate_array_dimensions_initialization_token_stream(&{
-                                        let (current_postgresql_type_pattern, current_not_null_or_nullable): (&PostgresqlTypePattern, &postgresql_crud_macros_common::NotNullOrNullable) = match &not_null_or_nullable {
-                                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => (&PostgresqlTypePattern::Standart, dimension1_not_null_or_nullable),
-                                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => (postgresql_type_pattern, &postgresql_crud_macros_common::NotNullOrNullable::NotNull),
-                                        };
-                                        generate_current_ident_origin_non_wrapping(current_postgresql_type_pattern, current_not_null_or_nullable)
-                                    }),
-                                }
-                            };
-                            quote::quote!{
-                                pub fn try_new_for_deserialize(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
-                                    #content_token_stream
-                                }
+                                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => proc_macro2::TokenStream::new(),
+                                },
+                                PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => proc_macro2::TokenStream::new(),
                             }
                         }
                         else {
@@ -3352,7 +3469,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
                             #pub_fn_new_or_try_new_token_stream
-                            #pub_fn_try_new_for_deserialize_token
+                            #pub_fn_new_or_try_new_for_deserialize_token
                             #pub_fn_new_or_try_new_unwraped_for_test_token_stream
                         }
                     }
@@ -3446,7 +3563,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         },
                                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &quote::quote! {sqlx::types::chrono::NaiveDate::default()},
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote::quote! {
+                                            sqlx::types::chrono::NaiveDateTime::new(
+                                                //todo maybe reuse naming
+                                                <crate::SqlxTypesChronoNaiveDate as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into(),
+                                                <crate::SqlxTypesChronoNaiveTime as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into()
+                                            )
+                                        },
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql
                                         | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &core_default_default_default_token_stream,
@@ -4805,22 +4928,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::types::chrono::NaiveDate::MAX
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{vec![
-                                        crate::SqlxTypesChronoNaiveDateTime::new(
-                                            crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()).unwrap(),
-                                            crate::SqlxTypesChronoNaiveTime::try_new(
-                                                crate::Hour::try_new(0).unwrap(),
-                                                crate::Minute::try_new(0).unwrap(),
-                                                crate::Second::try_new(0).unwrap(),
-                                                crate::Microsecond::try_new(0).unwrap(),
+                                        sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                0,
+                                                0,
+                                                0,
+                                                0,
                                             ).unwrap()
                                         ),
-                                        crate::SqlxTypesChronoNaiveDateTime::new(
-                                            crate::SqlxTypesChronoNaiveDate::try_new(sqlx::types::chrono::NaiveDate::MAX).unwrap(),
-                                            crate::SqlxTypesChronoNaiveTime::try_new(
-                                                crate::Hour::try_new(23).unwrap(),
-                                                crate::Minute::try_new(59).unwrap(),
-                                                crate::Second::try_new(59).unwrap(),
-                                                crate::Microsecond::try_new(999_999).unwrap(),
+                                        sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::MAX,
+                                            sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                23,
+                                                59,
+                                                59,
+                                                999_999,
                                             ).unwrap()
                                         )
                                     ]},
