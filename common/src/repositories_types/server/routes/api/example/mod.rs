@@ -92,7 +92,7 @@ pub struct Example {
     // pub column_54: postgresql_crud::postgresql_type::OptionVecOfStdVecVecStdPrimitiveU8AsNullableArrayOfNotNullBytea,
     // pub column_55: postgresql_crud::postgresql_type::VecOfOptionStdVecVecStdPrimitiveU8AsNotNullArrayOfNullableBytea,
     // pub column_56: postgresql_crud::postgresql_type::OptionVecOfOptionStdVecVecStdPrimitiveU8AsNullableArrayOfNullableBytea,
-    // pub column_57: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveTimeAsNotNullTime,
+    pub column_57: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveTimeAsNotNullTime,
     // pub column_58: postgresql_crud::postgresql_type::OptionSqlxTypesChronoNaiveTimeAsNullableTime,
     // pub column_59: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveTimeAsNotNullArrayOfNotNullTime,
     // pub column_60: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoNaiveTimeAsNullableArrayOfNotNullTime,

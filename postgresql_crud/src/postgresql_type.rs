@@ -1933,3 +1933,229 @@ generate_postgresql_types::generate_postgresql_types!({
 
 
 
+#[derive(Debug)]
+pub struct SqlxTypesChronoNaiveTimeAsNotNullTime;
+#[derive(Debug, Clone, PartialEq, PartialOrd, serde :: Serialize, serde :: Deserialize)]
+pub struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin(crate::SqlxTypesChronoNaiveTime);
+impl SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+    pub fn new(value: crate::SqlxTypesChronoNaiveTime) -> Self {
+        Self(value)
+    }
+    pub fn new_or_try_new_unwraped_for_test(value: crate::SqlxTypesChronoNaiveTime) -> Self {
+        Self::new(value)
+    }
+}
+impl std::fmt::Display for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{self:?}")
+    }
+}
+impl error_occurence_lib::ToStdStringString for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <crate::SqlxTypesChronoNaiveTime as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <crate::SqlxTypesChronoNaiveTime as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <crate::SqlxTypesChronoNaiveTime as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+        <crate::SqlxTypesChronoNaiveTime as sqlx::postgres::PgHasArrayType>::array_type_info()
+    }
+}
+impl SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+    pub fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} time not null")
+    }
+}
+pub type SqlxTypesChronoNaiveTimeAsNotNullTimeTableTypeDeclaration = SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin;
+pub type SqlxTypesChronoNaiveTimeAsNotNullTimeCreate = SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin;
+#[derive(Debug, Default, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct SqlxTypesChronoNaiveTimeAsNotNullTimeSelect;
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoNaiveTimeAsNotNullTimeSelect {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        ::core::default::Default::default()
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub enum SqlxTypesChronoNaiveTimeAsNotNullTimeWhereElement {
+    Equal(crate::where_element_filters::PostgresqlTypeWhereElementEqual<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>),
+    GreaterThan(crate::where_element_filters::PostgresqlTypeWhereElementGreaterThan<SqlxTypesChronoNaiveTimeAsNotNullTimeTableTypeDeclaration>),
+    Between(crate::where_element_filters::PostgresqlTypeWhereElementBetween<SqlxTypesChronoNaiveTimeAsNotNullTimeTableTypeDeclaration>),
+    CurrentTime(crate::where_element_filters::PostgresqlTypeWhereElementCurrentTime),
+    GreaterThanCurrentTime(crate::where_element_filters::PostgresqlTypeWhereElementGreaterThanCurrentTime),
+}
+impl<'a> crate::PostgresqlTypeWhereFilter<'a> for SqlxTypesChronoNaiveTimeAsNotNullTimeWhereElement {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        match &self {
+            Self::Equal(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+            Self::GreaterThan(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+            Self::Between(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+            Self::CurrentTime(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+            Self::GreaterThanCurrentTime(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+        }
+    }
+    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self {
+            Self::Equal(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+            Self::GreaterThan(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+            Self::Between(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+            Self::CurrentTime(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+            Self::GreaterThanCurrentTime(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+        }
+    }
+}
+impl error_occurence_lib::ToStdStringString for SqlxTypesChronoNaiveTimeAsNotNullTimeWhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+impl crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoNaiveTimeAsNotNullTimeWhereElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![
+            Self::Equal(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            Self::GreaterThan(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            Self::Between(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            Self::CurrentTime(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            Self::GreaterThanCurrentTime(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+        ]
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct SqlxTypesChronoNaiveTimeAsNotNullTimeRead(SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin);
+impl SqlxTypesChronoNaiveTimeAsNotNullTimeRead {
+    pub fn new(value: crate::SqlxTypesChronoNaiveTime) -> Self {
+        Self(SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::new(value))
+    }
+    pub fn new_or_try_new_unwraped_for_test(value: crate::SqlxTypesChronoNaiveTime) -> Self {
+        Self(SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::new_or_try_new_unwraped_for_test(value))
+    }
+}
+impl error_occurence_lib::ToStdStringString for SqlxTypesChronoNaiveTimeAsNotNullTimeRead {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoNaiveTimeAsNotNullTimeRead {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTimeAsNotNullTimeRead {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoNaiveTimeAsNotNullTimeRead {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoNaiveTimeAsNotNullTimeRead {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+pub type SqlxTypesChronoNaiveTimeAsNotNullTimeReadInner = crate::SqlxTypesChronoNaiveTime;
+pub type SqlxTypesChronoNaiveTimeAsNotNullTimeUpdate = SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin;
+impl crate::PostgresqlType for SqlxTypesChronoNaiveTimeAsNotNullTime {
+    type TableTypeDeclaration = SqlxTypesChronoNaiveTimeAsNotNullTimeTableTypeDeclaration;
+    type Create = SqlxTypesChronoNaiveTimeAsNotNullTimeCreate;
+    fn create_query_part(_: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                acc.push_str(&format!("${increment}"));
+            }
+            None => {
+                return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+            }
+        }
+        Ok(acc)
+    }
+    fn create_query_bind(value: Self::Create, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(value);
+        query
+    }
+    type Select = SqlxTypesChronoNaiveTimeAsNotNullTimeSelect;
+    fn select_query_part(_: &Self::Select, column: &std::primitive::str) -> std::string::String {
+        column.to_string()
+    }
+    type WhereElement = SqlxTypesChronoNaiveTimeAsNotNullTimeWhereElement;
+    type Read = SqlxTypesChronoNaiveTimeAsNotNullTimeRead;
+    type ReadInner = SqlxTypesChronoNaiveTimeAsNotNullTimeReadInner;
+    fn into_inner(value: Self::Read) -> Self::ReadInner {
+        value.0.0
+    }
+    type Update = SqlxTypesChronoNaiveTimeAsNotNullTimeUpdate;
+    fn update_query_part(_: &Self::Update, _: &std::primitive::str, _: &std::primitive::str, _: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                acc.push_str(&format!("${increment}"));
+            }
+            None => {
+                return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+            }
+        }
+        Ok(acc)
+    }
+    fn update_query_bind<'a>(value: Self::Update, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(value);
+        query
+    }
+}
+impl crate::tests::PostgresqlTypeTestCases for SqlxTypesChronoNaiveTimeAsNotNullTime {
+    type Element = Self;
+    fn test_cases() -> std::vec::Vec<<Self::Element as crate::PostgresqlType>::ReadInner> {
+        vec![
+            crate::SqlxTypesChronoNaiveTime::try_new(
+                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                    0,
+                    0,
+                    0,
+                    0,
+                ).unwrap()
+            ).unwrap(),
+            crate::SqlxTypesChronoNaiveTime::try_new(
+                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                    23,
+                    59,
+                    59,
+                    999_999,
+                ).unwrap()
+            ).unwrap(),
+        ]
+    }
+}
