@@ -3401,7 +3401,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     };
-                    let pub_fn_new_or_try_new_for_deserialize_token = {
+                    let fn_new_or_try_new_for_deserialize_token = {
                         if let Ok(postgresql_type_initialization_with_try_new) = &postgresql_type_initialization_with_try_new_try_from_postgresql_type {
                             match &postgresql_type_pattern {
                                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
@@ -3424,7 +3424,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => proc_macro2::TokenStream::new(),
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                                             quote::quote!{
-                                                pub fn new_for_deserialize(naive_date: crate::SqlxTypesChronoNaiveDate, naive_time: crate::SqlxTypesChronoNaiveTime) -> Self {
+                                                fn new_for_deserialize(naive_date: crate::SqlxTypesChronoNaiveDate, naive_time: crate::SqlxTypesChronoNaiveTime) -> Self {
                                                     Self(sqlx::types::chrono::NaiveDateTime::new(
                                                         naive_date.into(),
                                                         naive_time.into()
@@ -3469,7 +3469,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
                             #pub_fn_new_or_try_new_token_stream
-                            #pub_fn_new_or_try_new_for_deserialize_token
+                            #fn_new_or_try_new_for_deserialize_token
                             #pub_fn_new_or_try_new_unwraped_for_test_token_stream
                         }
                     }
