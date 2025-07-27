@@ -3425,7 +3425,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                                             quote::quote!{
                                                 fn new_for_deserialize(naive_date: crate::SqlxTypesChronoNaiveDate, naive_time: crate::SqlxTypesChronoNaiveTime) -> Self {
-                                                    Self(sqlx::types::chrono::NaiveDateTime::new(
+                                                    Self(#field_type_standart_not_null::new(
                                                         naive_date.into(),
                                                         naive_time.into()
                                                     ))
@@ -3561,10 +3561,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 &double_dots_space_core_default_default_default_token_stream,
                                             )
                                         },
-                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &quote::quote! {sqlx::types::chrono::NaiveDate::default()},
+                                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote::quote! {
-                                            sqlx::types::chrono::NaiveDateTime::new(
+                                            #field_type_standart_not_null::new(
                                                 //todo maybe reuse naming
                                                 <crate::SqlxTypesChronoNaiveDate as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into(),
                                                 <crate::SqlxTypesChronoNaiveTime as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into()
