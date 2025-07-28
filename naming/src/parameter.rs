@@ -372,5 +372,6 @@ naming_macros::generate_self_upper_camel_and_snake_case_stringified_and_token_st
     ["try", "from", "sqlx", "postgres", "pg", "row", "with", "not", "empty", "unique", "enum", "vec", "self", "select"],
     ["update", "query", "part", "self"],
     ["self", "tests"],
-    ["self", "origin", "try", "new", "error", "named"]
+    ["self", "origin", "try", "new", "error", "named"],
+    ["self", "origin", "try", "new", "for", "deserialize", "error", "named"]
 ]);
