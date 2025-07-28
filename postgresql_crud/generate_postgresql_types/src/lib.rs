@@ -241,8 +241,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
                 let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
                 let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_string();
-                let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
-                // let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
+                let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
                 let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc".to_string();
@@ -772,6 +771,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     enum PostgresqlTypeImplTryNewForDeserialize {
         StdStringStringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
+        SqlxTypesTimeTimeAsTime,
     }
     #[derive(Debug)]
     enum PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize {
@@ -803,7 +803,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime
                     )
                 ),
-                PostgresqlType::SqlxTypesTimeTimeAsTime => Self::Derive,
+                PostgresqlType::SqlxTypesTimeTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(
+                    PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(
+                        PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime
+                    )
+                ),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::Derive,
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::Derive,
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::ImplNewForDeserializeOrTryNewForDeserialize(
@@ -1043,9 +1047,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let min_snake_case = naming::MinSnakeCase;
             let sec_snake_case = naming::SecSnakeCase;
             let micro_snake_case = naming::MicroSnakeCase;
+            let minute_snake_case = naming::MinuteSnakeCase;
+            let second_snake_case = naming::SecondSnakeCase;
+            let microsecond_snake_case = naming::MicrosecondSnakeCase;
+            let error_snake_case = naming::ErrorSnakeCase;
             
             let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
 
+            let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
             let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
             let std_string_string_token_stream = token_patterns::StdStringString;
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
@@ -3503,6 +3512,23 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                         }
                                     },
+                                    PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
+                                        quote::quote!{
+                                            #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
+                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #hour_snake_case: #std_primitive_u8_token_stream,
+                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #minute_snake_case: #std_primitive_u8_token_stream,
+                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #second_snake_case: #std_primitive_u8_token_stream,
+                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #microsecond_snake_case: #std_primitive_u32_token_stream,
+                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #error_snake_case: #std_string_string_token_stream,
+                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                            }
+                                        }
+                                    },
                                 };
                                 quote::quote!{
                                     #[derive(Debug, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence)]
@@ -3930,6 +3956,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     #micro_snake_case: #std_primitive_u32_token_stream
                                                 }
                                             },
+                                            PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
+                                                quote::quote!{
+                                                    #hour_snake_case: #std_primitive_u8_token_stream,
+                                                    #minute_snake_case: #std_primitive_u8_token_stream,
+                                                    #second_snake_case: #std_primitive_u8_token_stream,
+                                                    #microsecond_snake_case: #std_primitive_u32_token_stream
+                                                }
+                                            },
                                         };
                                         let content_token_stream = match &postgresql_type_impl_try_new_for_deserialize {
                                             PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => {
@@ -3959,6 +3993,26 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             #min_snake_case,
                                                             #sec_snake_case,
                                                             #micro_snake_case,
+                                                            code_occurence: error_occurence_lib::code_occurence!(),
+                                                        })
+                                                    }
+                                                }
+                                            },
+                                            PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
+                                                quote::quote!{
+                                                    match sqlx::types::time::Time::from_hms_micro(
+                                                        #hour_snake_case,
+                                                        #minute_snake_case,
+                                                        #second_snake_case,
+                                                        #microsecond_snake_case,
+                                                    ) {
+                                                        Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                                                        Err(#error_snake_case) => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
+                                                            #hour_snake_case,
+                                                            #minute_snake_case,
+                                                            #second_snake_case,
+                                                            #microsecond_snake_case,
+                                                            #error_snake_case: #error_snake_case.to_string(),
                                                             code_occurence: error_occurence_lib::code_occurence!(),
                                                         })
                                                     }

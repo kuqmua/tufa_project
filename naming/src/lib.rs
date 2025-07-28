@@ -653,7 +653,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["hour"],
     ["min"],
     ["sec"],
-    ["micro"]
+    ["micro"],
+    ["minute"],
+    ["second"],
+    ["microsecond"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
