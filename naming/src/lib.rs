@@ -648,7 +648,12 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["earlier", "date", "not", "supported"],
     ["earliest", "supported", "date"],
     ["naive", "date"],
-    ["naive", "time"]
+    ["naive", "time"],
+    ["invalid", "hour", "or", "minute", "or", "second", "or", "microsecond"],
+    ["hour"],
+    ["min"],
+    ["sec"],
+    ["micro"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
