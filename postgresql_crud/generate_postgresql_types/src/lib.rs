@@ -242,6 +242,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
                 let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_string();
                 let sqlx_types_time_time_stringified = "crate::SqlxTypesTimeTime".to_string();
+                // let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
                 let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
                 let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
                 let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "crate::SqlxTypesChronoDateTimeSqlxTypesChronoUtc".to_string();
@@ -770,7 +771,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     #[derive(Debug)]
     enum PostgresqlTypeImplTryNewForDeserialize {
         StdStringStringAsText,
-        SqlxTypesChronoNaiveTimeAsTime
+        SqlxTypesChronoNaiveTimeAsTime,
     }
     #[derive(Debug)]
     enum PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize {
