@@ -6283,6 +6283,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 59,
                                                 999_999,
                                             ).unwrap()
+                                        ),
+                                        sqlx::types::chrono::NaiveDateTime::new(
+                                            sqlx::types::chrono::NaiveDate::MAX,
+                                            sqlx::types::chrono::NaiveTime::from_hms_nano_opt(
+                                                23,
+                                                59,
+                                                59,
+                                                999_999_999,
+                                            ).unwrap()
                                         )
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
