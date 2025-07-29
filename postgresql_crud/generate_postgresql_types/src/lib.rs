@@ -1682,13 +1682,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             )?;
                                             _serde::ser::SerializeStruct::serialize_field(
                                                 &mut __serde_state,
-                                                "naive_date",
-                                                &crate::SqlxTypesChronoNaiveDate::try_new(self.0.date()).unwrap()
+                                                "date",
+                                                &SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(self.0.date()).unwrap(),
                                             )?;
                                             _serde::ser::SerializeStruct::serialize_field(
                                                 &mut __serde_state,
-                                                "naive_time",
-                                                &crate::SqlxTypesChronoNaiveTime::try_new(self.0.time()).unwrap()
+                                                "time",
+                                                &SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(self.0.time()).unwrap(),
                                             )?;
                                             _serde::ser::SerializeStruct::end(__serde_state)
                                         }
@@ -3377,6 +3377,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }),
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl({
+                            //todo
                             quote::quote!{
                                 const _: () = {
                                     #[allow(unused_extern_crates, clippy::useless_attribute)]
@@ -3432,8 +3433,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     __E: _serde::de::Error,
                                                 {
                                                     match __value {
-                                                        "naive_date" => _serde::__private::Ok(__Field::__field0),
-                                                        "naive_time" => _serde::__private::Ok(__Field::__field1),
+                                                        "date" => _serde::__private::Ok(__Field::__field0),
+                                                        "time" => _serde::__private::Ok(__Field::__field1),
                                                         _ => _serde::__private::Ok(__Field::__ignore),
                                                     }
                                                 }
@@ -3445,8 +3446,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     __E: _serde::de::Error,
                                                 {
                                                     match __value {
-                                                        b"naive_date" => _serde::__private::Ok(__Field::__field0),
-                                                        b"naive_time" => _serde::__private::Ok(__Field::__field1),
+                                                        b"date" => _serde::__private::Ok(__Field::__field0),
+                                                        b"time" => _serde::__private::Ok(__Field::__field1),
                                                         _ => _serde::__private::Ok(__Field::__ignore),
                                                     }
                                                 }
@@ -3494,7 +3495,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     __A: _serde::de::SeqAccess<'de>,
                                                 {
                                                     let __field0 = match _serde::de::SeqAccess::next_element::<
-                                                        crate::SqlxTypesChronoNaiveDate,
+                                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
                                                     >(&mut __seq)? {
                                                         _serde::__private::Some(__value) => __value,
                                                         _serde::__private::None => {
@@ -3507,7 +3508,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         }
                                                     };
                                                     let __field1 = match _serde::de::SeqAccess::next_element::<
-                                                        crate::SqlxTypesChronoNaiveTime,
+                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
                                                     >(&mut __seq)? {
                                                         _serde::__private::Some(__value) => __value,
                                                         _serde::__private::None => {
@@ -3530,10 +3531,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     __A: _serde::de::MapAccess<'de>,
                                                 {
                                                     let mut __field0: _serde::__private::Option<
-                                                        crate::SqlxTypesChronoNaiveDate,
+                                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
                                                     > = _serde::__private::None;
                                                     let mut __field1: _serde::__private::Option<
-                                                        crate::SqlxTypesChronoNaiveTime,
+                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
                                                     > = _serde::__private::None;
                                                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
                                                         __Field,
@@ -3542,28 +3543,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             __Field::__field0 => {
                                                                 if _serde::__private::Option::is_some(&__field0) {
                                                                     return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                                                            "naive_date",
-                                                                        ),
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field("date"),
                                                                     );
                                                                 }
                                                                 __field0 = _serde::__private::Some(
                                                                     _serde::de::MapAccess::next_value::<
-                                                                        crate::SqlxTypesChronoNaiveDate,
+                                                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
                                                                     >(&mut __map)?,
                                                                 );
                                                             }
                                                             __Field::__field1 => {
                                                                 if _serde::__private::Option::is_some(&__field1) {
                                                                     return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                                                            "naive_time",
-                                                                        ),
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field("time"),
                                                                     );
                                                                 }
                                                                 __field1 = _serde::__private::Some(
                                                                     _serde::de::MapAccess::next_value::<
-                                                                        crate::SqlxTypesChronoNaiveTime,
+                                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
                                                                     >(&mut __map)?,
                                                                 );
                                                             }
@@ -3577,20 +3574,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     let __field0 = match __field0 {
                                                         _serde::__private::Some(__field0) => __field0,
                                                         _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("naive_date")?
+                                                            _serde::__private::de::missing_field("date")?
                                                         }
                                                     };
                                                     let __field1 = match __field1 {
                                                         _serde::__private::Some(__field1) => __field1,
                                                         _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("naive_time")?
+                                                            _serde::__private::de::missing_field("time")?
                                                         }
                                                     };
                                                     _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
                                                 }
                                             }
                                             #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &["naive_date", "naive_time"];
+                                            const FIELDS: &'static [&'static str] = &["date", "time"];
                                             _serde::Deserializer::deserialize_struct(
                                                 __deserializer,
                                                 "SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
@@ -3869,13 +3866,236 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         )),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&{
                             quote::quote! {
-                                #enum_field_two_token_stream
-                                #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
-                                #impl_serde_deserialize_for_field_token_stream
-                                #struct_visitor_token_stream
-                                #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
-                                #const_fields_start_end_token_stream
-                                #serde_deserializer_deserialize_struct_visitor_token_stream
+                                // #enum_field_two_token_stream
+                                // #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                                // #impl_serde_deserialize_for_field_token_stream
+                                // #struct_visitor_token_stream
+                                // #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
+                                // #const_fields_start_end_token_stream
+                                // #serde_deserializer_deserialize_struct_visitor_token_stream
+                                const _: () = {
+                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
+                                    extern crate serde as _serde;
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de>
+                                    for SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin {
+                                        fn deserialize<__D>(
+                                            __deserializer: __D,
+                                        ) -> _serde::__private::Result<Self, __D::Error>
+                                        where
+                                            __D: _serde::Deserializer<'de>,
+                                        {
+                                            #[allow(non_camel_case_types)]
+                                            #[doc(hidden)]
+                                            enum __Field {
+                                                __field0,
+                                                __field1,
+                                                __ignore,
+                                            }
+                                            #[doc(hidden)]
+                                            struct __FieldVisitor;
+                                            #[automatically_derived]
+                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                                type Value = __Field;
+                                                fn expecting(
+                                                    &self,
+                                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                                ) -> _serde::__private::fmt::Result {
+                                                    _serde::__private::Formatter::write_str(
+                                                        __formatter,
+                                                        "field identifier",
+                                                    )
+                                                }
+                                                fn visit_u64<__E>(
+                                                    self,
+                                                    __value: u64,
+                                                ) -> _serde::__private::Result<Self::Value, __E>
+                                                where
+                                                    __E: _serde::de::Error,
+                                                {
+                                                    match __value {
+                                                        0u64 => _serde::__private::Ok(__Field::__field0),
+                                                        1u64 => _serde::__private::Ok(__Field::__field1),
+                                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                                    }
+                                                }
+                                                fn visit_str<__E>(
+                                                    self,
+                                                    __value: &str,
+                                                ) -> _serde::__private::Result<Self::Value, __E>
+                                                where
+                                                    __E: _serde::de::Error,
+                                                {
+                                                    match __value {
+                                                        "date" => _serde::__private::Ok(__Field::__field0),
+                                                        "time" => _serde::__private::Ok(__Field::__field1),
+                                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                                    }
+                                                }
+                                                fn visit_bytes<__E>(
+                                                    self,
+                                                    __value: &[u8],
+                                                ) -> _serde::__private::Result<Self::Value, __E>
+                                                where
+                                                    __E: _serde::de::Error,
+                                                {
+                                                    match __value {
+                                                        b"date" => _serde::__private::Ok(__Field::__field0),
+                                                        b"time" => _serde::__private::Ok(__Field::__field1),
+                                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                                    }
+                                                }
+                                            }
+                                            #[automatically_derived]
+                                            impl<'de> _serde::Deserialize<'de> for __Field {
+                                                #[inline]
+                                                fn deserialize<__D>(
+                                                    __deserializer: __D,
+                                                ) -> _serde::__private::Result<Self, __D::Error>
+                                                where
+                                                    __D: _serde::Deserializer<'de>,
+                                                {
+                                                    _serde::Deserializer::deserialize_identifier(
+                                                        __deserializer,
+                                                        __FieldVisitor,
+                                                    )
+                                                }
+                                            }
+                                            #[doc(hidden)]
+                                            struct __Visitor<'de> {
+                                                marker: _serde::__private::PhantomData<
+                                                    SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
+                                                >,
+                                                lifetime: _serde::__private::PhantomData<&'de ()>,
+                                            }
+                                            #[automatically_derived]
+                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                                type Value = SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin;
+                                                fn expecting(
+                                                    &self,
+                                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                                ) -> _serde::__private::fmt::Result {
+                                                    _serde::__private::Formatter::write_str(
+                                                        __formatter,
+                                                        "struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
+                                                    )
+                                                }
+                                                #[inline]
+                                                fn visit_seq<__A>(
+                                                    self,
+                                                    mut __seq: __A,
+                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                                where
+                                                    __A: _serde::de::SeqAccess<'de>,
+                                                {
+                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                                                    >(&mut __seq)? {
+                                                        _serde::__private::Some(__value) => __value,
+                                                        _serde::__private::None => {
+                                                            return _serde::__private::Err(
+                                                                _serde::de::Error::invalid_length(
+                                                                    0usize,
+                                                                    &"struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin with 2 elements",
+                                                                ),
+                                                            );
+                                                        }
+                                                    };
+                                                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
+                                                    >(&mut __seq)? {
+                                                        _serde::__private::Some(__value) => __value,
+                                                        _serde::__private::None => {
+                                                            return _serde::__private::Err(
+                                                                _serde::de::Error::invalid_length(
+                                                                    1usize,
+                                                                    &"struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin with 2 elements",
+                                                                ),
+                                                            );
+                                                        }
+                                                    };
+                                                    _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
+                                                }
+                                                #[inline]
+                                                fn visit_map<__A>(
+                                                    self,
+                                                    mut __map: __A,
+                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                                where
+                                                    __A: _serde::de::MapAccess<'de>,
+                                                {
+                                                    let mut __field0: _serde::__private::Option<
+                                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                                                    > = _serde::__private::None;
+                                                    let mut __field1: _serde::__private::Option<
+                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
+                                                    > = _serde::__private::None;
+                                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                                        __Field,
+                                                    >(&mut __map)? {
+                                                        match __key {
+                                                            __Field::__field0 => {
+                                                                if _serde::__private::Option::is_some(&__field0) {
+                                                                    return _serde::__private::Err(
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field("date"),
+                                                                    );
+                                                                }
+                                                                __field0 = _serde::__private::Some(
+                                                                    _serde::de::MapAccess::next_value::<
+                                                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                                                                    >(&mut __map)?,
+                                                                );
+                                                            }
+                                                            __Field::__field1 => {
+                                                                if _serde::__private::Option::is_some(&__field1) {
+                                                                    return _serde::__private::Err(
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field("time"),
+                                                                    );
+                                                                }
+                                                                __field1 = _serde::__private::Some(
+                                                                    _serde::de::MapAccess::next_value::<
+                                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
+                                                                    >(&mut __map)?,
+                                                                );
+                                                            }
+                                                            _ => {
+                                                                let _ = _serde::de::MapAccess::next_value::<
+                                                                    _serde::de::IgnoredAny,
+                                                                >(&mut __map)?;
+                                                            }
+                                                        }
+                                                    }
+                                                    let __field0 = match __field0 {
+                                                        _serde::__private::Some(__field0) => __field0,
+                                                        _serde::__private::None => {
+                                                            _serde::__private::de::missing_field("date")?
+                                                        }
+                                                    };
+                                                    let __field1 = match __field1 {
+                                                        _serde::__private::Some(__field1) => __field1,
+                                                        _serde::__private::None => {
+                                                            _serde::__private::de::missing_field("time")?
+                                                        }
+                                                    };
+                                                    _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
+                                                }
+                                            }
+                                            #[doc(hidden)]
+                                            const FIELDS: &'static [&'static str] = &["date", "time"];
+                                            _serde::Deserializer::deserialize_struct(
+                                                __deserializer,
+                                                "SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
+                                                FIELDS,
+                                                __Visitor {
+                                                    marker: _serde::__private::PhantomData::<
+                                                        SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
+                                                    >,
+                                                    lifetime: _serde::__private::PhantomData,
+                                                },
+                                            )
+                                        }
+                                    }
+                                };
                             }
                         })),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
@@ -4093,12 +4313,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 quote::quote! {
                                     #naive_date_upper_camel_case {
                                         #[eo_error_occurence]
-                                        #error_snake_case: crate::SqlxTypesChronoNaiveDateTryNewErrorNamed,
+                                        #error_snake_case: SqlxTypesChronoNaiveDateAsNotNullDateOriginTryNewErrorNamed,//todo reuse
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                     #naive_time_upper_camel_case {
                                         #[eo_error_occurence]
-                                        #error_snake_case: crate::SqlxTypesChronoNaiveTimeTryNewErrorNamed,
+                                        #error_snake_case: SqlxTypesChronoNaiveTimeAsNotNullTimeOriginTryNewErrorNamed,//todo reuse
                                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                                     },
                                 }
@@ -4425,7 +4645,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                                                     quote::quote! {
-                                                        let date = match crate::SqlxTypesChronoNaiveDate::try_new(#value_snake_case.date()) {
+                                                        let date = match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value.date()) {
                                                             Ok(#value_snake_case) => #value_snake_case,
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#naive_date_upper_camel_case {
@@ -4434,7 +4654,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 });
                                                             }
                                                         };
-                                                        let time = match crate::SqlxTypesChronoNaiveTime::try_new(#value_snake_case.time()) {
+                                                        //todo
+                                                        let time = match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(#value_snake_case.time()) {
                                                             Ok(#value_snake_case) => #value_snake_case,
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#naive_time_upper_camel_case {
@@ -4443,10 +4664,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 });
                                                             }
                                                         };
-                                                        Ok(Self(#field_type_standart_not_null::new(
-                                                            date.into(),
-                                                            time.into()
-                                                        )))
+                                                        //here
+                                                        Ok(Self(#field_type_standart_not_null::new(date.0, time.0)))
                                                     }
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
@@ -4458,7 +4677,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                                             });
                                                         }
-                                                        Ok(Self(value))
+                                                        Ok(Self(#value_snake_case))
                                                     }
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_temp_range_check_token_stream(&TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
@@ -4628,8 +4847,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         let parameters_token_stream = match &postgresql_type_impl_new_for_deserialize {
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                                                 quote::quote!{
-                                                    naive_date: crate::SqlxTypesChronoNaiveDate,
-                                                    naive_time: crate::SqlxTypesChronoNaiveTime
+                                                    date: SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                                                    time: SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin
                                                 }
                                             }
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
@@ -4643,10 +4862,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         let content_token_stream = match &postgresql_type_impl_new_for_deserialize {
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                                                 quote::quote!{
-                                                    Self(#field_type_standart_not_null::new(
-                                                        naive_date.into(),
-                                                        naive_time.into()
-                                                    ))
+                                                    Self(#field_type_standart_not_null::new(date.0, time.0))
                                                 }
                                             },
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
@@ -4893,10 +5109,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote::quote! {
+                                            //todo maybe reuse naming
                                             #field_type_standart_not_null::new(
-                                                //todo maybe reuse naming
-                                                <crate::SqlxTypesChronoNaiveDate as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into(),
-                                                <crate::SqlxTypesChronoNaiveTime as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().into()
+                                                <SqlxTypesChronoNaiveDateAsNotNullDateOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
+                                                <SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
                                             )
                                         },
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &quote::quote! {
@@ -6282,15 +6498,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 59,
                                                 59,
                                                 999_999,
-                                            ).unwrap()
-                                        ),
-                                        sqlx::types::chrono::NaiveDateTime::new(
-                                            sqlx::types::chrono::NaiveDate::MAX,
-                                            sqlx::types::chrono::NaiveTime::from_hms_nano_opt(
-                                                23,
-                                                59,
-                                                59,
-                                                999_999_999,
                                             ).unwrap()
                                         )
                                     ]},
