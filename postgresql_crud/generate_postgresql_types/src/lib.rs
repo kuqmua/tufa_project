@@ -6169,6 +6169,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             59,
                                             59,
                                             999_999,
+                                        ).unwrap(),
+                                        sqlx::types::chrono::NaiveTime::from_hms_nano_opt(
+                                            23,
+                                            59,
+                                            59,
+                                            999_999_999,//todo make it fail in NaiveTime
                                         ).unwrap()
                                     ]},
                                     PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{vec![
@@ -6183,7 +6189,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             59,
                                             59,
                                             999_999,
-                                        ).unwrap()
+                                        ).unwrap(),//todo check precision
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{vec![
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MIN, days: std::primitive::i32::MIN, microseconds: std::primitive::i64::MIN },
