@@ -1576,7 +1576,52 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                             }
                         }),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
+                            //todo
+                            quote::quote!{
+                                const _: () = {
+                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
+                                    extern crate serde as _serde;
+                                    #[automatically_derived]
+                                    impl _serde::Serialize for SqlxTypesTimeTimeAsNotNullTimeOrigin {
+                                        fn serialize<__S>(
+                                            &self,
+                                            __serializer: __S,
+                                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
+                                        where
+                                            __S: _serde::Serializer,
+                                        {
+                                            let mut __serde_state = _serde::Serializer::serialize_struct(
+                                                __serializer,
+                                                "SqlxTypesTimeTimeAsNotNullTimeOrigin",
+                                                false as usize + 1 + 1 + 1 + 1,
+                                            )?;
+                                            _serde::ser::SerializeStruct::serialize_field(
+                                                &mut __serde_state,
+                                                "hour",
+                                                &self.0.hour(),
+                                            )?;
+                                            _serde::ser::SerializeStruct::serialize_field(
+                                                &mut __serde_state,
+                                                "minute",
+                                                &self.0.minute(),
+                                            )?;
+                                            _serde::ser::SerializeStruct::serialize_field(
+                                                &mut __serde_state,
+                                                "second",
+                                                &self.0.second(),
+                                            )?;
+                                            _serde::ser::SerializeStruct::serialize_field(
+                                                &mut __serde_state,
+                                                "microsecond",
+                                                &self.0.microsecond(),
+                                            )?;
+                                            _serde::ser::SerializeStruct::end(__serde_state)
+                                        }
+                                    }
+                                };
+                            }
+                        }),
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                             let generate_serialize_field_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value});
                             let months_serialize_field_token_stream = generate_serialize_field_token_stream(&months_snake_case);
@@ -2893,7 +2938,310 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 };
                             }
                         }),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Derive,
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
+                            //todo
+                            quote::quote!{
+                                const _: () = {
+                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
+                                    extern crate serde as _serde;
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de> for SqlxTypesTimeTimeAsNotNullTimeOrigin {
+                                        fn deserialize<__D>(
+                                            __deserializer: __D,
+                                        ) -> _serde::__private::Result<Self, __D::Error>
+                                        where
+                                            __D: _serde::Deserializer<'de>,
+                                        {
+                                            #[allow(non_camel_case_types)]
+                                            #[doc(hidden)]
+                                            enum __Field {
+                                                __field0,
+                                                __field1,
+                                                __field2,
+                                                __field3,
+                                                __ignore,
+                                            }
+                                            #[doc(hidden)]
+                                            struct __FieldVisitor;
+                                            #[automatically_derived]
+                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                                type Value = __Field;
+                                                fn expecting(
+                                                    &self,
+                                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                                ) -> _serde::__private::fmt::Result {
+                                                    _serde::__private::Formatter::write_str(
+                                                        __formatter,
+                                                        "field identifier",
+                                                    )
+                                                }
+                                                fn visit_u64<__E>(
+                                                    self,
+                                                    __value: u64,
+                                                ) -> _serde::__private::Result<Self::Value, __E>
+                                                where
+                                                    __E: _serde::de::Error,
+                                                {
+                                                    match __value {
+                                                        0u64 => _serde::__private::Ok(__Field::__field0),
+                                                        1u64 => _serde::__private::Ok(__Field::__field1),
+                                                        2u64 => _serde::__private::Ok(__Field::__field2),
+                                                        3u64 => _serde::__private::Ok(__Field::__field3),
+                                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                                    }
+                                                }
+                                                fn visit_str<__E>(
+                                                    self,
+                                                    __value: &str,
+                                                ) -> _serde::__private::Result<Self::Value, __E>
+                                                where
+                                                    __E: _serde::de::Error,
+                                                {
+                                                    match __value {
+                                                        "hour" => _serde::__private::Ok(__Field::__field0),
+                                                        "minute" => _serde::__private::Ok(__Field::__field1),
+                                                        "second" => _serde::__private::Ok(__Field::__field2),
+                                                        "microsecond" => _serde::__private::Ok(__Field::__field3),
+                                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                                    }
+                                                }
+                                                fn visit_bytes<__E>(
+                                                    self,
+                                                    __value: &[u8],
+                                                ) -> _serde::__private::Result<Self::Value, __E>
+                                                where
+                                                    __E: _serde::de::Error,
+                                                {
+                                                    match __value {
+                                                        b"hour" => _serde::__private::Ok(__Field::__field0),
+                                                        b"minute" => _serde::__private::Ok(__Field::__field1),
+                                                        b"second" => _serde::__private::Ok(__Field::__field2),
+                                                        b"microsecond" => _serde::__private::Ok(__Field::__field3),
+                                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                                    }
+                                                }
+                                            }
+                                            #[automatically_derived]
+                                            impl<'de> _serde::Deserialize<'de> for __Field {
+                                                #[inline]
+                                                fn deserialize<__D>(
+                                                    __deserializer: __D,
+                                                ) -> _serde::__private::Result<Self, __D::Error>
+                                                where
+                                                    __D: _serde::Deserializer<'de>,
+                                                {
+                                                    _serde::Deserializer::deserialize_identifier(
+                                                        __deserializer,
+                                                        __FieldVisitor,
+                                                    )
+                                                }
+                                            }
+                                            #[doc(hidden)]
+                                            struct __Visitor<'de> {
+                                                marker: _serde::__private::PhantomData<SqlxTypesTimeTimeAsNotNullTimeOrigin>,
+                                                lifetime: _serde::__private::PhantomData<&'de ()>,
+                                            }
+                                            #[automatically_derived]
+                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                                type Value = SqlxTypesTimeTimeAsNotNullTimeOrigin;
+                                                fn expecting(
+                                                    &self,
+                                                    __formatter: &mut _serde::__private::Formatter<'_>,
+                                                ) -> _serde::__private::fmt::Result {
+                                                    _serde::__private::Formatter::write_str(
+                                                        __formatter,
+                                                        "struct SqlxTypesTimeTimeAsNotNullTimeOrigin",
+                                                    )
+                                                }
+                                                #[inline]
+                                                fn visit_seq<__A>(
+                                                    self,
+                                                    mut __seq: __A,
+                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                                where
+                                                    __A: _serde::de::SeqAccess<'de>,
+                                                {
+                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                        std::primitive::u8,
+                                                    >(&mut __seq)? {
+                                                        _serde::__private::Some(__value) => __value,
+                                                        _serde::__private::None => {
+                                                            return _serde::__private::Err(
+                                                                _serde::de::Error::invalid_length(
+                                                                    0usize,
+                                                                    &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
+                                                                ),
+                                                            );
+                                                        }
+                                                    };
+                                                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                                                        std::primitive::u8,
+                                                    >(&mut __seq)? {
+                                                        _serde::__private::Some(__value) => __value,
+                                                        _serde::__private::None => {
+                                                            return _serde::__private::Err(
+                                                                _serde::de::Error::invalid_length(
+                                                                    1usize,
+                                                                    &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
+                                                                ),
+                                                            );
+                                                        }
+                                                    };
+                                                    let __field2 = match _serde::de::SeqAccess::next_element::<
+                                                        std::primitive::u8,
+                                                    >(&mut __seq)? {
+                                                        _serde::__private::Some(__value) => __value,
+                                                        _serde::__private::None => {
+                                                            return _serde::__private::Err(
+                                                                _serde::de::Error::invalid_length(
+                                                                    2usize,
+                                                                    &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
+                                                                ),
+                                                            );
+                                                        }
+                                                    };
+                                                    let __field3 = match _serde::de::SeqAccess::next_element::<
+                                                        std::primitive::u32,
+                                                    >(&mut __seq)? {
+                                                        _serde::__private::Some(__value) => __value,
+                                                        _serde::__private::None => {
+                                                            return _serde::__private::Err(
+                                                                _serde::de::Error::invalid_length(
+                                                                    3usize,
+                                                                    &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
+                                                                ),
+                                                            );
+                                                        }
+                                                    };
+                                                    match SqlxTypesTimeTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
+                                                        Ok(value) => _serde::__private::Ok(value),
+                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                                    }
+                                                }
+                                                #[inline]
+                                                fn visit_map<__A>(
+                                                    self,
+                                                    mut __map: __A,
+                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                                where
+                                                    __A: _serde::de::MapAccess<'de>,
+                                                {
+                                                    let mut __field0: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                                                    let mut __field1: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                                                    let mut __field2: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                                                    let mut __field3: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
+                                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                                        __Field,
+                                                    >(&mut __map)? {
+                                                        match __key {
+                                                            __Field::__field0 => {
+                                                                if _serde::__private::Option::is_some(&__field0) {
+                                                                    return _serde::__private::Err(
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field("hour"),
+                                                                    );
+                                                                }
+                                                                __field0 = _serde::__private::Some(
+                                                                    _serde::de::MapAccess::next_value::<
+                                                                        std::primitive::u8,
+                                                                    >(&mut __map)?,
+                                                                );
+                                                            }
+                                                            __Field::__field1 => {
+                                                                if _serde::__private::Option::is_some(&__field1) {
+                                                                    return _serde::__private::Err(
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field("minute"),
+                                                                    );
+                                                                }
+                                                                __field1 = _serde::__private::Some(
+                                                                    _serde::de::MapAccess::next_value::<
+                                                                        std::primitive::u8,
+                                                                    >(&mut __map)?,
+                                                                );
+                                                            }
+                                                            __Field::__field2 => {
+                                                                if _serde::__private::Option::is_some(&__field2) {
+                                                                    return _serde::__private::Err(
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field("second"),
+                                                                    );
+                                                                }
+                                                                __field2 = _serde::__private::Some(
+                                                                    _serde::de::MapAccess::next_value::<
+                                                                        std::primitive::u8,
+                                                                    >(&mut __map)?,
+                                                                );
+                                                            }
+                                                            __Field::__field3 => {
+                                                                if _serde::__private::Option::is_some(&__field3) {
+                                                                    return _serde::__private::Err(
+                                                                        <__A::Error as _serde::de::Error>::duplicate_field(
+                                                                            "microsecond",
+                                                                        ),
+                                                                    );
+                                                                }
+                                                                __field3 = _serde::__private::Some(
+                                                                    _serde::de::MapAccess::next_value::<
+                                                                        std::primitive::u32,
+                                                                    >(&mut __map)?,
+                                                                );
+                                                            }
+                                                            _ => {
+                                                                let _ = _serde::de::MapAccess::next_value::<
+                                                                    _serde::de::IgnoredAny,
+                                                                >(&mut __map)?;
+                                                            }
+                                                        }
+                                                    }
+                                                    let __field0 = match __field0 {
+                                                        _serde::__private::Some(__field0) => __field0,
+                                                        _serde::__private::None => {
+                                                            _serde::__private::de::missing_field("hour")?
+                                                        }
+                                                    };
+                                                    let __field1 = match __field1 {
+                                                        _serde::__private::Some(__field1) => __field1,
+                                                        _serde::__private::None => {
+                                                            _serde::__private::de::missing_field("minute")?
+                                                        }
+                                                    };
+                                                    let __field2 = match __field2 {
+                                                        _serde::__private::Some(__field2) => __field2,
+                                                        _serde::__private::None => {
+                                                            _serde::__private::de::missing_field("second")?
+                                                        }
+                                                    };
+                                                    let __field3 = match __field3 {
+                                                        _serde::__private::Some(__field3) => __field3,
+                                                        _serde::__private::None => {
+                                                            _serde::__private::de::missing_field("microsecond")?
+                                                        }
+                                                    };
+                                                    match SqlxTypesTimeTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
+                                                        Ok(value) => _serde::__private::Ok(value),
+                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                                    }
+                                                }
+                                            }
+                                            #[doc(hidden)]
+                                            const FIELDS: &'static [&'static str] = &[
+                                                "hour",
+                                                "minute",
+                                                "second",
+                                                "microsecond",
+                                            ];
+                                            _serde::Deserializer::deserialize_struct(
+                                                __deserializer,
+                                                "SqlxTypesTimeTimeAsNotNullTimeOrigin",
+                                                FIELDS,
+                                                __Visitor {
+                                                    marker: _serde::__private::PhantomData::<SqlxTypesTimeTimeAsNotNullTimeOrigin>,
+                                                    lifetime: _serde::__private::PhantomData,
+                                                },
+                                            )
+                                        }
+                                    }
+                                };
+                            }
+                        }),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // todo
                             quote::quote!{
@@ -4132,7 +4480,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::StdPrimitiveBoolAsBool
                                         | PostgresqlType::StdStringStringAsText => &core_default_default_default_token_stream,
                                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote::quote! {vec![#core_default_default_default_token_stream]},
-                                        PostgresqlType::SqlxTypesTimeTimeAsTime => &crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                        PostgresqlType::SqlxTypesTimeTimeAsTime => &quote::quote!{
+                                            #field_type_standart_not_null::from_hms_micro(
+                                                0,
+                                                0,
+                                                0,
+                                                0,
+                                            ).unwrap()
+                                        },
                                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => &{
                                             let double_dots_space_core_default_default_default_token_stream = generate_double_dot_space_tokens_token_stream(&core_default_default_default_token_stream);
                                             generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
@@ -5487,17 +5842,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         ).unwrap()
                                     ]},
                                     PostgresqlType::SqlxTypesTimeTimeAsTime => quote::quote!{vec![
-                                        crate::SqlxTypesTimeTime::try_new(
-                                            crate::Hour::try_new(0).unwrap(),
-                                            crate::Minute::try_new(0).unwrap(),
-                                            crate::Second::try_new(0).unwrap(),
-                                            crate::Microsecond::try_new(0).unwrap(),
+                                        #field_type_standart_not_null::from_hms_micro(
+                                            0,
+                                            0,
+                                            0,
+                                            0,
                                         ).unwrap(),
-                                        crate::SqlxTypesTimeTime::try_new(
-                                            crate::Hour::try_new(23).unwrap(),
-                                            crate::Minute::try_new(59).unwrap(),
-                                            crate::Second::try_new(59).unwrap(),
-                                            crate::Microsecond::try_new(999_999).unwrap(),
+                                        #field_type_standart_not_null::from_hms_micro(
+                                            23,
+                                            59,
+                                            59,
+                                            999_999,
                                         ).unwrap()
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{vec![
