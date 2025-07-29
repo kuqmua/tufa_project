@@ -714,6 +714,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     enum PostgresqlTypeInitializationTryNew {
         StdStringStringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
+        SqlxTypesTimeTimeAsTime,
         SqlxTypesChronoNaiveDateAsDate,
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
@@ -737,7 +738,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::StdStringStringAsText => Ok(Self::StdStringStringAsText),
                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Ok(Self::SqlxTypesChronoNaiveTimeAsTime),
-                PostgresqlType::SqlxTypesTimeTimeAsTime => Err(()),
+                PostgresqlType::SqlxTypesTimeTimeAsTime => Ok(Self::SqlxTypesTimeTimeAsTime),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Ok(Self::SqlxTypesChronoNaiveDateAsDate),
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Ok(Self::SqlxTypesChronoNaiveDateTimeAsTimestamp),
@@ -759,6 +760,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             match value {
                 PostgresqlTypeInitializationTryNew::StdStringStringAsText => Self::StdStringStringAsText,
                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => Self::SqlxTypesChronoNaiveTimeAsTime,
+                PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => Self::SqlxTypesTimeTimeAsTime,
                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => Self::SqlxTypesChronoNaiveDateAsDate,
                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::SqlxTypesChronoNaiveDateTimeAsTimestamp,
                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
@@ -4067,6 +4069,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                 }
                             },
+                            PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => {
+                                quote::quote! {
+                                    #nanosecond_precision_is_not_supported_upper_camel_case {
+                                        #[eo_to_std_string_string_serialize_deserialize]
+                                        #value_snake_case: #std_string_string_token_stream,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
+                                }
+                            },
                             PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => {
                                 quote::quote! {
                                     #earlier_date_not_supported_upper_camel_case {
@@ -4183,7 +4194,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 #[eo_to_std_string_string_serialize_deserialize]
                                                 #error_snake_case: #std_string_string_token_stream,
                                                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                            }
+                                            },
+                                            //todo maybe reuse
+                                            #nanosecond_precision_is_not_supported_upper_camel_case {
+                                                #[eo_to_std_string_string_serialize_deserialize]
+                                                #value_snake_case: #std_string_string_token_stream,
+                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                            },
                                         }
                                     },
                                 };
@@ -4372,6 +4389,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => {
                                                     quote::quote! {
                                                         if <#field_type_standart_not_null as chrono::Timelike>::nanosecond(&#value_snake_case) % 1000 != 0 {
+                                                            return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
+                                                                #value_snake_case: #value_snake_case.to_string(),
+                                                                code_occurence: error_occurence_lib::code_occurence!(),
+                                                            });
+                                                        }
+                                                        Ok(Self(#value_snake_case))
+                                                    }
+                                                },
+                                                PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => {
+                                                    quote::quote! {
+                                                        if #value_snake_case.nanosecond() % 1000 != 0 {
                                                             return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
                                                                 #value_snake_case: #value_snake_case.to_string(),
                                                                 code_occurence: error_occurence_lib::code_occurence!(),
@@ -4712,7 +4740,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         #second_snake_case,
                                                         #microsecond_snake_case,
                                                     ) {
-                                                        Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
+                                                        Ok(#value_snake_case) => {
+                                                            if #value_snake_case.nanosecond() % 1000 != 0 {
+                                                                return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
+                                                                    #value_snake_case: #value_snake_case.to_string(),
+                                                                    code_occurence: error_occurence_lib::code_occurence!(),
+                                                                });
+                                                            }
+                                                            Ok(Self(#value_snake_case))
+                                                        },
                                                         Err(#error_snake_case) => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
                                                             #hour_snake_case,
                                                             #minute_snake_case,
@@ -6220,12 +6256,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             59,
                                             999_999,
                                         ).unwrap(),
-                                        #field_type_standart_not_null::from_hms_nano(
-                                            23,
-                                            59,
-                                            59,
-                                            999_999_999,
-                                        ).unwrap(),//todo check precision
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{vec![
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MIN, days: std::primitive::i32::MIN, microseconds: std::primitive::i64::MIN },
