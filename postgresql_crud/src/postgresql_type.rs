@@ -445,11 +445,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        // {
-        //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
+        {
+            "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        },
         // {
         //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
         //     "not_null_or_nullable": "Nullable",
@@ -484,6 +484,98 @@ generate_postgresql_types::generate_postgresql_types!({
         // },
         // {
         //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "Nullable"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": "Standart"
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "NotNull"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "NotNull"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "Nullable"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "Nullable"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // },
+        // {
+        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": "Standart"
+        // },
+        // {
+        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "NotNull"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
+        //     "not_null_or_nullable": "Nullable",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "NotNull"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": {
+        //         "ArrayDimension1": {
+        //             "dimension1_not_null_or_nullable": "Nullable"
+        //         }
+        //     }
+        // },
+        // {
+        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
         //     "not_null_or_nullable": "Nullable",
         //     "postgresql_type_pattern": {
         //         "ArrayDimension1": {
@@ -492,102 +584,10 @@ generate_postgresql_types::generate_postgresql_types!({
         //     }
         // },
         {
-            "postgresql_type": "SqlxTypesTimeTimeAsTime",
+            "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
             "not_null_or_nullable": "NotNull",
             "postgresql_type_pattern": "Standart"
         },
-        // {
-        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": "Standart"
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesTimeTimeAsTime",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
-        // {
-        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": "Standart"
-        // },
-        // {
-        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "NotNull"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxPostgresTypesPgIntervalAsInterval",
-        //     "not_null_or_nullable": "Nullable",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
-        // {
-        //     "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
         // {
         //     "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
         //     "not_null_or_nullable": "Nullable",
@@ -1929,3 +1929,526 @@ generate_postgresql_types::generate_postgresql_types!({
 
 //     Ok(())
 // }
+
+
+#[derive(Debug)]
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTz;
+#[derive(Debug, Clone, PartialEq, PartialOrd)]
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin(sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>);
+#[derive(Debug, serde :: Serialize, serde :: Deserialize, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOriginTryNewErrorNamed {
+    NaiveDate {
+        #[eo_error_occurence]
+        error: SqlxTypesChronoNaiveDateAsNotNullDateOriginTryNewErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+    pub fn try_new(value: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>) -> Result<Self, SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOriginTryNewErrorNamed> {
+        if let Err(error) = SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value.date_naive()) {
+            return Err(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOriginTryNewErrorNamed::NaiveDate {
+                error,
+                code_occurence: error_occurence_lib::code_occurence!(),
+            });
+        }
+        Ok(Self(value))
+    }
+    fn new_for_deserialize(
+        date_naive: SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+        time: SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,//todo check nanosecond precision
+    ) -> Self {
+        Self(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+            sqlx::types::chrono::NaiveDateTime::new(
+                date_naive.0,
+                time.0
+            ),
+            sqlx::types::chrono::Utc
+        ))
+    }
+    pub fn new_or_try_new_unwraped_for_test(value: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>) -> Self {
+        Self::try_new(value).unwrap()
+    }
+}
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl _serde::Serialize
+    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+        fn serialize<__S>(
+            &self,
+            __serializer: __S,
+        ) -> _serde::__private::Result<__S::Ok, __S::Error>
+        where
+            __S: _serde::Serializer,
+        {
+            let mut __serde_state = _serde::Serializer::serialize_struct(
+                __serializer,
+                "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin",
+                false as usize + 1 + 1,
+            )?;
+            _serde::ser::SerializeStruct::serialize_field(
+                &mut __serde_state,
+                "date_naive",
+                &SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(self.0.date_naive()).unwrap(),
+            )?;
+            _serde::ser::SerializeStruct::serialize_field(
+                &mut __serde_state,
+                "time",
+                &SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::new(self.0.time()),
+            )?;
+            _serde::ser::SerializeStruct::end(__serde_state)
+        }
+    }
+};
+const _: () = {
+    #[allow(unused_extern_crates, clippy::useless_attribute)]
+    extern crate serde as _serde;
+    #[automatically_derived]
+    impl<'de> _serde::Deserialize<'de>
+    for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+        fn deserialize<__D>(
+            __deserializer: __D,
+        ) -> _serde::__private::Result<Self, __D::Error>
+        where
+            __D: _serde::Deserializer<'de>,
+        {
+            #[allow(non_camel_case_types)]
+            #[doc(hidden)]
+            enum __Field {
+                __field0,
+                __field1,
+                __ignore,
+            }
+            #[doc(hidden)]
+            struct __FieldVisitor;
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                type Value = __Field;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "field identifier",
+                    )
+                }
+                fn visit_u64<__E>(
+                    self,
+                    __value: u64,
+                ) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        0u64 => _serde::__private::Ok(__Field::__field0),
+                        1u64 => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_str<__E>(
+                    self,
+                    __value: &str,
+                ) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        "date_naive" => _serde::__private::Ok(__Field::__field0),
+                        "time" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+                fn visit_bytes<__E>(
+                    self,
+                    __value: &[u8],
+                ) -> _serde::__private::Result<Self::Value, __E>
+                where
+                    __E: _serde::de::Error,
+                {
+                    match __value {
+                        b"date_naive" => _serde::__private::Ok(__Field::__field0),
+                        b"time" => _serde::__private::Ok(__Field::__field1),
+                        _ => _serde::__private::Ok(__Field::__ignore),
+                    }
+                }
+            }
+            #[automatically_derived]
+            impl<'de> _serde::Deserialize<'de> for __Field {
+                #[inline]
+                fn deserialize<__D>(
+                    __deserializer: __D,
+                ) -> _serde::__private::Result<Self, __D::Error>
+                where
+                    __D: _serde::Deserializer<'de>,
+                {
+                    _serde::Deserializer::deserialize_identifier(
+                        __deserializer,
+                        __FieldVisitor,
+                    )
+                }
+            }
+            #[doc(hidden)]
+            struct __Visitor<'de> {
+                marker: _serde::__private::PhantomData<
+                    SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin,
+                >,
+                lifetime: _serde::__private::PhantomData<&'de ()>,
+            }
+            #[automatically_derived]
+            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                type Value = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin;
+                fn expecting(
+                    &self,
+                    __formatter: &mut _serde::__private::Formatter<'_>,
+                ) -> _serde::__private::fmt::Result {
+                    _serde::__private::Formatter::write_str(
+                        __formatter,
+                        "struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin",
+                    )
+                }
+                #[inline]
+                fn visit_seq<__A>(
+                    self,
+                    mut __seq: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::SeqAccess<'de>,
+                {
+                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    0usize,
+                                    &"struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin with 2 elements",
+                                ),
+                            );
+                        }
+                    };
+                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
+                    >(&mut __seq)? {
+                        _serde::__private::Some(__value) => __value,
+                        _serde::__private::None => {
+                            return _serde::__private::Err(
+                                _serde::de::Error::invalid_length(
+                                    1usize,
+                                    &"struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin with 2 elements",
+                                ),
+                            );
+                        }
+                    };
+                    _serde::__private::Ok(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::new_for_deserialize(
+                        __field0,
+                       __field1,
+                    ))
+                }
+                #[inline]
+                fn visit_map<__A>(
+                    self,
+                    mut __map: __A,
+                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                where
+                    __A: _serde::de::MapAccess<'de>,
+                {
+                    let mut __field0: _serde::__private::Option<
+                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                    > = _serde::__private::None;
+                    let mut __field1: _serde::__private::Option<
+                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
+                    > = _serde::__private::None;
+                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                        __Field,
+                    >(&mut __map)? {
+                        match __key {
+                            __Field::__field0 => {
+                                if _serde::__private::Option::is_some(&__field0) {
+                                    return _serde::__private::Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field(
+                                            "date_naive",
+                                        ),
+                                    );
+                                }
+                                __field0 = _serde::__private::Some(
+                                    _serde::de::MapAccess::next_value::<
+                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                                    >(&mut __map)?,
+                                );
+                            }
+                            __Field::__field1 => {
+                                if _serde::__private::Option::is_some(&__field1) {
+                                    return _serde::__private::Err(
+                                        <__A::Error as _serde::de::Error>::duplicate_field("time"),
+                                    );
+                                }
+                                __field1 = _serde::__private::Some(
+                                    _serde::de::MapAccess::next_value::<
+                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
+                                    >(&mut __map)?,
+                                );
+                            }
+                            _ => {
+                                let _ = _serde::de::MapAccess::next_value::<
+                                    _serde::de::IgnoredAny,
+                                >(&mut __map)?;
+                            }
+                        }
+                    }
+                    let __field0 = match __field0 {
+                        _serde::__private::Some(__field0) => __field0,
+                        _serde::__private::None => {
+                            _serde::__private::de::missing_field("date_naive")?
+                        }
+                    };
+                    let __field1 = match __field1 {
+                        _serde::__private::Some(__field1) => __field1,
+                        _serde::__private::None => {
+                            _serde::__private::de::missing_field("time")?
+                        }
+                    };
+                    _serde::__private::Ok(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::new_for_deserialize(
+                        __field0,
+                       __field1,
+                    ))
+                }
+            }
+            #[doc(hidden)]
+            const FIELDS: &'static [&'static str] = &["date_naive", "time"];
+            _serde::Deserializer::deserialize_struct(
+                __deserializer,
+                "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin",
+                FIELDS,
+                __Visitor {
+                    marker: _serde::__private::PhantomData::<
+                        SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin,
+                    >,
+                    lifetime: _serde::__private::PhantomData,
+                },
+            )
+        }
+    }
+};
+impl std::fmt::Display for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+    fn fmt(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(formatter, "{self:?}")
+    }
+}
+impl error_occurence_lib::ToStdStringString for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.to_string()
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+            chrono::NaiveDateTime::new(
+                <SqlxTypesChronoNaiveDateAsNotNullDateOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
+                <SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
+            ),
+            sqlx::types::chrono::Utc
+        ))
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::postgres::PgHasArrayType for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+    fn array_type_info() -> sqlx::postgres::PgTypeInfo {
+        <sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc> as sqlx::postgres::PgHasArrayType>::array_type_info()
+    }
+}
+impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+    pub fn create_table_column_query_part(column: &dyn std::fmt::Display, _: std::primitive::bool) -> impl std::fmt::Display {
+        format!("{column} timestamptz not null")
+    }
+}
+pub type SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzTableTypeDeclaration = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin;
+pub type SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzCreate = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin;
+#[derive(Debug, Default, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzSelect;
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzSelect {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        ::core::default::Default::default()
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub enum SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzWhereElement {
+    Equal(crate::where_element_filters::PostgresqlTypeWhereElementEqual<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>),
+    Before(crate::where_element_filters::PostgresqlTypeWhereElementBefore<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzTableTypeDeclaration>),
+    Between(crate::where_element_filters::PostgresqlTypeWhereElementBetween<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzTableTypeDeclaration>),
+}
+impl<'a> crate::PostgresqlTypeWhereFilter<'a> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzWhereElement {
+    fn query_part(&self, increment: &mut std::primitive::u64, column: &dyn std::fmt::Display, is_need_to_add_logical_operator: std::primitive::bool) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        match &self {
+            Self::Equal(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+            Self::Before(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+            Self::Between(value) => crate::PostgresqlTypeWhereFilter::query_part(value, increment, column, is_need_to_add_logical_operator),
+        }
+    }
+    fn query_bind(self, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        match self {
+            Self::Equal(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+            Self::Before(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+            Self::Between(value) => crate::PostgresqlTypeWhereFilter::query_bind(value, query),
+        }
+    }
+}
+impl error_occurence_lib::ToStdStringString for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzWhereElement {
+    fn to_std_string_string(&self) -> std::string::String {
+        format!("{self:#?}")
+    }
+}
+impl crate::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzWhereElement {
+    fn all_enum_variants_array_default_but_std_option_option_is_always_some_and_std_vec_vec_always_contains_one_element() -> std::vec::Vec<Self> {
+        vec![
+            Self::Equal(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            Self::Before(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+            Self::Between(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+        ]
+    }
+}
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize)]
+pub struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRead(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin);
+impl SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRead {
+    pub fn try_new(value: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>) -> Result<Self, SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOriginTryNewErrorNamed> {
+        match SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error)
+        }
+    }
+    pub fn new_or_try_new_unwraped_for_test(value: sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>) -> Self {
+        Self(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::new_or_try_new_unwraped_for_test(value))
+    }
+}
+impl error_occurence_lib::ToStdStringString for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRead {
+    fn to_std_string_string(&self) -> std::string::String {
+        self.0.to_string()
+    }
+}
+impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRead {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self(crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element())
+    }
+}
+impl sqlx::Encode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRead {
+    fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
+        sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
+    }
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRead {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(Self(value)),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRead {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+pub type SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzReadInner = sqlx::types::chrono::DateTime<sqlx::types::chrono::Utc>;
+pub type SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzUpdate = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin;
+impl crate::PostgresqlType for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTz {
+    type TableTypeDeclaration = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzTableTypeDeclaration;
+    type Create = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzCreate;
+    fn create_query_part(_: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                acc.push_str(&format!("${increment}"));
+            }
+            None => {
+                return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+            }
+        }
+        Ok(acc)
+    }
+    fn create_query_bind(value: Self::Create, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(value);
+        query
+    }
+    type Select = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzSelect;
+    fn select_query_part(_: &Self::Select, column: &std::primitive::str) -> std::string::String {
+        column.to_string()
+    }
+    type WhereElement = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzWhereElement;
+    type Read = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRead;
+    type ReadInner = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzReadInner;
+    fn into_inner(value: Self::Read) -> Self::ReadInner {
+        value.0.0
+    }
+    type Update = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzUpdate;
+    fn update_query_part(_: &Self::Update, _: &std::primitive::str, _: &std::primitive::str, _: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, crate::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        match increment.checked_add(1) {
+            Some(value) => {
+                *increment = value;
+                acc.push_str(&format!("${increment}"));
+            }
+            None => {
+                return Err(crate::QueryPartErrorNamed::CheckedAdd { code_occurence: error_occurence_lib::code_occurence!() });
+            }
+        }
+        Ok(acc)
+    }
+    fn update_query_bind<'a>(value: Self::Update, mut query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = query.bind(value);
+        query
+    }
+}
+impl crate::tests::PostgresqlTypeTestCases for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTz {
+    type Element = Self;
+    fn test_cases() -> std::vec::Vec<<Self::Element as crate::PostgresqlType>::ReadInner> {
+        vec![
+            sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+                sqlx::types::chrono::NaiveDateTime::new(
+                    sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap(),
+                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()//todo check nanosecond precision
+                ),
+                sqlx::types::chrono::Utc
+            ),
+            sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
+                sqlx::types::chrono::NaiveDateTime::new(
+                    sqlx::types::chrono::NaiveDate::MAX,
+                    sqlx::types::chrono::NaiveTime::
+                    // from_hms_micro_opt(23, 59, 59, 999_999).unwrap()
+                    from_hms_nano_opt(
+                        23,
+                        59,
+                        59,
+                        999_999_999,
+                    ).unwrap()
+                ),
+                sqlx::types::chrono::Utc
+            )
+        ]
+    }
+}
