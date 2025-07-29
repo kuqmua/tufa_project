@@ -6219,6 +6219,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             59,
                                             59,
                                             999_999,
+                                        ).unwrap(),
+                                        #field_type_standart_not_null::from_hms_nano(
+                                            23,
+                                            59,
+                                            59,
+                                            999_999_999,
                                         ).unwrap(),//todo check precision
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{vec![
