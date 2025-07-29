@@ -742,7 +742,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Err(()),
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Ok(Self::SqlxTypesChronoNaiveDateAsDate),
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Ok(Self::SqlxTypesChronoNaiveDateTimeAsTimestamp),
-                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Err(()),
+                PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => Ok(Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
                 PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => Err(()),
                 PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => Err(()),
                 PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => Err(()),
@@ -4199,6 +4199,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let earliest_supported_date_snake_case = naming::EarliestSupportedDateSnakeCase;
                 let naive_date_upper_camel_case = naming::NaiveDateUpperCamelCase;
                 let naive_time_upper_camel_case = naming::NaiveTimeUpperCamelCase;
+                let date_naive_upper_camel_case = naming::DateNaiveUpperCamelCase;
+                let time_upper_camel_camel_case = naming::TimeUpperCamelCase;
                 let invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case = naming::InvalidHourOrMinuteOrSecondOrMicrosecondUpperCamelCase;
                 let nanosecond_precision_is_not_supported_upper_camel_case = naming::NanosecondPrecisionIsNotSupportedUpperCamelCase;
                 let included_start_more_than_included_end_upper_camel_case = naming::IncludedStartMoreThanIncludedEndUpperCamelCase;
@@ -4324,17 +4326,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             },
                             PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
+                                //todo
                                 quote::quote! {
-                                    // #naive_date_upper_camel_case {
-                                    //     #[eo_error_occurence]
-                                    //     #error_snake_case: crate::SqlxTypesChronoNaiveDateTryNewErrorNamed,
-                                    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    // },
-                                    // #naive_time_upper_camel_case {
-                                    //     #[eo_error_occurence]
-                                    //     #error_snake_case: crate::SqlxTypesChronoNaiveTimeTryNewErrorNamed,
-                                    //     code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    // },
+                                    #date_naive_upper_camel_case {
+                                        #[eo_error_occurence]
+                                        #error_snake_case: SqlxTypesChronoNaiveDateAsNotNullDateOriginTryNewErrorNamed,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
+                                    #time_upper_camel_camel_case {
+                                        #[eo_error_occurence]
+                                        #error_snake_case: SqlxTypesChronoNaiveTimeAsNotNullTimeOriginTryNewErrorNamed,
+                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                                    },
                                 }
                             },
                             PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_temp_range_type_error_variants_token_stream(
