@@ -47,16 +47,16 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        {
-            "postgresql_type": "StdPrimitiveI32AsInt4",
-            "not_null_or_nullable": "NotNull",
-            "postgresql_type_pattern": "Standart"
-        },
         // {
-        //     "postgresql_type": "StdPrimitiveI64AsInt8",
+        //     "postgresql_type": "StdPrimitiveI32AsInt4",
         //     "not_null_or_nullable": "NotNull",
         //     "postgresql_type_pattern": "Standart"
         // },
+        {
+            "postgresql_type": "StdPrimitiveI64AsInt8",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        },
         // {
         //     "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
         //     "not_null_or_nullable": "NotNull",
@@ -867,17 +867,17 @@ generate_postgresql_types::generate_postgresql_types!({
         //     }
         // }
         // ,
-        {
-            "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range",
-            "not_null_or_nullable": "NotNull",
-            "postgresql_type_pattern": "Standart"
-        }
-        // ,
         // {
-        //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range",
+        //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range",
         //     "not_null_or_nullable": "NotNull",
         //     "postgresql_type_pattern": "Standart"
         // }
+        // ,
+        {
+            "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        }
         // ,
         // {
         //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
