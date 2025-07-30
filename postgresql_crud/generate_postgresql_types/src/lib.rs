@@ -1453,7 +1453,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     True,
                     False
                 }
-                let generate_match_std_collections_bound_token_stream = |
+                let generate_match_std_ops_bound_token_stream = |
                     match_token_stream: &dyn quote::ToTokens,
                     init_token_stream: &dyn quote::ToTokens,
                     should_add_borrow: &ShouldAddBorrow,
@@ -1463,13 +1463,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         ShouldAddBorrow::False => proc_macro2::TokenStream::new()
                     };
                     quote::quote! {match #maybe_borrow_token_stream #match_token_stream {
-                        std::collections::Bound::Included(#value_snake_case) => std::collections::Bound::Included(#init_token_stream),
-                        std::collections::Bound::Excluded(#value_snake_case) => std::collections::Bound::Excluded(#init_token_stream),
-                        std::collections::Bound::Unbounded => std::collections::Bound::Unbounded,
+                        std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#init_token_stream),
+                        std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#init_token_stream),
+                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                     }}
                 };
-                let generate_std_collections_bound_token_stream = |type_token_stream: &dyn quote::ToTokens| {
-                    quote::quote! {std::collections::Bound<#type_token_stream>}
+                let generate_std_ops_bound_token_stream = |type_token_stream: &dyn quote::ToTokens| {
+                    quote::quote! {std::ops::Bound<#type_token_stream>}
                 };
                 let serde_serialize_derive_or_impl = {
                     let generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens = |content_token_stream: &dyn quote::ToTokens| {
@@ -1523,7 +1523,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let serde_serialize_content_b1e2ccdf_3707_4f59_b809_20c0f087ab25 = {
                         let generate_self_zero_match_tokens_token_stream = |value_token_stream: &dyn quote::ToTokens| {
-                            let token_stream = generate_match_std_collections_bound_token_stream(
+                            let token_stream = generate_match_std_ops_bound_token_stream(
                                 &quote::quote! {#self_dot_zero_token_stream.#value_token_stream},
                                 &value_snake_case,
                                 &ShouldAddBorrow::True
@@ -1985,8 +1985,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     });
                     let sqlx_postgres_types_pg_range_start_end_token_stream = generate_qlx_postgres_types_pg_range_start_end_token_stream(&field_0_token_stream, &field_1_token_stream);
                     let sqlx_postgres_types_pg_range_bound_start_end_token_stream = generate_qlx_postgres_types_pg_range_start_end_token_stream(
-                        &generate_match_std_collections_bound_token_stream(&field_0_token_stream, &value_snake_case, &ShouldAddBorrow::False),
-                        &generate_match_std_collections_bound_token_stream(&field_1_token_stream, &value_snake_case, &ShouldAddBorrow::False),
+                        &generate_match_std_ops_bound_token_stream(&field_0_token_stream, &value_snake_case, &ShouldAddBorrow::False),
+                        &generate_match_std_ops_bound_token_stream(&field_1_token_stream, &value_snake_case, &ShouldAddBorrow::False),
                     );
                     let match_ident_standart_not_null_try_new_sqlx_postgres_types_pg_range_token_stream = quote::quote!{
                         match #ident_standart_not_null_origin_upper_camel_case::try_new(sqlx::postgres::types::PgRange {
@@ -2018,7 +2018,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         std_collections_bound_sqlx_types_chrono_naive_date_token_stream,
                     ) = {
                         let generate_std_collections_bound_ident_standart_not_null_origin = |postgresql_type: &PostgresqlType|{
-                            generate_std_collections_bound_token_stream(
+                            generate_std_ops_bound_token_stream(
                                 &naming::parameter::SelfOriginUpperCamelCase::from_tokens(
                                     &generate_ident_token_stream(
                                         &postgresql_type,
@@ -4201,6 +4201,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{#std_primitive_i64_token_stream},
                     }
                 };
+                //todo maybe should rewrite it as just start end? without bound info
                 let generate_int_range_type_error_variants_token_stream = |temp_range_type: &TempRangeType|{
                     let range_inner_type_token_stream = temp_range_type_to_range_inner_type_token_stream(&temp_range_type);
                     quote::quote! {
