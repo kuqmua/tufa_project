@@ -6432,7 +6432,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
                                         sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                                             sqlx::types::chrono::NaiveDateTime::new(
-                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4712, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
                                                 sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()//todo check nanosecond precision
                                             ),
                                             sqlx::types::chrono::Utc
