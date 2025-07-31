@@ -1191,6 +1191,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
             let ident_standart_not_null_or_nullable_upper_camel_case = generate_ident_token_stream(postgresql_type, not_null_or_nullable, &PostgresqlTypePattern::Standart);
 
+            //todo local usage?
+            let sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate)
+            );
+            let sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime)
+            );
+            let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp)
+            );
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz)
+            );
+
             let field_type_standart_not_null = postgresql_type.field_type_token_stream();
             let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
                 naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(postgresql_type, current_not_null_or_nullable, current_postgresql_type_pattern))
@@ -1668,13 +1682,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         // })),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                            //todo maybe reuse?
-                            let sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate)
-                            );
-                            let sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime)
-                            );
                             quote::quote!{
                                 #serde_state_initialization_two_fields_token_stream
                                 _serde::ser::SerializeStruct::serialize_field(
@@ -1690,17 +1697,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 _serde::ser::SerializeStruct::end(__serde_state)
                             }
                         })),
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            //todo 
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                                quote::quote!{
-                                    #serde_state_initialization_two_fields_token_stream
-                                    _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "date_naive", &SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(self.0.date_naive()).unwrap())?;
-                                    _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "time", &SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(self.0.time()).unwrap())?;//here
-                                    _serde::ser::SerializeStruct::end(__serde_state)
-                                }
-                            })
-                        }),
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                            quote::quote!{
+                                #serde_state_initialization_two_fields_token_stream
+                                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "date_naive", &#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(self.0.date_naive()).unwrap())?;
+                                _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "time", &#sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::try_new(self.0.time()).unwrap())?;//here
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        })),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream),
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => postgresql_crud_macros_common::DeriveOrImpl::Derive,
@@ -1718,8 +1722,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &mut __serde_state,
                                         "start",
                                         &match self.0.start {
-                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
-                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(value).unwrap()),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(value).unwrap()),
                                             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                         }
                                     )?;
@@ -1727,8 +1731,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &mut __serde_state,
                                         "end",
                                         &match self.0.end {
-                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
-                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(value).unwrap()),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(value).unwrap()),
                                             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                         }
                                     )?;
@@ -1746,8 +1750,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &mut __serde_state,
                                         "start",
                                         &match self.0.start {
-                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
-                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(value).unwrap()),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(value).unwrap()),
                                             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                         }
                                     )?;
@@ -1755,8 +1759,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &mut __serde_state,
                                         "end",
                                         &match self.0.end {
-                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
-                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(value).unwrap()),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(value).unwrap()),
                                             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                         }
                                     )?;
@@ -1774,8 +1778,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             &mut __serde_state,
                                             "start",
                                             &match self.0.start {
-                                                std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
-                                                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
+                                                std::ops::Bound::Included(value) => std::ops::Bound::Included(#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case::try_new(value).unwrap()),
+                                                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case::try_new(value).unwrap()),
                                                 std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                             }
                                         )?;
@@ -1783,8 +1787,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             &mut __serde_state,
                                             "end",
                                             &match self.0.end {
-                                                std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
-                                                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
+                                                std::ops::Bound::Included(value) => std::ops::Bound::Included(#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case::try_new(value).unwrap()),
+                                                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case::try_new(value).unwrap()),
                                                 std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                             }
                                         )?;
