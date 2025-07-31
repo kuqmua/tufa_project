@@ -814,7 +814,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => Self::Derive,
                 PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => Self::Derive,
                 PostgresqlType::StdPrimitiveBoolAsBool => Self::Derive,
-                PostgresqlType::StdStringStringAsText => Self::Derive,//todo try_new_for_deserialize
+                PostgresqlType::StdStringStringAsText => Self::ImplNewForDeserializeOrTryNewForDeserialize(
+                    PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(
+                        PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText
+                    )
+                ),
                 PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => Self::Derive,
                 PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => Self::ImplNewForDeserializeOrTryNewForDeserialize(
                     PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(
@@ -2767,7 +2771,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     let __field0: std::string::String = <std::string::String as _serde::Deserialize>::deserialize(
                                                         __e,
                                                     )?;
-                                                    match StdStringStringAsNotNullTextOrigin::try_new(__field0) {
+                                                    match StdStringStringAsNotNullTextOrigin::try_new_for_deserialize(__field0) {
                                                         Ok(value) => _serde::__private::Ok(value),
                                                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                                                     }
@@ -2793,7 +2797,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             );
                                                         }
                                                     };
-                                                    match StdStringStringAsNotNullTextOrigin::try_new(__field0) {
+                                                    match StdStringStringAsNotNullTextOrigin::try_new_for_deserialize(__field0) {
                                                         Ok(value) => _serde::__private::Ok(value),
                                                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                                                     }
@@ -4634,6 +4638,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let content_token_stream = {
                         match &postgresql_type_initialization_try_new {
                             PostgresqlTypeInitializationTryNew::StdStringStringAsText => {
+                                //todo reuse
                                 quote::quote! {
                                     #contains_null_byte_upper_camel_case {
                                         #[eo_to_std_string_string_serialize_deserialize]
@@ -5601,13 +5606,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => {
                                                     //todo reuse
                                                     quote::quote! {
-                                                        if #value_snake_case.find('\0').is_some() {
-                                                            Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#contains_null_byte_upper_camel_case {
-                                                                #value_snake_case,
-                                                                code_occurence: error_occurence_lib::code_occurence!(),
-                                                            })
-                                                        } else {
-                                                            Ok(Self(#value_snake_case))
+                                                        match Self::try_new(#value_snake_case) {
+                                                            Ok(#value_snake_case) => Ok(#value_snake_case),
+                                                            Err(#error_snake_case) => match #error_snake_case {
+                                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#contains_null_byte_upper_camel_case {
+                                                                    #value_snake_case,
+                                                                    code_occurence,
+                                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#contains_null_byte_upper_camel_case {
+                                                                    #value_snake_case,
+                                                                    code_occurence,
+                                                                }),
+                                                            }
                                                         }
                                                     }
                                                 },
