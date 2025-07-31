@@ -1590,22 +1590,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     _serde::ser::SerializeStruct::serialize_field(
                                         &mut __serde_state,
                                         "hour",
-                                        &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::hour(&self.0),
+                                        &<#field_type_standart_not_null as chrono::Timelike>::hour(&self.0),
                                     )?;
                                     _serde::ser::SerializeStruct::serialize_field(
                                         &mut __serde_state,
                                         "min",
-                                        &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&self.0),
+                                        &<#field_type_standart_not_null as chrono::Timelike>::minute(&self.0),
                                     )?;
                                     _serde::ser::SerializeStruct::serialize_field(
                                         &mut __serde_state,
                                         "sec",
-                                        &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&self.0),
+                                        &<#field_type_standart_not_null as chrono::Timelike>::second(&self.0),
                                     )?;
                                     _serde::ser::SerializeStruct::serialize_field(
                                         &mut __serde_state,
                                         "micro",
-                                        &(<sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&self.0) / 1000),
+                                        &(<#field_type_standart_not_null as chrono::Timelike>::nanosecond(&self.0) / 1000),
                                     )?;
                                     _serde::ser::SerializeStruct::end(__serde_state)
                                 }
@@ -1667,25 +1667,29 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         //     }
                         // })),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
-                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            //todo
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                                quote::quote!{
-                                    #serde_state_initialization_two_fields_token_stream
-                                    _serde::ser::SerializeStruct::serialize_field(
-                                        &mut __serde_state,
-                                        "date",
-                                        &SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(self.0.date()).unwrap(),
-                                    )?;
-                                    _serde::ser::SerializeStruct::serialize_field(
-                                        &mut __serde_state,
-                                        "time",
-                                        &SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(self.0.time()).unwrap(),
-                                    )?;
-                                    _serde::ser::SerializeStruct::end(__serde_state)
-                                }
-                            })
-                        }),
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                            //todo maybe reuse?
+                            let sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate)
+                            );
+                            let sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
+                                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime)
+                            );
+                            quote::quote!{
+                                #serde_state_initialization_two_fields_token_stream
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "date",
+                                    &#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(self.0.date()).unwrap(),
+                                )?;
+                                _serde::ser::SerializeStruct::serialize_field(
+                                    &mut __serde_state,
+                                    "time",
+                                    &#sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::try_new(self.0.time()).unwrap(),
+                                )?;
+                                _serde::ser::SerializeStruct::end(__serde_state)
+                            }
+                        })),
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             //todo 
                             generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
