@@ -57,11 +57,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //     "not_null_or_nullable": "NotNull",
         //     "postgresql_type_pattern": "Standart"
         // },
-        {
-            "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
-            "not_null_or_nullable": "NotNull",
-            "postgresql_type_pattern": "Standart"
-        },
+        // {
+        //     "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // },
         // {
         //     "postgresql_type": "SqlxTypesChronoNaiveDateTimeAsTimestamp",
         //     "not_null_or_nullable": "NotNull",
@@ -445,11 +445,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        // {
-        //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
+        {
+            "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        },
         // {
         //     "postgresql_type": "SqlxTypesChronoNaiveTimeAsTime",
         //     "not_null_or_nullable": "Nullable",
@@ -583,11 +583,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        // {
-        //     "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
+        {
+            "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        },
         // {
         //     "postgresql_type": "SqlxTypesChronoNaiveDateAsDate",
         //     "not_null_or_nullable": "Nullable",
@@ -675,11 +675,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        // {
-        //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
+        {
+            "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        },
         // {
         //     "postgresql_type": "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz",
         //     "not_null_or_nullable": "Nullable",
@@ -879,11 +879,11 @@ generate_postgresql_types::generate_postgresql_types!({
         //     "postgresql_type_pattern": "Standart"
         // }
         // ,
-        {
-            "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
-            "not_null_or_nullable": "NotNull",
-            "postgresql_type_pattern": "Standart"
-        }
+        // {
+        //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange",
+        //     "not_null_or_nullable": "NotNull",
+        //     "postgresql_type_pattern": "Standart"
+        // }
         // ,
         // {
         //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range",
@@ -1065,11 +1065,12 @@ generate_postgresql_types::generate_postgresql_types!({
         //         }
         //     }
         // },
-        // {
-        //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": "Standart"
-        // },
+        {
+            "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": "Standart"
+        }
+        // ,
         // {
         //     "postgresql_type": "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange",
         //     "not_null_or_nullable": "Nullable",
@@ -1113,548 +1114,6 @@ generate_postgresql_types::generate_postgresql_types!({
         // }
     ]
 });
-
-
-// #[derive(Debug, Clone, PartialEq)]
-// pub struct SqlxPostgresTypesPgRangeStdPrimitiveI32(sqlx::postgres::types::PgRange<StdPrimitiveI32AsNotNullInt4Origin>);
-// #[derive(Debug, Clone, PartialEq, Eq, serde::Serialize, serde::Deserialize, thiserror::Error, error_occurence_lib::ErrorOccurence, schemars::JsonSchema)]
-// pub enum SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed {
-//     IncludedStartMoreThanIncludedEnd {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         start: std::primitive::i32,
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         end: std::primitive::i32,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     IncludedStartMoreThanExcludedEnd {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         start: std::primitive::i32,
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         end: std::primitive::i32,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     ExcludedStartMoreThanIncludedEnd {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         start: std::primitive::i32,
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         end: std::primitive::i32,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     ExcludedStartMoreThanExcludedEnd {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         start: std::primitive::i32,
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         end: std::primitive::i32,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-//     IncludedEndCannotBeStdPrimitiveI32Max {
-//         #[eo_to_std_string_string_serialize_deserialize]
-//         end: std::primitive::i32,
-//         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-//     },
-// }
-// impl SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     pub fn try_new(value: sqlx::postgres::types::PgRange<std::primitive::i32>) -> Result<Self, SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed> {
-//         let (start, end) = match (&value.start, &value.end) {
-//             (std::ops::Bound::Included(start), std::ops::Bound::Included(end)) => {
-//                 if start > end {
-//                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartMoreThanIncludedEnd {
-//                         start: *start,
-//                         end: *end,
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//                 if *end == std::primitive::i32::MAX {
-//                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedEndCannotBeStdPrimitiveI32Max {
-//                         end: *end,
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//                 (
-//                     std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                     std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                 )
-//             },
-//             (std::ops::Bound::Included(start), std::ops::Bound::Excluded(end)) => {
-//                 if start > end {
-//                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedStartMoreThanExcludedEnd {
-//                         start: *start,
-//                         end: *end,
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//                 (
-//                     std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                     std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                 )
-//             },
-//             (std::ops::Bound::Included(start), std::ops::Bound::Unbounded) => {
-//                 (
-//                     std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                     std::ops::Bound::Unbounded
-//                 )
-//             },
-//             (std::ops::Bound::Excluded(start), std::ops::Bound::Included(end)) => {
-//                 if start > end {
-//                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartMoreThanIncludedEnd {
-//                         start: *start,
-//                         end: *end,
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//                 if *end == std::primitive::i32::MAX {
-//                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedEndCannotBeStdPrimitiveI32Max {
-//                         end: *end,
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//                 (
-//                     std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                     std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                 )
-//             },
-//             (std::ops::Bound::Excluded(start), std::ops::Bound::Excluded(end)) => {
-//                 if start > end {
-//                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::ExcludedStartMoreThanExcludedEnd {
-//                         start: *start,
-//                         end: *end,
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//                 (
-//                     std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                     std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                 )
-//             },
-//             (std::ops::Bound::Excluded(start), std::ops::Bound::Unbounded) => {
-//                 (
-//                     std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                     std::ops::Bound::Unbounded
-//                 )
-//             },
-//             (std::ops::Bound::Unbounded, std::ops::Bound::Included(end)) => {
-//                 if *end == std::primitive::i32::MAX {
-//                     return Err(SqlxPostgresTypesPgRangeStdPrimitiveI32TryNewErrorNamed::IncludedEndCannotBeStdPrimitiveI32Max {
-//                         end: *end,
-//                         code_occurence: error_occurence_lib::code_occurence!(),
-//                     });
-//                 }
-//                 (
-//                     std::ops::Bound::Unbounded,
-//                     std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                 )
-//             },
-//             (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end)) => {
-//                 (
-//                     std::ops::Bound::Unbounded,
-//                     std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                 )
-//             },
-//             (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
-//                 (
-//                     std::ops::Bound::Unbounded,
-//                     std::ops::Bound::Unbounded
-//                 )
-//             },
-//         };
-//         Ok(Self(sqlx::postgres::types::PgRange {
-//             start,
-//             end
-//         }))
-//     }
-//     pub fn get(&self) -> &sqlx::postgres::types::PgRange<StdPrimitiveI32AsNotNullInt4Origin> {
-//         &self.0
-//     }
-// }
-// const _: () = {
-//     #[allow(unused_extern_crates, clippy::useless_attribute)]
-//     extern crate serde as _serde;
-//     #[automatically_derived]
-//     impl _serde::Serialize for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//         fn serialize<__S>(
-//             &self,
-//             __serializer: __S,
-//         ) -> _serde::__private::Result<__S::Ok, __S::Error>
-//         where
-//             __S: _serde::Serializer,
-//         {
-//             let mut __serde_state = _serde::Serializer::serialize_struct(
-//                 __serializer,
-//                 "SqlxPostgresTypesPgRangeStdPrimitiveI32",
-//                 false as usize + 1 + 1,
-//             )?;
-//             _serde::ser::SerializeStruct::serialize_field(
-//                 &mut __serde_state,
-//                 "start",
-//                 &self.0.start,
-//             )?;
-//             _serde::ser::SerializeStruct::serialize_field(
-//                 &mut __serde_state,
-//                 "end",
-//                 &self.0.end,
-//             )?;
-//             _serde::ser::SerializeStruct::end(__serde_state)
-//         }
-//     }
-// };
-// #[doc(hidden)]
-// #[allow(
-//     non_upper_case_globals,
-//     unused_attributes,
-//     unused_qualifications,
-//     clippy::absolute_paths,
-// )]
-// const _: () = {
-//     #[allow(unused_extern_crates, clippy::useless_attribute)]
-//     extern crate serde as _serde;
-//     #[automatically_derived]
-//     impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//         fn deserialize<__D>(
-//             __deserializer: __D,
-//         ) -> _serde::__private::Result<Self, __D::Error>
-//         where
-//             __D: _serde::Deserializer<'de>,
-//         {
-//             #[allow(non_camel_case_types)]
-//             #[doc(hidden)]
-//             enum __Field {
-//                 __field0,
-//                 __field1,
-//                 __ignore,
-//             }
-//             #[doc(hidden)]
-//             struct __FieldVisitor;
-//             #[automatically_derived]
-//             impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-//                 type Value = __Field;
-//                 fn expecting(
-//                     &self,
-//                     __formatter: &mut _serde::__private::Formatter<'_>,
-//                 ) -> _serde::__private::fmt::Result {
-//                     _serde::__private::Formatter::write_str(
-//                         __formatter,
-//                         "field identifier",
-//                     )
-//                 }
-//                 fn visit_u64<__E>(
-//                     self,
-//                     __value: u64,
-//                 ) -> _serde::__private::Result<Self::Value, __E>
-//                 where
-//                     __E: _serde::de::Error,
-//                 {
-//                     match __value {
-//                         0u64 => _serde::__private::Ok(__Field::__field0),
-//                         1u64 => _serde::__private::Ok(__Field::__field1),
-//                         _ => _serde::__private::Ok(__Field::__ignore),
-//                     }
-//                 }
-//                 fn visit_str<__E>(
-//                     self,
-//                     __value: &str,
-//                 ) -> _serde::__private::Result<Self::Value, __E>
-//                 where
-//                     __E: _serde::de::Error,
-//                 {
-//                     match __value {
-//                         "start" => _serde::__private::Ok(__Field::__field0),
-//                         "end" => _serde::__private::Ok(__Field::__field1),
-//                         _ => _serde::__private::Ok(__Field::__ignore),
-//                     }
-//                 }
-//                 fn visit_bytes<__E>(
-//                     self,
-//                     __value: &[u8],
-//                 ) -> _serde::__private::Result<Self::Value, __E>
-//                 where
-//                     __E: _serde::de::Error,
-//                 {
-//                     match __value {
-//                         b"start" => _serde::__private::Ok(__Field::__field0),
-//                         b"end" => _serde::__private::Ok(__Field::__field1),
-//                         _ => _serde::__private::Ok(__Field::__ignore),
-//                     }
-//                 }
-//             }
-//             #[automatically_derived]
-//             impl<'de> _serde::Deserialize<'de> for __Field {
-//                 #[inline]
-//                 fn deserialize<__D>(
-//                     __deserializer: __D,
-//                 ) -> _serde::__private::Result<Self, __D::Error>
-//                 where
-//                     __D: _serde::Deserializer<'de>,
-//                 {
-//                     _serde::Deserializer::deserialize_identifier(
-//                         __deserializer,
-//                         __FieldVisitor,
-//                     )
-//                 }
-//             }
-//             #[doc(hidden)]
-//             struct __Visitor<'de> {
-//                 marker: _serde::__private::PhantomData<
-//                     SqlxPostgresTypesPgRangeStdPrimitiveI32,
-//                 >,
-//                 lifetime: _serde::__private::PhantomData<&'de ()>,
-//             }
-//             #[automatically_derived]
-//             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-//                 type Value = SqlxPostgresTypesPgRangeStdPrimitiveI32;
-//                 fn expecting(
-//                     &self,
-//                     __formatter: &mut _serde::__private::Formatter<'_>,
-//                 ) -> _serde::__private::fmt::Result {
-//                     _serde::__private::Formatter::write_str(
-//                         __formatter,
-//                         "struct SqlxPostgresTypesPgRangeStdPrimitiveI32",
-//                     )
-//                 }
-//                 #[inline]
-//                 fn visit_seq<__A>(
-//                     self,
-//                     mut __seq: __A,
-//                 ) -> _serde::__private::Result<Self::Value, __A::Error>
-//                 where
-//                     __A: _serde::de::SeqAccess<'de>,
-//                 {
-//                     let __field0 = match _serde::de::SeqAccess::next_element::<
-//                         std::ops::Bound<std::primitive::i32>,
-//                     >(&mut __seq)? {
-//                         _serde::__private::Some(__value) => __value,
-//                         _serde::__private::None => {
-//                             return _serde::__private::Err(
-//                                 _serde::de::Error::invalid_length(
-//                                     0usize,
-//                                     &"struct SqlxPostgresTypesPgRangeStdPrimitiveI32 with 2 elements",
-//                                 ),
-//                             );
-//                         }
-//                     };
-//                     let __field1 = match _serde::de::SeqAccess::next_element::<
-//                         std::ops::Bound<std::primitive::i32>,
-//                     >(&mut __seq)? {
-//                         _serde::__private::Some(__value) => __value,
-//                         _serde::__private::None => {
-//                             return _serde::__private::Err(
-//                                 _serde::de::Error::invalid_length(
-//                                     1usize,
-//                                     &"struct SqlxPostgresTypesPgRangeStdPrimitiveI32 with 2 elements",
-//                                 ),
-//                             );
-//                         }
-//                     };
-//                     match SqlxPostgresTypesPgRangeStdPrimitiveI32::try_new(sqlx::postgres::types::PgRange {
-//                         start: __field0,
-//                         end: __field1
-//                     }) {
-//                         Ok(value) => _serde::__private::Ok(value),
-//                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-//                     }
-//                 }
-//                 #[inline]
-//                 fn visit_map<__A>(
-//                     self,
-//                     mut __map: __A,
-//                 ) -> _serde::__private::Result<Self::Value, __A::Error>
-//                 where
-//                     __A: _serde::de::MapAccess<'de>,
-//                 {
-//                     let mut __field0: _serde::__private::Option<
-//                         std::ops::Bound<std::primitive::i32>,
-//                     > = _serde::__private::None;
-//                     let mut __field1: _serde::__private::Option<
-//                         std::ops::Bound<std::primitive::i32>,
-//                     > = _serde::__private::None;
-//                     while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-//                         __Field,
-//                     >(&mut __map)? {
-//                         match __key {
-//                             __Field::__field0 => {
-//                                 if _serde::__private::Option::is_some(&__field0) {
-//                                     return _serde::__private::Err(
-//                                         <__A::Error as _serde::de::Error>::duplicate_field("start"),
-//                                     );
-//                                 }
-//                                 __field0 = _serde::__private::Some(
-//                                     _serde::de::MapAccess::next_value::<
-//                                         std::ops::Bound<std::primitive::i32>,
-//                                     >(&mut __map)?,
-//                                 );
-//                             }
-//                             __Field::__field1 => {
-//                                 if _serde::__private::Option::is_some(&__field1) {
-//                                     return _serde::__private::Err(
-//                                         <__A::Error as _serde::de::Error>::duplicate_field("end"),
-//                                     );
-//                                 }
-//                                 __field1 = _serde::__private::Some(
-//                                     _serde::de::MapAccess::next_value::<
-//                                         std::ops::Bound<std::primitive::i32>,
-//                                     >(&mut __map)?,
-//                                 );
-//                             }
-//                             _ => {
-//                                 let _ = _serde::de::MapAccess::next_value::<
-//                                     _serde::de::IgnoredAny,
-//                                 >(&mut __map)?;
-//                             }
-//                         }
-//                     }
-//                     let __field0 = match __field0 {
-//                         _serde::__private::Some(__field0) => __field0,
-//                         _serde::__private::None => {
-//                             _serde::__private::de::missing_field("start")?
-//                         }
-//                     };
-//                     let __field1 = match __field1 {
-//                         _serde::__private::Some(__field1) => __field1,
-//                         _serde::__private::None => {
-//                             _serde::__private::de::missing_field("end")?
-//                         }
-//                     };
-//                     match SqlxPostgresTypesPgRangeStdPrimitiveI32::try_new(sqlx::postgres::types::PgRange {
-//                         start: __field0,
-//                         end: __field1
-//                     }) {
-//                         Ok(value) => _serde::__private::Ok(value),
-//                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-//                     }
-//                 }
-//             }
-//             #[doc(hidden)]
-//             const FIELDS: &'static [&'static str] = &["start", "end"];
-//             _serde::Deserializer::deserialize_struct(
-//                 __deserializer,
-//                 "SqlxPostgresTypesPgRangeStdPrimitiveI32",
-//                 FIELDS,
-//                 __Visitor {
-//                     marker: _serde::__private::PhantomData::<
-//                         SqlxPostgresTypesPgRangeStdPrimitiveI32,
-//                     >,
-//                     lifetime: _serde::__private::PhantomData,
-//                 },
-//             )
-//         }
-//     }
-// };
-// impl std::convert::Into<sqlx::postgres::types::PgRange<std::primitive::i32>> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     fn into(self) -> sqlx::postgres::types::PgRange<std::primitive::i32> {
-//         sqlx::postgres::types::PgRange {
-//             start: match self.0.start {
-//                 std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),//<StdPrimitiveI32AsNotNullInt4 as crate::PostgresqlType>::into_inner(value)
-//                 std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-//                 std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-//             },
-//             end: match self.0.end {
-//                 std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-//                 std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-//                 std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-//             },
-//         }
-//     }
-// }
-// impl error_occurence_lib::ToStdStringString for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     fn to_std_string_string(&self) -> std::string::String {
-//         self.0.to_string()
-//     }
-// }
-// impl crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
-//         Self(sqlx::postgres::types::PgRange {
-//             start: std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(0)),
-//             end: std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(10)),
-//         })
-//     }
-// }
-// impl sqlx::Type<sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
-//         <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Type<sqlx::Postgres>>::type_info()
-//     }
-//     fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
-//         <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
-//     }
-// }
-// impl sqlx::Encode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     fn encode_by_ref(&self, buf: &mut sqlx::postgres::PgArgumentBuffer) -> Result<sqlx::encode::IsNull, Box<dyn std::error::Error + Send + Sync>> {
-//         sqlx::Encode::<sqlx::Postgres>::encode_by_ref(&self.0, buf)
-//     }
-// }
-// impl sqlx::Decode<'_, sqlx::Postgres> for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
-//         match <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
-//             Ok(value) => Ok(Self({
-//                 let (start, end) = match (&value.start, &value.end) {
-//                     (std::ops::Bound::Included(start), std::ops::Bound::Included(end)) => {
-//                         (
-//                             std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                             std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                         )
-//                     },
-//                     (std::ops::Bound::Included(start), std::ops::Bound::Excluded(end)) => {
-//                         (
-//                             std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                             std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                         )
-//                     },
-//                     (std::ops::Bound::Included(start), std::ops::Bound::Unbounded) => {
-//                         (
-//                             std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                             std::ops::Bound::Unbounded
-//                         )
-//                     },
-//                     (std::ops::Bound::Excluded(start), std::ops::Bound::Included(end)) => {
-//                         (
-//                             std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                             std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                         )
-//                     },
-//                     (std::ops::Bound::Excluded(start), std::ops::Bound::Excluded(end)) => {
-//                         (
-//                             std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                             std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                         )
-//                     },
-//                     (std::ops::Bound::Excluded(start), std::ops::Bound::Unbounded) => {
-//                         (
-//                             std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*start)),
-//                             std::ops::Bound::Unbounded
-//                         )
-//                     },
-//                     (std::ops::Bound::Unbounded, std::ops::Bound::Included(end)) => {
-//                         (
-//                             std::ops::Bound::Unbounded,
-//                             std::ops::Bound::Included(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                         )
-//                     },
-//                     (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(end)) => {
-//                         (
-//                             std::ops::Bound::Unbounded,
-//                             std::ops::Bound::Excluded(StdPrimitiveI32AsNotNullInt4Origin::new(*end))
-//                         )
-//                     },
-//                     (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => {
-//                         (
-//                             std::ops::Bound::Unbounded,
-//                             std::ops::Bound::Unbounded
-//                         )
-//                     },
-//                 };
-//                 sqlx::postgres::types::PgRange {
-//                     start,
-//                     end
-//                 }
-//             })),
-//             Err(error) => Err(error),
-//         }
-//     }
-// }
-// impl sqlx::postgres::PgHasArrayType for SqlxPostgresTypesPgRangeStdPrimitiveI32 {
-//     fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-//         <sqlx::postgres::types::PgRange<std::primitive::i32> as sqlx::postgres::PgHasArrayType>::array_type_info()
-//     }
-// }
-
 
 ////////////////////
 
