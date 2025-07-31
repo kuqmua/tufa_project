@@ -1449,6 +1449,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     One,
                     Two,
                     Three,
+                    Four,
                 }
                 impl ParameterNumber {
                     fn get_index(&self) -> std::primitive::usize {
@@ -1456,6 +1457,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             Self::One => 0,
                             Self::Two => 1,
                             Self::Three => 2,
+                            Self::Four => 3,
                         }
                     }
                     fn get_index_starting_with_one(&self) -> std::primitive::usize {
@@ -1463,6 +1465,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             Self::One => 1,
                             Self::Two => 2,
                             Self::Three => 3,
+                            Self::Four => 4,
                         }
                     }
                     fn get_vec_from_index_starting_with_one(&self) -> std::vec::Vec<std::primitive::usize> {
@@ -1525,6 +1528,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Two);
                     let serde_state_initialization_three_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Three);
+                    let serde_state_initialization_four_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Four);
                     let generate_serialize_field_token_stream = |field_name: &dyn std::fmt::Display, third_parameter_token_stream: &dyn quote::ToTokens| {
                         let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_name);
                         quote::quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_double_quotes_token_stream, #third_parameter_token_stream)?;}
@@ -1580,95 +1584,61 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             //todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl _serde::Serialize for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
-                                        fn serialize<__S>(
-                                            &self,
-                                            __serializer: __S,
-                                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                                        where
-                                            __S: _serde::Serializer,
-                                        {
-                                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                                __serializer,
-                                                "SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin",
-                                                false as usize + 1 + 1 + 1 + 1,
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "hour",
-                                                &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::hour(&self.0),
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "min",
-                                                &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&self.0),
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "sec",
-                                                &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&self.0),
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "micro",
-                                                &(<sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&self.0) / 1000),
-                                            )?;
-                                            _serde::ser::SerializeStruct::end(__serde_state)
-                                        }
-                                    }
-                                };
-                            }
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                                quote::quote!{
+                                    #serde_state_initialization_four_fields_token_stream
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "hour",
+                                        &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::hour(&self.0),
+                                    )?;
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "min",
+                                        &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::minute(&self.0),
+                                    )?;
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "sec",
+                                        &<sqlx::types::chrono::NaiveTime as chrono::Timelike>::second(&self.0),
+                                    )?;
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "micro",
+                                        &(<sqlx::types::chrono::NaiveTime as chrono::Timelike>::nanosecond(&self.0) / 1000),
+                                    )?;
+                                    _serde::ser::SerializeStruct::end(__serde_state)
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             //todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl _serde::Serialize for SqlxTypesTimeTimeAsNotNullTimeOrigin {
-                                        fn serialize<__S>(
-                                            &self,
-                                            __serializer: __S,
-                                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                                        where
-                                            __S: _serde::Serializer,
-                                        {
-                                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                                __serializer,
-                                                "SqlxTypesTimeTimeAsNotNullTimeOrigin",
-                                                false as usize + 1 + 1 + 1 + 1,
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "hour",
-                                                &self.0.hour(),
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "minute",
-                                                &self.0.minute(),
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "second",
-                                                &self.0.second(),
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "microsecond",
-                                                &self.0.microsecond(),
-                                            )?;
-                                            _serde::ser::SerializeStruct::end(__serde_state)
-                                        }
-                                    }
-                                };
-                            }
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                                quote::quote!{
+                                    #serde_state_initialization_four_fields_token_stream
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "hour",
+                                        &self.0.hour(),
+                                    )?;
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "minute",
+                                        &self.0.minute(),
+                                    )?;
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "second",
+                                        &self.0.second(),
+                                    )?;
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "microsecond",
+                                        &self.0.microsecond(),
+                                    )?;
+                                    _serde::ser::SerializeStruct::end(__serde_state)
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                             let generate_serialize_field_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value});
@@ -1699,60 +1669,33 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             //todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl _serde::Serialize for SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin {
-                                        fn serialize<__S>(
-                                            &self,
-                                            __serializer: __S,
-                                        ) -> _serde::__private::Result<__S::Ok, __S::Error>
-                                        where
-                                            __S: _serde::Serializer,
-                                        {
-                                            let mut __serde_state = _serde::Serializer::serialize_struct(
-                                                __serializer,
-                                                "SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
-                                                false as usize + 1 + 1,
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "date",
-                                                &SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(self.0.date()).unwrap(),
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "time",
-                                                &SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(self.0.time()).unwrap(),
-                                            )?;
-                                            _serde::ser::SerializeStruct::end(__serde_state)
-                                        }
-                                    }
-                                };
-                            }
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                                quote::quote!{
+                                    #serde_state_initialization_two_fields_token_stream
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "date",
+                                        &SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(self.0.date()).unwrap(),
+                                    )?;
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "time",
+                                        &SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(self.0.time()).unwrap(),
+                                    )?;
+                                    _serde::ser::SerializeStruct::end(__serde_state)
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             //todo 
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl _serde::Serialize for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
-                                        fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                                        where
-                                            __S: _serde::Serializer,
-                                        {
-                                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin", false as usize + 1 + 1)?;
-                                            _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "date_naive", &SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(self.0.date_naive()).unwrap())?;
-                                            _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "time", &SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(self.0.time()).unwrap())?;//here
-                                            _serde::ser::SerializeStruct::end(__serde_state)
-                                        }
-                                    }
-                                };
-                            }
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                                quote::quote!{
+                                    #serde_state_initialization_two_fields_token_stream
+                                    _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "date_naive", &SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(self.0.date_naive()).unwrap())?;
+                                    _serde::ser::SerializeStruct::serialize_field(&mut __serde_state, "time", &SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(self.0.time()).unwrap())?;//here
+                                    _serde::ser::SerializeStruct::end(__serde_state)
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_sqlx_types_uuid_uuid_token_stream),
@@ -1764,116 +1707,86 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl _serde::Serialize for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin {
-                                        fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                                        where
-                                            __S: _serde::Serializer,
-                                        {
-                                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin", false as std::primitive::usize + 1 + 1)?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "start",
-                                                &match self.0.start {
-                                                    std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
-                                                    std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
-                                                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                }
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "end",
-                                                &match self.0.end {
-                                                    std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
-                                                    std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
-                                                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                }
-                                            )?;
-                                            _serde::ser::SerializeStruct::end(__serde_state)
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                                quote::quote!{
+                                    #serde_state_initialization_two_fields_token_stream
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "start",
+                                        &match self.0.start {
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                         }
-                                    }
-                                };
-                            }
+                                    )?;
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "end",
+                                        &match self.0.end {
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                        }
+                                    )?;
+                                    _serde::ser::SerializeStruct::end(__serde_state)
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream
                             //todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl _serde::Serialize for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin {
-                                        fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                                        where
-                                            __S: _serde::Serializer,
-                                        {
-                                            let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin", false as std::primitive::usize + 1 + 1)?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "start",
-                                                &match self.0.start {
-                                                    std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
-                                                    std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
-                                                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                }
-                                            )?;
-                                            _serde::ser::SerializeStruct::serialize_field(
-                                                &mut __serde_state,
-                                                "end",
-                                                &match self.0.end {
-                                                    std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
-                                                    std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
-                                                    std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                }
-                                            )?;
-                                            _serde::ser::SerializeStruct::end(__serde_state)
+                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                                quote::quote!{
+                                    #serde_state_initialization_two_fields_token_stream
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "start",
+                                        &match self.0.start {
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                         }
-                                    }
-                                };
-                            }
+                                    )?;
+                                    _serde::ser::SerializeStruct::serialize_field(
+                                        &mut __serde_state,
+                                        "end",
+                                        &match self.0.end {
+                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(value).unwrap()),
+                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                        }
+                                    )?;
+                                    _serde::ser::SerializeStruct::end(__serde_state)
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => {
                             postgresql_crud_macros_common::DeriveOrImpl::Impl({
                                 // impl_serde_serialize_for_postgresql_type_not_null_tokens_serde_serialize_content_e5bb5640_d9fe_4ed3_9862_6943f8efee90_token_stream
-                                quote::quote!{
-                                    const _: () = {
-                                        #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                        extern crate serde as _serde;
-                                        #[automatically_derived]
-                                        impl _serde::Serialize for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin {
-                                            fn serialize<__S>(&self, __serializer: __S) -> _serde::__private::Result<__S::Ok, __S::Error>
-                                            where
-                                                __S: _serde::Serializer,
-                                            {
-                                                let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin", false as std::primitive::usize + 1 + 1)?;
-                                                _serde::ser::SerializeStruct::serialize_field(
-                                                    &mut __serde_state,
-                                                    "start",
-                                                    &match self.0.start {
-                                                        std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
-                                                        std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
-                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                    }
-                                                )?;
-                                                _serde::ser::SerializeStruct::serialize_field(
-                                                    &mut __serde_state,
-                                                    "end",
-                                                    &match self.0.end {
-                                                        std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
-                                                        std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
-                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                    }
-                                                )?;
-                                                _serde::ser::SerializeStruct::end(__serde_state)
+                                generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                                    quote::quote!{
+                                        #serde_state_initialization_two_fields_token_stream
+                                        _serde::ser::SerializeStruct::serialize_field(
+                                            &mut __serde_state,
+                                            "start",
+                                            &match self.0.start {
+                                                std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
+                                                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
+                                                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                             }
-                                        }
-                                    };
-                                }
+                                        )?;
+                                        _serde::ser::SerializeStruct::serialize_field(
+                                            &mut __serde_state,
+                                            "end",
+                                            &match self.0.end {
+                                                std::ops::Bound::Included(value) => std::ops::Bound::Included(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
+                                                std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::try_new(value).unwrap()),
+                                                std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                            }
+                                        )?;
+                                        _serde::ser::SerializeStruct::end(__serde_state)
+                                    }
+                                })
                             })
                         }
                     }
@@ -2051,11 +1964,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     });
                     let (seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream, seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream, seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream) = {
                         let generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream = |parameter_number: &ParameterNumber| {
-                            let index_token_stream = match &parameter_number {
-                                ParameterNumber::One => quote::quote! {0},
-                                ParameterNumber::Two => quote::quote! {1},
-                                ParameterNumber::Three => quote::quote! {2},
-                            };
+                            let index_token_stream = parameter_number.get_index().to_string().parse::<proc_macro2::TokenStream>().unwrap();
                             quote::quote! {__seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(#index_token_stream, &self))?;}
                         };
                         (
