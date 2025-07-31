@@ -1599,28 +1599,36 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             //todo
                             generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                                let hour_serialize_field_token_stream = generate_serialize_field_token_stream(
+                                    &hour_snake_case,
+                                    &quote::quote!{
+                                        &<#field_type_standart_not_null as chrono::Timelike>::hour(&self.0)
+                                    }
+                                );
+                                let min_serialize_field_token_stream = generate_serialize_field_token_stream(
+                                    &min_snake_case,
+                                    &quote::quote!{
+                                        &<#field_type_standart_not_null as chrono::Timelike>::minute(&self.0)
+                                    }
+                                );
+                                let sec_serialize_field_token_stream = generate_serialize_field_token_stream(
+                                    &sec_snake_case,
+                                    &quote::quote!{
+                                        &<#field_type_standart_not_null as chrono::Timelike>::second(&self.0)
+                                    }
+                                );
+                                let micro_serialize_field_token_stream = generate_serialize_field_token_stream(
+                                    &micro_snake_case,
+                                    &quote::quote!{
+                                        &(<#field_type_standart_not_null as chrono::Timelike>::nanosecond(&self.0) / 1000)//it a safe if initialization checked
+                                    }
+                                );
                                 quote::quote!{
                                     #serde_state_initialization_four_fields_token_stream
-                                    _serde::ser::SerializeStruct::serialize_field(
-                                        &mut __serde_state,
-                                        "hour",
-                                        &<#field_type_standart_not_null as chrono::Timelike>::hour(&self.0),
-                                    )?;
-                                    _serde::ser::SerializeStruct::serialize_field(
-                                        &mut __serde_state,
-                                        "min",
-                                        &<#field_type_standart_not_null as chrono::Timelike>::minute(&self.0),
-                                    )?;
-                                    _serde::ser::SerializeStruct::serialize_field(
-                                        &mut __serde_state,
-                                        "sec",
-                                        &<#field_type_standart_not_null as chrono::Timelike>::second(&self.0),
-                                    )?;
-                                    _serde::ser::SerializeStruct::serialize_field(
-                                        &mut __serde_state,
-                                        "micro",
-                                        &(<#field_type_standart_not_null as chrono::Timelike>::nanosecond(&self.0) / 1000),
-                                    )?;
+                                    #hour_serialize_field_token_stream
+                                    #min_serialize_field_token_stream
+                                    #sec_serialize_field_token_stream
+                                    #micro_serialize_field_token_stream
                                     _serde::ser::SerializeStruct::end(__serde_state)
                                 }
                             })
