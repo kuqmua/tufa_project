@@ -1486,8 +1486,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             Self::Four => 4,
                         }
                     }
-                    fn get_vec_from_index_starting_with_one(&self) -> std::vec::Vec<std::primitive::usize> {
-                        (0..self.get_index_starting_with_one()).collect()
+                    fn get_vec_from_index_starting_with_zero(&self) -> std::vec::Vec<std::primitive::usize> {
+                        (0..=self.get_index()).collect()
                     }
                 }
                 let ident_standart_not_null_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_standart_not_null_upper_camel_case);
@@ -1537,7 +1537,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber| {
                         let parameter_number_token_stream = {
-                            let value = parameter_number.get_vec_from_index_starting_with_one().into_iter().map(|_| quote::quote! {+ 1});
+                            let value = parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|_| quote::quote! {+ 1});
                             quote::quote! {#(#value)*}
                         };
                         quote::quote! {
@@ -1845,11 +1845,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let parameter_number_two = ParameterNumber::Two;
                     let parameter_number_three = ParameterNumber::Three;
+                    let parameter_number_four = ParameterNumber::Four;
                     let generate_field_index_token_stream = |index: std::primitive::usize| format!("__{}{index}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().unwrap();
-                    let (enum_field_two_token_stream, enum_field_three_token_stream) = {
+                    let (enum_field_two_token_stream, enum_field_three_token_stream, enum_field_four_token_stream) = {
                         let generate_enum_field_token_stream = |parameter_number: &ParameterNumber| {
                             let fields_token_stream = {
-                                let fields_token_stream = parameter_number.get_vec_from_index_starting_with_one().into_iter().map(&generate_field_index_token_stream);
+                                let fields_token_stream = parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(&generate_field_index_token_stream);
                                 quote::quote! {#(#fields_token_stream),*}
                             };
                             quote::quote! {
@@ -1861,7 +1862,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         };
-                        (generate_enum_field_token_stream(&parameter_number_two), generate_enum_field_token_stream(&parameter_number_three))
+                        (generate_enum_field_token_stream(&parameter_number_two), generate_enum_field_token_stream(&parameter_number_three), generate_enum_field_token_stream(&parameter_number_four))
                     };
                     let (fn_expecting_struct_ident_double_quotes_token_stream, fn_expecting_field_identifier_token_stream, fn_expecting_months_or_days_or_microseconds_token_stream, fn_expecting_start_or_end_token_stream) = {
                         let generate_fn_expecting_token_stream = |content_token_stream: &dyn quote::ToTokens| {
@@ -2078,7 +2079,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let (fn_visit_u64_two_token_stream, fn_visit_u64_three_token_stream) = {
                         let generate_fn_visit_u64_token_stream = |parameter_number: &ParameterNumber| {
                             let fields_token_stream = {
-                                parameter_number.get_vec_from_index_starting_with_one().into_iter().map(|element| {
+                                parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|element| {
                                     let index_variant_token_stream = format!("{element}u64").parse::<proc_macro2::TokenStream>().unwrap();
                                     let field_index_token_stream = generate_field_index_token_stream(element);
                                     quote::quote! {#index_variant_token_stream => serde::__private::Ok(__Field::#field_index_token_stream)}
@@ -2708,15 +2709,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    #[allow(non_camel_case_types)]
-                                    #[doc(hidden)]
-                                    enum __Field {
-                                        __field0,
-                                        __field1,
-                                        __field2,
-                                        __field3,
-                                        __ignore,
-                                    }
+                                    #enum_field_four_token_stream
                                     #[doc(hidden)]
                                     struct __FieldVisitor;
                                     #[automatically_derived]
@@ -2992,15 +2985,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    #[allow(non_camel_case_types)]
-                                    #[doc(hidden)]
-                                    enum __Field {
-                                        __field0,
-                                        __field1,
-                                        __field2,
-                                        __field3,
-                                        __ignore,
-                                    }
+                                    #enum_field_four_token_stream
                                     #[doc(hidden)]
                                     struct __FieldVisitor;
                                     #[automatically_derived]
@@ -3357,13 +3342,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    #[allow(non_camel_case_types)]
-                                    #[doc(hidden)]
-                                    enum __Field {
-                                        __field0,
-                                        __field1,
-                                        __ignore,
-                                    }
+                                    #enum_field_two_token_stream
                                     #[doc(hidden)]
                                     struct __FieldVisitor;
                                     #[automatically_derived]
@@ -3571,13 +3550,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    #[allow(non_camel_case_types)]
-                                    #[doc(hidden)]
-                                    enum __Field {
-                                        __field0,
-                                        __field1,
-                                        __ignore,
-                                    }
+                                    #enum_field_two_token_stream
                                     #[doc(hidden)]
                                     struct __FieldVisitor;
                                     #[automatically_derived]
@@ -3823,13 +3796,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // )
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    #[allow(non_camel_case_types)]
-                                    #[doc(hidden)]
-                                    enum __Field {
-                                        __field0,
-                                        __field1,
-                                        __ignore,
-                                    }
+                                    #enum_field_two_token_stream
                                     #[doc(hidden)]
                                     struct __FieldVisitor;
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
@@ -3972,13 +3939,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // })
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    #[allow(non_camel_case_types)]
-                                    #[doc(hidden)]
-                                    enum __Field {
-                                        __field0,
-                                        __field1,
-                                        __ignore,
-                                    }
+                                    #enum_field_two_token_stream
                                     #[doc(hidden)]
                                     struct __FieldVisitor;
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
@@ -4112,13 +4073,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(&impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream)
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    #[allow(non_camel_case_types)]
-                                    #[doc(hidden)]
-                                    enum __Field {
-                                        __field0,
-                                        __field1,
-                                        __ignore,
-                                    }
+                                    #enum_field_two_token_stream
                                     #[doc(hidden)]
                                     struct __FieldVisitor;
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
