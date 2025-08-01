@@ -1696,14 +1696,28 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         })),
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                            let date_naive_serialize_field_token_stream = generate_serialize_field_token_stream(
-                                &date_naive_snake_case,
-                                &quote::quote!{&#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(self.0.#date_naive_snake_case()).unwrap()}
-                            );
-                            let time_serialize_field_token_stream = generate_serialize_field_token_stream(
-                                &time_snake_case,
-                                &quote::quote!{&#sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::try_new(self.0.#time_snake_case()).unwrap()}
-                            );
+                            enum DateNaiveOrTime {
+                                Date,
+                                Time
+                            }
+                            let generate_serialize_field_try_new_unwrap_token_stream = |date_naive_or_time: &DateNaiveOrTime|{
+                                let date_naive_or_time_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &date_naive_or_time {
+                                    DateNaiveOrTime::Date => &date_naive_snake_case,
+                                    DateNaiveOrTime::Time => &time_snake_case,
+                                };
+                                generate_serialize_field_token_stream(
+                                    &date_naive_or_time_token_stream,
+                                    &{
+                                        let ident_token_stream: &dyn quote::ToTokens = match &date_naive_or_time {
+                                            DateNaiveOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
+                                            DateNaiveOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case
+                                        };
+                                        quote::quote!{&#ident_token_stream::try_new(self.0.#date_naive_or_time_token_stream()).unwrap()}
+                                    }
+                                )
+                            };
+                            let date_naive_serialize_field_token_stream = generate_serialize_field_try_new_unwrap_token_stream(&DateNaiveOrTime::Date);
+                            let time_serialize_field_token_stream = generate_serialize_field_try_new_unwrap_token_stream(&DateNaiveOrTime::Time);
                             quote::quote!{
                                 #serde_state_initialization_two_fields_token_stream
                                 #date_naive_serialize_field_token_stream
