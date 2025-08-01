@@ -2627,1161 +2627,1086 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdPrimitiveBoolAsBool => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             //todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: _serde::__private::PhantomData<
+                                            StdStringStringAsNotNullTextOrigin,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    }
                                     #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for StdStringStringAsNotNullTextOrigin {
-                                        fn deserialize<__D>(
-                                            __deserializer: __D,
-                                        ) -> _serde::__private::Result<Self, __D::Error>
-                                        where
-                                            __D: _serde::Deserializer<'de>,
-                                        {
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: _serde::__private::PhantomData<
-                                                    StdStringStringAsNotNullTextOrigin,
-                                                >,
-                                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = StdStringStringAsNotNullTextOrigin;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "tuple struct StdStringStringAsNotNullTextOrigin",
-                                                    )
-                                                }
-                                                #[inline]
-                                                fn visit_newtype_struct<__E>(
-                                                    self,
-                                                    __e: __E,
-                                                ) -> _serde::__private::Result<Self::Value, __E::Error>
-                                                where
-                                                    __E: _serde::Deserializer<'de>,
-                                                {
-                                                    let __field0: std::string::String = <std::string::String as _serde::Deserialize>::deserialize(
-                                                        __e,
-                                                    )?;
-                                                    match StdStringStringAsNotNullTextOrigin::try_new_for_deserialize(__field0) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(
-                                                    self,
-                                                    mut __seq: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                                        std::string::String,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    0usize,
-                                                                    &"tuple struct StdStringStringAsNotNullTextOrigin with 1 element",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    match StdStringStringAsNotNullTextOrigin::try_new_for_deserialize(__field0) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                            }
-                                            _serde::Deserializer::deserialize_newtype_struct(
-                                                __deserializer,
-                                                "StdStringStringAsNotNullTextOrigin",
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<
-                                                        StdStringStringAsNotNullTextOrigin,
-                                                    >,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = StdStringStringAsNotNullTextOrigin;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter<'_>,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "tuple struct StdStringStringAsNotNullTextOrigin",
                                             )
                                         }
+                                        #[inline]
+                                        fn visit_newtype_struct<__E>(
+                                            self,
+                                            __e: __E,
+                                        ) -> _serde::__private::Result<Self::Value, __E::Error>
+                                        where
+                                            __E: _serde::Deserializer<'de>,
+                                        {
+                                            let __field0: std::string::String = <std::string::String as _serde::Deserialize>::deserialize(
+                                                __e,
+                                            )?;
+                                            match StdStringStringAsNotNullTextOrigin::try_new_for_deserialize(__field0) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                std::string::String,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &"tuple struct StdStringStringAsNotNullTextOrigin with 1 element",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            match StdStringStringAsNotNullTextOrigin::try_new_for_deserialize(__field0) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
                                     }
-                                };
-                            }
+                                    _serde::Deserializer::deserialize_newtype_struct(
+                                        __deserializer,
+                                        "StdStringStringAsNotNullTextOrigin",
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<
+                                                StdStringStringAsNotNullTextOrigin,
+                                            >,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            })
                         }),
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __field2,
+                                        __field3,
+                                        __ignore,
+                                    }
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
                                     #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin {
+                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter<'_>,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "field identifier",
+                                            )
+                                        }
+                                        fn visit_u64<__E>(
+                                            self,
+                                            __value: u64,
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => _serde::__private::Ok(__Field::__field0),
+                                                1u64 => _serde::__private::Ok(__Field::__field1),
+                                                2u64 => _serde::__private::Ok(__Field::__field2),
+                                                3u64 => _serde::__private::Ok(__Field::__field3),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_str<__E>(
+                                            self,
+                                            __value: &str,
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                "hour" => _serde::__private::Ok(__Field::__field0),
+                                                "min" => _serde::__private::Ok(__Field::__field1),
+                                                "sec" => _serde::__private::Ok(__Field::__field2),
+                                                "micro" => _serde::__private::Ok(__Field::__field3),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_bytes<__E>(
+                                            self,
+                                            __value: &[u8],
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"hour" => _serde::__private::Ok(__Field::__field0),
+                                                b"min" => _serde::__private::Ok(__Field::__field1),
+                                                b"sec" => _serde::__private::Ok(__Field::__field2),
+                                                b"micro" => _serde::__private::Ok(__Field::__field3),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de> for __Field {
+                                        #[inline]
                                         fn deserialize<__D>(
                                             __deserializer: __D,
                                         ) -> _serde::__private::Result<Self, __D::Error>
                                         where
                                             __D: _serde::Deserializer<'de>,
                                         {
-                                            #[allow(non_camel_case_types)]
-                                            #[doc(hidden)]
-                                            enum __Field {
-                                                __field0,
-                                                __field1,
-                                                __field2,
-                                                __field3,
-                                                __ignore,
-                                            }
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = __Field;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "field identifier",
-                                                    )
-                                                }
-                                                fn visit_u64<__E>(
-                                                    self,
-                                                    __value: u64,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                                        2u64 => _serde::__private::Ok(__Field::__field2),
-                                                        3u64 => _serde::__private::Ok(__Field::__field3),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_str<__E>(
-                                                    self,
-                                                    __value: &str,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        "hour" => _serde::__private::Ok(__Field::__field0),
-                                                        "min" => _serde::__private::Ok(__Field::__field1),
-                                                        "sec" => _serde::__private::Ok(__Field::__field2),
-                                                        "micro" => _serde::__private::Ok(__Field::__field3),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_bytes<__E>(
-                                                    self,
-                                                    __value: &[u8],
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        b"hour" => _serde::__private::Ok(__Field::__field0),
-                                                        b"min" => _serde::__private::Ok(__Field::__field1),
-                                                        b"sec" => _serde::__private::Ok(__Field::__field2),
-                                                        b"micro" => _serde::__private::Ok(__Field::__field3),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                                #[inline]
-                                                fn deserialize<__D>(
-                                                    __deserializer: __D,
-                                                ) -> _serde::__private::Result<Self, __D::Error>
-                                                where
-                                                    __D: _serde::Deserializer<'de>,
-                                                {
-                                                    _serde::Deserializer::deserialize_identifier(
-                                                        __deserializer,
-                                                        __FieldVisitor,
-                                                    )
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: _serde::__private::PhantomData<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>,
-                                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin",
-                                                    )
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(
-                                                    self,
-                                                    mut __seq: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                                        std::primitive::u32,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    0usize,
-                                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                                        std::primitive::u32,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    1usize,
-                                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field2 = match _serde::de::SeqAccess::next_element::<
-                                                        std::primitive::u32,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    2usize,
-                                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field3 = match _serde::de::SeqAccess::next_element::<
-                                                        std::primitive::u32,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    3usize,
-                                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                                #[inline]
-                                                fn visit_map<__A>(
-                                                    self,
-                                                    mut __map: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut __field0: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
-                                                    let mut __field1: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
-                                                    let mut __field2: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
-                                                    let mut __field3: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
-                                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                                        __Field,
-                                                    >(&mut __map)? {
-                                                        match __key {
-                                                            __Field::__field0 => {
-                                                                if _serde::__private::Option::is_some(&__field0) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("hour"),
-                                                                    );
-                                                                }
-                                                                __field0 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        std::primitive::u32,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field1 => {
-                                                                if _serde::__private::Option::is_some(&__field1) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("min"),
-                                                                    );
-                                                                }
-                                                                __field1 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        std::primitive::u32,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field2 => {
-                                                                if _serde::__private::Option::is_some(&__field2) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("sec"),
-                                                                    );
-                                                                }
-                                                                __field2 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        std::primitive::u32,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field3 => {
-                                                                if _serde::__private::Option::is_some(&__field3) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("micro"),
-                                                                    );
-                                                                }
-                                                                __field3 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        std::primitive::u32,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            _ => {
-                                                                let _ = _serde::de::MapAccess::next_value::<
-                                                                    _serde::de::IgnoredAny,
-                                                                >(&mut __map)?;
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = match __field0 {
-                                                        _serde::__private::Some(__field0) => __field0,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("hour")?
-                                                        }
-                                                    };
-                                                    let __field1 = match __field1 {
-                                                        _serde::__private::Some(__field1) => __field1,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("min")?
-                                                        }
-                                                    };
-                                                    let __field2 = match __field2 {
-                                                        _serde::__private::Some(__field2) => __field2,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("sec")?
-                                                        }
-                                                    };
-                                                    let __field3 = match __field3 {
-                                                        _serde::__private::Some(__field3) => __field3,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("micro")?
-                                                        }
-                                                    };
-                                                    match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &["hour", "min", "sec", "micro"];
-                                            _serde::Deserializer::deserialize_struct(
+                                            _serde::Deserializer::deserialize_identifier(
                                                 __deserializer,
-                                                "SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin",
-                                                FIELDS,
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
+                                                __FieldVisitor,
                                             )
                                         }
                                     }
-                                };
-                            }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: _serde::__private::PhantomData<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>,
+                                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter<'_>,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin",
+                                            )
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                std::primitive::u32,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field1 = match _serde::de::SeqAccess::next_element::<
+                                                std::primitive::u32,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            1usize,
+                                                            &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field2 = match _serde::de::SeqAccess::next_element::<
+                                                std::primitive::u32,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            2usize,
+                                                            &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field3 = match _serde::de::SeqAccess::next_element::<
+                                                std::primitive::u32,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            3usize,
+                                                            &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(
+                                            self,
+                                            mut __map: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
+                                            let mut __field1: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
+                                            let mut __field2: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
+                                            let mut __field3: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
+                                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                                __Field,
+                                            >(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if _serde::__private::Option::is_some(&__field0) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("hour"),
+                                                            );
+                                                        }
+                                                        __field0 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::primitive::u32,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if _serde::__private::Option::is_some(&__field1) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("min"),
+                                                            );
+                                                        }
+                                                        __field1 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::primitive::u32,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field2 => {
+                                                        if _serde::__private::Option::is_some(&__field2) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("sec"),
+                                                            );
+                                                        }
+                                                        __field2 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::primitive::u32,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field3 => {
+                                                        if _serde::__private::Option::is_some(&__field3) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("micro"),
+                                                            );
+                                                        }
+                                                        __field3 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::primitive::u32,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    _ => {
+                                                        let _ = _serde::de::MapAccess::next_value::<
+                                                            _serde::de::IgnoredAny,
+                                                        >(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                _serde::__private::Some(__field0) => __field0,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("hour")?
+                                                }
+                                            };
+                                            let __field1 = match __field1 {
+                                                _serde::__private::Some(__field1) => __field1,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("min")?
+                                                }
+                                            };
+                                            let __field2 = match __field2 {
+                                                _serde::__private::Some(__field2) => __field2,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("sec")?
+                                                }
+                                            };
+                                            let __field3 = match __field3 {
+                                                _serde::__private::Some(__field3) => __field3,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("micro")?
+                                                }
+                                            };
+                                            match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["hour", "min", "sec", "micro"];
+                                    _serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        "SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin",
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            //todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __field2,
+                                        __field3,
+                                        __ignore,
+                                    }
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
                                     #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for SqlxTypesTimeTimeAsNotNullTimeOrigin {
+                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter<'_>,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "field identifier",
+                                            )
+                                        }
+                                        fn visit_u64<__E>(
+                                            self,
+                                            __value: u64,
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => _serde::__private::Ok(__Field::__field0),
+                                                1u64 => _serde::__private::Ok(__Field::__field1),
+                                                2u64 => _serde::__private::Ok(__Field::__field2),
+                                                3u64 => _serde::__private::Ok(__Field::__field3),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_str<__E>(
+                                            self,
+                                            __value: &str,
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                "hour" => _serde::__private::Ok(__Field::__field0),
+                                                "minute" => _serde::__private::Ok(__Field::__field1),
+                                                "second" => _serde::__private::Ok(__Field::__field2),
+                                                "microsecond" => _serde::__private::Ok(__Field::__field3),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_bytes<__E>(
+                                            self,
+                                            __value: &[u8],
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"hour" => _serde::__private::Ok(__Field::__field0),
+                                                b"minute" => _serde::__private::Ok(__Field::__field1),
+                                                b"second" => _serde::__private::Ok(__Field::__field2),
+                                                b"microsecond" => _serde::__private::Ok(__Field::__field3),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de> for __Field {
+                                        #[inline]
                                         fn deserialize<__D>(
                                             __deserializer: __D,
                                         ) -> _serde::__private::Result<Self, __D::Error>
                                         where
                                             __D: _serde::Deserializer<'de>,
                                         {
-                                            #[allow(non_camel_case_types)]
-                                            #[doc(hidden)]
-                                            enum __Field {
-                                                __field0,
-                                                __field1,
-                                                __field2,
-                                                __field3,
-                                                __ignore,
-                                            }
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = __Field;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "field identifier",
-                                                    )
-                                                }
-                                                fn visit_u64<__E>(
-                                                    self,
-                                                    __value: u64,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                                        2u64 => _serde::__private::Ok(__Field::__field2),
-                                                        3u64 => _serde::__private::Ok(__Field::__field3),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_str<__E>(
-                                                    self,
-                                                    __value: &str,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        "hour" => _serde::__private::Ok(__Field::__field0),
-                                                        "minute" => _serde::__private::Ok(__Field::__field1),
-                                                        "second" => _serde::__private::Ok(__Field::__field2),
-                                                        "microsecond" => _serde::__private::Ok(__Field::__field3),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_bytes<__E>(
-                                                    self,
-                                                    __value: &[u8],
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        b"hour" => _serde::__private::Ok(__Field::__field0),
-                                                        b"minute" => _serde::__private::Ok(__Field::__field1),
-                                                        b"second" => _serde::__private::Ok(__Field::__field2),
-                                                        b"microsecond" => _serde::__private::Ok(__Field::__field3),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                                #[inline]
-                                                fn deserialize<__D>(
-                                                    __deserializer: __D,
-                                                ) -> _serde::__private::Result<Self, __D::Error>
-                                                where
-                                                    __D: _serde::Deserializer<'de>,
-                                                {
-                                                    _serde::Deserializer::deserialize_identifier(
-                                                        __deserializer,
-                                                        __FieldVisitor,
-                                                    )
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: _serde::__private::PhantomData<SqlxTypesTimeTimeAsNotNullTimeOrigin>,
-                                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = SqlxTypesTimeTimeAsNotNullTimeOrigin;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "struct SqlxTypesTimeTimeAsNotNullTimeOrigin",
-                                                    )
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(
-                                                    self,
-                                                    mut __seq: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                                        std::primitive::u8,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    0usize,
-                                                                    &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                                        std::primitive::u8,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    1usize,
-                                                                    &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field2 = match _serde::de::SeqAccess::next_element::<
-                                                        std::primitive::u8,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    2usize,
-                                                                    &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field3 = match _serde::de::SeqAccess::next_element::<
-                                                        std::primitive::u32,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    3usize,
-                                                                    &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    match SqlxTypesTimeTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                                #[inline]
-                                                fn visit_map<__A>(
-                                                    self,
-                                                    mut __map: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut __field0: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
-                                                    let mut __field1: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
-                                                    let mut __field2: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
-                                                    let mut __field3: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
-                                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                                        __Field,
-                                                    >(&mut __map)? {
-                                                        match __key {
-                                                            __Field::__field0 => {
-                                                                if _serde::__private::Option::is_some(&__field0) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("hour"),
-                                                                    );
-                                                                }
-                                                                __field0 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        std::primitive::u8,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field1 => {
-                                                                if _serde::__private::Option::is_some(&__field1) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("minute"),
-                                                                    );
-                                                                }
-                                                                __field1 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        std::primitive::u8,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field2 => {
-                                                                if _serde::__private::Option::is_some(&__field2) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("second"),
-                                                                    );
-                                                                }
-                                                                __field2 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        std::primitive::u8,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field3 => {
-                                                                if _serde::__private::Option::is_some(&__field3) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                                                            "microsecond",
-                                                                        ),
-                                                                    );
-                                                                }
-                                                                __field3 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        std::primitive::u32,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            _ => {
-                                                                let _ = _serde::de::MapAccess::next_value::<
-                                                                    _serde::de::IgnoredAny,
-                                                                >(&mut __map)?;
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = match __field0 {
-                                                        _serde::__private::Some(__field0) => __field0,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("hour")?
-                                                        }
-                                                    };
-                                                    let __field1 = match __field1 {
-                                                        _serde::__private::Some(__field1) => __field1,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("minute")?
-                                                        }
-                                                    };
-                                                    let __field2 = match __field2 {
-                                                        _serde::__private::Some(__field2) => __field2,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("second")?
-                                                        }
-                                                    };
-                                                    let __field3 = match __field3 {
-                                                        _serde::__private::Some(__field3) => __field3,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("microsecond")?
-                                                        }
-                                                    };
-                                                    match SqlxTypesTimeTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &[
-                                                "hour",
-                                                "minute",
-                                                "second",
-                                                "microsecond",
-                                            ];
-                                            _serde::Deserializer::deserialize_struct(
+                                            _serde::Deserializer::deserialize_identifier(
                                                 __deserializer,
-                                                "SqlxTypesTimeTimeAsNotNullTimeOrigin",
-                                                FIELDS,
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<SqlxTypesTimeTimeAsNotNullTimeOrigin>,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
+                                                __FieldVisitor,
                                             )
                                         }
                                     }
-                                };
-                            }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: _serde::__private::PhantomData<SqlxTypesTimeTimeAsNotNullTimeOrigin>,
+                                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = SqlxTypesTimeTimeAsNotNullTimeOrigin;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter<'_>,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "struct SqlxTypesTimeTimeAsNotNullTimeOrigin",
+                                            )
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                std::primitive::u8,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field1 = match _serde::de::SeqAccess::next_element::<
+                                                std::primitive::u8,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            1usize,
+                                                            &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field2 = match _serde::de::SeqAccess::next_element::<
+                                                std::primitive::u8,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            2usize,
+                                                            &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field3 = match _serde::de::SeqAccess::next_element::<
+                                                std::primitive::u32,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            3usize,
+                                                            &"struct SqlxTypesTimeTimeAsNotNullTimeOrigin with 4 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            match SqlxTypesTimeTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(
+                                            self,
+                                            mut __map: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                                            let mut __field1: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                                            let mut __field2: _serde::__private::Option<std::primitive::u8> = _serde::__private::None;
+                                            let mut __field3: _serde::__private::Option<std::primitive::u32> = _serde::__private::None;
+                                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                                __Field,
+                                            >(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if _serde::__private::Option::is_some(&__field0) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("hour"),
+                                                            );
+                                                        }
+                                                        __field0 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::primitive::u8,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if _serde::__private::Option::is_some(&__field1) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("minute"),
+                                                            );
+                                                        }
+                                                        __field1 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::primitive::u8,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field2 => {
+                                                        if _serde::__private::Option::is_some(&__field2) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("second"),
+                                                            );
+                                                        }
+                                                        __field2 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::primitive::u8,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field3 => {
+                                                        if _serde::__private::Option::is_some(&__field3) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field(
+                                                                    "microsecond",
+                                                                ),
+                                                            );
+                                                        }
+                                                        __field3 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::primitive::u32,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    _ => {
+                                                        let _ = _serde::de::MapAccess::next_value::<
+                                                            _serde::de::IgnoredAny,
+                                                        >(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                _serde::__private::Some(__field0) => __field0,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("hour")?
+                                                }
+                                            };
+                                            let __field1 = match __field1 {
+                                                _serde::__private::Some(__field1) => __field1,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("minute")?
+                                                }
+                                            };
+                                            let __field2 = match __field2 {
+                                                _serde::__private::Some(__field2) => __field2,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("second")?
+                                                }
+                                            };
+                                            let __field3 = match __field3 {
+                                                _serde::__private::Some(__field3) => __field3,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("microsecond")?
+                                                }
+                                            };
+                                            match SqlxTypesTimeTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &[
+                                        "hour",
+                                        "minute",
+                                        "second",
+                                        "microsecond",
+                                    ];
+                                    _serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        "SqlxTypesTimeTimeAsNotNullTimeOrigin",
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<SqlxTypesTimeTimeAsNotNullTimeOrigin>,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            // todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: _serde::__private::PhantomData<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>,
+                                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    }
                                     #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for SqlxTypesChronoNaiveDateAsNotNullDateOrigin {
-                                        fn deserialize<__D>(
-                                            __deserializer: __D,
-                                        ) -> _serde::__private::Result<Self, __D::Error>
-                                        where
-                                            __D: _serde::Deserializer<'de>,
-                                        {
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: _serde::__private::PhantomData<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>,
-                                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = SqlxTypesChronoNaiveDateAsNotNullDateOrigin;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "tuple struct SqlxTypesChronoNaiveDateAsNotNullDateOrigin",
-                                                    )
-                                                }
-                                                #[inline]
-                                                fn visit_newtype_struct<__E>(
-                                                    self,
-                                                    __e: __E,
-                                                ) -> _serde::__private::Result<Self::Value, __E::Error>
-                                                where
-                                                    __E: _serde::Deserializer<'de>,
-                                                {
-                                                    let __field0: sqlx::types::chrono::NaiveDate = <sqlx::types::chrono::NaiveDate as _serde::Deserialize>::deserialize(
-                                                        __e,
-                                                    )?;
-                                                    match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(__field0) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(
-                                                    self,
-                                                    mut __seq: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                                        sqlx::types::chrono::NaiveDate,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    0usize,
-                                                                    &"tuple struct SqlxTypesChronoNaiveDateAsNotNullDateOrigin with 1 element",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(__field0) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                            }
-                                            _serde::Deserializer::deserialize_newtype_struct(
-                                                __deserializer,
-                                                "SqlxTypesChronoNaiveDateAsNotNullDateOrigin",
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = SqlxTypesChronoNaiveDateAsNotNullDateOrigin;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter<'_>,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "tuple struct SqlxTypesChronoNaiveDateAsNotNullDateOrigin",
                                             )
                                         }
+                                        #[inline]
+                                        fn visit_newtype_struct<__E>(
+                                            self,
+                                            __e: __E,
+                                        ) -> _serde::__private::Result<Self::Value, __E::Error>
+                                        where
+                                            __E: _serde::Deserializer<'de>,
+                                        {
+                                            let __field0: sqlx::types::chrono::NaiveDate = <sqlx::types::chrono::NaiveDate as _serde::Deserialize>::deserialize(
+                                                __e,
+                                            )?;
+                                            match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(__field0) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                sqlx::types::chrono::NaiveDate,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &"tuple struct SqlxTypesChronoNaiveDateAsNotNullDateOrigin with 1 element",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(__field0) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
                                     }
-                                };
-                            }
+                                    _serde::Deserializer::deserialize_newtype_struct(
+                                        __deserializer,
+                                        "SqlxTypesChronoNaiveDateAsNotNullDateOrigin",
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            //todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __ignore,
+                                    }
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
                                     #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de>
-                                    for SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin {
+                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter<'_>,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "field identifier",
+                                            )
+                                        }
+                                        fn visit_u64<__E>(
+                                            self,
+                                            __value: u64,
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => _serde::__private::Ok(__Field::__field0),
+                                                1u64 => _serde::__private::Ok(__Field::__field1),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_str<__E>(
+                                            self,
+                                            __value: &str,
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                "date" => _serde::__private::Ok(__Field::__field0),
+                                                "time" => _serde::__private::Ok(__Field::__field1),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_bytes<__E>(
+                                            self,
+                                            __value: &[u8],
+                                        ) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"date" => _serde::__private::Ok(__Field::__field0),
+                                                b"time" => _serde::__private::Ok(__Field::__field1),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de> for __Field {
+                                        #[inline]
                                         fn deserialize<__D>(
                                             __deserializer: __D,
                                         ) -> _serde::__private::Result<Self, __D::Error>
                                         where
                                             __D: _serde::Deserializer<'de>,
                                         {
-                                            #[allow(non_camel_case_types)]
-                                            #[doc(hidden)]
-                                            enum __Field {
-                                                __field0,
-                                                __field1,
-                                                __ignore,
-                                            }
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = __Field;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "field identifier",
-                                                    )
-                                                }
-                                                fn visit_u64<__E>(
-                                                    self,
-                                                    __value: u64,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_str<__E>(
-                                                    self,
-                                                    __value: &str,
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        "date" => _serde::__private::Ok(__Field::__field0),
-                                                        "time" => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_bytes<__E>(
-                                                    self,
-                                                    __value: &[u8],
-                                                ) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        b"date" => _serde::__private::Ok(__Field::__field0),
-                                                        b"time" => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                                #[inline]
-                                                fn deserialize<__D>(
-                                                    __deserializer: __D,
-                                                ) -> _serde::__private::Result<Self, __D::Error>
-                                                where
-                                                    __D: _serde::Deserializer<'de>,
-                                                {
-                                                    _serde::Deserializer::deserialize_identifier(
-                                                        __deserializer,
-                                                        __FieldVisitor,
-                                                    )
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: _serde::__private::PhantomData<
-                                                    SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
-                                                >,
-                                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin;
-                                                fn expecting(
-                                                    &self,
-                                                    __formatter: &mut _serde::__private::Formatter<'_>,
-                                                ) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(
-                                                        __formatter,
-                                                        "struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
-                                                    )
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(
-                                                    self,
-                                                    mut __seq: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    0usize,
-                                                                    &"struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin with 2 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
-                                                    >(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(
-                                                                _serde::de::Error::invalid_length(
-                                                                    1usize,
-                                                                    &"struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin with 2 elements",
-                                                                ),
-                                                            );
-                                                        }
-                                                    };
-                                                    _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                                #[inline]
-                                                fn visit_map<__A>(
-                                                    self,
-                                                    mut __map: __A,
-                                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut __field0: _serde::__private::Option<
-                                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
-                                                    > = _serde::__private::None;
-                                                    let mut __field1: _serde::__private::Option<
-                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
-                                                    > = _serde::__private::None;
-                                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                                        __Field,
-                                                    >(&mut __map)? {
-                                                        match __key {
-                                                            __Field::__field0 => {
-                                                                if _serde::__private::Option::is_some(&__field0) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("date"),
-                                                                    );
-                                                                }
-                                                                __field0 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            __Field::__field1 => {
-                                                                if _serde::__private::Option::is_some(&__field1) {
-                                                                    return _serde::__private::Err(
-                                                                        <__A::Error as _serde::de::Error>::duplicate_field("time"),
-                                                                    );
-                                                                }
-                                                                __field1 = _serde::__private::Some(
-                                                                    _serde::de::MapAccess::next_value::<
-                                                                        SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
-                                                                    >(&mut __map)?,
-                                                                );
-                                                            }
-                                                            _ => {
-                                                                let _ = _serde::de::MapAccess::next_value::<
-                                                                    _serde::de::IgnoredAny,
-                                                                >(&mut __map)?;
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = match __field0 {
-                                                        _serde::__private::Some(__field0) => __field0,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("date")?
-                                                        }
-                                                    };
-                                                    let __field1 = match __field1 {
-                                                        _serde::__private::Some(__field1) => __field1,
-                                                        _serde::__private::None => {
-                                                            _serde::__private::de::missing_field("time")?
-                                                        }
-                                                    };
-                                                    _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &["date", "time"];
-                                            _serde::Deserializer::deserialize_struct(
+                                            _serde::Deserializer::deserialize_identifier(
                                                 __deserializer,
-                                                "SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
-                                                FIELDS,
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<
-                                                        SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
-                                                    >,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
+                                                __FieldVisitor,
                                             )
                                         }
                                     }
-                                };
-                            }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: _serde::__private::PhantomData<
+                                            SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin;
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter<'_>,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
+                                            )
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &"struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin with 2 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field1 = match _serde::de::SeqAccess::next_element::<
+                                                SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            1usize,
+                                                            &"struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin with 2 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(
+                                            self,
+                                            mut __map: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: _serde::__private::Option<
+                                                SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                                            > = _serde::__private::None;
+                                            let mut __field1: _serde::__private::Option<
+                                                SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
+                                            > = _serde::__private::None;
+                                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                                __Field,
+                                            >(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if _serde::__private::Option::is_some(&__field0) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("date"),
+                                                            );
+                                                        }
+                                                        __field0 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if _serde::__private::Option::is_some(&__field1) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("time"),
+                                                            );
+                                                        }
+                                                        __field1 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    _ => {
+                                                        let _ = _serde::de::MapAccess::next_value::<
+                                                            _serde::de::IgnoredAny,
+                                                        >(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                _serde::__private::Some(__field0) => __field0,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("date")?
+                                                }
+                                            };
+                                            let __field1 = match __field1 {
+                                                _serde::__private::Some(__field1) => __field1,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("time")?
+                                                }
+                                            };
+                                            _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["date", "time"];
+                                    _serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        "SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<
+                                                SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
+                                            >,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            //todo
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __ignore,
+                                    }
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
                                     #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin {
+                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(__formatter, "field identifier")
+                                        }
+                                        fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => _serde::__private::Ok(__Field::__field0),
+                                                1u64 => _serde::__private::Ok(__Field::__field1),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                "date_naive" => _serde::__private::Ok(__Field::__field0),
+                                                "time" => _serde::__private::Ok(__Field::__field1),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"date_naive" => _serde::__private::Ok(__Field::__field0),
+                                                b"time" => _serde::__private::Ok(__Field::__field1),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de> for __Field {
+                                        #[inline]
                                         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
                                         where
                                             __D: _serde::Deserializer<'de>,
                                         {
-                                            #[allow(non_camel_case_types)]
-                                            #[doc(hidden)]
-                                            enum __Field {
-                                                __field0,
-                                                __field1,
-                                                __ignore,
-                                            }
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = __Field;
-                                                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(__formatter, "field identifier")
-                                                }
-                                                fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        "date_naive" => _serde::__private::Ok(__Field::__field0),
-                                                        "time" => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        b"date_naive" => _serde::__private::Ok(__Field::__field0),
-                                                        b"time" => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                                #[inline]
-                                                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
-                                                where
-                                                    __D: _serde::Deserializer<'de>,
-                                                {
-                                                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: _serde::__private::PhantomData<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>,
-                                                lifetime: _serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            #[automatically_derived]
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin;
-                                                fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                                                    _serde::__private::Formatter::write_str(__formatter, "struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin")
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match _serde::de::SeqAccess::next_element::<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin with 2 elements"));
-                                                        }
-                                                    };
-                                                    let __field1 = match _serde::de::SeqAccess::next_element::<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>(&mut __seq)? {
-                                                        _serde::__private::Some(__value) => __value,
-                                                        _serde::__private::None => {
-                                                            return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin with 2 elements"));
-                                                        }
-                                                    };
-                                                    _serde::__private::Ok(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                                #[inline]
-                                                fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: _serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut __field0: _serde::__private::Option<SqlxTypesChronoNaiveDateAsNotNullDateOrigin> = _serde::__private::None;
-                                                    let mut __field1: _serde::__private::Option<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin> = _serde::__private::None;
-                                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                                                        match __key {
-                                                            __Field::__field0 => {
-                                                                if _serde::__private::Option::is_some(&__field0) {
-                                                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("date_naive"));
-                                                                }
-                                                                __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>(&mut __map)?);
-                                                            }
-                                                            __Field::__field1 => {
-                                                                if _serde::__private::Option::is_some(&__field1) {
-                                                                    return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("time"));
-                                                                }
-                                                                __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>(&mut __map)?);
-                                                            }
-                                                            _ => {
-                                                                let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = match __field0 {
-                                                        _serde::__private::Some(__field0) => __field0,
-                                                        _serde::__private::None => _serde::__private::de::missing_field("date_naive")?,
-                                                    };
-                                                    let __field1 = match __field1 {
-                                                        _serde::__private::Some(__field1) => __field1,
-                                                        _serde::__private::None => _serde::__private::de::missing_field("time")?,
-                                                    };
-                                                    _serde::__private::Ok(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &["date_naive", "time"];
-                                            _serde::Deserializer::deserialize_struct(
-                                                __deserializer,
-                                                "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin",
-                                                FIELDS,
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
-                                            )
+                                            _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
-                                };
-                            }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: _serde::__private::PhantomData<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>,
+                                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin;
+                                        fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(__formatter, "struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin")
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match _serde::de::SeqAccess::next_element::<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(_serde::de::Error::invalid_length(0usize, &"struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin with 2 elements"));
+                                                }
+                                            };
+                                            let __field1 = match _serde::de::SeqAccess::next_element::<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(_serde::de::Error::invalid_length(1usize, &"struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin with 2 elements"));
+                                                }
+                                            };
+                                            _serde::__private::Ok(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(self, mut __map: __A) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: _serde::__private::Option<SqlxTypesChronoNaiveDateAsNotNullDateOrigin> = _serde::__private::None;
+                                            let mut __field1: _serde::__private::Option<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin> = _serde::__private::None;
+                                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if _serde::__private::Option::is_some(&__field0) {
+                                                            return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("date_naive"));
+                                                        }
+                                                        __field0 = _serde::__private::Some(_serde::de::MapAccess::next_value::<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>(&mut __map)?);
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if _serde::__private::Option::is_some(&__field1) {
+                                                            return _serde::__private::Err(<__A::Error as _serde::de::Error>::duplicate_field("time"));
+                                                        }
+                                                        __field1 = _serde::__private::Some(_serde::de::MapAccess::next_value::<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>(&mut __map)?);
+                                                    }
+                                                    _ => {
+                                                        let _ = _serde::de::MapAccess::next_value::<_serde::de::IgnoredAny>(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                _serde::__private::Some(__field0) => __field0,
+                                                _serde::__private::None => _serde::__private::de::missing_field("date_naive")?,
+                                            };
+                                            let __field1 = match __field1 {
+                                                _serde::__private::Some(__field1) => __field1,
+                                                _serde::__private::None => _serde::__private::de::missing_field("time")?,
+                                            };
+                                            _serde::__private::Ok(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["date_naive", "time"];
+                                    _serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin",
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream),
@@ -3804,253 +3729,233 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         })),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin {
-                                        fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    enum Field {
+                                        Start,
+                                        End,
+                                    }
+                                    impl<'de> serde::Deserialize<'de> for Field {
+                                        fn deserialize<D>(__deserializer: D) -> Result<Field, D::Error>
                                         where
-                                            __D: _serde::Deserializer<'de>,
+                                            D: serde::Deserializer<'de>,
                                         {
-                                            enum Field {
-                                                Start,
-                                                End,
-                                            }
-                                            impl<'de> serde::Deserialize<'de> for Field {
-                                                fn deserialize<D>(__deserializer: D) -> Result<Field, D::Error>
-                                                where
-                                                    D: serde::Deserializer<'de>,
-                                                {
-                                                    #[doc(hidden)]
-                                                    struct __FieldVisitor;
-                                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                        type Value = Field;
-                                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                            serde::__private::Formatter::write_str(__f, "`start` or `end`")
-                                                        }
-                                                        fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                                        where
-                                                            E: serde::de::Error,
-                                                        {
-                                                            match value {
-                                                                "start" => Ok(Field::Start),
-                                                                "end" => Ok(Field::End),
-                                                                _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                                            }
-                                                        }
-                                                    }
-                                                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                                                }
-                                            }
-                                            struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor;
-                                            impl<'de> _serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor {
-                                                type Value = SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin;
-                                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                    serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin")
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                                                    let __field1 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                                    match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(sqlx::postgres::types::PgRange { start: __field0, end: __field1 }) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                                #[inline]
-                                                fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin, V::Error>
-                                                where
-                                                    V: serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut start = None;
-                                                    let mut end = None;
-                                                    while let Some(key) = map.next_key()? {
-                                                        match key {
-                                                            Field::Start => {
-                                                                if start.is_some() {
-                                                                    return Err(serde::de::Error::duplicate_field("start"));
-                                                                }
-                                                                start = Some(map.next_value()?);
-                                                            }
-                                                            Field::End => {
-                                                                if end.is_some() {
-                                                                    return Err(serde::de::Error::duplicate_field("end"));
-                                                                }
-                                                                end = Some(map.next_value()?);
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = start.ok_or_else(|| serde::de::Error::missing_field("\"start\""))?;
-                                                    let __field1 = end.ok_or_else(|| serde::de::Error::missing_field("\"end\""))?;
-                                                    match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(sqlx::postgres::types::PgRange { start: __field0, end: __field1 }) {
-                                                        Ok(value) => _serde::__private::Ok(value),
-                                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                                    }
-                                                }
-                                            }
                                             #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                                            _serde::Deserializer::deserialize_struct(__deserializer, "SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4Range", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor)
+                                            struct __FieldVisitor;
+                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                                type Value = Field;
+                                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                                    serde::__private::Formatter::write_str(__f, "`start` or `end`")
+                                                }
+                                                fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                                                where
+                                                    E: serde::de::Error,
+                                                {
+                                                    match value {
+                                                        "start" => Ok(Field::Start),
+                                                        "end" => Ok(Field::End),
+                                                        _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                                                    }
+                                                }
+                                            }
+                                            _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
-                                };
-                            }
+                                    struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor;
+                                    impl<'de> _serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor {
+                                        type Value = SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin;
+                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin")
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
+                                            let __field1 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                                            match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(sqlx::postgres::types::PgRange { start: __field0, end: __field1 }) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
+                                        #[inline]
+                                        fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin, V::Error>
+                                        where
+                                            V: serde::de::MapAccess<'de>,
+                                        {
+                                            let mut start = None;
+                                            let mut end = None;
+                                            while let Some(key) = map.next_key()? {
+                                                match key {
+                                                    Field::Start => {
+                                                        if start.is_some() {
+                                                            return Err(serde::de::Error::duplicate_field("start"));
+                                                        }
+                                                        start = Some(map.next_value()?);
+                                                    }
+                                                    Field::End => {
+                                                        if end.is_some() {
+                                                            return Err(serde::de::Error::duplicate_field("end"));
+                                                        }
+                                                        end = Some(map.next_value()?);
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = start.ok_or_else(|| serde::de::Error::missing_field("\"start\""))?;
+                                            let __field1 = end.ok_or_else(|| serde::de::Error::missing_field("\"end\""))?;
+                                            match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(sqlx::postgres::types::PgRange { start: __field0, end: __field1 }) {
+                                                Ok(value) => _serde::__private::Ok(value),
+                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                            }
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                                    _serde::Deserializer::deserialize_struct(__deserializer, "SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4Range", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor)
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(
                             //     &impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                             // )
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin {
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __ignore,
+                                    }
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
+                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(__f, "field identifier")
+                                        }
+                                        fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => serde::__private::Ok(__Field::__field0),
+                                                1u64 => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                "start" => _serde::__private::Ok(__Field::__field0),
+                                                "end" => _serde::__private::Ok(__Field::__field1),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"start" => serde::__private::Ok(__Field::__field0),
+                                                b"end" => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                    }
+                                    impl<'de> _serde::Deserialize<'de> for __Field {
+                                        #[inline]
                                         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
                                         where
                                             __D: _serde::Deserializer<'de>,
                                         {
-                                            #[allow(non_camel_case_types)]
-                                            #[doc(hidden)]
-                                            enum __Field {
-                                                __field0,
-                                                __field1,
-                                                __ignore,
-                                            }
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = __Field;
-                                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                    serde::__private::Formatter::write_str(__f, "field identifier")
-                                                }
-                                                fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        0u64 => serde::__private::Ok(__Field::__field0),
-                                                        1u64 => serde::__private::Ok(__Field::__field1),
-                                                        _ => serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        b"start" => serde::__private::Ok(__Field::__field0),
-                                                        b"end" => serde::__private::Ok(__Field::__field1),
-                                                        _ => serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                            }
-                                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                                #[inline]
-                                                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
-                                                where
-                                                    __D: _serde::Deserializer<'de>,
-                                                {
-                                                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: serde::__private::PhantomData<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin>,
-                                                lifetime: serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin;
-                                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                    serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin")
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match serde::de::SeqAccess::next_element::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __seq)? {
-                                                        serde::__private::Some(__value) => __value,
-                                                        serde::__private::None => {
-                                                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin with 2 elements"));
-                                                        }
-                                                    };
-                                                    let __field1 = match serde::de::SeqAccess::next_element::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __seq)? {
-                                                        serde::__private::Some(__value) => __value,
-                                                        serde::__private::None => {
-                                                            return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin with 2 elements"));
-                                                        }
-                                                    };
-                                                    serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                                #[inline]
-                                                fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut __field0: serde::__private::Option<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>> = serde::__private::None;
-                                                    let mut __field1: serde::__private::Option<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>> = serde::__private::None;
-                                                    while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                                                        match __key {
-                                                            __Field::__field0 => {
-                                                                if serde::__private::Option::is_some(&__field0) {
-                                                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"start\""));
-                                                                }
-                                                                __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __map)?);
-                                                            }
-                                                            __Field::__field1 => {
-                                                                if serde::__private::Option::is_some(&__field1) {
-                                                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"end\""));
-                                                                }
-                                                                __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __map)?);
-                                                            }
-                                                            _ => {
-                                                                let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = match __field0 {
-                                                        serde::__private::Some(__field0) => __field0,
-                                                        serde::__private::None => serde::__private::de::missing_field("\"start\"")?,
-                                                    };
-                                                    let __field1 = match __field1 {
-                                                        serde::__private::Some(__field1) => __field1,
-                                                        serde::__private::None => serde::__private::de::missing_field("\"end\"")?,
-                                                    };
-                                                    serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                                            _serde::Deserializer::deserialize_struct(
-                                                __deserializer,
-                                                "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRange",
-                                                FIELDS,
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin>,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
-                                            )
+                                            _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
-                                };
-                            }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: serde::__private::PhantomData<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin>,
+                                        lifetime: serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin;
+                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin")
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match serde::de::SeqAccess::next_element::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin with 2 elements"));
+                                                }
+                                            };
+                                            let __field1 = match serde::de::SeqAccess::next_element::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin with 2 elements"));
+                                                }
+                                            };
+                                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: serde::__private::Option<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>> = serde::__private::None;
+                                            let mut __field1: serde::__private::Option<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>> = serde::__private::None;
+                                            while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if serde::__private::Option::is_some(&__field0) {
+                                                            return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"start\""));
+                                                        }
+                                                        __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __map)?);
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if serde::__private::Option::is_some(&__field1) {
+                                                            return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"end\""));
+                                                        }
+                                                        __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __map)?);
+                                                    }
+                                                    _ => {
+                                                        let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                serde::__private::Some(__field0) => __field0,
+                                                serde::__private::None => serde::__private::de::missing_field("\"start\"")?,
+                                            };
+                                            let __field1 = match __field1 {
+                                                serde::__private::Some(__field1) => __field1,
+                                                serde::__private::None => serde::__private::de::missing_field("\"end\"")?,
+                                            };
+                                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                                    _serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRange",
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin>,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            })
                         }),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(
                             //todo
@@ -4065,301 +3970,281 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             //         #serde_deserializer_deserialize_struct_visitor_token_stream
                             //     }
                             // })
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin {
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __ignore,
+                                    }
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
+                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(__f, "field identifier")
+                                        }
+                                        fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => serde::__private::Ok(__Field::__field0),
+                                                1u64 => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                "start" => _serde::__private::Ok(__Field::__field0),
+                                                "end" => _serde::__private::Ok(__Field::__field1),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"start" => serde::__private::Ok(__Field::__field0),
+                                                b"end" => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                    }
+                                    impl<'de> _serde::Deserialize<'de> for __Field {
+                                        #[inline]
                                         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
                                         where
                                             __D: _serde::Deserializer<'de>,
                                         {
-                                            #[allow(non_camel_case_types)]
-                                            #[doc(hidden)]
-                                            enum __Field {
-                                                __field0,
-                                                __field1,
-                                                __ignore,
-                                            }
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = __Field;
-                                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                    serde::__private::Formatter::write_str(__f, "field identifier")
-                                                }
-                                                fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        0u64 => serde::__private::Ok(__Field::__field0),
-                                                        1u64 => serde::__private::Ok(__Field::__field1),
-                                                        _ => serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        b"start" => serde::__private::Ok(__Field::__field0),
-                                                        b"end" => serde::__private::Ok(__Field::__field1),
-                                                        _ => serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                            }
-                                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                                #[inline]
-                                                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
-                                                where
-                                                    __D: _serde::Deserializer<'de>,
-                                                {
-                                                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: serde::__private::PhantomData<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin>,
-                                                lifetime: serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin;
-                                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                    serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin")
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __seq)? {
-                                                        serde::__private::Some(__value) => __value,
-                                                        serde::__private::None => {
-                                                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin with 2 elements"));
-                                                        }
-                                                    };
-                                                    let __field1 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __seq)? {
-                                                        serde::__private::Some(__value) => __value,
-                                                        serde::__private::None => {
-                                                            return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin with 2 elements"));
-                                                        }
-                                                    };
-                                                    //here 
-                                                    serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                                #[inline]
-                                                fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut __field0: serde::__private::Option<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>> = serde::__private::None;
-                                                    let mut __field1: serde::__private::Option<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>> = serde::__private::None;
-                                                    while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                                                        match __key {
-                                                            __Field::__field0 => {
-                                                                if serde::__private::Option::is_some(&__field0) {
-                                                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"start\""));
-                                                                }
-                                                                __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __map)?);
-                                                            }
-                                                            __Field::__field1 => {
-                                                                if serde::__private::Option::is_some(&__field1) {
-                                                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"end\""));
-                                                                }
-                                                                __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __map)?);
-                                                            }
-                                                            _ => {
-                                                                let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = match __field0 {
-                                                        serde::__private::Some(__field0) => __field0,
-                                                        serde::__private::None => serde::__private::de::missing_field("\"start\"")?,
-                                                    };
-                                                    let __field1 = match __field1 {
-                                                        serde::__private::Some(__field1) => __field1,
-                                                        serde::__private::None => serde::__private::de::missing_field("\"end\"")?,
-                                                    };
-                                                    //here 
-                                                    serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                                            _serde::Deserializer::deserialize_struct(
-                                                __deserializer,
-                                                "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRange",
-                                                FIELDS,
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin>,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
-                                            )
+                                            _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
-                                };
-                            }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: serde::__private::PhantomData<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin>,
+                                        lifetime: serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin;
+                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin")
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin with 2 elements"));
+                                                }
+                                            };
+                                            let __field1 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin with 2 elements"));
+                                                }
+                                            };
+                                            //here 
+                                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: serde::__private::Option<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>> = serde::__private::None;
+                                            let mut __field1: serde::__private::Option<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>> = serde::__private::None;
+                                            while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if serde::__private::Option::is_some(&__field0) {
+                                                            return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"start\""));
+                                                        }
+                                                        __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __map)?);
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if serde::__private::Option::is_some(&__field1) {
+                                                            return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"end\""));
+                                                        }
+                                                        __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __map)?);
+                                                    }
+                                                    _ => {
+                                                        let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                serde::__private::Some(__field0) => __field0,
+                                                serde::__private::None => serde::__private::de::missing_field("\"start\"")?,
+                                            };
+                                            let __field1 = match __field1 {
+                                                serde::__private::Some(__field1) => __field1,
+                                                serde::__private::None => serde::__private::de::missing_field("\"end\"")?,
+                                            };
+                                            //here 
+                                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                                    _serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRange",
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin>,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            })
                         ),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(&impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream)
-                            quote::quote!{
-                                const _: () = {
-                                    #[allow(unused_extern_crates, clippy::useless_attribute)]
-                                    extern crate serde as _serde;
-                                    #[automatically_derived]
-                                    impl<'de> _serde::Deserialize<'de> for SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin {
+                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                quote::quote!{
+                                    #[allow(non_camel_case_types)]
+                                    #[doc(hidden)]
+                                    enum __Field {
+                                        __field0,
+                                        __field1,
+                                        __ignore,
+                                    }
+                                    #[doc(hidden)]
+                                    struct __FieldVisitor;
+                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                        type Value = __Field;
+                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(__f, "field identifier")
+                                        }
+                                        fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                0u64 => serde::__private::Ok(__Field::__field0),
+                                                1u64 => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: _serde::de::Error,
+                                        {
+                                            match __value {
+                                                "start" => _serde::__private::Ok(__Field::__field0),
+                                                "end" => _serde::__private::Ok(__Field::__field1),
+                                                _ => _serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                        fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                                        where
+                                            __E: serde::de::Error,
+                                        {
+                                            match __value {
+                                                b"start" => serde::__private::Ok(__Field::__field0),
+                                                b"end" => serde::__private::Ok(__Field::__field1),
+                                                _ => serde::__private::Ok(__Field::__ignore),
+                                            }
+                                        }
+                                    }
+                                    impl<'de> _serde::Deserialize<'de> for __Field {
+                                        #[inline]
                                         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
                                         where
                                             __D: _serde::Deserializer<'de>,
                                         {
-                                            #[allow(non_camel_case_types)]
-                                            #[doc(hidden)]
-                                            enum __Field {
-                                                __field0,
-                                                __field1,
-                                                __ignore,
-                                            }
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = __Field;
-                                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                    serde::__private::Formatter::write_str(__f, "field identifier")
-                                                }
-                                                fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        0u64 => serde::__private::Ok(__Field::__field0),
-                                                        1u64 => serde::__private::Ok(__Field::__field1),
-                                                        _ => serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: _serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        "start" => _serde::__private::Ok(__Field::__field0),
-                                                        "end" => _serde::__private::Ok(__Field::__field1),
-                                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                                fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                                where
-                                                    __E: serde::de::Error,
-                                                {
-                                                    match __value {
-                                                        b"start" => serde::__private::Ok(__Field::__field0),
-                                                        b"end" => serde::__private::Ok(__Field::__field1),
-                                                        _ => serde::__private::Ok(__Field::__ignore),
-                                                    }
-                                                }
-                                            }
-                                            impl<'de> _serde::Deserialize<'de> for __Field {
-                                                #[inline]
-                                                fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
-                                                where
-                                                    __D: _serde::Deserializer<'de>,
-                                                {
-                                                    _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            struct __Visitor<'de> {
-                                                marker: serde::__private::PhantomData<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin>,
-                                                lifetime: serde::__private::PhantomData<&'de ()>,
-                                            }
-                                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                                type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin;
-                                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                    serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin")
-                                                }
-                                                #[inline]
-                                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: serde::de::SeqAccess<'de>,
-                                                {
-                                                    let __field0 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __seq)? {
-                                                        serde::__private::Some(__value) => __value,
-                                                        serde::__private::None => {
-                                                            return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin with 2 elements"));
-                                                        }
-                                                    };
-                                                    let __field1 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __seq)? {
-                                                        serde::__private::Some(__value) => __value,
-                                                        serde::__private::None => {
-                                                            return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin with 2 elements"));
-                                                        }
-                                                    };
-                                                    serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                                #[inline]
-                                                fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                                                where
-                                                    __A: serde::de::MapAccess<'de>,
-                                                {
-                                                    let mut __field0: serde::__private::Option<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>> = serde::__private::None;
-                                                    let mut __field1: serde::__private::Option<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>> = serde::__private::None;
-                                                    while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
-                                                        match __key {
-                                                            __Field::__field0 => {
-                                                                if serde::__private::Option::is_some(&__field0) {
-                                                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"start\""));
-                                                                }
-                                                                __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __map)?);
-                                                            }
-                                                            __Field::__field1 => {
-                                                                if serde::__private::Option::is_some(&__field1) {
-                                                                    return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"end\""));
-                                                                }
-                                                                __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __map)?);
-                                                            }
-                                                            _ => {
-                                                                let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
-                                                            }
-                                                        }
-                                                    }
-                                                    let __field0 = match __field0 {
-                                                        serde::__private::Some(__field0) => __field0,
-                                                        serde::__private::None => serde::__private::de::missing_field("\"start\"")?,
-                                                    };
-                                                    let __field1 = match __field1 {
-                                                        serde::__private::Some(__field1) => __field1,
-                                                        serde::__private::None => serde::__private::de::missing_field("\"end\"")?,
-                                                    };
-                                                    serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin::new_for_deserialize(__field0, __field1))
-                                                }
-                                            }
-                                            #[doc(hidden)]
-                                            const FIELDS: &'static [&'static str] = &["start", "end"];
-                                            _serde::Deserializer::deserialize_struct(
-                                                __deserializer,
-                                                "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRange",
-                                                FIELDS,
-                                                __Visitor {
-                                                    marker: _serde::__private::PhantomData::<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin>,
-                                                    lifetime: _serde::__private::PhantomData,
-                                                },
-                                            )
+                                            _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
-                                };
-                            }
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: serde::__private::PhantomData<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin>,
+                                        lifetime: serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                        type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin;
+                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                            serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin")
+                                        }
+                                        #[inline]
+                                        fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::SeqAccess<'de>,
+                                        {
+                                            let __field0 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(serde::de::Error::invalid_length(0usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin with 2 elements"));
+                                                }
+                                            };
+                                            let __field1 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __seq)? {
+                                                serde::__private::Some(__value) => __value,
+                                                serde::__private::None => {
+                                                    return serde::__private::Err(serde::de::Error::invalid_length(1usize, &"struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin with 2 elements"));
+                                                }
+                                            };
+                                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(self, mut __map: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: serde::__private::Option<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>> = serde::__private::None;
+                                            let mut __field1: serde::__private::Option<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>> = serde::__private::None;
+                                            while let serde::__private::Some(__key) = serde::de::MapAccess::next_key::<__Field>(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if serde::__private::Option::is_some(&__field0) {
+                                                            return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"start\""));
+                                                        }
+                                                        __field0 = serde::__private::Some(serde::de::MapAccess::next_value::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __map)?);
+                                                    }
+                                                    __Field::__field1 => {
+                                                        if serde::__private::Option::is_some(&__field1) {
+                                                            return serde::__private::Err(<__A::Error as serde::de::Error>::duplicate_field("\"end\""));
+                                                        }
+                                                        __field1 = serde::__private::Some(serde::de::MapAccess::next_value::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __map)?);
+                                                    }
+                                                    _ => {
+                                                        let _ = serde::de::MapAccess::next_value::<serde::de::IgnoredAny>(&mut __map)?;
+                                                    }
+                                                }
+                                            }
+                                            let __field0 = match __field0 {
+                                                serde::__private::Some(__field0) => __field0,
+                                                serde::__private::None => serde::__private::de::missing_field("\"start\"")?,
+                                            };
+                                            let __field1 = match __field1 {
+                                                serde::__private::Some(__field1) => __field1,
+                                                serde::__private::None => serde::__private::de::missing_field("\"end\"")?,
+                                            };
+                                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin::new_for_deserialize(__field0, __field1))
+                                        }
+                                    }
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                                    _serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRange",
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin>,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
+                                }
+                            })
                         }),
                     }
                 };
