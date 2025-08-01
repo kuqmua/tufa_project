@@ -1100,6 +1100,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let date_snake_case = naming::DateSnakeCase;
             let date_naive_snake_case = naming::DateNaiveSnakeCase;
             let time_snake_case = naming::TimeSnakeCase;
+            let nanosecond_snake_case = naming::NanosecondSnakeCase;
             
             let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
 
@@ -1618,7 +1619,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let micro_serialize_field_token_stream = generate_serialize_field_token_stream(
                                 &micro_snake_case,
                                 &generate_field_field_type_standart_not_null_as_chrono_timelike_token_stream(&quote::quote!{
-                                    nanosecond(&self.0) / 1000
+                                    #nanosecond_snake_case(&self.0) / 1000
                                 })
                             );
                             quote::quote!{
@@ -1630,29 +1631,26 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #serde_ser_serialize_struct_end_token_stream
                             }
                         })),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            //todo
-                            generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                                let generate_serialize_field_self_zero_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| {
-                                    generate_serialize_field_token_stream(
-                                        &value,
-                                        &quote::quote!{&self.0.#value()}
-                                    )
-                                };
-                                let hour_serialize_field_token_stream = generate_serialize_field_self_zero_token_stream(&hour_snake_case);
-                                let minute_serialize_field_token_stream = generate_serialize_field_self_zero_token_stream(&minute_snake_case);
-                                let second_serialize_field_token_stream = generate_serialize_field_self_zero_token_stream(&second_snake_case);
-                                let microsecond_serialize_field_token_stream = generate_serialize_field_self_zero_token_stream(&microsecond_snake_case);
-                                quote::quote!{
-                                    #serde_state_initialization_four_fields_token_stream
-                                    #hour_serialize_field_token_stream
-                                    #minute_serialize_field_token_stream
-                                    #second_serialize_field_token_stream
-                                    #microsecond_serialize_field_token_stream
-                                    #serde_ser_serialize_struct_end_token_stream
-                                }
-                            })
-                        }),
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
+                            let generate_serialize_field_self_zero_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| {
+                                generate_serialize_field_token_stream(
+                                    &value,
+                                    &quote::quote!{&self.0.#value()}
+                                )
+                            };
+                            let hour_serialize_field_token_stream = generate_serialize_field_self_zero_token_stream(&hour_snake_case);
+                            let minute_serialize_field_token_stream = generate_serialize_field_self_zero_token_stream(&minute_snake_case);
+                            let second_serialize_field_token_stream = generate_serialize_field_self_zero_token_stream(&second_snake_case);
+                            let microsecond_serialize_field_token_stream = generate_serialize_field_self_zero_token_stream(&microsecond_snake_case);
+                            quote::quote!{
+                                #serde_state_initialization_four_fields_token_stream
+                                #hour_serialize_field_token_stream
+                                #minute_serialize_field_token_stream
+                                #second_serialize_field_token_stream
+                                #microsecond_serialize_field_token_stream
+                                #serde_ser_serialize_struct_end_token_stream
+                            }
+                        })),
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
                             let generate_serialize_field_token_stream = |value: &dyn naming::StdFmtDisplayPlusQuoteToTokens| generate_serialize_field_token_stream(&value, &quote::quote! {&#self_dot_zero_token_stream.#value});
                             let months_serialize_field_token_stream = generate_serialize_field_token_stream(&months_snake_case);
@@ -1668,14 +1666,28 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         })),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                            let date_serialize_field_token_stream = generate_serialize_field_token_stream(
-                                &date_snake_case,
-                                &quote::quote!{&#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(self.0.date()).unwrap()}
-                            );
-                            let time_serialize_field_token_stream = generate_serialize_field_token_stream(
-                                &time_snake_case,
-                                &quote::quote!{&#sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::try_new(self.0.time()).unwrap()}
-                            );
+                            enum DateOrTime {
+                                Date,
+                                Time
+                            }
+                            let generate_serialize_field_try_new_unwrap_token_stream = |date_or_time: &DateOrTime|{
+                                let date_or_time_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &date_or_time {
+                                    DateOrTime::Date => &date_snake_case,
+                                    DateOrTime::Time => &time_snake_case,
+                                };
+                                generate_serialize_field_token_stream(
+                                    &date_or_time_token_stream,
+                                    &{
+                                        let ident_token_stream: &dyn quote::ToTokens = match &date_or_time {
+                                            DateOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
+                                            DateOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case
+                                        };
+                                        quote::quote!{&#ident_token_stream::try_new(self.0.#date_or_time_token_stream()).unwrap()}
+                                    }
+                                )
+                            };
+                            let date_serialize_field_token_stream = generate_serialize_field_try_new_unwrap_token_stream(&DateOrTime::Date);
+                            let time_serialize_field_token_stream = generate_serialize_field_try_new_unwrap_token_stream(&DateOrTime::Time);
                             quote::quote!{
                                 #serde_state_initialization_two_fields_token_stream
                                 #date_serialize_field_token_stream
@@ -1713,30 +1725,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 Start,
                                 End
                             }
-                            impl StartOrEnd {
-                                fn snake_case_token_stream(&self) -> proc_macro2::TokenStream {
-                                    match &self {
-                                        StartOrEnd::Start => {
-                                            let start_snake_case = naming::StartSnakeCase;
-                                            quote::quote!{#start_snake_case}
-                                        },
-                                        StartOrEnd::End => {
-                                            let end_snake_case = naming::EndSnakeCase;
-                                            quote::quote!{#end_snake_case}
-                                        },
-                                    }
-                                }
-                            }
-                            impl quote::ToTokens for StartOrEnd {
-                                fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-                                    self.snake_case_token_stream().to_tokens(tokens)
-                                }
-                            }
                             let generate_serialize_field_match_std_ops_bound_token_stream = |start_or_end: &StartOrEnd, ident_token_stream: &dyn quote::ToTokens|{
+                                let start_or_end_token_stream: &dyn naming::StdFmtDisplayPlusQuoteToTokens = match &start_or_end {
+                                    StartOrEnd::Start => &start_snake_case,
+                                    StartOrEnd::End => &end_snake_case,
+                                };
                                 generate_serialize_field_token_stream(
-                                    &start_or_end.snake_case_token_stream(),
+                                    &start_or_end_token_stream,
                                     &quote::quote!{
-                                        &match self.0.#start_or_end {
+                                        &match self.0.#start_or_end_token_stream {
                                             std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#ident_token_stream::try_new(#value_snake_case).unwrap()),
                                             std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#ident_token_stream::try_new(#value_snake_case).unwrap()),
                                             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
