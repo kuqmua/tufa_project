@@ -2449,6 +2449,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_const_fields_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
+                    let generate_impl_serde_de_visitor_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
+                        quote::quote! {
+                            impl<'de> _serde::de::Visitor<'de> for #ident_token_stream {
+                                #content_token_stream
+                            }
+                        }
+                    };
                     let (
                         impl_serde_de_visitor_for_visitor_pg_money_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
@@ -2458,14 +2465,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_visitor_mac_address_mac_address_token_stream,
                     ) = {
                         let generate_impl_serde_de_visitor_for_visitor_token_stream = |first_token_stream: &dyn quote::ToTokens, second_token_stream: &dyn quote::ToTokens| {
-                            quote::quote! {
-                                impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                            generate_impl_serde_de_visitor_for_tokens_token_stream(
+                                &quote::quote!{__Visitor<'de>},
+                                &quote::quote!{
                                     type Value = #ident_standart_not_null_origin_upper_camel_case;
                                     #fn_expecting_struct_ident_double_quotes_token_stream
                                     #first_token_stream
                                     #second_token_stream
                                 }
-                            }
+                            )
                         };
                         (
                             generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_pg_money_token_stream, &fn_visit_seq_pg_money_token_stream),
@@ -2478,13 +2486,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_uuid_token_stream, &fn_visit_seq_sqlx_types_uuid_uuid_token_stream),
                             generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_mac_address_token_stream, &fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream),
                         )
-                    };
-                    let generate_impl_serde_de_visitor_for_tokens_token_stream = |ident_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {
-                            impl<'de> _serde::de::Visitor<'de> for #ident_token_stream {
-                                #content_token_stream
-                            }
-                        }
                     };
                     let (
                         impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2,
