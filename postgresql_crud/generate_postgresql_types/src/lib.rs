@@ -2630,13 +2630,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             //todo
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: _serde::__private::PhantomData<
-                                            StdStringStringAsNotNullTextOrigin,
-                                        >,
-                                        lifetime: _serde::__private::PhantomData<&'de ()>,
-                                    }
+                                    #struct_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = StdStringStringAsNotNullTextOrigin;
@@ -2785,11 +2779,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             )
                                         }
                                     }
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: _serde::__private::PhantomData<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>,
-                                        lifetime: _serde::__private::PhantomData<&'de ()>,
-                                    }
+                                    #struct_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin;
@@ -3061,11 +3051,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             )
                                         }
                                     }
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: _serde::__private::PhantomData<SqlxTypesTimeTimeAsNotNullTimeOrigin>,
-                                        lifetime: _serde::__private::PhantomData<&'de ()>,
-                                    }
+                                    #struct_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesTimeTimeAsNotNullTimeOrigin;
@@ -3268,11 +3254,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: _serde::__private::PhantomData<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>,
-                                        lifetime: _serde::__private::PhantomData<&'de ()>,
-                                    }
+                                    #struct_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesChronoNaiveDateAsNotNullDateOrigin;
@@ -3412,13 +3394,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             )
                                         }
                                     }
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: _serde::__private::PhantomData<
-                                            SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
-                                        >,
-                                        lifetime: _serde::__private::PhantomData<&'de ()>,
-                                    }
+                                    #struct_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin;
@@ -3600,11 +3576,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: _serde::__private::PhantomData<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>,
-                                        lifetime: _serde::__private::PhantomData<&'de ()>,
-                                    }
+                                    #struct_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin;
@@ -3789,6 +3761,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             })
                         }),
+                        //todo rewrite it as i32 deserialization
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(
@@ -3844,11 +3817,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: serde::__private::PhantomData<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin>,
-                                        lifetime: serde::__private::PhantomData<&'de ()>,
-                                    }
+                                    #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin;
                                         fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -3987,11 +3956,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: serde::__private::PhantomData<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin>,
-                                        lifetime: serde::__private::PhantomData<&'de ()>,
-                                    }
+                                    #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin;
                                         fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -4121,11 +4086,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
-                                    #[doc(hidden)]
-                                    struct __Visitor<'de> {
-                                        marker: serde::__private::PhantomData<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin>,
-                                        lifetime: serde::__private::PhantomData<&'de ()>,
-                                    }
+                                    #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin;
                                         fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
