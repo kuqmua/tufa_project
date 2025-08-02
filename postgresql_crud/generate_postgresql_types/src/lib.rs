@@ -1784,10 +1784,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                     let tuple_struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_tuple_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                     let postgresql_type_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
-                    let struct_field_visitor_token_stream = quote::quote!{
-                        #[doc(hidden)]
-                        struct __FieldVisitor;
-                    };
                     let struct_visitor_token_stream = quote::quote! {
                         #[doc(hidden)]
                         struct __Visitor<'de> {
@@ -2563,6 +2559,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             ),
                         )
                     };
+                    let field_visitor_token_stream = quote::quote! {__FieldVisitor};
+                    let struct_field_visitor_token_stream = quote::quote!{
+                        #[doc(hidden)]
+                        struct #field_visitor_token_stream;
+                    };
+                    let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                        generate_impl_serde_de_visitor_for_tokens_token_stream(
+                            &field_visitor_token_stream,
+                            &content_token_stream
+                        )
+                    };
                     let (
                         impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2,
                         impl_serde_de_visitor_for_field_visitor_token_stream_31609291_37e6_427f_8d04_d19e2af929f8,
@@ -2570,11 +2577,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6,
                     ) = {
                         let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                            let field_visitor_token_stream = quote::quote! {__FieldVisitor};
                             let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(&field_visitor_token_stream, &content_token_stream);
                             quote::quote! {
-                                #[doc(hidden)]
-                                struct #field_visitor_token_stream;
+                                #struct_field_visitor_token_stream
                                 #impl_serde_de_visitor_for_tokens_token_stream
                             }
                         };
@@ -2685,14 +2690,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #const_fields_start_end_token_stream
                             #serde_deserializer_deserialize_struct_visitor_token_stream
                         })
-                    };
-                    let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                        quote::quote!{
-                            #[automatically_derived]
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                #content_token_stream
-                            }
-                        }
                     };
                     match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2 => postgresql_crud_macros_common::DeriveOrImpl::Derive,
