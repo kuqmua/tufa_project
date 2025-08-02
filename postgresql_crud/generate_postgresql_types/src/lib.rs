@@ -1865,7 +1865,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         (generate_enum_field_token_stream(&parameter_number_two), generate_enum_field_token_stream(&parameter_number_three), generate_enum_field_token_stream(&parameter_number_four))
                     };
-                    // tuple_struct_ident_double_quotes_token_stream
                     let (
                         fn_expecting_struct_ident_double_quotes_token_stream,
                         fn_expecting_tuple_struct_ident_double_quotes_token_stream,
@@ -2717,15 +2716,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut _serde::__private::Formatter<'_>,
-                                    ) -> _serde::__private::fmt::Result {
-                                        _serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            "field identifier",
-                                        )
-                                    }
+                                    #fn_expecting_field_identifier_token_stream
                                     fn visit_u64<__E>(
                                         self,
                                         __value: u64,
@@ -2795,15 +2786,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin;
-                                        fn expecting(
-                                            &self,
-                                            __formatter: &mut _serde::__private::Formatter<'_>,
-                                        ) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(
-                                                __formatter,
-                                                "struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin",
-                                            )
-                                        }
+                                        #fn_expecting_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_seq<__A>(
                                             self,
@@ -2988,15 +2971,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut _serde::__private::Formatter<'_>,
-                                    ) -> _serde::__private::fmt::Result {
-                                        _serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            "field identifier",
-                                        )
-                                    }
+                                    #fn_expecting_field_identifier_token_stream
                                     fn visit_u64<__E>(
                                         self,
                                         __value: u64,
@@ -3066,15 +3041,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesTimeTimeAsNotNullTimeOrigin;
-                                        fn expecting(
-                                            &self,
-                                            __formatter: &mut _serde::__private::Formatter<'_>,
-                                        ) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(
-                                                __formatter,
-                                                "struct SqlxTypesTimeTimeAsNotNullTimeOrigin",
-                                            )
-                                        }
+                                        #fn_expecting_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_seq<__A>(
                                             self,
@@ -3269,15 +3236,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesChronoNaiveDateAsNotNullDateOrigin;
-                                        fn expecting(
-                                            &self,
-                                            __formatter: &mut _serde::__private::Formatter<'_>,
-                                        ) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(
-                                                __formatter,
-                                                "tuple struct SqlxTypesChronoNaiveDateAsNotNullDateOrigin",
-                                            )
-                                        }
+                                        #fn_expecting_tuple_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_newtype_struct<__E>(
                                             self,
@@ -3329,15 +3288,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
-                                    fn expecting(
-                                        &self,
-                                        __formatter: &mut _serde::__private::Formatter<'_>,
-                                    ) -> _serde::__private::fmt::Result {
-                                        _serde::__private::Formatter::write_str(
-                                            __formatter,
-                                            "field identifier",
-                                        )
-                                    }
+                                    #fn_expecting_field_identifier_token_stream
                                     fn visit_u64<__E>(
                                         self,
                                         __value: u64,
@@ -3401,15 +3352,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin;
-                                        fn expecting(
-                                            &self,
-                                            __formatter: &mut _serde::__private::Formatter<'_>,
-                                        ) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(
-                                                __formatter,
-                                                "struct SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
-                                            )
-                                        }
+                                        #fn_expecting_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_seq<__A>(
                                             self,
@@ -3530,9 +3473,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
-                                    fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                                        _serde::__private::Formatter::write_str(__formatter, "field identifier")
-                                    }
+                                    #fn_expecting_field_identifier_token_stream
                                     fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
                                     where
                                         __E: _serde::de::Error,
@@ -3582,9 +3523,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin;
-                                        fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(__formatter, "struct SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin")
-                                        }
+                                        #fn_expecting_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_seq<__A>(self, mut __seq: __A) -> _serde::__private::Result<Self::Value, __A::Error>
                                         where
@@ -3679,9 +3618,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     type Value = Field;
-                                    fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(__f, "`start` or `end`")
-                                    }
+                                    #fn_expecting_start_or_end_token_stream
                                     fn visit_str<E>(self, value: &str) -> Result<Field, E>
                                     where
                                         E: serde::de::Error,
@@ -3711,9 +3648,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor;
                                     impl<'de> _serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor {
                                         type Value = SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin;
-                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                            serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin")
-                                        }
+                                        #fn_expecting_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
                                         where
@@ -3772,9 +3707,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
-                                    fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(__f, "field identifier")
-                                    }
+                                    #fn_expecting_field_identifier_token_stream
                                     fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
                                     where
                                         __E: serde::de::Error,
@@ -3822,9 +3755,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin;
-                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                            serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin")
-                                        }
+                                        #fn_expecting_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
                                         where
@@ -3911,9 +3842,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
-                                    fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(__f, "field identifier")
-                                    }
+                                    #fn_expecting_field_identifier_token_stream
                                     fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
                                     where
                                         __E: serde::de::Error,
@@ -3961,9 +3890,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin;
-                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                            serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin")
-                                        }
+                                        #fn_expecting_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
                                         where
@@ -4041,9 +3968,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
-                                    fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                        serde::__private::Formatter::write_str(__f, "field identifier")
-                                    }
+                                    #fn_expecting_field_identifier_token_stream
                                     fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
                                     where
                                         __E: serde::de::Error,
@@ -4091,9 +4016,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin;
-                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                            serde::__private::Formatter::write_str(__f, "struct SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin")
-                                        }
+                                        #fn_expecting_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
                                         where
