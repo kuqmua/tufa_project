@@ -2855,15 +2855,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_time_token_stream
                                     #[doc(hidden)]
                                     #const_fields_sqlx_types_chrono_naive_time_token_stream
-                                    _serde::Deserializer::deserialize_struct(
-                                        __deserializer,
-                                        "SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin",
-                                        FIELDS,
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin>,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #serde_deserializer_deserialize_struct_visitor_token_stream
                                 }
                             })
                         }),
@@ -3078,15 +3070,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         }
                                     }
                                     #const_fields_sqlx_types_time_time_token_stream
-                                    _serde::Deserializer::deserialize_struct(
-                                        __deserializer,
-                                        "SqlxTypesTimeTimeAsNotNullTimeOrigin",
-                                        FIELDS,
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<SqlxTypesTimeTimeAsNotNullTimeOrigin>,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #serde_deserializer_deserialize_struct_visitor_token_stream
                                 }
                             })
                         }),
@@ -3278,17 +3262,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         }
                                     }
                                     #const_fields_sqlx_types_chrono_naive_date_time_token_stream
-                                    _serde::Deserializer::deserialize_struct(
-                                        __deserializer,
-                                        "SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin",
-                                        FIELDS,
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<
-                                                SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin,
-                                            >,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #serde_deserializer_deserialize_struct_visitor_token_stream
                                 }
                             })
                         }),
@@ -3384,15 +3358,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         }
                                     }
                                     #const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                                    _serde::Deserializer::deserialize_struct(
-                                        __deserializer,
-                                        "SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin",
-                                        FIELDS,
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #serde_deserializer_deserialize_struct_visitor_token_stream
                                 }
                             })
                         }),
@@ -3492,7 +3458,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         }
                                     }
                                     #const_fields_start_end_token_stream
-                                    _serde::Deserializer::deserialize_struct(__deserializer, "SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4Range", FIELDS, SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor)
+                                    #serde_deserializer_deserialize_struct_ident_visitor_token_stream
                                 }
                             })
                         }),
@@ -3591,15 +3557,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         }
                                     }
                                     #const_fields_start_end_token_stream
-                                    _serde::Deserializer::deserialize_struct(
-                                        __deserializer,
-                                        "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRange",
-                                        FIELDS,
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin>,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #serde_deserializer_deserialize_struct_visitor_token_stream
                                 }
                             })
                         }),
@@ -3706,15 +3664,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         }
                                     }
                                     #const_fields_start_end_token_stream
-                                    _serde::Deserializer::deserialize_struct(
-                                        __deserializer,
-                                        "SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRange",
-                                        FIELDS,
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin>,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #serde_deserializer_deserialize_struct_visitor_token_stream
                                 }
                             })
                         ),
@@ -3809,15 +3759,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         }
                                     }
                                     #const_fields_start_end_token_stream
-                                    _serde::Deserializer::deserialize_struct(
-                                        __deserializer,
-                                        "SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRange",
-                                        FIELDS,
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin>,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #serde_deserializer_deserialize_struct_visitor_token_stream
                                 }
                             })
                         }),
