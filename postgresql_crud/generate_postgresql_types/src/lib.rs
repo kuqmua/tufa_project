@@ -2063,6 +2063,65 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_std_collections_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate),
                         )
                     };
+                    //here
+                    let fn_visit_seq_sqlx_types_chrono_naive_time_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
+                        let __field0 = match _serde::de::SeqAccess::next_element::<
+                            std::primitive::u32,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        0usize,
+                                        &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
+                                    ),
+                                );
+                            }
+                        };
+                        let __field1 = match _serde::de::SeqAccess::next_element::<
+                            std::primitive::u32,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        1usize,
+                                        &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
+                                    ),
+                                );
+                            }
+                        };
+                        let __field2 = match _serde::de::SeqAccess::next_element::<
+                            std::primitive::u32,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        2usize,
+                                        &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
+                                    ),
+                                );
+                            }
+                        };
+                        let __field3 = match _serde::de::SeqAccess::next_element::<
+                            std::primitive::u32,
+                        >(&mut __seq)? {
+                            _serde::__private::Some(__value) => __value,
+                            _serde::__private::None => {
+                                return _serde::__private::Err(
+                                    _serde::de::Error::invalid_length(
+                                        3usize,
+                                        &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
+                                    ),
+                                );
+                            }
+                        };
+                        match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
+                            Ok(value) => _serde::__private::Ok(value),
+                            Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                        }
+                    });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
                         let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                             &std_collections_bound_sqlx_types_chrono_naive_date_time_token_stream,
@@ -2572,6 +2631,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     };
                     let (
+                        impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_time_token_stream,
                         impl_serde_de_visitor_for_visitor_pg_money_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
@@ -2596,6 +2656,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             )
                         };
                         (
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_struct_ident_double_quotes_token_stream,
+                                &fn_visit_seq_sqlx_types_chrono_naive_time_token_stream,
+                                &fn_visit_map_sqlx_types_chrono_naive_time_token_stream
+                            ),
                             generate_impl_serde_de_visitor_for_visitor_token_stream(
                                 &fn_expecting_tuple_struct_ident_double_quotes_token_stream,
                                 &fn_visit_newtype_struct_pg_money_token_stream,
@@ -2797,64 +2862,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #fn_visit_str_value_hour_min_sec_micro_token_stream
                                     #fn_visit_bytes_hour_min_sec_micro_token_stream
                                 });
-                                let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::primitive::u32,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::primitive::u32,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field2 = match _serde::de::SeqAccess::next_element::<
-                                        std::primitive::u32,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    2usize,
-                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field3 = match _serde::de::SeqAccess::next_element::<
-                                        std::primitive::u32,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    3usize,
-                                                    &"struct SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin with 4 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new_for_deserialize(__field0, __field1, __field2, __field3) {
-                                        Ok(value) => _serde::__private::Ok(value),
-                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                    }
-                                });
                                 quote::quote!{
                                     #enum_field_four_token_stream
                                     #struct_field_visitor_token_stream
@@ -2862,13 +2869,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #[automatically_derived]
                                     #impl_serde_deserialize_for_field_token_stream
                                     #struct_visitor_token_stream
-                                    #[automatically_derived]
-                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                        type Value = SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin;
-                                        #fn_expecting_struct_ident_double_quotes_token_stream
-                                        #fn_visit_seq_token_stream
-                                        #fn_visit_map_sqlx_types_chrono_naive_time_token_stream
-                                    }
+                                    #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_time_token_stream
                                     #[doc(hidden)]
                                     const FIELDS: &'static [&'static str] = &["hour", "min", "sec", "micro"];
                                     _serde::Deserializer::deserialize_struct(
