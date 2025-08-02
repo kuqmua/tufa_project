@@ -2570,6 +2570,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             &content_token_stream
                         )
                     };
+                    let type_value_equal_underscore_field_semicolon_token_stream = quote::quote! {type Value = __Field;};
                     let (
                         impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2,
                         impl_serde_de_visitor_for_field_visitor_token_stream_31609291_37e6_427f_8d04_d19e2af929f8,
@@ -2585,7 +2586,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         (
                             generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
-                                type Value = __Field;
+                                #type_value_equal_underscore_field_semicolon_token_stream
                                 #fn_expecting_field_identifier_token_stream
                                 #fn_visit_u64_three_token_stream
                                 #fn_visit_str_value_year_month_day_token_stream
@@ -2602,7 +2603,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #fn_visit_str_field_start_end_token_stream
                             }),
                             generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
-                                type Value = __Field;
+                                #type_value_equal_underscore_field_semicolon_token_stream
                                 #fn_expecting_field_identifier_token_stream
                                 #fn_visit_u64_two_token_stream
                                 #fn_visit_str_value_start_end_token_stream
@@ -2715,7 +2716,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    type Value = __Field;
+                                    #type_value_equal_underscore_field_semicolon_token_stream
                                     fn expecting(
                                         &self,
                                         __formatter: &mut _serde::__private::Formatter<'_>,
@@ -2986,7 +2987,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    type Value = __Field;
+                                    #type_value_equal_underscore_field_semicolon_token_stream
                                     fn expecting(
                                         &self,
                                         __formatter: &mut _serde::__private::Formatter<'_>,
@@ -3327,7 +3328,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    type Value = __Field;
+                                    #type_value_equal_underscore_field_semicolon_token_stream
                                     fn expecting(
                                         &self,
                                         __formatter: &mut _serde::__private::Formatter<'_>,
@@ -3528,7 +3529,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    type Value = __Field;
+                                    #type_value_equal_underscore_field_semicolon_token_stream
                                     fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
                                         _serde::__private::Formatter::write_str(__formatter, "field identifier")
                                     }
@@ -3770,7 +3771,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // )
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    type Value = __Field;
+                                    #type_value_equal_underscore_field_semicolon_token_stream
                                     fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
                                         serde::__private::Formatter::write_str(__f, "field identifier")
                                     }
@@ -3909,7 +3910,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // })
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    type Value = __Field;
+                                    #type_value_equal_underscore_field_semicolon_token_stream
                                     fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
                                         serde::__private::Formatter::write_str(__f, "field identifier")
                                     }
@@ -4039,7 +4040,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(&impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream)
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    type Value = __Field;
+                                    #type_value_equal_underscore_field_semicolon_token_stream
                                     fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
                                         serde::__private::Formatter::write_str(__f, "field identifier")
                                     }
