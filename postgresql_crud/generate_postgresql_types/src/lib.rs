@@ -2116,7 +2116,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     });
-                    let (fn_visit_u64_two_token_stream, fn_visit_u64_three_token_stream) = {
+                    let (fn_visit_u64_two_token_stream, fn_visit_u64_three_token_stream, fn_visit_u64_four_token_stream) = {
                         let generate_fn_visit_u64_token_stream = |parameter_number: &ParameterNumber| {
                             let fields_token_stream = {
                                 parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|element| {
@@ -2137,7 +2137,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             }
                         };
-                        (generate_fn_visit_u64_token_stream(&ParameterNumber::Two), generate_fn_visit_u64_token_stream(&ParameterNumber::Three))
+                        (
+                            generate_fn_visit_u64_token_stream(&ParameterNumber::Two),
+                            generate_fn_visit_u64_token_stream(&ParameterNumber::Three),
+                            generate_fn_visit_u64_token_stream(&ParameterNumber::Four)
+                        )
                     };
                     let (fn_visit_str_value_year_month_day_token_stream, fn_visit_str_value_start_end_token_stream) = {
                         let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
@@ -2570,6 +2574,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         )
                     };
                     let type_value_equal_underscore_field_semicolon_token_stream = quote::quote! {type Value = __Field;};
+                    let type_value_equal_field_semicolon_token_stream = quote::quote! {type Value = Field;};
                     let (
                         impl_serde_de_visitor_for_field_visitor_token_stream_77c8b6d8_4ac3_4551_8498_36b9d77317f2,
                         impl_serde_de_visitor_for_field_visitor_token_stream_31609291_37e6_427f_8d04_d19e2af929f8,
@@ -2592,12 +2597,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #fn_visit_bytes_year_month_day_token_stream
                             }),
                             generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
-                                type Value = Field;
+                                #type_value_equal_field_semicolon_token_stream
                                 #fn_expecting_months_or_days_or_microseconds_token_stream
                                 #fn_visit_str_field_months_days_microseconds_token_stream
                             }),
                             generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
-                                type Value = Field;
+                                #type_value_equal_field_semicolon_token_stream
                                 #fn_expecting_start_or_end_token_stream
                                 #fn_visit_str_field_start_end_token_stream
                             }),
@@ -2717,21 +2722,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
                                     #fn_expecting_field_identifier_token_stream
-                                    fn visit_u64<__E>(
-                                        self,
-                                        __value: u64,
-                                    ) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => _serde::__private::Ok(__Field::__field0),
-                                            1u64 => _serde::__private::Ok(__Field::__field1),
-                                            2u64 => _serde::__private::Ok(__Field::__field2),
-                                            3u64 => _serde::__private::Ok(__Field::__field3),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_u64_four_token_stream
                                     fn visit_str<__E>(
                                         self,
                                         __value: &str,
@@ -2972,21 +2963,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
                                     #fn_expecting_field_identifier_token_stream
-                                    fn visit_u64<__E>(
-                                        self,
-                                        __value: u64,
-                                    ) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => _serde::__private::Ok(__Field::__field0),
-                                            1u64 => _serde::__private::Ok(__Field::__field1),
-                                            2u64 => _serde::__private::Ok(__Field::__field2),
-                                            3u64 => _serde::__private::Ok(__Field::__field3),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_u64_four_token_stream
                                     fn visit_str<__E>(
                                         self,
                                         __value: &str,
@@ -3289,19 +3266,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
                                     #fn_expecting_field_identifier_token_stream
-                                    fn visit_u64<__E>(
-                                        self,
-                                        __value: u64,
-                                    ) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => _serde::__private::Ok(__Field::__field0),
-                                            1u64 => _serde::__private::Ok(__Field::__field1),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_u64_two_token_stream
                                     fn visit_str<__E>(
                                         self,
                                         __value: &str,
@@ -3474,16 +3439,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
                                     #fn_expecting_field_identifier_token_stream
-                                    fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => _serde::__private::Ok(__Field::__field0),
-                                            1u64 => _serde::__private::Ok(__Field::__field1),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_u64_two_token_stream
                                     fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
                                     where
                                         __E: _serde::de::Error,
@@ -3617,7 +3573,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    type Value = Field;
+                                    #type_value_equal_field_semicolon_token_stream
                                     #fn_expecting_start_or_end_token_stream
                                     fn visit_str<E>(self, value: &str) -> Result<Field, E>
                                     where
@@ -3708,16 +3664,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
                                     #fn_expecting_field_identifier_token_stream
-                                    fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => serde::__private::Ok(__Field::__field0),
-                                            1u64 => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_u64_two_token_stream
                                     fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
                                     where
                                         __E: _serde::de::Error,
@@ -3843,16 +3790,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
                                     #fn_expecting_field_identifier_token_stream
-                                    fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => serde::__private::Ok(__Field::__field0),
-                                            1u64 => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_u64_two_token_stream
                                     fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
                                     where
                                         __E: _serde::de::Error,
@@ -3969,16 +3907,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_underscore_field_semicolon_token_stream
                                     #fn_expecting_field_identifier_token_stream
-                                    fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            0u64 => serde::__private::Ok(__Field::__field0),
-                                            1u64 => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_u64_two_token_stream
                                     fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
                                     where
                                         __E: _serde::de::Error,
