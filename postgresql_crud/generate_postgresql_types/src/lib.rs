@@ -2686,6 +2686,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_deserializer_deserialize_struct_visitor_token_stream
                         })
                     };
+                    let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                        quote::quote!{
+                            #[automatically_derived]
+                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                #content_token_stream
+                            }
+                        }
+                    };
                     match &postgresql_type {
                         PostgresqlType::StdPrimitiveI16AsInt2 => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::StdPrimitiveI32AsInt4 => postgresql_crud_macros_common::DeriveOrImpl::Derive,
@@ -2709,67 +2717,67 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
+                                    }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            2u64 => _serde::__private::Ok(__Field::__field2),
+                                            3u64 => _serde::__private::Ok(__Field::__field3),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "hour" => _serde::__private::Ok(__Field::__field0),
+                                            "min" => _serde::__private::Ok(__Field::__field1),
+                                            "sec" => _serde::__private::Ok(__Field::__field2),
+                                            "micro" => _serde::__private::Ok(__Field::__field3),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"hour" => _serde::__private::Ok(__Field::__field0),
+                                            b"min" => _serde::__private::Ok(__Field::__field1),
+                                            b"sec" => _serde::__private::Ok(__Field::__field2),
+                                            b"micro" => _serde::__private::Ok(__Field::__field3),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                });
                                 quote::quote!{
                                     #enum_field_four_token_stream
                                     #struct_field_visitor_token_stream
-                                    #[automatically_derived]
-                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                        type Value = __Field;
-                                        fn expecting(
-                                            &self,
-                                            __formatter: &mut _serde::__private::Formatter<'_>,
-                                        ) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(
-                                                __formatter,
-                                                "field identifier",
-                                            )
-                                        }
-                                        fn visit_u64<__E>(
-                                            self,
-                                            __value: u64,
-                                        ) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                0u64 => _serde::__private::Ok(__Field::__field0),
-                                                1u64 => _serde::__private::Ok(__Field::__field1),
-                                                2u64 => _serde::__private::Ok(__Field::__field2),
-                                                3u64 => _serde::__private::Ok(__Field::__field3),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_str<__E>(
-                                            self,
-                                            __value: &str,
-                                        ) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                "hour" => _serde::__private::Ok(__Field::__field0),
-                                                "min" => _serde::__private::Ok(__Field::__field1),
-                                                "sec" => _serde::__private::Ok(__Field::__field2),
-                                                "micro" => _serde::__private::Ok(__Field::__field3),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_bytes<__E>(
-                                            self,
-                                            __value: &[u8],
-                                        ) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                b"hour" => _serde::__private::Ok(__Field::__field0),
-                                                b"min" => _serde::__private::Ok(__Field::__field1),
-                                                b"sec" => _serde::__private::Ok(__Field::__field2),
-                                                b"micro" => _serde::__private::Ok(__Field::__field3),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                    }
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::Deserialize<'de> for __Field {
                                         #[inline]
@@ -2980,67 +2988,67 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }),
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
+                                    }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            2u64 => _serde::__private::Ok(__Field::__field2),
+                                            3u64 => _serde::__private::Ok(__Field::__field3),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "hour" => _serde::__private::Ok(__Field::__field0),
+                                            "minute" => _serde::__private::Ok(__Field::__field1),
+                                            "second" => _serde::__private::Ok(__Field::__field2),
+                                            "microsecond" => _serde::__private::Ok(__Field::__field3),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"hour" => _serde::__private::Ok(__Field::__field0),
+                                            b"minute" => _serde::__private::Ok(__Field::__field1),
+                                            b"second" => _serde::__private::Ok(__Field::__field2),
+                                            b"microsecond" => _serde::__private::Ok(__Field::__field3),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                });
                                 quote::quote!{
                                     #enum_field_four_token_stream
                                     #struct_field_visitor_token_stream
-                                    #[automatically_derived]
-                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                        type Value = __Field;
-                                        fn expecting(
-                                            &self,
-                                            __formatter: &mut _serde::__private::Formatter<'_>,
-                                        ) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(
-                                                __formatter,
-                                                "field identifier",
-                                            )
-                                        }
-                                        fn visit_u64<__E>(
-                                            self,
-                                            __value: u64,
-                                        ) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                0u64 => _serde::__private::Ok(__Field::__field0),
-                                                1u64 => _serde::__private::Ok(__Field::__field1),
-                                                2u64 => _serde::__private::Ok(__Field::__field2),
-                                                3u64 => _serde::__private::Ok(__Field::__field3),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_str<__E>(
-                                            self,
-                                            __value: &str,
-                                        ) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                "hour" => _serde::__private::Ok(__Field::__field0),
-                                                "minute" => _serde::__private::Ok(__Field::__field1),
-                                                "second" => _serde::__private::Ok(__Field::__field2),
-                                                "microsecond" => _serde::__private::Ok(__Field::__field3),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_bytes<__E>(
-                                            self,
-                                            __value: &[u8],
-                                        ) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                b"hour" => _serde::__private::Ok(__Field::__field0),
-                                                b"minute" => _serde::__private::Ok(__Field::__field1),
-                                                b"second" => _serde::__private::Ok(__Field::__field2),
-                                                b"microsecond" => _serde::__private::Ok(__Field::__field3),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                    }
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::Deserialize<'de> for __Field {
                                         #[inline]
@@ -3321,61 +3329,61 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }),
                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                    type Value = __Field;
+                                    fn expecting(
+                                        &self,
+                                        __formatter: &mut _serde::__private::Formatter<'_>,
+                                    ) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(
+                                            __formatter,
+                                            "field identifier",
+                                        )
+                                    }
+                                    fn visit_u64<__E>(
+                                        self,
+                                        __value: u64,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_str<__E>(
+                                        self,
+                                        __value: &str,
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "date" => _serde::__private::Ok(__Field::__field0),
+                                            "time" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_bytes<__E>(
+                                        self,
+                                        __value: &[u8],
+                                    ) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"date" => _serde::__private::Ok(__Field::__field0),
+                                            b"time" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                });
                                 quote::quote!{
                                     #enum_field_two_token_stream
                                     #struct_field_visitor_token_stream
-                                    #[automatically_derived]
-                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                        type Value = __Field;
-                                        fn expecting(
-                                            &self,
-                                            __formatter: &mut _serde::__private::Formatter<'_>,
-                                        ) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(
-                                                __formatter,
-                                                "field identifier",
-                                            )
-                                        }
-                                        fn visit_u64<__E>(
-                                            self,
-                                            __value: u64,
-                                        ) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                0u64 => _serde::__private::Ok(__Field::__field0),
-                                                1u64 => _serde::__private::Ok(__Field::__field1),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_str<__E>(
-                                            self,
-                                            __value: &str,
-                                        ) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                "date" => _serde::__private::Ok(__Field::__field0),
-                                                "time" => _serde::__private::Ok(__Field::__field1),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_bytes<__E>(
-                                            self,
-                                            __value: &[u8],
-                                        ) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                b"date" => _serde::__private::Ok(__Field::__field0),
-                                                b"time" => _serde::__private::Ok(__Field::__field1),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                    }
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::Deserialize<'de> for __Field {
                                         #[inline]
@@ -3522,46 +3530,46 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }),
                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                    type Value = __Field;
+                                    fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
+                                        _serde::__private::Formatter::write_str(__formatter, "field identifier")
+                                    }
+                                    fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => _serde::__private::Ok(__Field::__field0),
+                                            1u64 => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "date_naive" => _serde::__private::Ok(__Field::__field0),
+                                            "time" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"date_naive" => _serde::__private::Ok(__Field::__field0),
+                                            b"time" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                });
                                 quote::quote!{
                                     #enum_field_two_token_stream
                                     #struct_field_visitor_token_stream
-                                    #[automatically_derived]
-                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                        type Value = __Field;
-                                        fn expecting(&self, __formatter: &mut _serde::__private::Formatter<'_>) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(__formatter, "field identifier")
-                                        }
-                                        fn visit_u64<__E>(self, __value: u64) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                0u64 => _serde::__private::Ok(__Field::__field0),
-                                                1u64 => _serde::__private::Ok(__Field::__field1),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                "date_naive" => _serde::__private::Ok(__Field::__field0),
-                                                "time" => _serde::__private::Ok(__Field::__field1),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                b"date_naive" => _serde::__private::Ok(__Field::__field0),
-                                                b"time" => _serde::__private::Ok(__Field::__field1),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                    }
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::Deserialize<'de> for __Field {
                                         #[inline]
@@ -3671,6 +3679,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                    type Value = Field;
+                                    fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                        serde::__private::Formatter::write_str(__f, "`start` or `end`")
+                                    }
+                                    fn visit_str<E>(self, value: &str) -> Result<Field, E>
+                                    where
+                                        E: serde::de::Error,
+                                    {
+                                        match value {
+                                            "start" => Ok(Field::Start),
+                                            "end" => Ok(Field::End),
+                                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
+                                        }
+                                    }
+                                });
                                 quote::quote!{
                                     enum Field {
                                         Start,
@@ -3682,22 +3706,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             D: serde::Deserializer<'de>,
                                         {
                                             #struct_field_visitor_token_stream
-                                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                                type Value = Field;
-                                                fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                                    serde::__private::Formatter::write_str(__f, "`start` or `end`")
-                                                }
-                                                fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                                where
-                                                    E: serde::de::Error,
-                                                {
-                                                    match value {
-                                                        "start" => Ok(Field::Start),
-                                                        "end" => Ok(Field::End),
-                                                        _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                                    }
-                                                }
-                                            }
+                                            #impl_serde_de_visitor_for_field_visitor_token_stream
                                             _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
@@ -3763,45 +3772,46 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             //     &impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                             // )
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                    type Value = __Field;
+                                    fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                        serde::__private::Formatter::write_str(__f, "field identifier")
+                                    }
+                                    fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => serde::__private::Ok(__Field::__field0),
+                                            1u64 => serde::__private::Ok(__Field::__field1),
+                                            _ => serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => serde::__private::Ok(__Field::__field0),
+                                            b"end" => serde::__private::Ok(__Field::__field1),
+                                            _ => serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                });
                                 quote::quote!{
                                     #enum_field_two_token_stream
                                     #struct_field_visitor_token_stream
-                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                        type Value = __Field;
-                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                            serde::__private::Formatter::write_str(__f, "field identifier")
-                                        }
-                                        fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: serde::de::Error,
-                                        {
-                                            match __value {
-                                                0u64 => serde::__private::Ok(__Field::__field0),
-                                                1u64 => serde::__private::Ok(__Field::__field1),
-                                                _ => serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                "start" => _serde::__private::Ok(__Field::__field0),
-                                                "end" => _serde::__private::Ok(__Field::__field1),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: serde::de::Error,
-                                        {
-                                            match __value {
-                                                b"start" => serde::__private::Ok(__Field::__field0),
-                                                b"end" => serde::__private::Ok(__Field::__field1),
-                                                _ => serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                    }
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream
                                     impl<'de> _serde::Deserialize<'de> for __Field {
                                         #[inline]
                                         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
@@ -3901,45 +3911,46 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             //     }
                             // })
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                    type Value = __Field;
+                                    fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                        serde::__private::Formatter::write_str(__f, "field identifier")
+                                    }
+                                    fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => serde::__private::Ok(__Field::__field0),
+                                            1u64 => serde::__private::Ok(__Field::__field1),
+                                            _ => serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => serde::__private::Ok(__Field::__field0),
+                                            b"end" => serde::__private::Ok(__Field::__field1),
+                                            _ => serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                });
                                 quote::quote!{
                                     #enum_field_two_token_stream
                                     #struct_field_visitor_token_stream
-                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                        type Value = __Field;
-                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                            serde::__private::Formatter::write_str(__f, "field identifier")
-                                        }
-                                        fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: serde::de::Error,
-                                        {
-                                            match __value {
-                                                0u64 => serde::__private::Ok(__Field::__field0),
-                                                1u64 => serde::__private::Ok(__Field::__field1),
-                                                _ => serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                "start" => _serde::__private::Ok(__Field::__field0),
-                                                "end" => _serde::__private::Ok(__Field::__field1),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: serde::de::Error,
-                                        {
-                                            match __value {
-                                                b"start" => serde::__private::Ok(__Field::__field0),
-                                                b"end" => serde::__private::Ok(__Field::__field1),
-                                                _ => serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                    }
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream
                                     impl<'de> _serde::Deserialize<'de> for __Field {
                                         #[inline]
                                         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
@@ -4030,45 +4041,46 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(&impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream)
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                    type Value = __Field;
+                                    fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
+                                        serde::__private::Formatter::write_str(__f, "field identifier")
+                                    }
+                                    fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: serde::de::Error,
+                                    {
+                                        match __value {
+                                            0u64 => serde::__private::Ok(__Field::__field0),
+                                            1u64 => serde::__private::Ok(__Field::__field1),
+                                            _ => serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: _serde::de::Error,
+                                    {
+                                        match __value {
+                                            "start" => _serde::__private::Ok(__Field::__field0),
+                                            "end" => _serde::__private::Ok(__Field::__field1),
+                                            _ => _serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                    fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
+                                    where
+                                        __E: serde::de::Error,
+                                    {
+                                        match __value {
+                                            b"start" => serde::__private::Ok(__Field::__field0),
+                                            b"end" => serde::__private::Ok(__Field::__field1),
+                                            _ => serde::__private::Ok(__Field::__ignore),
+                                        }
+                                    }
+                                });
                                 quote::quote!{
                                     #enum_field_two_token_stream
                                     #struct_field_visitor_token_stream
-                                    impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                        type Value = __Field;
-                                        fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
-                                            serde::__private::Formatter::write_str(__f, "field identifier")
-                                        }
-                                        fn visit_u64<__E>(self, __value: u64) -> serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: serde::de::Error,
-                                        {
-                                            match __value {
-                                                0u64 => serde::__private::Ok(__Field::__field0),
-                                                1u64 => serde::__private::Ok(__Field::__field1),
-                                                _ => serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_str<__E>(self, __value: &str) -> _serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: _serde::de::Error,
-                                        {
-                                            match __value {
-                                                "start" => _serde::__private::Ok(__Field::__field0),
-                                                "end" => _serde::__private::Ok(__Field::__field1),
-                                                _ => _serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                        fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                        where
-                                            __E: serde::de::Error,
-                                        {
-                                            match __value {
-                                                b"start" => serde::__private::Ok(__Field::__field0),
-                                                b"end" => serde::__private::Ok(__Field::__field1),
-                                                _ => serde::__private::Ok(__Field::__ignore),
-                                            }
-                                        }
-                                    }
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream
                                     impl<'de> _serde::Deserialize<'de> for __Field {
                                         #[inline]
                                         fn deserialize<__D>(__deserializer: __D) -> _serde::__private::Result<Self, __D::Error>
