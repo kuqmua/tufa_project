@@ -2849,11 +2849,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 quote::quote!{
                                     #enum_field_four_token_stream
                                     #impl_serde_de_visitor_for_field_visitor_token_stream_5a4f24ce_7a8e_4bcc_8f79_2494f79bcc08
-                                    #[automatically_derived]
                                     #impl_serde_deserialize_for_field_token_stream
                                     #struct_visitor_token_stream
                                     #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_time_token_stream
-                                    #[doc(hidden)]
                                     #const_fields_sqlx_types_chrono_naive_time_token_stream
                                     #serde_deserializer_deserialize_struct_visitor_token_stream
                                 }
