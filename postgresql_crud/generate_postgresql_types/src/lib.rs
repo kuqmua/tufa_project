@@ -1784,6 +1784,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                     let tuple_struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_tuple_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                     let postgresql_type_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
+                    let struct_field_visitor_token_stream = quote::quote!{
+                        #[doc(hidden)]
+                        struct __FieldVisitor;
+                    };
                     let struct_visitor_token_stream = quote::quote! {
                         #[doc(hidden)]
                         struct __Visitor<'de> {
@@ -2707,8 +2711,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
                                     #enum_field_four_token_stream
-                                    #[doc(hidden)]
-                                    struct __FieldVisitor;
+                                    #struct_field_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                                         type Value = __Field;
@@ -2979,8 +2982,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
                                     #enum_field_four_token_stream
-                                    #[doc(hidden)]
-                                    struct __FieldVisitor;
+                                    #struct_field_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                                         type Value = __Field;
@@ -3321,8 +3323,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #[doc(hidden)]
-                                    struct __FieldVisitor;
+                                    #struct_field_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                                         type Value = __Field;
@@ -3523,8 +3524,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #[doc(hidden)]
-                                    struct __FieldVisitor;
+                                    #struct_field_visitor_token_stream
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                                         type Value = __Field;
@@ -3681,8 +3681,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         where
                                             D: serde::Deserializer<'de>,
                                         {
-                                            #[doc(hidden)]
-                                            struct __FieldVisitor;
+                                            #struct_field_visitor_token_stream
                                             impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                                                 type Value = Field;
                                                 fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -3766,8 +3765,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #[doc(hidden)]
-                                    struct __FieldVisitor;
+                                    #struct_field_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                                         type Value = __Field;
                                         fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -3905,8 +3903,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #[doc(hidden)]
-                                    struct __FieldVisitor;
+                                    #struct_field_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                                         type Value = __Field;
                                         fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -4035,8 +4032,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #[doc(hidden)]
-                                    struct __FieldVisitor;
+                                    #struct_field_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
                                         type Value = __Field;
                                         fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
