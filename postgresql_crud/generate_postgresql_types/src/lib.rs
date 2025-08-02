@@ -1794,6 +1794,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let year_month_day_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&year_snake_case, &month_snake_case, &day_snake_case];
                     let start_end_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 2] = [&start_snake_case, &end_snake_case];
                     let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [&months_snake_case, &days_snake_case, &microseconds_snake_case];
+                    let hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 4] = [
+                        &hour_snake_case,
+                        &min_snake_case,
+                        &sec_snake_case,
+                        &micro_snake_case,
+                    ];
                     let (serde_deserializer_deserialize_struct_visitor_token_stream, serde_deserializer_deserialize_struct_ident_visitor_token_stream) = {
                         let generate_serde_deserializer_deserialize_struct_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
@@ -2143,7 +2149,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_fn_visit_u64_token_stream(&ParameterNumber::Four)
                         )
                     };
-                    let (fn_visit_str_value_year_month_day_token_stream, fn_visit_str_value_start_end_token_stream) = {
+                    let (
+                        fn_visit_str_value_year_month_day_token_stream,
+                        fn_visit_str_value_start_end_token_stream,
+                        fn_visit_str_value_hour_min_sec_micro_token_stream,
+                    ) = {
                         let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
                                 let element_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
@@ -2170,6 +2180,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         (
                             generate_fn_visit_str_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_str_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
+                            generate_fn_visit_str_token_stream(&hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
                     let (fn_visit_str_field_months_days_microseconds_token_stream, fn_visit_str_field_start_end_token_stream) = {
@@ -2723,21 +2734,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #type_value_equal_underscore_field_semicolon_token_stream
                                     #fn_expecting_field_identifier_token_stream
                                     #fn_visit_u64_four_token_stream
-                                    fn visit_str<__E>(
-                                        self,
-                                        __value: &str,
-                                    ) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            "hour" => _serde::__private::Ok(__Field::__field0),
-                                            "min" => _serde::__private::Ok(__Field::__field1),
-                                            "sec" => _serde::__private::Ok(__Field::__field2),
-                                            "micro" => _serde::__private::Ok(__Field::__field3),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_str_value_hour_min_sec_micro_token_stream
                                     fn visit_bytes<__E>(
                                         self,
                                         __value: &[u8],
