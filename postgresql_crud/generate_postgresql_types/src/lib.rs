@@ -1782,6 +1782,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 let serde_deserialize_derive_or_impl = {
                     let struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
+                    let tuple_struct_ident_double_quotes_token_stream = postgresql_crud_macros_common::generate_tuple_struct_ident_double_quotes_token_stream(&ident_origin_upper_camel_case);
                     let postgresql_type_visitor_upper_camel_case = naming::parameter::SelfVisitorUpperCamelCase::from_tokens(&postgresql_type);
                     let struct_visitor_token_stream = quote::quote! {
                         #[doc(hidden)]
@@ -1864,7 +1865,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         (generate_enum_field_token_stream(&parameter_number_two), generate_enum_field_token_stream(&parameter_number_three), generate_enum_field_token_stream(&parameter_number_four))
                     };
-                    let (fn_expecting_struct_ident_double_quotes_token_stream, fn_expecting_field_identifier_token_stream, fn_expecting_months_or_days_or_microseconds_token_stream, fn_expecting_start_or_end_token_stream) = {
+                    // tuple_struct_ident_double_quotes_token_stream
+                    let (
+                        fn_expecting_struct_ident_double_quotes_token_stream,
+                        fn_expecting_tuple_struct_ident_double_quotes_token_stream,
+                        fn_expecting_field_identifier_token_stream,
+                        fn_expecting_months_or_days_or_microseconds_token_stream,
+                        fn_expecting_start_or_end_token_stream
+                    ) = {
                         let generate_fn_expecting_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 fn expecting(&self, __f: &mut serde::__private::Formatter<'_>) -> serde::__private::fmt::Result {
@@ -1874,6 +1882,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         };
                         (
                             generate_fn_expecting_token_stream(&struct_ident_double_quotes_token_stream),
+                            generate_fn_expecting_token_stream(&tuple_struct_ident_double_quotes_token_stream),
                             generate_fn_expecting_token_stream(&quote::quote! {"field identifier"}),
                             generate_fn_expecting_token_stream(&quote::quote! {"`months` or `days` or `microseconds`"}),
                             generate_fn_expecting_token_stream(&quote::quote! {"`start` or `end`"}),
@@ -1894,9 +1903,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }};
                     let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#field_type_standart_not_null::new(#field_0_token_stream)};
                     let array_std_primitive_u8_6_token_stream = quote::quote! {[std::primitive::u8; 6]};
-                    let (fn_visit_newtype_struct_pg_money_token_stream, fn_visit_newtype_struct_uuid_token_stream, fn_visit_newtype_struct_mac_address_token_stream) = {
-                        let generate_fn_visit_newtype_struct_token_stream = |type_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
-                            let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(content_token_stream);
+                    let (
+                        fn_visit_newtype_struct_pg_money_token_stream,
+                        fn_visit_newtype_struct_uuid_token_stream,
+                        fn_visit_newtype_struct_mac_address_token_stream,
+                        fn_visit_newtype_struct_text_token_stream
+                    ) = {
+                        let generate_fn_visit_newtype_struct_token_stream = |type_token_stream: &dyn quote::ToTokens, serde_private_ok_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
                                 #[inline]
                                 fn visit_newtype_struct<__E>(self, __e: __E) -> serde::__private::Result<Self::Value, __E::Error>
@@ -1904,14 +1917,32 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     __E: serde::Deserializer<'de>,
                                 {
                                     let #field_0_token_stream = <#type_token_stream as serde::Deserialize>::deserialize(__e)?;
-                                    #serde_private_ok_postgresql_type_token_stream
+                                    #serde_private_ok_token_stream
                                 }
                             }
                         };
                         (
-                            generate_fn_visit_newtype_struct_token_stream(&std_primitive_i64_token_stream, &quote::quote! {#field_type_standart_not_null(#field_0_token_stream)}),
-                            generate_fn_visit_newtype_struct_token_stream(&std_string_string_token_stream, &match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream),
-                            generate_fn_visit_newtype_struct_token_stream(&array_std_primitive_u8_6_token_stream, &sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream),
+                            generate_fn_visit_newtype_struct_token_stream(
+                                &std_primitive_i64_token_stream,
+                                &generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#field_type_standart_not_null(#field_0_token_stream)})
+                            ),
+                            generate_fn_visit_newtype_struct_token_stream(
+                                &std_string_string_token_stream,
+                                &generate_serde_private_ok_postgresql_type_token_stream(&match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream)
+                            ),
+                            generate_fn_visit_newtype_struct_token_stream(
+                                &array_std_primitive_u8_6_token_stream,
+                                &generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream)
+                            ),
+                            generate_fn_visit_newtype_struct_token_stream(
+                                &std_string_string_token_stream,
+                                &quote::quote!{
+                                    match #ident_standart_not_null_origin_upper_camel_case::try_new_for_deserialize(__field0) {
+                                        Ok(value) => _serde::__private::Ok(value),
+                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                    }
+                                }
+                            ),
                         )
                     };
                     let generate_fn_visit_seq_token_stream = |content_token_stream: &dyn quote::ToTokens| {
@@ -2074,6 +2105,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         quote::quote! {
                             #fields_initialization_token_stream
                             #serde_private_ok_postgresql_type_token_stream
+                        }
+                    });
+                    let fn_visit_seq_std_string_string_token_stream = generate_fn_visit_seq_token_stream(&{
+                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_string_string_token_stream]);
+                        quote::quote! {
+                            #fields_initialization_token_stream
+                            match #ident_standart_not_null_origin_upper_camel_case::try_new_for_deserialize(__field0) {
+                                Ok(value) => _serde::__private::Ok(value),
+                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                            }
                         }
                     });
                     let (fn_visit_u64_two_token_stream, fn_visit_u64_three_token_stream) = {
@@ -2463,28 +2504,59 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                         impl_serde_de_visitor_for_visitor_uuid_uuid_token_stream,
                         impl_serde_de_visitor_for_visitor_mac_address_mac_address_token_stream,
+                        impl_serde_de_visitor_for_visitor_std_string_string_token_stream,
                     ) = {
-                        let generate_impl_serde_de_visitor_for_visitor_token_stream = |first_token_stream: &dyn quote::ToTokens, second_token_stream: &dyn quote::ToTokens| {
+                        let generate_impl_serde_de_visitor_for_visitor_token_stream = |
+                            zero_token_stream: &dyn quote::ToTokens,
+                            first_token_stream: &dyn quote::ToTokens,
+                            second_token_stream: &dyn quote::ToTokens
+                        | {
                             generate_impl_serde_de_visitor_for_tokens_token_stream(
                                 &quote::quote!{__Visitor<'de>},
                                 &quote::quote!{
                                     type Value = #ident_standart_not_null_origin_upper_camel_case;
-                                    #fn_expecting_struct_ident_double_quotes_token_stream
+                                    #zero_token_stream
                                     #first_token_stream
                                     #second_token_stream
                                 }
                             )
                         };
                         (
-                            generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_pg_money_token_stream, &fn_visit_seq_pg_money_token_stream),
-                            generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream, &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream),
                             generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_tuple_struct_ident_double_quotes_token_stream,
+                                &fn_visit_newtype_struct_pg_money_token_stream,
+                                &fn_visit_seq_pg_money_token_stream
+                            ),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_tuple_struct_ident_double_quotes_token_stream,
+                                &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                                &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream
+                            ),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_tuple_struct_ident_double_quotes_token_stream,
                                 &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                                 &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                             ),
-                            generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream, &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream),
-                            generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_uuid_token_stream, &fn_visit_seq_sqlx_types_uuid_uuid_token_stream),
-                            generate_impl_serde_de_visitor_for_visitor_token_stream(&fn_visit_newtype_struct_mac_address_token_stream, &fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_tuple_struct_ident_double_quotes_token_stream,
+                                &fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                                &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream
+                            ),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_tuple_struct_ident_double_quotes_token_stream,
+                                &fn_visit_newtype_struct_uuid_token_stream,
+                                &fn_visit_seq_sqlx_types_uuid_uuid_token_stream
+                            ),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_tuple_struct_ident_double_quotes_token_stream,
+                                &fn_visit_newtype_struct_mac_address_token_stream,
+                                &fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream
+                            ),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_tuple_struct_ident_double_quotes_token_stream,
+                                &fn_visit_newtype_struct_text_token_stream,
+                                &fn_visit_seq_std_string_string_token_stream
+                            ),
                         )
                     };
                     let (
@@ -2632,61 +2704,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
                                     #struct_visitor_token_stream
-                                    #[automatically_derived]
-                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                        type Value = StdStringStringAsNotNullTextOrigin;
-                                        fn expecting(
-                                            &self,
-                                            __formatter: &mut _serde::__private::Formatter<'_>,
-                                        ) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(
-                                                __formatter,
-                                                "tuple struct StdStringStringAsNotNullTextOrigin",
-                                            )
-                                        }
-                                        #[inline]
-                                        fn visit_newtype_struct<__E>(
-                                            self,
-                                            __e: __E,
-                                        ) -> _serde::__private::Result<Self::Value, __E::Error>
-                                        where
-                                            __E: _serde::Deserializer<'de>,
-                                        {
-                                            let __field0: std::string::String = <std::string::String as _serde::Deserialize>::deserialize(
-                                                __e,
-                                            )?;
-                                            match StdStringStringAsNotNullTextOrigin::try_new_for_deserialize(__field0) {
-                                                Ok(value) => _serde::__private::Ok(value),
-                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                            }
-                                        }
-                                        #[inline]
-                                        fn visit_seq<__A>(
-                                            self,
-                                            mut __seq: __A,
-                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                        where
-                                            __A: _serde::de::SeqAccess<'de>,
-                                        {
-                                            let __field0 = match _serde::de::SeqAccess::next_element::<
-                                                std::string::String,
-                                            >(&mut __seq)? {
-                                                _serde::__private::Some(__value) => __value,
-                                                _serde::__private::None => {
-                                                    return _serde::__private::Err(
-                                                        _serde::de::Error::invalid_length(
-                                                            0usize,
-                                                            &"tuple struct StdStringStringAsNotNullTextOrigin with 1 element",
-                                                        ),
-                                                    );
-                                                }
-                                            };
-                                            match StdStringStringAsNotNullTextOrigin::try_new_for_deserialize(__field0) {
-                                                Ok(value) => _serde::__private::Ok(value),
-                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                            }
-                                        }
-                                    }
+                                    #impl_serde_de_visitor_for_visitor_std_string_string_token_stream
                                     _serde::Deserializer::deserialize_newtype_struct(
                                         __deserializer,
                                         "StdStringStringAsNotNullTextOrigin",

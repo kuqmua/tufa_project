@@ -151,6 +151,9 @@ pub fn generate_struct_ident_double_quotes_token_stream(value: &dyn std::fmt::Di
 pub fn generate_struct_ident_with_number_elements_double_quotes_token_stream(ident: &dyn naming::StdFmtDisplayPlusQuoteToTokens, length: std::primitive::usize) -> proc_macro2::TokenStream {
     generate_quotes::double_quotes_token_stream(&format!("struct {ident} with {length} elements"))
 }
+pub fn generate_tuple_struct_ident_double_quotes_token_stream(value: &dyn std::fmt::Display) -> proc_macro2::TokenStream {
+    generate_quotes::double_quotes_token_stream(&format!("tuple struct {value}"))
+}
 
 pub fn generate_sqlx_types_json_type_declaration_token_stream(type_token_stream: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
     quote::quote! {sqlx::types::Json<#type_token_stream>}
