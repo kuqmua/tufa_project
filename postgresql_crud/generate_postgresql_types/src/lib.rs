@@ -2705,16 +2705,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 quote::quote!{
                                     #struct_visitor_token_stream
                                     #impl_serde_de_visitor_for_visitor_std_string_string_token_stream
-                                    _serde::Deserializer::deserialize_newtype_struct(
-                                        __deserializer,
-                                        "StdStringStringAsNotNullTextOrigin",
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<
-                                                StdStringStringAsNotNullTextOrigin,
-                                            >,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #serde_deserializer_deserialize_newtype_struct_token_stream
                                 }
                             })
                         }),
@@ -3329,14 +3320,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                         }
                                     }
-                                    _serde::Deserializer::deserialize_newtype_struct(
-                                        __deserializer,
-                                        "SqlxTypesChronoNaiveDateAsNotNullDateOrigin",
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #serde_deserializer_deserialize_newtype_struct_token_stream
                                 }
                             })
                         }),
