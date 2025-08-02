@@ -2691,24 +2691,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Derive,
-                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                            quote::quote! {
-                                #struct_visitor_token_stream
-                                #impl_serde_de_visitor_for_visitor_pg_money_token_stream
-                                #serde_deserializer_deserialize_newtype_struct_token_stream
-                            }
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote! {
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_pg_money_token_stream
+                            #serde_deserializer_deserialize_newtype_struct_token_stream
                         })),
                         PostgresqlType::StdPrimitiveBoolAsBool => postgresql_crud_macros_common::DeriveOrImpl::Derive,
-                        PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            //todo
-                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                                quote::quote!{
-                                    #struct_visitor_token_stream
-                                    #impl_serde_de_visitor_for_visitor_std_string_string_token_stream
-                                    #serde_deserializer_deserialize_newtype_struct_token_stream
-                                }
-                            })
-                        }),
+                        PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_std_string_string_token_stream
+                            #serde_deserializer_deserialize_newtype_struct_token_stream
+                        })),
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
