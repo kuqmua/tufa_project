@@ -2837,26 +2837,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_deserializer_deserialize_newtype_struct_token_stream
                         })),
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::DeriveOrImpl::Derive,
-                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    #type_value_equal_underscore_field_semicolon_token_stream
-                                    #fn_expecting_field_identifier_token_stream
-                                    #fn_visit_u64_four_token_stream
-                                    #fn_visit_str_value_hour_min_sec_micro_token_stream
-                                    #fn_visit_bytes_hour_min_sec_micro_token_stream
-                                });
-                                quote::quote!{
-                                    #enum_field_four_token_stream
-                                    #impl_serde_de_visitor_for_field_visitor_token_stream_5a4f24ce_7a8e_4bcc_8f79_2494f79bcc08
-                                    #impl_serde_deserialize_for_field_token_stream
-                                    #struct_visitor_token_stream
-                                    #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_time_token_stream
-                                    #const_fields_sqlx_types_chrono_naive_time_token_stream
-                                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                                }
-                            })
-                        }),
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                            #enum_field_four_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_5a4f24ce_7a8e_4bcc_8f79_2494f79bcc08
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_time_token_stream
+                            #const_fields_sqlx_types_chrono_naive_time_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        })),
                         PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
