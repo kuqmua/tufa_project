@@ -2253,7 +2253,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let (
                         fn_visit_bytes_year_month_day_token_stream,
                         fn_visit_bytes_start_end_token_stream,
-                        fn_visit_bytes_hour_min_sec_micro_token_stream
+                        fn_visit_bytes_hour_min_sec_micro_token_stream,
+                        fn_visit_bytes_hour_minute_second_microsecond_token_stream,
+                        fn_visit_bytes_date_time_token_stream,
+                        fn_visit_bytes_date_naive_time_token_stream,
                     ) = {
                         let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2279,6 +2282,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_fn_visit_bytes_token_stream(&year_month_day_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_bytes_token_stream(&start_end_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_bytes_token_stream(&hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array),
+                            generate_fn_visit_bytes_token_stream(&hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array),
+                            generate_fn_visit_bytes_token_stream(&date_time_std_fmt_display_plus_quote_to_tokens_array),
+                            generate_fn_visit_bytes_token_stream(&date_naive_time_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
                     let serde_deserializer_deserialize_identifier_token_stream = quote::quote! {
@@ -2859,21 +2865,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #fn_expecting_field_identifier_token_stream
                                     #fn_visit_u64_four_token_stream
                                     #fn_visit_str_value_hour_minute_second_microsecond_token_stream
-                                    fn visit_bytes<__E>(
-                                        self,
-                                        __value: &[u8],
-                                    ) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"hour" => _serde::__private::Ok(__Field::__field0),
-                                            b"minute" => _serde::__private::Ok(__Field::__field1),
-                                            b"second" => _serde::__private::Ok(__Field::__field2),
-                                            b"microsecond" => _serde::__private::Ok(__Field::__field3),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_bytes_hour_minute_second_microsecond_token_stream
                                 });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = match _serde::de::SeqAccess::next_element::<
@@ -3109,19 +3101,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #fn_expecting_field_identifier_token_stream
                                     #fn_visit_u64_two_token_stream
                                     #fn_visit_str_value_date_time_token_stream
-                                    fn visit_bytes<__E>(
-                                        self,
-                                        __value: &[u8],
-                                    ) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"date" => _serde::__private::Ok(__Field::__field0),
-                                            b"time" => _serde::__private::Ok(__Field::__field1),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_bytes_date_time_token_stream
                                 });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = match _serde::de::SeqAccess::next_element::<
@@ -3240,16 +3220,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #fn_expecting_field_identifier_token_stream
                                     #fn_visit_u64_two_token_stream
                                     #fn_visit_str_value_date_naive_time_token_stream
-                                    fn visit_bytes<__E>(self, __value: &[u8]) -> _serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: _serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"date_naive" => _serde::__private::Ok(__Field::__field0),
-                                            b"time" => _serde::__private::Ok(__Field::__field1),
-                                            _ => _serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_bytes_date_naive_time_token_stream
                                 });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = match _serde::de::SeqAccess::next_element::<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>(&mut __seq)? {
@@ -3432,16 +3403,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #fn_expecting_field_identifier_token_stream
                                     #fn_visit_u64_two_token_stream
                                     #fn_visit_str_value_start_end_token_stream
-                                    fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"start" => serde::__private::Ok(__Field::__field0),
-                                            b"end" => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_bytes_start_end_token_stream
                                 });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = match serde::de::SeqAccess::next_element::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __seq)? {
@@ -3529,16 +3491,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #fn_expecting_field_identifier_token_stream
                                     #fn_visit_u64_two_token_stream
                                     #fn_visit_str_value_start_end_token_stream
-                                    fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"start" => serde::__private::Ok(__Field::__field0),
-                                            b"end" => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_bytes_start_end_token_stream
                                 });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __seq)? {
@@ -3616,16 +3569,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #fn_expecting_field_identifier_token_stream
                                     #fn_visit_u64_two_token_stream
                                     #fn_visit_str_value_start_end_token_stream
-                                    fn visit_bytes<__E>(self, __value: &[u8]) -> serde::__private::Result<Self::Value, __E>
-                                    where
-                                        __E: serde::de::Error,
-                                    {
-                                        match __value {
-                                            b"start" => serde::__private::Ok(__Field::__field0),
-                                            b"end" => serde::__private::Ok(__Field::__field1),
-                                            _ => serde::__private::Ok(__Field::__ignore),
-                                        }
-                                    }
+                                    #fn_visit_bytes_start_end_token_stream
                                 });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __seq)? {
