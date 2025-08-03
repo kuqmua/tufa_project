@@ -1946,6 +1946,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let match_origin_try_new_for_deserialize_one_token_stream = generate_match_origin_try_new_for_deserialize_token_stream(1);
                     let match_origin_try_new_for_deserialize_two_token_stream = generate_match_origin_try_new_for_deserialize_token_stream(2);
                     let match_origin_try_new_for_deserialize_four_token_stream = generate_match_origin_try_new_for_deserialize_token_stream(4);
+                    //
+                    let generate_origin_new_for_deserialize_token_stream = |length: std::primitive::usize|{
+                        //todo make struct wrapper? and put it into parameter?
+                        if length == 0 {
+                            panic!("length == 0");
+                        }
+                        let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)|generate_field_index_token_stream(index));
+                        quote::quote!{
+                            _serde::__private::Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#(#fields_token_stream),*))
+                        }
+                    };
+                    let origin_new_for_deserialize_two_token_stream = generate_origin_new_for_deserialize_token_stream(2);
+                    //
                     let (
                         fn_visit_newtype_struct_pg_money_token_stream,
                         fn_visit_newtype_struct_uuid_token_stream,
@@ -2193,7 +2206,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         ]);
                         quote::quote!{
                             #fields_initialization_token_stream
-                            _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
+                            #origin_new_for_deserialize_two_token_stream
                         }
                     });
                     let fn_visit_seq_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_fn_visit_seq_token_stream(&{
@@ -2203,7 +2216,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         ]);
                         quote::quote!{
                             #fields_initialization_token_stream
-                            _serde::__private::Ok(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::new_for_deserialize(__field0, __field1))
+                            #origin_new_for_deserialize_two_token_stream
                         }
                     });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&{
@@ -2223,12 +2236,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         ]);
                         quote::quote!{
                             #fields_initialization_token_stream
-                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin::new_for_deserialize(__field0, __field1))
+                            #origin_new_for_deserialize_two_token_stream
                         }
                     });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
                         let std_collections_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_token_stream = quote::quote!{
-                            std::collections::Bound<#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case>
+                            std::ops::Bound<#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case>
                         };
                         let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
                             &std_collections_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_token_stream,
@@ -2236,7 +2249,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         ]);
                         quote::quote!{
                             #fields_initialization_token_stream
-                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin::new_for_deserialize(__field0, __field1))
+                            #origin_new_for_deserialize_two_token_stream
                         }
                     });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_fn_visit_seq_token_stream(&{
@@ -2249,7 +2262,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         ]);
                         quote::quote!{
                             #fields_initialization_token_stream
-                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin::new_for_deserialize(__field0, __field1))
+                            #origin_new_for_deserialize_two_token_stream
                         }
                     });
                     let (fn_visit_u64_two_token_stream, fn_visit_u64_three_token_stream, fn_visit_u64_four_token_stream) = {
@@ -3196,7 +3209,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     _serde::__private::de::missing_field("time")?
                                                 }
                                             };
-                                            _serde::__private::Ok(SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::new_for_deserialize(__field0, __field1))
+                                            #origin_new_for_deserialize_two_token_stream
                                         }
                                     }
                                     #const_fields_sqlx_types_chrono_naive_date_time_token_stream
@@ -3251,7 +3264,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 _serde::__private::Some(__field1) => __field1,
                                                 _serde::__private::None => _serde::__private::de::missing_field("time")?,
                                             };
-                                            _serde::__private::Ok(SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin::new_for_deserialize(__field0, __field1))
+                                            #origin_new_for_deserialize_two_token_stream
                                         }
                                     }
                                     #const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
@@ -3383,7 +3396,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 serde::__private::Some(__field1) => __field1,
                                                 serde::__private::None => serde::__private::de::missing_field("\"end\"")?,
                                             };
-                                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsNotNullDateRangeOrigin::new_for_deserialize(__field0, __field1))
+                                            #origin_new_for_deserialize_two_token_stream
                                         }
                                     }
                                     #const_fields_start_end_token_stream
@@ -3436,8 +3449,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 serde::__private::Some(__field1) => __field1,
                                                 serde::__private::None => serde::__private::de::missing_field("\"end\"")?,
                                             };
-                                            //here 
-                                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsNotNullTimestampRangeOrigin::new_for_deserialize(__field0, __field1))
+                                            #origin_new_for_deserialize_two_token_stream
                                         }
                                     }
                                     #const_fields_start_end_token_stream
@@ -3491,7 +3503,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 serde::__private::Some(__field1) => __field1,
                                                 serde::__private::None => serde::__private::de::missing_field("\"end\"")?,
                                             };
-                                            serde::__private::Ok(SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzRangeOrigin::new_for_deserialize(__field0, __field1))
+                                            #origin_new_for_deserialize_two_token_stream
                                         }
                                     }
                                     #const_fields_start_end_token_stream
