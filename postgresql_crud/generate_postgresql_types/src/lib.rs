@@ -2874,6 +2874,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_visitor_uuid_uuid_token_stream,
                         impl_serde_de_visitor_for_visitor_mac_address_mac_address_token_stream,
                         impl_serde_de_visitor_for_visitor_std_string_string_token_stream,
+                        impl_serde_de_visitor_for_visitor_sqlx_types_time_time_token_stream,
                     ) = {
                         let generate_impl_serde_de_visitor_for_visitor_token_stream = |
                             zero_token_stream: &dyn quote::ToTokens,
@@ -2930,6 +2931,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &fn_expecting_tuple_struct_ident_double_quotes_token_stream,
                                 &fn_visit_newtype_struct_text_token_stream,
                                 &fn_visit_seq_std_string_string_token_stream
+                            ),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_struct_ident_double_quotes_token_stream,
+                                &fn_visit_seq_sqlx_types_time_time_token_stream,
+                                &fn_visit_map_sqlx_types_time_time_token_stream
                             ),
                         )
                     };
@@ -3129,25 +3135,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #const_fields_sqlx_types_chrono_naive_time_token_stream
                             #serde_deserializer_deserialize_struct_visitor_token_stream
                         })),
-                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                                quote::quote!{
-                                    #enum_field_four_token_stream
-                                    #impl_serde_de_visitor_for_field_visitor_token_stream_9b240c3e_a4af_4da1_a2ab_f1bab44b1df6
-                                    #impl_serde_deserialize_for_field_token_stream
-                                    #struct_visitor_token_stream
-                                    #[automatically_derived]
-                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                        type Value = SqlxTypesTimeTimeAsNotNullTimeOrigin;
-                                        #fn_expecting_struct_ident_double_quotes_token_stream
-                                        #fn_visit_seq_sqlx_types_time_time_token_stream
-                                        #fn_visit_map_sqlx_types_time_time_token_stream
-                                    }
-                                    #const_fields_sqlx_types_time_time_token_stream
-                                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                                }
-                            })
-                        }),
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                            #enum_field_four_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_9b240c3e_a4af_4da1_a2ab_f1bab44b1df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_types_time_time_token_stream
+                            #const_fields_sqlx_types_time_time_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        })),
                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
