@@ -788,6 +788,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
         StdStringStringAsText,
         SqlxTypesChronoNaiveTimeAsTime,
         SqlxTypesTimeTimeAsTime,
+        SqlxTypesChronoNaiveDateAsDate,
         SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
         SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range,
     }
@@ -831,7 +832,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     )
                 ),
                 PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::Derive,
-                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::Derive,
+                PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::ImplNewForDeserializeOrTryNewForDeserialize(
+                    PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(
+                        PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate
+                    )
+                ),
                 PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => Self::ImplNewForDeserializeOrTryNewForDeserialize(
                     PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(
                         PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp
@@ -3071,7 +3076,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             );
                                         }
                                     };
-                                    match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(__field0) {
+                                    match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new_for_deserialize(__field0) {
                                         Ok(value) => _serde::__private::Ok(value),
                                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                                     }
@@ -3750,6 +3755,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         },
                     }
                 };
+                let sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_token_stream = quote::quote! {
+                    #earlier_date_not_supported_upper_camel_case {
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        #value_snake_case: #std_string_string_token_stream,
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        #earliest_supported_date_snake_case: #std_string_string_token_stream,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    }
+                };
                 let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if let (
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                     PostgresqlTypePattern::Standart,
@@ -3759,9 +3773,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     &postgresql_type_pattern,
                     &postgresql_type_initialization_try_new_try_from_postgresql_type
                 ) {
-                    let content_token_stream = {
+                    let content_token_stream: &dyn quote::ToTokens = {
                         match &postgresql_type_initialization_try_new {
-                            PostgresqlTypeInitializationTryNew::StdStringStringAsText => {
+                            PostgresqlTypeInitializationTryNew::StdStringStringAsText => &{
                                 //todo reuse
                                 quote::quote! {
                                     #contains_null_byte_upper_camel_case {
@@ -3771,7 +3785,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 }
                             },
-                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => {
+                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => &{
                                 quote::quote! {
                                     #nanosecond_precision_is_not_supported_upper_camel_case {
                                         #[eo_to_std_string_string_serialize_deserialize]
@@ -3780,7 +3794,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                 }
                             },
-                            PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => {
+                            PostgresqlTypeInitializationTryNew::SqlxTypesTimeTimeAsTime => &{
                                 quote::quote! {
                                     #nanosecond_precision_is_not_supported_upper_camel_case {
                                         #[eo_to_std_string_string_serialize_deserialize]
@@ -3789,18 +3803,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                 }
                             },
-                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => {
-                                quote::quote! {
-                                    #earlier_date_not_supported_upper_camel_case {
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #value_snake_case: #std_string_string_token_stream,
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #earliest_supported_date_snake_case: #std_string_string_token_stream,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    }
-                                }
-                            },
-                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
+                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_token_stream,
+                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => &{
                                 quote::quote! {
                                     #naive_date_upper_camel_case {
                                         #[eo_error_occurence]
@@ -3814,7 +3818,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                 }
                             },
-                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
+                            PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &{
                                 //todo
                                 quote::quote! {
                                     #date_naive_upper_camel_case {
@@ -3829,13 +3833,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                 }
                             },
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_int_range_type_error_variants_token_stream(
+                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &generate_int_range_type_error_variants_token_stream(
                                 &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
                             ),
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_int_range_type_error_variants_token_stream(
+                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &generate_int_range_type_error_variants_token_stream(
                                 &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
                             ),
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => {
+                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &{
                                 //todo
                                 quote::quote!{
                                     #start_upper_camel_case {
@@ -3850,7 +3854,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                 }
                             },
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => {
+                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &{
                                 //todo
                                 quote::quote!{
                                     #start_upper_camel_case {
@@ -3865,7 +3869,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                 }
                             },
-                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => {
+                            PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &{
                                 //todo
                                 quote::quote!{
                                     #start_upper_camel_case {
@@ -3906,8 +3910,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                             PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(_) => proc_macro2::TokenStream::new(),
                             PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(postgresql_type_impl_try_new_for_deserialize) => {
-                                let content_token_stream = match &postgresql_type_impl_try_new_for_deserialize {
-                                    PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => {
+                                let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_impl_try_new_for_deserialize {
+                                    PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => &{
                                         //todo reuse
                                         quote::quote! {
                                             #contains_null_byte_upper_camel_case {
@@ -3917,7 +3921,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                         }
                                     },
-                                    PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => {
+                                    PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &{
                                         quote::quote!{
                                             #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
                                                 #[eo_to_std_string_string_serialize_deserialize]
@@ -3937,7 +3941,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             },
                                         }
                                     },
-                                    PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
+                                    PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => &{
                                         quote::quote!{
                                             #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
                                                 #[eo_to_std_string_string_serialize_deserialize]
@@ -3960,10 +3964,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             },
                                         }
                                     },
-                                    PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_int_range_type_error_variants_token_stream(
+                                    PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_token_stream,
+                                    PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &generate_int_range_type_error_variants_token_stream(
                                         &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
                                     ),
-                                    PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_int_range_type_error_variants_token_stream(
+                                    PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &generate_int_range_type_error_variants_token_stream(
                                         &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
                                     ),
                                 };
@@ -4672,6 +4677,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         #microsecond_snake_case: #std_primitive_u32_token_stream
                                                     }
                                                 },
+                                                PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => {
+                                                    quote::quote! {
+                                                        #value_ident_inner_type_token_stream
+                                                    }
+                                                },
                                                 PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_value_pg_range_int_type_token_stream(
                                                     &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
                                                 ),
@@ -4802,6 +4812,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 #error_snake_case: #error_snake_case.to_string(),
                                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                                             })
+                                                        }
+                                                    }
+                                                },
+                                                PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => {
+                                                    quote::quote! {
+                                                        match Self::try_new(#value_snake_case) {
+                                                            Ok(#value_snake_case) => Ok(#value_snake_case),
+                                                            Err(#error_snake_case) => match #error_snake_case {
+                                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#earlier_date_not_supported_upper_camel_case {
+                                                                    #value_snake_case,
+                                                                    #earliest_supported_date_snake_case,
+                                                                    code_occurence,
+                                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#earlier_date_not_supported_upper_camel_case {
+                                                                    #value_snake_case,
+                                                                    #earliest_supported_date_snake_case,
+                                                                    code_occurence,
+                                                                }),
+                                                            }
                                                         }
                                                     }
                                                 },
