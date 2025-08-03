@@ -3309,7 +3309,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
                                     let __field1 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                    match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(sqlx::postgres::types::PgRange { start: __field0, end: __field1 }) {
+                                    match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(__field0, __field1) {
                                         Ok(value) => _serde::__private::Ok(value),
                                         Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                                     }
@@ -3358,7 +3358,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                             let __field0 = start.ok_or_else(|| serde::de::Error::missing_field("\"start\""))?;
                                             let __field1 = end.ok_or_else(|| serde::de::Error::missing_field("\"end\""))?;
-                                            match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(sqlx::postgres::types::PgRange { start: __field0, end: __field1 }) {
+                                            match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(__field0, __field1) {
                                                 Ok(value) => _serde::__private::Ok(value),
                                                 Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                                             }
@@ -4646,8 +4646,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(postgresql_type_impl_try_new_for_deserialize) => {
                                         let parameters_token_stream = {
                                             let generate_value_pg_range_int_type_token_stream = |temp_range_type: &TempRangeType|{
-                                                let type_token_stream = temp_range_type_to_range_inner_type_token_stream(&temp_range_type);
-                                                quote::quote!{#value_snake_case: sqlx::postgres::types::PgRange<#type_token_stream>}
+                                                let type_token_stream = {
+                                                    let content_token_stream = temp_range_type_to_range_inner_type_token_stream(&temp_range_type);
+                                                    quote::quote!{std::ops::Bound<#content_token_stream>}
+                                                };
+                                                quote::quote!{
+                                                    #start_snake_case: #type_token_stream,
+                                                    #end_snake_case: #type_token_stream
+                                                }
                                             };
                                             match &postgresql_type_impl_try_new_for_deserialize {
                                                 PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => {
@@ -4681,7 +4687,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         };
                                         let content_token_stream = {
                                             let try_new_convert_pg_range_int_content_token_stream = quote::quote!{
-                                                match Self::try_new(#value_snake_case) {
+                                                match Self::try_new(sqlx::postgres::types::PgRange { #start_snake_case, #end_snake_case }) {
                                                     Ok(#value_snake_case) => Ok(#value_snake_case),
                                                     //todo maybe optimize
                                                     Err(#error_snake_case) => match #error_snake_case {
