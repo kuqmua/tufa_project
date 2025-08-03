@@ -3316,16 +3316,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                     #type_value_equal_field_semicolon_token_stream
                                     #fn_expecting_start_or_end_token_stream
-                                    fn visit_str<E>(self, value: &str) -> Result<Field, E>
-                                    where
-                                        E: serde::de::Error,
-                                    {
-                                        match value {
-                                            "start" => Ok(Field::Start),
-                                            "end" => Ok(Field::End),
-                                            _ => Err(serde::de::Error::unknown_field(value, FIELDS)),
-                                        }
-                                    }
+                                    #fn_visit_str_field_start_end_token_stream
                                 });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
