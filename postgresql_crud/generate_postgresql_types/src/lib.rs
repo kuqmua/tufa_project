@@ -2708,6 +2708,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_field_visitor_token_stream_9b240c3e_a4af_4da1_a2ab_f1bab44b1df6,
                         impl_serde_de_visitor_for_field_visitor_token_stream_dc439ca1_8af1_4c4c_ab49_4e4fb15a41d3,
                         impl_serde_de_visitor_for_field_visitor_token_stream_8c733fe0_c816_4a0e_bb13_4c2d0cd2ded6,
+                        impl_serde_de_visitor_for_field_visitor_token_stream_c3087ddf_9815_4c47_9b25_8e90a4833fbc,
+                        impl_serde_de_visitor_for_field_visitor_token_stream_2846533f_eda1_4170_b52a_6c6371d3e41a,
+                        impl_serde_de_visitor_for_field_visitor_token_stream_d29ef03f_46e2_4ed2_8ada_069f22e4c811,
+                        impl_serde_de_visitor_for_field_visitor_token_stream_cce27f9b_3117_4ebe_aeba_2367a12f89b1,
                     ) = {
                         let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(&field_visitor_token_stream, &content_token_stream);
@@ -2768,6 +2772,32 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #fn_visit_u64_two_token_stream
                                 #fn_visit_str_value_date_naive_time_token_stream
                                 #fn_visit_bytes_date_naive_time_token_stream
+                            }),
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                #type_value_equal_field_semicolon_token_stream
+                                #fn_expecting_start_or_end_token_stream
+                                #fn_visit_str_field_start_end_token_stream
+                            }),
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                #type_value_equal_underscore_field_semicolon_token_stream
+                                #fn_expecting_field_identifier_token_stream
+                                #fn_visit_u64_two_token_stream
+                                #fn_visit_str_value_start_end_token_stream
+                                #fn_visit_bytes_start_end_token_stream
+                            }),
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                #type_value_equal_underscore_field_semicolon_token_stream
+                                #fn_expecting_field_identifier_token_stream
+                                #fn_visit_u64_two_token_stream
+                                #fn_visit_str_value_start_end_token_stream
+                                #fn_visit_bytes_start_end_token_stream
+                            }),
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                #type_value_equal_underscore_field_semicolon_token_stream
+                                #fn_expecting_field_identifier_token_stream
+                                #fn_visit_u64_two_token_stream
+                                #fn_visit_str_value_start_end_token_stream
+                                #fn_visit_bytes_start_end_token_stream
                             }),
                         )
                     };
@@ -3313,11 +3343,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    #type_value_equal_field_semicolon_token_stream
-                                    #fn_expecting_start_or_end_token_stream
-                                    #fn_visit_str_field_start_end_token_stream
-                                });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
                                     let __field1 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
@@ -3336,8 +3361,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         where
                                             D: serde::Deserializer<'de>,
                                         {
-                                            #struct_field_visitor_token_stream
-                                            #impl_serde_de_visitor_for_field_visitor_token_stream
+                                            #impl_serde_de_visitor_for_field_visitor_token_stream_c3087ddf_9815_4c47_9b25_8e90a4833fbc
                                             _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
@@ -3389,13 +3413,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             //     &impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
                             // )
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    #type_value_equal_underscore_field_semicolon_token_stream
-                                    #fn_expecting_field_identifier_token_stream
-                                    #fn_visit_u64_two_token_stream
-                                    #fn_visit_str_value_start_end_token_stream
-                                    #fn_visit_bytes_start_end_token_stream
-                                });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = match serde::de::SeqAccess::next_element::<std::collections::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>>(&mut __seq)? {
                                         serde::__private::Some(__value) => __value,
@@ -3413,8 +3430,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 });
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #struct_field_visitor_token_stream
-                                    #impl_serde_de_visitor_for_field_visitor_token_stream
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream_2846533f_eda1_4170_b52a_6c6371d3e41a
                                     #impl_serde_deserialize_for_field_token_stream
                                     #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
@@ -3477,13 +3493,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             //     }
                             // })
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    #type_value_equal_underscore_field_semicolon_token_stream
-                                    #fn_expecting_field_identifier_token_stream
-                                    #fn_visit_u64_two_token_stream
-                                    #fn_visit_str_value_start_end_token_stream
-                                    #fn_visit_bytes_start_end_token_stream
-                                });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>>(&mut __seq)? {
                                         serde::__private::Some(__value) => __value,
@@ -3501,8 +3510,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 });
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #struct_field_visitor_token_stream
-                                    #impl_serde_de_visitor_for_field_visitor_token_stream
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream_d29ef03f_46e2_4ed2_8ada_069f22e4c811
                                     #impl_serde_deserialize_for_field_token_stream
                                     #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
@@ -3555,13 +3563,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => postgresql_crud_macros_common::DeriveOrImpl::Impl({
                             // generate_impl_serde_deserialize_for_tokens_2a45b124_f34d_4526_b85d_52516d6a5486_token_stream(&impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream)
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                                let impl_serde_de_visitor_for_field_visitor_token_stream = generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                    #type_value_equal_underscore_field_semicolon_token_stream
-                                    #fn_expecting_field_identifier_token_stream
-                                    #fn_visit_u64_two_token_stream
-                                    #fn_visit_str_value_start_end_token_stream
-                                    #fn_visit_bytes_start_end_token_stream
-                                });
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = match serde::de::SeqAccess::next_element::<std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>>(&mut __seq)? {
                                         serde::__private::Some(__value) => __value,
@@ -3579,8 +3580,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 });
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #struct_field_visitor_token_stream
-                                    #impl_serde_de_visitor_for_field_visitor_token_stream
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream_cce27f9b_3117_4ebe_aeba_2367a12f89b1
                                     #impl_serde_deserialize_for_field_token_stream
                                     #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
