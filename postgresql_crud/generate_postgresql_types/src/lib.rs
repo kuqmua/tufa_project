@@ -2034,7 +2034,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_private_ok_postgresql_type_token_stream
                         }
                     });
-                    let (seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream, seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream, seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream) = {
+                    let (
+                        seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream,
+                        seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream,
+                        seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream
+                    ) = {
                         let generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream = |parameter_number: &ParameterNumber| {
                             let index_token_stream = parameter_number.get_index().to_string().parse::<proc_macro2::TokenStream>().unwrap();
                             quote::quote! {__seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(#index_token_stream, &self))?;}
@@ -2051,6 +2055,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             &proc_macro2_token_stream_new,
                             &proc_macro2_token_stream_new
                         ));
+                        //todo why here months days microseconds and not __field0, __field1 ...?
                         quote::quote! {
                             let #months_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
                             let #days_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
@@ -2221,8 +2226,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     });
                     let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&{
                         quote::quote!{
-                            let __field0 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
-                            let __field1 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
+                            //todo reuse
+                            let #field_0_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
+                            let #field_1_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
                             #match_origin_try_new_for_deserialize_two_token_stream
                         }
                     });
