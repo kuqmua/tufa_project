@@ -3076,10 +3076,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             );
                                         }
                                     };
-                                    match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new_for_deserialize(__field0) {
-                                        Ok(value) => _serde::__private::Ok(value),
-                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                    }
+                                    #match_origin_try_new_for_deserialize_one_token_stream
                                 });
                                 quote::quote!{
                                     #struct_visitor_token_stream
