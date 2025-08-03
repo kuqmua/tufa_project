@@ -1939,6 +1939,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array.len()
                     );
                     let match_origin_try_new_for_deserialize_one_token_stream = generate_match_origin_try_new_for_deserialize_token_stream(1);
+                    let match_origin_try_new_for_deserialize_two_token_stream = generate_match_origin_try_new_for_deserialize_token_stream(2);
                     let match_origin_try_new_for_deserialize_four_token_stream = generate_match_origin_try_new_for_deserialize_token_stream(4);
                     let (
                         fn_visit_newtype_struct_pg_money_token_stream,
@@ -3309,10 +3310,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let fn_visit_seq_token_stream = generate_fn_visit_seq_token_stream(&quote::quote!{
                                     let __field0 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(0, &self))?;
                                     let __field1 = __seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(1, &self))?;
-                                    match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(__field0, __field1) {
-                                        Ok(value) => _serde::__private::Ok(value),
-                                        Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                    }
+                                    #match_origin_try_new_for_deserialize_two_token_stream
                                 });
                                 quote::quote!{
                                     enum Field {
@@ -3358,10 +3356,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                             let __field0 = start.ok_or_else(|| serde::de::Error::missing_field("\"start\""))?;
                                             let __field1 = end.ok_or_else(|| serde::de::Error::missing_field("\"end\""))?;
-                                            match SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin::try_new_for_deserialize(__field0, __field1) {
-                                                Ok(value) => _serde::__private::Ok(value),
-                                                Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
-                                            }
+                                            #match_origin_try_new_for_deserialize_two_token_stream
                                         }
                                     }
                                     #const_fields_start_end_token_stream
