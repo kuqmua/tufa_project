@@ -2708,10 +2708,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_field_visitor_token_stream_9b240c3e_a4af_4da1_a2ab_f1bab44b1df6,
                         impl_serde_de_visitor_for_field_visitor_token_stream_dc439ca1_8af1_4c4c_ab49_4e4fb15a41d3,
                         impl_serde_de_visitor_for_field_visitor_token_stream_8c733fe0_c816_4a0e_bb13_4c2d0cd2ded6,
-                        impl_serde_de_visitor_for_field_visitor_token_stream_c3087ddf_9815_4c47_9b25_8e90a4833fbc,
-                        impl_serde_de_visitor_for_field_visitor_token_stream_2846533f_eda1_4170_b52a_6c6371d3e41a,
-                        impl_serde_de_visitor_for_field_visitor_token_stream_d29ef03f_46e2_4ed2_8ada_069f22e4c811,
-                        impl_serde_de_visitor_for_field_visitor_token_stream_cce27f9b_3117_4ebe_aeba_2367a12f89b1,
                     ) = {
                         let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(&field_visitor_token_stream, &content_token_stream);
@@ -2721,31 +2717,31 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         (
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                 #type_value_equal_underscore_field_semicolon_token_stream
                                 #fn_expecting_field_identifier_token_stream
                                 #fn_visit_u64_four_token_stream
                                 #fn_visit_str_value_hour_min_sec_micro_token_stream
                                 #fn_visit_bytes_hour_min_sec_micro_token_stream
                             }),
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                 #type_value_equal_underscore_field_semicolon_token_stream
                                 #fn_expecting_field_identifier_token_stream
                                 #fn_visit_u64_three_token_stream
                                 #fn_visit_str_value_year_month_day_token_stream
                                 #fn_visit_bytes_year_month_day_token_stream
                             }),
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                 #type_value_equal_field_semicolon_token_stream
                                 #fn_expecting_months_or_days_or_microseconds_token_stream
                                 #fn_visit_str_field_months_days_microseconds_token_stream
                             }),
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                 #type_value_equal_field_semicolon_token_stream
                                 #fn_expecting_start_or_end_token_stream
                                 #fn_visit_str_field_start_end_token_stream
                             }),
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote! {
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
                                 #type_value_equal_underscore_field_semicolon_token_stream
                                 #fn_expecting_field_identifier_token_stream
                                 #fn_visit_u64_two_token_stream
@@ -2772,32 +2768,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #fn_visit_u64_two_token_stream
                                 #fn_visit_str_value_date_naive_time_token_stream
                                 #fn_visit_bytes_date_naive_time_token_stream
-                            }),
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                #type_value_equal_field_semicolon_token_stream
-                                #fn_expecting_start_or_end_token_stream
-                                #fn_visit_str_field_start_end_token_stream
-                            }),
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                #type_value_equal_underscore_field_semicolon_token_stream
-                                #fn_expecting_field_identifier_token_stream
-                                #fn_visit_u64_two_token_stream
-                                #fn_visit_str_value_start_end_token_stream
-                                #fn_visit_bytes_start_end_token_stream
-                            }),
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                #type_value_equal_underscore_field_semicolon_token_stream
-                                #fn_expecting_field_identifier_token_stream
-                                #fn_visit_u64_two_token_stream
-                                #fn_visit_str_value_start_end_token_stream
-                                #fn_visit_bytes_start_end_token_stream
-                            }),
-                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
-                                #type_value_equal_underscore_field_semicolon_token_stream
-                                #fn_expecting_field_identifier_token_stream
-                                #fn_visit_u64_two_token_stream
-                                #fn_visit_str_value_start_end_token_stream
-                                #fn_visit_bytes_start_end_token_stream
                             }),
                         )
                     };
@@ -3361,7 +3331,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         where
                                             D: serde::Deserializer<'de>,
                                         {
-                                            #impl_serde_de_visitor_for_field_visitor_token_stream_c3087ddf_9815_4c47_9b25_8e90a4833fbc
+                                            #impl_serde_de_visitor_for_field_visitor_token_stream_ca843915_2330_4969_8bc8_8b33bff7a565
                                             _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
                                         }
                                     }
@@ -3430,7 +3400,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 });
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #impl_serde_de_visitor_for_field_visitor_token_stream_2846533f_eda1_4170_b52a_6c6371d3e41a
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
                                     #impl_serde_deserialize_for_field_token_stream
                                     #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
@@ -3510,7 +3480,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 });
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #impl_serde_de_visitor_for_field_visitor_token_stream_d29ef03f_46e2_4ed2_8ada_069f22e4c811
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
                                     #impl_serde_deserialize_for_field_token_stream
                                     #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
@@ -3580,7 +3550,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 });
                                 quote::quote!{
                                     #enum_field_two_token_stream
-                                    #impl_serde_de_visitor_for_field_visitor_token_stream_cce27f9b_3117_4ebe_aeba_2367a12f89b1
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
                                     #impl_serde_deserialize_for_field_token_stream
                                     #struct_visitor_token_stream
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
