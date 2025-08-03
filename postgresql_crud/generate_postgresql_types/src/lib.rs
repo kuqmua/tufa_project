@@ -2832,6 +2832,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_visitor_sqlx_types_time_time_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_date_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_types_chrono_naive_date_time_token_stream,
+                        impl_serde_de_visitor_for_visitor_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                     ) = {
                         let generate_impl_serde_de_visitor_for_visitor_token_stream = |
                             zero_token_stream: &dyn quote::ToTokens,
@@ -2903,6 +2904,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &fn_expecting_struct_ident_double_quotes_token_stream,
                                 &fn_visit_seq_sqlx_types_chrono_naive_date_time_token_stream,
                                 &fn_visit_map_sqlx_types_chrono_naive_date_time_token_stream
+                            ),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_struct_ident_double_quotes_token_stream,
+                                &fn_visit_seq_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                                &fn_visit_map_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
                             ),
                         )
                     };
@@ -3126,26 +3132,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #const_fields_sqlx_types_chrono_naive_date_time_token_stream
                             #serde_deserializer_deserialize_struct_visitor_token_stream
                         })),
-                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl({
-                            generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                                quote::quote!{
-                                    #enum_field_two_token_stream
-                                    #impl_serde_de_visitor_for_field_visitor_token_stream_8c733fe0_c816_4a0e_bb13_4c2d0cd2ded6
-                                    #[automatically_derived]
-                                    #impl_serde_deserialize_for_field_token_stream
-                                    #struct_visitor_token_stream
-                                    #[automatically_derived]
-                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                        type Value = SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin;
-                                        #fn_expecting_struct_ident_double_quotes_token_stream
-                                        #fn_visit_seq_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                                        #fn_visit_map_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                                    }
-                                    #const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                                    #serde_deserializer_deserialize_struct_visitor_token_stream
-                                }
-                            })
-                        }),
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_8c733fe0_c816_4a0e_bb13_4c2d0cd2ded6
+                            #[automatically_derived]
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
+                            #const_fields_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        })),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream),
                         PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream),
                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => postgresql_crud_macros_common::DeriveOrImpl::Derive,
