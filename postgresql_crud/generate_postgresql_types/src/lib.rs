@@ -3313,19 +3313,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             #match_origin_try_new_for_deserialize_two_token_stream
                                         }
                                     }
-                                    #[doc(hidden)]
-                                    const FIELDS: &'static [&'static str] = &["start", "end"];
-                                    _serde::Deserializer::deserialize_struct(
-                                        __deserializer,
-                                        "SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin",
-                                        FIELDS,
-                                        __Visitor {
-                                            marker: _serde::__private::PhantomData::<
-                                                SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin,
-                                            >,
-                                            lifetime: _serde::__private::PhantomData,
-                                        },
-                                    )
+                                    #const_fields_start_end_token_stream
+                                    #serde_deserializer_deserialize_struct_visitor_token_stream
                                 }
                             })
                         }),
