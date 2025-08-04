@@ -4316,18 +4316,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             };
                                             match &postgresql_type_impl_try_new_for_deserialize {
                                                 PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => {
+                                                    let variant_token_stream = quote::quote! {
+                                                        #contains_null_byte_upper_camel_case {
+                                                            #value_snake_case,
+                                                            code_occurence,
+                                                        }
+                                                    };
                                                     //todo reuse
                                                     quote::quote! {
                                                         match Self::try_new(#value_snake_case) {
                                                             Ok(#value_snake_case) => Ok(#value_snake_case),
                                                             Err(#error_snake_case) => match #error_snake_case {
-                                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#contains_null_byte_upper_camel_case {
-                                                                    #value_snake_case,
-                                                                    code_occurence,
-                                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#contains_null_byte_upper_camel_case {
-                                                                    #value_snake_case,
-                                                                    code_occurence,
-                                                                }),
+                                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#variant_token_stream => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#variant_token_stream),
                                                             }
                                                         }
                                                     }
