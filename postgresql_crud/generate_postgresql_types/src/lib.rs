@@ -3331,6 +3331,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
                     }
                 };
+                let std_string_string_as_text_try_new_error_named_variants_token_stream = quote::quote!{
+                    #contains_null_byte_upper_camel_case {
+                        #[eo_to_std_string_string_serialize_deserialize]
+                        #value_snake_case: #ident_inner_type_token_stream,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+                    }
+                };
                 let maybe_pub_enum_ident_standart_not_null_origin_try_new_error_named_token_stream = if let (
                     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
                     PostgresqlTypePattern::Standart,
@@ -3342,16 +3349,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 ) {
                     let content_token_stream: &dyn quote::ToTokens = {
                         match &postgresql_type_initialization_try_new {
-                            PostgresqlTypeInitializationTryNew::StdStringStringAsText => &{
-                                //todo reuse
-                                quote::quote! {
-                                    #contains_null_byte_upper_camel_case {
-                                        #[eo_to_std_string_string_serialize_deserialize]
-                                        #value_snake_case: #ident_inner_type_token_stream,
-                                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                    }
-                                }
-                            },
+                            PostgresqlTypeInitializationTryNew::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_token_stream,
                             PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => &{
                                 quote::quote! {
                                     #nanosecond_precision_is_not_supported_upper_camel_case {
@@ -3478,16 +3476,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(_) => proc_macro2::TokenStream::new(),
                             PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(postgresql_type_impl_try_new_for_deserialize) => {
                                 let content_token_stream: &dyn quote::ToTokens = match &postgresql_type_impl_try_new_for_deserialize {
-                                    PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => &{
-                                        //todo reuse
-                                        quote::quote! {
-                                            #contains_null_byte_upper_camel_case {
-                                                #[eo_to_std_string_string_serialize_deserialize]
-                                                #value_snake_case: #ident_inner_type_token_stream,
-                                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
-                                            }
-                                        }
-                                    },
+                                    PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => &std_string_string_as_text_try_new_error_named_variants_token_stream,
                                     PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => &{
                                         quote::quote!{
                                             #invalid_hour_or_minute_or_second_or_microsecond_upper_camel_case {
