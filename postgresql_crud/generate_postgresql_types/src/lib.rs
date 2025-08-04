@@ -1972,14 +1972,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_match_origin_try_new_for_deserialize_token_stream(4),
                         )
                     };
-                    let origin_new_for_deserialize_two_token_stream = {
+                    let (
+                        origin_new_for_deserialize_two_token_stream,
+                        origin_new_for_deserialize_three_token_stream
+                    ) = {
                         let generate_origin_new_for_deserialize_token_stream = |length: std::primitive::usize|{
                             let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)|generate_field_index_token_stream(index));
                             quote::quote!{
                                 _serde::__private::Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#(#fields_token_stream),*))
                             }
                         };
-                        generate_origin_new_for_deserialize_token_stream(2)
+                        (
+                            generate_origin_new_for_deserialize_token_stream(2),
+                            generate_origin_new_for_deserialize_token_stream(3)
+                        )
                     };
                     let (
                         fn_visit_newtype_struct_pg_money_token_stream,
@@ -2073,7 +2079,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     };
                     let (
                         fn_visit_seq_pg_money_token_stream,
-                        fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream,
                         fn_visit_seq_sqlx_types_chrono_naive_time_token_stream,
                         fn_visit_seq_sqlx_types_uuid_uuid_token_stream,
                         fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream,
@@ -2087,6 +2092,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                         fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                         fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                        fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream,
                     ) = {
                         let generate_fn_visit_seq_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
@@ -2105,20 +2111,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#field_type_standart_not_null(#field_0_token_stream)});
                                 quote::quote! {
                                     #fields_initialization_token_stream
-                                    #serde_private_ok_postgresql_type_token_stream
-                                }
-                            }),
-                            generate_fn_visit_seq_token_stream(&{
-                                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
-                                    &proc_macro2_token_stream_new,
-                                    &proc_macro2_token_stream_new,
-                                    &proc_macro2_token_stream_new
-                                ));
-                                //todo why here months days microseconds and not __field0, __field1 ...?
-                                quote::quote! {
-                                    let #months_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
-                                    let #days_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
-                                    let #microseconds_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream
                                     #serde_private_ok_postgresql_type_token_stream
                                 }
                             }),
@@ -2246,6 +2238,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 quote::quote!{
                                     #fields_initialization_token_stream
                                     #match_origin_try_new_for_deserialize_two_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &std_primitive_i32_token_stream,
+                                    &std_primitive_i32_token_stream,
+                                    &std_primitive_i64_token_stream,
+                                ]);
+                                quote::quote! {
+                                    #fields_initialization_token_stream
+                                    #origin_new_for_deserialize_three_token_stream
                                 }
                             }),
                         )
@@ -3220,68 +3223,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #[automatically_derived]
                             impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                 type Value = SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "struct SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin",
-                                    )
-                                }
-                                #[inline]
-                                fn visit_seq<__A>(
-                                    self,
-                                    mut __seq: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::SeqAccess<'de>,
-                                {
-                                    let __field0 = match _serde::de::SeqAccess::next_element::<
-                                        std::primitive::i32,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    0usize,
-                                                    &"struct SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin with 3 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field1 = match _serde::de::SeqAccess::next_element::<
-                                        std::primitive::i32,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    1usize,
-                                                    &"struct SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin with 3 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    let __field2 = match _serde::de::SeqAccess::next_element::<
-                                        std::primitive::i64,
-                                    >(&mut __seq)? {
-                                        _serde::__private::Some(__value) => __value,
-                                        _serde::__private::None => {
-                                            return _serde::__private::Err(
-                                                _serde::de::Error::invalid_length(
-                                                    2usize,
-                                                    &"struct SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin with 3 elements",
-                                                ),
-                                            );
-                                        }
-                                    };
-                                    serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin::new_for_deserialize(
-                                        __field0,
-                                        __field1,
-                                        __field2,
-                                    ))
-                                }
+                                #fn_expecting_struct_ident_double_quotes_token_stream
+                                #fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream
                                 #[inline]
                                 fn visit_map<__A>(
                                     self,
