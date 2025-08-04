@@ -3078,15 +3078,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_field_token_stream(&impl_serde_de_visitor_for_field_visitor_token_stream_ca843915_2330_4969_8bc8_8b33bff7a565),
                         )
                     };
-                    let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                        quote::quote! {
-                            #field_start_end_token_stream
-                            #impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_stream
-                            #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
-                            #const_fields_start_end_token_stream
-                            #serde_deserializer_deserialize_struct_ident_visitor_token_stream
-                        }
-                    });
+                    //todo remove
+                    // let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
+                    //     quote::quote! {
+                    //         #field_start_end_token_stream
+                    //         #impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_stream
+                    //         #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
+                    //         #const_fields_start_end_token_stream
+                    //         #serde_deserializer_deserialize_struct_ident_visitor_token_stream
+                    //     }
+                    // });
+                    //todo remove
                     let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                         quote::quote! {
                             #field_start_end_token_stream
@@ -3195,54 +3197,155 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
                             generate_impl_serde_deserialize_for_tokens_token_stream(&{
                                 quote::quote!{
-                                    enum Field {
-                                        Start,
-                                        End,
-                                    }
-                                    impl<'de> serde::Deserialize<'de> for Field {
-                                        fn deserialize<D>(__deserializer: D) -> Result<Field, D::Error>
+                                    #enum_field_two_token_stream
+                                    #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                                    #[automatically_derived]
+                                    impl<'de> _serde::Deserialize<'de> for __Field {
+                                        #[inline]
+                                        fn deserialize<__D>(
+                                            __deserializer: __D,
+                                        ) -> _serde::__private::Result<Self, __D::Error>
                                         where
-                                            D: serde::Deserializer<'de>,
+                                            __D: _serde::Deserializer<'de>,
                                         {
-                                            #impl_serde_de_visitor_for_field_visitor_token_stream_ca843915_2330_4969_8bc8_8b33bff7a565
-                                            _serde::Deserializer::deserialize_identifier(__deserializer, __FieldVisitor)
+                                            _serde::Deserializer::deserialize_identifier(
+                                                __deserializer,
+                                                __FieldVisitor,
+                                            )
                                         }
                                     }
-                                    struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor;
-                                    impl<'de> _serde::de::Visitor<'de> for SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4RangeVisitor {
+                                    #[doc(hidden)]
+                                    struct __Visitor<'de> {
+                                        marker: _serde::__private::PhantomData<
+                                            SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin,
+                                        >,
+                                        lifetime: _serde::__private::PhantomData<&'de ()>,
+                                    }
+                                    #[automatically_derived]
+                                    impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin;
-                                        #fn_expecting_struct_ident_double_quotes_token_stream
-                                        #fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
+                                        fn expecting(
+                                            &self,
+                                            __formatter: &mut _serde::__private::Formatter,
+                                        ) -> _serde::__private::fmt::Result {
+                                            _serde::__private::Formatter::write_str(
+                                                __formatter,
+                                                "struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin",
+                                            )
+                                        }
                                         #[inline]
-                                        fn visit_map<V>(self, mut map: V) -> Result<SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin, V::Error>
+                                        fn visit_seq<__A>(
+                                            self,
+                                            mut __seq: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
                                         where
-                                            V: serde::de::MapAccess<'de>,
+                                            __A: _serde::de::SeqAccess<'de>,
                                         {
-                                            let mut start = None;
-                                            let mut end = None;
-                                            while let Some(key) = map.next_key()? {
-                                                match key {
-                                                    Field::Start => {
-                                                        if start.is_some() {
-                                                            return Err(serde::de::Error::duplicate_field("start"));
+                                            let __field0 = match _serde::de::SeqAccess::next_element::<
+                                                std::ops::Bound<std::primitive::i32>,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            0usize,
+                                                            &"struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin with 2 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            let __field1 = match _serde::de::SeqAccess::next_element::<
+                                                std::ops::Bound<std::primitive::i32>,
+                                            >(&mut __seq)? {
+                                                _serde::__private::Some(__value) => __value,
+                                                _serde::__private::None => {
+                                                    return _serde::__private::Err(
+                                                        _serde::de::Error::invalid_length(
+                                                            1usize,
+                                                            &"struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin with 2 elements",
+                                                        ),
+                                                    );
+                                                }
+                                            };
+                                            #match_origin_try_new_for_deserialize_two_token_stream
+                                        }
+                                        #[inline]
+                                        fn visit_map<__A>(
+                                            self,
+                                            mut __map: __A,
+                                        ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                        where
+                                            __A: _serde::de::MapAccess<'de>,
+                                        {
+                                            let mut __field0: _serde::__private::Option<
+                                                std::ops::Bound<std::primitive::i32>,
+                                            > = _serde::__private::None;
+                                            let mut __field1: _serde::__private::Option<
+                                                std::ops::Bound<std::primitive::i32>,
+                                            > = _serde::__private::None;
+                                            while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                                __Field,
+                                            >(&mut __map)? {
+                                                match __key {
+                                                    __Field::__field0 => {
+                                                        if _serde::__private::Option::is_some(&__field0) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("start"),
+                                                            );
                                                         }
-                                                        start = Some(map.next_value()?);
+                                                        __field0 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::ops::Bound<std::primitive::i32>,
+                                                            >(&mut __map)?,
+                                                        );
                                                     }
-                                                    Field::End => {
-                                                        if end.is_some() {
-                                                            return Err(serde::de::Error::duplicate_field("end"));
+                                                    __Field::__field1 => {
+                                                        if _serde::__private::Option::is_some(&__field1) {
+                                                            return _serde::__private::Err(
+                                                                <__A::Error as _serde::de::Error>::duplicate_field("end"),
+                                                            );
                                                         }
-                                                        end = Some(map.next_value()?);
+                                                        __field1 = _serde::__private::Some(
+                                                            _serde::de::MapAccess::next_value::<
+                                                                std::ops::Bound<std::primitive::i32>,
+                                                            >(&mut __map)?,
+                                                        );
+                                                    }
+                                                    _ => {
+                                                        let _ = _serde::de::MapAccess::next_value::<
+                                                            _serde::de::IgnoredAny,
+                                                        >(&mut __map)?;
                                                     }
                                                 }
                                             }
-                                            let __field0 = start.ok_or_else(|| serde::de::Error::missing_field("\"start\""))?;
-                                            let __field1 = end.ok_or_else(|| serde::de::Error::missing_field("\"end\""))?;
+                                            let __field0 = match __field0 {
+                                                _serde::__private::Some(__field0) => __field0,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("start")?
+                                                }
+                                            };
+                                            let __field1 = match __field1 {
+                                                _serde::__private::Some(__field1) => __field1,
+                                                _serde::__private::None => {
+                                                    _serde::__private::de::missing_field("end")?
+                                                }
+                                            };
                                             #match_origin_try_new_for_deserialize_two_token_stream
                                         }
                                     }
-                                    #const_fields_start_end_token_stream
-                                    #serde_deserializer_deserialize_struct_ident_visitor_token_stream
+                                    #[doc(hidden)]
+                                    const FIELDS: &'static [&'static str] = &["start", "end"];
+                                    _serde::Deserializer::deserialize_struct(
+                                        __deserializer,
+                                        "SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin",
+                                        FIELDS,
+                                        __Visitor {
+                                            marker: _serde::__private::PhantomData::<
+                                                SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin,
+                                            >,
+                                            lifetime: _serde::__private::PhantomData,
+                                        },
+                                    )
                                 }
                             })
                         }),
