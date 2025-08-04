@@ -4411,15 +4411,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote::quote! {
                                             //todo maybe reuse naming
                                             #field_type_standart_not_null::new(
-                                                <SqlxTypesChronoNaiveDateAsNotNullDateOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
-                                                <SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
+                                                <#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
+                                                <#sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
                                             )
                                         },
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &quote::quote! {
                                             #field_type_standart_not_null::from_naive_utc_and_offset(
                                                 chrono::NaiveDateTime::new(
-                                                    <SqlxTypesChronoNaiveDateAsNotNullDateOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
-                                                    <SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
+                                                    <#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
+                                                    <#sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
                                                 ),
                                                 sqlx::types::chrono::Utc,
                                             )
@@ -4437,10 +4437,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             quote::quote!{
                                                 sqlx::postgres::types::PgRange {
                                                     start: std::ops::Bound::Included(
-                                                        <SqlxTypesChronoNaiveDateAsNotNullDateOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                        <#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
                                                     ),
                                                     end: std::ops::Bound::Excluded(
-                                                        <SqlxTypesChronoNaiveDateAsNotNullDateOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                        <#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
                                                     ),
                                                 }
                                             }
@@ -4449,10 +4449,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &quote::quote!{
                                             sqlx::postgres::types::PgRange {
                                                 #start_snake_case: std::ops::Bound::Included(
-                                                    <SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                    <#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
                                                 ),
                                                 #end_snake_case: std::ops::Bound::Excluded(
-                                                    <SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                    <#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
                                                 ),
                                             }
                                         },
@@ -4461,10 +4461,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             quote::quote!{
                                                 sqlx::postgres::types::PgRange {
                                                     #start_snake_case: std::ops::Bound::Included(
-                                                        <SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                        <#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
                                                     ),
                                                     #end_snake_case: std::ops::Bound::Excluded(
-                                                        <SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                        <#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
                                                     ),
                                                 }
                                             }
