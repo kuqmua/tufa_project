@@ -3799,7 +3799,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             },
                                                             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                                         },
-                                                        end: match #value_snake_case.end {
+                                                        #end_snake_case: match #value_snake_case.#end_snake_case {
                                                             std::ops::Bound::Included(#value_snake_case) => match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                 Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
                                                                 Err(#error_snake_case) => {
@@ -3825,7 +3825,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{
                                                     let #value_snake_case = sqlx::postgres::types::PgRange {
-                                                        start: match #value_snake_case.start {
+                                                        #start_snake_case: match #value_snake_case.start {
                                                             std::ops::Bound::Included(#value_snake_case) => {
                                                                 match #sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                     Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
@@ -3850,7 +3850,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             },
                                                             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                                         },
-                                                        end: match #value_snake_case.end {
+                                                        #end_snake_case: match #value_snake_case.#end_snake_case {
                                                             std::ops::Bound::Included(#value_snake_case) => {
                                                                 match #sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                     Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
@@ -3880,7 +3880,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{
                                                     let #value_snake_case = sqlx::postgres::types::PgRange {
-                                                        start: match #value_snake_case.start {
+                                                        #start_snake_case: match #value_snake_case.start {
                                                             std::ops::Bound::Included(#value_snake_case) => {
                                                                 match #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                     Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
@@ -3905,7 +3905,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             },
                                                             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                                         },
-                                                        end: match #value_snake_case.end {
+                                                        #end_snake_case: match #value_snake_case.end {
                                                             std::ops::Bound::Included(#value_snake_case) => {
                                                                 match #sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                     Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
