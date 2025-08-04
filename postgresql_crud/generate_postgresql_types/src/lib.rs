@@ -2414,6 +2414,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                         fn_visit_map_sqlx_postgres_types_pg_range_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                         fn_visit_map_sqlx_postgres_types_pg_range_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                        fn_visit_map_sqlx_postgres_types_pg_interval_token_stream,
                     ) = {
                         let generate_fn_visit_map_token_stream = |
                             field_option_none_initialization_token_stream: &dyn quote::ToTokens,
@@ -2444,6 +2445,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                             field_option_none_initialization_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                             field_option_none_initialization_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                            field_option_none_initialization_sqlx_postgres_types_pg_interval_token_stream,
                         ) = {
                             let generate_field_option_none_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
                                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2495,6 +2497,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     &std_ops_bound_std_primitive_i64_token_stream,
                                     &std_ops_bound_std_primitive_i64_token_stream
                                 ]),
+                                generate_field_option_none_initialization_token_stream(&[
+                                    &std_primitive_i32_token_stream,
+                                    &std_primitive_i32_token_stream,
+                                    &std_primitive_i64_token_stream,
+                                ]),
                             )
                         };
                         let (
@@ -2507,6 +2514,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                             while_some_next_key_field_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                             while_some_next_key_field_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                            while_some_next_key_field_sqlx_postgres_types_pg_interval_token_stream,
                         ) = {
                             let generate_while_some_next_key_field_token_stream = |vec_token_stream: &[(&dyn std::fmt::Display, &dyn quote::ToTokens)]| {
                                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2640,6 +2648,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &std_ops_bound_std_primitive_i64_token_stream
                                     ),
                                 ]),
+                                generate_while_some_next_key_field_token_stream(&[
+                                    (
+                                        &months_snake_case,
+                                        &std_primitive_i32_token_stream
+                                    ),
+                                    (
+                                        &days_snake_case,
+                                        &std_primitive_i32_token_stream
+                                    ),
+                                    (
+                                        &microseconds_snake_case,
+                                        &std_primitive_i64_token_stream
+                                    ),
+                                ]),
                             )
                         };
                         let (
@@ -2648,6 +2670,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             match_field_initialization_hour_minute_second_microsecond_token_stream,
                             match_field_initialization_date_time_token_stream,
                             match_field_initialization_date_naive_time_token_stream,
+                            match_field_initialization_months_days_microseconds_token_stream,
                         ) = {
                             let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]|{
                                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2668,6 +2691,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 generate_match_field_initialization_token_stream(&hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array),
                                 generate_match_field_initialization_token_stream(&date_time_std_fmt_display_plus_quote_to_tokens_array),
                                 generate_match_field_initialization_token_stream(&date_naive_time_std_fmt_display_plus_quote_to_tokens_array),
+                                generate_match_field_initialization_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
                             )
                         };
                         let serde_private_ok_postgresql_type_sqlx_postgres_types_pg_range_start_end_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
@@ -2727,111 +2751,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &match_field_initialization_start_end_token_stream,
                                 &match_origin_try_new_for_deserialize_two_token_stream,
                             ),
-                        )
-                    };
-                    let (
-                        fn_visit_map_sqlx_postgres_types_pg_interval_token_stream,
-                        fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                        fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
-                    ) = {
-                        let generate_fn_visit_map_token_stream = |
-                            field_option_none_initialization_token_stream: &dyn quote::ToTokens,
-                            while_some_next_key_field_token_stream: &dyn quote::ToTokens,
-                            match_field_initialization_token_stream: &dyn quote::ToTokens,
-                            initialization_token_stream: &dyn quote::ToTokens
-                        | {
-                            quote::quote! {
-                                #[inline]
-                                fn visit_map<V>(self, mut map: V) -> Result<#ident_standart_not_null_origin_upper_camel_case, V::Error>
-                                where
-                                    V: serde::de::MapAccess<'de>,
-                                {
-                                    #field_option_none_initialization_token_stream
-                                    #while_some_next_key_field_token_stream
-                                    #match_field_initialization_token_stream
-                                    #initialization_token_stream
-                                }
-                            }
-                        };
-                        let (field_option_none_initialization_months_days_microseconds_token_stream, field_option_none_initialization_start_end_token_stream) = {
-                            let generate_field_option_none_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
-                                let fields_initialization_token_stream = vec_token_stream.iter().map(|element| {
-                                    quote::quote! {
-                                        let mut #element = None;
-                                    }
-                                });
-                                quote::quote! {#(#fields_initialization_token_stream)*}
-                            };
-                            (
-                                generate_field_option_none_initialization_token_stream(&[&months_snake_case, &days_snake_case, &microseconds_snake_case]),
-                                generate_field_option_none_initialization_token_stream(&[&start_snake_case, &end_snake_case]),
-                            )
-                        };
-                        let (while_some_next_key_field_months_days_microseconds_token_stream, while_some_next_key_field_start_end_token_stream) = {
-                            let generate_while_some_next_key_field_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                                let fields_initialization_token_stream = vec_token_stream.iter().map(|element| {
-                                    let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&element);
-                                    let element_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element);
-                                    quote::quote! {
-                                        Field::#element_upper_camel_case_token_stream => {
-                                            if #element.is_some() {
-                                                return Err(serde::de::Error::duplicate_field(#field_name_double_quotes_token_stream));
-                                            }
-                                            #element = Some(map.next_value()?);
-                                        }
-                                    }
-                                });
-                                quote::quote! {
-                                    while let Some(key) = map.next_key()? {
-                                        match key {
-                                            #(#fields_initialization_token_stream)*
-                                        }
-                                    }
-                                }
-                            };
-                            (
-                                generate_while_some_next_key_field_token_stream(&[&months_snake_case, &days_snake_case, &microseconds_snake_case]),
-                                generate_while_some_next_key_field_token_stream(&[&start_snake_case, &end_snake_case]),
-                            )
-                        };
-                        let (match_field_initialization_months_days_microseconds_token_stream, match_field_initialization_start_end_token_stream) = {
-                            let generate_match_field_initialization_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
-                                let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
-                                    let field_index_name_token_stream = generate_field_index_token_stream(index);
-                                    let field_name_double_quotes_token_stream = generate_quotes::double_quotes_stringified(&element);
-                                    quote::quote! {
-                                        let #field_index_name_token_stream = #element.ok_or_else(|| serde::de::Error::missing_field(#field_name_double_quotes_token_stream))?;
-                                    }
-                                });
-                                quote::quote! {#(#fields_initialization_token_stream)*}
-                            };
-                            (
-                                generate_match_field_initialization_token_stream(&[&months_snake_case, &days_snake_case, &microseconds_snake_case]),
-                                generate_match_field_initialization_token_stream(&[&start_snake_case, &end_snake_case]),
-                            )
-                        };
-                        (
                             generate_fn_visit_map_token_stream(
-                                &field_option_none_initialization_months_days_microseconds_token_stream,
-                                &while_some_next_key_field_months_days_microseconds_token_stream,
+                                &field_option_none_initialization_sqlx_postgres_types_pg_interval_token_stream,
+                                &while_some_next_key_field_sqlx_postgres_types_pg_interval_token_stream,
                                 &match_field_initialization_months_days_microseconds_token_stream,
-                                &generate_serde_private_ok_postgresql_type_token_stream(&generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
-                                    &generate_double_dot_space_tokens_token_stream(&field_0_token_stream),
-                                    &generate_double_dot_space_tokens_token_stream(&field_1_token_stream),
-                                    &generate_double_dot_space_tokens_token_stream(&field_2_token_stream),
-                                )),
-                            ),
-                            generate_fn_visit_map_token_stream(
-                                &field_option_none_initialization_start_end_token_stream,
-                                &while_some_next_key_field_start_end_token_stream,
-                                &match_field_initialization_start_end_token_stream,
-                                &match_ident_standart_not_null_try_new_sqlx_postgres_types_pg_range_token_stream
-                            ),
-                            generate_fn_visit_map_token_stream(
-                                &field_option_none_initialization_start_end_token_stream,
-                                &while_some_next_key_field_start_end_token_stream,
-                                &match_field_initialization_start_end_token_stream,
-                                &generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream)
+                                &origin_new_for_deserialize_three_token_stream,
                             ),
                         )
                     };
@@ -3077,32 +3001,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }),
                         )
                     };
-                    let (
-                        impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream,
-                        impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
-                        impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
-                    ) = {
-                        let generate_impl_serde_de_visitor_for_ident_visitor_token_stream = |first_token_stream: &dyn quote::ToTokens, second_token_stream: &dyn quote::ToTokens| {
-                            let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(
-                                &postgresql_type_visitor_upper_camel_case,
-                                &quote::quote! {
-                                    type Value = #ident_standart_not_null_origin_upper_camel_case;
-                                    #fn_expecting_struct_ident_double_quotes_token_stream
-                                    #first_token_stream
-                                    #second_token_stream
-                                },
-                            );
-                            quote::quote! {
-                                struct #postgresql_type_visitor_upper_camel_case;
-                                #impl_serde_de_visitor_for_tokens_token_stream
-                            }
-                        };
-                        (
-                            generate_impl_serde_de_visitor_for_ident_visitor_token_stream(&fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream, &fn_visit_map_sqlx_postgres_types_pg_interval_token_stream),
-                            generate_impl_serde_de_visitor_for_ident_visitor_token_stream(&fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream, &fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream),
-                            generate_impl_serde_de_visitor_for_ident_visitor_token_stream(&fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream, &fn_visit_map_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream),
-                        )
-                    };
                     let (impl_serde_deserialize_for_field_sqlx_postgres_types_pg_interval_token_stream, impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_stream) = {
                         let generate_impl_serde_deserialize_for_field_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
@@ -3225,90 +3123,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 type Value = SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin;
                                 #fn_expecting_struct_ident_double_quotes_token_stream
                                 #fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream
-                                #[inline]
-                                fn visit_map<__A>(
-                                    self,
-                                    mut __map: __A,
-                                ) -> _serde::__private::Result<Self::Value, __A::Error>
-                                where
-                                    __A: _serde::de::MapAccess<'de>,
-                                {
-                                    let mut __field0: _serde::__private::Option<std::primitive::i32> = _serde::__private::None;
-                                    let mut __field1: _serde::__private::Option<std::primitive::i32> = _serde::__private::None;
-                                    let mut __field2: _serde::__private::Option<std::primitive::i64> = _serde::__private::None;
-                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
-                                        __Field,
-                                    >(&mut __map)? {
-                                        match __key {
-                                            __Field::__field0 => {
-                                                if _serde::__private::Option::is_some(&__field0) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("months"),
-                                                    );
-                                                }
-                                                __field0 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::primitive::i32,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field1 => {
-                                                if _serde::__private::Option::is_some(&__field1) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field("days"),
-                                                    );
-                                                }
-                                                __field1 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::primitive::i32,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            __Field::__field2 => {
-                                                if _serde::__private::Option::is_some(&__field2) {
-                                                    return _serde::__private::Err(
-                                                        <__A::Error as _serde::de::Error>::duplicate_field(
-                                                            "microseconds",
-                                                        ),
-                                                    );
-                                                }
-                                                __field2 = _serde::__private::Some(
-                                                    _serde::de::MapAccess::next_value::<
-                                                        std::primitive::i64,
-                                                    >(&mut __map)?,
-                                                );
-                                            }
-                                            _ => {
-                                                let _ = _serde::de::MapAccess::next_value::<
-                                                    _serde::de::IgnoredAny,
-                                                >(&mut __map)?;
-                                            }
-                                        }
-                                    }
-                                    let __field0 = match __field0 {
-                                        _serde::__private::Some(__field0) => __field0,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("months")?
-                                        }
-                                    };
-                                    let __field1 = match __field1 {
-                                        _serde::__private::Some(__field1) => __field1,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("days")?
-                                        }
-                                    };
-                                    let __field2 = match __field2 {
-                                        _serde::__private::Some(__field2) => __field2,
-                                        _serde::__private::None => {
-                                            _serde::__private::de::missing_field("microseconds")?
-                                        }
-                                    };
-                                    serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin::new_for_deserialize(
-                                        __field0,
-                                        __field1,
-                                        __field2,
-                                    ))
-                                }
+                                #fn_visit_map_sqlx_postgres_types_pg_interval_token_stream
                             }
                             #const_fields_sqlx_postgres_types_pg_interval_token_stream
                             #serde_deserializer_deserialize_struct_visitor_token_stream
