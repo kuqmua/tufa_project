@@ -3792,7 +3792,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     quote::quote!{
                                                         let #value_snake_case = sqlx::postgres::types::PgRange {
                                                             #start_snake_case: match #value_snake_case.#start_snake_case {
-                                                                std::ops::Bound::Included(#value_snake_case) => match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(#value_snake_case) {
+                                                                std::ops::Bound::Included(#value_snake_case) => match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                     Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
                                                                     Err(#error_snake_case) => {
                                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
@@ -3801,7 +3801,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                         });
                                                                     }
                                                                 },
-                                                                std::ops::Bound::Excluded(#value_snake_case) => match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(#value_snake_case) {
+                                                                std::ops::Bound::Excluded(#value_snake_case) => match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                     Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
                                                                     Err(#error_snake_case) => {
                                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
@@ -3813,7 +3813,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                                             },
                                                             end: match #value_snake_case.end {
-                                                                std::ops::Bound::Included(#value_snake_case) => match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(#value_snake_case) {
+                                                                std::ops::Bound::Included(#value_snake_case) => match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                     Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
                                                                     Err(#error_snake_case) => {
                                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
@@ -3822,7 +3822,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                         });
                                                                     }
                                                                 },
-                                                                std::ops::Bound::Excluded(#value_snake_case) => match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(#value_snake_case) {
+                                                                std::ops::Bound::Excluded(#value_snake_case) => match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                     Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
                                                                     Err(#error_snake_case) => {
                                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
@@ -3838,27 +3838,26 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     }
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => {
-                                                    //todo
                                                     quote::quote!{
                                                         let #value_snake_case = sqlx::postgres::types::PgRange {
                                                             start: match #value_snake_case.start {
                                                                 std::ops::Bound::Included(#value_snake_case) => {
-                                                                    match SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(#value_snake_case) {
-                                                                        Ok(#value_snake_case) => std::ops::Bound::Included(value.0),
-                                                                        Err(error) => {
+                                                                    match #sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(#value_snake_case) {
+                                                                        Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
+                                                                        Err(#error_snake_case) => {
                                                                             return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
-                                                                                error,
+                                                                                #error_snake_case,
                                                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                                                             });
                                                                         }
                                                                     }
                                                                 },
                                                                 std::ops::Bound::Excluded(#value_snake_case) => {
-                                                                    match SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(#value_snake_case) {
+                                                                    match #sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                         Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
-                                                                        Err(error) => {
+                                                                        Err(#error_snake_case) => {
                                                                             return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
-                                                                                error,
+                                                                                #error_snake_case,
                                                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                                                             });
                                                                         }
@@ -3868,22 +3867,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             },
                                                             end: match #value_snake_case.end {
                                                                 std::ops::Bound::Included(#value_snake_case) => {
-                                                                    match SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(#value_snake_case) {
+                                                                    match #sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                         Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
-                                                                        Err(error) => {
+                                                                        Err(#error_snake_case) => {
                                                                             return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
-                                                                                error,
+                                                                                #error_snake_case,
                                                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                                                             });
                                                                         }
                                                                     }
                                                                 },
                                                                 std::ops::Bound::Excluded(#value_snake_case) => {
-                                                                    match SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin::try_new(#value_snake_case) {
+                                                                    match #sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case::try_new(#value_snake_case) {
                                                                         Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
-                                                                        Err(error) => {
+                                                                        Err(#error_snake_case) => {
                                                                             return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
-                                                                                error,
+                                                                                #error_snake_case,
                                                                                 code_occurence: error_occurence_lib::code_occurence!(),
                                                                             });
                                                                         }
