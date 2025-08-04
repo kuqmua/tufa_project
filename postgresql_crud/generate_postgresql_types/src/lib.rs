@@ -3204,15 +3204,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     #[automatically_derived]
                                     impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
                                         type Value = SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin;
-                                        fn expecting(
-                                            &self,
-                                            __formatter: &mut _serde::__private::Formatter,
-                                        ) -> _serde::__private::fmt::Result {
-                                            _serde::__private::Formatter::write_str(
-                                                __formatter,
-                                                "struct SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4RangeOrigin",
-                                            )
-                                        }
+                                        #fn_expecting_struct_ident_double_quotes_token_stream
                                         #[inline]
                                         fn visit_seq<__A>(
                                             self,
