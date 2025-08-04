@@ -2012,17 +2012,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             ),
                         )
                     };
-                    let generate_fn_visit_seq_token_stream = |content_token_stream: &dyn quote::ToTokens| {
-                        quote::quote! {
-                            #[inline]
-                            fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
-                            where
-                                __A: serde::de::SeqAccess<'de>,
-                            {
-                                #content_token_stream
-                            }
-                        }
-                    };
                     let generate_fields_serde_de_seq_access_next_element_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
                         let error_message_token_stream = postgresql_crud_macros_common::generate_struct_ident_with_number_elements_double_quotes_token_stream(
                             &ident_standart_not_null_origin_upper_camel_case,
@@ -2042,14 +2031,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         });
                         quote::quote! {#(#fields_initialization_token_stream)*}
                     };
-                    let fn_visit_seq_pg_money_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_primitive_i64_token_stream]);
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#field_type_standart_not_null(#field_0_token_stream)});
-                        quote::quote! {
-                            #fields_initialization_token_stream
-                            #serde_private_ok_postgresql_type_token_stream
-                        }
-                    });
                     let (
                         seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream,
                         seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream,
@@ -2065,20 +2046,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::Three),
                         )
                     };
-                    let fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
-                            &proc_macro2_token_stream_new,
-                            &proc_macro2_token_stream_new,
-                            &proc_macro2_token_stream_new
-                        ));
-                        //todo why here months days microseconds and not __field0, __field1 ...?
-                        quote::quote! {
-                            let #months_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
-                            let #days_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
-                            let #microseconds_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream
-                            #serde_private_ok_postgresql_type_token_stream
-                        }
-                    });
                     let sqlx_postgres_types_pg_range_start_end_token_stream = generate_qlx_postgres_types_pg_range_start_end_token_stream(&field_0_token_stream, &field_1_token_stream);
                     let sqlx_postgres_types_pg_range_bound_start_end_token_stream = generate_qlx_postgres_types_pg_range_start_end_token_stream(
                         &generate_match_std_ops_bound_token_stream(&field_0_token_stream, &value_snake_case, &ShouldAddBorrow::False),
@@ -2093,211 +2060,185 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             Err(error) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                         }
                     };
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&{
-                        quote::quote! {
-                            let #field_0_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
-                            let #field_1_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
-                            #match_ident_standart_not_null_try_new_sqlx_postgres_types_pg_range_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
-                        quote::quote! {
-                            let #field_0_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
-                            let #field_1_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
-                            #serde_private_ok_postgresql_type_token_stream
-                        }
-                    });
                     let (
-                        std_ops_bound_sqlx_types_chrono_naive_date_time_token_stream,
-                        std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                        std_ops_bound_sqlx_types_chrono_naive_date_token_stream,
+                        fn_visit_seq_pg_money_token_stream,
+                        fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream,
+                        fn_visit_seq_sqlx_types_chrono_naive_time_token_stream,
+                        fn_visit_seq_sqlx_types_uuid_uuid_token_stream,
+                        fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream,
+                        fn_visit_seq_std_string_string_token_stream,
+                        fn_visit_seq_sqlx_types_time_time_token_stream,
+                        fn_visit_seq_sqlx_types_chrono_naive_date_token_stream,
+                        fn_visit_seq_sqlx_types_chrono_naive_date_time_token_stream,
+                        fn_visit_seq_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                        fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream,
+                        fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
+                        fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
+                        fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                        fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
                     ) = {
-                        let generate_std_ops_bound_ident_standart_not_null_origin = |postgresql_type: &PostgresqlType|{
-                            generate_std_ops_bound_token_stream(
-                                &naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                                    &generate_ident_token_stream(
-                                        &postgresql_type,
-                                        &postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                                        &PostgresqlTypePattern::Standart
-                                    )
-                                )
-                            )
+                        let generate_fn_visit_seq_token_stream = |content_token_stream: &dyn quote::ToTokens| {
+                            quote::quote! {
+                                #[inline]
+                                fn visit_seq<__A>(self, mut __seq: __A) -> serde::__private::Result<Self::Value, __A::Error>
+                                where
+                                    __A: serde::de::SeqAccess<'de>,
+                                {
+                                    #content_token_stream
+                                }
+                            }
                         };
                         (
-                            generate_std_ops_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp),
-                            generate_std_ops_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz),
-                            generate_std_ops_bound_ident_standart_not_null_origin(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_primitive_i64_token_stream]);
+                                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#field_type_standart_not_null(#field_0_token_stream)});
+                                quote::quote! {
+                                    #fields_initialization_token_stream
+                                    #serde_private_ok_postgresql_type_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream(
+                                    &proc_macro2_token_stream_new,
+                                    &proc_macro2_token_stream_new,
+                                    &proc_macro2_token_stream_new
+                                ));
+                                //todo why here months days microseconds and not __field0, __field1 ...?
+                                quote::quote! {
+                                    let #months_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
+                                    let #days_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
+                                    let #microseconds_snake_case = #seq_next_element_ok_or_else_serde_de_error_invalid_length_two_token_stream
+                                    #serde_private_ok_postgresql_type_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &std_primitive_u32_token_stream,
+                                    &std_primitive_u32_token_stream,
+                                    &std_primitive_u32_token_stream,
+                                    &std_primitive_u32_token_stream,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #sqlx_types_chrono_naive_time_origin_try_new_for_deserialize
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_string_string_token_stream]);
+                                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream);
+                                quote::quote! {
+                                    #fields_initialization_token_stream
+                                    #serde_private_ok_postgresql_type_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&array_std_primitive_u8_6_token_stream]);
+                                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream);
+                                quote::quote! {
+                                    #fields_initialization_token_stream
+                                    #serde_private_ok_postgresql_type_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_string_string_token_stream]);
+                                quote::quote! {
+                                    #fields_initialization_token_stream
+                                    #match_origin_try_new_for_deserialize_one_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &std_primitive_u8_token_stream,
+                                    &std_primitive_u8_token_stream,
+                                    &std_primitive_u8_token_stream,
+                                    &std_primitive_u32_token_stream,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #match_origin_try_new_for_deserialize_four_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &field_type_standart_not_null,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #match_origin_try_new_for_deserialize_one_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
+                                    &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #origin_new_for_deserialize_two_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
+                                    &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #origin_new_for_deserialize_two_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_token_stream,
+                                    &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_token_stream,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #origin_new_for_deserialize_two_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_token_stream,
+                                    &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_token_stream,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #origin_new_for_deserialize_two_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_token_stream,
+                                    &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_token_stream,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #origin_new_for_deserialize_two_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &std_ops_bound_std_primitive_i32_token_stream,
+                                    &std_ops_bound_std_primitive_i32_token_stream,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #match_origin_try_new_for_deserialize_two_token_stream
+                                }
+                            }),
+                            generate_fn_visit_seq_token_stream(&{
+                                let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                                    &std_ops_bound_std_primitive_i64_token_stream,
+                                    &std_ops_bound_std_primitive_i64_token_stream,
+                                ]);
+                                quote::quote!{
+                                    #fields_initialization_token_stream
+                                    #match_origin_try_new_for_deserialize_two_token_stream
+                                }
+                            }),
                         )
                     };
-                    let fn_visit_seq_sqlx_types_chrono_naive_time_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_primitive_u32_token_stream,
-                            &std_primitive_u32_token_stream,
-                            &std_primitive_u32_token_stream,
-                            &std_primitive_u32_token_stream,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #sqlx_types_chrono_naive_time_origin_try_new_for_deserialize
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_ops_bound_sqlx_types_chrono_naive_date_time_token_stream,
-                            &std_ops_bound_sqlx_types_chrono_naive_date_time_token_stream
-                        ]);
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
-                        quote::quote! {
-                            #fields_initialization_token_stream
-                            #serde_private_ok_postgresql_type_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
-                            &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream
-                        ]);
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
-                        quote::quote! {
-                            #fields_initialization_token_stream
-                            #serde_private_ok_postgresql_type_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_ops_bound_sqlx_types_chrono_naive_date_token_stream,
-                            &std_ops_bound_sqlx_types_chrono_naive_date_token_stream
-                        ]);
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_postgres_types_pg_range_start_end_token_stream);
-                        quote::quote! {
-                            #fields_initialization_token_stream
-                            #serde_private_ok_postgresql_type_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_types_uuid_uuid_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_string_string_token_stream]);
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream);
-                        quote::quote! {
-                            #fields_initialization_token_stream
-                            #serde_private_ok_postgresql_type_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_types_mac_address_mac_address_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&array_std_primitive_u8_6_token_stream]);
-                        let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream);
-                        quote::quote! {
-                            #fields_initialization_token_stream
-                            #serde_private_ok_postgresql_type_token_stream
-                        }
-                    });
-                    let fn_visit_seq_std_string_string_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_string_string_token_stream]);
-                        quote::quote! {
-                            #fields_initialization_token_stream
-                            #match_origin_try_new_for_deserialize_one_token_stream
-                        }
-                    });
-                    //todo
-                    let fn_visit_seq_sqlx_types_time_time_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_primitive_u8_token_stream,
-                            &std_primitive_u8_token_stream,
-                            &std_primitive_u8_token_stream,
-                            &std_primitive_u32_token_stream,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #match_origin_try_new_for_deserialize_four_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_types_chrono_naive_date_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &field_type_standart_not_null,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #match_origin_try_new_for_deserialize_one_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_types_chrono_naive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
-                            &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #origin_new_for_deserialize_two_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
-                            &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #origin_new_for_deserialize_two_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&{
-                        quote::quote!{
-                            //todo reuse
-                            let #field_0_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_zero_token_stream
-                            let #field_1_token_stream = #seq_next_element_ok_or_else_serde_de_error_invalid_length_one_token_stream
-                            #match_origin_try_new_for_deserialize_two_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_token_stream,
-                            &std_ops_bound_sqlx_types_chrono_naive_date_as_not_null_date_origin_token_stream,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #origin_new_for_deserialize_two_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_token_stream,
-                            &std_ops_bound_sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_token_stream,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #origin_new_for_deserialize_two_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_token_stream,
-                            &std_ops_bound_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_token_stream,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #origin_new_for_deserialize_two_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_ops_bound_std_primitive_i32_token_stream,
-                            &std_ops_bound_std_primitive_i32_token_stream,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #match_origin_try_new_for_deserialize_two_token_stream
-                        }
-                    });
-                    let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_fn_visit_seq_token_stream(&{
-                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                            &std_ops_bound_std_primitive_i64_token_stream,
-                            &std_ops_bound_std_primitive_i64_token_stream,
-                        ]);
-                        quote::quote!{
-                            #fields_initialization_token_stream
-                            #match_origin_try_new_for_deserialize_two_token_stream
-                        }
-                    });
                     let (fn_visit_u64_two_token_stream, fn_visit_u64_three_token_stream, fn_visit_u64_four_token_stream) = {
                         let generate_fn_visit_u64_token_stream = |parameter_number: &ParameterNumber| {
                             let fields_token_stream = {
