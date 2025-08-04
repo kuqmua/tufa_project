@@ -1495,6 +1495,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         (0..=self.get_index()).collect()
                     }
                 }
+                let parameter_number_one = ParameterNumber::One;
+                let parameter_number_two = ParameterNumber::Two;
+                let parameter_number_three = ParameterNumber::Three;
+                let parameter_number_four = ParameterNumber::Four;
                 let ident_standart_not_null_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_standart_not_null_upper_camel_case);
                 let ident_standart_not_null_origin_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&ident_standart_not_null_origin_upper_camel_case);
                 enum ShouldAddBorrow {
@@ -1551,7 +1555,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     let generate_serde_serialize_content_b5af560e_5f3f_4f23_9286_c72dd986a1b4 = |value_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {_serde::Serializer::serialize_newtype_struct(__serializer, #ident_standart_not_null_origin_double_quotes_token_stream, &#self_dot_zero_token_stream #value_token_stream)}
                     };
-                    let generate_serde_state_initialization_token_stream = |parameter_number: ParameterNumber| {
+                    let generate_serde_state_initialization_token_stream = |parameter_number: &ParameterNumber| {
                         let parameter_number_token_stream = {
                             let value = parameter_number.get_vec_from_index_starting_with_zero().into_iter().map(|_| quote::quote! {+ 1});
                             quote::quote! {#(#value)*}
@@ -1560,9 +1564,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let mut __serde_state = _serde::Serializer::serialize_struct(__serializer, #ident_standart_not_null_origin_double_quotes_token_stream, false as std::primitive::usize #parameter_number_token_stream)?;
                         }
                     };
-                    let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Two);
-                    let serde_state_initialization_three_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Three);
-                    let serde_state_initialization_four_fields_token_stream = generate_serde_state_initialization_token_stream(ParameterNumber::Four);
+                    let serde_state_initialization_two_fields_token_stream = generate_serde_state_initialization_token_stream(&parameter_number_two);
+                    let serde_state_initialization_three_fields_token_stream = generate_serde_state_initialization_token_stream(&parameter_number_three);
+                    let serde_state_initialization_four_fields_token_stream = generate_serde_state_initialization_token_stream(&parameter_number_four);
                     let generate_serialize_field_token_stream = |field_name: &dyn std::fmt::Display, third_parameter_token_stream: &dyn quote::ToTokens| {
                         let field_name_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&field_name);
                         quote::quote! {_serde::ser::SerializeStruct::serialize_field(&mut __serde_state, #field_name_double_quotes_token_stream, #third_parameter_token_stream)?;}
@@ -1880,9 +1884,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             };
                         }
                     };
-                    let parameter_number_two = ParameterNumber::Two;
-                    let parameter_number_three = ParameterNumber::Three;
-                    let parameter_number_four = ParameterNumber::Four;
                     let generate_field_index_token_stream = |index: std::primitive::usize| format!("__{}{index}", naming::FieldSnakeCase).parse::<proc_macro2::TokenStream>().unwrap();
                     let (enum_field_two_token_stream, enum_field_three_token_stream, enum_field_four_token_stream) = {
                         let generate_enum_field_token_stream = |parameter_number: &ParameterNumber| {
@@ -1923,9 +1924,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_fn_expecting_token_stream(&quote::quote! {"`start` or `end`"}),
                         )
                     };
-                    let field_0_token_stream = generate_field_index_token_stream(ParameterNumber::One.get_index());
-                    let field_1_token_stream = generate_field_index_token_stream(ParameterNumber::Two.get_index());
-                    let field_2_token_stream = generate_field_index_token_stream(ParameterNumber::Three.get_index());
+                    let field_0_token_stream = generate_field_index_token_stream(parameter_number_one.get_index());
+                    let field_1_token_stream = generate_field_index_token_stream(parameter_number_two.get_index());
+                    let field_2_token_stream = generate_field_index_token_stream(parameter_number_three.get_index());
                     let generate_serde_private_ok_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                         quote::quote! {serde::__private::Ok(#content_token_stream)}
                     };
@@ -2042,9 +2043,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             quote::quote! {__seq.next_element()?.ok_or_else(|| serde::de::Error::invalid_length(#index_token_stream, &self))?;}
                         };
                         (
-                            generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::One),
-                            generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::Two),
-                            generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&ParameterNumber::Three),
+                            generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&parameter_number_one),
+                            generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&parameter_number_two),
+                            generate_seq_next_element_ok_or_else_serde_de_error_invalid_length_index_token_stream(&parameter_number_three),
                         )
                     };
                     let sqlx_postgres_types_pg_range_start_end_token_stream = generate_qlx_postgres_types_pg_range_start_end_token_stream(&field_0_token_stream, &field_1_token_stream);
@@ -2262,9 +2263,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         };
                         (
-                            generate_fn_visit_u64_token_stream(&ParameterNumber::Two),
-                            generate_fn_visit_u64_token_stream(&ParameterNumber::Three),
-                            generate_fn_visit_u64_token_stream(&ParameterNumber::Four)
+                            generate_fn_visit_u64_token_stream(&parameter_number_two),
+                            generate_fn_visit_u64_token_stream(&parameter_number_three),
+                            generate_fn_visit_u64_token_stream(&parameter_number_four)
                         )
                     };
                     let (
