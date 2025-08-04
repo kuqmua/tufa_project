@@ -2288,6 +2288,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #match_origin_try_new_for_deserialize_two_token_stream
                         }
                     });
+                    let fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_fn_visit_seq_token_stream(&{
+                        let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
+                            &std_ops_bound_std_primitive_i64_token_stream,
+                            &std_ops_bound_std_primitive_i64_token_stream,
+                        ]);
+                        quote::quote!{
+                            #fields_initialization_token_stream
+                            #match_origin_try_new_for_deserialize_two_token_stream
+                        }
+                    });
                     let (fn_visit_u64_two_token_stream, fn_visit_u64_three_token_stream, fn_visit_u64_four_token_stream) = {
                         let generate_fn_visit_u64_token_stream = |parameter_number: &ParameterNumber| {
                             let fields_token_stream = {
@@ -2444,6 +2454,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                         fn_visit_map_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                         fn_visit_map_sqlx_postgres_types_pg_range_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                        fn_visit_map_sqlx_postgres_types_pg_range_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
                     ) = {
                         let generate_fn_visit_map_token_stream = |
                             field_option_none_initialization_token_stream: &dyn quote::ToTokens,
@@ -2473,6 +2484,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                             field_option_none_initialization_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                             field_option_none_initialization_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                            field_option_none_initialization_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
                         ) = {
                             let generate_field_option_none_initialization_token_stream = |vec_token_stream: &[&dyn quote::ToTokens]| {
                                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2520,6 +2532,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     &std_ops_bound_std_primitive_i32_token_stream,
                                     &std_ops_bound_std_primitive_i32_token_stream
                                 ]),
+                                generate_field_option_none_initialization_token_stream(&[
+                                    &std_ops_bound_std_primitive_i64_token_stream,
+                                    &std_ops_bound_std_primitive_i64_token_stream
+                                ]),
                             )
                         };
                         let (
@@ -2531,6 +2547,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                             while_some_next_key_field_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                             while_some_next_key_field_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                            while_some_next_key_field_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
                         ) = {
                             let generate_while_some_next_key_field_token_stream = |vec_token_stream: &[(&dyn std::fmt::Display, &dyn quote::ToTokens)]| {
                                 let fields_initialization_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2654,6 +2671,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &std_ops_bound_std_primitive_i32_token_stream
                                     ),
                                 ]),
+                                generate_while_some_next_key_field_token_stream(&[
+                                    (
+                                        &start_snake_case,
+                                        &std_ops_bound_std_primitive_i64_token_stream
+                                    ),
+                                    (
+                                        &end_snake_case,
+                                        &std_ops_bound_std_primitive_i64_token_stream
+                                    ),
+                                ]),
                             )
                         };
                         let (
@@ -2732,6 +2759,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_fn_visit_map_token_stream(
                                 &field_option_none_initialization_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                                 &while_some_next_key_field_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                                &match_field_initialization_start_end_token_stream,
+                                &match_origin_try_new_for_deserialize_two_token_stream,
+                            ),
+                            generate_fn_visit_map_token_stream(
+                                &field_option_none_initialization_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                                &while_some_next_key_field_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
                                 &match_field_initialization_start_end_token_stream,
                                 &match_origin_try_new_for_deserialize_two_token_stream,
                             ),
@@ -2902,6 +2935,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_naive_date_time_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
+                        impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
                     ) = {
                         let generate_impl_serde_de_visitor_for_visitor_token_stream = |
                             zero_token_stream: &dyn quote::ToTokens,
@@ -2983,6 +3017,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &fn_expecting_struct_ident_double_quotes_token_stream,
                                 &fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                                 &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
+                            ),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_struct_ident_double_quotes_token_stream,
+                                &fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                                &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
                             ),
                         )
                     };
@@ -3116,26 +3155,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_impl_serde_deserialize_for_field_token_stream(&impl_serde_de_visitor_for_field_visitor_token_stream_ca843915_2330_4969_8bc8_8b33bff7a565),
                         )
                     };
-                    //todo remove
-                    // let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                    //     quote::quote! {
-                    //         #field_start_end_token_stream
-                    //         #impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_stream
-                    //         #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream
-                    //         #const_fields_start_end_token_stream
-                    //         #serde_deserializer_deserialize_struct_ident_visitor_token_stream
-                    //     }
-                    // });
-                    //todo remove
-                    let impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
-                        quote::quote! {
-                            #field_start_end_token_stream
-                            #impl_serde_deserialize_for_field_token_sqlx_postgres_types_pg_range_std_primitive_i32_or_i64_stream
-                            #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
-                            #const_fields_start_end_token_stream
-                            #serde_deserializer_deserialize_struct_ident_visitor_token_stream
-                        }
-                    });
                     let impl_serde_deserialize_for_sqlx_types_uuid_uuid_token_stream = generate_impl_serde_deserialize_for_tokens_token_stream(&{
                         quote::quote! {
                             #struct_visitor_token_stream
@@ -3240,8 +3259,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #const_fields_start_end_token_stream
                             #serde_deserializer_deserialize_struct_visitor_token_stream
                         })),
-                        //todo rewrite it as i32 deserialization
-                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(impl_serde_deserialize_for_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream),
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
+                            #enum_field_two_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
+                            #impl_serde_deserialize_for_field_token_stream
+                            #struct_visitor_token_stream
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
+                            #const_fields_start_end_token_stream
+                            #serde_deserializer_deserialize_struct_visitor_token_stream
+                        })),
                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                             #enum_field_two_token_stream
                             #impl_serde_de_visitor_for_field_visitor_token_stream_f4d8cc33_bf35_4c13_a745_341364a68df6
