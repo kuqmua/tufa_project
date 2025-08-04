@@ -3187,11 +3187,271 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_deserializer_deserialize_newtype_struct_token_stream
                         })),
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote! {
-                            #field_months_days_microseconds_token_stream
-                            #impl_serde_deserialize_for_field_sqlx_postgres_types_pg_interval_token_stream
-                            #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream
-                            #const_fields_sqlx_postgres_types_pg_interval_token_stream
-                            #serde_deserializer_deserialize_struct_ident_visitor_token_stream
+                            // #field_months_days_microseconds_token_stream
+                            // #impl_serde_deserialize_for_field_sqlx_postgres_types_pg_interval_token_stream
+                            // #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream
+                            // #const_fields_sqlx_postgres_types_pg_interval_token_stream
+                            // #serde_deserializer_deserialize_struct_ident_visitor_token_stream
+                            #[allow(non_camel_case_types)]
+                            #[doc(hidden)]
+                            enum __Field {
+                                __field0,
+                                __field1,
+                                __field2,
+                                __ignore,
+                            }
+                            #[doc(hidden)]
+                            struct __FieldVisitor;
+                            #[automatically_derived]
+                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
+                                type Value = __Field;
+                                fn expecting(
+                                    &self,
+                                    __formatter: &mut _serde::__private::Formatter,
+                                ) -> _serde::__private::fmt::Result {
+                                    _serde::__private::Formatter::write_str(
+                                        __formatter,
+                                        "field identifier",
+                                    )
+                                }
+                                fn visit_u64<__E>(
+                                    self,
+                                    __value: u64,
+                                ) -> _serde::__private::Result<Self::Value, __E>
+                                where
+                                    __E: _serde::de::Error,
+                                {
+                                    match __value {
+                                        0u64 => _serde::__private::Ok(__Field::__field0),
+                                        1u64 => _serde::__private::Ok(__Field::__field1),
+                                        2u64 => _serde::__private::Ok(__Field::__field2),
+                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                    }
+                                }
+                                fn visit_str<__E>(
+                                    self,
+                                    __value: &str,
+                                ) -> _serde::__private::Result<Self::Value, __E>
+                                where
+                                    __E: _serde::de::Error,
+                                {
+                                    match __value {
+                                        "months" => _serde::__private::Ok(__Field::__field0),
+                                        "days" => _serde::__private::Ok(__Field::__field1),
+                                        "microseconds" => _serde::__private::Ok(__Field::__field2),
+                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                    }
+                                }
+                                fn visit_bytes<__E>(
+                                    self,
+                                    __value: &[u8],
+                                ) -> _serde::__private::Result<Self::Value, __E>
+                                where
+                                    __E: _serde::de::Error,
+                                {
+                                    match __value {
+                                        b"months" => _serde::__private::Ok(__Field::__field0),
+                                        b"days" => _serde::__private::Ok(__Field::__field1),
+                                        b"microseconds" => _serde::__private::Ok(__Field::__field2),
+                                        _ => _serde::__private::Ok(__Field::__ignore),
+                                    }
+                                }
+                            }
+                            #[automatically_derived]
+                            impl<'de> _serde::Deserialize<'de> for __Field {
+                                #[inline]
+                                fn deserialize<__D>(
+                                    __deserializer: __D,
+                                ) -> _serde::__private::Result<Self, __D::Error>
+                                where
+                                    __D: _serde::Deserializer<'de>,
+                                {
+                                    _serde::Deserializer::deserialize_identifier(
+                                        __deserializer,
+                                        __FieldVisitor,
+                                    )
+                                }
+                            }
+                            #[doc(hidden)]
+                            struct __Visitor<'de> {
+                                marker: _serde::__private::PhantomData<
+                                    SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin,
+                                >,
+                                lifetime: _serde::__private::PhantomData<&'de ()>,
+                            }
+                            #[automatically_derived]
+                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
+                                type Value = SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin;
+                                fn expecting(
+                                    &self,
+                                    __formatter: &mut _serde::__private::Formatter,
+                                ) -> _serde::__private::fmt::Result {
+                                    _serde::__private::Formatter::write_str(
+                                        __formatter,
+                                        "struct SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin",
+                                    )
+                                }
+                                #[inline]
+                                fn visit_seq<__A>(
+                                    self,
+                                    mut __seq: __A,
+                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                where
+                                    __A: _serde::de::SeqAccess<'de>,
+                                {
+                                    let __field0 = match _serde::de::SeqAccess::next_element::<
+                                        std::primitive::i32,
+                                    >(&mut __seq)? {
+                                        _serde::__private::Some(__value) => __value,
+                                        _serde::__private::None => {
+                                            return _serde::__private::Err(
+                                                _serde::de::Error::invalid_length(
+                                                    0usize,
+                                                    &"struct SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin with 3 elements",
+                                                ),
+                                            );
+                                        }
+                                    };
+                                    let __field1 = match _serde::de::SeqAccess::next_element::<
+                                        std::primitive::i32,
+                                    >(&mut __seq)? {
+                                        _serde::__private::Some(__value) => __value,
+                                        _serde::__private::None => {
+                                            return _serde::__private::Err(
+                                                _serde::de::Error::invalid_length(
+                                                    1usize,
+                                                    &"struct SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin with 3 elements",
+                                                ),
+                                            );
+                                        }
+                                    };
+                                    let __field2 = match _serde::de::SeqAccess::next_element::<
+                                        std::primitive::i64,
+                                    >(&mut __seq)? {
+                                        _serde::__private::Some(__value) => __value,
+                                        _serde::__private::None => {
+                                            return _serde::__private::Err(
+                                                _serde::de::Error::invalid_length(
+                                                    2usize,
+                                                    &"struct SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin with 3 elements",
+                                                ),
+                                            );
+                                        }
+                                    };
+                                    // _serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin {
+                                    //     months: __field0,
+                                    //     days: __field1,
+                                    //     microseconds: __field2,
+                                    // })
+                                    serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin(sqlx::postgres::types::PgInterval {
+                                        months: __field0,
+                                        days: __field1,
+                                        microseconds: __field2,
+                                    }))
+                                }
+                                #[inline]
+                                fn visit_map<__A>(
+                                    self,
+                                    mut __map: __A,
+                                ) -> _serde::__private::Result<Self::Value, __A::Error>
+                                where
+                                    __A: _serde::de::MapAccess<'de>,
+                                {
+                                    let mut __field0: _serde::__private::Option<std::primitive::i32> = _serde::__private::None;
+                                    let mut __field1: _serde::__private::Option<std::primitive::i32> = _serde::__private::None;
+                                    let mut __field2: _serde::__private::Option<std::primitive::i64> = _serde::__private::None;
+                                    while let _serde::__private::Some(__key) = _serde::de::MapAccess::next_key::<
+                                        __Field,
+                                    >(&mut __map)? {
+                                        match __key {
+                                            __Field::__field0 => {
+                                                if _serde::__private::Option::is_some(&__field0) {
+                                                    return _serde::__private::Err(
+                                                        <__A::Error as _serde::de::Error>::duplicate_field("months"),
+                                                    );
+                                                }
+                                                __field0 = _serde::__private::Some(
+                                                    _serde::de::MapAccess::next_value::<
+                                                        std::primitive::i32,
+                                                    >(&mut __map)?,
+                                                );
+                                            }
+                                            __Field::__field1 => {
+                                                if _serde::__private::Option::is_some(&__field1) {
+                                                    return _serde::__private::Err(
+                                                        <__A::Error as _serde::de::Error>::duplicate_field("days"),
+                                                    );
+                                                }
+                                                __field1 = _serde::__private::Some(
+                                                    _serde::de::MapAccess::next_value::<
+                                                        std::primitive::i32,
+                                                    >(&mut __map)?,
+                                                );
+                                            }
+                                            __Field::__field2 => {
+                                                if _serde::__private::Option::is_some(&__field2) {
+                                                    return _serde::__private::Err(
+                                                        <__A::Error as _serde::de::Error>::duplicate_field(
+                                                            "microseconds",
+                                                        ),
+                                                    );
+                                                }
+                                                __field2 = _serde::__private::Some(
+                                                    _serde::de::MapAccess::next_value::<
+                                                        std::primitive::i64,
+                                                    >(&mut __map)?,
+                                                );
+                                            }
+                                            _ => {
+                                                let _ = _serde::de::MapAccess::next_value::<
+                                                    _serde::de::IgnoredAny,
+                                                >(&mut __map)?;
+                                            }
+                                        }
+                                    }
+                                    let __field0 = match __field0 {
+                                        _serde::__private::Some(__field0) => __field0,
+                                        _serde::__private::None => {
+                                            _serde::__private::de::missing_field("months")?
+                                        }
+                                    };
+                                    let __field1 = match __field1 {
+                                        _serde::__private::Some(__field1) => __field1,
+                                        _serde::__private::None => {
+                                            _serde::__private::de::missing_field("days")?
+                                        }
+                                    };
+                                    let __field2 = match __field2 {
+                                        _serde::__private::Some(__field2) => __field2,
+                                        _serde::__private::None => {
+                                            _serde::__private::de::missing_field("microseconds")?
+                                        }
+                                    };
+                                    // _serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin {
+                                    //     months: __field0,
+                                    //     days: __field1,
+                                    //     microseconds: __field2,
+                                    // })
+                                    serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin(sqlx::postgres::types::PgInterval {
+                                        months: __field0,
+                                        days: __field1,
+                                        microseconds: __field2,
+                                    }))
+                                }
+                            }
+                            #[doc(hidden)]
+                            const FIELDS: &'static [&'static str] = &["months", "days", "microseconds"];
+                            _serde::Deserializer::deserialize_struct(
+                                __deserializer,
+                                "SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin",
+                                FIELDS,
+                                __Visitor {
+                                    marker: _serde::__private::PhantomData::<
+                                        SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin,
+                                    >,
+                                    lifetime: _serde::__private::PhantomData,
+                                },
+                            )
                         })),
                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote!{
                             #enum_field_two_token_stream
