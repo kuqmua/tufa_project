@@ -3997,122 +3997,94 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                                     PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(postgresql_type_impl_new_for_deserialize) => {
                                         let parameters_token_stream = match &postgresql_type_impl_new_for_deserialize {
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval => {
-                                                quote::quote!{
-                                                    #months_snake_case: #std_primitive_i32_token_stream,
-                                                    #days_snake_case: #std_primitive_i32_token_stream,
-                                                    #microseconds_snake_case: #std_primitive_i64_token_stream,
-                                                }
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{
+                                                #months_snake_case: #std_primitive_i32_token_stream,
+                                                #days_snake_case: #std_primitive_i32_token_stream,
+                                                #microseconds_snake_case: #std_primitive_i64_token_stream,
                                             },
-                                            PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
-                                                quote::quote!{
-                                                    date: SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
-                                                    time: SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin
-                                                }
-                                            }
-                                            PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                                quote::quote!{
-                                                    //todo reuse
-                                                    date_naive: SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
-                                                    time: SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin,//todo check nanosecond precision
-                                                }
-                                            }
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => {
-                                                quote::quote!{
-                                                    start: std::ops::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>,
-                                                    end: std::ops::Bound<SqlxTypesChronoNaiveDateAsNotNullDateOrigin>
-                                                }
-                                            }
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => {
-                                                //todo
-                                                quote::quote!{
-                                                    start: std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>,
-                                                    end: std::ops::Bound<SqlxTypesChronoNaiveDateTimeAsNotNullTimestampOrigin>
-                                                }
-                                            }
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => {
-                                                //todo
-                                                quote::quote!{
-                                                    start: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>,
-                                                    end: std::ops::Bound<SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTzOrigin>
-                                                }
+                                            PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{
+                                                #date_snake_case: #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
+                                                #time_snake_case: #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case
+                                            },
+                                            PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{
+                                                #date_naive_snake_case: #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
+                                                #time_snake_case: #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case,
+                                            },
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{
+                                                #start_snake_case: std::ops::Bound<#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case>,
+                                                #end_snake_case: std::ops::Bound<#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case>
+                                            },
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{
+                                                #start_snake_case: std::ops::Bound<#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case>,
+                                                #end_snake_case: std::ops::Bound<#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case>
+                                            },
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{
+                                                #start_snake_case: std::ops::Bound<#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case>,
+                                                #end_snake_case: std::ops::Bound<#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case>
                                             }
                                         };
                                         let content_token_stream = match &postgresql_type_impl_new_for_deserialize {
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval => {
-                                                quote::quote!{
-                                                    Self(sqlx::postgres::types::PgInterval {
-                                                        #months_snake_case,
-                                                        #days_snake_case,
-                                                        #microseconds_snake_case,
-                                                    })
-                                                }
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval => quote::quote!{
+                                                Self(sqlx::postgres::types::PgInterval {
+                                                    #months_snake_case,
+                                                    #days_snake_case,
+                                                    #microseconds_snake_case,
+                                                })
                                             },
-                                            PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
-                                                quote::quote!{
-                                                    Self(#field_type_standart_not_null::new(date.0, time.0))
-                                                }
+                                            PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{
+                                                Self(#field_type_standart_not_null::new(#date_snake_case.0, #time_snake_case.0))
                                             },
-                                            PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                                quote::quote!{
-                                                    Self(#field_type_standart_not_null::from_naive_utc_and_offset(
-                                                        sqlx::types::chrono::NaiveDateTime::new(
-                                                            date_naive.0,
-                                                            time.0
-                                                        ),
-                                                        sqlx::types::chrono::Utc
-                                                    ))
-                                                }
+                                            PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{
+                                                Self(#field_type_standart_not_null::from_naive_utc_and_offset(
+                                                    sqlx::types::chrono::NaiveDateTime::new(//todo naive date time reusage
+                                                        #date_naive_snake_case.0,
+                                                        #time_snake_case.0
+                                                    ),
+                                                    sqlx::types::chrono::Utc
+                                                ))
                                             },
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => {
-                                                quote::quote!{
-                                                    Self(sqlx::postgres::types::PgRange {
-                                                        start: match start {
-                                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                        },
-                                                        end: match end {
-                                                            std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
-                                                            std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
-                                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                        },
-                                                    })
-                                                }
-                                            }
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => {
-                                                //todo
-                                                quote::quote!{
-                                                    Self(sqlx::postgres::types::PgRange {
-                                                        start: match start {
-                                                            std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
-                                                            std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
-                                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                        },
-                                                        end: match end {
-                                                            std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
-                                                            std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
-                                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                        }
-                                                    })
-                                                }
-                                            }
-                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => {
-                                                //todo
-                                                quote::quote!{
-                                                    Self(sqlx::postgres::types::PgRange {
-                                                        start: match start {
-                                                            std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
-                                                            std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
-                                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                        },
-                                                        end: match end {
-                                                            std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
-                                                            std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
-                                                            std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
-                                                        }
-                                                    })
-                                                }
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => quote::quote!{
+                                                Self(sqlx::postgres::types::PgRange {
+                                                    start: match start {
+                                                        std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                                                        std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                                    },
+                                                    end: match end {
+                                                        std::ops::Bound::Included(value) => std::ops::Bound::Included(value.0),
+                                                        std::ops::Bound::Excluded(value) => std::ops::Bound::Excluded(value.0),
+                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                                    },
+                                                })
+                                            },
+                                            //todo
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{
+                                                Self(sqlx::postgres::types::PgRange {
+                                                    start: match start {
+                                                        std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
+                                                        std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
+                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                                    },
+                                                    end: match end {
+                                                        std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
+                                                        std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
+                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                                    }
+                                                })
+                                            },
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => quote::quote!{
+                                                Self(sqlx::postgres::types::PgRange {
+                                                    start: match start {
+                                                        std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
+                                                        std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
+                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                                    },
+                                                    end: match end {
+                                                        std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
+                                                        std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
+                                                        std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
+                                                    }
+                                                })
                                             }
                                         };
                                         quote::quote!{
