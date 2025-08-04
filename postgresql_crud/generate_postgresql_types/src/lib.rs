@@ -1121,7 +1121,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let std_primitive_i32_token_stream = token_patterns::StdPrimitiveI32;
             let std_primitive_i64_token_stream = token_patterns::StdPrimitiveI64;
             let std_string_string_token_stream = token_patterns::StdStringString;
-            
 
             let core_default_default_default_token_stream = token_patterns::CoreDefaultDefaultDefault;
             let crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = token_patterns::CrateDefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementCall;
@@ -3733,7 +3732,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                                                     quote::quote! {
-                                                        let date = match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(value.date()) {
+                                                        let #date_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(
+                                                            #value_snake_case.#date_snake_case()
+                                                        ) {
                                                             Ok(#value_snake_case) => #value_snake_case,
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#date_upper_camel_case {
@@ -3742,8 +3743,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 });
                                                             }
                                                         };
-                                                        //todo
-                                                        let time = match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(#value_snake_case.time()) {
+                                                        let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::try_new(
+                                                            #value_snake_case.#time_snake_case()
+                                                        ) {
                                                             Ok(#value_snake_case) => #value_snake_case,
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#time_upper_camel_case {
@@ -3752,14 +3754,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 });
                                                             }
                                                         };
-                                                        //here
-                                                        Ok(Self(#field_type_standart_not_null::new(date.0, time.0)))
+                                                        Ok(Self(#field_type_standart_not_null::new(#date_snake_case.0, #time_snake_case.0)))
                                                     }
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
-                                                    //todo reuse
                                                     quote::quote! {
-                                                        let date_naive = match SqlxTypesChronoNaiveDateAsNotNullDateOrigin::try_new(#value_snake_case.date_naive()) {
+                                                        let #date_naive_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(#value_snake_case.date_naive()) {
                                                             Ok(#value_snake_case) => #value_snake_case,
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#date_naive_upper_camel_case {
@@ -3768,7 +3768,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 });
                                                             }
                                                         };
-                                                        let time = match SqlxTypesChronoNaiveTimeAsNotNullTimeOrigin::try_new(#value_snake_case.time()) {
+                                                        let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::try_new(#value_snake_case.time()) {
                                                             Ok(#value_snake_case) => #value_snake_case,
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#time_upper_camel_camel_case {
@@ -3779,8 +3779,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         };
                                                         Ok(Self(sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                                                             sqlx::types::chrono::NaiveDateTime::new(
-                                                                date_naive.0,
-                                                                time.0
+                                                                #date_naive_snake_case.0,
+                                                                #time_snake_case.0
                                                             ),
                                                             sqlx::types::chrono::Utc
                                                         )))
