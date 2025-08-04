@@ -1201,23 +1201,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     pub struct #ident;
                 }
             };
-            let ident_standart_not_null_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
+            let generate_ident_standart_not_null_origin_token_stream = |postgresql_type: &PostgresqlType|{
+                naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_standart_not_null_token_stream(postgresql_type))
+            };
+            let ident_standart_not_null_origin_upper_camel_case = generate_ident_standart_not_null_origin_token_stream(&postgresql_type);
             let ident_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(&ident);
             let ident_standart_not_null_or_nullable_upper_camel_case = generate_ident_token_stream(postgresql_type, not_null_or_nullable, &PostgresqlTypePattern::Standart);
 
-            //todo local usage?
-            let sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate)
-            );
-            let sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime)
-            );
-            let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp)
-            );
-            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case = naming::parameter::SelfOriginUpperCamelCase::from_tokens(
-                &generate_ident_standart_not_null_token_stream(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz)
-            );
+            let sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case = generate_ident_standart_not_null_origin_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateAsDate);
+            let sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case = generate_ident_standart_not_null_origin_token_stream(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime);
+            let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case = generate_ident_standart_not_null_origin_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
+            let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case = generate_ident_standart_not_null_origin_token_stream(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
 
             let field_type_standart_not_null = postgresql_type.field_type_token_stream();
             let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
@@ -3280,21 +3274,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let excluded_start_more_than_included_end_upper_camel_case = naming::ExcludedStartMoreThanIncludedEndUpperCamelCase;
                 let excluded_start_more_than_excluded_end_upper_camel_case = naming::ExcludedStartMoreThanExcludedEndUpperCamelCase;
                 let included_end_cannot_be_max_upper_camel_case = naming::IncludedEndCannotBeMaxUpperCamelCase;
-                //todo after all ranges checks rename it
-                enum TempRangeType {
+                enum IntRangeType {
                     SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
                     SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
                 }
-                //todo maybe refactor
-                let temp_range_type_to_range_inner_type_token_stream = |temp_range_type: &TempRangeType| -> proc_macro2::TokenStream {
-                    match &temp_range_type {
-                        TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{#std_primitive_i32_token_stream},
-                        TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{#std_primitive_i64_token_stream},
+                let int_range_type_to_range_inner_type_token_stream = |int_range_type: &IntRangeType| -> proc_macro2::TokenStream {
+                    match &int_range_type {
+                        IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{#std_primitive_i32_token_stream},
+                        IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{#std_primitive_i64_token_stream},
                     }
                 };
-                //todo maybe should rewrite it as just start end? without bound info
-                let generate_int_range_type_error_variants_token_stream = |temp_range_type: &TempRangeType|{
-                    let range_inner_type_token_stream = temp_range_type_to_range_inner_type_token_stream(&temp_range_type);
+                let generate_int_range_type_error_variants_token_stream = |int_range_type: &IntRangeType|{
+                    let range_inner_type_token_stream = int_range_type_to_range_inner_type_token_stream(&int_range_type);
                     quote::quote! {
                         #included_start_more_than_included_end_upper_camel_case {
                             #[eo_to_std_string_string_serialize_deserialize]
@@ -3410,10 +3401,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             },
                             PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &generate_int_range_type_error_variants_token_stream(
-                                &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
+                                &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
                             ),
                             PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &generate_int_range_type_error_variants_token_stream(
-                                &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
+                                &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
                             ),
                             PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &{
                                 //todo
@@ -3542,10 +3533,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                     PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => &sqlx_types_chrono_naive_date_as_date_try_new_error_named_variants_token_stream,
                                     PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &generate_int_range_type_error_variants_token_stream(
-                                        &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
+                                        &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
                                     ),
                                     PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &generate_int_range_type_error_variants_token_stream(
-                                        &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
+                                        &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
                                     ),
                                 };
                                 quote::quote!{
@@ -3598,11 +3589,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 match &postgresql_type_pattern {
                                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                            let generate_temp_range_check_token_stream = |temp_range_type: &TempRangeType|{
+                                            let generate_temp_range_check_token_stream = |int_range_type: &IntRangeType|{
                                                 //todo somehow convert it with from or try from
-                                                let max_value_token_stream = match &temp_range_type {
-                                                    TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{std::primitive::i32::MAX},
-                                                    TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{std::primitive::i64::MAX},
+                                                let max_value_token_stream = match &int_range_type {
+                                                    IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{std::primitive::i32::MAX},
+                                                    IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{std::primitive::i64::MAX},
                                                 };
                                                 quote::quote! {
                                                     let max = #max_value_token_stream;
@@ -3781,8 +3772,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         )))
                                                     }
                                                 },
-                                                PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_temp_range_check_token_stream(&TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
-                                                PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_temp_range_check_token_stream(&TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
+                                                PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_temp_range_check_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range),
+                                                PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_temp_range_check_token_stream(&IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range),
                                                 PostgresqlTypeInitializationTryNew::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => {
                                                     quote::quote!{
                                                         let #value_snake_case = sqlx::postgres::types::PgRange {
@@ -4237,9 +4228,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     },
                                     PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(postgresql_type_impl_try_new_for_deserialize) => {
                                         let parameters_token_stream = {
-                                            let generate_value_pg_range_int_type_token_stream = |temp_range_type: &TempRangeType|{
+                                            let generate_value_pg_range_int_type_token_stream = |int_range_type: &IntRangeType|{
                                                 let type_token_stream = {
-                                                    let content_token_stream = temp_range_type_to_range_inner_type_token_stream(&temp_range_type);
+                                                    let content_token_stream = int_range_type_to_range_inner_type_token_stream(&int_range_type);
                                                     quote::quote!{std::ops::Bound<#content_token_stream>}
                                                 };
                                                 quote::quote!{
@@ -4275,10 +4266,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     }
                                                 },
                                                 PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_value_pg_range_int_type_token_stream(
-                                                    &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
+                                                    &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
                                                 ),
                                                 PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_value_pg_range_int_type_token_stream(
-                                                    &TempRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
+                                                    &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
                                                 ),
                                             }
                                         };
