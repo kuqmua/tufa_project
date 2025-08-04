@@ -1839,6 +1839,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &date_naive_snake_case,
                         &time_snake_case,
                     ];
+                    let months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array: [&dyn naming::StdFmtDisplayPlusQuoteToTokens; 3] = [
+                        &months_snake_case,
+                        &days_snake_case,
+                        &microseconds_snake_case,
+                    ];
                     let (serde_deserializer_deserialize_struct_visitor_token_stream, serde_deserializer_deserialize_struct_ident_visitor_token_stream) = {
                         let generate_serde_deserializer_deserialize_struct_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             quote::quote! {
@@ -2280,6 +2285,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         fn_visit_str_value_hour_minute_second_microsecond_token_stream,
                         fn_visit_str_value_date_time_token_stream,
                         fn_visit_str_value_date_naive_time_token_stream,
+                        fn_visit_str_value_months_days_microseconds_token_stream,
                     ) = {
                         let generate_fn_visit_str_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2311,6 +2317,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_fn_visit_str_token_stream(&hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_str_token_stream(&date_time_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_str_token_stream(&date_naive_time_std_fmt_display_plus_quote_to_tokens_array),
+                            generate_fn_visit_str_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
                     let (fn_visit_str_field_months_days_microseconds_token_stream, fn_visit_str_field_start_end_token_stream) = {
@@ -2344,6 +2351,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         fn_visit_bytes_hour_minute_second_microsecond_token_stream,
                         fn_visit_bytes_date_time_token_stream,
                         fn_visit_bytes_date_naive_time_token_stream,
+                        fn_visit_bytes_months_days_microseconds_token_stream,
                     ) = {
                         let generate_fn_visit_bytes_token_stream = |vec_token_stream: &[&dyn naming::StdFmtDisplayPlusQuoteToTokens]| {
                             let fields_token_stream = vec_token_stream.iter().enumerate().map(|(index, element)| {
@@ -2372,6 +2380,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             generate_fn_visit_bytes_token_stream(&hour_minute_second_microsecond_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_bytes_token_stream(&date_time_std_fmt_display_plus_quote_to_tokens_array),
                             generate_fn_visit_bytes_token_stream(&date_naive_time_std_fmt_display_plus_quote_to_tokens_array),
+                            generate_fn_visit_bytes_token_stream(&months_days_microseconds_std_fmt_display_plus_quote_to_tokens_array),
                         )
                     };
                     let serde_deserializer_deserialize_identifier_token_stream = quote::quote! {
@@ -2995,6 +3004,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_field_visitor_token_stream_9b240c3e_a4af_4da1_a2ab_f1bab44b1df6,
                         impl_serde_de_visitor_for_field_visitor_token_stream_dc439ca1_8af1_4c4c_ab49_4e4fb15a41d3,
                         impl_serde_de_visitor_for_field_visitor_token_stream_8c733fe0_c816_4a0e_bb13_4c2d0cd2ded6,
+                        impl_serde_de_visitor_for_field_visitor_token_stream_f702a411_b02b_4c90_aa7f_962a698612e7,
                     ) = {
                         let generate_impl_serde_de_visitor_for_field_visitor_token_stream = |content_token_stream: &dyn quote::ToTokens| {
                             let impl_serde_de_visitor_for_tokens_token_stream = generate_impl_serde_de_visitor_for_tokens_token_stream(&field_visitor_token_stream, &content_token_stream);
@@ -3055,6 +3065,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 #fn_visit_u64_two_token_stream
                                 #fn_visit_str_value_date_naive_time_token_stream
                                 #fn_visit_bytes_date_naive_time_token_stream
+                            }),
+                            generate_impl_serde_de_visitor_for_field_visitor_token_stream(&quote::quote!{
+                                #type_value_equal_underscore_field_semicolon_token_stream
+                                #fn_expecting_field_identifier_token_stream
+                                #fn_visit_u64_three_token_stream
+                                #fn_visit_str_value_months_days_microseconds_token_stream
+                                #fn_visit_bytes_months_days_microseconds_token_stream
                             }),
                         )
                     };
@@ -3197,71 +3214,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             // #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream
                             // #const_fields_sqlx_postgres_types_pg_interval_token_stream
                             // #serde_deserializer_deserialize_struct_ident_visitor_token_stream
-                            #[allow(non_camel_case_types)]
-                            #[doc(hidden)]
-                            enum __Field {
-                                __field0,
-                                __field1,
-                                __field2,
-                                __ignore,
-                            }
-                            #[doc(hidden)]
-                            struct __FieldVisitor;
-                            #[automatically_derived]
-                            impl<'de> _serde::de::Visitor<'de> for __FieldVisitor {
-                                type Value = __Field;
-                                fn expecting(
-                                    &self,
-                                    __formatter: &mut _serde::__private::Formatter,
-                                ) -> _serde::__private::fmt::Result {
-                                    _serde::__private::Formatter::write_str(
-                                        __formatter,
-                                        "field identifier",
-                                    )
-                                }
-                                fn visit_u64<__E>(
-                                    self,
-                                    __value: u64,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        0u64 => _serde::__private::Ok(__Field::__field0),
-                                        1u64 => _serde::__private::Ok(__Field::__field1),
-                                        2u64 => _serde::__private::Ok(__Field::__field2),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_str<__E>(
-                                    self,
-                                    __value: &str,
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        "months" => _serde::__private::Ok(__Field::__field0),
-                                        "days" => _serde::__private::Ok(__Field::__field1),
-                                        "microseconds" => _serde::__private::Ok(__Field::__field2),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                                fn visit_bytes<__E>(
-                                    self,
-                                    __value: &[u8],
-                                ) -> _serde::__private::Result<Self::Value, __E>
-                                where
-                                    __E: _serde::de::Error,
-                                {
-                                    match __value {
-                                        b"months" => _serde::__private::Ok(__Field::__field0),
-                                        b"days" => _serde::__private::Ok(__Field::__field1),
-                                        b"microseconds" => _serde::__private::Ok(__Field::__field2),
-                                        _ => _serde::__private::Ok(__Field::__ignore),
-                                    }
-                                }
-                            }
+                            #enum_field_three_token_stream
+                            #impl_serde_de_visitor_for_field_visitor_token_stream_f702a411_b02b_4c90_aa7f_962a698612e7
                             #[automatically_derived]
                             impl<'de> _serde::Deserialize<'de> for __Field {
                                 #[inline]
