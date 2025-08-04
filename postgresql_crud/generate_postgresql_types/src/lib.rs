@@ -2819,6 +2819,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_std_primitive_i32_token_stream,
                         impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
+                        impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_interval_token_stream,
                     ) = {
                         let generate_impl_serde_de_visitor_for_visitor_token_stream = |
                             zero_token_stream: &dyn quote::ToTokens,
@@ -2905,6 +2906,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &fn_expecting_struct_ident_double_quotes_token_stream,
                                 &fn_visit_seq_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream,
                                 &fn_visit_map_sqlx_postgres_types_pg_range_sqlx_postgres_types_pg_range_std_primitive_i64_token_stream
+                            ),
+                            generate_impl_serde_de_visitor_for_visitor_token_stream(
+                                &fn_expecting_struct_ident_double_quotes_token_stream,
+                                &fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream,
+                                &fn_visit_map_sqlx_postgres_types_pg_interval_token_stream
                             ),
                         )
                     };
@@ -3109,22 +3115,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             #serde_deserializer_deserialize_newtype_struct_token_stream
                         })),
                         PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_deserialize_for_tokens_token_stream(&quote::quote! {
-                            // #field_months_days_microseconds_token_stream
-                            // #impl_serde_deserialize_for_field_sqlx_postgres_types_pg_interval_token_stream
-                            // #impl_serde_de_visitor_for_ident_visitor_sqlx_postgres_types_pg_interval_token_stream
-                            // #const_fields_sqlx_postgres_types_pg_interval_token_stream
-                            // #serde_deserializer_deserialize_struct_ident_visitor_token_stream
                             #enum_field_three_token_stream
                             #impl_serde_de_visitor_for_field_visitor_token_stream_f702a411_b02b_4c90_aa7f_962a698612e7
                             #impl_serde_deserialize_for_field_token_stream
                             #struct_visitor_token_stream
-                            #[automatically_derived]
-                            impl<'de> _serde::de::Visitor<'de> for __Visitor<'de> {
-                                type Value = SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin;
-                                #fn_expecting_struct_ident_double_quotes_token_stream
-                                #fn_visit_seq_sqlx_postgres_types_pg_interval_token_stream
-                                #fn_visit_map_sqlx_postgres_types_pg_interval_token_stream
-                            }
+                            #impl_serde_de_visitor_for_visitor_sqlx_postgres_types_pg_interval_token_stream
                             #const_fields_sqlx_postgres_types_pg_interval_token_stream
                             #serde_deserializer_deserialize_struct_visitor_token_stream
                         })),
