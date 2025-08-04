@@ -3605,10 +3605,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                             let generate_temp_range_check_token_stream = |int_range_type: &IntRangeType|{
-                                                //todo somehow convert it with from or try from
-                                                let max_value_token_stream = match &int_range_type {
-                                                    IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{std::primitive::i32::MAX},
-                                                    IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{std::primitive::i64::MAX},
+                                                let max_value_token_stream = {
+                                                    let type_token_stream = int_range_type_to_range_inner_type_token_stream(&int_range_type);
+                                                    quote::quote!{#type_token_stream::MAX}
                                                 };
                                                 quote::quote! {
                                                     let max = #max_value_token_stream;
