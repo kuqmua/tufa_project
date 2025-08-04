@@ -1938,38 +1938,39 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }};
                     let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#field_type_standart_not_null::new(#field_0_token_stream)};
                     let array_std_primitive_u8_6_token_stream = quote::quote! {[std::primitive::u8; 6]};
-                    let generate_match_origin_try_new_for_deserialize_token_stream = |length: std::primitive::usize|{
-                        //todo make struct wrapper? and put it into parameter?
-                        if length == 0 {
-                            panic!("length == 0");
-                        }
-                        let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)|generate_field_index_token_stream(index));
-                        quote::quote!{
-                            match #ident_standart_not_null_origin_upper_camel_case::try_new_for_deserialize(#(#fields_token_stream),*) {
-                                Ok(#value_snake_case) => _serde::__private::Ok(#value_snake_case),
-                                Err(#error_snake_case) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                    let (
+                        sqlx_types_chrono_naive_time_origin_try_new_for_deserialize,
+                        match_origin_try_new_for_deserialize_one_token_stream,
+                        match_origin_try_new_for_deserialize_two_token_stream,
+                        match_origin_try_new_for_deserialize_four_token_stream
+                    ) = {
+                        let generate_match_origin_try_new_for_deserialize_token_stream = |length: std::primitive::usize|{
+                            let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)|generate_field_index_token_stream(index));
+                            quote::quote!{
+                                match #ident_standart_not_null_origin_upper_camel_case::try_new_for_deserialize(#(#fields_token_stream),*) {
+                                    Ok(#value_snake_case) => _serde::__private::Ok(#value_snake_case),
+                                    Err(#error_snake_case) => Err(_serde::de::Error::custom(format!("{error:?}"))),
+                                }
                             }
-                        }
+                        };
+                        (
+                           generate_match_origin_try_new_for_deserialize_token_stream(
+                                hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array.len()
+                            ),
+                            generate_match_origin_try_new_for_deserialize_token_stream(1),
+                            generate_match_origin_try_new_for_deserialize_token_stream(2),
+                            generate_match_origin_try_new_for_deserialize_token_stream(4),
+                        )
                     };
-                    let sqlx_types_chrono_naive_time_origin_try_new_for_deserialize = generate_match_origin_try_new_for_deserialize_token_stream(
-                        hour_min_sec_micro_std_fmt_display_plus_quote_to_tokens_array.len()
-                    );
-                    let match_origin_try_new_for_deserialize_one_token_stream = generate_match_origin_try_new_for_deserialize_token_stream(1);
-                    let match_origin_try_new_for_deserialize_two_token_stream = generate_match_origin_try_new_for_deserialize_token_stream(2);
-                    let match_origin_try_new_for_deserialize_four_token_stream = generate_match_origin_try_new_for_deserialize_token_stream(4);
-                    //
-                    let generate_origin_new_for_deserialize_token_stream = |length: std::primitive::usize|{
-                        //todo make struct wrapper? and put it into parameter?
-                        if length == 0 {
-                            panic!("length == 0");
-                        }
-                        let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)|generate_field_index_token_stream(index));
-                        quote::quote!{
-                            _serde::__private::Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#(#fields_token_stream),*))
-                        }
+                    let origin_new_for_deserialize_two_token_stream = {
+                        let generate_origin_new_for_deserialize_token_stream = |length: std::primitive::usize|{
+                            let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)|generate_field_index_token_stream(index));
+                            quote::quote!{
+                                _serde::__private::Ok(#ident_standart_not_null_origin_upper_camel_case::new_for_deserialize(#(#fields_token_stream),*))
+                            }
+                        };
+                        generate_origin_new_for_deserialize_token_stream(2)
                     };
-                    let origin_new_for_deserialize_two_token_stream = generate_origin_new_for_deserialize_token_stream(2);
-                    //
                     let (
                         fn_visit_newtype_struct_pg_money_token_stream,
                         fn_visit_newtype_struct_uuid_token_stream,
