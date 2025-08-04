@@ -777,6 +777,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
     }
     #[derive(Debug)]
     enum PostgresqlTypeImplNewForDeserialize {
+        SqlxPostgresTypesPgIntervalAsInterval,
         SqlxTypesChronoNaiveDateTimeAsTimestamp,
         SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz,
         SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange,
@@ -831,7 +832,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime
                     )
                 ),
-                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::Derive,
+                PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => Self::ImplNewForDeserializeOrTryNewForDeserialize(
+                    PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(
+                        PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval
+                    )
+                ),
                 PostgresqlType::SqlxTypesChronoNaiveDateAsDate => Self::ImplNewForDeserializeOrTryNewForDeserialize(
                     PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::TryNewForDeserialize(
                         PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate
@@ -3338,16 +3343,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             );
                                         }
                                     };
-                                    // _serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin {
-                                    //     months: __field0,
-                                    //     days: __field1,
-                                    //     microseconds: __field2,
-                                    // })
-                                    serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin(sqlx::postgres::types::PgInterval {
-                                        months: __field0,
-                                        days: __field1,
-                                        microseconds: __field2,
-                                    }))
+                                    serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin::new_for_deserialize(
+                                        __field0,
+                                        __field1,
+                                        __field2,
+                                    ))
                                 }
                                 #[inline]
                                 fn visit_map<__A>(
@@ -3427,16 +3427,11 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             _serde::__private::de::missing_field("microseconds")?
                                         }
                                     };
-                                    // _serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin {
-                                    //     months: __field0,
-                                    //     days: __field1,
-                                    //     microseconds: __field2,
-                                    // })
-                                    serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin(sqlx::postgres::types::PgInterval {
-                                        months: __field0,
-                                        days: __field1,
-                                        microseconds: __field2,
-                                    }))
+                                    serde::__private::Ok(SqlxPostgresTypesPgIntervalAsNotNullIntervalOrigin::new_for_deserialize(
+                                        __field0,
+                                        __field1,
+                                        __field2,
+                                    ))
                                 }
                             }
                             #[doc(hidden)]
@@ -4441,6 +4436,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 PostgresqlTypeDeserialize::ImplNewForDeserializeOrTryNewForDeserialize(postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize) => match &postgresql_type_impl_new_for_deserialize_or_try_new_for_deserialize {
                                     PostgresqlTypeImplNewForDeserializeOrTryNewForDeserialize::NewForDeserialize(postgresql_type_impl_new_for_deserialize) => {
                                         let parameters_token_stream = match &postgresql_type_impl_new_for_deserialize {
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval => {
+                                                quote::quote!{
+                                                    #months_snake_case: #std_primitive_i32_token_stream,
+                                                    #days_snake_case: #std_primitive_i32_token_stream,
+                                                    #microseconds_snake_case: #std_primitive_i64_token_stream,
+                                                }
+                                            },
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                                                 quote::quote!{
                                                     date: SqlxTypesChronoNaiveDateAsNotNullDateOrigin,
@@ -4476,6 +4478,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                         };
                                         let content_token_stream = match &postgresql_type_impl_new_for_deserialize {
+                                            PostgresqlTypeImplNewForDeserialize::SqlxPostgresTypesPgIntervalAsInterval => {
+                                                quote::quote!{
+                                                    Self(sqlx::postgres::types::PgInterval {
+                                                        #months_snake_case,
+                                                        #days_snake_case,
+                                                        #microseconds_snake_case,
+                                                    })
+                                                }
+                                            },
                                             PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => {
                                                 quote::quote!{
                                                     Self(#field_type_standart_not_null::new(date.0, time.0))
