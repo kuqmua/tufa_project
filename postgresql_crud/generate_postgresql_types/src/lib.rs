@@ -4122,56 +4122,67 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                         };
                                         let content_token_stream = {
-                                            let try_new_convert_pg_range_int_content_token_stream = quote::quote!{
-                                                match Self::try_new(sqlx::postgres::types::PgRange { #start_snake_case, #end_snake_case }) {
-                                                    Ok(#value_snake_case) => Ok(#value_snake_case),
-                                                    Err(#error_snake_case) => match #error_snake_case {
-                                                        #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_included_end_upper_camel_case {
-                                                            #start_snake_case,
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_start_more_than_included_end_upper_camel_case {
-                                                            #start_snake_case,
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        }),
-                                                        #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_excluded_end_upper_camel_case {
-                                                            #start_snake_case,
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_start_more_than_excluded_end_upper_camel_case {
-                                                            #start_snake_case,
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        }),
-                                                        #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_included_end_upper_camel_case {
-                                                            #start_snake_case,
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#excluded_start_more_than_included_end_upper_camel_case {
-                                                            #start_snake_case,
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        }),
-                                                        #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_excluded_end_upper_camel_case {
-                                                            #start_snake_case,
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#excluded_start_more_than_excluded_end_upper_camel_case {
-                                                            #start_snake_case,
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        }),
-                                                        #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
-                                                            #end_snake_case,
-                                                            code_occurence,
-                                                        }),
+                                            let generate_self_match_try_new_token_stream = |
+                                                parameters_token_stream: &dyn quote::ToTokens,
+                                                match_error_variants_token_stream: &dyn quote::ToTokens,
+                                            |{
+                                                quote::quote!{
+                                                    match Self::try_new(#parameters_token_stream) {
+                                                        Ok(#value_snake_case) => Ok(#value_snake_case),
+                                                        Err(#error_snake_case) => match #error_snake_case {
+                                                            #match_error_variants_token_stream
+                                                        }
                                                     }
                                                 }
                                             };
+                                            let try_new_convert_pg_range_int_content_token_stream = generate_self_match_try_new_token_stream(
+                                                &quote::quote!{sqlx::postgres::types::PgRange { #start_snake_case, #end_snake_case }},
+                                                &quote::quote!{
+                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_included_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_start_more_than_included_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    }),
+                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_start_more_than_excluded_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_start_more_than_excluded_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    }),
+                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_included_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#excluded_start_more_than_included_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    }),
+                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#excluded_start_more_than_excluded_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#excluded_start_more_than_excluded_end_upper_camel_case {
+                                                        #start_snake_case,
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    }),
+                                                    #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#included_end_cannot_be_max_upper_camel_case {
+                                                        #end_snake_case,
+                                                        code_occurence,
+                                                    }),
+                                                }
+                                            );
                                             match &postgresql_type_impl_try_new_for_deserialize {
                                                 PostgresqlTypeImplTryNewForDeserialize::StdStringStringAsText => {
                                                     let variant_token_stream = quote::quote! {
@@ -4180,15 +4191,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             code_occurence,
                                                         }
                                                     };
-                                                    //todo reuse
-                                                    quote::quote! {
-                                                        match Self::try_new(#value_snake_case) {
-                                                            Ok(#value_snake_case) => Ok(#value_snake_case),
-                                                            Err(#error_snake_case) => match #error_snake_case {
-                                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#variant_token_stream => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#variant_token_stream),
-                                                            }
+                                                    generate_self_match_try_new_token_stream(
+                                                        &value_snake_case,
+                                                        &quote::quote!{
+                                                            #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#variant_token_stream => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#variant_token_stream),
                                                         }
-                                                    }
+                                                    )
                                                 },
                                                 PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => {
                                                     quote::quote!{
@@ -4245,24 +4253,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         }
                                                     }
                                                 },
-                                                PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => {
-                                                    quote::quote! {
-                                                        match Self::try_new(#value_snake_case) {
-                                                            Ok(#value_snake_case) => Ok(#value_snake_case),
-                                                            Err(#error_snake_case) => match #error_snake_case {
-                                                                #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#earlier_date_not_supported_upper_camel_case {
-                                                                    #value_snake_case,
-                                                                    #earliest_supported_date_snake_case,
-                                                                    code_occurence,
-                                                                } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#earlier_date_not_supported_upper_camel_case {
-                                                                    #value_snake_case,
-                                                                    #earliest_supported_date_snake_case,
-                                                                    code_occurence,
-                                                                }),
-                                                            }
-                                                        }
+                                                PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveDateAsDate => generate_self_match_try_new_token_stream(
+                                                    &value_snake_case,
+                                                    &quote::quote!{
+                                                        #ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#earlier_date_not_supported_upper_camel_case {
+                                                            #value_snake_case,
+                                                            #earliest_supported_date_snake_case,
+                                                            code_occurence,
+                                                        } => Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#earlier_date_not_supported_upper_camel_case {
+                                                            #value_snake_case,
+                                                            #earliest_supported_date_snake_case,
+                                                            code_occurence,
+                                                        }),
                                                     }
-                                                },
+                                                ),
                                                 PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => try_new_convert_pg_range_int_content_token_stream,
                                                 PostgresqlTypeImplTryNewForDeserialize::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => try_new_convert_pg_range_int_content_token_stream,
                                             }
