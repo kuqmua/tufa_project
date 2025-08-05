@@ -3705,6 +3705,28 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &format!("try_read_one result different after try_update_one for {field_ident}: {}", quote::quote!{#field_type})
             );
             let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
+            let generate_match_tokens_clone_value_normalize_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                quote::quote! {
+                    match #ident_token_stream.clone() {
+                        Some(#value_snake_case) => Some(postgresql_crud::Value {
+                            #value_snake_case: #value_snake_case.#value_snake_case.normalize()
+                        }),
+                        None => None
+                    }
+                }
+            };
+            let match_some_value_primary_key_read_returned_from_create_many1_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
+                &quote::quote!{some_value_primary_key_read_returned_from_create_many1}//todo reuse
+            );
+            let match_some_value_primary_key_read_returned_from_create_many2_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
+                &quote::quote!{some_value_primary_key_read_returned_from_create_many2}//todo reuse
+            );
+            let match_some_value_field_ident_read_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
+                &quote::quote!{some_value_field_ident_read}//todo reuse
+            );
+            let match_some_value_primary_key_read_returned_from_create_one_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
+                &quote::quote!{some_value_primary_key_read_returned_from_create_one}//todo reuse
+            );
             quote::quote! {
                 for #element_snake_case in <#field_type as postgresql_crud::tests::#postgresql_type_test_cases_upper_camel_case>:: #test_cases_snake_case() {
                     let some_value_update = Some(postgresql_crud::Value {
@@ -3780,33 +3802,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     assert_eq!(
                         vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
                             super::#ident_read_upper_camel_case {
-                                #primary_key_field_ident: match some_value_primary_key_read_returned_from_create_many1.clone() {
-                                    Some(value) => Some(postgresql_crud::Value {
-                                        value: value.value.normalize()
-                                    }),
-                                    None => None
-                                },
-                                #field_ident: match some_value_field_ident_read.clone() {
-                                    Some(value) => Some(postgresql_crud::Value {
-                                        value: value.value.normalize()
-                                    }),
-                                    None => None
-                                },
+                                #primary_key_field_ident: #match_some_value_primary_key_read_returned_from_create_many1_clone_value_normalize_token_stream,
+                                #field_ident: #match_some_value_field_ident_read_clone_value_normalize_token_stream,
                                 #(#field_ident_nones_token_stream),*
                             },
                             super::#ident_read_upper_camel_case {
-                                #primary_key_field_ident: match some_value_primary_key_read_returned_from_create_many2.clone() {
-                                    Some(value) => Some(postgresql_crud::Value {
-                                        value: value.value.normalize()
-                                    }),
-                                    None => None
-                                },
-                                #field_ident: match some_value_field_ident_read.clone() {
-                                    Some(value) => Some(postgresql_crud::Value {
-                                        value: value.value.normalize()
-                                    }),
-                                    None => None
-                                },
+                                #primary_key_field_ident: #match_some_value_primary_key_read_returned_from_create_many2_clone_value_normalize_token_stream,
+                                #field_ident: #match_some_value_field_ident_read_clone_value_normalize_token_stream,
                                 #(#field_ident_nones_token_stream),*
                             }
                         ]),
@@ -3842,18 +3844,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .unwrap();
                     assert_eq!(
                         super::#ident_read_upper_camel_case {
-                            #primary_key_field_ident: match some_value_primary_key_read_returned_from_create_one.clone() {
-                                Some(value) => Some(postgresql_crud::Value {
-                                    value: value.value.normalize()
-                                }),
-                                None => None
-                            },
-                            #field_ident: match some_value_field_ident_read.clone() {
-                                Some(value) => Some(postgresql_crud::Value {
-                                    value: value.value.normalize()
-                                }),
-                                None => None
-                            },
+                            #primary_key_field_ident: #match_some_value_primary_key_read_returned_from_create_one_clone_value_normalize_token_stream,
+                            #field_ident: #match_some_value_field_ident_read_clone_value_normalize_token_stream,
                             #(#field_ident_nones_token_stream),*
                         },
                         ident_read_returned_from_read_one,
