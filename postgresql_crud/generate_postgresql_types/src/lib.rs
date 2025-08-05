@@ -5454,7 +5454,71 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }))
                                 },
                                 PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{
-
+                                    Self(#ident_standart_not_null_origin_upper_camel_case(match (self.0.0.#start_snake_case, self.0.0.#end_snake_case) {
+                                        (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Included(#start_snake_case),
+                                            #end_snake_case: std::ops::Bound::Included(#end_snake_case),
+                                        },
+                                        (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
+                                            if #start_snake_case == #end_snake_case {
+                                                sqlx::postgres::types::PgRange {
+                                                    #start_snake_case: std::ops::Bound::Unbounded,
+                                                    #end_snake_case: std::ops::Bound::Unbounded,
+                                                }
+                                            } else {
+                                                sqlx::postgres::types::PgRange {
+                                                    #start_snake_case: std::ops::Bound::Included(#start_snake_case),
+                                                    #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
+                                                }
+                                            }
+                                        }
+                                        (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Included(#start_snake_case),
+                                            #end_snake_case: std::ops::Bound::Unbounded,
+                                        },
+                                        (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
+                                            if #start_snake_case == #end_snake_case {
+                                                sqlx::postgres::types::PgRange {
+                                                    #start_snake_case: std::ops::Bound::Unbounded,
+                                                    #end_snake_case: std::ops::Bound::Unbounded,
+                                                }
+                                            } else {
+                                                sqlx::postgres::types::PgRange {
+                                                    #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
+                                                    #end_snake_case: std::ops::Bound::Included(#end_snake_case),
+                                                }
+                                            }
+                                        }
+                                        (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
+                                            if #start_snake_case == #end_snake_case {
+                                                sqlx::postgres::types::PgRange {
+                                                    #start_snake_case: std::ops::Bound::Unbounded,
+                                                    #end_snake_case: std::ops::Bound::Unbounded,
+                                                }
+                                            } else {
+                                                sqlx::postgres::types::PgRange {
+                                                    #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
+                                                    #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
+                                                }
+                                            }
+                                        }
+                                        (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
+                                            #end_snake_case: std::ops::Bound::Unbounded,
+                                        },
+                                        (std::ops::Bound::Unbounded, std::ops::Bound::Included(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Unbounded,
+                                            #end_snake_case: std::ops::Bound::Included(#end_snake_case),
+                                        },
+                                        (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Unbounded,
+                                            #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
+                                        },
+                                        (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Unbounded,
+                                            #end_snake_case: std::ops::Bound::Unbounded,
+                                        },
+                                    }))
                                 },
                                 PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{#self_snake_case},
                             }
@@ -6267,70 +6331,731 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             end: std::ops::Bound::Unbounded,
                                         },
                                     ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => 
-                                    //todo
-                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp),
-                                    quote::quote!{vec![
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),//todo from_hms_micro_opt
-                                        //     )),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(1970, 1, 1).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 1).unwrap(),
-                                        //     )),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2020, 5, 20).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                        //     )),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2020, 5, 20).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(12, 0, 0).unwrap(),
-                                        //     )),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2022, 12, 31).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                        //     )),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2023, 1, 1).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                        //     )),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(6, 0, 0).unwrap(),
-                                        //     )),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2024, 2, 29).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(18, 0, 0).unwrap(),
-                                        //     )),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                        //        sqlx::types::chrono::NaiveDate::from_ymd_opt(2030, 1, 1).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                        //     )),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2030, 1, 1).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_opt(0, 0, 0).unwrap(),
-                                        //     )),
-                                        // },
-                                        // sqlx::postgres::types::PgRange {
-                                        //     start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_micro_opt(12, 34, 56, 123456).unwrap(),
-                                        //     )),
-                                        //     end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
-                                        //         sqlx::types::chrono::NaiveDate::from_ymd_opt(2025, 7, 15).unwrap(),
-                                        //         sqlx::types::chrono::NaiveTime::from_hms_micro_opt(12, 34, 56, 654321).unwrap(),
-                                        //     )),
-                                        // },
+                                    PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => quote::quote!{vec![
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                            end: std::ops::Bound::Unbounded,
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    10,
+                                                    10,
+                                                    10,
+                                                    10,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(2000, 1, 1).unwrap(),
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    20,
+                                                    20,
+                                                    20,
+                                                    20,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDateTime::new(
+                                                sqlx::types::chrono::NaiveDate::MAX,
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
+                                                    23,
+                                                    59,
+                                                    59,
+                                                    999_999,
+                                                ).unwrap(),
+                                            )),
+                                        },
+                                        sqlx::postgres::types::PgRange {
+                                            start: std::ops::Bound::Unbounded,
+                                            end: std::ops::Bound::Unbounded,
+                                        },
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => 
                                     //todo
