@@ -659,7 +659,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["microsecond"],
     ["nanosecond", "precision", "is", "not", "supported"],
     ["date", "naive"],
-    ["nanosecond"]
+    ["nanosecond"],
+    ["included"],
+    ["excluded"],
+    ["unbounded"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
