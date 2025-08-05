@@ -6095,8 +6095,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
-                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
-                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
                                             start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap()),
@@ -6119,8 +6119,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
-                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
-                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
                                             start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap()),
@@ -6143,7 +6143,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             end: std::ops::Bound::Unbounded,
                                         },
                                         sqlx::postgres::types::PgRange {
-                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
+                                            start: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
                                             end: std::ops::Bound::Unbounded,
                                         },
                                         sqlx::postgres::types::PgRange {
@@ -6163,8 +6163,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
-                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
-                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
                                             start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap()),
@@ -6187,8 +6187,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
-                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
-                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
                                             start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(1000, 1, 1).unwrap()),
@@ -6211,7 +6211,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             end: std::ops::Bound::Unbounded,
                                         },
                                         sqlx::postgres::types::PgRange {
-                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
+                                            start: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
                                             end: std::ops::Bound::Unbounded,
                                         },
                                         sqlx::postgres::types::PgRange {
@@ -6232,7 +6232,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         },
                                         sqlx::postgres::types::PgRange {
                                             start: std::ops::Bound::Unbounded,
-                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
+                                            end: std::ops::Bound::Included(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
                                             start: std::ops::Bound::Unbounded,
@@ -6252,7 +6252,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         },
                                         sqlx::postgres::types::PgRange {
                                             start: std::ops::Bound::Unbounded,
-                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0000, 1, 1).unwrap()),
+                                            end: std::ops::Bound::Excluded(sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()),
                                         },
                                         sqlx::postgres::types::PgRange {
                                             start: std::ops::Bound::Unbounded,
