@@ -4377,6 +4377,20 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             end: std::ops::Bound::Excluded(std::default::Default::default()),
                                         }
                                     };
+                                    let generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = |
+                                        ident_token_stream: &dyn quote::ToTokens
+                                    |{
+                                        quote::quote!{
+                                            sqlx::postgres::types::PgRange {
+                                                #start_snake_case: std::ops::Bound::Included(
+                                                    <#ident_token_stream as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                ),
+                                                #end_snake_case: std::ops::Bound::Excluded(
+                                                    <#ident_token_stream as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                ),
+                                            }
+                                        }
+                                    };
                                     let initialization_token_stream: &dyn quote::ToTokens = match &postgresql_type {
                                         PostgresqlType::StdPrimitiveI16AsInt2
                                         | PostgresqlType::StdPrimitiveI32AsInt4
@@ -4432,43 +4446,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &pg_range_int_default_initialization_token_stream,
                                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => &pg_range_int_default_initialization_token_stream,
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &{
-                                            // sqlx_postgres_types_pg_range_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                            quote::quote!{
-                                                sqlx::postgres::types::PgRange {
-                                                    start: std::ops::Bound::Included(
-                                                        <#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
-                                                    ),
-                                                    end: std::ops::Bound::Excluded(
-                                                        <#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
-                                                    ),
-                                                }
-                                            }
-                                        },
+                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
+                                            &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case
+                                        ),
                                         //todo reuse
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &quote::quote!{
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Included(
-                                                    <#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
-                                                ),
-                                                #end_snake_case: std::ops::Bound::Excluded(
-                                                    <#sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
-                                                ),
-                                            }
-                                        },
-                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &{
-                                            // sqlx_postgres_types_pg_range_crate_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                            quote::quote!{
-                                                sqlx::postgres::types::PgRange {
-                                                    #start_snake_case: std::ops::Bound::Included(
-                                                        <#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
-                                                    ),
-                                                    #end_snake_case: std::ops::Bound::Excluded(
-                                                        <#sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
-                                                    ),
-                                                }
-                                            }
-                                        },
+                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
+                                            &sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case
+                                        ),
+                                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
+                                            &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_upper_camel_case
+                                        ),
                                     };
                                     quote::quote! {#initialization_token_stream}
                                 },
