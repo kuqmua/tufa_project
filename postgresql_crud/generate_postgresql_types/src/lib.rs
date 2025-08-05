@@ -1490,6 +1490,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     StartOrEnd::End => &end_snake_case,
                 }
             };
+            let generate_tokens_as_crate_postgresql_type_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+                quote::quote!{<#ident_token_stream as crate::PostgresqlType>}
+            };
             let (serde_serialize_derive_or_impl, serde_deserialize_derive_or_impl) = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
                 let self_dot_zero_token_stream = quote::quote! {#self_snake_case.0};
                 enum ParameterNumber {
@@ -4456,7 +4459,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
                                             &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case
                                         ),
-                                        //todo reuse
                                         PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => &generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream(
                                             &sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_upper_camel_case
                                         ),
@@ -4692,11 +4694,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                 );
                 let maybe_impl_std_convert_from_ident_read_for_ident_origin_token_stream = match &is_not_null_standart_can_be_primary_key {
-                    IsNotNullStandartCanBePrimaryKey::True => quote::quote! {
-                        impl std::convert::From<#ident_standart_not_null_read_upper_camel_case> for #ident_origin_upper_camel_case {
-                            fn from(#value_snake_case: #ident_standart_not_null_read_upper_camel_case) -> Self {
-                                //todo reuse as crate::PostgresqlType
-                                Self::new(<#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::into_inner(#value_snake_case))
+                    IsNotNullStandartCanBePrimaryKey::True => {
+                        let ident_standart_not_null_as_crate_postgresql_type_token_stream = generate_tokens_as_crate_postgresql_type_token_stream(&ident_standart_not_null_upper_camel_case);
+                        quote::quote! {
+                            impl std::convert::From<#ident_standart_not_null_read_upper_camel_case> for #ident_origin_upper_camel_case {
+                                fn from(#value_snake_case: #ident_standart_not_null_read_upper_camel_case) -> Self {
+                                    Self::new(#ident_standart_not_null_as_crate_postgresql_type_token_stream::into_inner(#value_snake_case))
+                                }
                             }
                         }
                     },
@@ -5076,6 +5080,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     let postgresql_type_from_postgresql_type_range = PostgresqlType::from(&postgresql_type_range);
                                     let range_element_ident_standart_not_null_token_stream = generate_ident_standart_not_null_token_stream(&postgresql_type_from_postgresql_type_range);
                                     let mut vec = common_array_dimension1_postgresql_type_filters.clone();
+                                    let range_element_ident_standart_not_null_as_crate_postgresql_type_read_token_stream = {
+                                        let range_element_ident_standart_not_null_as_crate_postgresql_type_token_stream = generate_tokens_as_crate_postgresql_type_token_stream(
+                                            &range_element_ident_standart_not_null_token_stream
+                                        );
+                                        quote::quote!{#range_element_ident_standart_not_null_as_crate_postgresql_type_token_stream::Read}
+                                    };
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneFindRangesWithinGivenRange {
                                         ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
@@ -5089,16 +5099,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneIncludedLowerBound {
-                                        ident: quote::quote!{<#range_element_ident_standart_not_null_token_stream as crate::PostgresqlType>::Read}
+                                        ident: range_element_ident_standart_not_null_as_crate_postgresql_type_read_token_stream.clone()
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneExcludedUpperBound {
-                                        ident: quote::quote!{<#range_element_ident_standart_not_null_token_stream as crate::PostgresqlType>::Read}
+                                        ident: range_element_ident_standart_not_null_as_crate_postgresql_type_read_token_stream.clone()
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanIncludedLowerBound {
-                                        ident: quote::quote!{<#range_element_ident_standart_not_null_token_stream as crate::PostgresqlType>::Read}
+                                        ident: range_element_ident_standart_not_null_as_crate_postgresql_type_read_token_stream.clone()
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneGreaterThanExcludedUpperBound {
-                                        ident: quote::quote!{<#range_element_ident_standart_not_null_token_stream as crate::PostgresqlType>::Read}
+                                        ident: range_element_ident_standart_not_null_as_crate_postgresql_type_read_token_stream
                                     });
                                     vec.push(postgresql_crud_macros_common::PostgresqlTypeFilter::DimensionOneOverlapWithRange {
                                         ident: quote::quote!{#ident_standart_not_null_table_type_declaration_upper_camel_case}
