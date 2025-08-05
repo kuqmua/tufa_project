@@ -5693,7 +5693,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
                     };
                     match &postgresql_type_pattern {
-                        //todo additional values for test
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
                                 let generate_pgrange_test_cases_token_stream = |postgresql_type_range: &PostgresqlTypeRange|{
@@ -5838,7 +5837,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                                             sqlx::types::chrono::NaiveDateTime::new(
                                                 sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
-                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()//todo check nanosecond precision
+                                                sqlx::types::chrono::NaiveTime::from_hms_micro_opt(0, 0, 0, 0).unwrap()
                                             ),
                                             sqlx::types::chrono::Utc
                                         ),
