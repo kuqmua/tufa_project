@@ -4373,24 +4373,32 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     );
                                     let pg_range_int_default_initialization_token_stream = quote::quote!{
                                         sqlx::postgres::types::PgRange {
-                                            start: std::ops::Bound::Included(std::default::Default::default()),
-                                            end: std::ops::Bound::Excluded(std::default::Default::default()),
+                                            start: std::ops::Bound::Included(#core_default_default_default_token_stream),
+                                            end: std::ops::Bound::Excluded(#core_default_default_default_token_stream),
+                                        }
+                                    };
+                                    let generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = |current_ident_token_stream: &dyn quote::ToTokens|{
+                                        quote::quote!{
+                                            <#current_ident_token_stream as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
                                         }
                                     };
                                     let generate_sqlx_postgres_types_pg_range_default_but_option_is_always_some_and_vec_always_contains_one_element_token_stream = |
-                                        ident_token_stream: &dyn quote::ToTokens
+                                        current_ident_token_stream: &dyn quote::ToTokens
                                     |{
+                                        let current_ident_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&current_ident_token_stream);
                                         quote::quote!{
                                             sqlx::postgres::types::PgRange {
                                                 #start_snake_case: std::ops::Bound::Included(
-                                                    <#ident_token_stream as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                    #current_ident_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0
                                                 ),
                                                 #end_snake_case: std::ops::Bound::Excluded(
-                                                    <#ident_token_stream as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0
+                                                    #current_ident_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0
                                                 ),
                                             }
                                         }
                                     };
+                                    let sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case);
+                                    let sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream = generate_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream(&sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case);
                                     let initialization_token_stream: &dyn quote::ToTokens = match &postgresql_type {
                                         PostgresqlType::StdPrimitiveI16AsInt2
                                         | PostgresqlType::StdPrimitiveI32AsInt4
@@ -4423,17 +4431,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesChronoNaiveDateAsDate => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => &quote::quote! {
-                                            //todo maybe reuse naming
                                             #field_type_standart_not_null::new(
-                                                <#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
-                                                <#sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
+                                                #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
+                                                #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
                                             )
                                         },
                                         PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => &quote::quote! {
                                             #field_type_standart_not_null::from_naive_utc_and_offset(
                                                 chrono::NaiveDateTime::new(
-                                                    <#sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
-                                                    <#sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case as crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element().0,
+                                                    #sqlx_types_chrono_naive_date_as_not_null_date_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
+                                                    #sqlx_types_chrono_naive_time_as_not_null_time_origin_as_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream.0,
                                                 ),
                                                 sqlx::types::chrono::Utc,
                                             )
