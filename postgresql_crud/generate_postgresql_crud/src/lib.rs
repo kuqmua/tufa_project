@@ -3780,13 +3780,33 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     assert_eq!(
                         vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
                             super::#ident_read_upper_camel_case {
-                                #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many1.clone(),
-                                #field_ident: some_value_field_ident_read.clone(),
+                                #primary_key_field_ident: match some_value_primary_key_read_returned_from_create_many1.clone() {
+                                    Some(value) => Some(postgresql_crud::Value {
+                                        value: value.value.normalize()
+                                    }),
+                                    None => None
+                                },
+                                #field_ident: match some_value_field_ident_read.clone() {
+                                    Some(value) => Some(postgresql_crud::Value {
+                                        value: value.value.normalize()
+                                    }),
+                                    None => None
+                                },
                                 #(#field_ident_nones_token_stream),*
                             },
                             super::#ident_read_upper_camel_case {
-                                #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many2.clone(),
-                                #field_ident: some_value_field_ident_read.clone(),
+                                #primary_key_field_ident: match some_value_primary_key_read_returned_from_create_many2.clone() {
+                                    Some(value) => Some(postgresql_crud::Value {
+                                        value: value.value.normalize()
+                                    }),
+                                    None => None
+                                },
+                                #field_ident: match some_value_field_ident_read.clone() {
+                                    Some(value) => Some(postgresql_crud::Value {
+                                        value: value.value.normalize()
+                                    }),
+                                    None => None
+                                },
                                 #(#field_ident_nones_token_stream),*
                             }
                         ]),
@@ -3822,8 +3842,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                     .unwrap();
                     assert_eq!(
                         super::#ident_read_upper_camel_case {
-                            #primary_key_field_ident: some_value_primary_key_read_returned_from_create_one.clone(),
-                            #field_ident: some_value_field_ident_read.clone(),
+                            #primary_key_field_ident: match some_value_primary_key_read_returned_from_create_one.clone() {
+                                Some(value) => Some(postgresql_crud::Value {
+                                    value: value.value.normalize()
+                                }),
+                                None => None
+                            },
+                            #field_ident: match some_value_field_ident_read.clone() {
+                                Some(value) => Some(postgresql_crud::Value {
+                                    value: value.value.normalize()
+                                }),
+                                None => None
+                            },
                             #(#field_ident_nones_token_stream),*
                         },
                         ident_read_returned_from_read_one,
@@ -4095,7 +4125,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
-        // #ident_tests_token_stream
+        #ident_tests_token_stream
     };
     // if ident == "" {
         // macros_helpers::write_token_stream_into_file::write_token_stream_into_file(
