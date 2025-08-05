@@ -3200,6 +3200,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case = naming::parameter::SelfOriginTryNewForDeserializeErrorNamedUpperCamelCase::from_display(
                 &ident_standart_not_null_upper_camel_case
             );
+            enum IntRangeType {
+                SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
+                SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
+            }
+            let int_range_type_to_range_inner_type_token_stream = |int_range_type: &IntRangeType| -> proc_macro2::TokenStream {
+                match &int_range_type {
+                    IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{#std_primitive_i32_token_stream},
+                    IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{#std_primitive_i64_token_stream},
+                }
+            };
             let ident_origin_token_stream = {
                 let ident_origin_token_stream = {
                     let maybe_derive_partial_ord_token_stream = if let (postgresql_crud_macros_common::NotNullOrNullable::NotNull, PostgresqlTypePattern::Standart) = (&not_null_or_nullable, &postgresql_type_pattern) {
@@ -3298,16 +3308,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let excluded_start_more_than_included_end_upper_camel_case = naming::ExcludedStartMoreThanIncludedEndUpperCamelCase;
                 let excluded_start_more_than_excluded_end_upper_camel_case = naming::ExcludedStartMoreThanExcludedEndUpperCamelCase;
                 let included_end_cannot_be_max_upper_camel_case = naming::IncludedEndCannotBeMaxUpperCamelCase;
-                enum IntRangeType {
-                    SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range,
-                    SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
-                }
-                let int_range_type_to_range_inner_type_token_stream = |int_range_type: &IntRangeType| -> proc_macro2::TokenStream {
-                    match &int_range_type {
-                        IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => quote::quote!{#std_primitive_i32_token_stream},
-                        IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote!{#std_primitive_i64_token_stream},
-                    }
-                };
                 let generate_int_range_type_error_variants_token_stream = |int_range_type: &IntRangeType|{
                     let range_inner_type_token_stream = int_range_type_to_range_inner_type_token_stream(&int_range_type);
                     quote::quote! {
@@ -5793,25 +5793,63 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     match &postgresql_type_pattern {
                         PostgresqlTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                let generate_pgrange_test_cases_token_stream = |postgresql_type_range: &PostgresqlTypeRange|{
-                                    let current_ident_standart_not_null = generate_ident_standart_not_null_token_stream(&PostgresqlType::from(postgresql_type_range));
-                                    quote::quote!{
-                                        let mut acc = vec![];
-                                        for element in <#current_ident_standart_not_null as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case() {
-                                            acc.push(sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(element.clone()), end: std::ops::Bound::Included(element.clone()) });
-                                            acc.push(sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(element.clone()), end: std::ops::Bound::Excluded(element.clone()) });
-                                            acc.push(sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(element.clone()), end: std::ops::Bound::Unbounded });
+                                let generate_int_pgrange_test_cases_token_stream = |int_range_type: &IntRangeType|{
+                                    let range_inner_type_token_stream = int_range_type_to_range_inner_type_token_stream(&int_range_type);
+                                    quote::quote!{vec![
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Included(#range_inner_type_token_stream::MIN)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(-20), end: std::ops::Bound::Included(-10)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(0), end: std::ops::Bound::Included(0)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(#range_inner_type_token_stream::MAX - 1), end: std::ops::Bound::Included(#range_inner_type_token_stream::MAX - 1)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Included(#range_inner_type_token_stream::MAX - 1)},
 
-                                            acc.push(sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(element.clone()), end: std::ops::Bound::Included(element.clone()) });
-                                            acc.push(sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(element.clone()), end: std::ops::Bound::Excluded(element.clone()) });
-                                            acc.push(sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(element.clone()), end: std::ops::Bound::Unbounded });
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Excluded(#range_inner_type_token_stream::MIN)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(-20), end: std::ops::Bound::Excluded(-10)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(0), end: std::ops::Bound::Excluded(0)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Excluded(20)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(#range_inner_type_token_stream::MAX - 1), end: std::ops::Bound::Excluded(#range_inner_type_token_stream::MAX - 1)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Excluded(#range_inner_type_token_stream::MAX - 1)},
 
-                                            acc.push(sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(element.clone()) });
-                                            acc.push(sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(element.clone()) });
-                                            acc.push(sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded });
-                                        }
-                                        acc
-                                    }
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Unbounded},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(-20), end: std::ops::Bound::Unbounded},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(0), end: std::ops::Bound::Unbounded},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Unbounded},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(#range_inner_type_token_stream::MAX - 1), end: std::ops::Bound::Unbounded},
+
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Included(#range_inner_type_token_stream::MIN)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(-20), end: std::ops::Bound::Included(-10)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(0), end: std::ops::Bound::Included(0)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Included(20)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(#range_inner_type_token_stream::MAX - 1), end: std::ops::Bound::Included(#range_inner_type_token_stream::MAX - 1)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Included(#range_inner_type_token_stream::MAX - 1)},
+
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Excluded(#range_inner_type_token_stream::MIN)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(-20), end: std::ops::Bound::Excluded(-10)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(0), end: std::ops::Bound::Excluded(0)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(#range_inner_type_token_stream::MAX - 1), end: std::ops::Bound::Excluded(#range_inner_type_token_stream::MAX - 1)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Excluded(#range_inner_type_token_stream::MAX - 1)},
+
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(#range_inner_type_token_stream::MIN), end: std::ops::Bound::Unbounded},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(-20), end: std::ops::Bound::Unbounded},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(0), end: std::ops::Bound::Unbounded},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Unbounded},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(#range_inner_type_token_stream::MAX - 1), end: std::ops::Bound::Unbounded},
+
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(#range_inner_type_token_stream::MIN)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(-10)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(0)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(20)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(#range_inner_type_token_stream::MAX - 1)},
+
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(#range_inner_type_token_stream::MIN)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(-10)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(0)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(20)},
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(#range_inner_type_token_stream::MAX - 1)},
+
+                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded},
+                                    ]}
                                 };
                                 match &postgresql_type {
                                     PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{vec![std::primitive::i16::MIN, 0, std::primitive::i16::MAX]},
@@ -5973,78 +6011,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::types::mac_address::MacAddress::new([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                                     ]},
                                     //todo maybe reuse Range logic? like wrap 
-                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => 
-                                    //todo
-                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::StdPrimitiveI32AsInt4),
-                                    quote::quote!{vec![
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(std::primitive::i32::MIN), end: std::ops::Bound::Included(std::primitive::i32::MIN)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(-20), end: std::ops::Bound::Included(-10)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(0), end: std::ops::Bound::Included(0)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(std::primitive::i32::MAX - 1), end: std::ops::Bound::Included(std::primitive::i32::MAX - 1)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(std::primitive::i32::MIN), end: std::ops::Bound::Included(std::primitive::i32::MAX - 1)},
-
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(std::primitive::i32::MIN), end: std::ops::Bound::Excluded(std::primitive::i32::MIN)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(-20), end: std::ops::Bound::Excluded(-10)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(0), end: std::ops::Bound::Excluded(0)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Excluded(20)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(std::primitive::i32::MAX - 1), end: std::ops::Bound::Excluded(std::primitive::i32::MAX - 1)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(std::primitive::i32::MIN), end: std::ops::Bound::Excluded(std::primitive::i32::MAX - 1)},
-
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(std::primitive::i32::MIN), end: std::ops::Bound::Unbounded},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(-20), end: std::ops::Bound::Unbounded},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(0), end: std::ops::Bound::Unbounded},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Unbounded},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(std::primitive::i32::MAX - 1), end: std::ops::Bound::Unbounded},
-
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(std::primitive::i32::MIN), end: std::ops::Bound::Included(std::primitive::i32::MIN)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(-20), end: std::ops::Bound::Included(-10)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(0), end: std::ops::Bound::Included(0)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Included(20)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(std::primitive::i32::MAX - 1), end: std::ops::Bound::Included(std::primitive::i32::MAX - 1)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(std::primitive::i32::MIN), end: std::ops::Bound::Included(std::primitive::i32::MAX - 1)},
-
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(std::primitive::i32::MIN), end: std::ops::Bound::Excluded(std::primitive::i32::MIN)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(-20), end: std::ops::Bound::Excluded(-10)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(0), end: std::ops::Bound::Excluded(0)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(std::primitive::i32::MAX - 1), end: std::ops::Bound::Excluded(std::primitive::i32::MAX - 1)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(std::primitive::i32::MIN), end: std::ops::Bound::Excluded(std::primitive::i32::MAX - 1)},
-
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(std::primitive::i32::MIN), end: std::ops::Bound::Unbounded},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(-20), end: std::ops::Bound::Unbounded},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(0), end: std::ops::Bound::Unbounded},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Unbounded},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(std::primitive::i32::MAX - 1), end: std::ops::Bound::Unbounded},
-
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(std::primitive::i32::MIN)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(-10)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(0)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(20)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Included(std::primitive::i32::MAX - 1)},
-
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(std::primitive::i32::MIN)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(-10)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(0)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(20)},
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(std::primitive::i32::MAX - 1)},
-
-                                        sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded},
-                                    ]},
-                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => 
-                                    //todo
-                                    // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::StdPrimitiveI64AsInt8),
-                                    quote::quote!{vec![
-                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Unbounded },
-                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Excluded(20)},
-                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Included(20) },
-                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
-                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
-                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Unbounded },
-                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Unbounded, end: std::ops::Bound::Excluded(20) },
-                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Included(10), end: std::ops::Bound::Included(20) },
-                                        // sqlx::postgres::types::PgRange { start: std::ops::Bound::Excluded(10), end: std::ops::Bound::Excluded(20) },
-                                    ]},
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_int_pgrange_test_cases_token_stream(
+                                        &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
+                                    ),
+                                    PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => generate_int_pgrange_test_cases_token_stream(
+                                        &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
+                                    ),
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => 
                                     //todo
                                     // generate_pgrange_test_cases_token_stream(&PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate),
