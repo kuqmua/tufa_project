@@ -3705,27 +3705,34 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &format!("try_read_one result different after try_update_one for {field_ident}: {}", quote::quote!{#field_type})
             );
             let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
-            let generate_match_tokens_clone_value_normalize_token_stream = |ident_token_stream: &dyn quote::ToTokens|{
+            let generate_match_tokens_clone_value_normalize_token_stream = |
+                ident_token_stream: &dyn quote::ToTokens,
+                current_field_type: &dyn quote::ToTokens,
+            |{
                 quote::quote! {
                     match #ident_token_stream.clone() {
                         Some(#value_snake_case) => Some(postgresql_crud::Value {
-                            #value_snake_case: #value_snake_case.#value_snake_case.normalize()
+                            #value_snake_case: <#current_field_type as postgresql_crud::PostgresqlType>::normalize(#value_snake_case.#value_snake_case)
                         }),
                         None => None
                     }
                 }
             };
             let match_some_value_primary_key_read_returned_from_create_many1_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
-                &quote::quote!{some_value_primary_key_read_returned_from_create_many1}//todo reuse
+                &quote::quote!{some_value_primary_key_read_returned_from_create_many1},//todo reuse
+                &primary_key_field_type
             );
             let match_some_value_primary_key_read_returned_from_create_many2_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
-                &quote::quote!{some_value_primary_key_read_returned_from_create_many2}//todo reuse
+                &quote::quote!{some_value_primary_key_read_returned_from_create_many2},//todo reuse
+                &primary_key_field_type
             );
             let match_some_value_field_ident_read_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
-                &quote::quote!{some_value_field_ident_read}//todo reuse
+                &quote::quote!{some_value_field_ident_read},//todo reuse
+                &field_type
             );
             let match_some_value_primary_key_read_returned_from_create_one_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
-                &quote::quote!{some_value_primary_key_read_returned_from_create_one}//todo reuse
+                &quote::quote!{some_value_primary_key_read_returned_from_create_one},//todo reuse
+                &primary_key_field_type
             );
             quote::quote! {
                 for #element_snake_case in <#field_type as postgresql_crud::tests::#postgresql_type_test_cases_upper_camel_case>:: #test_cases_snake_case() {
