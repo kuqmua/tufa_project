@@ -6120,6 +6120,49 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         generate_sqlx_types_chrono_naive_date_token_stream(&generate_from_ymd_opt_unwrap_token_stream(&quote::quote!{2000, 1, 1})),
                                     )
                                 };
+                                let (
+                                    sqlx_types_chrono_naive_date_time_min_token_stream,
+                                    sqlx_types_chrono_naive_date_time_max_token_stream,
+                                    sqlx_types_chrono_naive_date_time_negative_less_typical_token_stream,
+                                    sqlx_types_chrono_naive_date_time_negative_more_typical_token_stream,
+                                    sqlx_types_chrono_naive_date_time_near_zero_token_stream,
+                                    sqlx_types_chrono_naive_date_time_positive_less_typical_token_stream,
+                                    sqlx_types_chrono_naive_date_time_positive_more_typical_token_stream,
+                                ) = {
+                                    let generate_sqlx_types_chrono_naive_date_time_new_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                                        quote::quote!{sqlx::types::chrono::NaiveDateTime::new(#content_token_stream)}
+                                    };
+                                    (
+                                        generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote!{
+                                            #sqlx_types_chrono_naive_date_min_token_stream,
+                                            #sqlx_types_chrono_naive_time_min_token_stream
+                                        }),
+                                        generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote!{
+                                            #sqlx_types_chrono_naive_date_max_token_stream,
+                                            #sqlx_types_chrono_naive_time_max_token_stream
+                                        }),
+                                        generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote!{
+                                            #sqlx_types_chrono_naive_date_negative_less_typical_token_stream,
+                                            #sqlx_types_chrono_naive_time_twenty_token_stream,
+                                        }),
+                                        generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote!{
+                                            #sqlx_types_chrono_naive_date_negative_more_typical_token_stream,
+                                            #sqlx_types_chrono_naive_time_ten_token_stream,
+                                        }),
+                                        generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote!{
+                                            #sqlx_types_chrono_naive_date_near_zero_token_stream,
+                                            #sqlx_types_chrono_naive_time_min_token_stream
+                                        }),
+                                        generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote!{
+                                            #sqlx_types_chrono_naive_date_positive_less_typical_token_stream,
+                                            #sqlx_types_chrono_naive_time_ten_token_stream,
+                                        }),
+                                        generate_sqlx_types_chrono_naive_date_time_new_token_stream(&quote::quote!{
+                                            #sqlx_types_chrono_naive_date_positive_more_typical_token_stream,
+                                            #sqlx_types_chrono_naive_time_twenty_token_stream,
+                                        }),
+                                    )
+                                };
                                 match &postgresql_type {
                                     PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{vec![std::primitive::i16::MIN, 0, std::primitive::i16::MAX]},
                                     PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{vec![std::primitive::i32::MIN, 0, std::primitive::i32::MAX]},
@@ -6209,28 +6252,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         #sqlx_types_chrono_naive_date_max_token_stream
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{vec![
-                                        sqlx::types::chrono::NaiveDateTime::new(
-                                            #sqlx_types_chrono_naive_date_min_token_stream,
-                                            #sqlx_types_chrono_naive_time_min_token_stream
-                                        ),
-                                        sqlx::types::chrono::NaiveDateTime::new(
-                                            #sqlx_types_chrono_naive_date_max_token_stream,
-                                            #sqlx_types_chrono_naive_time_max_token_stream
-                                        )
+                                        #sqlx_types_chrono_naive_date_time_min_token_stream,
+                                        #sqlx_types_chrono_naive_date_time_max_token_stream
                                     ]},
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
                                         sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                                            sqlx::types::chrono::NaiveDateTime::new(
-                                                #sqlx_types_chrono_naive_date_min_token_stream,
-                                                #sqlx_types_chrono_naive_time_min_token_stream
-                                            ),
+                                            #sqlx_types_chrono_naive_date_time_min_token_stream,
                                             sqlx::types::chrono::Utc
                                         ),
                                         sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                                            sqlx::types::chrono::NaiveDateTime::new(
-                                                #sqlx_types_chrono_naive_date_max_token_stream,
-                                                #sqlx_types_chrono_naive_time_max_token_stream
-                                            ),
+                                            #sqlx_types_chrono_naive_date_time_max_token_stream,
                                             sqlx::types::chrono::Utc
                                         ),
                                     ]},
@@ -6276,83 +6307,41 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &quote::quote!{#sqlx_types_chrono_naive_date_max_token_stream.pred_opt().unwrap()},
                                     ),
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_range_test_cases_token_stream(
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                            #sqlx_types_chrono_naive_date_min_token_stream,
-                                            #sqlx_types_chrono_naive_time_min_token_stream
-                                        )},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                            #sqlx_types_chrono_naive_date_negative_less_typical_token_stream,
-                                            #sqlx_types_chrono_naive_time_twenty_token_stream,
-                                        )},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                            #sqlx_types_chrono_naive_date_negative_more_typical_token_stream,
-                                            #sqlx_types_chrono_naive_time_ten_token_stream,
-                                        )},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                            #sqlx_types_chrono_naive_date_near_zero_token_stream,
-                                            #sqlx_types_chrono_naive_time_min_token_stream
-                                        )},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                            #sqlx_types_chrono_naive_date_positive_less_typical_token_stream,
-                                            #sqlx_types_chrono_naive_time_ten_token_stream,
-                                        )},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                            #sqlx_types_chrono_naive_date_positive_more_typical_token_stream,
-                                            #sqlx_types_chrono_naive_time_twenty_token_stream,
-                                        )},
-                                        &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                            #sqlx_types_chrono_naive_date_max_token_stream,
-                                            #sqlx_types_chrono_naive_time_max_token_stream,
-                                        )},
+                                        &sqlx_types_chrono_naive_date_time_min_token_stream,
+                                        &sqlx_types_chrono_naive_date_time_negative_less_typical_token_stream,
+                                        &sqlx_types_chrono_naive_date_time_negative_more_typical_token_stream,
+                                        &sqlx_types_chrono_naive_date_time_near_zero_token_stream,
+                                        &sqlx_types_chrono_naive_date_time_positive_less_typical_token_stream,
+                                        &sqlx_types_chrono_naive_date_time_positive_more_typical_token_stream,
+                                        &sqlx_types_chrono_naive_date_time_max_token_stream,
                                     ),
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_range_test_cases_token_stream(
                                         &quote::quote!{sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                                            sqlx::types::chrono::NaiveDateTime::new(
-                                                #sqlx_types_chrono_naive_date_min_token_stream,
-                                                #sqlx_types_chrono_naive_time_min_token_stream
-                                            ),
+                                            #sqlx_types_chrono_naive_date_time_min_token_stream,
                                             sqlx::types::chrono::Utc
                                         )},
                                         &quote::quote!{sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                                            sqlx::types::chrono::NaiveDateTime::new(
-                                                #sqlx_types_chrono_naive_date_negative_less_typical_token_stream,
-                                                #sqlx_types_chrono_naive_time_twenty_token_stream
-                                            ),
+                                            #sqlx_types_chrono_naive_date_time_negative_less_typical_token_stream,
                                             sqlx::types::chrono::Utc
                                         )},
                                         &quote::quote!{sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                                            sqlx::types::chrono::NaiveDateTime::new(
-                                                #sqlx_types_chrono_naive_date_negative_more_typical_token_stream,
-                                                #sqlx_types_chrono_naive_time_ten_token_stream
-                                            ),
+                                            #sqlx_types_chrono_naive_date_time_negative_more_typical_token_stream,
                                             sqlx::types::chrono::Utc
                                         )},
                                         &quote::quote!{sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                                            sqlx::types::chrono::NaiveDateTime::new(
-                                                #sqlx_types_chrono_naive_date_near_zero_token_stream,
-                                                #sqlx_types_chrono_naive_time_min_token_stream
-                                            ),
+                                            #sqlx_types_chrono_naive_date_time_near_zero_token_stream,
                                             sqlx::types::chrono::Utc
                                         )},
                                         &quote::quote!{sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                                            sqlx::types::chrono::NaiveDateTime::new(
-                                                #sqlx_types_chrono_naive_date_positive_less_typical_token_stream,
-                                                #sqlx_types_chrono_naive_time_ten_token_stream
-                                            ),
+                                            #sqlx_types_chrono_naive_date_time_positive_less_typical_token_stream,
                                             sqlx::types::chrono::Utc
                                         )},
                                         &quote::quote!{sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                                            sqlx::types::chrono::NaiveDateTime::new(
-                                                #sqlx_types_chrono_naive_date_positive_more_typical_token_stream,
-                                                #sqlx_types_chrono_naive_time_twenty_token_stream
-                                            ),
+                                            #sqlx_types_chrono_naive_date_time_positive_more_typical_token_stream,
                                             sqlx::types::chrono::Utc
                                         )},
                                         &quote::quote!{sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
-                                            sqlx::types::chrono::NaiveDateTime::new(
-                                                #sqlx_types_chrono_naive_date_max_token_stream,
-                                                #sqlx_types_chrono_naive_time_max_token_stream
-                                            ),
+                                            #sqlx_types_chrono_naive_date_time_max_token_stream,
                                             sqlx::types::chrono::Utc
                                         )},
                                     ),
