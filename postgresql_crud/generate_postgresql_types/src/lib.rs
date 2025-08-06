@@ -6095,6 +6095,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote!{20,20,20,20}),
                                     )
                                 };
+                                let sqlx_types_chrono_naive_date_min_token_stream = quote::quote!{
+                                    sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()
+                                };
                                 match &postgresql_type {
                                     PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{vec![std::primitive::i16::MIN, 0, std::primitive::i16::MAX]},
                                     PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{vec![std::primitive::i32::MIN, 0, std::primitive::i32::MAX]},
@@ -6180,12 +6183,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::postgres::types::PgInterval { months: std::primitive::i32::MAX, days: std::primitive::i32::MAX, microseconds: std::primitive::i64::MAX },
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate => quote::quote!{vec![
-                                        sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                        #sqlx_types_chrono_naive_date_min_token_stream,
                                         sqlx::types::chrono::NaiveDate::MAX
                                     ]},
                                     PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{vec![
                                         sqlx::types::chrono::NaiveDateTime::new(
-                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                            #sqlx_types_chrono_naive_date_min_token_stream,
                                             #sqlx_types_chrono_naive_time_min_token_stream
                                         ),
                                         sqlx::types::chrono::NaiveDateTime::new(
@@ -6196,7 +6199,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{vec![
                                         sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                                             sqlx::types::chrono::NaiveDateTime::new(
-                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                #sqlx_types_chrono_naive_date_min_token_stream,
                                                 #sqlx_types_chrono_naive_time_min_token_stream
                                             ),
                                             sqlx::types::chrono::Utc
@@ -6242,7 +6245,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range
                                     ),
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => generate_range_test_cases_token_stream(
-                                        &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap()},
+                                        &quote::quote!{#sqlx_types_chrono_naive_date_min_token_stream},
                                         &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-2000, 1, 1).unwrap()},
                                         &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(-1000, 1, 1).unwrap()},
                                         &quote::quote!{sqlx::types::chrono::NaiveDate::from_ymd_opt(0, 1, 1).unwrap()},
@@ -6252,7 +6255,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     ),
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => generate_range_test_cases_token_stream(
                                         &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
-                                            sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                            #sqlx_types_chrono_naive_date_min_token_stream,
                                             #sqlx_types_chrono_naive_time_min_token_stream
                                         )},
                                         &quote::quote!{sqlx::types::chrono::NaiveDateTime::new(
@@ -6283,7 +6286,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => generate_range_test_cases_token_stream(
                                         &quote::quote!{sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>::from_naive_utc_and_offset(
                                             sqlx::types::chrono::NaiveDateTime::new(
-                                                sqlx::types::chrono::NaiveDate::from_ymd_opt(-4713, 12, 31).unwrap(),
+                                                #sqlx_types_chrono_naive_date_min_token_stream,
                                                 #sqlx_types_chrono_naive_time_min_token_stream
                                             ),
                                             sqlx::types::chrono::Utc
