@@ -60,7 +60,7 @@ pub trait PostgresqlType {
         // + error_occurence_lib::ToStdStringString
         // + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         ;
-    //todo add normalize method to Read
+    fn normalize(value: Self::Read) -> Self::Read;
     type ReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;

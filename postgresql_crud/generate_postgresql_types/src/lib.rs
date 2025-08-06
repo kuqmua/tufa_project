@@ -5883,6 +5883,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
+                    &value_snake_case,
                     &ident_read_inner_upper_camel_case,
                     &{
                         let generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream = |content_token_stream: &dyn quote::ToTokens|{
@@ -6314,7 +6315,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         sqlx::types::mac_address::MacAddress::new([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
                                         sqlx::types::mac_address::MacAddress::new([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                                     ]},
-                                    //todo maybe reuse Range logic? like wrap 
                                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_int_pgrange_test_cases_token_stream(
                                         &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
                                     ),
