@@ -6079,37 +6079,21 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     )
                                 };
                                 let empty_vec_token_stream = quote::quote!{vec![]};
-                                let sqlx_types_chrono_naive_time_min_token_stream = quote::quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
-                                        0,
-                                        0,
-                                        0,
-                                        0,
-                                    ).unwrap()
-                                };
-                                let sqlx_types_chrono_naive_time_max_token_stream = quote::quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
-                                        23,
-                                        59,
-                                        59,
-                                        999_999,
-                                    ).unwrap()
-                                };
-                                let sqlx_types_chrono_naive_time_ten_token_stream = quote::quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
-                                        10,
-                                        10,
-                                        10,
-                                        10,
-                                    ).unwrap()
-                                };
-                                let sqlx_types_chrono_naive_time_twenty_token_stream = quote::quote!{
-                                    sqlx::types::chrono::NaiveTime::from_hms_micro_opt(
-                                        20,
-                                        20,
-                                        20,
-                                        20,
-                                    ).unwrap()
+                                let (
+                                    sqlx_types_chrono_naive_time_min_token_stream,
+                                    sqlx_types_chrono_naive_time_max_token_stream,
+                                    sqlx_types_chrono_naive_time_ten_token_stream,
+                                    sqlx_types_chrono_naive_time_twenty_token_stream
+                                ) = {
+                                    let generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream = |parameters_token_stream: &dyn quote::ToTokens|{
+                                        quote::quote!{sqlx::types::chrono::NaiveTime::from_hms_micro_opt(#parameters_token_stream).unwrap()}
+                                    };
+                                    (
+                                        generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote!{0,0,0,0}),
+                                        generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote!{23,59,59,999_999}),
+                                        generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote!{10,10,10,10}),
+                                        generate_sqlx_types_chrono_naive_time_from_hms_micro_opt_token_stream(&quote::quote!{20,20,20,20}),
+                                    )
                                 };
                                 match &postgresql_type {
                                     PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{vec![std::primitive::i16::MIN, 0, std::primitive::i16::MAX]},
