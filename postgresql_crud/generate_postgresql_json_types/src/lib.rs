@@ -478,7 +478,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
     // );
     use rayon::iter::IntoParallelRefIterator;
     use rayon::iter::ParallelIterator;
-    let (fields_token_stream, postgresql_json_type_array) = postgresql_json_type_record_vec
+    let (_fields_token_stream, postgresql_json_type_array) = postgresql_json_type_record_vec
         .into_iter()
         .enumerate()
         .collect::<std::vec::Vec<(std::primitive::usize, PostgresqlJsonTypeRecord)>>()

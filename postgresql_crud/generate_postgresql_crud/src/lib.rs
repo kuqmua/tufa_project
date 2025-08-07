@@ -3658,7 +3658,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_ident = &element.field_ident;
             quote::quote! {#field_ident: None}
         });
-        let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
         let some_value_primary_key_read_returned_from_create_many1_token_stream = quote::quote!{some_value_primary_key_read_returned_from_create_many1};
         let some_value_primary_key_read_returned_from_create_many2_token_stream = quote::quote!{some_value_primary_key_read_returned_from_create_many2};
         let some_value_field_ident_read_token_stream = quote::quote!{some_value_field_ident_read};
@@ -3667,9 +3666,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let update_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type = &element.syn_field.ty;
-            let field_type_as_postgresql_type_update_token_stream = generate_as_postgresql_type_update_token_stream(
-                &field_type
-            );
             let fields_without_primary_key_and_field_ident = {
                 let mut acc = vec![];
                 for field in &fields {
@@ -3695,7 +3691,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             });
             let field_ident_upper_camel_case_token_stream = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
             let field_type_as_postgresql_type_select_token_stream = generate_as_postgresql_type_select_token_stream(&field_type);
-            let field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&field_type);
             let try_update_many_result_different_for_field_ident_field_type_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(
                 &format!("try_update_many result different for {field_ident}: {}", quote::quote!{#field_type})
             );
