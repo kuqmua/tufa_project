@@ -4004,7 +4004,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             };
                             quote::quote! {
-                                pub fn new(value: #ident_inner_type_token_stream) -> Self {
+                                pub fn new(#value_ident_inner_type_token_stream) -> Self {
                                     Self(#content_token_stream)
                                 }
                             }
@@ -4306,25 +4306,10 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable: _ } => proc_macro2::TokenStream::new(),
                     };
-                    //todo maybe move to test module
-                    let pub_fn_new_or_try_new_unwraped_for_test_token_stream = {
-                        let content_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                            quote::quote! {try_new(#value_snake_case).unwrap()}
-                        }
-                        else {
-                            quote::quote! {new(#value_snake_case)}
-                        };
-                        quote::quote! {
-                            pub fn #new_or_try_new_unwraped_for_test_snake_case(#value_ident_inner_type_token_stream) -> Self {
-                                Self::#content_token_stream
-                            }
-                        }
-                    };
                     quote::quote! {
                         impl #ident_origin_upper_camel_case {
                             #pub_fn_new_or_try_new_token_stream
                             #maybe_fn_new_or_try_new_for_deserialize_token
-                            #pub_fn_new_or_try_new_unwraped_for_test_token_stream
                         }
                     }
                 };
@@ -5269,16 +5254,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     };
-                    //todo maybe put into test module?
-                    let maybe_pub_fn_new_or_try_new_unwraped_for_test_token_stream = quote::quote!{
-                        pub fn #new_or_try_new_unwraped_for_test_snake_case(#value_ident_inner_type_token_stream) -> Self {
-                            Self(#ident_origin_upper_camel_case::#new_or_try_new_unwraped_for_test_snake_case(#value_snake_case))
-                        }
-                    };
                     quote::quote! {
                         impl #ident_read_upper_camel_case {
                             #pub_fn_new_or_try_new_token_stream
-                            #maybe_pub_fn_new_or_try_new_unwraped_for_test_token_stream
                         }
                     }
                 };
@@ -5982,6 +5960,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let impl_postgresql_type_test_cases_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                 &postgresql_crud_macros_common_import_path_crate,
+                &ident_inner_type_token_stream,
                 &ident,
                 &{
                     let ident_standart_not_null_as_postgresql_type_read_inner_token_stream = quote::quote!{
@@ -6340,7 +6319,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{
-                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case()
+                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
+                                >>::#test_cases_snake_case()
                                 .into_iter()
                                 .map(|element|Some(element))
                                 .collect::<std::vec::Vec<
@@ -6352,7 +6333,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         },
                         PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{
-                                <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case()
+                                <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
+                                >>::#test_cases_snake_case()
                                 .into_iter()
                                 .map(|element|vec![element])
                                 .collect::<std::vec::Vec<
@@ -6360,7 +6343,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 >>()
                             },
                             (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{
-                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case()
+                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
+                                >>::#test_cases_snake_case()
                                 .into_iter()
                                 .map(|element|vec![Some(element)])
                                 .collect::<std::vec::Vec<
@@ -6372,7 +6357,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 acc
                             },
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{
-                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case()
+                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
+                                >>::#test_cases_snake_case()
                                 .into_iter()
                                 .map(|element|Some(vec![element]))
                                 .collect::<std::vec::Vec<
@@ -6384,7 +6371,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 acc
                             },
                             (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{
-                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases>::#test_cases_snake_case()
+                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::ReadInner
+                                >>::#test_cases_snake_case()
                                 .into_iter()
                                 .map(|element|Some(vec![Some(element)]))
                                 .collect::<std::vec::Vec<
@@ -6401,7 +6390,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
 
                         }
                     }
+                },
+                &if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                    quote::quote! {#ident_read_upper_camel_case::try_new(#value_snake_case).unwrap()}
                 }
+                else {
+                    quote::quote! {#ident_read_upper_camel_case::new(#value_snake_case)}
+                },
+                &if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
+                    quote::quote! {#ident_update_upper_camel_case::try_new(#value_snake_case).unwrap()}
+                }
+                else {
+                    quote::quote! {#ident_update_upper_camel_case::new(#value_snake_case)}
+                },
             );
             let generated = quote::quote! {
                 #ident_token_stream

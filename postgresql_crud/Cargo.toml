@@ -32,3 +32,6 @@ route_validators = {path = "../route_validators"}
 
 [lints]
 workspace = true
+
+[features]
+test-utils = []

@@ -3739,9 +3739,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 &primary_key_field_type
             );
             quote::quote! {
-                for #element_snake_case in <#field_type as postgresql_crud::tests::#postgresql_type_test_cases_upper_camel_case>:: #test_cases_snake_case() {
+                for #element_snake_case in <
+                    #field_type as postgresql_crud::tests::#postgresql_type_test_cases_upper_camel_case<<#field_type as postgresql_crud::PostgresqlType>::ReadInner>
+                >:: #test_cases_snake_case() {
                     let some_value_update = Some(postgresql_crud::Value {
-                        value: #field_type_as_postgresql_type_update_token_stream::#new_or_try_new_unwraped_for_test_snake_case(#element_snake_case.clone()),
+                        value: <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<
+                            <#field_type as postgresql_crud::PostgresqlType>::ReadInner
+                        >>::update_new_or_try_new_unwraped_for_test(element.clone())
                     });
                     let vec_of_primary_keys_returned_from_update_many = {
                         let mut value = super::#ident::try_update_many(
@@ -3808,7 +3812,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .unwrap()
                     );
                     let #some_value_field_ident_read_token_stream = Some(postgresql_crud::Value {
-                        value: #field_type_as_postgresql_type_read_token_stream::#new_or_try_new_unwraped_for_test_snake_case(#element_snake_case),
+                        value: <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<
+                            <#field_type as postgresql_crud::PostgresqlType>::ReadInner
+                        >>::read_new_or_try_new_unwraped_for_test(element.clone())
                     });
                     assert_eq!(
                         vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
