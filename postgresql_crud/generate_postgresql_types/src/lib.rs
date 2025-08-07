@@ -228,60 +228,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => CanBeAnArrayElement::True,
             }
         }
-        fn field_type_token_stream(&self) -> proc_macro2::TokenStream {
-            let value = {
-                let std_primitive_i16_stringified = "std::primitive::i16".to_string();
-                let std_primitive_i32_stringified = "std::primitive::i32".to_string();
-                let std_primitive_i64_stringified = "std::primitive::i64".to_string();
-                let std_primitive_f32_stringified = "std::primitive::f32".to_string();
-                let std_primitive_f64_stringified = "std::primitive::f64".to_string();
-                let sqlx_postgres_types_pg_money_stringified = "sqlx::postgres::types::PgMoney".to_string();
-                let std_primitive_bool_stringified = "std::primitive::bool".to_string();
-                let std_string_string_stringified = "std::string::String".to_string();
-                let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
-                let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
-                let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_string();
-                let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
-                let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
-                let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
-                let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>".to_string();
-                let sqlx_types_uuid_uuid_stringified = "sqlx::types::uuid::Uuid".to_string();
-                let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_string();
-                let sqlx_types_mac_address_mac_address_stringified = "sqlx::types::mac_address::MacAddress".to_string();
-                match &self {
-                    Self::StdPrimitiveI16AsInt2 => std_primitive_i16_stringified,
-                    Self::StdPrimitiveI32AsInt4 => std_primitive_i32_stringified,
-                    Self::StdPrimitiveI64AsInt8 => std_primitive_i64_stringified,
-                    Self::StdPrimitiveF32AsFloat4 => std_primitive_f32_stringified,
-                    Self::StdPrimitiveF64AsFloat8 => std_primitive_f64_stringified,
-                    Self::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => std_primitive_i16_stringified,
-                    Self::StdPrimitiveI32AsSerialInitializedByPostgresql => std_primitive_i32_stringified,
-                    Self::StdPrimitiveI64AsBigSerialInitializedByPostgresql => std_primitive_i64_stringified,
-                    Self::SqlxPostgresTypesPgMoneyAsMoney => sqlx_postgres_types_pg_money_stringified,
-                    Self::StdPrimitiveBoolAsBool => std_primitive_bool_stringified,
-                    Self::StdStringStringAsText => std_string_string_stringified,
-                    Self::StdVecVecStdPrimitiveU8AsBytea => std_vec_vec_std_primitive_u8_stringified,
-                    Self::SqlxTypesChronoNaiveTimeAsTime => sqlx_types_chrono_naive_time_stringified,
-                    Self::SqlxTypesTimeTimeAsTime => sqlx_types_time_time_stringified,
-                    Self::SqlxPostgresTypesPgIntervalAsInterval => sqlx_postgres_types_pg_interval_stringified,
-                    Self::SqlxTypesChronoNaiveDateAsDate => sqlx_types_chrono_naive_date_stringified,
-                    Self::SqlxTypesChronoNaiveDateTimeAsTimestamp => sqlx_types_chrono_naive_date_time_stringified,
-                    Self::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified,
-                    Self::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => sqlx_types_uuid_uuid_stringified,
-                    Self::SqlxTypesUuidUuidAsUuidInitializedByClient => sqlx_types_uuid_uuid_stringified,
-                    Self::SqlxTypesIpnetworkIpNetworkAsInet => sqlx_types_ipnetwork_ip_network_stringified,
-                    Self::SqlxTypesMacAddressMacAddressAsMacAddr => sqlx_types_mac_address_mac_address_stringified,
-                    Self::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i32_stringified),
-                    Self::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i64_stringified),
-                    Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_stringified),
-                    Self::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_time_stringified),
-                    Self::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_postgres_types_pg_range_stringified(
-                        &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified
-                    ),
-                }
-            };
-            value.parse::<proc_macro2::TokenStream>().unwrap()
-        }
     }
     impl quote::ToTokens for PostgresqlType {
         fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
@@ -1026,6 +972,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let new_snake_case = naming::NewSnakeCase;
             let try_new_snake_case = naming::TryNewSnakeCase;
             let try_new_for_deserialize_snake_case = naming::TryNewForDeserializeSnakeCase;
+            let read_upper_camel_case = naming::ReadUpperCamelCase;
+            let update_upper_camel_case = naming::UpdateUpperCamelCase;
             
             let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
 
@@ -1134,8 +1082,60 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let sqlx_types_chrono_naive_time_as_not_null_time_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_token_stream(&PostgresqlType::SqlxTypesChronoNaiveTimeAsTime);
             let sqlx_types_chrono_naive_date_time_as_not_null_timestamp_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_token_stream(&PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp);
             let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_as_not_null_timestamptz_origin_try_new_error_named_upper_camel_case = generate_ident_standart_not_null_origin_try_new_error_named_token_stream(&PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz);
-
-            let field_type_standart_not_null = postgresql_type.field_type_token_stream();
+            let inner_type_standart_not_null_token_stream = {
+                let value = {
+                    let std_primitive_i16_stringified = "std::primitive::i16".to_string();
+                    let std_primitive_i32_stringified = "std::primitive::i32".to_string();
+                    let std_primitive_i64_stringified = "std::primitive::i64".to_string();
+                    let std_primitive_f32_stringified = "std::primitive::f32".to_string();
+                    let std_primitive_f64_stringified = "std::primitive::f64".to_string();
+                    let sqlx_postgres_types_pg_money_stringified = "sqlx::postgres::types::PgMoney".to_string();
+                    let std_primitive_bool_stringified = "std::primitive::bool".to_string();
+                    let std_string_string_stringified = "std::string::String".to_string();
+                    let std_vec_vec_std_primitive_u8_stringified = "std::vec::Vec<std::primitive::u8>".to_string();
+                    let sqlx_types_chrono_naive_date_stringified = "sqlx::types::chrono::NaiveDate".to_string();
+                    let sqlx_types_chrono_naive_time_stringified = "sqlx::types::chrono::NaiveTime".to_string();
+                    let sqlx_types_time_time_stringified = "sqlx::types::time::Time".to_string();
+                    let sqlx_postgres_types_pg_interval_stringified = "sqlx::postgres::types::PgInterval".to_string();
+                    let sqlx_types_chrono_naive_date_time_stringified = "sqlx::types::chrono::NaiveDateTime".to_string();
+                    let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified = "sqlx::types::chrono::DateTime::<sqlx::types::chrono::Utc>".to_string();
+                    let sqlx_types_uuid_uuid_stringified = "sqlx::types::uuid::Uuid".to_string();
+                    let sqlx_types_ipnetwork_ip_network_stringified = "sqlx::types::ipnetwork::IpNetwork".to_string();
+                    let sqlx_types_mac_address_mac_address_stringified = "sqlx::types::mac_address::MacAddress".to_string();
+                    match &postgresql_type {
+                        PostgresqlType::StdPrimitiveI16AsInt2 => std_primitive_i16_stringified,
+                        PostgresqlType::StdPrimitiveI32AsInt4 => std_primitive_i32_stringified,
+                        PostgresqlType::StdPrimitiveI64AsInt8 => std_primitive_i64_stringified,
+                        PostgresqlType::StdPrimitiveF32AsFloat4 => std_primitive_f32_stringified,
+                        PostgresqlType::StdPrimitiveF64AsFloat8 => std_primitive_f64_stringified,
+                        PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql => std_primitive_i16_stringified,
+                        PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => std_primitive_i32_stringified,
+                        PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => std_primitive_i64_stringified,
+                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => sqlx_postgres_types_pg_money_stringified,
+                        PostgresqlType::StdPrimitiveBoolAsBool => std_primitive_bool_stringified,
+                        PostgresqlType::StdStringStringAsText => std_string_string_stringified,
+                        PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => std_vec_vec_std_primitive_u8_stringified,
+                        PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => sqlx_types_chrono_naive_time_stringified,
+                        PostgresqlType::SqlxTypesTimeTimeAsTime => sqlx_types_time_time_stringified,
+                        PostgresqlType::SqlxPostgresTypesPgIntervalAsInterval => sqlx_postgres_types_pg_interval_stringified,
+                        PostgresqlType::SqlxTypesChronoNaiveDateAsDate => sqlx_types_chrono_naive_date_stringified,
+                        PostgresqlType::SqlxTypesChronoNaiveDateTimeAsTimestamp => sqlx_types_chrono_naive_date_time_stringified,
+                        PostgresqlType::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified,
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql => sqlx_types_uuid_uuid_stringified,
+                        PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => sqlx_types_uuid_uuid_stringified,
+                        PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => sqlx_types_ipnetwork_ip_network_stringified,
+                        PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => sqlx_types_mac_address_mac_address_stringified,
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i32_stringified),
+                        PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => wrap_into_sqlx_postgres_types_pg_range_stringified(&std_primitive_i64_stringified),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateAsDateRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_stringified),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoNaiveDateTimeAsTimestampRange => wrap_into_sqlx_postgres_types_pg_range_stringified(&sqlx_types_chrono_naive_date_time_stringified),
+                        PostgresqlType::SqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTzRange => wrap_into_sqlx_postgres_types_pg_range_stringified(
+                            &sqlx_types_chrono_date_time_sqlx_types_chrono_utc_stringified
+                        ),
+                    }
+                };
+                value.parse::<proc_macro2::TokenStream>().unwrap()
+            };
             let generate_current_ident_origin_non_wrapping = |current_postgresql_type_pattern: &PostgresqlTypePattern, current_not_null_or_nullable: &postgresql_crud_macros_common::NotNullOrNullable| {
                 naming::parameter::SelfOriginUpperCamelCase::from_tokens(&generate_ident_token_stream(postgresql_type, current_not_null_or_nullable, current_postgresql_type_pattern))
             };
@@ -1149,7 +1149,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 };
                 match &postgresql_type_pattern {
                     PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => &inner_type_standart_not_null_token_stream,
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => &postgresql_crud_macros_common::generate_std_option_option_tokens_declaration_token_stream(&ident_standart_not_null_origin_upper_camel_case),
                     },
                     PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
@@ -1275,7 +1275,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 quote::quote! {: #value}
             };
             let generate_sqlx_postgres_types_pg_interval_field_type_pattern_token_stream = |months_token_stream: &dyn quote::ToTokens, days_token_stream: &dyn quote::ToTokens, microseconds_token_stream: &dyn quote::ToTokens| {
-                quote::quote! {#field_type_standart_not_null {
+                quote::quote! {#inner_type_standart_not_null_token_stream {
                     #months_snake_case #months_token_stream,
                     #days_snake_case #days_token_stream,
                     #microseconds_snake_case #microseconds_token_stream
@@ -1283,18 +1283,18 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             };
             let ident_inner_type_token_stream = match &element.postgresql_type_pattern {
                 PostgresqlTypePattern::Standart => match &not_null_or_nullable {
-                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &field_type_standart_not_null,
-                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#field_type_standart_not_null>},
+                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => &inner_type_standart_not_null_token_stream,
+                    postgresql_crud_macros_common::NotNullOrNullable::Nullable => &quote::quote! {std::option::Option<#inner_type_standart_not_null_token_stream>},
                 },
                 PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => &{
-                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#field_type_standart_not_null});
+                    let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote! {#inner_type_standart_not_null_token_stream});
                     not_null_or_nullable.maybe_option_wrap(quote::quote! {std::vec::Vec<#dimension1_type>})
                 },
                 // PostgresqlTypePattern::ArrayDimension2 {
                 //     dimension1_not_null_or_nullable,
                 //     dimension2_not_null_or_nullable,
                 // } => &{
-                //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
+                //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{#inner_type_standart_not_null_token_stream});
                 //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                 //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
                 // },
@@ -1303,7 +1303,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 //     dimension2_not_null_or_nullable,
                 //     dimension3_not_null_or_nullable,
                 // } => &{
-                //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
+                //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{#inner_type_standart_not_null_token_stream});
                 //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
                 //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
                 //     not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension1_type>})
@@ -1314,7 +1314,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 //     dimension3_not_null_or_nullable,
                 //     dimension4_not_null_or_nullable,
                 // } => &{
-                //     let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#field_type_standart_not_null});
+                //     let dimension4_type = dimension4_not_null_or_nullable.maybe_option_wrap(quote::quote!{#inner_type_standart_not_null_token_stream});
                 //     let dimension3_type = dimension3_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension4_type>});
                 //     let dimension2_type = dimension2_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension3_type>});
                 //     let dimension1_type = dimension1_not_null_or_nullable.maybe_option_wrap(quote::quote!{std::vec::Vec<#dimension2_type>});
@@ -1589,24 +1589,24 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => postgresql_crud_macros_common::DeriveOrImpl::Derive,
                         PostgresqlType::SqlxTypesChronoNaiveTimeAsTime => postgresql_crud_macros_common::DeriveOrImpl::Impl(generate_impl_serde_serialize_for_ident_standart_not_null_origin_tokens(&{
-                            let generate_field_field_type_standart_not_null_as_chrono_timelike_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                                quote::quote!{&(<#field_type_standart_not_null as chrono::Timelike>::#content_token_stream)}
+                            let generate_field_inner_type_standart_not_null_token_stream_as_chrono_timelike_token_stream = |content_token_stream: &dyn quote::ToTokens|{
+                                quote::quote!{&(<#inner_type_standart_not_null_token_stream as chrono::Timelike>::#content_token_stream)}
                             };
                             let hour_serialize_field_token_stream = generate_serialize_field_token_stream(
                                 &hour_snake_case,
-                                &generate_field_field_type_standart_not_null_as_chrono_timelike_token_stream(&quote::quote!{hour(&self.0)})
+                                &generate_field_inner_type_standart_not_null_token_stream_as_chrono_timelike_token_stream(&quote::quote!{hour(&self.0)})
                             );
                             let min_serialize_field_token_stream = generate_serialize_field_token_stream(
                                 &min_snake_case,
-                                &generate_field_field_type_standart_not_null_as_chrono_timelike_token_stream(&quote::quote!{minute(&self.0)})
+                                &generate_field_inner_type_standart_not_null_token_stream_as_chrono_timelike_token_stream(&quote::quote!{minute(&self.0)})
                             );
                             let sec_serialize_field_token_stream = generate_serialize_field_token_stream(
                                 &sec_snake_case,
-                                &generate_field_field_type_standart_not_null_as_chrono_timelike_token_stream(&quote::quote!{second(&self.0)})
+                                &generate_field_inner_type_standart_not_null_token_stream_as_chrono_timelike_token_stream(&quote::quote!{second(&self.0)})
                             );
                             let micro_serialize_field_token_stream = generate_serialize_field_token_stream(
                                 &micro_snake_case,
-                                &generate_field_field_type_standart_not_null_as_chrono_timelike_token_stream(&quote::quote!{
+                                &generate_field_inner_type_standart_not_null_token_stream_as_chrono_timelike_token_stream(&quote::quote!{
                                     #nanosecond_snake_case(&self.0) / 1000
                                 })
                             );
@@ -1868,13 +1868,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         quote::quote! {serde::__private::Ok(#content_token_stream)}
                     };
                     let generate_serde_private_ok_postgresql_type_token_stream = |content_token_stream: &dyn quote::ToTokens| generate_serde_private_ok_token_stream(&quote::quote! {#ident_standart_not_null_origin_upper_camel_case(#content_token_stream)});
-                    let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #field_type_standart_not_null::try_parse(&#field_0_token_stream) {
+                    let match_sqlx_types_uuid_uuid_field_type_try_parse_token_stream = quote::quote! {match #inner_type_standart_not_null_token_stream::try_parse(&#field_0_token_stream) {
                         Ok(value) => value,
                         Err(error) => {
                             return Err(serde::de::Error::custom(error));
                         }
                     }};
-                    let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#field_type_standart_not_null::#new_snake_case(#field_0_token_stream)};
+                    let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#inner_type_standart_not_null_token_stream::#new_snake_case(#field_0_token_stream)};
                     let array_std_primitive_u8_6_token_stream = quote::quote! {[std::primitive::u8; 6]};
                     let (
                         sqlx_types_chrono_naive_time_origin_try_new_for_deserialize,
@@ -1937,7 +1937,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         (
                             generate_fn_visit_newtype_struct_token_stream(
                                 &std_primitive_i64_token_stream,
-                                &generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#field_type_standart_not_null(#field_0_token_stream)})
+                                &generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#inner_type_standart_not_null_token_stream(#field_0_token_stream)})
                             ),
                             generate_fn_visit_newtype_struct_token_stream(
                                 &std_string_string_token_stream,
@@ -1952,7 +1952,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &match_origin_try_new_for_deserialize_one_token_stream
                             ),
                             generate_fn_visit_newtype_struct_token_stream(
-                                &field_type_standart_not_null,
+                                &inner_type_standart_not_null_token_stream,
                                 &match_origin_try_new_for_deserialize_one_token_stream
                             ),
                         )
@@ -2036,7 +2036,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         (
                             generate_fn_visit_seq_token_stream(&{
                                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[&std_primitive_i64_token_stream]);
-                                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#field_type_standart_not_null(#field_0_token_stream)});
+                                let serde_private_ok_postgresql_type_token_stream = generate_serde_private_ok_postgresql_type_token_stream(&quote::quote! {#inner_type_standart_not_null_token_stream(#field_0_token_stream)});
                                 quote::quote! {
                                     #fields_initialization_token_stream
                                     #serde_private_ok_postgresql_type_token_stream
@@ -2091,7 +2091,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }),
                             generate_fn_visit_seq_token_stream(&{
                                 let fields_initialization_token_stream = generate_fields_serde_de_seq_access_next_element_initialization_token_stream(&[
-                                    &field_type_standart_not_null,
+                                    &inner_type_standart_not_null_token_stream,
                                 ]);
                                 quote::quote!{
                                     #fields_initialization_token_stream
@@ -3669,7 +3669,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     }
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveTimeAsTime => quote::quote! {
-                                                    if <#field_type_standart_not_null as chrono::Timelike>::nanosecond(&#value_snake_case) % 1000 != 0 {
+                                                    if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&#value_snake_case) % 1000 != 0 {
                                                         return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
                                                             #value_snake_case: #value_snake_case.to_string(),
                                                             code_occurence: error_occurence_lib::code_occurence!(),
@@ -3687,7 +3687,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     Ok(Self(#value_snake_case))
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => quote::quote! {
-                                                    let #earliest_supported_date_snake_case = #field_type_standart_not_null::from_ymd_opt(-4713, 12, 31).unwrap();
+                                                    let #earliest_supported_date_snake_case = #inner_type_standart_not_null_token_stream::from_ymd_opt(-4713, 12, 31).unwrap();
                                                     if #value_snake_case >= #earliest_supported_date_snake_case {
                                                         Ok(Self(#value_snake_case))
                                                     }
@@ -3722,7 +3722,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             });
                                                         }
                                                     };
-                                                    Ok(Self(#field_type_standart_not_null::#new_snake_case(#date_snake_case.0, #time_snake_case.0)))
+                                                    Ok(Self(#inner_type_standart_not_null_token_stream::#new_snake_case(#date_snake_case.0, #time_snake_case.0)))
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
                                                     let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream = generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream(
@@ -3982,7 +3982,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     })
                                                 },
                                                 PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{
-                                                    Self(#field_type_standart_not_null::#new_snake_case(#date_snake_case.0, #time_snake_case.0))
+                                                    Self(#inner_type_standart_not_null_token_stream::#new_snake_case(#date_snake_case.0, #time_snake_case.0))
                                                 },
                                                 PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
                                                     let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream = generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream(
@@ -4132,14 +4132,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 },
                                                 PostgresqlTypeImplTryNewForDeserialize::SqlxTypesChronoNaiveTimeAsTime => {
                                                     quote::quote!{
-                                                        match #field_type_standart_not_null::from_hms_micro_opt(
+                                                        match #inner_type_standart_not_null_token_stream::from_hms_micro_opt(
                                                             #hour_snake_case,
                                                             #min_snake_case,
                                                             #sec_snake_case,
                                                             #micro_snake_case,
                                                         ) {
                                                             Some(#value_snake_case) => {
-                                                                if <#field_type_standart_not_null as chrono::Timelike>::nanosecond(&#value_snake_case) % 1000 != 0 {
+                                                                if <#inner_type_standart_not_null_token_stream as chrono::Timelike>::nanosecond(&#value_snake_case) % 1000 != 0 {
                                                                     return Err(#ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case::#nanosecond_precision_is_not_supported_upper_camel_case {
                                                                         #value_snake_case: #value_snake_case.to_string(),
                                                                         code_occurence: error_occurence_lib::code_occurence!(),
@@ -4159,7 +4159,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 },
                                                 PostgresqlTypeImplTryNewForDeserialize::SqlxTypesTimeTimeAsTime => {
                                                     quote::quote!{
-                                                        match #field_type_standart_not_null::from_hms_micro(
+                                                        match #inner_type_standart_not_null_token_stream::from_hms_micro(
                                                             #hour_snake_case,
                                                             #minute_snake_case,
                                                             #second_snake_case,
@@ -4324,7 +4324,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         | PostgresqlType::StdPrimitiveI16AsSmallSerialInitializedByPostgresql
                                         | PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql
                                         | PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => &core_default_default_default_token_stream,
-                                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => &quote::quote! {#field_type_standart_not_null(#core_default_default_default_token_stream)},
+                                        PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => &quote::quote! {#inner_type_standart_not_null_token_stream(#core_default_default_default_token_stream)},
                                         PostgresqlType::StdPrimitiveBoolAsBool
                                         | PostgresqlType::StdStringStringAsText => &core_default_default_default_token_stream,
                                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => &quote::quote! {vec![#core_default_default_default_token_stream]},
@@ -4451,7 +4451,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     quote::quote! {
                         impl sqlx::postgres::PgHasArrayType for #ident_origin_upper_camel_case {
                             fn array_type_info() -> sqlx::postgres::PgTypeInfo {
-                                <#field_type_standart_not_null as sqlx::postgres::PgHasArrayType>::array_type_info()
+                                <#inner_type_standart_not_null_token_stream as sqlx::postgres::PgHasArrayType>::array_type_info()
                             }
                         }
                     }
@@ -5783,9 +5783,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     Update
                 }
                 let generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream = |read_or_update: &ReadOrUpdate|{
-                    let ident_read_or_update_upper_camel_case: &dyn quote::ToTokens = match &read_or_update {
-                        ReadOrUpdate::Read => &ident_read_upper_camel_case,
-                        ReadOrUpdate::Update => &ident_update_upper_camel_case,
+                    let read_or_update_upper_camel_case: &dyn quote::ToTokens = match &read_or_update {
+                        ReadOrUpdate::Read => &read_upper_camel_case,
+                        ReadOrUpdate::Update => &update_upper_camel_case,
                     };
                     let content_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
                         quote::quote! {#try_new_snake_case(#value_snake_case).unwrap()}
@@ -5793,7 +5793,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     else {
                         quote::quote! {#new_snake_case(#value_snake_case)}
                     };
-                    quote::quote!{#ident_read_or_update_upper_camel_case::#content_token_stream}
+                    quote::quote!{<Self::Element as crate::PostgresqlType>::#read_or_update_upper_camel_case:: #content_token_stream}
                 };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                     &postgresql_crud_macros_common_import_path_crate,
@@ -6021,9 +6021,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::StdPrimitiveI32AsSerialInitializedByPostgresql => empty_vec_token_stream,
                                         PostgresqlType::StdPrimitiveI64AsBigSerialInitializedByPostgresql => empty_vec_token_stream,
                                         PostgresqlType::SqlxPostgresTypesPgMoneyAsMoney => quote::quote!{vec![
-                                            #field_type_standart_not_null(std::primitive::i64::MIN),
-                                            #field_type_standart_not_null(0),
-                                            #field_type_standart_not_null(std::primitive::i64::MAX)
+                                            #inner_type_standart_not_null_token_stream(std::primitive::i64::MIN),
+                                            #inner_type_standart_not_null_token_stream(0),
+                                            #inner_type_standart_not_null_token_stream(std::primitive::i64::MAX)
                                         ]},
                                         PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{vec![true, false]},
                                         PostgresqlType::StdStringStringAsText => quote::quote!{vec![

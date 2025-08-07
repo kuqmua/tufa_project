@@ -6,6 +6,14 @@ pub trait PostgresqlTypeTestCases<T> {
     fn update_new_or_try_new_unwraped_for_test(value: T) -> <Self::Element as crate::PostgresqlType>::Update;
 }
 
+#[cfg(feature = "test-utils")]
+pub trait PostgresqlJsonTypeTestCases<T> {
+    type Element: crate::PostgresqlJsonType;
+    fn test_cases() -> std::vec::Vec<<Self::Element as crate::PostgresqlJsonType>::ReadInner>;//todo maybe make it an array
+    fn read_new_or_try_new_unwraped_for_test(value: T) -> <Self::Element as crate::PostgresqlJsonType>::Read;
+    fn update_new_or_try_new_unwraped_for_test(value: T) -> <Self::Element as crate::PostgresqlJsonType>::Update;
+}
+
 //for multiple parameters initialization
 // pub trait PostgresqlTypeTestCasesTwo {
 //     type SelfHandle: crate::PostgresqlType;
