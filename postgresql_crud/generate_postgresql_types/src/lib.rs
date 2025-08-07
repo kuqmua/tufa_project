@@ -5599,6 +5599,14 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             &quote::quote!{Excluded(#start_snake_case)},
                             &quote::quote!{Included(#end_snake_case)},
                         );
+                        let sqlx_postgres_types_pg_range_included_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                            &quote::quote!{Included(#start_snake_case)},
+                            &unbounded_upper_camel_case,
+                        );
+                        let sqlx_postgres_types_pg_range_unbounded_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                            &unbounded_upper_camel_case,
+                            &quote::quote!{Excluded(#end_snake_case)},
+                        );
                         let sqlx_postgres_types_pg_range_included_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
                             &included_start_token_stream,
                             &excluded_end_token_stream
@@ -5694,10 +5702,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 &quote::quote!{
-                                    sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Included(#start_snake_case),
-                                        #end_snake_case: std::ops::Bound::Unbounded,
-                                    }
+                                    #sqlx_postgres_types_pg_range_included_unbounded_token_stream
                                 },
                                 &quote::quote!{
                                     if #start_snake_case == #end_snake_case {
@@ -5732,10 +5737,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 &quote::quote!{
-                                    sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Unbounded,
-                                        #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                    }
+                                    #sqlx_postgres_types_pg_range_unbounded_excluded_token_stream
                                 },
                             ),
                             PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => generate_range_match_token_stream(
@@ -5748,10 +5750,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 &quote::quote!{
-                                    sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Included(#start_snake_case),
-                                        #end_snake_case: std::ops::Bound::Unbounded,
-                                    }
+                                    #sqlx_postgres_types_pg_range_included_unbounded_token_stream
                                 },
                                 &quote::quote!{
                                     if #start_snake_case == #end_snake_case {
@@ -5783,10 +5782,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 &quote::quote!{
-                                    sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Unbounded,
-                                        #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                    }
+                                    #sqlx_postgres_types_pg_range_unbounded_excluded_token_stream
                                 },
                             ),
                             PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => generate_range_match_token_stream(
@@ -5799,10 +5795,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 &quote::quote!{
-                                    sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Included(#start_snake_case),
-                                        #end_snake_case: std::ops::Bound::Unbounded,
-                                    }
+                                    #sqlx_postgres_types_pg_range_included_unbounded_token_stream
                                 },
                                 &quote::quote!{
                                     if #start_snake_case == #end_snake_case {
@@ -5834,10 +5827,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 &quote::quote!{
-                                    sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Unbounded,
-                                        #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                    }
+                                    #sqlx_postgres_types_pg_range_unbounded_excluded_token_stream
                                 },
                             ),
                         }
