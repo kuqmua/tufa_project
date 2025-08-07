@@ -3659,6 +3659,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             quote::quote! {#field_ident: None}
         });
         let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
+        let some_value_primary_key_read_returned_from_create_many1_token_stream = quote::quote!{some_value_primary_key_read_returned_from_create_many1};
+        let some_value_primary_key_read_returned_from_create_many2_token_stream = quote::quote!{some_value_primary_key_read_returned_from_create_many2};
+        let some_value_field_ident_read_token_stream = quote::quote!{some_value_field_ident_read};
+        let some_value_primary_key_read_returned_from_create_one_token_stream = quote::quote!{some_value_primary_key_read_returned_from_create_one};
         //todo instead of first dropping table - check if its not exists. if exists test must fail
         let update_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
@@ -3719,19 +3723,19 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             };
             let match_some_value_primary_key_read_returned_from_create_many1_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
-                &quote::quote!{some_value_primary_key_read_returned_from_create_many1},//todo reuse
+                &some_value_primary_key_read_returned_from_create_many1_token_stream,
                 &primary_key_field_type
             );
             let match_some_value_primary_key_read_returned_from_create_many2_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
-                &quote::quote!{some_value_primary_key_read_returned_from_create_many2},//todo reuse
+                &some_value_primary_key_read_returned_from_create_many2_token_stream,
                 &primary_key_field_type
             );
             let match_some_value_field_ident_read_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
-                &quote::quote!{some_value_field_ident_read},//todo reuse
+                &some_value_field_ident_read_token_stream,
                 &field_type
             );
             let match_some_value_primary_key_read_returned_from_create_one_clone_value_normalize_token_stream = generate_match_tokens_clone_value_normalize_token_stream(
-                &quote::quote!{some_value_primary_key_read_returned_from_create_one},//todo reuse
+                &some_value_primary_key_read_returned_from_create_one_token_stream,
                 &primary_key_field_type
             );
             quote::quote! {
@@ -3803,7 +3807,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .await
                         .unwrap()
                     );
-                    let some_value_field_ident_read = Some(postgresql_crud::Value {
+                    let #some_value_field_ident_read_token_stream = Some(postgresql_crud::Value {
                         value: #field_type_as_postgresql_type_read_token_stream::#new_or_try_new_unwraped_for_test_snake_case(#element_snake_case),
                     });
                     assert_eq!(
@@ -3966,16 +3970,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     .await
                                     .unwrap()
                                 );
-                                let some_value_primary_key_read_returned_from_create_many1 = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many1.clone() });
-                                let some_value_primary_key_read_returned_from_create_many2 = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many2.clone() });
+                                let #some_value_primary_key_read_returned_from_create_many1_token_stream = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many1.clone() });
+                                let #some_value_primary_key_read_returned_from_create_many2_token_stream = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many2.clone() });
                                 assert_eq!(
                                     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
                                         super::#ident_read_upper_camel_case {
-                                            #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many1.clone(),
+                                            #primary_key_field_ident: #some_value_primary_key_read_returned_from_create_many1_token_stream.clone(),
                                             #fields_none_initialization_token_stream
                                         },
                                         super::#ident_read_upper_camel_case {
-                                            #primary_key_field_ident: some_value_primary_key_read_returned_from_create_many2.clone(),
+                                            #primary_key_field_ident: #some_value_primary_key_read_returned_from_create_many2_token_stream.clone(),
                                             #fields_none_initialization_token_stream
                                         }
                                     ]),
@@ -4000,10 +4004,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 )
                                 .await
                                 .unwrap();
-                                let some_value_primary_key_read_returned_from_create_one = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_one.clone() });
+                                let #some_value_primary_key_read_returned_from_create_one_token_stream = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_one.clone() });
                                 assert_eq!(
                                     super::#ident_read_upper_camel_case {
-                                        #primary_key_field_ident: some_value_primary_key_read_returned_from_create_one.clone(),
+                                        #primary_key_field_ident: #some_value_primary_key_read_returned_from_create_one_token_stream.clone(),
                                         #fields_none_initialization_token_stream
                                     },
                                     ident_read_returned_from_read_one,
