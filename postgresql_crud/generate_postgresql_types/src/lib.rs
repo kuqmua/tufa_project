@@ -1116,6 +1116,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let included_upper_camel_case = naming::IncludedUpperCamelCase;
             let excluded_upper_camel_case = naming::ExcludedUpperCamelCase;
             let unbounded_upper_camel_case = naming::UnboundedUpperCamelCase;
+            let new_snake_case = naming::NewSnakeCase;
+            let try_new_snake_case = naming::TryNewSnakeCase;
+            let try_new_for_deserialize_snake_case = naming::TryNewForDeserializeSnakeCase;
             
             let new_or_try_new_unwraped_for_test_snake_case = naming::NewOrTryNewUnwrapedForTestSnakeCase;
 
@@ -1645,8 +1648,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &start_or_end_token_stream,
                                 &quote::quote!{
                                     &match self.0.#start_or_end_token_stream {
-                                        std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#ident_token_stream::try_new(#value_snake_case).unwrap()),
-                                        std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#ident_token_stream::try_new(#value_snake_case).unwrap()),
+                                        std::ops::Bound::Included(#value_snake_case) => std::ops::Bound::Included(#ident_token_stream::#try_new_snake_case(#value_snake_case).unwrap()),
+                                        std::ops::Bound::Excluded(#value_snake_case) => std::ops::Bound::Excluded(#ident_token_stream::#try_new_snake_case(#value_snake_case).unwrap()),
                                         std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                     }
                                 }
@@ -1760,7 +1763,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             DateOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
                                             DateOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case
                                         };
-                                        quote::quote!{&#ident_token_stream::try_new(self.0.#date_or_time_token_stream()).unwrap()}
+                                        quote::quote!{&#ident_token_stream::#try_new_snake_case(self.0.#date_or_time_token_stream()).unwrap()}
                                     }
                                 )
                             };
@@ -1790,7 +1793,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             DateNaiveOrTime::Date => &sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case,
                                             DateNaiveOrTime::Time => &sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case
                                         };
-                                        quote::quote!{&#ident_token_stream::try_new(self.0.#date_naive_or_time_token_stream()).unwrap()}
+                                        quote::quote!{&#ident_token_stream::#try_new_snake_case(self.0.#date_naive_or_time_token_stream()).unwrap()}
                                     }
                                 )
                             };
@@ -1964,7 +1967,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             return Err(serde::de::Error::custom(error));
                         }
                     }};
-                    let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#field_type_standart_not_null::new(#field_0_token_stream)};
+                    let sqlx_types_mac_address_mac_address_field_type_new_field_0_token_stream = quote::quote! {#field_type_standart_not_null::#new_snake_case(#field_0_token_stream)};
                     let array_std_primitive_u8_6_token_stream = quote::quote! {[std::primitive::u8; 6]};
                     let (
                         sqlx_types_chrono_naive_time_origin_try_new_for_deserialize,
@@ -1975,7 +1978,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         let generate_match_origin_try_new_for_deserialize_token_stream = |length: std::primitive::usize|{
                             let fields_token_stream = (1..=length).collect::<std::vec::Vec<_>>().into_iter().enumerate().map(|(index, _)|generate_field_index_token_stream(index));
                             quote::quote!{
-                                match #ident_standart_not_null_origin_upper_camel_case::try_new_for_deserialize(#(#fields_token_stream),*) {
+                                match #ident_standart_not_null_origin_upper_camel_case::#try_new_for_deserialize_snake_case(#(#fields_token_stream),*) {
                                     Ok(#value_snake_case) => _serde::__private::Ok(#value_snake_case),
                                     Err(#error_snake_case) => Err(_serde::de::Error::custom(format!("{error:?}"))),
                                 }
@@ -2087,7 +2090,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &generate_match_std_ops_bound_token_stream(&field_1_token_stream, &value_snake_case, &ShouldAddBorrow::False),
                     );
                     let match_ident_standart_not_null_try_new_sqlx_postgres_types_pg_range_token_stream = quote::quote!{
-                        match #ident_standart_not_null_origin_upper_camel_case::try_new(sqlx::postgres::types::PgRange {
+                        match #ident_standart_not_null_origin_upper_camel_case::#try_new_snake_case(sqlx::postgres::types::PgRange {
                             start: __field0,
                             end: __field1
                         }) {
@@ -3217,7 +3220,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 )}
             };
             let generate_sqlx_types_chrono_naive_date_time_new_token_stream = |content_token_stream: &dyn quote::ToTokens|{
-                quote::quote!{sqlx::types::chrono::NaiveDateTime::new(#content_token_stream)}
+                quote::quote!{sqlx::types::chrono::NaiveDateTime::#new_snake_case(#content_token_stream)}
             };
             let generate_sqlx_types_time_time_from_hms_micro_unwrap_token_stream = |content_token_stream: &dyn quote::ToTokens|{
                 quote::quote!{sqlx::types::time::Time::from_hms_micro(#content_token_stream).unwrap()}
@@ -3590,7 +3593,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let content_token_stream = {
                                 let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                                     quote::quote! {Ok(Self(match #value_snake_case {
-                                        Some(#value_snake_case) => Some(match #type_token_stream::try_new(#value_snake_case) {
+                                        Some(#value_snake_case) => Some(match #type_token_stream::#try_new_snake_case(#value_snake_case) {
                                             Ok(#value_snake_case) => #value_snake_case,
                                             Err(#error_snake_case) => {
                                                 return Err(#error_snake_case);
@@ -3604,7 +3607,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         Ok(Self({
                                             let mut #acc_snake_case = vec![];
                                             for #element_snake_case in #value_snake_case {
-                                                match #type_token_stream::try_new(#element_snake_case) {
+                                                match #type_token_stream::#try_new_snake_case(#element_snake_case) {
                                                     Ok(#value_snake_case) => {
                                                         #acc_snake_case.push(#value_snake_case);
                                                     },
@@ -3702,7 +3705,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 quote::quote!{
                                                     let #value_snake_case = sqlx::postgres::types::PgRange {
                                                         #start_snake_case: match #value_snake_case.#start_snake_case {
-                                                            std::ops::Bound::Included(#value_snake_case) => match #ident_origin_token_stream::try_new(#value_snake_case) {
+                                                            std::ops::Bound::Included(#value_snake_case) => match #ident_origin_token_stream::#try_new_snake_case(#value_snake_case) {
                                                                 Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
                                                                 Err(#error_snake_case) => {
                                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
@@ -3711,7 +3714,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                     });
                                                                 }
                                                             },
-                                                            std::ops::Bound::Excluded(#value_snake_case) => match #ident_origin_token_stream::try_new(#value_snake_case) {
+                                                            std::ops::Bound::Excluded(#value_snake_case) => match #ident_origin_token_stream::#try_new_snake_case(#value_snake_case) {
                                                                 Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
                                                                 Err(#error_snake_case) => {
                                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#start_upper_camel_case {
@@ -3723,7 +3726,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             std::ops::Bound::Unbounded => std::ops::Bound::Unbounded,
                                                         },
                                                         #end_snake_case: match #value_snake_case.#end_snake_case {
-                                                            std::ops::Bound::Included(#value_snake_case) => match #ident_origin_token_stream::try_new(#value_snake_case) {
+                                                            std::ops::Bound::Included(#value_snake_case) => match #ident_origin_token_stream::#try_new_snake_case(#value_snake_case) {
                                                                 Ok(#value_snake_case) => std::ops::Bound::Included(#value_snake_case.0),
                                                                 Err(#error_snake_case) => {
                                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
@@ -3732,7 +3735,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                     });
                                                                 }
                                                             },
-                                                            std::ops::Bound::Excluded(#value_snake_case) => match #ident_origin_token_stream::try_new(#value_snake_case) {
+                                                            std::ops::Bound::Excluded(#value_snake_case) => match #ident_origin_token_stream::#try_new_snake_case(#value_snake_case) {
                                                                 Ok(#value_snake_case) => std::ops::Bound::Excluded(#value_snake_case.0),
                                                                 Err(#error_snake_case) => {
                                                                     return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#end_upper_camel_case {
@@ -3777,7 +3780,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     Ok(Self(#value_snake_case))
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateAsDate => quote::quote! {
-                                                    let #earliest_supported_date_snake_case = #field_type_standart_not_null::from_ymd_opt(-4713, 12, 31).unwrap();//todo check -4713, 1, 1 or -4713, 12, 31
+                                                    let #earliest_supported_date_snake_case = #field_type_standart_not_null::from_ymd_opt(-4713, 12, 31).unwrap();
                                                     if #value_snake_case >= #earliest_supported_date_snake_case {
                                                         Ok(Self(#value_snake_case))
                                                     }
@@ -3790,7 +3793,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     }
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote! {
-                                                    let #date_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(
+                                                    let #date_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::#try_new_snake_case(
                                                         #value_snake_case.#date_snake_case()
                                                     ) {
                                                         Ok(#value_snake_case) => #value_snake_case,
@@ -3801,7 +3804,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             });
                                                         }
                                                     };
-                                                    let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::try_new(
+                                                    let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::#try_new_snake_case(
                                                         #value_snake_case.#time_snake_case()
                                                     ) {
                                                         Ok(#value_snake_case) => #value_snake_case,
@@ -3812,7 +3815,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             });
                                                         }
                                                     };
-                                                    Ok(Self(#field_type_standart_not_null::new(#date_snake_case.0, #time_snake_case.0)))
+                                                    Ok(Self(#field_type_standart_not_null::#new_snake_case(#date_snake_case.0, #time_snake_case.0)))
                                                 },
                                                 PostgresqlTypeInitializationTryNew::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
                                                     let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream = generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream(
@@ -3822,7 +3825,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                         })
                                                     );
                                                     quote::quote! {
-                                                        let #date_naive_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::try_new(#value_snake_case.date_naive()) {
+                                                        let #date_naive_snake_case = match #sqlx_types_chrono_naive_date_as_not_null_date_origin_upper_camel_case::#try_new_snake_case(#value_snake_case.date_naive()) {
                                                             Ok(#value_snake_case) => #value_snake_case,
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#date_naive_upper_camel_case {
@@ -3831,7 +3834,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                                 });
                                                             }
                                                         };
-                                                        let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::try_new(#value_snake_case.time()) {
+                                                        let #time_snake_case = match #sqlx_types_chrono_naive_time_as_not_null_time_origin_upper_camel_case::#try_new_snake_case(#value_snake_case.time()) {
                                                             Ok(#value_snake_case) => #value_snake_case,
                                                             Err(#error_snake_case) => {
                                                                 return Err(#ident_standart_not_null_origin_try_new_error_named_upper_camel_case::#time_upper_camel_camel_case {
@@ -3868,7 +3871,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 }
                             };
                             quote::quote!{
-                                pub fn try_new(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                                pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
                                     #content_token_stream
                                 }
                             }
@@ -3877,12 +3880,12 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             let content_token_stream = {
                                 let generate_match_option_token_stream = |type_token_stream: &dyn quote::ToTokens| {
                                     quote::quote! {match value {
-                                        Some(value) => Some(#type_token_stream::new(value)),
+                                        Some(value) => Some(#type_token_stream::#new_snake_case(value)),
                                         None => None
                                     }}
                                 };
                                 let generate_array_dimensions_initialization_token_stream = |type_token_stream: &dyn quote::ToTokens| match &not_null_or_nullable {
-                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::new(element)).collect()},
+                                    postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote! {value.into_iter().map(|element|#type_token_stream::#new_snake_case(element)).collect()},
                                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => generate_match_option_token_stream(&type_token_stream),
                                 };
                                 match &postgresql_type_pattern {
@@ -3898,7 +3901,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                             &postgresql_type_pattern
                                                         )
                                                     );
-                                                    quote::quote!{#range_postgresql_type_ident_origin::new(value)}
+                                                    quote::quote!{#range_postgresql_type_ident_origin::#new_snake_case(value)}
                                                 }
                                             )
                                         }
@@ -4072,7 +4075,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                     })
                                                 },
                                                 PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{
-                                                    Self(#field_type_standart_not_null::new(#date_snake_case.0, #time_snake_case.0))
+                                                    Self(#field_type_standart_not_null::#new_snake_case(#date_snake_case.0, #time_snake_case.0))
                                                 },
                                                 PostgresqlTypeImplNewForDeserialize::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => {
                                                     let sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream = generate_sqlx_types_chrono_date_time_sqlx_types_chrono_utc_from_naive_utc_and_offset_token_stream(
@@ -4149,7 +4152,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                                 match_error_variants_token_stream: &dyn quote::ToTokens,
                                             |{
                                                 quote::quote!{
-                                                    match Self::try_new(#parameters_token_stream) {
+                                                    match Self::#try_new_snake_case(#parameters_token_stream) {
                                                         Ok(#value_snake_case) => Ok(#value_snake_case),
                                                         Err(#error_snake_case) => match #error_snake_case {
                                                             #match_error_variants_token_stream
@@ -4294,8 +4297,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             }
                                         };
                                         quote::quote!{
-                                            //todo reuse naming new, try_new, new_for_deserialize and try_new_for_deserialize
-                                            fn try_new_for_deserialize(#parameters_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case> {
+                                            fn #try_new_for_deserialize_snake_case(#parameters_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_for_deserialize_error_named_upper_camel_case> {
                                                 #content_token_stream
                                             }
                                         }
@@ -4447,7 +4449,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         PostgresqlType::SqlxTypesUuidUuidAsUuidV4InitializedByPostgresql
                                         | PostgresqlType::SqlxTypesUuidUuidAsUuidInitializedByClient => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxTypesIpnetworkIpNetworkAsInet => &quote::quote! {
-                                            sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_token_stream).unwrap())
+                                            sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(core::net::Ipv4Addr::UNSPECIFIED, #core_default_default_default_token_stream).unwrap())
                                         },
                                         PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => &core_default_default_default_token_stream,
                                         PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => &pg_range_int_default_initialization_token_stream,
@@ -4526,9 +4528,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     PostgresqlType::SqlxTypesChronoNaiveDateAsDate |
                                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range |
                                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI64AsInt8Range => quote::quote! {
-                                        match Self::try_new #scopes_value_token_stream {
+                                        match Self::#try_new_snake_case #scopes_value_token_stream {
                                             Ok(#value_snake_case) => Ok(#value_snake_case),
-                                            Err(#error_snake_case) => Err(std::boxed::Box::new(error)),
+                                            Err(#error_snake_case) => Err(std::boxed::Box::#new_snake_case(error)),
                                         }
                                     }
                                 },
@@ -4695,7 +4697,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         quote::quote! {
                             impl std::convert::From<#ident_standart_not_null_read_upper_camel_case> for #ident_origin_upper_camel_case {
                                 fn from(#value_snake_case: #ident_standart_not_null_read_upper_camel_case) -> Self {
-                                    Self::new(#ident_standart_not_null_as_crate_postgresql_type_token_stream::into_inner(#value_snake_case))
+                                    Self::#new_snake_case(#ident_standart_not_null_as_crate_postgresql_type_token_stream::into_inner(#value_snake_case))
                                 }
                             }
                         }
@@ -5239,8 +5241,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 let impl_ident_read_token_stream = {
                     let pub_fn_new_or_try_new_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
                         quote::quote! {
-                            pub fn try_new(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
-                                match #ident_origin_upper_camel_case::try_new(#value_snake_case) {
+                            pub fn #try_new_snake_case(#value_ident_inner_type_token_stream) -> Result<Self, #ident_standart_not_null_origin_try_new_error_named_upper_camel_case> {
+                                match #ident_origin_upper_camel_case::#try_new_snake_case(#value_snake_case) {
                                     Ok(#value_snake_case) => Ok(Self(#value_snake_case)),
                                     Err(#error_snake_case) => Err(#error_snake_case)
                                 }
@@ -5250,7 +5252,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     else {
                         quote::quote! {
                             pub fn new(#value_ident_inner_type_token_stream) -> Self {
-                                Self(#ident_origin_upper_camel_case::new(#value_snake_case))
+                                Self(#ident_origin_upper_camel_case::#new_snake_case(#value_snake_case))
                             }
                         }
                     };
@@ -6269,19 +6271,19 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("127.0.0.1/32").unwrap(),
                                         <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("::1/128").unwrap(),
                                         <sqlx::types::ipnetwork::IpNetwork as std::str::FromStr>::from_str("2001:db8::/32").unwrap(),
-                                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(std::net::Ipv4Addr::new(192, 168, 0, 0), 24).unwrap()),
-                                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(std::net::Ipv4Addr::new(10, 0, 0, 0), 8).unwrap()),
-                                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::new(std::net::Ipv4Addr::new(127, 0, 0, 1), 32).unwrap()),
-                                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::new(std::net::Ipv6Addr::LOCALHOST, 128).unwrap()),
-                                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::new("2001:db8::".parse().unwrap(), 32).unwrap()),
+                                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(192, 168, 0, 0), 24).unwrap()),
+                                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(10, 0, 0, 0), 8).unwrap()),
+                                        sqlx::types::ipnetwork::IpNetwork::V4(sqlx::types::ipnetwork::Ipv4Network::#new_snake_case(std::net::Ipv4Addr::#new_snake_case(127, 0, 0, 1), 32).unwrap()),
+                                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#new_snake_case(std::net::Ipv6Addr::LOCALHOST, 128).unwrap()),
+                                        sqlx::types::ipnetwork::IpNetwork::V6(sqlx::types::ipnetwork::Ipv6Network::#new_snake_case("2001:db8::".parse().unwrap(), 32).unwrap()),
                                     ]},
                                     PostgresqlType::SqlxTypesMacAddressMacAddressAsMacAddr => quote::quote!{vec![
-                                        sqlx::types::mac_address::MacAddress::new([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]), // All zeros
-                                        sqlx::types::mac_address::MacAddress::new([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]), // All ones (broadcast address)
-                                        sqlx::types::mac_address::MacAddress::new([0x02, 0x00, 0x00, 0x00, 0x00, 0x01]), // Locally administered address
-                                        sqlx::types::mac_address::MacAddress::new([0x00, 0x1A, 0x2B, 0x3C, 0x4D, 0x5E]), // Universally administered address
-                                        sqlx::types::mac_address::MacAddress::new([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
-                                        sqlx::types::mac_address::MacAddress::new([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
+                                        sqlx::types::mac_address::MacAddress::#new_snake_case([0x00, 0x00, 0x00, 0x00, 0x00, 0x00]), // All zeros
+                                        sqlx::types::mac_address::MacAddress::#new_snake_case([0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]), // All ones (broadcast address)
+                                        sqlx::types::mac_address::MacAddress::#new_snake_case([0x02, 0x00, 0x00, 0x00, 0x00, 0x01]), // Locally administered address
+                                        sqlx::types::mac_address::MacAddress::#new_snake_case([0x00, 0x1A, 0x2B, 0x3C, 0x4D, 0x5E]), // Universally administered address
+                                        sqlx::types::mac_address::MacAddress::#new_snake_case([0x01, 0x00, 0x5E, 0x00, 0x00, 0xFB]), // Multicast address
+                                        sqlx::types::mac_address::MacAddress::#new_snake_case([0xDE, 0xAD, 0xBE, 0xEF, 0xCA, 0xFE]), // Random valid MAC
                                     ]},
                                     PostgresqlType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range => generate_int_pgrange_test_cases_token_stream(
                                         &IntRangeType::SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range
@@ -6392,16 +6394,16 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     }
                 },
                 &if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                    quote::quote! {#ident_read_upper_camel_case::try_new(#value_snake_case).unwrap()}
+                    quote::quote! {#ident_read_upper_camel_case::#try_new_snake_case(#value_snake_case).unwrap()}
                 }
                 else {
-                    quote::quote! {#ident_read_upper_camel_case::new(#value_snake_case)}
+                    quote::quote! {#ident_read_upper_camel_case::#new_snake_case(#value_snake_case)}
                 },
                 &if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
-                    quote::quote! {#ident_update_upper_camel_case::try_new(#value_snake_case).unwrap()}
+                    quote::quote! {#ident_update_upper_camel_case::#try_new_snake_case(#value_snake_case).unwrap()}
                 }
                 else {
-                    quote::quote! {#ident_update_upper_camel_case::new(#value_snake_case)}
+                    quote::quote! {#ident_update_upper_camel_case::#new_snake_case(#value_snake_case)}
                 },
             );
             let generated = quote::quote! {

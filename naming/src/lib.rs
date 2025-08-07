@@ -663,7 +663,10 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["included"],
     ["excluded"],
     ["unbounded"],
-    ["normalize"]
+    ["normalize"],
+    ["new"],
+    ["try", "new"],
+    ["try", "new", "for", "deserialize"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
