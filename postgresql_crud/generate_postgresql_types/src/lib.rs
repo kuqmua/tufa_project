@@ -5540,9 +5540,74 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         &postgresql_type_pattern,
                         &PostgresqlTypeRange::try_from(postgresql_type)
                     ) {
+                        let generate_range_match_token_stream = |
+                            included_included_token_stream: &dyn quote::ToTokens,
+                            included_excluded_token_stream: &dyn quote::ToTokens,
+                            included_unbounded_token_stream: &dyn quote::ToTokens,
+                            excluded_included_token_stream: &dyn quote::ToTokens,
+                            excluded_excluded_token_stream: &dyn quote::ToTokens,
+                            excluded_unbounded_token_stream: &dyn quote::ToTokens,
+                            unbounded_included_token_stream: &dyn quote::ToTokens,
+                            unbounded_excluded_token_stream: &dyn quote::ToTokens,
+                        |{
+                            quote::quote!{
+                                #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (#value_snake_case.0.0.#start_snake_case, #value_snake_case.0.0.#end_snake_case) {
+                                    (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
+                                        #included_included_token_stream
+                                    },
+                                    (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
+                                        #included_excluded_token_stream
+                                    },
+                                    (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#unbounded_upper_camel_case) => {
+                                        #included_unbounded_token_stream
+                                    },
+                                    (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
+                                        #excluded_included_token_stream
+                                    },
+                                    (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
+                                        #excluded_excluded_token_stream
+                                    },
+                                    (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#unbounded_upper_camel_case) => {
+                                        #excluded_unbounded_token_stream
+                                    },
+                                    (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
+                                        #unbounded_included_token_stream
+                                    },
+                                    (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
+                                        #unbounded_excluded_token_stream
+                                    },
+                                    (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#unbounded_upper_camel_case) => sqlx::postgres::types::PgRange {
+                                        #start_snake_case: std::ops::Bound::Unbounded,
+                                        #end_snake_case: std::ops::Bound::Unbounded,
+                                    },
+                                }))
+                            }
+                        };
+                        let included_start_token_stream = quote::quote!{#included_upper_camel_case(#start_snake_case)};
+                        let excluded_end_token_stream = quote::quote!{#excluded_upper_camel_case(#end_snake_case)};
+                        let generate_sqlx_postgres_types_pg_range_token_stream = |start_token_stream: &dyn quote::ToTokens,end_token_stream: &dyn quote::ToTokens|quote::quote!{
+                            sqlx::postgres::types::PgRange{
+                                #start_snake_case: std::ops::Bound::#start_token_stream,
+                                #end_snake_case: std::ops::Bound::#end_token_stream
+                            }
+                        };
+                        let sqlx_postgres_types_pg_range_included_included_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                            &quote::quote!{Included(#start_snake_case)},
+                            &quote::quote!{Included(#end_snake_case)},
+                        );
+                        let sqlx_postgres_types_pg_range_excluded_included_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                            &quote::quote!{Excluded(#start_snake_case)},
+                            &quote::quote!{Included(#end_snake_case)},
+                        );
+                        let sqlx_postgres_types_pg_range_included_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                            &included_start_token_stream,
+                            &excluded_end_token_stream
+                        );
+                        let sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                            &unbounded_upper_camel_case,
+                            &unbounded_upper_camel_case
+                        );
                         let int_range_normalize_token_stream = {
-                            let included_start_token_stream = quote::quote!{#included_upper_camel_case(#start_snake_case)};
-                            let excluded_end_token_stream = quote::quote!{#excluded_upper_camel_case(#end_snake_case)};
                             let generate_included_start_checked_add_token_stream = |id: &dyn std::fmt::Display|{
                                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&id);
                                 quote::quote!{#included_upper_camel_case(#start_snake_case.checked_add(1).expect(#format_handle_token_stream))}
@@ -5551,24 +5616,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&id);
                                 quote::quote!{#excluded_upper_camel_case(#end_snake_case.checked_add(1).expect(#format_handle_token_stream))}
                             };
-                            let generate_sqlx_postgres_types_pg_range_token_stream = |
-                                start_token_stream: &dyn quote::ToTokens,
-                                end_token_stream: &dyn quote::ToTokens,
-                            |quote::quote!{sqlx::postgres::types::PgRange{
-                                #start_snake_case: std::ops::Bound::#start_token_stream,
-                                #end_snake_case: std::ops::Bound::#end_token_stream
-                            }};
-                            let sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &unbounded_upper_camel_case,
-                                &unbounded_upper_camel_case
-                            );
                             let included_excluded_checked_add_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
                                 &included_start_token_stream,
                                 &generate_excluded_end_checked_add_token_stream(&"73fe1d32-6a04-4578-b251-15ed7009b47e")
-                            );
-                            let included_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &included_start_token_stream,
-                                &excluded_end_token_stream
                             );
                             let included_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
                                 &included_start_token_stream,
@@ -5594,261 +5644,202 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                 &unbounded_upper_camel_case,
                                 &excluded_end_token_stream
                             );
-                            let unbounded_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &unbounded_upper_camel_case,
-                                &unbounded_upper_camel_case
-                            );
-                            quote::quote!{
-                                #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (#value_snake_case.0.0.#start_snake_case, #value_snake_case.0.0.#end_snake_case) {
-                                    (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
-                                        #included_excluded_checked_add_token_stream
-                                    },
-                                    (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
-                                        }
-                                        else {
-                                            #included_excluded_token_stream
-                                        }
-                                    },
-                                    (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#unbounded_upper_camel_case) => {
-                                        #included_unbounded_token_stream
-                                    },
-                                    (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
-                                        }
-                                        else {
-                                            #included_checked_add_excluded_checked_add_token_stream
-                                        }
-                                    },
-                                    (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
-                                        }
-                                        else {
-                                            #included_checked_add_excluded_token_stream
-                                        }
-                                    },
-                                    (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#unbounded_upper_camel_case) => {
-                                        #included_checked_add_unbounded_token_stream
-                                    },
-                                    (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
-                                        #unbounded_excluded_checked_add_token_stream
-                                    },
-                                    (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
-                                        #unbounded_excluded_token_stream
-                                    },
-                                    (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#unbounded_upper_camel_case) => {
-                                        #unbounded_unbounded_token_stream
-                                    },
-                                }))
-                            }
+                            generate_range_match_token_stream(
+                                &included_excluded_checked_add_token_stream,
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    }
+                                    else {
+                                        #sqlx_postgres_types_pg_range_included_excluded_token_stream
+                                    }
+                                },
+                                &included_unbounded_token_stream,
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    }
+                                    else {
+                                        #included_checked_add_excluded_checked_add_token_stream
+                                    }
+                                },
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    }
+                                    else {
+                                        #included_checked_add_excluded_token_stream
+                                    }
+                                },
+                                &included_checked_add_unbounded_token_stream,
+                                &unbounded_excluded_checked_add_token_stream,
+                                &unbounded_excluded_token_stream,
+                            )
                         };
                         match &postgresql_type_range {
                             PostgresqlTypeRange::StdPrimitiveI32AsInt4 => int_range_normalize_token_stream,
                             PostgresqlTypeRange::StdPrimitiveI64AsInt8 => int_range_normalize_token_stream,
-                            PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => quote::quote!{
-                                #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (#value_snake_case.0.0.#start_snake_case, #value_snake_case.0.0.#end_snake_case) {
-                                    (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                            PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => generate_range_match_token_stream(
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Included(#start_snake_case),
                                         #end_snake_case: std::ops::Bound::Excluded(#end_snake_case.succ_opt().expect("9ebce3b4-4ca7-4ff5-8b7a-a3539125bba0")),
-                                    },
-                                    (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Unbounded,
-                                                #end_snake_case: std::ops::Bound::Unbounded,
-                                            }
-                                        } else {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Included(#start_snake_case),
-                                                #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                            }
-                                        }
                                     }
-                                    (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
+                                },
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    } else {
+                                        #sqlx_postgres_types_pg_range_included_excluded_token_stream
+                                    }
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Included(#start_snake_case),
                                         #end_snake_case: std::ops::Bound::Unbounded,
-                                    },
-                                    (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Unbounded,
-                                                #end_snake_case: std::ops::Bound::Unbounded,
-                                            }
-                                        } else {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Included(#start_snake_case.succ_opt().expect("98a0357b-d21a-4949-a101-c641528d2376")),
-                                                #end_snake_case: std::ops::Bound::Excluded(#end_snake_case.succ_opt().expect("fe53a6b9-2d7e-4605-9f5a-7f5c21cc01e6")),
-                                            }
+                                    }
+                                },
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    } else {
+                                        sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Included(#start_snake_case.succ_opt().expect("98a0357b-d21a-4949-a101-c641528d2376")),
+                                            #end_snake_case: std::ops::Bound::Excluded(#end_snake_case.succ_opt().expect("fe53a6b9-2d7e-4605-9f5a-7f5c21cc01e6")),
                                         }
                                     }
-                                    (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Unbounded,
-                                                #end_snake_case: std::ops::Bound::Unbounded,
-                                            }
-                                        } else {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Included(#start_snake_case.succ_opt().expect("d8a26635-c478-4a2a-acf4-bf1765702889")),
-                                                #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                            }
+                                },
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    } else {
+                                        sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Included(#start_snake_case.succ_opt().expect("d8a26635-c478-4a2a-acf4-bf1765702889")),
+                                            #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
                                         }
                                     }
-                                    (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Included(#start_snake_case.succ_opt().expect("9811c7c7-d7f5-4fb7-9d25-affb0bd4f5fb")),
                                         #end_snake_case: std::ops::Bound::Unbounded,
-                                    },
-                                    (std::ops::Bound::Unbounded, std::ops::Bound::Included(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                                    }
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Unbounded,
                                         #end_snake_case: std::ops::Bound::Excluded(#end_snake_case.succ_opt().expect("d6288f19-0a24-42ad-9e69-36036d9f2c1d")),
-                                    },
-                                    (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                                    }
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Unbounded,
                                         #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                    },
-                                    (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Unbounded,
-                                        #end_snake_case: std::ops::Bound::Unbounded,
-                                    },
-                                }))
-                            },
-                            PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => quote::quote!{
-                                #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (#value_snake_case.0.0.#start_snake_case, #value_snake_case.0.0.#end_snake_case) {
-                                    (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Included(#start_snake_case),
-                                        #end_snake_case: std::ops::Bound::Included(#end_snake_case),
-                                    },
-                                    (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Unbounded,
-                                                #end_snake_case: std::ops::Bound::Unbounded,
-                                            }
-                                        } else {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Included(#start_snake_case),
-                                                #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                            }
-                                        }
                                     }
-                                    (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
+                                },
+                            ),
+                            PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => generate_range_match_token_stream(
+                                &sqlx_postgres_types_pg_range_included_included_token_stream,
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    } else {
+                                        #sqlx_postgres_types_pg_range_included_excluded_token_stream
+                                    }
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Included(#start_snake_case),
                                         #end_snake_case: std::ops::Bound::Unbounded,
-                                    },
-                                    (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Unbounded,
-                                                #end_snake_case: std::ops::Bound::Unbounded,
-                                            }
-                                        } else {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
-                                                #end_snake_case: std::ops::Bound::Included(#end_snake_case),
-                                            }
+                                    }
+                                },
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    } else {
+                                        #sqlx_postgres_types_pg_range_excluded_included_token_stream
+                                    }
+                                },
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    } else {
+                                        sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
+                                            #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
                                         }
                                     }
-                                    (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Unbounded,
-                                                #end_snake_case: std::ops::Bound::Unbounded,
-                                            }
-                                        } else {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
-                                                #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                            }
-                                        }
-                                    }
-                                    (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
                                         #end_snake_case: std::ops::Bound::Unbounded,
-                                    },
-                                    (std::ops::Bound::Unbounded, std::ops::Bound::Included(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                                    }
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Unbounded,
                                         #end_snake_case: std::ops::Bound::Included(#end_snake_case),
-                                    },
-                                    (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                                    }
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Unbounded,
                                         #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                    },
-                                    (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Unbounded,
-                                        #end_snake_case: std::ops::Bound::Unbounded,
-                                    },
-                                }))
-                            },
-                            PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => quote::quote!{
-                                #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (#value_snake_case.0.0.#start_snake_case, #value_snake_case.0.0.#end_snake_case) {
-                                    (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Included(#start_snake_case),
-                                        #end_snake_case: std::ops::Bound::Included(#end_snake_case),
-                                    },
-                                    (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Unbounded,
-                                                #end_snake_case: std::ops::Bound::Unbounded,
-                                            }
-                                        } else {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Included(#start_snake_case),
-                                                #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                            }
-                                        }
                                     }
-                                    (std::ops::Bound::Included(#start_snake_case), std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
+                                },
+                            ),
+                            PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => generate_range_match_token_stream(
+                                &sqlx_postgres_types_pg_range_included_included_token_stream,
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    } else {
+                                        #sqlx_postgres_types_pg_range_included_excluded_token_stream
+                                    }
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Included(#start_snake_case),
                                         #end_snake_case: std::ops::Bound::Unbounded,
-                                    },
-                                    (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Included(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Unbounded,
-                                                #end_snake_case: std::ops::Bound::Unbounded,
-                                            }
-                                        } else {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
-                                                #end_snake_case: std::ops::Bound::Included(#end_snake_case),
-                                            }
+                                    }
+                                },
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    } else {
+                                        #sqlx_postgres_types_pg_range_excluded_included_token_stream
+                                    }
+                                },
+                                &quote::quote!{
+                                    if #start_snake_case == #end_snake_case {
+                                        #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream
+                                    } else {
+                                        sqlx::postgres::types::PgRange {
+                                            #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
+                                            #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
                                         }
                                     }
-                                    (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Excluded(#end_snake_case)) => {
-                                        if #start_snake_case == #end_snake_case {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Unbounded,
-                                                #end_snake_case: std::ops::Bound::Unbounded,
-                                            }
-                                        } else {
-                                            sqlx::postgres::types::PgRange {
-                                                #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
-                                                #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                            }
-                                        }
-                                    }
-                                    (std::ops::Bound::Excluded(#start_snake_case), std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Excluded(#start_snake_case),
                                         #end_snake_case: std::ops::Bound::Unbounded,
-                                    },
-                                    (std::ops::Bound::Unbounded, std::ops::Bound::Included(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                                    }
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Unbounded,
                                         #end_snake_case: std::ops::Bound::Included(#end_snake_case),
-                                    },
-                                    (std::ops::Bound::Unbounded, std::ops::Bound::Excluded(#end_snake_case)) => sqlx::postgres::types::PgRange {
+                                    }
+                                },
+                                &quote::quote!{
+                                    sqlx::postgres::types::PgRange {
                                         #start_snake_case: std::ops::Bound::Unbounded,
                                         #end_snake_case: std::ops::Bound::Excluded(#end_snake_case),
-                                    },
-                                    (std::ops::Bound::Unbounded, std::ops::Bound::Unbounded) => sqlx::postgres::types::PgRange {
-                                        #start_snake_case: std::ops::Bound::Unbounded,
-                                        #end_snake_case: std::ops::Bound::Unbounded,
-                                    },
-                                }))
-                            },
+                                    }
+                                },
+                            ),
                         }
                     } else {
                         quote::quote!{#value_snake_case}
