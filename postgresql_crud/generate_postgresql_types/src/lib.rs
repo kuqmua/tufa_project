@@ -971,7 +971,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let self_upper_camel_case = naming::SelfUpperCamelCase;
             let element_upper_camel_case = naming::ElementUpperCamelCase;
             let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
-            let postgresql_type_test_cases_upper_camel_case = naming::PostgresqlTypeTestCasesUpperCamelCase;
             
             let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
