@@ -1245,3 +1245,36 @@ pub fn std_primitive_i32_test_vec_token_stream() -> proc_macro2::TokenStream {
 pub fn std_primitive_i64_test_vec_token_stream() -> proc_macro2::TokenStream {
     generate_int_min_zero_max_test_vec_token_stream(&quote::quote!{std::primitive::i64})
 }
+pub fn std_primitive_f32_test_vec_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{vec![
+        std::primitive::f32::EPSILON,
+        std::primitive::f32::MAX,
+        std::primitive::f32::MIN,
+        std::primitive::f32::MIN_POSITIVE,
+        -1e30,
+        -1e-30,
+        -1.0,
+        -0.0,
+        0.0,
+        1.0,
+        3.1415,
+        -3.1415,
+        1e-30,
+        1e30
+    ]}
+}
+pub fn std_primitive_f64_test_vec_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{vec![
+        std::primitive::f64::MAX,
+        std::primitive::f64::MIN,
+        std::primitive::f64::MIN_POSITIVE,
+        -1e300,
+        -1e-300,
+        -1.0,
+        -0.0,
+        0.0,
+        1.0,
+        1e-300,
+        1e300
+    ]}
+}
