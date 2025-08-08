@@ -1942,7 +1942,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 PostgresqlJsonType::StdPrimitiveF32AsJsonbNumber => postgresql_crud_macros_common::std_primitive_f32_test_vec_token_stream(),
                                 PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => postgresql_crud_macros_common::std_primitive_f64_test_vec_token_stream(),
                                 PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => postgresql_crud_macros_common::std_primitive_bool_test_vec_token_stream(),
-                                PostgresqlJsonType::StdStringStringAsJsonbString => quote::quote!{vec![]},
+                                PostgresqlJsonType::StdStringStringAsJsonbString => postgresql_crud_macros_common::std_string_string_test_vec_token_stream(),
                                 PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{vec![]},
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{vec![]},

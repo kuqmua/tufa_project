@@ -1281,3 +1281,19 @@ pub fn std_primitive_f64_test_vec_token_stream() -> proc_macro2::TokenStream {
 pub fn std_primitive_bool_test_vec_token_stream() -> proc_macro2::TokenStream {
     quote::quote!{vec![true, false]}
 }
+pub fn std_string_string_test_vec_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{vec![
+        "".to_string(), // empty
+        "a".to_string(), // single character
+        "Hello, world!".to_string(), // basic ASCII
+        "   ".to_string(), // spaces only
+        "\n\r\t".to_string(), // escape/control characters
+        "1234567890".to_string(), // numeric string
+        "😀".to_string(), // emoji
+        "こんにちは".to_string(), // Japanese
+        "🌍🚀✨ Rust 💖🦀".to_string(), // mixed emoji + text
+        "a".repeat(1024), // long string (1 KB of 'a')
+        "line1\nline2\nline3".to_string(), // multi-line
+        String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
+    ]}
+}

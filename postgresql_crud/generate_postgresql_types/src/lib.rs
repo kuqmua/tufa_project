@@ -5786,20 +5786,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             #inner_type_standart_not_null_token_stream(std::primitive::i64::MAX)
                                         ]},
                                         PostgresqlType::StdPrimitiveBoolAsBool => postgresql_crud_macros_common::std_primitive_bool_test_vec_token_stream(),
-                                        PostgresqlType::StdStringStringAsText => quote::quote!{vec![
-                                            "".to_string(), // empty
-                                            "a".to_string(), // single character
-                                            "Hello, world!".to_string(), // basic ASCII
-                                            "   ".to_string(), // spaces only
-                                            "\n\r\t".to_string(), // escape/control characters
-                                            "1234567890".to_string(), // numeric string
-                                            "😀".to_string(), // emoji
-                                            "こんにちは".to_string(), // Japanese
-                                            "🌍🚀✨ Rust 💖🦀".to_string(), // mixed emoji + text
-                                            "a".repeat(1024), // long string (1 KB of 'a')
-                                            "line1\nline2\nline3".to_string(), // multi-line
-                                            String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
-                                        ]},
+                                        PostgresqlType::StdStringStringAsText => postgresql_crud_macros_common::std_string_string_test_vec_token_stream(),
                                         PostgresqlType::StdVecVecStdPrimitiveU8AsBytea => quote::quote!{vec![
                                             vec![],
                                             (0u8..=255).collect(),
