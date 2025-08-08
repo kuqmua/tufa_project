@@ -5772,9 +5772,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                         &sqlx_types_chrono_naive_date_time_max_token_stream
                                     );
                                     match &postgresql_type {
-                                        PostgresqlType::StdPrimitiveI16AsInt2 => quote::quote!{vec![std::primitive::i16::MIN, 0, std::primitive::i16::MAX]},
-                                        PostgresqlType::StdPrimitiveI32AsInt4 => quote::quote!{vec![std::primitive::i32::MIN, 0, std::primitive::i32::MAX]},
-                                        PostgresqlType::StdPrimitiveI64AsInt8 => quote::quote!{vec![std::primitive::i64::MIN, 0, std::primitive::i64::MAX]},
+                                        PostgresqlType::StdPrimitiveI16AsInt2 => postgresql_crud_macros_common::std_primitive_i16_test_vec_token_stream(),
+                                        PostgresqlType::StdPrimitiveI32AsInt4 => postgresql_crud_macros_common::std_primitive_i32_test_vec_token_stream(),
+                                        PostgresqlType::StdPrimitiveI64AsInt8 => postgresql_crud_macros_common::std_primitive_i64_test_vec_token_stream(),
                                         PostgresqlType::StdPrimitiveF32AsFloat4 => quote::quote!{vec![
                                             std::primitive::f32::EPSILON,
                                             std::primitive::f32::MAX,

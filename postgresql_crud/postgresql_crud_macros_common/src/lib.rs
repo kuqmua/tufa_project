@@ -1232,3 +1232,16 @@ pub fn maybe_wrap_into_braces_token_stream(content_token_stream: &dyn quote::ToT
         quote::quote!{#content_token_stream}
     }
 }
+
+pub fn generate_int_min_zero_max_test_vec_token_stream(value: &dyn quote::ToTokens) -> proc_macro2::TokenStream {
+    quote::quote!{vec![#value::MIN, 0, #value::MAX]}
+}
+pub fn std_primitive_i16_test_vec_token_stream() -> proc_macro2::TokenStream {
+    generate_int_min_zero_max_test_vec_token_stream(&quote::quote!{std::primitive::i16})
+}
+pub fn std_primitive_i32_test_vec_token_stream() -> proc_macro2::TokenStream {
+    generate_int_min_zero_max_test_vec_token_stream(&quote::quote!{std::primitive::i32})
+}
+pub fn std_primitive_i64_test_vec_token_stream() -> proc_macro2::TokenStream {
+    generate_int_min_zero_max_test_vec_token_stream(&quote::quote!{std::primitive::i64})
+}
