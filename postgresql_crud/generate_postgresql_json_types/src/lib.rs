@@ -1898,6 +1898,15 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     &ident,
                     &{
                         use postgresql_crud_macros_common::NotNullOrNullable;
+                        let ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream = quote::quote!{
+                            <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
+                        };
+                        let into_iter_token_stream = quote::quote!{
+                            <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
+                                #ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream
+                            >>::test_cases()
+                            .into_iter()
+                        };
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 // #inner_type_standart_not_null_token_stream
@@ -1917,13 +1926,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {vec![uuid::Uuid::new_v4()]},
                                 },
                                 NotNullOrNullable::Nullable => quote::quote!{
-                                    let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
-                                        <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
-                                    >>::test_cases()
-                                    .into_iter()
+                                    let mut acc = #into_iter_token_stream
                                     .map(|element|Some(element))
                                     .collect::<std::vec::Vec<
-                                        std::option::Option<<#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner>
+                                        std::option::Option<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
                                     >>();
                                     acc.push(None);
                                     acc
@@ -1931,53 +1937,41 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {
-                                    <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
-                                        <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
-                                    >>::test_cases()
-                                    .into_iter()
+                                    #into_iter_token_stream
                                     .map(|element|vec![element])
                                     .collect::<std::vec::Vec<
-                                        std::vec::Vec<<#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner>
+                                        std::vec::Vec<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
                                     >>()
                                 },
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote! {
-                                    let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
-                                        <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
-                                    >>::test_cases()
-                                    .into_iter()
+                                    let mut acc = #into_iter_token_stream
                                     .map(|element|vec![Some(element)])
                                     .collect::<std::vec::Vec<
                                         std::vec::Vec<
-                                            std::option::Option<<#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner>
+                                            std::option::Option<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
                                         >
                                     >>();
                                     acc.push(vec![None]);
                                     acc
                                 },
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote! {
-                                    let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
-                                        <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
-                                    >>::test_cases()
-                                    .into_iter()
+                                    let mut acc = #into_iter_token_stream
                                     .map(|element|Some(vec![element]))
                                     .collect::<std::vec::Vec<
                                         std::option::Option<
-                                            std::vec::Vec<<#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner>
+                                            std::vec::Vec<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
                                         >
                                     >>();
                                     acc.push(None);
                                     acc
                                 },
                                 (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote! {
-                                    let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
-                                        <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
-                                    >>::test_cases()
-                                    .into_iter()
+                                    let mut acc = #into_iter_token_stream
                                     .map(|element|Some(vec![Some(element)]))
                                     .collect::<std::vec::Vec<
                                         std::option::Option<
                                             std::vec::Vec<
-                                                std::option::Option<<#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner>
+                                                std::option::Option<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
                                             >
                                         >
                                     >>();
