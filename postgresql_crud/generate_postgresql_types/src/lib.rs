@@ -5785,7 +5785,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                             #inner_type_standart_not_null_token_stream(0),
                                             #inner_type_standart_not_null_token_stream(std::primitive::i64::MAX)
                                         ]},
-                                        PostgresqlType::StdPrimitiveBoolAsBool => quote::quote!{vec![true, false]},
+                                        PostgresqlType::StdPrimitiveBoolAsBool => postgresql_crud_macros_common::std_primitive_bool_test_vec_token_stream(),
                                         PostgresqlType::StdStringStringAsText => quote::quote!{vec![
                                             "".to_string(), // empty
                                             "a".to_string(), // single character

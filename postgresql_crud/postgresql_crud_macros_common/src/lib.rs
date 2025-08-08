@@ -1278,3 +1278,6 @@ pub fn std_primitive_f64_test_vec_token_stream() -> proc_macro2::TokenStream {
         1e300
     ]}
 }
+pub fn std_primitive_bool_test_vec_token_stream() -> proc_macro2::TokenStream {
+    quote::quote!{vec![true, false]}
+}
