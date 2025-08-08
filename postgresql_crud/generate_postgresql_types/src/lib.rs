@@ -5964,7 +5964,6 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     acc.push(Some(vec![None]));
                                     acc
                                 },
-
                             }
                         }
                     },

@@ -1952,7 +1952,63 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                         },
                         PostgresqlJsonTypePattern::ArrayDimension1 {
                             dimension1_not_null_or_nullable
-                        } => quote::quote!{vec![]},
+                        } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{
+                                <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
+                                >>::test_cases()
+                                .into_iter()
+                                .map(|element|vec![element])
+                                .collect::<std::vec::Vec<
+                                    std::vec::Vec<<#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner>
+                                >>()
+                            },
+                            (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{
+                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
+                                >>::test_cases()
+                                .into_iter()
+                                .map(|element|vec![Some(element)])
+                                .collect::<std::vec::Vec<
+                                    std::vec::Vec<
+                                        std::option::Option<<#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner>
+                                    >
+                                >>();
+                                acc.push(vec![None]);
+                                acc
+                            },
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => quote::quote!{
+                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
+                                >>::test_cases()
+                                .into_iter()
+                                .map(|element|Some(vec![element]))
+                                .collect::<std::vec::Vec<
+                                    std::option::Option<
+                                        std::vec::Vec<<#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner>
+                                    >
+                                >>();
+                                acc.push(None);
+                                acc
+                            },
+                            (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => quote::quote!{
+                                let mut acc = <#ident_standart_not_null_upper_camel_case as crate::tests::PostgresqlJsonTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner
+                                >>::test_cases()
+                                .into_iter()
+                                .map(|element|Some(vec![Some(element)]))
+                                .collect::<std::vec::Vec<
+                                    std::option::Option<
+                                        std::vec::Vec<
+                                            std::option::Option<<#ident_standart_not_null_upper_camel_case as crate::PostgresqlJsonType>::ReadInner>
+                                        >
+                                    >
+                                >>();
+                                acc.push(None);
+                                acc.push(Some(vec![None]));
+                                acc
+                            },
+                        },
                         PostgresqlJsonTypePattern::ArrayDimension2 {
                             dimension1_not_null_or_nullable,
                             dimension2_not_null_or_nullable,
