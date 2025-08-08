@@ -1297,3 +1297,45 @@ pub fn std_string_string_test_vec_token_stream() -> proc_macro2::TokenStream {
         String::from_utf8_lossy(&[0xF0, 0x9F, 0x92, 0x96]).to_string(), // 💖 as raw bytes
     ]}
 }
+
+pub enum PostgresqlTypeOrPostgresqlJsonType {
+    PostgresqlType,
+    PostgresqlJsonType
+}
+pub fn generate_standart_nullable_test_vec_token_stream(
+    ident_standart_not_null_upper_camel_case: &dyn quote::ToTokens,
+    postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType
+) -> proc_macro2::TokenStream {
+    let (
+        postgresql_type_or_postgresql_json_type_upper_camel_case,
+        postgresql_type_test_cases_or_postgresql_json_type_test_cases_upper_camel_case
+    ): (
+        &dyn quote::ToTokens,
+        &dyn quote::ToTokens,
+    ) = match &postgresql_type_or_postgresql_json_type {
+        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => (
+            &naming::PostgresqlTypeUpperCamelCase,
+            &naming::PostgresqlTypeTestCasesUpperCamelCase,
+        ),
+        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => (
+            &naming::PostgresqlJsonTypeUpperCamelCase,
+            &naming::PostgresqlJsonTypeTestCasesUpperCamelCase,
+        )
+    };
+    let read_inner_token_stream = quote::quote!{<#ident_standart_not_null_upper_camel_case as crate::#postgresql_type_or_postgresql_json_type_upper_camel_case>::ReadInner};
+    let test_cases_snake_case = naming::TestCasesSnakeCase;
+    let element_snake_case = naming::ElementSnakeCase;
+    let acc_snake_case = naming::AccSnakeCase;
+    quote::quote!{
+        let mut #acc_snake_case = <#ident_standart_not_null_upper_camel_case as crate::tests::#postgresql_type_test_cases_or_postgresql_json_type_test_cases_upper_camel_case<
+            #read_inner_token_stream
+        >>::#test_cases_snake_case()
+        .into_iter()
+        .map(|#element_snake_case|Some(#element_snake_case))
+        .collect::<std::vec::Vec<
+            std::option::Option<#read_inner_token_stream>
+        >>();
+        #acc_snake_case.push(None);
+        #acc_snake_case
+    }
+}

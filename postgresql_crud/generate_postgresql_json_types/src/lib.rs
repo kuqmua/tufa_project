@@ -1943,9 +1943,12 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 PostgresqlJsonType::StdPrimitiveF64AsJsonbNumber => postgresql_crud_macros_common::std_primitive_f64_test_vec_token_stream(),
                                 PostgresqlJsonType::StdPrimitiveBoolAsJsonbBoolean => postgresql_crud_macros_common::std_primitive_bool_test_vec_token_stream(),
                                 PostgresqlJsonType::StdStringStringAsJsonbString => postgresql_crud_macros_common::std_string_string_test_vec_token_stream(),
-                                PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{vec![]},
+                                PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote!{vec![uuid::Uuid::new_v4()]},
                             },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{vec![]},
+                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => postgresql_crud_macros_common::generate_standart_nullable_test_vec_token_stream(
+                                &ident_standart_not_null_upper_camel_case,
+                                &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType
+                            ),
                         },
                         PostgresqlJsonTypePattern::ArrayDimension1 {
                             dimension1_not_null_or_nullable

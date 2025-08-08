@@ -343,24 +343,20 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
         let pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream = generate_pub_dimensions_bounded_vec_token_stream(&dimension_number.dimension_token_stream(), &KindOfUnsignedPartOfStdPrimitiveI32::CanBeZero);
         quote::quote! {#pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_token_stream,}
     };
-    enum PostgresqlTypeOrPostgresqlJsonType {
-        PostgresqlType,
-        PostgresqlJsonType
-    }
-    let generate_postgresql_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, postgresql_type_or_postgresql_json_type: &PostgresqlTypeOrPostgresqlJsonType|{
+    let generate_postgresql_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle, postgresql_type_or_postgresql_json_type: &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType|{
         if let Ok(dimension_number) = DimensionNumber::try_from(postgresql_type_pattern_handle) {
             (
                 match &postgresql_type_or_postgresql_json_type {
-                    PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
-                    PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
+                    postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => generate_pub_dimensions_bounded_vec_not_zero_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
+                    postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => generate_pub_dimensions_bounded_vec_unsigned_part_of_std_primitive_i32_comma_token_stream(&dimension_number),
                 },
                 dimensions_default_initialization_comma_token_stream.clone(),
                 generate_ident_match_self_field_function_increment_column_is_need_to_add_logical_operator_initialization_token_stream(
                     &dimensions_indexes_snake_case,
                     &dimensions_snake_case,
                     &match &postgresql_type_or_postgresql_json_type {
-                        PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => quote::quote!{postgresql_type_query_part},
-                        PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => quote::quote!{postgresql_json_type_query_part}
+                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType => quote::quote!{postgresql_type_query_part},
+                        postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType => quote::quote!{postgresql_json_type_query_part}
                     },
                 ),
                 PostgresqlTypeKind::ArrayDimension,
@@ -399,7 +395,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 };
                 let pub_value_postgresql_type_not_empty_unique_vec_t_token_stream = quote::quote!{pub value: crate::PostgresqlTypeNotEmptyUniqueVec<T>};
                 let generate_postgresql_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle|{
-                    generate_postgresql_type_dimensions_helpers(&postgresql_type_pattern_handle, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlType)
+                    generate_postgresql_type_dimensions_helpers(&postgresql_type_pattern_handle, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlType)
                 };
                 let generate_32abfefc_c087_480b_b502_cb78533dafb0_token_stream = |
                     postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
@@ -975,7 +971,7 @@ pub fn generate_where_element_filters(_input_token_stream: proc_macro::TokenStre
                 query
             };
             let generate_postgresql_json_type_dimensions_helpers = |postgresql_type_pattern_handle: &PostgresqlTypePatternHandle|{
-                generate_postgresql_type_dimensions_helpers(&postgresql_type_pattern_handle, &PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType)
+                generate_postgresql_type_dimensions_helpers(&postgresql_type_pattern_handle, &postgresql_crud_macros_common::PostgresqlTypeOrPostgresqlJsonType::PostgresqlJsonType)
             };
             let generate_1763ccf3_10be_4527_912b_363d8ea05f4b_token_stream = |
                 postgresql_type_pattern_handle: &PostgresqlTypePatternHandle,
