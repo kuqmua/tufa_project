@@ -1944,10 +1944,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 NotNullOrNullable::Nullable => quote::quote!{std::option::Option<std::vec::Vec<#content_token_stream>>}
                             }
                         };
-                        // let generate_maybe_push_1_token_stream = |not_null_or_nullable: &NotNullOrNullable|{
+                        // let maybe_push_none_token_stream = |not_null_or_nullable: &NotNullOrNullable|{
                         //     match &not_null_or_nullable {
                         //         NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
-                        //         NotNullOrNullable::Nullable => quote::quote!{acc.push(vec![None]);}
+                        //         NotNullOrNullable::Nullable => quote::quote!{acc.push(None);}
                         //     }
                         // };
                         // let generate_maybe_push_2_token_stream = |not_null_or_nullable: &NotNullOrNullable|{
@@ -2013,8 +2013,8 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             acc.push(None);
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(None);
                                             acc.push(Some(vec![None]));
+                                            acc.push(None);
                                         },
                                     }
                                 )
