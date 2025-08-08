@@ -666,7 +666,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["normalize"],
     ["new"],
     ["try", "new"],
-    ["try", "new", "for", "deserialize"]
+    ["try", "new", "for", "deserialize"],
+    ["postgresql", "json", "type", "test", "cases"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

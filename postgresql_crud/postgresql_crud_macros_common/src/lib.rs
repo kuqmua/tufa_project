@@ -797,19 +797,66 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
     let test_cases_snake_case = naming::TestCasesSnakeCase;
     let element_upper_camel_case = naming::ElementUpperCamelCase;
+    let self_upper_camel_case = naming::SelfUpperCamelCase;
+    let read_upper_camel_case = naming::ReadUpperCamelCase;
+    let update_upper_camel_case = naming::UpdateUpperCamelCase;
     quote::quote! {
         #[cfg(feature = "test-utils")]
         impl #import_path::tests::#postgresql_type_test_cases_upper_camel_case<#type_token_stream> for #ident {
-            type #element_upper_camel_case = Self;
-            fn #test_cases_snake_case() -> std::vec::Vec<<Self::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_inner_upper_camel_case> {
+            type #element_upper_camel_case = #self_upper_camel_case;
+            fn #test_cases_snake_case() -> std::vec::Vec<<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_inner_upper_camel_case> {
                 #test_cases_content_token_stream
             }
-            fn read_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <Self::Element as crate::PostgresqlType>::Read {
+            fn read_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_upper_camel_case {
                 #read_new_or_try_new_unwraped_for_test_token_stream
             }
-            fn update_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <Self::Element as crate::PostgresqlType>::Update {
+            fn update_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#update_upper_camel_case {
                 #update_new_or_try_new_unwraped_for_test_token_stream
             }
+        }
+    }
+}
+pub fn generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
+    import_path: &ImportPath,
+    type_token_stream: &dyn quote::ToTokens,
+    ident: &dyn quote::ToTokens,
+    test_cases_content_token_stream: &dyn quote::ToTokens,
+    read_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
+    update_new_or_try_new_unwraped_for_test_token_stream: &dyn quote::ToTokens,
+) -> proc_macro2::TokenStream {
+    let postgresql_json_type_upper_camel_case = naming::PostgresqlJsonTypeUpperCamelCase;
+    let postgresql_json_type_test_cases_upper_camel_case = naming::PostgresqlJsonTypeTestCasesUpperCamelCase;
+    let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
+    let test_cases_snake_case = naming::TestCasesSnakeCase;
+    let element_upper_camel_case = naming::ElementUpperCamelCase;
+    let self_upper_camel_case = naming::SelfUpperCamelCase;
+    let read_upper_camel_case = naming::ReadUpperCamelCase;
+    let update_upper_camel_case = naming::UpdateUpperCamelCase;
+    quote::quote! {
+        #[cfg(feature = "test-utils")]
+        impl #import_path::tests::#postgresql_json_type_test_cases_upper_camel_case<#type_token_stream> for #ident {
+            type #element_upper_camel_case = #self_upper_camel_case;
+            fn #test_cases_snake_case() -> std::vec::Vec<<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_inner_upper_camel_case> {
+                #test_cases_content_token_stream
+            }
+            fn read_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#read_upper_camel_case {
+                #read_new_or_try_new_unwraped_for_test_token_stream
+            }
+            fn update_new_or_try_new_unwraped_for_test(value: #type_token_stream) -> <#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_json_type_upper_camel_case>::#update_upper_camel_case {
+                #update_new_or_try_new_unwraped_for_test_token_stream
+            }
+        }
+    }
+}
+pub enum ReadOrUpdate {
+    Read,
+    Update
+}
+impl ReadOrUpdate {
+    pub fn upper_camel_case(&self) -> &dyn naming::StdFmtDisplayPlusQuoteToTokens {
+        match &self {
+            ReadOrUpdate::Read => &naming::ReadUpperCamelCase,
+            ReadOrUpdate::Update => &naming::UpdateUpperCamelCase,
         }
     }
 }

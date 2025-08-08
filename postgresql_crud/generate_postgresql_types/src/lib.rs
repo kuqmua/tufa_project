@@ -968,8 +968,9 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
             let new_snake_case = naming::NewSnakeCase;
             let try_new_snake_case = naming::TryNewSnakeCase;
             let try_new_for_deserialize_snake_case = naming::TryNewForDeserializeSnakeCase;
-            let read_upper_camel_case = naming::ReadUpperCamelCase;
-            let update_upper_camel_case = naming::UpdateUpperCamelCase;
+            let self_upper_camel_case = naming::SelfUpperCamelCase;
+            let element_upper_camel_case = naming::ElementUpperCamelCase;
+            let postgresql_type_upper_camel_case = naming::PostgresqlTypeUpperCamelCase;
             
             let std_primitive_u8_token_stream = token_patterns::StdPrimitiveU8;
             let std_primitive_u32_token_stream = token_patterns::StdPrimitiveU32;
@@ -5569,22 +5570,17 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                 )
             };
             let impl_postgresql_type_test_cases_for_ident_token_stream = {
-                enum ReadOrUpdate {
-                    Read,
-                    Update
-                }
-                let generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream = |read_or_update: &ReadOrUpdate|{
-                    let read_or_update_upper_camel_case: &dyn quote::ToTokens = match &read_or_update {
-                        ReadOrUpdate::Read => &read_upper_camel_case,
-                        ReadOrUpdate::Update => &update_upper_camel_case,
-                    };
+                let generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream = |read_or_update: &postgresql_crud_macros_common::ReadOrUpdate|{
+                    let read_or_update_upper_camel_case = read_or_update.upper_camel_case();
                     let content_token_stream = if postgresql_type_initialization_try_new_try_from_postgresql_type.is_ok() {
                         quote::quote! {#try_new_snake_case(#value_snake_case).unwrap()}
                     }
                     else {
                         quote::quote! {#new_snake_case(#value_snake_case)}
                     };
-                    quote::quote!{<Self::Element as crate::PostgresqlType>::#read_or_update_upper_camel_case:: #content_token_stream}
+                    quote::quote!{<#self_upper_camel_case::#element_upper_camel_case
+                        as 
+                    #postgresql_crud_macros_common_import_path_crate::#postgresql_type_upper_camel_case>::#read_or_update_upper_camel_case:: #content_token_stream}
                 };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
                     &postgresql_crud_macros_common_import_path_crate,
@@ -6019,8 +6015,8 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             }
                         }
                     },
-                    &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&ReadOrUpdate::Read),
-                    &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&ReadOrUpdate::Update),
+                    &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Read),
+                    &generate_read_or_update_new_or_try_new_unwraped_for_test_token_stream(&postgresql_crud_macros_common::ReadOrUpdate::Update),
                 )
             };
             let generated = quote::quote! {
