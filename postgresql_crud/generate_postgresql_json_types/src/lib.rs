@@ -1907,6 +1907,19 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             >>::test_cases()
                             .into_iter()
                         };
+                        let generate_acc_token_stream = |
+                            map_content_token_stream: &dyn quote::ToTokens,
+                            collect_content_token_stream: &dyn quote::ToTokens,
+                            acc_pushes_content_token_stream: &dyn quote::ToTokens,
+                        |{
+                            quote::quote! {
+                                let mut acc = #into_iter_token_stream
+                                .map(|element|#map_content_token_stream)
+                                .collect::<std::vec::Vec<#collect_content_token_stream>>();
+                                #acc_pushes_content_token_stream
+                                acc
+                            }
+                        };
                         match &postgresql_json_type_pattern {
                             PostgresqlJsonTypePattern::Standart => match &not_null_or_nullable {
                                 // #inner_type_standart_not_null_token_stream
@@ -1925,15 +1938,11 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     PostgresqlJsonType::StdStringStringAsJsonbString => postgresql_crud_macros_common::std_string_string_test_vec_token_stream(),
                                     PostgresqlJsonType::UuidUuidAsJsonbString => quote::quote! {vec![uuid::Uuid::new_v4()]},
                                 },
-                                NotNullOrNullable::Nullable => quote::quote!{
-                                    let mut acc = #into_iter_token_stream
-                                    .map(|element|Some(element))
-                                    .collect::<std::vec::Vec<
-                                        std::option::Option<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
-                                    >>();
-                                    acc.push(None);
-                                    acc
-                                },
+                                NotNullOrNullable::Nullable => generate_acc_token_stream(
+                                    &quote::quote!{Some(element)},
+                                    &quote::quote!{std::option::Option<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>},
+                                    &quote::quote!{acc.push(None);},
+                                )
                             },
                             PostgresqlJsonTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                 (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote! {
@@ -1943,42 +1952,36 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                         std::vec::Vec<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
                                     >>()
                                 },
-                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote! {
-                                    let mut acc = #into_iter_token_stream
-                                    .map(|element|vec![Some(element)])
-                                    .collect::<std::vec::Vec<
-                                        std::vec::Vec<
-                                            std::option::Option<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
-                                        >
-                                    >>();
-                                    acc.push(vec![None]);
-                                    acc
-                                },
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote! {
-                                    let mut acc = #into_iter_token_stream
-                                    .map(|element|Some(vec![element]))
-                                    .collect::<std::vec::Vec<
+                                (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => generate_acc_token_stream(
+                                    &quote::quote!{vec![Some(element)]},
+                                    &quote::quote!{std::vec::Vec<
+                                        std::option::Option<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
+                                    >},
+                                    &quote::quote!{acc.push(vec![None]);},
+                                ),
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => generate_acc_token_stream(
+                                    &quote::quote!{Some(vec![element])},
+                                    &quote::quote!{
                                         std::option::Option<
                                             std::vec::Vec<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
                                         >
-                                    >>();
-                                    acc.push(None);
-                                    acc
-                                },
-                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote! {
-                                    let mut acc = #into_iter_token_stream
-                                    .map(|element|Some(vec![Some(element)]))
-                                    .collect::<std::vec::Vec<
+                                    },
+                                    &quote::quote!{acc.push(None);},
+                                ),
+                                (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => generate_acc_token_stream(
+                                    &quote::quote!{Some(vec![Some(element)])},
+                                    &quote::quote!{
                                         std::option::Option<
                                             std::vec::Vec<
                                                 std::option::Option<#ident_standart_not_null_as_postgresql_json_type_read_inner_token_stream>
                                             >
                                         >
-                                    >>();
-                                    acc.push(None);
-                                    acc.push(Some(vec![None]));
-                                    acc
-                                },
+                                    },
+                                    &quote::quote!{
+                                        acc.push(None);
+                                        acc.push(Some(vec![None]));
+                                    },
+                                ),
                             },
                             PostgresqlJsonTypePattern::ArrayDimension2 {
                                 dimension1_not_null_or_nullable,
