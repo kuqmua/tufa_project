@@ -188,10 +188,38 @@ pub struct Example {
 #[derive(Debug
     , postgresql_crud::GeneratePostgresqlJsonObjectType
 )]
-#[postgresql_crud::postgresql_json_object_type_pattern{"All"}]
+#[postgresql_crud::postgresql_json_object_type_pattern{
+    // "All"
+    {
+        "Concrete": 
+        // [
+            {
+                "not_null_or_nullable": "NotNull",
+                "postgresql_json_object_type_pattern": "Standart",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
+            // ,
+            // {
+            //     "not_null_or_nullable": "NotNull",
+            //     "postgresql_json_object_type_pattern": "Array",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // },
+            // {
+            //     "not_null_or_nullable": "Nullable",
+            //     "postgresql_json_object_type_pattern": "Standart",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // },
+            // {
+            //     "not_null_or_nullable": "Nullable",
+            //     "postgresql_json_object_type_pattern": "Array",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
+        // ]
+    }
+}]
 pub struct Animal {
     pub field_0: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
-    // pub field_1: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
+    pub field_1: postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber,
     // pub field_2: postgresql_crud::postgresql_json_type::VecOfStdPrimitiveI8AsNotNullArrayOfNotNullJsonbNumber,
     // pub field_3: postgresql_crud::postgresql_json_type::VecOfOptionStdPrimitiveI8AsNotNullArrayOfNullableJsonbNumber,
     // pub field_4: postgresql_crud::postgresql_json_type::OptionVecOfStdPrimitiveI8AsNullableArrayOfNotNullJsonbNumber,
@@ -1373,6 +1401,12 @@ pub struct Animal {
 // Animal {
     // pub field_0: postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber,
 
+
+// #[derive(Clone)]
+// pub struct AnimalAsNotNullJsonbObjectReadInner {
+//     field_0: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner>>,
+//     field_1: std::option::Option<postgresql_crud::Value<<postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner>>,
+// }
 #[cfg(test)]
 impl postgresql_crud::tests::PostgresqlTypeTestCases<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner> for crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject {
     type Element = Self;
@@ -1384,8 +1418,34 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases<crate::repositories_types::
     fn read_new_or_try_new_unwraped_for_test(
         value: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner
     ) -> <Self::Element as postgresql_crud::PostgresqlType>::Read {
-        // <Self::Element as postgresql_crud::PostgresqlType>::Read::new(value)
-        todo!()
+        <Self::Element as postgresql_crud::PostgresqlType>::Read::try_new(
+            match value.field_0 {
+                Some(value) => Some(postgresql_crud::Value {
+                    value: <
+                        postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
+                        as
+                        postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                            <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                        >
+                    >::read_new_or_try_new_unwraped_for_test(value.value)
+                    
+                }),
+                None => None
+            },
+            match value.field_1 {
+                Some(value) => Some(postgresql_crud::Value {
+                    value: <
+                        postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
+                        as
+                        postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                            <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                        >
+                    >::read_new_or_try_new_unwraped_for_test(value.value)
+                    
+                }),
+                None => None
+            },
+        ).unwrap()
     }
     fn update_new_or_try_new_unwraped_for_test(
         value: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner
@@ -1394,3 +1454,7 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases<crate::repositories_types::
         todo!()
     }
 }
+
+
+
+//////////////////////
