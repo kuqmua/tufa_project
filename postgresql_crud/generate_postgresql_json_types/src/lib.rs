@@ -2305,12 +2305,16 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                             acc.push(None);
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                            acc.push(Some(vec![vec![vec![vec![None]]]]));
                                             acc.push(None);
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                            acc.push(Some(vec![vec![vec![None]]]));
                                             acc.push(None);
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                            acc.push(Some(vec![vec![vec![Some(vec![None])]]]));
+                                            acc.push(Some(vec![vec![vec![None]]]));
                                             acc.push(None);
                                         },
                                         (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
