@@ -1944,12 +1944,10 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 NotNullOrNullable::Nullable => quote::quote!{std::option::Option<std::vec::Vec<#content_token_stream>>}
                             }
                         };
-                        // let maybe_push_none_token_stream = |not_null_or_nullable: &NotNullOrNullable|{
-                        //     match &not_null_or_nullable {
-                        //         NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
-                        //         NotNullOrNullable::Nullable => quote::quote!{acc.push(None);}
-                        //     }
-                        // };
+                        let maybe_push_none_token_stream = match &not_null_or_nullable {
+                            NotNullOrNullable::NotNull => proc_macro2::TokenStream::new(),
+                            NotNullOrNullable::Nullable => quote::quote!{acc.push(None);}
+                        };
                         // let generate_maybe_push_2_token_stream = |not_null_or_nullable: &NotNullOrNullable|{
                         //     match &not_null_or_nullable {
                         //         NotNullOrNullable::NotNull => quote::quote!{acc.push(None);},
@@ -2004,18 +2002,21 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 generate_acc_token_stream(
                                     &not_null_or_nullable_map,
                                     &not_null_or_nullable_collect,
-                                    &match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
+                                    &{
+                                        let content_token_stream = match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![None]));
+                                            },
+                                        };
+                                        quote::quote!{
+                                            #content_token_stream
+                                            #maybe_push_none_token_stream
+                                        }
                                     }
                                 )
                             },
@@ -2050,34 +2051,35 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 generate_acc_token_stream(
                                     &not_null_or_nullable_map,
                                     &not_null_or_nullable_collect,
-                                    &match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![vec![None]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![Some(vec![None])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![vec![None]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![None])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
+                                    &{
+                                        let content_token_stream = match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable) {
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![vec![None]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![Some(vec![None])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![vec![None]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![None])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                        };
+                                        quote::quote!{
+                                            #content_token_stream
+                                            #maybe_push_none_token_stream
+                                        }
                                     }
                                 )
                             },
@@ -2121,70 +2123,68 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 generate_acc_token_stream(
                                     &not_null_or_nullable_map,
                                     &not_null_or_nullable_collect,
-                                    &match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![vec![vec![None]]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![vec![None]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![vec![Some(vec![None])]]);
-                                            acc.push(vec![vec![None]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![Some(vec![vec![None]])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![Some(vec![None])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![Some(vec![Some(vec![None])])]);
-                                            acc.push(vec![Some(vec![None])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![vec![vec![None]]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![vec![None]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![vec![Some(vec![None])]]));
-                                            acc.push(Some(vec![vec![None]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![vec![None]])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![None])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![Some(vec![None])])]));
-                                            acc.push(Some(vec![Some(vec![None])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
+                                    &{
+                                        let content_token_stream = match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable) {
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![vec![vec![None]]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![vec![None]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![vec![Some(vec![None])]]);
+                                                acc.push(vec![vec![None]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![Some(vec![vec![None]])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![Some(vec![None])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![Some(vec![Some(vec![None])])]);
+                                                acc.push(vec![Some(vec![None])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![vec![vec![None]]]));
+                                                acc.push(None);
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![vec![None]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![vec![Some(vec![None])]]));
+                                                acc.push(Some(vec![vec![None]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![vec![None]])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![None])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![Some(vec![None])])]));
+                                                acc.push(Some(vec![Some(vec![None])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                        };
+                                        quote::quote!{
+                                            #content_token_stream
+                                            #maybe_push_none_token_stream
+                                        }
                                     }
                                 )
                             },
@@ -2237,150 +2237,140 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                 generate_acc_token_stream(
                                     &not_null_or_nullable_map,
                                     &not_null_or_nullable_collect,
-                                    &match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![vec![vec![vec![None]]]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![vec![vec![None]]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![vec![vec![Some(vec![None])]]]);
-                                            acc.push(vec![vec![vec![None]]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![vec![None]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![vec![Some(vec![vec![None]])]]);
-                                            acc.push(vec![vec![None]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![vec![Some(vec![None])]]);
-                                            acc.push(vec![vec![None]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![vec![Some(vec![Some(vec![None])])]]);
-                                            acc.push(vec![vec![Some(vec![None])]]);
-                                            acc.push(vec![vec![None]]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![Some(vec![vec![vec![None]]])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![Some(vec![vec![None]])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![Some(vec![vec![Some(vec![None])]])]);
-                                            acc.push(vec![Some(vec![vec![None]])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![Some(vec![None])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![Some(vec![Some(vec![vec![None]])])]);
-                                            acc.push(vec![Some(vec![None])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(vec![Some(vec![Some(vec![None])])]);
-                                            acc.push(vec![Some(vec![None])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(vec![Some(vec![Some(vec![Some(vec![None])])])]);
-                                            acc.push(vec![Some(vec![Some(vec![None])])]);
-                                            acc.push(vec![Some(vec![None])]);
-                                            acc.push(vec![None]);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![vec![vec![vec![None]]]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![vec![vec![None]]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![vec![vec![Some(vec![None])]]]));
-                                            acc.push(Some(vec![vec![vec![None]]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![vec![None]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![vec![Some(vec![vec![None]])]]));
-                                            acc.push(Some(vec![vec![None]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![vec![Some(vec![None])]]));
-                                            acc.push(Some(vec![vec![None]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![vec![Some(vec![Some(vec![None])])]]));
-                                            acc.push(Some(vec![vec![Some(vec![None])]]));
-                                            acc.push(Some(vec![vec![None]]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![vec![vec![None]]])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![vec![None]])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![vec![Some(vec![None])]])]));
-                                            acc.push(Some(vec![Some(vec![vec![None]])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![None])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![Some(vec![vec![None]])])]));
-                                            acc.push(Some(vec![Some(vec![None])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![Some(vec![None])])]));
-                                            acc.push(Some(vec![Some(vec![None])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
-                                        (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                            acc.push(Some(vec![Some(vec![Some(vec![Some(vec![None])])])]));
-                                            acc.push(Some(vec![Some(vec![Some(vec![None])])]));
-                                            acc.push(Some(vec![Some(vec![None])]));
-                                            acc.push(Some(vec![None]));
-                                            acc.push(None);
-                                        },
+                                    &{
+                                        let content_token_stream = match (&not_null_or_nullable, &dimension1_not_null_or_nullable, &dimension2_not_null_or_nullable, &dimension3_not_null_or_nullable, &dimension4_not_null_or_nullable) {
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![vec![vec![vec![None]]]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![vec![vec![None]]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![vec![vec![Some(vec![None])]]]);
+                                                acc.push(vec![vec![vec![None]]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![vec![None]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![vec![Some(vec![vec![None]])]]);
+                                                acc.push(vec![vec![None]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![vec![Some(vec![None])]]);
+                                                acc.push(vec![vec![None]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![vec![Some(vec![Some(vec![None])])]]);
+                                                acc.push(vec![vec![Some(vec![None])]]);
+                                                acc.push(vec![vec![None]]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![Some(vec![vec![vec![None]]])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![Some(vec![vec![None]])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![Some(vec![vec![Some(vec![None])]])]);
+                                                acc.push(vec![Some(vec![vec![None]])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![Some(vec![None])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![Some(vec![Some(vec![vec![None]])])]);
+                                                acc.push(vec![Some(vec![None])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(vec![Some(vec![Some(vec![None])])]);
+                                                acc.push(vec![Some(vec![None])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(vec![Some(vec![Some(vec![Some(vec![None])])])]);
+                                                acc.push(vec![Some(vec![Some(vec![None])])]);
+                                                acc.push(vec![Some(vec![None])]);
+                                                acc.push(vec![None]);
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![vec![vec![vec![None]]]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![vec![vec![None]]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![vec![vec![Some(vec![None])]]]));
+                                                acc.push(Some(vec![vec![vec![None]]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![vec![None]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![vec![Some(vec![vec![None]])]]));
+                                                acc.push(Some(vec![vec![None]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![vec![Some(vec![None])]]));
+                                                acc.push(Some(vec![vec![None]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![vec![Some(vec![Some(vec![None])])]]));
+                                                acc.push(Some(vec![vec![Some(vec![None])]]));
+                                                acc.push(Some(vec![vec![None]]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![vec![vec![None]]])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![vec![None]])]));
+                                                acc.push(Some(vec![None]));
+                                                acc.push(None);
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![vec![Some(vec![None])]])]));
+                                                acc.push(Some(vec![Some(vec![vec![None]])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![None])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![Some(vec![vec![None]])])]));
+                                                acc.push(Some(vec![Some(vec![None])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![Some(vec![None])])]));
+                                                acc.push(Some(vec![Some(vec![None])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
+                                                acc.push(Some(vec![Some(vec![Some(vec![Some(vec![None])])])]));
+                                                acc.push(Some(vec![Some(vec![Some(vec![None])])]));
+                                                acc.push(Some(vec![Some(vec![None])]));
+                                                acc.push(Some(vec![None]));
+                                            },
+                                        };
+                                        quote::quote!{
+                                            #content_token_stream
+                                            #maybe_push_none_token_stream
+                                        }
                                     }
                                 )
                             },
