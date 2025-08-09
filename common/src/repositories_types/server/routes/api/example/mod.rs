@@ -1450,8 +1450,30 @@ impl postgresql_crud::tests::PostgresqlTypeTestCases<crate::repositories_types::
     fn update_new_or_try_new_unwraped_for_test(
         value: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner
     ) -> <Self::Element as postgresql_crud::PostgresqlType>::Update {
-        // <Self::Element as postgresql_crud::PostgresqlType>::Update::new(value)
-        todo!()
+        <Self::Element as postgresql_crud::PostgresqlType>::Update::new(
+            postgresql_crud::NotEmptyUniqueEnumVec::try_new(
+                vec![
+                    AnimalAsNotNullJsonbObjectUpdateElement::Field0(postgresql_crud::Value {
+                        value: <
+                            postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
+                            as
+                            postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                            >
+                        >::update_new_or_try_new_unwraped_for_test(value.field_0.unwrap().value),
+                    }),
+                    AnimalAsNotNullJsonbObjectUpdateElement::Field1(postgresql_crud::Value {
+                        value: <
+                            postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
+                            as
+                            postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                            >
+                        >::update_new_or_try_new_unwraped_for_test(value.field_1.unwrap().value),
+                    })
+                ]
+            ).unwrap()
+        )
     }
 }
 

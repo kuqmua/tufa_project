@@ -2213,7 +2213,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                      &ReadOrReadInner::ReadInner
                  );
                  quote::quote!{
-                    #[derive(Clone)]
+                    #[derive(Debug, Clone, PartialEq)]
                     pub struct #ident_token_stream {
                         #content_token_stream
                     }
