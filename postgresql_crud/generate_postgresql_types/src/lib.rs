@@ -5583,6 +5583,7 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     #postgresql_crud_macros_common_import_path_crate::#postgresql_type_upper_camel_case>::#read_or_update_upper_camel_case:: #content_token_stream}
                 };
                 postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
+                    &quote::quote!{#[cfg(feature = "test-utils")]},
                     &postgresql_crud_macros_common_import_path_crate,
                     &ident_inner_type_token_stream,
                     &ident,

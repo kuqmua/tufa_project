@@ -785,6 +785,7 @@ pub fn generate_impl_postgresql_type_for_ident_token_stream(
 }
 
 pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
+    cfg_token_stream: &dyn quote::ToTokens,
     import_path: &ImportPath,
     type_token_stream: &dyn quote::ToTokens,
     ident: &dyn quote::ToTokens,
@@ -801,7 +802,7 @@ pub fn generate_impl_postgresql_type_test_cases_for_ident_token_stream(
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
     quote::quote! {
-        #[cfg(feature = "test-utils")]
+        #cfg_token_stream
         impl #import_path::tests::#postgresql_type_test_cases_upper_camel_case<#type_token_stream> for #ident {
             type #element_upper_camel_case = #self_upper_camel_case;
             fn #test_cases_snake_case() -> std::vec::Vec<<#self_upper_camel_case::#element_upper_camel_case as #import_path::#postgresql_type_upper_camel_case>::#read_inner_upper_camel_case> {

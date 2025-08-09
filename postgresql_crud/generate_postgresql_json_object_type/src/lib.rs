@@ -3228,6 +3228,103 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         else {
             proc_macro2::TokenStream::new()
         };
+        let impl_postgresql_json_type_test_cases_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
+            &quote::quote!{#[cfg(test)]},
+            &import_path,
+            &quote::quote!{crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner},
+            &ident,
+            &{
+                quote::quote!{
+                    let mut acc = vec![];
+                    for field_0 in <
+                        postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                            <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                        >
+                    >::test_cases() {
+                        for field_1 in <
+                            postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                            >
+                        >::test_cases() {
+                            acc.push(AnimalAsNotNullJsonbObjectReadInner {
+                                field_0: Some(postgresql_crud::Value {
+                                    value: field_0,
+                                }),
+                                field_1: Some(postgresql_crud::Value {
+                                    value: field_1,
+                                }),
+                            });
+                        }
+                    }
+                    acc
+                }
+            },
+            &{
+                quote::quote!{
+                    <Self::Element as postgresql_crud::PostgresqlType>::Read::try_new(
+                        match value.field_0 {
+                            Some(value) => Some(postgresql_crud::Value {
+                                value: <
+                                    postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
+                                    as
+                                    postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                    >
+                                >::read_new_or_try_new_unwraped_for_test(value.value)
+
+                            }),
+                            None => None
+                        },
+                        match value.field_1 {
+                            Some(value) => Some(postgresql_crud::Value {
+                                value: <
+                                    postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
+                                    as
+                                    postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                    >
+                                >::read_new_or_try_new_unwraped_for_test(value.value)
+
+                            }),
+                            None => None
+                        },
+                    ).unwrap()
+                }
+            },
+            &{
+                quote::quote!{
+                    <Self::Element as postgresql_crud::PostgresqlType>::Update::new(
+                        postgresql_crud::NotEmptyUniqueEnumVec::try_new({
+                            let mut acc = vec![];
+                            if let Some(value) = value.field_0 {
+                                acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field0(postgresql_crud::Value {
+                                    value: <
+                                        postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
+                                        as
+                                        postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                            <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                        >
+                                    >::update_new_or_try_new_unwraped_for_test(value.value),
+                                }));
+                            }
+                            if let Some(value) = value.field_1 {
+                                acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field1(postgresql_crud::Value {
+                                    value: <
+                                        postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
+                                        as
+                                        postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                            <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                        >
+                                    >::update_new_or_try_new_unwraped_for_test(value.value),
+                                }));
+                            }
+                            acc
+                        }).unwrap()
+                    )
+                }
+            },
+        );
+        // println!("{impl_postgresql_json_type_test_cases_for_ident_token_stream}");
         let generated = quote::quote! {
             #ident_token_stream
             #ident_table_type_declaration_token_stream
@@ -3240,6 +3337,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
+            #impl_postgresql_json_type_test_cases_for_ident_token_stream
         };
         // if let (
         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
