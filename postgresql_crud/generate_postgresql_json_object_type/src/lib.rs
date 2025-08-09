@@ -3242,7 +3242,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
                                 panic!("{}", naming::FIELD_IDENT_IS_NONE);
                             });
-                            quote::quote! {#element_field_ident: Some(postgresql_crud::Value { value: #element_field_ident })}
+                            quote::quote! {#element_field_ident: Some(postgresql_crud::Value { value: #element_field_ident.clone() })}
                         });
                         quote::quote!{
                             #acc_snake_case.push(#ident_read_inner_upper_camel_case{#(#fields_token_stream),*});
