@@ -2212,7 +2212,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                      &is_standart_with_id,
                      &ReadOrReadInner::ReadInner
                  );
-                 quote::quote!{pub struct #ident_token_stream {#content_token_stream}}
+                 quote::quote!{
+                    #[derive(Clone)]
+                    pub struct #ident_token_stream {
+                        #content_token_stream
+                    }
+                }
             };
             let ident_read_inner_token_stream = {
                 let generate_pub_type_ident_read_inner_alias_token_stream = |content_token_stream: &dyn quote::ToTokens|{
