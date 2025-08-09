@@ -164,6 +164,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let checked_add_upper_camel_case = naming::CheckedAddUpperCamelCase;
         let field_ident_snake_case = naming::FieldIdentSnakeCase;
         let id_snake_case = naming::IdSnakeCase;
+        let acc_snake_case = naming::AccSnakeCase;
         let fields_snake_case = naming::FieldsSnakeCase;
         let self_upper_camel_case = naming::SelfUpperCamelCase;
         let update_query_part_snake_case = naming::UpdateQueryPartSnakeCase;
@@ -3234,8 +3235,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             &quote::quote!{crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObjectReadInner},
             &ident,
             &{
+                let fields_token_stream = vec_syn_field.iter().map(|element| {
+                    let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                    });
+                    quote::quote! {#element_field_ident: Some(postgresql_crud::Value { value: #element_field_ident })}
+                });
                 quote::quote!{
-                    let mut acc = vec![];
+                    let mut #acc_snake_case = vec![];
                     for field_0 in <
                         postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::tests::PostgresqlJsonTypeTestCases<
                             <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
@@ -3246,79 +3253,63 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
                             >
                         >::test_cases() {
-                            acc.push(AnimalAsNotNullJsonbObjectReadInner {
-                                field_0: Some(postgresql_crud::Value {
-                                    value: field_0,
-                                }),
-                                field_1: Some(postgresql_crud::Value {
-                                    value: field_1,
-                                }),
-                            });
+                            #acc_snake_case.push(AnimalAsNotNullJsonbObjectReadInner {#(#fields_token_stream),*});
                         }
                     }
-                    acc
+                    #acc_snake_case
                 }
             },
             &{
-                quote::quote!{
-                    <Self::Element as postgresql_crud::PostgresqlType>::Read::try_new(
-                        match value.field_0 {
-                            Some(value) => Some(postgresql_crud::Value {
-                                value: <
-                                    postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
+                let parameters_token_stream = vec_syn_field.iter().map(|element| {
+                    let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                    });
+                    let element_type = &element.ty;
+                    quote::quote! {
+                        match #value_snake_case.#element_field_ident {
+                            Some(#value_snake_case) => Some(postgresql_crud::Value {
+                                #value_snake_case: <
+                                    #element_type
                                     as
                                     postgresql_crud::tests::PostgresqlJsonTypeTestCases<
-                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                        <#element_type as postgresql_crud::PostgresqlJsonType>::ReadInner
                                     >
-                                >::read_new_or_try_new_unwraped_for_test(value.value)
+                                >::read_new_or_try_new_unwraped_for_test(#value_snake_case.#value_snake_case)
 
                             }),
                             None => None
-                        },
-                        match value.field_1 {
-                            Some(value) => Some(postgresql_crud::Value {
-                                value: <
-                                    postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
-                                    as
-                                    postgresql_crud::tests::PostgresqlJsonTypeTestCases<
-                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
-                                    >
-                                >::read_new_or_try_new_unwraped_for_test(value.value)
-
-                            }),
-                            None => None
-                        },
-                    ).unwrap()
-                }
+                        }
+                    }
+                });
+                quote::quote!{<Self::Element as postgresql_crud::PostgresqlType>::Read::try_new(#(#parameters_token_stream),*).unwrap()}
             },
             &{
+                let parameters_token_stream = vec_syn_field.iter().map(|element| {
+                    let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                    });
+                    let element_field_ident_upper_camel_case = &naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element_field_ident);
+                    let element_type = &element.ty;
+                    quote::quote! {
+                        if let Some(#value_snake_case) = #value_snake_case.#element_field_ident {
+                            #acc_snake_case.push(AnimalAsNotNullJsonbObjectUpdateElement::#element_field_ident_upper_camel_case(postgresql_crud::Value {
+                                #value_snake_case: <
+                                    #element_type
+                                    as
+                                    postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                        <#element_type as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                    >
+                                >::update_new_or_try_new_unwraped_for_test(#value_snake_case.#value_snake_case),
+                            }));
+                        }
+                    }
+                });
                 quote::quote!{
                     <Self::Element as postgresql_crud::PostgresqlType>::Update::new(
                         postgresql_crud::NotEmptyUniqueEnumVec::try_new({
-                            let mut acc = vec![];
-                            if let Some(value) = value.field_0 {
-                                acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field0(postgresql_crud::Value {
-                                    value: <
-                                        postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber
-                                        as
-                                        postgresql_crud::tests::PostgresqlJsonTypeTestCases<
-                                            <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
-                                        >
-                                    >::update_new_or_try_new_unwraped_for_test(value.value),
-                                }));
-                            }
-                            if let Some(value) = value.field_1 {
-                                acc.push(AnimalAsNotNullJsonbObjectUpdateElement::Field1(postgresql_crud::Value {
-                                    value: <
-                                        postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber
-                                        as
-                                        postgresql_crud::tests::PostgresqlJsonTypeTestCases<
-                                            <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::ReadInner
-                                        >
-                                    >::update_new_or_try_new_unwraped_for_test(value.value),
-                                }));
-                            }
-                            acc
+                            let mut #acc_snake_case = vec![];
+                            #(#parameters_token_stream)*
+                            #acc_snake_case
                         }).unwrap()
                     )
                 }
