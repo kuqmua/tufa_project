@@ -2750,7 +2750,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             #(#query_part_variants_token_stream),*
                         }
                     }
-                    if #jsonb_set_accumulator_snake_case.is_empty() && #jsonb_set_path_snake_case.is_empty() {
+                    println!("HERE CAN BE BUG");
+                    if 
+                    //todo maybe bug here - maybe need additional parameter
+                    // #jsonb_set_accumulator_snake_case.is_empty() &&
+                    #jsonb_set_path_snake_case.is_empty() {
                         Ok(#object_acc_snake_case)
                     }
                     else {
