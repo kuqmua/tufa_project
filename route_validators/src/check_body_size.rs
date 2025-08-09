@@ -21,6 +21,15 @@ impl http_logic::GetAxumHttpStatusCode for CheckBodySizeErrorNamed {
 
 pub async fn check_body_size(body: axum::body::Body, limit: std::primitive::usize) -> Result<bytes::Bytes, CheckBodySizeErrorNamed> {
     let size_hint = axum::body::HttpBody::size_hint(&body);
+    //todo maybe move to router with idenpotent key log or something
+    match size_hint.exact() {
+        Some(value) => {
+            println!("HttpBody::size_hint {value} byte or {} kilobyte or {} megabyte", value / 1024, value / 1024 / 1024);
+        },
+        None => {
+            println!("HttpBody::size_hint is None")
+        }
+    }
     match axum::body::to_bytes(body, limit).await {
         Ok(value) => Ok(value),
         Err(error) => Err(CheckBodySizeErrorNamed::ReachedMaximumSizeOfBody {
