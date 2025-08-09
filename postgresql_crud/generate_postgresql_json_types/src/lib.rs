@@ -2003,18 +2003,17 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                                     &not_null_or_nullable_map,
                                     &not_null_or_nullable_collect,
                                     &{
-                                        let content_token_stream = match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
-                                            (NotNullOrNullable::NotNull, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
-                                            (NotNullOrNullable::NotNull, NotNullOrNullable::Nullable) => quote::quote!{
-                                                acc.push(vec![None]);
-                                            },
-                                            (NotNullOrNullable::Nullable, NotNullOrNullable::NotNull) => proc_macro2::TokenStream::new(),
-                                            (NotNullOrNullable::Nullable, NotNullOrNullable::Nullable) => quote::quote!{
-                                                acc.push(Some(vec![None]));
-                                            },
+                                        let maybe_push_maybe_some_vec_none_token_stream = if let NotNullOrNullable::Nullable = &dimension1_not_null_or_nullable {
+                                            match &not_null_or_nullable {
+                                                NotNullOrNullable::NotNull => quote::quote!{acc.push(vec![None]);},
+                                                NotNullOrNullable::Nullable => quote::quote!{acc.push(Some(vec![None]));},
+                                            }
+                                        }
+                                        else {
+                                            proc_macro2::TokenStream::new()
                                         };
                                         quote::quote!{
-                                            #content_token_stream
+                                            #maybe_push_maybe_some_vec_none_token_stream
                                             #maybe_push_none_token_stream
                                         }
                                     }
