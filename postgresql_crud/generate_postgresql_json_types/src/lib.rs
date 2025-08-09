@@ -1893,6 +1893,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     >::#read_or_update_upper_camel_case::#new_snake_case(#value_snake_case)}
                 };
                 postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
+                    &quote::quote!{#[cfg(feature = "test-utils")]},
                     &postgresql_crud_macros_common_import_path_crate,
                     &ident_origin_impl_new_value_type_token_stream,
                     &ident,
