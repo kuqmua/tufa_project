@@ -3229,13 +3229,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         else {
             proc_macro2::TokenStream::new()
         };
-        let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
-        let impl_postgresql_type_test_cases_for_ident_token_stream = postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
-            &quote::quote!{#[cfg(test)]},
-            &import_path,
-            &ident_read_inner_upper_camel_case,
-            &ident,
-            &{
+        let (
+            impl_postgresql_type_test_cases_for_ident_token_stream,
+            impl_postgresql_json_type_test_cases_for_ident_token_stream
+        ) = {
+            let ident_read_inner_upper_camel_case = naming::parameter::SelfReadInnerUpperCamelCase::from_tokens(&ident);
+            let cfg_test_token_stream = quote::quote!{#[cfg(test)]};
+            let test_cases_content_token_stream = {
                 let content_token_stream = {
                     let mut content_token_stream = {
                         let fields_token_stream = vec_syn_field.iter().map(|element| {
@@ -3270,8 +3270,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #content_token_stream
                     #acc_snake_case
                 }
-            },
-            &{
+            };
+            let read_new_or_try_new_unwraped_for_test_token_stream = {
                 let parameters_token_stream = vec_syn_field.iter().map(|element| {
                     let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -3294,8 +3294,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     }
                 });
                 quote::quote!{<Self::Element as postgresql_crud::PostgresqlType>::Read::try_new(#(#parameters_token_stream),*).unwrap()}
-            },
-            &{
+            };
+            let update_new_or_try_new_unwraped_for_test_token_stream = {
                 let parameters_token_stream = vec_syn_field.iter().map(|element| {
                     let element_field_ident = element.ident.as_ref().unwrap_or_else(|| {
                         panic!("{}", naming::FIELD_IDENT_IS_NONE);
@@ -3325,8 +3325,28 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         }).unwrap()
                     )
                 }
-            },
-        );
+            };
+            (
+                postgresql_crud_macros_common::generate_impl_postgresql_type_test_cases_for_ident_token_stream(
+                    &cfg_test_token_stream,
+                    &import_path,
+                    &ident_read_inner_upper_camel_case,
+                    &ident,
+                    &test_cases_content_token_stream,
+                    &read_new_or_try_new_unwraped_for_test_token_stream,
+                    &update_new_or_try_new_unwraped_for_test_token_stream,
+                ),
+                postgresql_crud_macros_common::generate_impl_postgresql_json_type_test_cases_for_ident_token_stream(
+                    &cfg_test_token_stream,
+                    &import_path,
+                    &ident_read_inner_upper_camel_case,
+                    &ident,
+                    &test_cases_content_token_stream,
+                    &read_new_or_try_new_unwraped_for_test_token_stream,
+                    &update_new_or_try_new_unwraped_for_test_token_stream,
+                )
+            )
+        };
         let generated = quote::quote! {
             #ident_token_stream
             #ident_table_type_declaration_token_stream
@@ -3340,6 +3360,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #maybe_impl_postgresql_crud_postgresql_types_postgresql_type_postgresql_type_token_stream
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_with_id_not_null_token_stream
             #impl_postgresql_type_test_cases_for_ident_token_stream
+            #impl_postgresql_json_type_test_cases_for_ident_token_stream
         };
         // if let (
         //     postgresql_crud_macros_common::NotNullOrNullable::NotNull,
