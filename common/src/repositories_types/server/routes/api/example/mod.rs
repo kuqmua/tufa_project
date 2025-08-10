@@ -36,119 +36,119 @@ pub struct Example {
     pub primary_key_column: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
     pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
-    pub column_1: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
-    pub column_2: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
-    pub column_3: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
-    pub column_4: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2,
-    pub column_5: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableInt2,
-    pub column_6: postgresql_crud::postgresql_type::StdPrimitiveI32AsNotNullInt4,
-    pub column_7: postgresql_crud::postgresql_type::OptionStdPrimitiveI32AsNullableInt4,
-    pub column_8: postgresql_crud::postgresql_type::VecOfStdPrimitiveI32AsNotNullArrayOfNotNullInt4,
-    pub column_9: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI32AsNullableArrayOfNotNullInt4,
-    pub column_10: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveI32AsNotNullArrayOfNullableInt4,
-    pub column_11: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveI32AsNullableArrayOfNullableInt4,
-    pub column_12: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullInt8,
-    pub column_13: postgresql_crud::postgresql_type::OptionStdPrimitiveI64AsNullableInt8,
-    pub column_14: postgresql_crud::postgresql_type::VecOfStdPrimitiveI64AsNotNullArrayOfNotNullInt8,
-    pub column_15: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI64AsNullableArrayOfNotNullInt8,
-    pub column_16: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveI64AsNotNullArrayOfNullableInt8,
-    pub column_17: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveI64AsNullableArrayOfNullableInt8,
-    pub column_18: postgresql_crud::postgresql_type::StdPrimitiveF32AsNotNullFloat4,
-    pub column_19: postgresql_crud::postgresql_type::OptionStdPrimitiveF32AsNullableFloat4,
-    pub column_20: postgresql_crud::postgresql_type::VecOfStdPrimitiveF32AsNotNullArrayOfNotNullFloat4,
-    pub column_21: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveF32AsNullableArrayOfNotNullFloat4,
-    pub column_22: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveF32AsNotNullArrayOfNullableFloat4,
-    pub column_23: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveF32AsNullableArrayOfNullableFloat4,
-    pub column_24: postgresql_crud::postgresql_type::StdPrimitiveF64AsNotNullFloat8,
-    pub column_25: postgresql_crud::postgresql_type::OptionStdPrimitiveF64AsNullableFloat8,
-    pub column_26: postgresql_crud::postgresql_type::VecOfStdPrimitiveF64AsNotNullArrayOfNotNullFloat8,
-    pub column_27: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveF64AsNullableArrayOfNotNullFloat8,
-    pub column_28: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveF64AsNotNullArrayOfNullableFloat8,
-    pub column_29: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveF64AsNullableArrayOfNullableFloat8,
-    pub column_30: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql,
-    pub column_31: postgresql_crud::postgresql_type::StdPrimitiveI32AsNotNullSerialInitializedByPostgresql,
-    pub column_32: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
-    pub column_33: postgresql_crud::postgresql_type::SqlxPostgresTypesPgMoneyAsNotNullMoney,
-    pub column_34: postgresql_crud::postgresql_type::OptionSqlxPostgresTypesPgMoneyAsNullableMoney,
-    pub column_35: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgMoneyAsNotNullArrayOfNotNullMoney,
-    pub column_36: postgresql_crud::postgresql_type::OptionVecOfSqlxPostgresTypesPgMoneyAsNullableArrayOfNotNullMoney,
-    pub column_37: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgMoneyAsNotNullArrayOfNullableMoney,
-    pub column_38: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgMoneyAsNullableArrayOfNullableMoney,
-    pub column_39: postgresql_crud::postgresql_type::StdPrimitiveBoolAsNotNullBool,
-    pub column_40: postgresql_crud::postgresql_type::OptionStdPrimitiveBoolAsNullableBool,
-    pub column_41: postgresql_crud::postgresql_type::VecOfStdPrimitiveBoolAsNotNullArrayOfNotNullBool,
-    pub column_42: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveBoolAsNullableArrayOfNotNullBool,
-    pub column_43: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveBoolAsNotNullArrayOfNullableBool,
-    pub column_44: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveBoolAsNullableArrayOfNullableBool,
-    pub column_45: postgresql_crud::postgresql_type::StdStringStringAsNotNullText,
-    pub column_46: postgresql_crud::postgresql_type::OptionStdStringStringAsNullableText,
-    pub column_47: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullText,
-    pub column_48: postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullText,
-    pub column_49: postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableText,
-    pub column_50: postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableText,
+    // pub column_1: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
+    // pub column_2: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
+    // pub column_3: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
+    // pub column_4: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveI16AsNotNullArrayOfNullableInt2,
+    // pub column_5: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveI16AsNullableArrayOfNullableInt2,
+    // pub column_6: postgresql_crud::postgresql_type::StdPrimitiveI32AsNotNullInt4,
+    // pub column_7: postgresql_crud::postgresql_type::OptionStdPrimitiveI32AsNullableInt4,
+    // pub column_8: postgresql_crud::postgresql_type::VecOfStdPrimitiveI32AsNotNullArrayOfNotNullInt4,
+    // pub column_9: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI32AsNullableArrayOfNotNullInt4,
+    // pub column_10: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveI32AsNotNullArrayOfNullableInt4,
+    // pub column_11: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveI32AsNullableArrayOfNullableInt4,
+    // pub column_12: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullInt8,
+    // pub column_13: postgresql_crud::postgresql_type::OptionStdPrimitiveI64AsNullableInt8,
+    // pub column_14: postgresql_crud::postgresql_type::VecOfStdPrimitiveI64AsNotNullArrayOfNotNullInt8,
+    // pub column_15: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI64AsNullableArrayOfNotNullInt8,
+    // pub column_16: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveI64AsNotNullArrayOfNullableInt8,
+    // pub column_17: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveI64AsNullableArrayOfNullableInt8,
+    // pub column_18: postgresql_crud::postgresql_type::StdPrimitiveF32AsNotNullFloat4,
+    // pub column_19: postgresql_crud::postgresql_type::OptionStdPrimitiveF32AsNullableFloat4,
+    // pub column_20: postgresql_crud::postgresql_type::VecOfStdPrimitiveF32AsNotNullArrayOfNotNullFloat4,
+    // pub column_21: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveF32AsNullableArrayOfNotNullFloat4,
+    // pub column_22: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveF32AsNotNullArrayOfNullableFloat4,
+    // pub column_23: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveF32AsNullableArrayOfNullableFloat4,
+    // pub column_24: postgresql_crud::postgresql_type::StdPrimitiveF64AsNotNullFloat8,
+    // pub column_25: postgresql_crud::postgresql_type::OptionStdPrimitiveF64AsNullableFloat8,
+    // pub column_26: postgresql_crud::postgresql_type::VecOfStdPrimitiveF64AsNotNullArrayOfNotNullFloat8,
+    // pub column_27: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveF64AsNullableArrayOfNotNullFloat8,
+    // pub column_28: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveF64AsNotNullArrayOfNullableFloat8,
+    // pub column_29: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveF64AsNullableArrayOfNullableFloat8,
+    // pub column_30: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullSmallSerialInitializedByPostgresql,
+    // pub column_31: postgresql_crud::postgresql_type::StdPrimitiveI32AsNotNullSerialInitializedByPostgresql,
+    // pub column_32: postgresql_crud::postgresql_type::StdPrimitiveI64AsNotNullBigSerialInitializedByPostgresql,
+    // pub column_33: postgresql_crud::postgresql_type::SqlxPostgresTypesPgMoneyAsNotNullMoney,
+    // pub column_34: postgresql_crud::postgresql_type::OptionSqlxPostgresTypesPgMoneyAsNullableMoney,
+    // pub column_35: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgMoneyAsNotNullArrayOfNotNullMoney,
+    // pub column_36: postgresql_crud::postgresql_type::OptionVecOfSqlxPostgresTypesPgMoneyAsNullableArrayOfNotNullMoney,
+    // pub column_37: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgMoneyAsNotNullArrayOfNullableMoney,
+    // pub column_38: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgMoneyAsNullableArrayOfNullableMoney,
+    // pub column_39: postgresql_crud::postgresql_type::StdPrimitiveBoolAsNotNullBool,
+    // pub column_40: postgresql_crud::postgresql_type::OptionStdPrimitiveBoolAsNullableBool,
+    // pub column_41: postgresql_crud::postgresql_type::VecOfStdPrimitiveBoolAsNotNullArrayOfNotNullBool,
+    // pub column_42: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveBoolAsNullableArrayOfNotNullBool,
+    // pub column_43: postgresql_crud::postgresql_type::VecOfOptionStdPrimitiveBoolAsNotNullArrayOfNullableBool,
+    // pub column_44: postgresql_crud::postgresql_type::OptionVecOfOptionStdPrimitiveBoolAsNullableArrayOfNullableBool,
+    // pub column_45: postgresql_crud::postgresql_type::StdStringStringAsNotNullText,
+    // pub column_46: postgresql_crud::postgresql_type::OptionStdStringStringAsNullableText,
+    // pub column_47: postgresql_crud::postgresql_type::VecOfStdStringStringAsNotNullArrayOfNotNullText,
+    // pub column_48: postgresql_crud::postgresql_type::OptionVecOfStdStringStringAsNullableArrayOfNotNullText,
+    // pub column_49: postgresql_crud::postgresql_type::VecOfOptionStdStringStringAsNotNullArrayOfNullableText,
+    // pub column_50: postgresql_crud::postgresql_type::OptionVecOfOptionStdStringStringAsNullableArrayOfNullableText,
     // pub column_51: postgresql_crud::postgresql_type::StdVecVecStdPrimitiveU8AsNotNullBytea,
     // pub column_52: postgresql_crud::postgresql_type::OptionStdVecVecStdPrimitiveU8AsNullableBytea,
     // pub column_53: postgresql_crud::postgresql_type::VecOfStdVecVecStdPrimitiveU8AsNotNullArrayOfNotNullBytea,
     // pub column_54: postgresql_crud::postgresql_type::OptionVecOfStdVecVecStdPrimitiveU8AsNullableArrayOfNotNullBytea,
     // pub column_55: postgresql_crud::postgresql_type::VecOfOptionStdVecVecStdPrimitiveU8AsNotNullArrayOfNullableBytea,
     // pub column_56: postgresql_crud::postgresql_type::OptionVecOfOptionStdVecVecStdPrimitiveU8AsNullableArrayOfNullableBytea,
-    pub column_57: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveTimeAsNotNullTime,
-    pub column_58: postgresql_crud::postgresql_type::OptionSqlxTypesChronoNaiveTimeAsNullableTime,
-    pub column_59: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveTimeAsNotNullArrayOfNotNullTime,
-    pub column_60: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoNaiveTimeAsNullableArrayOfNotNullTime,
-    pub column_61: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesChronoNaiveTimeAsNotNullArrayOfNullableTime,
-    pub column_62: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesChronoNaiveTimeAsNullableArrayOfNullableTime,
-    pub column_63: postgresql_crud::postgresql_type::SqlxTypesTimeTimeAsNotNullTime,
-    pub column_64: postgresql_crud::postgresql_type::OptionSqlxTypesTimeTimeAsNullableTime,
-    pub column_65: postgresql_crud::postgresql_type::VecOfSqlxTypesTimeTimeAsNotNullArrayOfNotNullTime,
-    pub column_66: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesTimeTimeAsNullableArrayOfNotNullTime,
-    pub column_67: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesTimeTimeAsNotNullArrayOfNullableTime,
-    pub column_68: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesTimeTimeAsNullableArrayOfNullableTime,
-    pub column_69: postgresql_crud::postgresql_type::SqlxPostgresTypesPgIntervalAsNotNullInterval,
-    pub column_70: postgresql_crud::postgresql_type::OptionSqlxPostgresTypesPgIntervalAsNullableInterval,
-    pub column_71: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgIntervalAsNotNullArrayOfNotNullInterval,
-    pub column_72: postgresql_crud::postgresql_type::OptionVecOfSqlxPostgresTypesPgIntervalAsNullableArrayOfNotNullInterval,
-    pub column_73: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgIntervalAsNotNullArrayOfNullableInterval,
-    pub column_74: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgIntervalAsNullableArrayOfNullableInterval,
-    pub column_75: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveDateAsNotNullDate,
-    pub column_76: postgresql_crud::postgresql_type::OptionSqlxTypesChronoNaiveDateAsNullableDate,
-    pub column_77: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveDateAsNotNullArrayOfNotNullDate,
-    pub column_78: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoNaiveDateAsNullableArrayOfNotNullDate,
-    pub column_79: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesChronoNaiveDateAsNotNullArrayOfNullableDate,
-    pub column_80: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesChronoNaiveDateAsNullableArrayOfNullableDate,
-    pub column_81: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveDateTimeAsNotNullTimestamp,
-    pub column_82: postgresql_crud::postgresql_type::OptionSqlxTypesChronoNaiveDateTimeAsNullableTimestamp,
-    pub column_83: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveDateTimeAsNotNullArrayOfNotNullTimestamp,
-    pub column_84: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoNaiveDateTimeAsNullableArrayOfNotNullTimestamp,
-    pub column_85: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesChronoNaiveDateTimeAsNotNullArrayOfNullableTimestamp,
-    pub column_86: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesChronoNaiveDateTimeAsNullableArrayOfNullableTimestamp,
-    pub column_87: postgresql_crud::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTz,
-    pub column_88: postgresql_crud::postgresql_type::OptionSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableTimestampTz,
-    pub column_89: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNotNullTimestampTz,
-    pub column_90: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNotNullTimestampTz,
-    pub column_91: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTz,
-    pub column_92: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTz,
-    pub column_93: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
-    pub column_94: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidInitializedByClient,
-    pub column_95: postgresql_crud::postgresql_type::OptionSqlxTypesUuidUuidAsNullableUuidInitializedByClient,
-    pub column_96: postgresql_crud::postgresql_type::VecOfSqlxTypesUuidUuidAsNotNullArrayOfNotNullUuidInitializedByClient,
-    pub column_97: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesUuidUuidAsNullableArrayOfNotNullUuidInitializedByClient,
-    pub column_98: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesUuidUuidAsNotNullArrayOfNullableUuidInitializedByClient,
-    pub column_99: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesUuidUuidAsNullableArrayOfNullableUuidInitializedByClient,
-    pub column_100: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullInet,
-    pub column_101: postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableInet,
-    pub column_102: postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullInet,
-    pub column_103: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullInet,
-    pub column_104: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableInet,
-    pub column_105: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableInet,
-    pub column_106: postgresql_crud::postgresql_type::SqlxTypesMacAddressMacAddressAsNotNullMacAddr,
-    pub column_107: postgresql_crud::postgresql_type::OptionSqlxTypesMacAddressMacAddressAsNullableMacAddr,
-    pub column_108: postgresql_crud::postgresql_type::VecOfSqlxTypesMacAddressMacAddressAsNotNullArrayOfNotNullMacAddr,
-    pub column_109: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesMacAddressMacAddressAsNullableArrayOfNotNullMacAddr,
-    pub column_110: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesMacAddressMacAddressAsNotNullArrayOfNullableMacAddr,
-    pub column_111: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesMacAddressMacAddressAsNullableArrayOfNullableMacAddr,
+    // pub column_57: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveTimeAsNotNullTime,
+    // pub column_58: postgresql_crud::postgresql_type::OptionSqlxTypesChronoNaiveTimeAsNullableTime,
+    // pub column_59: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveTimeAsNotNullArrayOfNotNullTime,
+    // pub column_60: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoNaiveTimeAsNullableArrayOfNotNullTime,
+    // pub column_61: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesChronoNaiveTimeAsNotNullArrayOfNullableTime,
+    // pub column_62: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesChronoNaiveTimeAsNullableArrayOfNullableTime,
+    // pub column_63: postgresql_crud::postgresql_type::SqlxTypesTimeTimeAsNotNullTime,
+    // pub column_64: postgresql_crud::postgresql_type::OptionSqlxTypesTimeTimeAsNullableTime,
+    // pub column_65: postgresql_crud::postgresql_type::VecOfSqlxTypesTimeTimeAsNotNullArrayOfNotNullTime,
+    // pub column_66: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesTimeTimeAsNullableArrayOfNotNullTime,
+    // pub column_67: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesTimeTimeAsNotNullArrayOfNullableTime,
+    // pub column_68: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesTimeTimeAsNullableArrayOfNullableTime,
+    // pub column_69: postgresql_crud::postgresql_type::SqlxPostgresTypesPgIntervalAsNotNullInterval,
+    // pub column_70: postgresql_crud::postgresql_type::OptionSqlxPostgresTypesPgIntervalAsNullableInterval,
+    // pub column_71: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgIntervalAsNotNullArrayOfNotNullInterval,
+    // pub column_72: postgresql_crud::postgresql_type::OptionVecOfSqlxPostgresTypesPgIntervalAsNullableArrayOfNotNullInterval,
+    // pub column_73: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgIntervalAsNotNullArrayOfNullableInterval,
+    // pub column_74: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgIntervalAsNullableArrayOfNullableInterval,
+    // pub column_75: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveDateAsNotNullDate,
+    // pub column_76: postgresql_crud::postgresql_type::OptionSqlxTypesChronoNaiveDateAsNullableDate,
+    // pub column_77: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveDateAsNotNullArrayOfNotNullDate,
+    // pub column_78: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoNaiveDateAsNullableArrayOfNotNullDate,
+    // pub column_79: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesChronoNaiveDateAsNotNullArrayOfNullableDate,
+    // pub column_80: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesChronoNaiveDateAsNullableArrayOfNullableDate,
+    // pub column_81: postgresql_crud::postgresql_type::SqlxTypesChronoNaiveDateTimeAsNotNullTimestamp,
+    // pub column_82: postgresql_crud::postgresql_type::OptionSqlxTypesChronoNaiveDateTimeAsNullableTimestamp,
+    // pub column_83: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoNaiveDateTimeAsNotNullArrayOfNotNullTimestamp,
+    // pub column_84: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoNaiveDateTimeAsNullableArrayOfNotNullTimestamp,
+    // pub column_85: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesChronoNaiveDateTimeAsNotNullArrayOfNullableTimestamp,
+    // pub column_86: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesChronoNaiveDateTimeAsNullableArrayOfNullableTimestamp,
+    // pub column_87: postgresql_crud::postgresql_type::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullTimestampTz,
+    // pub column_88: postgresql_crud::postgresql_type::OptionSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableTimestampTz,
+    // pub column_89: postgresql_crud::postgresql_type::VecOfSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNotNullTimestampTz,
+    // pub column_90: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNotNullTimestampTz,
+    // pub column_91: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTz,
+    // pub column_92: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTz,
+    // pub column_93: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
+    // pub column_94: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidInitializedByClient,
+    // pub column_95: postgresql_crud::postgresql_type::OptionSqlxTypesUuidUuidAsNullableUuidInitializedByClient,
+    // pub column_96: postgresql_crud::postgresql_type::VecOfSqlxTypesUuidUuidAsNotNullArrayOfNotNullUuidInitializedByClient,
+    // pub column_97: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesUuidUuidAsNullableArrayOfNotNullUuidInitializedByClient,
+    // pub column_98: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesUuidUuidAsNotNullArrayOfNullableUuidInitializedByClient,
+    // pub column_99: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesUuidUuidAsNullableArrayOfNullableUuidInitializedByClient,
+    // pub column_100: postgresql_crud::postgresql_type::SqlxTypesIpnetworkIpNetworkAsNotNullInet,
+    // pub column_101: postgresql_crud::postgresql_type::OptionSqlxTypesIpnetworkIpNetworkAsNullableInet,
+    // pub column_102: postgresql_crud::postgresql_type::VecOfSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNotNullInet,
+    // pub column_103: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNotNullInet,
+    // pub column_104: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesIpnetworkIpNetworkAsNotNullArrayOfNullableInet,
+    // pub column_105: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesIpnetworkIpNetworkAsNullableArrayOfNullableInet,
+    // pub column_106: postgresql_crud::postgresql_type::SqlxTypesMacAddressMacAddressAsNotNullMacAddr,
+    // pub column_107: postgresql_crud::postgresql_type::OptionSqlxTypesMacAddressMacAddressAsNullableMacAddr,
+    // pub column_108: postgresql_crud::postgresql_type::VecOfSqlxTypesMacAddressMacAddressAsNotNullArrayOfNotNullMacAddr,
+    // pub column_109: postgresql_crud::postgresql_type::OptionVecOfSqlxTypesMacAddressMacAddressAsNullableArrayOfNotNullMacAddr,
+    // pub column_110: postgresql_crud::postgresql_type::VecOfOptionSqlxTypesMacAddressMacAddressAsNotNullArrayOfNullableMacAddr,
+    // pub column_111: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesMacAddressMacAddressAsNullableArrayOfNullableMacAddr,
 
-    pub column_112: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4Range,
+    // pub column_112: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4Range,
     // pub column_113: postgresql_crud::postgresql_type::OptionSqlxPostgresTypesPgRangeStdPrimitiveI32AsNullableInt4Range,
     // pub column_114: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4Range,
     // pub column_115: postgresql_crud::postgresql_type::OptionVecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNullableArrayOfNotNullInt4Range,
@@ -1425,3 +1425,645 @@ pub struct Animal {
 //             .unwrap();
 //     }
 // }
+
+
+#[cfg(test)]
+mod example_tests {
+    #[test]
+    fn test_size_of() {
+        assert_eq!(std::mem::size_of::<super::Example>(), 0);
+    }
+    #[test]
+    fn test_crud() {
+        std::thread::Builder::new()
+            .stack_size(16 * 1024 * 1024)
+            .spawn(|| {
+                tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().unwrap().block_on(async {
+                    static CONFIG: std::sync::OnceLock<crate::repositories_types::server::config::Config> = std::sync::OnceLock::new();
+                    let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config::try_from_env().unwrap());
+                    let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
+                    let url = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
+                    async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
+                        let query = "drop table if exists example";
+                        println!("{query}");
+                        let _unused = sqlx::query(query).execute(postgres_pool).await.unwrap();
+                    }
+                    drop_table_if_exists(&postgres_pool).await;
+                    let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
+                    let _unused = tokio::spawn(async move {
+                        super::Example::prepare_postgresql(&postgres_pool_for_tokio_spawn_sync_move).await.unwrap();
+                        let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
+                            postgres_pool: postgres_pool_for_tokio_spawn_sync_move.clone(),
+                            config: &config,
+                            project_git_info: &git_info::PROJECT_GIT_INFO,
+                        });
+                        axum::serve(
+                            tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&config)).await.unwrap(),
+                            axum::Router::new().merge(super::Example::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state))).into_make_service(),
+                        )
+                        .await
+                        .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
+                    });
+                    tokio::time::sleep(std::time::Duration::from_millis(100)).await;
+                    let
+                ident_create_default = super :: ExampleCreate
+                {
+                    column_0 : < < postgresql_crud :: postgresql_type ::
+                    StdPrimitiveI16AsNotNullInt2 as postgresql_crud ::
+                    PostgresqlType > :: Create as postgresql_crud ::
+                    DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                    ::
+                    default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    column_154 : < < crate :: repositories_types :: server ::
+                    routes :: api :: example :: AnimalAsNotNullJsonbObject as
+                    postgresql_crud :: PostgresqlType > :: Create as
+                    postgresql_crud ::
+                    DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                    ::
+                    default_but_option_is_always_some_and_vec_always_contains_one_element()
+                };
+                    let vec_of_primary_keys_returned_from_create_many = super::Example::try_create_many(
+                        &url,
+                        super::ExampleCreateManyParameters {
+                            payload: super::ExampleCreateManyPayload(vec![ident_create_default.clone(), ident_create_default.clone()]),
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    assert_eq!(2, vec_of_primary_keys_returned_from_create_many.len(), "try_create_many result different");
+                    let (primary_key_read_returned_from_create_many1, primary_key_read_returned_from_create_many2) = {
+                        let mut iter = vec_of_primary_keys_returned_from_create_many.into_iter();
+                        (iter.next().unwrap(), iter.next().unwrap())
+                    };
+                    let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::ExampleSelect::PrimaryKeyColumn(
+                        <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default(),
+                    )])
+                    .unwrap();
+                    let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
+                        primary_key_column: Some(
+                            postgresql_crud::PostgresqlTypeWhere::try_new(
+                                postgresql_crud::LogicalOperator::Or,
+                                vec![
+                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                                        logical_operator: postgresql_crud::LogicalOperator::Or,
+                                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read_returned_from_create_many1.clone()),
+                                    }),
+                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                                        logical_operator: postgresql_crud::LogicalOperator::Or,
+                                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read_returned_from_create_many2.clone()),
+                                    }),
+                                ],
+                            )
+                            .unwrap(),
+                        ),
+                        column_0: None,
+                        column_154: None,
+                    }));
+                    let vec_of_ident_read_with_primary_key_sort_by_primary_key = |mut vec: std::vec::Vec<super::ExampleRead>| -> std::vec::Vec<super::ExampleRead> {
+                        vec.sort_by_key(|element| element.primary_key_column.clone().unwrap().value);
+                        vec
+                    };
+                    let vec_of_ident_read_returned_from_read_many = vec_of_ident_read_with_primary_key_sort_by_primary_key(
+                        super::Example::try_read_many(
+                            &url,
+                            super::ExampleReadManyParameters {
+                                payload: super::ExampleReadManyPayload {
+                                    where_many: where_many_1_and_2_primary_keys.clone(),
+                                    select: select_primary_key.clone(),
+                                    order_by: postgresql_crud::OrderBy {
+                                        column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                        order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                    },
+                                    pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                },
+                            },
+                        )
+                        .await
+                        .unwrap(),
+                    );
+                    let some_value_primary_key_read_returned_from_create_many1 = Some(postgresql_crud::Value {
+                        value: primary_key_read_returned_from_create_many1.clone(),
+                    });
+                    let some_value_primary_key_read_returned_from_create_many2 = Some(postgresql_crud::Value {
+                        value: primary_key_read_returned_from_create_many2.clone(),
+                    });
+                    assert_eq!(
+                        vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
+                            super::ExampleRead {
+                                primary_key_column: some_value_primary_key_read_returned_from_create_many1.clone(),
+                                column_0: None,
+                                column_154: None
+                            },
+                            super::ExampleRead {
+                                primary_key_column: some_value_primary_key_read_returned_from_create_many2.clone(),
+                                column_0: None,
+                                column_154: None
+                            }
+                        ]),
+                        vec_of_ident_read_returned_from_read_many,
+                        "try_read_many result different after try_create_many"
+                    );
+                    let primary_key_returned_from_create_one = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: ident_create_default }).await.unwrap();
+                    let primary_key_read_returned_from_create_one = primary_key_returned_from_create_one;
+                    let ident_read_returned_from_read_one = super::Example::try_read_one(
+                        &url,
+                        super::ExampleReadOneParameters {
+                            payload: super::ExampleReadOnePayload {
+                                primary_key_column: primary_key_read_returned_from_create_one.clone(),
+                                select: select_primary_key.clone(),
+                            },
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    let some_value_primary_key_read_returned_from_create_one = Some(postgresql_crud::Value {
+                        value: primary_key_read_returned_from_create_one.clone(),
+                    });
+                    assert_eq!(
+                        super::ExampleRead {
+                            primary_key_column: some_value_primary_key_read_returned_from_create_one.clone(),
+                            column_0: None,
+                            column_154: None
+                        },
+                        ident_read_returned_from_read_one,
+                        "try_read_one result different after try_create_one"
+                    );
+                    let column_0_test_cases = <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner>>::test_cases();
+                    let column_154_test_cases = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<
+                        <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::ReadInner,
+                    >>::test_cases();
+                    for index in 0..column_0_test_cases.len().max(column_154_test_cases.len()) {
+                        let vec_of_primary_keys_returned_from_update_many = {
+                            let mut value = super::Example::try_update_many(
+                                &url,
+                                super::ExampleUpdateManyParameters {
+                                    payload: super::ExampleUpdateManyPayload::try_new({
+                                        let generate_element = |primary_key_read_returned_from_create_many: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read| {
+                                            super :: ExampleUpdate ::
+                                    try_new(< postgresql_crud :: postgresql_type ::
+                                    SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as
+                                    postgresql_crud :: PostgresqlType > :: Update ::
+                                    from(primary_key_read_returned_from_create_many), match
+                                    column_0_test_cases.get(index)
+                                    {
+                                        Some(value) =>
+                                        Some(postgresql_crud :: Value
+                                        {
+                                            value : < postgresql_crud :: postgresql_type ::
+                                            StdPrimitiveI16AsNotNullInt2 as postgresql_crud :: tests ::
+                                            PostgresqlTypeTestCases << postgresql_crud ::
+                                            postgresql_type :: StdPrimitiveI16AsNotNullInt2 as
+                                            postgresql_crud :: PostgresqlType > :: ReadInner >> ::
+                                            update_new_or_try_new_unwraped_for_test(value.clone())
+                                        }), None =>
+                                        Some(postgresql_crud :: Value
+                                        {
+                                            value : < postgresql_crud :: postgresql_type ::
+                                            StdPrimitiveI16AsNotNullInt2 as postgresql_crud :: tests ::
+                                            PostgresqlTypeTestCases << postgresql_crud ::
+                                            postgresql_type :: StdPrimitiveI16AsNotNullInt2 as
+                                            postgresql_crud :: PostgresqlType > :: ReadInner >> ::
+                                            update_new_or_try_new_unwraped_for_test(< postgresql_crud ::
+                                            postgresql_type :: StdPrimitiveI16AsNotNullInt2 as
+                                            postgresql_crud :: PostgresqlType > ::
+                                            into_inner(< < postgresql_crud :: postgresql_type ::
+                                            StdPrimitiveI16AsNotNullInt2 as postgresql_crud ::
+                                            PostgresqlType > :: Read as postgresql_crud ::
+                                            DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                                            ::
+                                            default_but_option_is_always_some_and_vec_always_contains_one_element())),
+                                        }),
+                                    }, match column_154_test_cases.get(index)
+                                    {
+                                        Some(value) =>
+                                        Some(postgresql_crud :: Value
+                                        {
+                                            value : < crate :: repositories_types :: server :: routes ::
+                                            api :: example :: AnimalAsNotNullJsonbObject as
+                                            postgresql_crud :: tests :: PostgresqlTypeTestCases << crate
+                                            :: repositories_types :: server :: routes :: api :: example
+                                            :: AnimalAsNotNullJsonbObject as postgresql_crud ::
+                                            PostgresqlType > :: ReadInner >> ::
+                                            update_new_or_try_new_unwraped_for_test(value.clone())
+                                        }), None =>
+                                        Some(postgresql_crud :: Value
+                                        {
+                                            value : < crate :: repositories_types :: server :: routes ::
+                                            api :: example :: AnimalAsNotNullJsonbObject as
+                                            postgresql_crud :: tests :: PostgresqlTypeTestCases << crate
+                                            :: repositories_types :: server :: routes :: api :: example
+                                            :: AnimalAsNotNullJsonbObject as postgresql_crud ::
+                                            PostgresqlType > :: ReadInner >> ::
+                                            update_new_or_try_new_unwraped_for_test(< crate ::
+                                            repositories_types :: server :: routes :: api :: example ::
+                                            AnimalAsNotNullJsonbObject as postgresql_crud ::
+                                            PostgresqlType > ::
+                                            into_inner(< < crate :: repositories_types :: server ::
+                                            routes :: api :: example :: AnimalAsNotNullJsonbObject as
+                                            postgresql_crud :: PostgresqlType > :: Read as
+                                            postgresql_crud ::
+                                            DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                                            ::
+                                            default_but_option_is_always_some_and_vec_always_contains_one_element())),
+                                        }),
+                                    }).unwrap()
+                                        };
+                                        vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
+                                    })
+                                    .unwrap(),
+                                },
+                            )
+                            .await
+                            .unwrap();
+                            value.sort();
+                            value
+                        };
+                        assert_eq!(
+                            {
+                                let mut value = vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()];
+                                value.sort();
+                                value
+                            },
+                            vec_of_primary_keys_returned_from_update_many,
+                            "try_update_many result different"
+                        );
+                        let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec!
+                        [super :: ExampleSelect ::
+                        PrimaryKeyColumn(< < postgresql_crud :: postgresql_type ::
+                        SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as
+                        postgresql_crud :: PostgresqlType > :: Select as
+                        postgresql_crud ::
+                        DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                        ::
+                        default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                        super :: ExampleSelect ::
+                        Column0(< < postgresql_crud :: postgresql_type ::
+                        StdPrimitiveI16AsNotNullInt2 as postgresql_crud ::
+                        PostgresqlType > :: Select as postgresql_crud ::
+                        DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                        ::
+                        default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                        super :: ExampleSelect ::
+                        Column154(< < crate :: repositories_types :: server ::
+                        routes :: api :: example :: AnimalAsNotNullJsonbObject as
+                        postgresql_crud :: PostgresqlType > :: Select as
+                        postgresql_crud ::
+                        DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                        ::
+                        default_but_option_is_always_some_and_vec_always_contains_one_element())])
+                            .unwrap();
+                        let vec_of_ident_read_returned_from_read_many = vec_of_ident_read_with_primary_key_sort_by_primary_key(
+                            super::Example::try_read_many(
+                                &url,
+                                super::ExampleReadManyParameters {
+                                    payload: super::ExampleReadManyPayload {
+                                        where_many: where_many_1_and_2_primary_keys.clone(),
+                                        select: select_primary_key_field_ident.clone(),
+                                        order_by: postgresql_crud::OrderBy {
+                                            column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                            order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                        },
+                                        pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                    },
+                                },
+                            )
+                            .await
+                            .unwrap(),
+                        );
+                        assert_eq!(
+                            vec_of_ident_read_with_primary_key_sort_by_primary_key({
+                                let generate_element = |primary_key_read_returned_from_create_many: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read| {
+                                    super :: ExampleRead
+                            {
+                                primary_key_column :
+                                Some(postgresql_crud :: Value
+                                {
+                                    value : < postgresql_crud :: postgresql_type ::
+                                    SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as
+                                    postgresql_crud :: PostgresqlType > :: Read ::
+                                    from(primary_key_read_returned_from_create_many),
+                                }), column_0 : match column_0_test_cases.get(index)
+                                {
+                                    Some(value) =>
+                                    Some(postgresql_crud :: Value
+                                    {
+                                        value : < postgresql_crud :: postgresql_type ::
+                                        StdPrimitiveI16AsNotNullInt2 as postgresql_crud ::
+                                        PostgresqlType > ::
+                                        normalize(< postgresql_crud :: postgresql_type ::
+                                        StdPrimitiveI16AsNotNullInt2 as postgresql_crud :: tests ::
+                                        PostgresqlTypeTestCases < < postgresql_crud ::
+                                        postgresql_type :: StdPrimitiveI16AsNotNullInt2 as
+                                        postgresql_crud :: PostgresqlType > :: ReadInner, >> ::
+                                        read_new_or_try_new_unwraped_for_test(value.clone()))
+                                    }), None =>
+                                    Some(postgresql_crud :: Value
+                                    {
+                                        value : < postgresql_crud :: postgresql_type ::
+                                        StdPrimitiveI16AsNotNullInt2 as postgresql_crud ::
+                                        PostgresqlType > ::
+                                        normalize(< postgresql_crud :: postgresql_type ::
+                                        StdPrimitiveI16AsNotNullInt2 as postgresql_crud :: tests ::
+                                        PostgresqlTypeTestCases < < postgresql_crud ::
+                                        postgresql_type :: StdPrimitiveI16AsNotNullInt2 as
+                                        postgresql_crud :: PostgresqlType > :: ReadInner, >> ::
+                                        read_new_or_try_new_unwraped_for_test(< postgresql_crud ::
+                                        postgresql_type :: StdPrimitiveI16AsNotNullInt2 as
+                                        postgresql_crud :: PostgresqlType > ::
+                                        into_inner(< < postgresql_crud :: postgresql_type ::
+                                        StdPrimitiveI16AsNotNullInt2 as postgresql_crud ::
+                                        PostgresqlType > :: Read as postgresql_crud ::
+                                        DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                                        ::
+                                        default_but_option_is_always_some_and_vec_always_contains_one_element())))
+                                    }),
+                                }, column_154 : match column_154_test_cases.get(index)
+                                {
+                                    Some(value) =>
+                                    Some(postgresql_crud :: Value
+                                    {
+                                        value : < crate :: repositories_types :: server :: routes ::
+                                        api :: example :: AnimalAsNotNullJsonbObject as
+                                        postgresql_crud :: PostgresqlType > ::
+                                        normalize(< crate :: repositories_types :: server :: routes
+                                        :: api :: example :: AnimalAsNotNullJsonbObject as
+                                        postgresql_crud :: tests :: PostgresqlTypeTestCases < <
+                                        crate :: repositories_types :: server :: routes :: api ::
+                                        example :: AnimalAsNotNullJsonbObject as postgresql_crud ::
+                                        PostgresqlType > :: ReadInner, >> ::
+                                        read_new_or_try_new_unwraped_for_test(value.clone()))
+                                    }), None =>
+                                    Some(postgresql_crud :: Value
+                                    {
+                                        value : < crate :: repositories_types :: server :: routes ::
+                                        api :: example :: AnimalAsNotNullJsonbObject as
+                                        postgresql_crud :: PostgresqlType > ::
+                                        normalize(< crate :: repositories_types :: server :: routes
+                                        :: api :: example :: AnimalAsNotNullJsonbObject as
+                                        postgresql_crud :: tests :: PostgresqlTypeTestCases < <
+                                        crate :: repositories_types :: server :: routes :: api ::
+                                        example :: AnimalAsNotNullJsonbObject as postgresql_crud ::
+                                        PostgresqlType > :: ReadInner, >> ::
+                                        read_new_or_try_new_unwraped_for_test(< crate ::
+                                        repositories_types :: server :: routes :: api :: example ::
+                                        AnimalAsNotNullJsonbObject as postgresql_crud ::
+                                        PostgresqlType > ::
+                                        into_inner(< < crate :: repositories_types :: server ::
+                                        routes :: api :: example :: AnimalAsNotNullJsonbObject as
+                                        postgresql_crud :: PostgresqlType > :: Read as
+                                        postgresql_crud ::
+                                        DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                                        ::
+                                        default_but_option_is_always_some_and_vec_always_contains_one_element())))
+                                    }),
+                                }
+                            }
+                                };
+                                vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
+                            }),
+                            vec_of_ident_read_returned_from_read_many,
+                            "try_read_many result different after try_update_many"
+                        );
+                        /////////////////
+                        // let some_value_update = Some(postgresql_crud::Value {
+                        //     value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner>>::update_new_or_try_new_unwraped_for_test(
+                        //         element.clone(),
+                        //     ),
+                        // });
+                        // let vec_of_primary_keys_returned_from_update_many = {
+                        //     let mut value = super::Example::try_update_many(
+                        //         &url,
+                        //         super::ExampleUpdateManyParameters {
+                        //             payload: super::ExampleUpdateManyPayload::try_new(vec![
+                        //                 super::ExampleUpdate::try_new(
+                        //                     <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many1.clone()),
+                        //                     some_value_update.clone(),
+                        //                     None,
+                        //                 )
+                        //                 .unwrap(),
+                        //                 super::ExampleUpdate::try_new(
+                        //                     <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many2.clone()),
+                        //                     some_value_update.clone(),
+                        //                     None,
+                        //                 )
+                        //                 .unwrap(),
+                        //             ])
+                        //             .unwrap(),
+                        //         },
+                        //     )
+                        //     .await
+                        //     .unwrap();
+                        //     value.sort();
+                        //     value
+                        // };
+                        // assert_eq!(
+                        //     {
+                        //         let mut value = vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()];
+                        //         value.sort();
+                        //         value
+                        //     },
+                        //     vec_of_primary_keys_returned_from_update_many,
+                        //     "try_update_many result different for column_0: postgresql_crud :: postgresql_type :: StdPrimitiveI16AsNotNullInt2"
+                        // );
+                        // let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec!
+                        // [super :: ExampleSelect ::
+                        // PrimaryKeyColumn(< < postgresql_crud :: postgresql_type ::
+                        // SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as
+                        // postgresql_crud :: PostgresqlType > :: Select as
+                        // postgresql_crud ::
+                        // DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                        // ::
+                        // default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                        // super :: ExampleSelect ::
+                        // Column0(< < postgresql_crud :: postgresql_type ::
+                        // StdPrimitiveI16AsNotNullInt2 as postgresql_crud ::
+                        // PostgresqlType > :: Select as postgresql_crud ::
+                        // DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                        // ::
+                        // default_but_option_is_always_some_and_vec_always_contains_one_element()),])
+                        // .unwrap();
+                        // let vec_of_ident_read_returned_from_read_many = vec_of_ident_read_with_primary_key_sort_by_primary_key(
+                        //     super::Example::try_read_many(
+                        //         &url,
+                        //         super::ExampleReadManyParameters {
+                        //             payload: super::ExampleReadManyPayload {
+                        //                 where_many: where_many_1_and_2_primary_keys.clone(),
+                        //                 select: select_primary_key_field_ident.clone(),
+                        //                 order_by: postgresql_crud::OrderBy {
+                        //                     column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                        //                     order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                        //                 },
+                        //                 pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                        //             },
+                        //         },
+                        //     )
+                        //     .await
+                        //     .unwrap(),
+                        // );
+                        // let some_value_field_ident_read = Some(postgresql_crud::Value {
+                        //     value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner>>::read_new_or_try_new_unwraped_for_test(
+                        //         element.clone(),
+                        //     ),
+                        // });
+                        // assert_eq!(
+                        //     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
+                        //         super::ExampleRead {
+                        //             primary_key_column: match some_value_primary_key_read_returned_from_create_many1.clone() {
+                        //                 Some(value) => Some(postgresql_crud::Value {
+                        //                     value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::normalize(value.value)
+                        //                 }),
+                        //                 None => None,
+                        //             },
+                        //             column_0: match some_value_field_ident_read.clone() {
+                        //                 Some(value) => Some(postgresql_crud::Value {
+                        //                     value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::normalize(value.value)
+                        //                 }),
+                        //                 None => None,
+                        //             },
+                        //             column_154: None
+                        //         },
+                        //         super::ExampleRead {
+                        //             primary_key_column: match some_value_primary_key_read_returned_from_create_many2.clone() {
+                        //                 Some(value) => Some(postgresql_crud::Value {
+                        //                     value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::normalize(value.value)
+                        //                 }),
+                        //                 None => None,
+                        //             },
+                        //             column_0: match some_value_field_ident_read.clone() {
+                        //                 Some(value) => Some(postgresql_crud::Value {
+                        //                     value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::normalize(value.value)
+                        //                 }),
+                        //                 None => None,
+                        //             },
+                        //             column_154: None
+                        //         }
+                        //     ]),
+                        //     vec_of_ident_read_returned_from_read_many,
+                        //     "try_read_many result different after try_update_many for column_0: postgresql_crud :: postgresql_type :: StdPrimitiveI16AsNotNullInt2"
+                        // );
+                        // let primary_key_returned_from_update_one = super::Example::try_update_one(
+                        //     &url,
+                        //     super::ExampleUpdateOneParameters {
+                        //         payload: super::ExampleUpdate::try_new(
+                        //             <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_one.clone()),
+                        //             some_value_update.clone(),
+                        //             None,
+                        //         )
+                        //         .unwrap(),
+                        //     },
+                        // )
+                        // .await
+                        // .unwrap();
+                        // assert_eq!(
+                        //     primary_key_read_returned_from_create_one.clone(),
+                        //     primary_key_returned_from_update_one,
+                        //     "try_update_one result different for column_0: postgresql_crud :: postgresql_type :: StdPrimitiveI16AsNotNullInt2"
+                        // );
+                        // let ident_read_returned_from_read_one = super::Example::try_read_one(
+                        //     &url,
+                        //     super::ExampleReadOneParameters {
+                        //         payload: super::ExampleReadOnePayload {
+                        //             primary_key_column: primary_key_read_returned_from_create_one.clone(),
+                        //             select: select_primary_key_field_ident.clone(),
+                        //         },
+                        //     },
+                        // )
+                        // .await
+                        // .unwrap();
+                        // assert_eq!(
+                        //     super::ExampleRead {
+                        //         primary_key_column: match some_value_primary_key_read_returned_from_create_one.clone() {
+                        //             Some(value) => Some(postgresql_crud::Value {
+                        //                 value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::normalize(value.value)
+                        //             }),
+                        //             None => None,
+                        //         },
+                        //         column_0: match some_value_field_ident_read.clone() {
+                        //             Some(value) => Some(postgresql_crud::Value {
+                        //                 value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::normalize(value.value)
+                        //             }),
+                        //             None => None,
+                        //         },
+                        //         column_154: None
+                        //     },
+                        //     ident_read_returned_from_read_one,
+                        //     "try_read_one result different after try_update_one for column_0: postgresql_crud :: postgresql_type :: StdPrimitiveI16AsNotNullInt2"
+                        // );
+                        /////////////////
+                    }
+                    let vec_of_primary_keys_returned_from_delete_many = {
+                        let mut value = super::Example::try_delete_many(
+                            &url,
+                            super::ExampleDeleteManyParameters {
+                                payload: super::ExampleDeleteManyPayload { where_many: where_many_1_and_2_primary_keys.clone() },
+                            },
+                        )
+                        .await
+                        .unwrap();
+                        value.sort();
+                        value
+                    };
+                    assert_eq!(
+                        {
+                            let mut value = vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()];
+                            value.sort();
+                            value
+                        },
+                        vec_of_primary_keys_returned_from_delete_many,
+                        "try_delete_many result different"
+                    );
+                    let vec_of_ident_read_returned_from_read_many = super::Example::try_read_many(
+                        &url,
+                        super::ExampleReadManyParameters {
+                            payload: super::ExampleReadManyPayload {
+                                where_many: where_many_1_and_2_primary_keys.clone(),
+                                select: select_primary_key.clone(),
+                                order_by: postgresql_crud::OrderBy {
+                                    column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                    order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                },
+                                pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                            },
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    assert_eq!(std::vec::Vec::<super::ExampleRead>::default(), vec_of_ident_read_returned_from_read_many, "try_read_many result different after try_delete_many");
+                    let primary_key_returned_from_delete_one = super::Example::try_delete_one(
+                        &url,
+                        super::ExampleDeleteOneParameters {
+                            payload: super::ExampleDeleteOnePayload {
+                                primary_key_column: primary_key_read_returned_from_create_one.clone(),
+                            },
+                        },
+                    )
+                    .await
+                    .unwrap();
+                    assert_eq!(primary_key_read_returned_from_create_one.clone(), primary_key_returned_from_delete_one, "try_delete_one result different");
+                    if let Err(error) = super::Example::try_read_one(
+                        &url,
+                        super::ExampleReadOneParameters {
+                            payload: super::ExampleReadOnePayload {
+                                primary_key_column: primary_key_read_returned_from_create_one.clone(),
+                                select: select_primary_key.clone(),
+                            },
+                        },
+                    )
+                    .await
+                        && let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize {
+                            read_one_error_named_with_serialize_deserialize,
+                            code_occurence: _,
+                        } = &error
+                        && let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize
+                        && "no rows returned by a query that expected to return at least one row".to_string() != *postgresql
+                    {
+                        panic!("try_read_one result different after try_delete_one");
+                    }
+                    drop_table_if_exists(&postgres_pool).await;
+                });
+            })
+            .unwrap()
+            .join()
+            .unwrap();
+    }
+}
