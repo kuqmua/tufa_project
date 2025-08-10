@@ -3909,6 +3909,50 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         });
+        let ident_select_columns_token_stream = generate_fields_named_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident_upper_camel_case = naming::ToTokensToUpperCamelCaseTokenStream::case_or_panic(&element.field_ident);
+            let field_type = &element.syn_field.ty;
+            quote::quote!{
+                super::#ident_select_upper_camel_case::#field_ident_upper_camel_case(
+                    <
+                        <#field_type as postgresql_crud::PostgresqlType>::Select
+                        as
+                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                )
+            }
+        });
+        let ident_read_fields_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_ident_test_cases_snake_case = naming::parameter::SelfTestCasesSnakeCase::from_tokens(&field_ident);
+            let field_type = &element.syn_field.ty;
+            quote::quote!{
+                #field_ident: match #field_ident_test_cases_snake_case.get(#index_snake_case) {
+                    Some(#value_snake_case) => Some(postgresql_crud::Value {
+                        #value_snake_case: <#field_type as postgresql_crud::PostgresqlType>::normalize(
+                            <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<
+                                <#field_type as postgresql_crud::PostgresqlType>::ReadInner,
+                            >>::read_new_or_try_new_unwraped_for_test(#value_snake_case.clone())
+                        )
+                    }),
+                    None => Some(postgresql_crud::Value {
+                        #value_snake_case: <#field_type as postgresql_crud::PostgresqlType>::normalize(
+                            <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<
+                                <#field_type as postgresql_crud::PostgresqlType>::ReadInner,
+                            >>::read_new_or_try_new_unwraped_for_test(
+                                <#field_type as postgresql_crud::PostgresqlType>::into_inner(
+                                    <
+                                        <#field_type as postgresql_crud::PostgresqlType>::Read
+                                        as
+                                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                )
+                            )
+                        )
+                    }),
+                }
+            }
+        });
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -4062,12 +4106,12 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #columns_test_cases_declaration_token_stream
                                 for #index_snake_case in #test_cases_max_len_token_stream {
                                     let vec_of_primary_keys_returned_from_update_many = {
-                                        let mut #value_snake_case = super::Example::try_update_many(
+                                        let mut #value_snake_case = super::#ident::try_update_many(
                                             &url,
-                                            super::ExampleUpdateManyParameters {
-                                                payload: super::ExampleUpdateManyPayload::try_new({
+                                            super::#ident_update_many_parameters_upper_camel_case {
+                                                #payload_snake_case: super::#ident_update_many_payload_upper_camel_case::try_new({
                                                     let generate_element = |primary_key_read_returned_from_create_many: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
-                                                        super::ExampleUpdate::try_new(
+                                                        super::#ident_update_upper_camel_case::try_new(
                                                             <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::from(
                                                                 primary_key_read_returned_from_create_many
                                                             ),
@@ -4090,119 +4134,42 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             #value_snake_case
                                         },
                                         vec_of_primary_keys_returned_from_update_many,
-                                        "try_update_many result different for column_154: crate :: repositories_types :: server :: routes :: api :: example ::AnimalAsNotNullJsonbObject"
+                                        "try_update_many result different"
                                     );
-                                    let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(
-                                        vec![
-                                            super::ExampleSelect::PrimaryKeyColumn(
-                                                <
-                                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select
-                                                    as
-                                                    postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                            ),
-                                            super::ExampleSelect::Column0(
-                                                <
-                                                    <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Select
-                                                    as
-                                                    postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                            ),
-                                            super::ExampleSelect::Column154(
-                                                <
-                                                    <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Select
-                                                    as
-                                                    postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                            )
-                                        ]
-                                    ).unwrap();
-                                    let vec_of_ident_read_returned_from_read_many = vec_of_ident_read_with_primary_key_sort_by_primary_key(
-                                        super::Example::try_read_many(
+                                    let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#ident_select_columns_token_stream]).unwrap();
+                                    let vec_of_ident_read_returned_from_read_many = vec_of_ident_read_with_primary_key_sort_by_primary_key(super::#ident::try_read_many(
                                             &url,
-                                            super::ExampleReadManyParameters {
-                                                payload: super::ExampleReadManyPayload {
-                                                    where_many: where_many_1_and_2_primary_keys.clone(),
-                                                    select: select_primary_key_field_ident.clone(),
-                                                    order_by: postgresql_crud::OrderBy {
-                                                        column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                                        order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                                            super::#ident_read_many_parameters_upper_camel_case {
+                                                #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
+                                                    #where_many_snake_case: where_many_1_and_2_primary_keys.clone(),
+                                                    #select_snake_case: select_primary_key_field_ident.clone(),
+                                                    #order_by_snake_case: postgresql_crud::OrderBy {
+                                                        #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                                        #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                                     },
-                                                    pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                                                    #pagination_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                                 },
                                             },
                                         )
                                         .await
-                                        .unwrap(),
+                                        .unwrap()
                                     );
                                     assert_eq!(
                                         vec_of_ident_read_with_primary_key_sort_by_primary_key({
                                             let generate_element = |primary_key_read_returned_from_create_many: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
-                                                super::ExampleRead {
-                                                    primary_key_column: Some(postgresql_crud::Value {
+                                                super::#ident_read_upper_camel_case {
+                                                    #primary_key_field_ident: Some(postgresql_crud::Value {
                                                         #value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::from(
                                                             primary_key_read_returned_from_create_many
                                                         ),
                                                     }),
-                                                    column_0: match column_0_test_cases.get(#index_snake_case) {
-                                                        Some(#value_snake_case) => Some(postgresql_crud::Value {
-                                                            #value_snake_case: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::normalize(
-                                                                <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<
-                                                                    <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner,
-                                                                >>::read_new_or_try_new_unwraped_for_test(#value_snake_case.clone())
-                                                            )
-                                                        }),
-                                                        None => Some(postgresql_crud::Value {
-                                                            #value_snake_case: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::normalize(
-                                                                <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<
-                                                                    <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner,
-                                                                >>::read_new_or_try_new_unwraped_for_test(
-                                                                    <
-                                                                        postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2
-                                                                        as
-                                                                        postgresql_crud::PostgresqlType
-                                                                    >::into_inner(
-                                                                        <
-                                                                            <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read
-                                                                            as
-                                                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                                                    )
-                                                                )
-                                                            )
-                                                        }),
-                                                    },
-                                                    column_154: match column_154_test_cases.get(#index_snake_case) {
-                                                        Some(#value_snake_case) => Some(postgresql_crud::Value {
-                                                            #value_snake_case: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::normalize(
-                                                                <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<
-                                                                    <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::ReadInner,
-                                                                >>::read_new_or_try_new_unwraped_for_test(#value_snake_case.clone())
-                                                            )
-                                                        }),
-                                                        None => Some(postgresql_crud::Value {
-                                                            #value_snake_case: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::normalize(
-                                                                <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<
-                                                                    <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::ReadInner,
-                                                                >>::read_new_or_try_new_unwraped_for_test(
-                                                                    <
-                                                                        crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                                                        as
-                                                                        postgresql_crud::PostgresqlType
-                                                                    >::into_inner(
-                                                                        <
-                                                                            <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Read
-                                                                            as
-                                                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                                                    )
-                                                                )
-                                                            )
-                                                        }),
-                                                    }
+                                                    #ident_read_fields_token_stream
                                                 }
                                             };
                                             vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
                                         }),
                                         vec_of_ident_read_returned_from_read_many,
-                                        "try_read_many result different after try_update_many for column_154: crate :: repositories_types :: server :: routes :: api :: example ::AnimalAsNotNullJsonbObject"
+                                        "try_read_many result different after try_update_many"
                                     );
                                 }
                                 //
