@@ -3866,13 +3866,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 }
             }
         });
-        // let generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
-        //     let field_ident = &element.field_ident;
-        //     let field_type = &element.syn_field.ty;
-        //     quote::quote!{
-
-        //     }
-        // });
+        let columns_test_cases_declaration_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident_test_cases_snake_case = naming::parameter::SelfTestCasesSnakeCase::from_tokens(&element.field_ident);
+            let field_type = &element.syn_field.ty;
+            quote::quote!{
+                let #field_ident_test_cases_snake_case = <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<<#field_type as postgresql_crud::PostgresqlType>::ReadInner>>::test_cases();
+            }
+        });
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -4023,11 +4023,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 );
                                 // #update_token_stream
                                 //
-                                let column_0_test_cases = <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<<postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner>>::test_cases();
-                                let column_154_test_cases = <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<<crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::ReadInner>>::test_cases();
+                                #columns_test_cases_declaration_token_stream
                                 for i in 0..column_0_test_cases.len().max(column_154_test_cases.len()) {
-                                    let current_option_column_0 = column_0_test_cases.get(i);
-                                    let current_option_column_154 = column_154_test_cases.get(i);
                                     let vec_of_primary_keys_returned_from_update_many = {
                                         let mut value = super::Example::try_update_many(
                                             &url,
@@ -4198,7 +4195,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                         primary_key_read_returned_from_create_many1.clone()
                                                     ),
                                                 }),
-                                                column_0: match current_option_column_0 {
+                                                column_0: match column_0_test_cases.get(i) {
                                                     Some(value) => Some(postgresql_crud::Value {
                                                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::normalize(
                                                             <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<
@@ -4226,7 +4223,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                         )
                                                     }),
                                                 },
-                                                column_154: match current_option_column_154 {
+                                                column_154: match column_154_test_cases.get(i) {
                                                     Some(value) => Some(postgresql_crud::Value {
                                                         value: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::normalize(
                                                             <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<
@@ -4261,7 +4258,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                         primary_key_read_returned_from_create_many2.clone()
                                                     ),
                                                 }),
-                                                column_0: match current_option_column_0 {
+                                                column_0: match column_0_test_cases.get(i) {
                                                     Some(value) => Some(postgresql_crud::Value {
                                                         value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::normalize(
                                                             <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<
@@ -4289,7 +4286,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                         )
                                                     }),
                                                 },
-                                                column_154: match current_option_column_154 {
+                                                column_154: match column_154_test_cases.get(i) {
                                                     Some(value) => Some(postgresql_crud::Value {
                                                         value: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::normalize(
                                                             <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<
