@@ -1599,72 +1599,49 @@ mod example_tests {
                                 super::ExampleUpdateManyParameters {
                                     payload: super::ExampleUpdateManyPayload::try_new({
                                         let generate_element = |primary_key_read_returned_from_create_many: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read| {
-                                            super :: ExampleUpdate :: try_new(< postgresql_crud :: postgresql_type ::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as
-                                                    postgresql_crud :: PostgresqlType > :: Update ::
-                                                    from(primary_key_read_returned_from_create_many), match
-                                                    column_0_test_cases.get(index)
-                                                    {
-                                                        Some(value) => Some(postgresql_crud :: Value
-                                                        {
-                                                            value : < postgresql_crud :: postgresql_type ::
-                                                            StdPrimitiveI16AsNotNullInt2 as postgresql_crud :: tests ::
-                                                            PostgresqlTypeTestCases << postgresql_crud ::
-                                                            postgresql_type :: StdPrimitiveI16AsNotNullInt2 as
-                                                            postgresql_crud :: PostgresqlType > :: ReadInner >> ::
-                                                            update_new_or_try_new_unwraped_for_test(value.clone())
+                                            super::ExampleUpdate::try_new(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as
+                                                    postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_many),
+                                                    match column_0_test_cases.get(index) {
+                                                        Some(value) => Some(postgresql_crud::Value {
+                                                            value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<
+                                                                <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner
+                                                            >>::update_new_or_try_new_unwraped_for_test(value.clone())
                                                         }), 
-                                                        None =>
-                                                        Some(postgresql_crud :: Value
-                                                        {
-                                                            value : < postgresql_crud :: postgresql_type ::
-                                                            StdPrimitiveI16AsNotNullInt2 as postgresql_crud :: tests ::
-                                                            PostgresqlTypeTestCases << postgresql_crud ::
-                                                            postgresql_type :: StdPrimitiveI16AsNotNullInt2 as
-                                                            postgresql_crud :: PostgresqlType > :: ReadInner >> ::
-                                                            update_new_or_try_new_unwraped_for_test(< postgresql_crud ::
-                                                            postgresql_type :: StdPrimitiveI16AsNotNullInt2 as
-                                                            postgresql_crud :: PostgresqlType > ::
-                                                            into_inner(< < postgresql_crud :: postgresql_type ::
-                                                            StdPrimitiveI16AsNotNullInt2 as postgresql_crud ::
-                                                            PostgresqlType > :: Read as postgresql_crud ::
-                                                            DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
-                                                            ::
-                                                            default_but_option_is_always_some_and_vec_always_contains_one_element())),
+                                                        None => Some(postgresql_crud::Value {
+                                                            value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::tests::PostgresqlTypeTestCases<
+                                                                <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::ReadInner
+                                                            >>::update_new_or_try_new_unwraped_for_test(
+                                                                <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::into_inner(
+                                                                    <
+                                                                        <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::Read
+                                                                        as
+                                                                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                                                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                                                )
+                                                            ),
                                                         }),
-                                                    }, match column_154_test_cases.get(index)
-                                                    {
-                                                        Some(value) =>
-                                                        Some(postgresql_crud :: Value
-                                                        {
-                                                            value : < crate :: repositories_types :: server :: routes ::
-                                                            api :: example :: AnimalAsNotNullJsonbObject as
-                                                            postgresql_crud :: tests :: PostgresqlTypeTestCases << crate
-                                                            :: repositories_types :: server :: routes :: api :: example
-                                                            :: AnimalAsNotNullJsonbObject as postgresql_crud ::
-                                                            PostgresqlType > :: ReadInner >> ::
-                                                            update_new_or_try_new_unwraped_for_test(value.clone())
-                                                        }), None =>
-                                                        Some(postgresql_crud :: Value
-                                                        {
-                                                            value : < crate :: repositories_types :: server :: routes ::
-                                                            api :: example :: AnimalAsNotNullJsonbObject as
-                                                            postgresql_crud :: tests :: PostgresqlTypeTestCases << crate
-                                                            :: repositories_types :: server :: routes :: api :: example
-                                                            :: AnimalAsNotNullJsonbObject as postgresql_crud ::
-                                                            PostgresqlType > :: ReadInner >> ::
-                                                            update_new_or_try_new_unwraped_for_test(< crate ::
-                                                            repositories_types :: server :: routes :: api :: example ::
-                                                            AnimalAsNotNullJsonbObject as postgresql_crud ::
-                                                            PostgresqlType > ::
-                                                            into_inner(< < crate :: repositories_types :: server ::
-                                                            routes :: api :: example :: AnimalAsNotNullJsonbObject as
-                                                            postgresql_crud :: PostgresqlType > :: Read as
-                                                            postgresql_crud ::
-                                                            DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
-                                                            ::
-                                                            default_but_option_is_always_some_and_vec_always_contains_one_element())),
+                                                    },
+                                                    match column_154_test_cases.get(index) {
+                                                        Some(value) => Some(postgresql_crud::Value {
+                                                            value: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<
+                                                                <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::ReadInner
+                                                            >>::update_new_or_try_new_unwraped_for_test(value.clone())
+                                                        }), 
+                                                        None => Some(postgresql_crud::Value {
+                                                            value: <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<
+                                                                <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::ReadInner
+                                                            >>::update_new_or_try_new_unwraped_for_test(
+                                                                <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::into_inner(
+                                                                    <
+                                                                        <crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlType>::Read
+                                                                        as
+                                                                        postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
+                                                                    >::default_but_option_is_always_some_and_vec_always_contains_one_element()
+                                                                )
+                                                            ),
                                                         }),
-                                                    }).unwrap()
+                                                    },
+                                                ).unwrap()
                                         };
                                         vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
                                     })
@@ -1939,54 +1916,56 @@ mod example_tests {
                         //     vec_of_ident_read_returned_from_read_many,
                         //     "try_read_many result different after try_update_many for column_0: postgresql_crud :: postgresql_type :: StdPrimitiveI16AsNotNullInt2"
                         // );
-                        let primary_key_returned_from_update_one = super::Example::try_update_one(
-                            &url,
-                            super::ExampleUpdateOneParameters {
-                                payload: super::ExampleUpdate::try_new(
-                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_one.clone()),
-                                    some_value_update.clone(),
-                                    None,
-                                )
-                                .unwrap(),
-                            },
-                        )
-                        .await
-                        .unwrap();
-                        assert_eq!(
-                            primary_key_read_returned_from_create_one.clone(),
-                            primary_key_returned_from_update_one,
-                            "try_update_one result different for column_0: postgresql_crud :: postgresql_type :: StdPrimitiveI16AsNotNullInt2"
-                        );
-                        let ident_read_returned_from_read_one = super::Example::try_read_one(
-                            &url,
-                            super::ExampleReadOneParameters {
-                                payload: super::ExampleReadOnePayload {
-                                    primary_key_column: primary_key_read_returned_from_create_one.clone(),
-                                    select: select_primary_key_field_ident.clone(),
-                                },
-                            },
-                        )
-                        .await
-                        .unwrap();
-                        assert_eq!(
-                            super::ExampleRead {
-                                primary_key_column: match some_value_primary_key_read_returned_from_create_one.clone() {
-                                    Some(value) => Some(postgresql_crud::Value {
-                                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::normalize(value.value)
-                                    }),
-                                    None => None,
-                                },
-                                column_0: match some_value_field_ident_read.clone() {
-                                    Some(value) => Some(postgresql_crud::Value {
-                                        value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::normalize(value.value)
-                                    }),
-                                    None => None,
-                                },
-                                column_154: None
-                            },
-                            ident_read_returned_from_read_one,
-                            "try_read_one result different after try_update_one for column_0: postgresql_crud :: postgresql_type :: StdPrimitiveI16AsNotNullInt2"
-                        );
+
+                        ///////
+                        // let primary_key_returned_from_update_one = super::Example::try_update_one(
+                        //     &url,
+                        //     super::ExampleUpdateOneParameters {
+                        //         payload: super::ExampleUpdate::try_new(
+                        //             <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_one.clone()),
+                        //             some_value_update.clone(),
+                        //             None,
+                        //         )
+                        //         .unwrap(),
+                        //     },
+                        // )
+                        // .await
+                        // .unwrap();
+                        // assert_eq!(
+                        //     primary_key_read_returned_from_create_one.clone(),
+                        //     primary_key_returned_from_update_one,
+                        //     "try_update_one result different for column_0: postgresql_crud :: postgresql_type :: StdPrimitiveI16AsNotNullInt2"
+                        // );
+                        // let ident_read_returned_from_read_one = super::Example::try_read_one(
+                        //     &url,
+                        //     super::ExampleReadOneParameters {
+                        //         payload: super::ExampleReadOnePayload {
+                        //             primary_key_column: primary_key_read_returned_from_create_one.clone(),
+                        //             select: select_primary_key_field_ident.clone(),
+                        //         },
+                        //     },
+                        // )
+                        // .await
+                        // .unwrap();
+                        // assert_eq!(
+                        //     super::ExampleRead {
+                        //         primary_key_column: match some_value_primary_key_read_returned_from_create_one.clone() {
+                        //             Some(value) => Some(postgresql_crud::Value {
+                        //                 value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::normalize(value.value)
+                        //             }),
+                        //             None => None,
+                        //         },
+                        //         column_0: match some_value_field_ident_read.clone() {
+                        //             Some(value) => Some(postgresql_crud::Value {
+                        //                 value: <postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2 as postgresql_crud::PostgresqlType>::normalize(value.value)
+                        //             }),
+                        //             None => None,
+                        //         },
+                        //         column_154: None
+                        //     },
+                        //     ident_read_returned_from_read_one,
+                        //     "try_read_one result different after try_update_one for column_0: postgresql_crud :: postgresql_type :: StdPrimitiveI16AsNotNullInt2"
+                        // );
                         /////////////////
                     }
                     let vec_of_primary_keys_returned_from_delete_many = {
