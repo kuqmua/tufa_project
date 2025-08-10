@@ -3873,6 +3873,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 let #field_ident_test_cases_snake_case = <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<<#field_type as postgresql_crud::PostgresqlType>::ReadInner>>::test_cases();
             }
         });
+        let test_cases_max_len_token_stream = {
+            let mut content_token_stream = proc_macro2::TokenStream::new();
+            for element in fields_without_primary_key {
+                let field_ident_test_cases_snake_case = naming::parameter::SelfTestCasesSnakeCase::from_tokens(&element.field_ident);
+                let field_type = &element.syn_field.ty;
+                if content_token_stream.to_string() == "".to_string() {
+                    content_token_stream = quote::quote!{0..#field_ident_test_cases_snake_case.len()};
+                }
+                else {
+                    content_token_stream = quote::quote!{#content_token_stream.max(#field_ident_test_cases_snake_case.len())};
+                }
+            }
+            content_token_stream
+        };
         quote::quote! {
             #[cfg(test)]
             mod #ident_tests_snake_case {
@@ -4024,7 +4038,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 // #update_token_stream
                                 //
                                 #columns_test_cases_declaration_token_stream
-                                for i in 0..column_0_test_cases.len().max(column_154_test_cases.len()) {
+                                for i in #test_cases_max_len_token_stream {
                                     let vec_of_primary_keys_returned_from_update_many = {
                                         let mut value = super::Example::try_update_many(
                                             &url,
