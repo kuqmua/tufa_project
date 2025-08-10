@@ -4046,7 +4046,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 payload: super::ExampleUpdateManyPayload::try_new({
                                                     let generate_element = |primary_key_read_returned_from_create_many: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
                                                         super::ExampleUpdate::try_new(
-                                                            <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(
+                                                            <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::from(
                                                                 primary_key_read_returned_from_create_many
                                                             ),
                                                             match column_0_test_cases.get(i) {
@@ -4117,7 +4117,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         vec![
                                             super::ExampleSelect::PrimaryKeyColumn(
                                                 <
-                                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select
+                                                    <#primary_key_field_type as postgresql_crud::PostgresqlType>::Select
                                                     as
                                                     postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()
                                             ),
@@ -4158,7 +4158,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             let generate_element = |primary_key_read_returned_from_create_many: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
                                                 super::ExampleRead {
                                                     primary_key_column: Some(postgresql_crud::Value {
-                                                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::from(
+                                                        value: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::from(
                                                             primary_key_read_returned_from_create_many
                                                         ),
                                                     }),
