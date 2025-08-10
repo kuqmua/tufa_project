@@ -13,4 +13,4 @@ STARTING_CHECK_LINK="" # https://www.google.com/
 TRACING_LEVEL="error" # trace|debug|info|warn|error
 SOURCE_PLACE_TYPE="source" # source|github
 ENABLE_API_GIT_COMMIT_CHECK="false"
-MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES="10485760" # 1 megabyte in bytes
+MAXIMUM_SIZE_OF_HTTP_BODY_IN_BYTES="1048576000" # 100 megabyte in bytes
