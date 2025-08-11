@@ -3604,14 +3604,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     super::#ident::try_read_many(
                                         &url,
                                         super::#ident_read_many_parameters_upper_camel_case {
-                                            payload: super::#ident_read_many_payload_upper_camel_case {
-                                                where_many: where_many_1_and_2_primary_keys.clone(),
-                                                select: select_primary_key.clone(),
-                                                order_by: postgresql_crud::OrderBy {
-                                                    column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                                                    order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                            #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
+                                                #where_many_snake_case: where_many_1_and_2_primary_keys.clone(),
+                                                #select_snake_case: select_primary_key.clone(),
+                                                #order_by_snake_case: postgresql_crud::OrderBy {
+                                                    #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                                    #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                                 },
-                                                pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                                #pagination_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                             },
                                         },
                                     )
@@ -3644,9 +3644,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let ident_read_returned_from_read_one = super::#ident::try_read_one(
                                     &url,
                                     super::#ident_read_one_parameters_upper_camel_case {
-                                        payload: super::#ident_read_one_payload_upper_camel_case {
+                                        #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                             #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
-                                            select: select_primary_key.clone(),
+                                            #select_snake_case: select_primary_key.clone(),
                                         },
                                     },
                                 )
@@ -3671,11 +3671,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             &url,
                                             super::#ident_update_many_parameters_upper_camel_case {
                                                 #payload_snake_case: super::#ident_update_many_payload_upper_camel_case::try_new({
-                                                    let generate_element = |primary_key_read_returned_from_create_many: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
+                                                    let generate_element = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
                                                         super::#ident_update_upper_camel_case::try_new(
-                                                            #primary_key_field_type_as_postgresql_type_update_token_stream::from(
-                                                                primary_key_read_returned_from_create_many
-                                                            ),
+                                                            #primary_key_field_type_as_postgresql_type_update_token_stream::from(#value_snake_case),
                                                             #update_try_new_parameters_cloned_token_stream
                                                         ).unwrap()
                                                     };
@@ -3776,25 +3774,27 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 }
                                 //update part end
                                 let vec_of_primary_keys_returned_from_delete_many = {
-                                    let mut value = super::#ident::try_delete_many(
+                                    let mut #value_snake_case = super::#ident::try_delete_many(
                                         &url,
                                         super::#ident_delete_many_parameters_upper_camel_case {
-                                            payload: super::#ident_delete_many_payload_upper_camel_case { where_many: where_many_1_and_2_primary_keys.clone() },
+                                            #payload_snake_case: super::#ident_delete_many_payload_upper_camel_case {
+                                                #where_many_snake_case: where_many_1_and_2_primary_keys.clone()
+                                            },
                                         },
                                     )
                                     .await
                                     .unwrap();
-                                    value.sort();
-                                    value
+                                    #value_snake_case.sort();
+                                    #value_snake_case
                                 };
                                 assert_eq!(
                                     {
-                                        let mut value = vec![
+                                        let mut #value_snake_case = vec![
                                             primary_key_read_returned_from_create_many1.clone(),
                                             primary_key_read_returned_from_create_many2.clone()
                                         ];
-                                        value.sort();
-                                        value
+                                        #value_snake_case.sort();
+                                        #value_snake_case
                                     },
                                     vec_of_primary_keys_returned_from_delete_many,
                                     "try_delete_many result different"
@@ -3802,14 +3802,16 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let vec_of_ident_read_returned_from_read_many = super::#ident::try_read_many(
                                     &url,
                                     super::#ident_read_many_parameters_upper_camel_case {
-                                        payload: super::#ident_read_many_payload_upper_camel_case {
-                                            where_many: where_many_1_and_2_primary_keys.clone(),
-                                            select: select_primary_key.clone(),
-                                            order_by: postgresql_crud::OrderBy {
-                                                column: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                                                order: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                        #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
+                                            #where_many_snake_case: where_many_1_and_2_primary_keys.clone(),
+                                            #select_snake_case: select_primary_key.clone(),
+                                            #order_by_snake_case: postgresql_crud::OrderBy {
+                                                #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                                                    #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                                ),
+                                                #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                             },
-                                            pagination: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                            #pagination_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                                         },
                                     },
                                 )
@@ -3823,25 +3825,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let primary_key_returned_from_delete_one = super::#ident::try_delete_one(
                                     &url,
                                     super::#ident_delete_one_parameters_upper_camel_case {
-                                        payload: super::#ident_delete_one_payload_upper_camel_case { #primary_key_field_ident: primary_key_read_returned_from_create_one.clone() },
+                                        #payload_snake_case: super::#ident_delete_one_payload_upper_camel_case { #primary_key_field_ident: primary_key_read_returned_from_create_one.clone() },
                                     },
                                 )
                                 .await
                                 .unwrap();
                                 assert_eq!(primary_key_read_returned_from_create_one.clone(), primary_key_returned_from_delete_one, "try_delete_one result different");
-                                if let Err(error) = super::#ident::try_read_one(
+                                if let Err(#error_snake_case) = super::#ident::try_read_one(
                                     &url,
                                     super::#ident_read_one_parameters_upper_camel_case {
-                                        payload: super::#ident_read_one_payload_upper_camel_case {
+                                        #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                             #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
-                                            select: select_primary_key.clone(),
+                                            #select_snake_case: select_primary_key.clone(),
                                         },
                                     },
                                 ).await &&
                                 let super::#ident_try_read_one_error_named_upper_camel_case::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case {
                                     read_one_error_named_with_serialize_deserialize,
                                     code_occurence: _,
-                                } = &error &&
+                                } = &#error_snake_case &&
                                 let super::#ident_read_one_error_named_with_serialize_deserialize_upper_camel_case::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize &&
                                 "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
                                     panic!("try_read_one result different after try_delete_one");
