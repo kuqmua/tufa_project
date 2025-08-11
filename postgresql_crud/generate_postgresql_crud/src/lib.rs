@@ -3418,6 +3418,23 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let primary_key_read_returned_from_create_many2_token_stream = quote::quote!{primary_key_read_returned_from_create_many2};
         let some_value_primary_key_read_returned_from_create_many1_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_many1};
         let some_value_primary_key_read_returned_from_create_many2_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_many2};
+        let (
+            equal_filter_primary_key1_token_stream,
+            equal_filter_primary_key2_token_stream
+        ) = {
+            let generate_equal_filter_primary_key_token_stream = |value: &dyn quote::ToTokens|{
+                quote::quote!{
+                    #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                        logical_operator: postgresql_crud::LogicalOperator::Or,
+                        value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::from(#value.clone())
+                    })
+                }
+            };
+            (
+                generate_equal_filter_primary_key_token_stream(&primary_key_read_returned_from_create_many1_token_stream),
+                generate_equal_filter_primary_key_token_stream(&primary_key_read_returned_from_create_many2_token_stream)
+            )
+        };
         let some_value_primary_key_read_returned_from_create_one_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_one};
         //todo instead of first dropping table - check if its not exists. if exists test must fail
         let columns_test_cases_declaration_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -3595,16 +3612,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let #where_many_1_and_2_primary_keys_token_stream = super::#std_option_option_ident_where_many_upper_camel_case(Some(super::#ident_where_many_upper_camel_case {
                                     #primary_key_field_ident: Some(postgresql_crud::PostgresqlTypeWhere::try_new(
                                         postgresql_crud::LogicalOperator::Or,
-                                        vec![
-                                            #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
-                                                logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::from(#primary_key_read_returned_from_create_many1_token_stream.clone())
-                                            }),
-                                            #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
-                                                logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::from(#primary_key_read_returned_from_create_many2_token_stream.clone())
-                                            })
-                                        ]
+                                        vec![#equal_filter_primary_key1_token_stream,#equal_filter_primary_key2_token_stream]
                                     ).unwrap()),
                                     #fields_none_initialization_token_stream
                                 }));
