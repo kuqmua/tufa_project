@@ -5230,237 +5230,270 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                     },
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
-                    &if let (
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull,
-                        PostgresqlTypePattern::Standart,
-                        Ok(postgresql_type_range)
-                    ) = (
-                        &not_null_or_nullable,
-                        &postgresql_type_pattern,
-                        &PostgresqlTypeRange::try_from(postgresql_type)
-                    ) {
-                        let generate_sqlx_postgres_types_pg_range_token_stream = |start_token_stream: &dyn quote::ToTokens,end_token_stream: &dyn quote::ToTokens|quote::quote!{
-                            sqlx::postgres::types::PgRange{
-                                #start_snake_case: std::ops::Bound::#start_token_stream,
-                                #end_snake_case: std::ops::Bound::#end_token_stream
-                            }
-                        };
-                        let included_start_token_stream = quote::quote!{#included_upper_camel_case(#start_snake_case)};
-                        let excluded_end_token_stream = quote::quote!{#excluded_upper_camel_case(#end_snake_case)};
-                        let included_end_token_stream = quote::quote!{#included_upper_camel_case(#end_snake_case)};
-                        let excluded_start_token_stream = quote::quote!{#excluded_upper_camel_case(#start_snake_case)};
-                        let sqlx_postgres_types_pg_range_excluded_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                            &excluded_start_token_stream,
-                            &excluded_end_token_stream,
-                        );
-                        let sqlx_postgres_types_pg_range_excluded_included_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                            &excluded_start_token_stream,
-                            &included_end_token_stream,
-                        );
-                        let sqlx_postgres_types_pg_range_included_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                            &included_start_token_stream,
-                            &unbounded_upper_camel_case,
-                        );
-                        let sqlx_postgres_types_pg_range_unbounded_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                            &unbounded_upper_camel_case,
-                            &excluded_end_token_stream,
-                        );
-                        let sqlx_postgres_types_pg_range_included_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                            &included_start_token_stream,
-                            &excluded_end_token_stream
-                        );
-                        let sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                            &unbounded_upper_camel_case,
-                            &unbounded_upper_camel_case
-                        );
-                        let generate_range_match_token_stream = |
-                            included_included_token_stream: &dyn quote::ToTokens,
-                            included_excluded_token_stream: &dyn quote::ToTokens,
-                            included_unbounded_token_stream: &dyn quote::ToTokens,
-                            excluded_included_token_stream: &dyn quote::ToTokens,
-                            excluded_excluded_token_stream: &dyn quote::ToTokens,
-                            excluded_unbounded_token_stream: &dyn quote::ToTokens,
-                            unbounded_included_token_stream: &dyn quote::ToTokens,
-                            unbounded_excluded_token_stream: &dyn quote::ToTokens,
-                        |{
-                            quote::quote!{
-                                #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (#value_snake_case.0.0.#start_snake_case, #value_snake_case.0.0.#end_snake_case) {
-                                    (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
-                                        #included_included_token_stream
-                                    },
-                                    (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
-                                        #included_excluded_token_stream
-                                    },
-                                    (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#unbounded_upper_camel_case) => {
-                                        #included_unbounded_token_stream
-                                    },
-                                    (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
-                                        #excluded_included_token_stream
-                                    },
-                                    (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
-                                        #excluded_excluded_token_stream
-                                    },
-                                    (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#unbounded_upper_camel_case) => {
-                                        #excluded_unbounded_token_stream
-                                    },
-                                    (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
-                                        #unbounded_included_token_stream
-                                    },
-                                    (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
-                                        #unbounded_excluded_token_stream
-                                    },
-                                    (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#unbounded_upper_camel_case) => #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
-                                }))
-                            }
-                        };
-                        let generate_if_start_end_equal_token_stream = |true_token_stream: &dyn quote::ToTokens, false_token_stream: &dyn quote::ToTokens|{
-                            quote::quote!{
-                                if #start_snake_case == #end_snake_case {
-                                    #true_token_stream
-                                } else {
-                                    #false_token_stream
-                                }
-                            }
-                        };
-                        let if_equal_unbounded_unbounded_or_included_excluded_token_stream = generate_if_start_end_equal_token_stream(
-                            &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
-                            &sqlx_postgres_types_pg_range_included_excluded_token_stream
-                        );
-                        let int_range_normalize_token_stream = {
-                            let generate_included_start_checked_add_token_stream = |id: &dyn std::fmt::Display|{
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&id);
-                                quote::quote!{#included_upper_camel_case(#start_snake_case.checked_add(1).expect(#format_handle_token_stream))}
-                            };
-                            let generate_excluded_end_checked_add_token_stream = |id: &dyn std::fmt::Display|{
-                                let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&id);
-                                quote::quote!{#excluded_upper_camel_case(#end_snake_case.checked_add(1).expect(#format_handle_token_stream))}
-                            };
-                            let included_excluded_checked_add_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &included_start_token_stream,
-                                &generate_excluded_end_checked_add_token_stream(&"73fe1d32-6a04-4578-b251-15ed7009b47e")
-                            );
-                            let included_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &included_start_token_stream,
-                                &unbounded_upper_camel_case
-                            );
-                            let included_checked_add_excluded_checked_add_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &generate_included_start_checked_add_token_stream(&"586c25e8-c948-4399-a69f-2bda10d493e9"),
-                                &generate_excluded_end_checked_add_token_stream(&"cc8f4052-4923-4223-8e71-6c20d72cf1cb")
-                            );
-                            let included_checked_add_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &generate_included_start_checked_add_token_stream(&"586bde76-a3cc-4118-bd9c-69155c03ae0c"),
-                                &excluded_end_token_stream
-                            );
-                            let included_checked_add_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &generate_included_start_checked_add_token_stream(&"cd851f25-3379-40e3-bf3e-84aff7e053b3"),
-                                &unbounded_upper_camel_case
-                            );
-                            let unbounded_excluded_checked_add_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &unbounded_upper_camel_case,
-                                &generate_excluded_end_checked_add_token_stream(&"68604d50-dd71-4d7b-8e19-38238e2f3631")
-                            );
-                            let unbounded_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
-                                &unbounded_upper_camel_case,
-                                &excluded_end_token_stream
-                            );
-                            generate_range_match_token_stream(
-                                &included_excluded_checked_add_token_stream,
-                                &generate_if_start_end_equal_token_stream(
-                                    &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
-                                    &sqlx_postgres_types_pg_range_included_excluded_token_stream
-                                ),
-                                &included_unbounded_token_stream,
-                                &generate_if_start_end_equal_token_stream(
-                                    &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
-                                    &included_checked_add_excluded_checked_add_token_stream
-                                ),
-                                &generate_if_start_end_equal_token_stream(
-                                    &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
-                                    &included_checked_add_excluded_token_stream
-                                ),
-                                &included_checked_add_unbounded_token_stream,
-                                &unbounded_excluded_checked_add_token_stream,
-                                &unbounded_excluded_token_stream,
-                            )
-                        };
-                        let range_match_timestamp_and_timestamp_tz_token_stream = generate_range_match_token_stream(
-                            &generate_sqlx_postgres_types_pg_range_token_stream(
-                                &included_start_token_stream,
-                                &included_end_token_stream,
-                            ),
-                            &if_equal_unbounded_unbounded_or_included_excluded_token_stream,
-                            &sqlx_postgres_types_pg_range_included_unbounded_token_stream,
-                            &generate_if_start_end_equal_token_stream(
-                                &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
-                                &sqlx_postgres_types_pg_range_excluded_included_token_stream
-                            ),
-                            &generate_if_start_end_equal_token_stream(
-                                &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
-                                &sqlx_postgres_types_pg_range_excluded_excluded_token_stream
-                            ),
-                            &generate_sqlx_postgres_types_pg_range_token_stream(
-                                &excluded_start_token_stream,
-                                &unbounded_upper_camel_case,
-                            ),
-                            &generate_sqlx_postgres_types_pg_range_token_stream(
-                                &unbounded_upper_camel_case,
-                                &included_end_token_stream,
-                            ),
-                            &sqlx_postgres_types_pg_range_unbounded_excluded_token_stream,
-                        );
-                        match &postgresql_type_range {
-                            PostgresqlTypeRange::StdPrimitiveI32AsInt4 => int_range_normalize_token_stream,
-                            PostgresqlTypeRange::StdPrimitiveI64AsInt8 => int_range_normalize_token_stream,
-                            PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => {
-                                let generate_dot_succ_opt_expect_token_stream = |id: &dyn std::fmt::Display|{
-                                    let id_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&id);
-                                    quote::quote!{.succ_opt().expect(#id_double_quotes_token_stream)}
-                                };
-                                let generate_included_start_succ_opt_token_stream = |id: &dyn std::fmt::Display|{
-                                    let dot_succ_opt_expect_token_stream = generate_dot_succ_opt_expect_token_stream(&id);
-                                    quote::quote!{#included_upper_camel_case(#start_snake_case #dot_succ_opt_expect_token_stream)}
-                                };
-                                let generate_excluded_end_succ_opt_token_stream = |id: &dyn std::fmt::Display|{
-                                    let dot_succ_opt_expect_token_stream = generate_dot_succ_opt_expect_token_stream(&id);
-                                    quote::quote!{#excluded_upper_camel_case(#end_snake_case #dot_succ_opt_expect_token_stream)}
-                                };
-                                generate_range_match_token_stream(
-                                    &generate_sqlx_postgres_types_pg_range_token_stream(
+                    &{
+                        match &postgresql_type_pattern {
+                            PostgresqlTypePattern::Standart => match &not_null_or_nullable {
+                                postgresql_crud_macros_common::NotNullOrNullable::NotNull => if let Ok(postgresql_type_range) = &PostgresqlTypeRange::try_from(postgresql_type) {
+                                    let generate_sqlx_postgres_types_pg_range_token_stream = |start_token_stream: &dyn quote::ToTokens,end_token_stream: &dyn quote::ToTokens|quote::quote!{
+                                        sqlx::postgres::types::PgRange{
+                                            #start_snake_case: std::ops::Bound::#start_token_stream,
+                                            #end_snake_case: std::ops::Bound::#end_token_stream
+                                        }
+                                    };
+                                    let included_start_token_stream = quote::quote!{#included_upper_camel_case(#start_snake_case)};
+                                    let excluded_end_token_stream = quote::quote!{#excluded_upper_camel_case(#end_snake_case)};
+                                    let included_end_token_stream = quote::quote!{#included_upper_camel_case(#end_snake_case)};
+                                    let excluded_start_token_stream = quote::quote!{#excluded_upper_camel_case(#start_snake_case)};
+                                    let sqlx_postgres_types_pg_range_excluded_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                        &excluded_start_token_stream,
+                                        &excluded_end_token_stream,
+                                    );
+                                    let sqlx_postgres_types_pg_range_excluded_included_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                        &excluded_start_token_stream,
+                                        &included_end_token_stream,
+                                    );
+                                    let sqlx_postgres_types_pg_range_included_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
                                         &included_start_token_stream,
-                                        &quote::quote!{#excluded_upper_camel_case(#end_snake_case.succ_opt().expect("9ebce3b4-4ca7-4ff5-8b7a-a3539125bba0"))},
-                                    ),
-                                    &if_equal_unbounded_unbounded_or_included_excluded_token_stream,
-                                    &sqlx_postgres_types_pg_range_included_unbounded_token_stream,
-                                    &generate_if_start_end_equal_token_stream(
-                                        &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
-                                        &generate_sqlx_postgres_types_pg_range_token_stream(
-                                            &generate_included_start_succ_opt_token_stream(&"98a0357b-d21a-4949-a101-c641528d2376"),
-                                            &generate_excluded_end_succ_opt_token_stream(&"fe53a6b9-2d7e-4605-9f5a-7f5c21cc01e6"),
-                                        )
-                                    ),
-                                    &generate_if_start_end_equal_token_stream(
-                                        &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
-                                        &generate_sqlx_postgres_types_pg_range_token_stream(
-                                            &generate_included_start_succ_opt_token_stream(&"d8a26635-c478-4a2a-acf4-bf1765702889"),
-                                            &excluded_end_token_stream,
-                                        )
-                                    ),
-                                    &generate_sqlx_postgres_types_pg_range_token_stream(
-                                        &generate_included_start_succ_opt_token_stream(&"9811c7c7-d7f5-4fb7-9d25-affb0bd4f5fb"),
-                                        &unbounded_upper_camel_case
-                                    ),
-                                    &generate_sqlx_postgres_types_pg_range_token_stream(
                                         &unbounded_upper_camel_case,
-                                        &generate_excluded_end_succ_opt_token_stream(&"d6288f19-0a24-42ad-9e69-36036d9f2c1d"),
-                                    ),
-                                    &sqlx_postgres_types_pg_range_unbounded_excluded_token_stream,
-                                )
+                                    );
+                                    let sqlx_postgres_types_pg_range_unbounded_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                        &unbounded_upper_camel_case,
+                                        &excluded_end_token_stream,
+                                    );
+                                    let sqlx_postgres_types_pg_range_included_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                        &included_start_token_stream,
+                                        &excluded_end_token_stream
+                                    );
+                                    let sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                        &unbounded_upper_camel_case,
+                                        &unbounded_upper_camel_case
+                                    );
+                                    let generate_range_match_token_stream = |
+                                        included_included_token_stream: &dyn quote::ToTokens,
+                                        included_excluded_token_stream: &dyn quote::ToTokens,
+                                        included_unbounded_token_stream: &dyn quote::ToTokens,
+                                        excluded_included_token_stream: &dyn quote::ToTokens,
+                                        excluded_excluded_token_stream: &dyn quote::ToTokens,
+                                        excluded_unbounded_token_stream: &dyn quote::ToTokens,
+                                        unbounded_included_token_stream: &dyn quote::ToTokens,
+                                        unbounded_excluded_token_stream: &dyn quote::ToTokens,
+                                    |{
+                                        quote::quote!{
+                                            #ident_standart_not_null_read_upper_camel_case(#ident_standart_not_null_origin_upper_camel_case(match (#value_snake_case.0.0.#start_snake_case, #value_snake_case.0.0.#end_snake_case) {
+                                                (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
+                                                    #included_included_token_stream
+                                                },
+                                                (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
+                                                    #included_excluded_token_stream
+                                                },
+                                                (std::ops::Bound::#included_upper_camel_case(#start_snake_case), std::ops::Bound::#unbounded_upper_camel_case) => {
+                                                    #included_unbounded_token_stream
+                                                },
+                                                (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
+                                                    #excluded_included_token_stream
+                                                },
+                                                (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
+                                                    #excluded_excluded_token_stream
+                                                },
+                                                (std::ops::Bound::#excluded_upper_camel_case(#start_snake_case), std::ops::Bound::#unbounded_upper_camel_case) => {
+                                                    #excluded_unbounded_token_stream
+                                                },
+                                                (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#included_upper_camel_case(#end_snake_case)) => {
+                                                    #unbounded_included_token_stream
+                                                },
+                                                (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#excluded_upper_camel_case(#end_snake_case)) => {
+                                                    #unbounded_excluded_token_stream
+                                                },
+                                                (std::ops::Bound::#unbounded_upper_camel_case, std::ops::Bound::#unbounded_upper_camel_case) => #sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
+                                            }))
+                                        }
+                                    };
+                                    let generate_if_start_end_equal_token_stream = |true_token_stream: &dyn quote::ToTokens, false_token_stream: &dyn quote::ToTokens|{
+                                        quote::quote!{
+                                            if #start_snake_case == #end_snake_case {
+                                                #true_token_stream
+                                            } else {
+                                                #false_token_stream
+                                            }
+                                        }
+                                    };
+                                    let if_equal_unbounded_unbounded_or_included_excluded_token_stream = generate_if_start_end_equal_token_stream(
+                                        &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
+                                        &sqlx_postgres_types_pg_range_included_excluded_token_stream
+                                    );
+                                    let int_range_normalize_token_stream = {
+                                        let generate_included_start_checked_add_token_stream = |id: &dyn std::fmt::Display|{
+                                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&id);
+                                            quote::quote!{#included_upper_camel_case(#start_snake_case.checked_add(1).expect(#format_handle_token_stream))}
+                                        };
+                                        let generate_excluded_end_checked_add_token_stream = |id: &dyn std::fmt::Display|{
+                                            let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&id);
+                                            quote::quote!{#excluded_upper_camel_case(#end_snake_case.checked_add(1).expect(#format_handle_token_stream))}
+                                        };
+                                        let included_excluded_checked_add_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &included_start_token_stream,
+                                            &generate_excluded_end_checked_add_token_stream(&"73fe1d32-6a04-4578-b251-15ed7009b47e")
+                                        );
+                                        let included_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &included_start_token_stream,
+                                            &unbounded_upper_camel_case
+                                        );
+                                        let included_checked_add_excluded_checked_add_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &generate_included_start_checked_add_token_stream(&"586c25e8-c948-4399-a69f-2bda10d493e9"),
+                                            &generate_excluded_end_checked_add_token_stream(&"cc8f4052-4923-4223-8e71-6c20d72cf1cb")
+                                        );
+                                        let included_checked_add_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &generate_included_start_checked_add_token_stream(&"586bde76-a3cc-4118-bd9c-69155c03ae0c"),
+                                            &excluded_end_token_stream
+                                        );
+                                        let included_checked_add_unbounded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &generate_included_start_checked_add_token_stream(&"cd851f25-3379-40e3-bf3e-84aff7e053b3"),
+                                            &unbounded_upper_camel_case
+                                        );
+                                        let unbounded_excluded_checked_add_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &unbounded_upper_camel_case,
+                                            &generate_excluded_end_checked_add_token_stream(&"68604d50-dd71-4d7b-8e19-38238e2f3631")
+                                        );
+                                        let unbounded_excluded_token_stream = generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &unbounded_upper_camel_case,
+                                            &excluded_end_token_stream
+                                        );
+                                        generate_range_match_token_stream(
+                                            &included_excluded_checked_add_token_stream,
+                                            &generate_if_start_end_equal_token_stream(
+                                                &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
+                                                &sqlx_postgres_types_pg_range_included_excluded_token_stream
+                                            ),
+                                            &included_unbounded_token_stream,
+                                            &generate_if_start_end_equal_token_stream(
+                                                &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
+                                                &included_checked_add_excluded_checked_add_token_stream
+                                            ),
+                                            &generate_if_start_end_equal_token_stream(
+                                                &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
+                                                &included_checked_add_excluded_token_stream
+                                            ),
+                                            &included_checked_add_unbounded_token_stream,
+                                            &unbounded_excluded_checked_add_token_stream,
+                                            &unbounded_excluded_token_stream,
+                                        )
+                                    };
+                                    let range_match_timestamp_and_timestamp_tz_token_stream = generate_range_match_token_stream(
+                                        &generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &included_start_token_stream,
+                                            &included_end_token_stream,
+                                        ),
+                                        &if_equal_unbounded_unbounded_or_included_excluded_token_stream,
+                                        &sqlx_postgres_types_pg_range_included_unbounded_token_stream,
+                                        &generate_if_start_end_equal_token_stream(
+                                            &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
+                                            &sqlx_postgres_types_pg_range_excluded_included_token_stream
+                                        ),
+                                        &generate_if_start_end_equal_token_stream(
+                                            &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
+                                            &sqlx_postgres_types_pg_range_excluded_excluded_token_stream
+                                        ),
+                                        &generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &excluded_start_token_stream,
+                                            &unbounded_upper_camel_case,
+                                        ),
+                                        &generate_sqlx_postgres_types_pg_range_token_stream(
+                                            &unbounded_upper_camel_case,
+                                            &included_end_token_stream,
+                                        ),
+                                        &sqlx_postgres_types_pg_range_unbounded_excluded_token_stream,
+                                    );
+                                    match &postgresql_type_range {
+                                        PostgresqlTypeRange::StdPrimitiveI32AsInt4 => int_range_normalize_token_stream,
+                                        PostgresqlTypeRange::StdPrimitiveI64AsInt8 => int_range_normalize_token_stream,
+                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateAsDate => {
+                                            let generate_dot_succ_opt_expect_token_stream = |id: &dyn std::fmt::Display|{
+                                                let id_double_quotes_token_stream = generate_quotes::double_quotes_token_stream(&id);
+                                                quote::quote!{.succ_opt().expect(#id_double_quotes_token_stream)}
+                                            };
+                                            let generate_included_start_succ_opt_token_stream = |id: &dyn std::fmt::Display|{
+                                                let dot_succ_opt_expect_token_stream = generate_dot_succ_opt_expect_token_stream(&id);
+                                                quote::quote!{#included_upper_camel_case(#start_snake_case #dot_succ_opt_expect_token_stream)}
+                                            };
+                                            let generate_excluded_end_succ_opt_token_stream = |id: &dyn std::fmt::Display|{
+                                                let dot_succ_opt_expect_token_stream = generate_dot_succ_opt_expect_token_stream(&id);
+                                                quote::quote!{#excluded_upper_camel_case(#end_snake_case #dot_succ_opt_expect_token_stream)}
+                                            };
+                                            generate_range_match_token_stream(
+                                                &generate_sqlx_postgres_types_pg_range_token_stream(
+                                                    &included_start_token_stream,
+                                                    &quote::quote!{#excluded_upper_camel_case(#end_snake_case.succ_opt().expect("9ebce3b4-4ca7-4ff5-8b7a-a3539125bba0"))},
+                                                ),
+                                                &if_equal_unbounded_unbounded_or_included_excluded_token_stream,
+                                                &sqlx_postgres_types_pg_range_included_unbounded_token_stream,
+                                                &generate_if_start_end_equal_token_stream(
+                                                    &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
+                                                    &generate_sqlx_postgres_types_pg_range_token_stream(
+                                                        &generate_included_start_succ_opt_token_stream(&"98a0357b-d21a-4949-a101-c641528d2376"),
+                                                        &generate_excluded_end_succ_opt_token_stream(&"fe53a6b9-2d7e-4605-9f5a-7f5c21cc01e6"),
+                                                    )
+                                                ),
+                                                &generate_if_start_end_equal_token_stream(
+                                                    &sqlx_postgres_types_pg_range_unbounded_unbounded_token_stream,
+                                                    &generate_sqlx_postgres_types_pg_range_token_stream(
+                                                        &generate_included_start_succ_opt_token_stream(&"d8a26635-c478-4a2a-acf4-bf1765702889"),
+                                                        &excluded_end_token_stream,
+                                                    )
+                                                ),
+                                                &generate_sqlx_postgres_types_pg_range_token_stream(
+                                                    &generate_included_start_succ_opt_token_stream(&"9811c7c7-d7f5-4fb7-9d25-affb0bd4f5fb"),
+                                                    &unbounded_upper_camel_case
+                                                ),
+                                                &generate_sqlx_postgres_types_pg_range_token_stream(
+                                                    &unbounded_upper_camel_case,
+                                                    &generate_excluded_end_succ_opt_token_stream(&"d6288f19-0a24-42ad-9e69-36036d9f2c1d"),
+                                                ),
+                                                &sqlx_postgres_types_pg_range_unbounded_excluded_token_stream,
+                                            )
+                                        },
+                                        PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => range_match_timestamp_and_timestamp_tz_token_stream,
+                                        PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => range_match_timestamp_and_timestamp_tz_token_stream,
+                                    }
+                                }
+                                else {
+                                    quote::quote! {#value_snake_case}
+                                },
+                                postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
+                                    quote::quote! {
+                                        #ident_read_upper_camel_case(#ident_origin_upper_camel_case(match #value_snake_case.0.0 {
+                                            Some(#value_snake_case) => Some(
+                                                <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::normalize(
+                                                    #ident_standart_not_null_read_upper_camel_case(#value_snake_case)
+                                                ).0
+                                            ),
+                                            None => None
+                                        }))
+                                    }
+                                },
                             },
-                            PostgresqlTypeRange::SqlxTypesChronoNaiveDateTimeAsTimestamp => range_match_timestamp_and_timestamp_tz_token_stream,
-                            PostgresqlTypeRange::SqlxTypesChronoDateTimeSqlxTypesChronoUtcAsTimestampTz => range_match_timestamp_and_timestamp_tz_token_stream,
+                            PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
+                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
+                                    quote::quote! {
+                                        #value_snake_case
+                                    }
+                                },
+                                (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                    quote::quote! {
+                                        #value_snake_case
+                                    }
+                                },
+                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
+                                    quote::quote! {
+                                        #value_snake_case
+                                    }
+                                },
+                                (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                    quote::quote! {
+                                        #value_snake_case
+                                    }
+                                },
+                            },
                         }
-                    } else {
-                        quote::quote!{#value_snake_case}
                     },
                     &ident_read_inner_upper_camel_case,
                     &{
