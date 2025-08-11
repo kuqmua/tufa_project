@@ -3697,16 +3697,20 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         {
                                             let mut #value_snake_case = super::#ident::try_update_many(
                                                 &#url_snake_case,
-                                                super::#ident_update_many_parameters_upper_camel_case {
-                                                    #payload_snake_case: super::#ident_update_many_payload_upper_camel_case::try_new({
-                                                        let #generate_element_snake_case = |#value_snake_case: #primary_key_field_type_as_postgresql_type_read_token_stream|{
-                                                            super::#ident_update_upper_camel_case::try_new(
-                                                                #primary_key_field_type_as_postgresql_type_update_token_stream::from(#value_snake_case),
-                                                                #update_try_new_parameters_cloned_token_stream
-                                                            ).expect("error ceb42476-3ef3-4d67-982a-866ace9e0958")
-                                                        };
-                                                        vec![#generate_element_snake_case(#primary_key_read_returned_from_create_many1_token_stream.clone()), #generate_element_snake_case(#primary_key_read_returned_from_create_many2_token_stream.clone())]
-                                                    }).expect("error 8c7aac34-27b3-43f0-8a16-63c0244a1623"),
+                                                {
+                                                    let f = super::#ident_update_many_parameters_upper_camel_case {
+                                                        #payload_snake_case: super::#ident_update_many_payload_upper_camel_case::try_new({
+                                                            let #generate_element_snake_case = |#value_snake_case: #primary_key_field_type_as_postgresql_type_read_token_stream|{
+                                                                super::#ident_update_upper_camel_case::try_new(
+                                                                    #primary_key_field_type_as_postgresql_type_update_token_stream::from(#value_snake_case),
+                                                                    #update_try_new_parameters_cloned_token_stream
+                                                                ).expect("error ceb42476-3ef3-4d67-982a-866ace9e0958")
+                                                            };
+                                                            vec![#generate_element_snake_case(#primary_key_read_returned_from_create_many1_token_stream.clone()), #generate_element_snake_case(#primary_key_read_returned_from_create_many2_token_stream.clone())]
+                                                        }).expect("error 8c7aac34-27b3-43f0-8a16-63c0244a1623"),
+                                                    };
+                                                    println!("{f:#?}");
+                                                    f
                                                 },
                                             )
                                             .await
@@ -3732,14 +3736,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case(super::#ident::try_read_many(
                                                 &#url_snake_case,
                                                 super::#ident_read_many_parameters_upper_camel_case {
-                                                    #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
-                                                        #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone(),
-                                                        #select_snake_case: #select_primary_key_field_ident_snake_case.clone(),
-                                                        #order_by_snake_case: postgresql_crud::OrderBy {
-                                                            #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                                                            #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                                                        },
-                                                        #pagination_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                                    #payload_snake_case: {
+                                                        let f = super::#ident_read_many_payload_upper_camel_case {
+                                                            #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone(),
+                                                            #select_snake_case: #select_primary_key_field_ident_snake_case.clone(),
+                                                            #order_by_snake_case: postgresql_crud::OrderBy {
+                                                                #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                                                #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                                            },
+                                                            #pagination_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                                        };
+                                                        println!("{f:#?}");
+                                                        f
                                                     },
                                                 },
                                             )
