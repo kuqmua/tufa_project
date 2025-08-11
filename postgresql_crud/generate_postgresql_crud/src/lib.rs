@@ -166,6 +166,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let test_cases_snake_case = naming::TestCasesSnakeCase;
     let config_snake_case = naming::ConfigSnakeCase;
     let postgres_pool_snake_case = naming::PostgresPoolSnakeCase;
+    let ident_create_default_snake_case = naming::IdentCreateDefaultSnakeCase;
     let postgres_pool_for_tokio_spawn_sync_move_snake_case = naming::PostgresPoolForTokioSpawnSyncMoveSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
@@ -3559,13 +3560,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
                                 });
                                 tokio::time::sleep(std::time::Duration::from_millis(100)).await;
-                                let ident_create_default = super::#ident_create_upper_camel_case {
+                                let #ident_create_default_snake_case = super::#ident_create_upper_camel_case {
                                     #ident_create_default_fields_initialization_without_primary_key_token_stream
                                 };
                                 let vec_of_primary_keys_returned_from_create_many = super::#ident::try_create_many(
                                     &#url_snake_case,
                                     super::#ident_create_many_parameters_upper_camel_case {
-                                        #payload_snake_case: super::#ident_create_many_payload_upper_camel_case(vec![ident_create_default.clone(), ident_create_default.clone()]),
+                                        #payload_snake_case: super::#ident_create_many_payload_upper_camel_case(vec![#ident_create_default_snake_case.clone(), #ident_create_default_snake_case.clone()]),
                                     },
                                 )
                                 .await
@@ -3644,7 +3645,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let primary_key_returned_from_create_one = super::#ident::try_create_one(
                                     &#url_snake_case,
                                     super::#ident_create_one_parameters_upper_camel_case {
-                                        payload: ident_create_default
+                                        #payload_snake_case: #ident_create_default_snake_case
                                     }
                                 ).await.unwrap();
                                 let primary_key_read_returned_from_create_one = primary_key_returned_from_create_one;
