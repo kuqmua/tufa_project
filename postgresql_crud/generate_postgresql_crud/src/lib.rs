@@ -164,6 +164,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let primary_key_snake_case = naming::PrimaryKeySnakeCase;
     let pagination_snake_case = naming::PaginationSnakeCase;
     let test_cases_snake_case = naming::TestCasesSnakeCase;
+    let config_snake_case = naming::ConfigSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -3393,6 +3394,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let ident_try_read_one_error_named_upper_camel_case = generate_ident_try_operation_error_named_upper_camel_case(&Operation::ReadOne);
         let ident_read_one_error_named_with_serialize_deserialize_upper_camel_case = generate_ident_operation_error_named_with_serialize_deserialize_upper_camel_case(&Operation::ReadOne);
         let std_option_option_ident_where_many_upper_camel_case = naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase::from_tokens(&ident);
+        let config_path_token_stream = quote::quote!{crate::repositories_types::server::config::Config};
+        let config_upper_case_token_stream = quote::quote!{CONFIG};
         let ident_create_default_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(&element.syn_field.ty);
@@ -3526,9 +3529,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                         .stack_size(16 * 1024 * 1024)
                         .spawn(|| {
                             tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().unwrap().block_on(async {
-                                static CONFIG: std::sync::OnceLock<crate::repositories_types::server::config::Config> = std::sync::OnceLock::new();
-                                let config = CONFIG.get_or_init(|| crate::repositories_types::server::config::Config::try_from_env().unwrap());
-                                let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&config))).await.unwrap();
+                                static #config_upper_case_token_stream: std::sync::OnceLock<#config_path_token_stream> = std::sync::OnceLock::new();
+                                let #config_snake_case = #config_upper_case_token_stream.get_or_init(||#config_path_token_stream::try_from_env().unwrap());
+                                let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#config_snake_case))).await.unwrap();
                                 let url = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
                                 async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
                                     let query = #drop_table_if_exists_ident_double_quotes_token_stream;
