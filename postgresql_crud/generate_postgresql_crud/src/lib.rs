@@ -165,6 +165,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let pagination_snake_case = naming::PaginationSnakeCase;
     let test_cases_snake_case = naming::TestCasesSnakeCase;
     let config_snake_case = naming::ConfigSnakeCase;
+    let postgres_pool_snake_case = naming::PostgresPoolSnakeCase;
+    let postgres_pool_for_tokio_spawn_sync_move_snake_case = naming::PostgresPoolForTokioSpawnSyncMoveSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -1906,14 +1908,15 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         }
     };
     let std_sync_arc_combination_of_app_state_logic_traits_token_stream = quote::quote! {std::sync::Arc<dyn #postgresql_crud_snake_case::CombinationOfAppStateLogicTraits>};
-    let generate_operation_token_stream = |operation: &Operation,
-                                           common_additional_logic_token_stream: &dyn quote::ToTokens,
-                                           parameters_logic_token_stream: &dyn quote::ToTokens,
-                                           expected_updated_primary_keys_token_stream: &dyn quote::ToTokens,
-                                           query_string_token_stream: &dyn quote::ToTokens,
-                                           binded_query_token_stream: &dyn quote::ToTokens,
-                                           postgresql_logic_token_stream: &dyn quote::ToTokens|
-     -> proc_macro2::TokenStream {
+    let generate_operation_token_stream = |
+        operation: &Operation,
+        common_additional_logic_token_stream: &dyn quote::ToTokens,
+        parameters_logic_token_stream: &dyn quote::ToTokens,
+        expected_updated_primary_keys_token_stream: &dyn quote::ToTokens,
+        query_string_token_stream: &dyn quote::ToTokens,
+        binded_query_token_stream: &dyn quote::ToTokens,
+        postgresql_logic_token_stream: &dyn quote::ToTokens
+    | -> proc_macro2::TokenStream {
         let operation_snake_case_token_stream = operation.snake_case_token_stream();
         let request_parts_preparation_token_stream = {
             let header_content_type_application_json_not_found_syn_variant_wrapper_error_initialization_eprintln_response_creation_token_stream =
@@ -3396,6 +3399,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         let std_option_option_ident_where_many_upper_camel_case = naming::parameter::StdOptionOptionSelfWhereManyUpperCamelCase::from_tokens(&ident);
         let config_path_token_stream = quote::quote!{crate::repositories_types::server::config::Config};
         let config_upper_case_token_stream = quote::quote!{CONFIG};
+        let underscore_unused_token_stream = quote::quote!{_unused};
         let ident_create_default_fields_initialization_without_primary_key_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_type_as_postgresql_type_create_token_stream = generate_as_postgresql_type_create_token_stream(&element.syn_field.ty);
@@ -3531,25 +3535,25 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             tokio::runtime::Builder::new_multi_thread().worker_threads(num_cpus::get()).enable_all().build().unwrap().block_on(async {
                                 static #config_upper_case_token_stream: std::sync::OnceLock<#config_path_token_stream> = std::sync::OnceLock::new();
                                 let #config_snake_case = #config_upper_case_token_stream.get_or_init(||#config_path_token_stream::try_from_env().unwrap());
-                                let postgres_pool = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#config_snake_case))).await.unwrap();
-                                let url = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&config));
-                                async fn drop_table_if_exists(postgres_pool: &sqlx::Pool<sqlx::Postgres>) {
-                                    let query = #drop_table_if_exists_ident_double_quotes_token_stream;
+                                let #postgres_pool_snake_case = sqlx::postgres::PgPoolOptions::new().connect(secrecy::ExposeSecret::expose_secret(app_state::GetDatabaseUrl::get_database_url(&#config_snake_case))).await.unwrap();
+                                let #url_snake_case = format!("http://{}", app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case));
+                                async fn drop_table_if_exists(#postgres_pool_snake_case: &sqlx::Pool<sqlx::Postgres>) {
+                                    let #query_snake_case = #drop_table_if_exists_ident_double_quotes_token_stream;
                                     println!("{query}");
-                                    let _unused = sqlx::query(query).execute(postgres_pool).await.unwrap();
+                                    let #underscore_unused_token_stream = sqlx::query(#query_snake_case).execute(#postgres_pool_snake_case).await.unwrap();
                                 }
-                                drop_table_if_exists(&postgres_pool).await;
-                                let postgres_pool_for_tokio_spawn_sync_move = postgres_pool.clone();
-                                let _unused = tokio::spawn(async move {
-                                    super::#ident::prepare_postgresql(&postgres_pool_for_tokio_spawn_sync_move).await.unwrap();
-                                    let app_state = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
-                                        postgres_pool: postgres_pool_for_tokio_spawn_sync_move.clone(),
-                                        config: &config,
+                                drop_table_if_exists(&#postgres_pool_snake_case).await;
+                                let #postgres_pool_for_tokio_spawn_sync_move_snake_case = #postgres_pool_snake_case.clone();
+                                let #underscore_unused_token_stream = tokio::spawn(async move {
+                                    super::#ident::prepare_postgresql(&#postgres_pool_for_tokio_spawn_sync_move_snake_case).await.unwrap();
+                                    let #app_state_snake_case = std::sync::Arc::new(crate::repositories_types::server::routes::app_state::AppState {
+                                        #postgres_pool_snake_case: #postgres_pool_for_tokio_spawn_sync_move_snake_case.clone(),
+                                        #config_snake_case: &#config_snake_case,
                                         project_git_info: &git_info::PROJECT_GIT_INFO,
                                     });
                                     axum::serve(
-                                        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&config)).await.unwrap(),
-                                        axum::Router::new().merge(super::#ident::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&app_state))).into_make_service(),
+                                        tokio::net::TcpListener::bind(app_state::GetServiceSocketAddress::get_service_socket_address(&#config_snake_case)).await.unwrap(),
+                                        axum::Router::new().merge(super::#ident::routes(std::sync::Arc::<crate::repositories_types::server::routes::app_state::AppState<'_>>::clone(&#app_state_snake_case))).into_make_service(),
                                     )
                                     .await
                                     .unwrap_or_else(|error| panic!("axum builder serve await failed {error:#?}"));
@@ -3559,9 +3563,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #ident_create_default_fields_initialization_without_primary_key_token_stream
                                 };
                                 let vec_of_primary_keys_returned_from_create_many = super::#ident::try_create_many(
-                                    &url,
+                                    &#url_snake_case,
                                     super::#ident_create_many_parameters_upper_camel_case {
-                                        payload: super::#ident_create_many_payload_upper_camel_case(vec![ident_create_default.clone(), ident_create_default.clone()]),
+                                        #payload_snake_case: super::#ident_create_many_payload_upper_camel_case(vec![ident_create_default.clone(), ident_create_default.clone()]),
                                     },
                                 )
                                 .await
@@ -3605,7 +3609,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 };
                                 let vec_of_ident_read_returned_from_read_many = vec_of_ident_read_with_primary_key_sort_by_primary_key(
                                     super::#ident::try_read_many(
-                                        &url,
+                                        &#url_snake_case,
                                         super::#ident_read_many_parameters_upper_camel_case {
                                             #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
                                                 #where_many_snake_case: where_many_1_and_2_primary_keys.clone(),
@@ -3638,14 +3642,14 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     "try_read_many result different after try_create_many"
                                 );
                                 let primary_key_returned_from_create_one = super::#ident::try_create_one(
-                                    &url,
+                                    &#url_snake_case,
                                     super::#ident_create_one_parameters_upper_camel_case {
                                         payload: ident_create_default
                                     }
                                 ).await.unwrap();
                                 let primary_key_read_returned_from_create_one = primary_key_returned_from_create_one;
                                 let ident_read_returned_from_read_one = super::#ident::try_read_one(
-                                    &url,
+                                    &#url_snake_case,
                                     super::#ident_read_one_parameters_upper_camel_case {
                                         #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                             #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
@@ -3671,7 +3675,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #ident_read_fields_declaration_token_stream
                                     let vec_of_primary_keys_returned_from_update_many = {
                                         let mut #value_snake_case = super::#ident::try_update_many(
-                                            &url,
+                                            &#url_snake_case,
                                             super::#ident_update_many_parameters_upper_camel_case {
                                                 #payload_snake_case: super::#ident_update_many_payload_upper_camel_case::try_new({
                                                     let generate_element = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
@@ -3700,7 +3704,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     );
                                     let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#ident_select_columns_token_stream]).unwrap();
                                     let vec_of_ident_read_returned_from_read_many = vec_of_ident_read_with_primary_key_sort_by_primary_key(super::#ident::try_read_many(
-                                            &url,
+                                            &#url_snake_case,
                                             super::#ident_read_many_parameters_upper_camel_case {
                                                 #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
                                                     #where_many_snake_case: where_many_1_and_2_primary_keys.clone(),
@@ -3734,7 +3738,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         "try_read_many result different after try_update_many"
                                     );
                                     let primary_key_returned_from_update_one = super::#ident::try_update_one(
-                                        &url,
+                                        &#url_snake_case,
                                         super::#ident_update_one_parameters_upper_camel_case {
                                             #payload_snake_case: super::#ident_update_upper_camel_case::try_new(
                                                 #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_one.clone()),
@@ -3751,7 +3755,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         "try_update_one result different"
                                     );
                                     let ident_read_returned_from_read_one = super::#ident::try_read_one(
-                                        &url,
+                                        &#url_snake_case,
                                         super::#ident_read_one_parameters_upper_camel_case {
                                             #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                                 #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
@@ -3778,7 +3782,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 //update part end
                                 let vec_of_primary_keys_returned_from_delete_many = {
                                     let mut #value_snake_case = super::#ident::try_delete_many(
-                                        &url,
+                                        &#url_snake_case,
                                         super::#ident_delete_many_parameters_upper_camel_case {
                                             #payload_snake_case: super::#ident_delete_many_payload_upper_camel_case {
                                                 #where_many_snake_case: where_many_1_and_2_primary_keys.clone()
@@ -3803,7 +3807,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     "try_delete_many result different"
                                 );
                                 let vec_of_ident_read_returned_from_read_many = super::#ident::try_read_many(
-                                    &url,
+                                    &#url_snake_case,
                                     super::#ident_read_many_parameters_upper_camel_case {
                                         #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
                                             #where_many_snake_case: where_many_1_and_2_primary_keys.clone(),
@@ -3826,7 +3830,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     "try_read_many result different after try_delete_many"
                                 );
                                 let primary_key_returned_from_delete_one = super::#ident::try_delete_one(
-                                    &url,
+                                    &#url_snake_case,
                                     super::#ident_delete_one_parameters_upper_camel_case {
                                         #payload_snake_case: super::#ident_delete_one_payload_upper_camel_case { #primary_key_field_ident: primary_key_read_returned_from_create_one.clone() },
                                     },
@@ -3835,7 +3839,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 .unwrap();
                                 assert_eq!(primary_key_read_returned_from_create_one.clone(), primary_key_returned_from_delete_one, "try_delete_one result different");
                                 if let Err(#error_snake_case) = super::#ident::try_read_one(
-                                    &url,
+                                    &#url_snake_case,
                                     super::#ident_read_one_parameters_upper_camel_case {
                                         #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                             #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
@@ -3851,7 +3855,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 "no rows returned by a query that expected to return at least one row".to_string() != *postgresql {
                                     panic!("try_read_one result different after try_delete_one");
                                 }
-                                drop_table_if_exists(&postgres_pool).await;
+                                drop_table_if_exists(&#postgres_pool_snake_case).await;
                             });
                         })
                         .unwrap()
