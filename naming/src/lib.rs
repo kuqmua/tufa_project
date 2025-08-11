@@ -676,7 +676,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["sort", "vec", "of", "ident", "read", "with", "primary", "key", "by", "primary", "key"],
     ["generate", "element"],
     ["some", "value", "primary", "key", "read", "returned", "from", "create", "one"],
-    ["primary", "key", "read", "returned", "from", "create", "one"]
+    ["primary", "key", "read", "returned", "from", "create", "one"],
+    ["select", "primary", "key", "field", "ident"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
