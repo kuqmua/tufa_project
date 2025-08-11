@@ -3406,7 +3406,6 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         });
         let some_value_primary_key_read_returned_from_create_many1_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_many1};
         let some_value_primary_key_read_returned_from_create_many2_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_many2};
-        let some_value_field_ident_read_token_stream = quote::quote! {some_value_field_ident_read};
         let some_value_primary_key_read_returned_from_create_one_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_one};
         //todo instead of first dropping table - check if its not exists. if exists test must fail
         let columns_test_cases_declaration_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -3718,11 +3717,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     );
                                     assert_eq!(
                                         vec_of_ident_read_with_primary_key_sort_by_primary_key({
-                                            let generate_element = |primary_key_read_returned_from_create_many: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
+                                            let generate_element = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
                                                 super::#ident_read_upper_camel_case {
                                                     #primary_key_field_ident: Some(postgresql_crud::Value {
                                                         #value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::from(
-                                                            primary_key_read_returned_from_create_many
+                                                            #value_snake_case
                                                         ),
                                                     }),
                                                     #ident_read_fields_cloned_token_stream
