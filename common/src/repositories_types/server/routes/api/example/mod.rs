@@ -2843,18 +2843,19 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         Self(Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()))
     }
 }
-impl OptionAnimalAsNullableJsonbObjectSelect {
-    fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, _: std::primitive::bool) -> std::string::String {
-        let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
-        format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))", {
-            let value = match &self.0 {
-                Some(value) => value,
-                None => &<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-            };
-            value.select_query_part(field_ident, &column_name_and_maybe_field_getter_field_ident, column_name_and_maybe_field_getter_for_error_message, true)
-        })
-    }
-}
+//HERE3
+// impl OptionAnimalAsNullableJsonbObjectSelect {
+//     fn select_query_part(&self, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, _: std::primitive::bool) -> std::string::String {
+//         let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
+//         format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))", {
+//             let value = match &self.0 {
+//                 Some(value) => value,
+//                 None => &<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+//             };
+//             value.select_query_part(field_ident, &column_name_and_maybe_field_getter_field_ident, column_name_and_maybe_field_getter_for_error_message, true)
+//         })
+//     }
+// }
 pub type OptionAnimalAsNullableJsonbObjectWhereElement = postgresql_crud::NullableJsonObjectPostgresqlTypeWhereFilter<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::WhereElement>;
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct OptionAnimalAsNullableJsonbObjectRead(std::option::Option<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Read>);
@@ -2935,8 +2936,23 @@ impl postgresql_crud::PostgresqlJsonType for OptionAnimalAsNullableJsonbObject {
         value.create_query_bind(query)
     }
     type Select = OptionAnimalAsNullableJsonbObjectSelect;
-    fn select_query_part(value: &Self::Select, field_ident: &std::primitive::str, column_name_and_maybe_field_getter: &std::primitive::str, column_name_and_maybe_field_getter_for_error_message: &std::primitive::str, is_postgresql_type: std::primitive::bool) -> std::string::String {
-        value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
+    fn select_query_part(
+        value: &Self::Select,
+        field_ident: &std::primitive::str,
+        column_name_and_maybe_field_getter: &std::primitive::str,
+        column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
+        is_postgresql_type: std::primitive::bool
+    ) -> std::string::String {
+        //HERE2
+        // value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
+        let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
+        format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))", {
+            let value = match &value.0 {
+                Some(value) => value,
+                None => &<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+            };
+            value.select_query_part(field_ident, &column_name_and_maybe_field_getter_field_ident, column_name_and_maybe_field_getter_for_error_message, true)
+        })
     }
     type WhereElement = OptionAnimalAsNullableJsonbObjectWhereElement;
     type Read = OptionAnimalAsNullableJsonbObjectRead;
