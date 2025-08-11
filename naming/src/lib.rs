@@ -671,7 +671,8 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["postgres", "pool"],
     ["postgres", "pool", "for", "tokio", "spawn", "sync", "move"],
     ["ident", "create", "default"],
-    ["vec", "of", "primary", "keys", "returned", "from", "create", "many"]
+    ["vec", "of", "primary", "keys", "returned", "from", "create", "many"],
+    ["select", "primary", "key"]
 ]);
 
 #[derive(Debug, Clone, Copy)]

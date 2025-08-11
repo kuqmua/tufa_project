@@ -169,6 +169,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let ident_create_default_snake_case = naming::IdentCreateDefaultSnakeCase;
     let postgres_pool_for_tokio_spawn_sync_move_snake_case = naming::PostgresPoolForTokioSpawnSyncMoveSnakeCase;
     let vec_of_primary_keys_returned_from_create_many_snake_case = naming::VecOfPrimaryKeysReturnedFromCreateManySnakeCase;
+    let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -3603,7 +3604,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         #value_snake_case.next().unwrap()
                                     )
                                 };
-                                let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
+                                let #select_primary_key_snake_case = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
                                     super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                                         #primary_key_field_type_as_postgresql_type_select_token_stream::default(),
                                     )
@@ -3626,7 +3627,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         super::#ident_read_many_parameters_upper_camel_case {
                                             #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
                                                 #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone(),
-                                                #select_snake_case: select_primary_key.clone(),
+                                                #select_snake_case: #select_primary_key_snake_case.clone(),
                                                 #order_by_snake_case: postgresql_crud::OrderBy {
                                                     #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                                     #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
@@ -3666,7 +3667,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     super::#ident_read_one_parameters_upper_camel_case {
                                         #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                             #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
-                                            #select_snake_case: select_primary_key.clone(),
+                                            #select_snake_case: #select_primary_key_snake_case.clone(),
                                         },
                                     },
                                 )
@@ -3824,7 +3825,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     super::#ident_read_many_parameters_upper_camel_case {
                                         #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
                                             #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone(),
-                                            #select_snake_case: select_primary_key.clone(),
+                                            #select_snake_case: #select_primary_key_snake_case.clone(),
                                             #order_by_snake_case: postgresql_crud::OrderBy {
                                                 #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
                                                     #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
@@ -3856,7 +3857,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     super::#ident_read_one_parameters_upper_camel_case {
                                         #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
                                             #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
-                                            #select_snake_case: select_primary_key.clone(),
+                                            #select_snake_case: #select_primary_key_snake_case.clone(),
                                         },
                                     },
                                 ).await &&
