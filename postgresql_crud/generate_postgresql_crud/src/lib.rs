@@ -276,7 +276,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_as_postgresql_type_where_element_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::WhereElementUpperCamelCase);
     let primary_key_field_type_as_postgresql_type_where_element_token_stream = generate_as_postgresql_type_where_element_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_read_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::ReadUpperCamelCase);
-    // let primary_key_field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&primary_key_field_type);
+    let primary_key_field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_update_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::UpdateUpperCamelCase);
     let primary_key_field_type_as_postgresql_type_update_token_stream = generate_as_postgresql_type_update_token_stream(&primary_key_field_type);
     let primary_key_field_type_as_primary_key_upper_camel_case = quote::quote! {
@@ -3699,7 +3699,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 &#url_snake_case,
                                                 super::#ident_update_many_parameters_upper_camel_case {
                                                     #payload_snake_case: super::#ident_update_many_payload_upper_camel_case::try_new({
-                                                        let #generate_element_snake_case = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
+                                                        let #generate_element_snake_case = |#value_snake_case: #primary_key_field_type_as_postgresql_type_read_token_stream|{
                                                             super::#ident_update_upper_camel_case::try_new(
                                                                 #primary_key_field_type_as_postgresql_type_update_token_stream::from(#value_snake_case),
                                                                 #update_try_new_parameters_cloned_token_stream
@@ -3719,12 +3719,10 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     let #select_primary_key_field_ident_snake_case = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#ident_select_columns_token_stream]).unwrap();
                                     assert_eq!(
                                         #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case({
-                                            let #generate_element_snake_case = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
+                                            let #generate_element_snake_case = |#value_snake_case: #primary_key_field_type_as_postgresql_type_read_token_stream|{
                                                 super::#ident_read_upper_camel_case {
                                                     #primary_key_field_ident: Some(postgresql_crud::Value {
-                                                        #value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::from(
-                                                            #value_snake_case
-                                                        ),
+                                                        #value_snake_case: #primary_key_field_type_as_postgresql_type_read_token_stream::from(#value_snake_case),
                                                     }),
                                                     #ident_read_fields_cloned_token_stream
                                                 }
