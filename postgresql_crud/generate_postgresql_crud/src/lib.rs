@@ -3413,6 +3413,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
             let field_ident = &element.field_ident;
             quote::quote! {#field_ident: None}
         });
+        let primary_key_read_returned_from_create_many1_token_stream = quote::quote!{primary_key_read_returned_from_create_many1};
+        let primary_key_read_returned_from_create_many2_token_stream = quote::quote!{primary_key_read_returned_from_create_many2};
         let some_value_primary_key_read_returned_from_create_many1_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_many1};
         let some_value_primary_key_read_returned_from_create_many2_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_many2};
         let some_value_primary_key_read_returned_from_create_one_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_one};
@@ -3574,13 +3576,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 .unwrap();
                                 assert_eq!(2, #vec_of_primary_keys_returned_from_create_many_snake_case.len(), "try_create_many result different");
                                 let (
-                                    primary_key_read_returned_from_create_many1,
-                                    primary_key_read_returned_from_create_many2
+                                    #primary_key_read_returned_from_create_many1_token_stream,
+                                    #primary_key_read_returned_from_create_many2_token_stream
                                 ) = {
-                                    let mut iter = #vec_of_primary_keys_returned_from_create_many_snake_case.into_iter();
+                                    let mut #value_snake_case = #vec_of_primary_keys_returned_from_create_many_snake_case.into_iter();
                                     (
-                                        iter.next().unwrap(),
-                                        iter.next().unwrap()
+                                        #value_snake_case.next().unwrap(),
+                                        #value_snake_case.next().unwrap()
                                     )
                                 };
                                 let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![
@@ -3595,11 +3597,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         vec![
                                             #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::from(primary_key_read_returned_from_create_many1.clone())
+                                                value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::from(#primary_key_read_returned_from_create_many1_token_stream.clone())
                                             }),
                                             #primary_key_field_type_as_postgresql_type_where_element_token_stream::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
                                                 logical_operator: postgresql_crud::LogicalOperator::Or,
-                                                value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::from(primary_key_read_returned_from_create_many2.clone())
+                                                value: #primary_key_field_type_as_postgresql_type_table_type_declaration_token_stream::from(#primary_key_read_returned_from_create_many2_token_stream.clone())
                                             })
                                         ]
                                     ).unwrap()),
@@ -3627,8 +3629,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     .await
                                     .unwrap()
                                 );
-                                let #some_value_primary_key_read_returned_from_create_many1_token_stream = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many1.clone() });
-                                let #some_value_primary_key_read_returned_from_create_many2_token_stream = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_many2.clone() });
+                                let #some_value_primary_key_read_returned_from_create_many1_token_stream = Some(postgresql_crud::Value { value: #primary_key_read_returned_from_create_many1_token_stream.clone() });
+                                let #some_value_primary_key_read_returned_from_create_many2_token_stream = Some(postgresql_crud::Value { value: #primary_key_read_returned_from_create_many2_token_stream.clone() });
                                 assert_eq!(
                                     vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
                                         super::#ident_read_upper_camel_case {
@@ -3686,7 +3688,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                             #update_try_new_parameters_cloned_token_stream
                                                         ).unwrap()
                                                     };
-                                                    vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
+                                                    vec![generate_element(#primary_key_read_returned_from_create_many1_token_stream.clone()), generate_element(#primary_key_read_returned_from_create_many2_token_stream.clone())]
                                                 }).unwrap(),
                                             },
                                         )
@@ -3697,7 +3699,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     };
                                     assert_eq!(
                                         {
-                                            let mut #value_snake_case = vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()];
+                                            let mut #value_snake_case = vec![#primary_key_read_returned_from_create_many1_token_stream.clone(), #primary_key_read_returned_from_create_many2_token_stream.clone()];
                                             #value_snake_case.sort();
                                             #value_snake_case
                                         },
@@ -3734,7 +3736,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                     #ident_read_fields_cloned_token_stream
                                                 }
                                             };
-                                            vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
+                                            vec![generate_element(#primary_key_read_returned_from_create_many1_token_stream.clone()), generate_element(#primary_key_read_returned_from_create_many2_token_stream.clone())]
                                         }),
                                         vec_of_ident_read_returned_from_read_many,
                                         "try_read_many result different after try_update_many"
@@ -3799,8 +3801,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 assert_eq!(
                                     {
                                         let mut #value_snake_case = vec![
-                                            primary_key_read_returned_from_create_many1.clone(),
-                                            primary_key_read_returned_from_create_many2.clone()
+                                            #primary_key_read_returned_from_create_many1_token_stream.clone(),
+                                            #primary_key_read_returned_from_create_many2_token_stream.clone()
                                         ];
                                         #value_snake_case.sort();
                                         #value_snake_case
