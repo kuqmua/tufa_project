@@ -267,6 +267,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let generate_as_postgresql_type_read_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::ReadUpperCamelCase);
     // let primary_key_field_type_as_postgresql_type_read_token_stream = generate_as_postgresql_type_read_token_stream(&primary_key_field_type);
     let generate_as_postgresql_type_update_token_stream = |field_type: &dyn quote::ToTokens| generate_as_postgresql_type_tokens_token_stream(&field_type, &naming::UpdateUpperCamelCase);
+    let primary_key_field_type_as_postgresql_type_update_token_stream = generate_as_postgresql_type_update_token_stream(&primary_key_field_type);
     let primary_key_field_type_as_primary_key_upper_camel_case = quote::quote! {
         <#primary_key_field_type as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
     };
@@ -3405,6 +3406,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         });
         let some_value_primary_key_read_returned_from_create_many1_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_many1};
         let some_value_primary_key_read_returned_from_create_many2_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_many2};
+        let some_value_field_ident_read_token_stream = quote::quote! {some_value_field_ident_read};
         let some_value_primary_key_read_returned_from_create_one_token_stream = quote::quote! {some_value_primary_key_read_returned_from_create_one};
         //todo instead of first dropping table - check if its not exists. if exists test must fail
         let columns_test_cases_declaration_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
@@ -3672,7 +3674,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 #payload_snake_case: super::#ident_update_many_payload_upper_camel_case::try_new({
                                                     let generate_element = |primary_key_read_returned_from_create_many: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
                                                         super::#ident_update_upper_camel_case::try_new(
-                                                            <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::from(
+                                                            #primary_key_field_type_as_postgresql_type_update_token_stream::from(
                                                                 primary_key_read_returned_from_create_many
                                                             ),
                                                             #update_try_new_parameters_cloned_token_stream
@@ -3735,7 +3737,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         &url,
                                         super::#ident_update_one_parameters_upper_camel_case {
                                             #payload_snake_case: super::#ident_update_upper_camel_case::try_new(
-                                                <#primary_key_field_type as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_one.clone()),
+                                                #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_one.clone()),
                                                 #update_try_new_parameters_token_stream
                                             )
                                             .unwrap(),
