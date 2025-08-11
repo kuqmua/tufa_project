@@ -3651,12 +3651,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                 )
             }
         });
-        let ident_read_fields_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+        let ident_read_fields_declaration_token_stream = generate_fields_named_without_primary_key_without_comma_token_stream(&|element: &SynFieldWrapper| {
             let field_ident = &element.field_ident;
             let field_ident_test_cases_snake_case = naming::parameter::SelfTestCasesSnakeCase::from_tokens(&field_ident);
+            let field_ident_some_value_read_snake_case = naming::parameter::SelfSomeValueReadSnakeCase::from_tokens(&field_ident);
             let field_type = &element.syn_field.ty;
             quote::quote! {
-                #field_ident: match #field_ident_test_cases_snake_case.get(#index_snake_case) {
+                let #field_ident_some_value_read_snake_case = match #field_ident_test_cases_snake_case.get(#index_snake_case) {
                     Some(#value_snake_case) => Some(postgresql_crud::Value {
                         #value_snake_case: <#field_type as postgresql_crud::PostgresqlType>::normalize(
                             <#field_type as postgresql_crud::tests::PostgresqlTypeTestCases<
@@ -3679,8 +3680,18 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                             )
                         )
                     }),
-                }
+                };
             }
+        });
+        let ident_read_fields_cloned_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_ident_some_value_read_snake_case = naming::parameter::SelfSomeValueReadSnakeCase::from_tokens(&field_ident);
+            quote::quote! {#field_ident: #field_ident_some_value_read_snake_case.clone()}
+        });
+        let ident_read_fields_token_stream = generate_fields_named_without_primary_key_with_comma_token_stream(&|element: &SynFieldWrapper| {
+            let field_ident = &element.field_ident;
+            let field_ident_some_value_read_snake_case = naming::parameter::SelfSomeValueReadSnakeCase::from_tokens(&field_ident);
+            quote::quote! {#field_ident: #field_ident_some_value_read_snake_case}
         });
         quote::quote! {
             #[cfg(test)]
@@ -3835,116 +3846,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 #columns_test_cases_declaration_token_stream
                                 for #index_snake_case in #test_cases_max_len_token_stream {
                                     #update_try_new_parameters_declaration_token_stream
-                                    let column_0_some_value_read = match column_0_test_cases.get(index) {
-                                        Some(value) => Some(postgresql_crud::Value {
-                                            value: <
-                                                postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2
-                                                as
-                                                postgresql_crud::PostgresqlType>::normalize(
-                                                    <
-                                                        postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2
-                                                        as
-                                                        postgresql_crud::tests::PostgresqlTypeTestCases<
-                                                            <
-                                                                postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2
-                                                                as
-                                                                postgresql_crud::PostgresqlType
-                                                            >::ReadInner
-                                                        >
-                                                    >::read_new_or_try_new_unwraped_for_test(value.clone())
-                                                )
-                                        }),
-                                        None => Some(postgresql_crud::Value {
-                                            value: <
-                                                postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2
-                                                as
-                                                postgresql_crud::PostgresqlType
-                                            >::normalize(
-                                                <
-                                                    postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2
-                                                    as
-                                                    postgresql_crud::tests::PostgresqlTypeTestCases<
-                                                        <
-                                                            postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2
-                                                            as
-                                                            postgresql_crud::PostgresqlType
-                                                        >::ReadInner
-                                                    >
-                                                >::read_new_or_try_new_unwraped_for_test(
-                                                    <
-                                                        postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2
-                                                        as
-                                                        postgresql_crud::PostgresqlType
-                                                    >::into_inner(
-                                                        <
-                                                            <
-                                                                postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2
-                                                                as
-                                                                postgresql_crud::PostgresqlType
-                                                            >::Read
-                                                            as
-                                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                                    )
-                                                )
-                                            )
-                                        }),
-                                    };
-                                    let column_154_some_value_read = match column_154_test_cases.get(index) {
-                                        Some(value) => Some(postgresql_crud::Value {
-                                            value: <
-                                                crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                                as
-                                                postgresql_crud::PostgresqlType>::normalize(
-                                                    <
-                                                        crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                                        as
-                                                        postgresql_crud::tests::PostgresqlTypeTestCases<
-                                                            <
-                                                                crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                                                as
-                                                                postgresql_crud::PostgresqlType
-                                                            >::ReadInner
-                                                        >
-                                                    >::read_new_or_try_new_unwraped_for_test(value.clone())
-                                                )
-                                        }),
-                                        None => Some(postgresql_crud::Value {
-                                            value: <
-                                                crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                                as
-                                                postgresql_crud::PostgresqlType
-                                            >::normalize(
-                                                <
-                                                    crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                                    as
-                                                    postgresql_crud::tests::PostgresqlTypeTestCases<
-                                                        <
-                                                            crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                                            as
-                                                            postgresql_crud::PostgresqlType
-                                                        >::ReadInner
-                                                    >
-                                                >::read_new_or_try_new_unwraped_for_test(
-                                                    <
-                                                        crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                                        as
-                                                        postgresql_crud::PostgresqlType
-                                                    >::into_inner(
-                                                        <
-                                                            <
-                                                                crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject
-                                                                as
-                                                                postgresql_crud::PostgresqlType
-                                                            >::Read
-                                                            as
-                                                            postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
-                                                        >::default_but_option_is_always_some_and_vec_always_contains_one_element()
-                                                    )
-                                                )
-                                            )
-                                        }),
-                                    };
+                                    #ident_read_fields_declaration_token_stream
                                     let vec_of_primary_keys_returned_from_update_many = {
                                         let mut #value_snake_case = super::#ident::try_update_many(
                                             &url,
@@ -4003,7 +3905,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                             primary_key_read_returned_from_create_many
                                                         ),
                                                     }),
-                                                    #ident_read_fields_token_stream
+                                                    #ident_read_fields_cloned_token_stream
                                                 }
                                             };
                                             vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
@@ -4047,8 +3949,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                 }),
                                                 None => None,
                                             },
-                                            column_0: column_0_some_value_read,
-                                            column_154: column_154_some_value_read,
+                                            #ident_read_fields_token_stream
                                         },
                                         ident_read_returned_from_read_one,
                                         "try_read_one result different after try_update_one"
