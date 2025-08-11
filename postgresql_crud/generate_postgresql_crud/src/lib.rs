@@ -170,6 +170,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let postgres_pool_for_tokio_spawn_sync_move_snake_case = naming::PostgresPoolForTokioSpawnSyncMoveSnakeCase;
     let vec_of_primary_keys_returned_from_create_many_snake_case = naming::VecOfPrimaryKeysReturnedFromCreateManySnakeCase;
     let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
+    let sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = naming::SortVecOfIdentReadWithPrimaryKeyByPrimaryKeySnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -3617,11 +3618,11 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     ).unwrap()),
                                     #fields_none_initialization_token_stream
                                 }));
-                                let vec_of_ident_read_with_primary_key_sort_by_primary_key = |mut vec: std::vec::Vec<super::#ident_read_upper_camel_case>| -> std::vec::Vec<super::#ident_read_upper_camel_case> {
-                                    vec.sort_by_key(|element| element.#primary_key_field_ident.clone().unwrap().value);
-                                    vec
+                                let #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = |mut #value_snake_case: std::vec::Vec<super::#ident_read_upper_camel_case>| -> std::vec::Vec<super::#ident_read_upper_camel_case> {
+                                    #value_snake_case.sort_by_key(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone().unwrap().#value_snake_case);
+                                    #value_snake_case
                                 };
-                                let vec_of_ident_read_returned_from_read_many = vec_of_ident_read_with_primary_key_sort_by_primary_key(
+                                let vec_of_ident_read_returned_from_read_many = #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case(
                                     super::#ident::try_read_many(
                                         &#url_snake_case,
                                         super::#ident_read_many_parameters_upper_camel_case {
@@ -3642,7 +3643,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                 let #some_value_primary_key_read_returned_from_create_many1_token_stream = Some(postgresql_crud::Value { value: #primary_key_read_returned_from_create_many1_token_stream.clone() });
                                 let #some_value_primary_key_read_returned_from_create_many2_token_stream = Some(postgresql_crud::Value { value: #primary_key_read_returned_from_create_many2_token_stream.clone() });
                                 assert_eq!(
-                                    vec_of_ident_read_with_primary_key_sort_by_primary_key(vec![
+                                    #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case(vec![
                                         super::#ident_read_upper_camel_case {
                                             #primary_key_field_ident: #some_value_primary_key_read_returned_from_create_many1_token_stream.clone(),
                                             #fields_none_initialization_token_stream
@@ -3717,7 +3718,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         "try_update_many result different"
                                     );
                                     let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#ident_select_columns_token_stream]).unwrap();
-                                    let vec_of_ident_read_returned_from_read_many = vec_of_ident_read_with_primary_key_sort_by_primary_key(super::#ident::try_read_many(
+                                    let vec_of_ident_read_returned_from_read_many = #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case(super::#ident::try_read_many(
                                             &#url_snake_case,
                                             super::#ident_read_many_parameters_upper_camel_case {
                                                 #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
@@ -3735,7 +3736,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         .unwrap()
                                     );
                                     assert_eq!(
-                                        vec_of_ident_read_with_primary_key_sort_by_primary_key({
+                                        #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case({
                                             let generate_element = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
                                                 super::#ident_read_upper_camel_case {
                                                     #primary_key_field_ident: Some(postgresql_crud::Value {
