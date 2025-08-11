@@ -2963,20 +2963,17 @@ impl postgresql_crud::PostgresqlType for OptionAnimalAsNullableJsonbObject {
     }
     type Select = OptionAnimalAsNullableJsonbObjectSelect;
     fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String {
-        let f = format!("{} as {column}", {
-            let field_ident = column;
-            let column_name_and_maybe_field_getter = column;
-            let column_name_and_maybe_field_getter_for_error_message = column;
-            let is_postgresql_type = true;
-            println!("field_ident {field_ident}");
-            println!("column_name_and_maybe_field_getter {column_name_and_maybe_field_getter}");
-            println!("column_name_and_maybe_field_getter_for_error_message {column_name_and_maybe_field_getter_for_error_message}");
-            println!("is_postgresql_type {is_postgresql_type}");
-            value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
-        });
-        
-        println!("SELECT QUERY PART {f}");
-        f
+        //HERE
+        format!(
+            "case when jsonb_typeof({column}) = 'null' then null else ({}) end as {column}",
+            {
+                let value = match &value.0 {
+                    Some(value) => value,
+                    None => &<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                };
+                value.select_query_part("", column, column, true)
+            }
+        )
     }
     type WhereElement = OptionAnimalAsNullableJsonbObjectWhereElement;
     type Read = OptionAnimalAsNullableJsonbObjectRead;
@@ -2995,6 +2992,13 @@ impl postgresql_crud::PostgresqlType for OptionAnimalAsNullableJsonbObject {
         value.update_query_bind(query)
     }
 }
+
+
+
+
+
+
+
 #[cfg(test)]
 impl postgresql_crud::tests::PostgresqlTypeTestCases<OptionAnimalAsNullableJsonbObjectReadInner> for OptionAnimalAsNullableJsonbObject {
     type Element = Self;
