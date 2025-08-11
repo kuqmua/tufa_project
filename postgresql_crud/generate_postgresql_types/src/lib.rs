@@ -5484,8 +5484,22 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                                     }
                                 },
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
+                                    let ident_standart_nullable_upper_camel_case = generate_ident_token_stream(
+                                        &postgresql_type,
+                                        &postgresql_crud_macros_common::NotNullOrNullable::Nullable,
+                                        &PostgresqlTypePattern::Standart,
+                                    );
+                                    let ident_array_standart_nullable_read_upper_camel_case = naming::parameter::SelfReadUpperCamelCase::from_tokens(
+                                        &ident_standart_nullable_upper_camel_case
+                                    );
                                     quote::quote! {
-                                        #value_snake_case
+                                        #ident_read_upper_camel_case(#ident_origin_upper_camel_case(
+                                            #value_snake_case.0.0.into_iter().map(|#element_snake_case|{
+                                                <#ident_standart_nullable_upper_camel_case as crate::PostgresqlType>::normalize(
+                                                    #ident_array_standart_nullable_read_upper_camel_case(#element_snake_case)
+                                                ).0
+                                            }).collect()
+                                        ))
                                     }
                                 },
                                 (postgresql_crud_macros_common::NotNullOrNullable::Nullable, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {

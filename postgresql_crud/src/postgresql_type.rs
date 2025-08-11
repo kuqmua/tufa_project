@@ -881,16 +881,17 @@ generate_postgresql_types::generate_postgresql_types!({
                 }
             }
         }
+        ,
+        {
+            "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range",
+            "not_null_or_nullable": "NotNull",
+            "postgresql_type_pattern": {
+                "ArrayDimension1": {
+                    "dimension1_not_null_or_nullable": "Nullable"
+                }
+            }
+        }
         // ,
-        // {
-        //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range",
-        //     "not_null_or_nullable": "NotNull",
-        //     "postgresql_type_pattern": {
-        //         "ArrayDimension1": {
-        //             "dimension1_not_null_or_nullable": "Nullable"
-        //         }
-        //     }
-        // },
         // {
         //     "postgresql_type": "SqlxPostgresTypesPgRangeStdPrimitiveI32AsInt4Range",
         //     "not_null_or_nullable": "Nullable",
