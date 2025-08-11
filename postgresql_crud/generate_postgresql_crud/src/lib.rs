@@ -170,6 +170,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let postgres_pool_for_tokio_spawn_sync_move_snake_case = naming::PostgresPoolForTokioSpawnSyncMoveSnakeCase;
     let vec_of_primary_keys_returned_from_create_many_snake_case = naming::VecOfPrimaryKeysReturnedFromCreateManySnakeCase;
     let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
+    let generate_element_snake_case = naming::GenerateElementSnakeCase;
     let sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = naming::SortVecOfIdentReadWithPrimaryKeyByPrimaryKeySnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
@@ -3622,26 +3623,8 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                     #value_snake_case.sort_by_key(|#element_snake_case| #element_snake_case.#primary_key_field_ident.clone().unwrap().#value_snake_case);
                                     #value_snake_case
                                 };
-                                let vec_of_ident_read_returned_from_read_many = #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case(
-                                    super::#ident::try_read_many(
-                                        &#url_snake_case,
-                                        super::#ident_read_many_parameters_upper_camel_case {
-                                            #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
-                                                #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone(),
-                                                #select_snake_case: #select_primary_key_snake_case.clone(),
-                                                #order_by_snake_case: postgresql_crud::OrderBy {
-                                                    #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                                                    #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                                                },
-                                                #pagination_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                            },
-                                        },
-                                    )
-                                    .await
-                                    .unwrap()
-                                );
-                                let #some_value_primary_key_read_returned_from_create_many1_token_stream = Some(postgresql_crud::Value { value: #primary_key_read_returned_from_create_many1_token_stream.clone() });
-                                let #some_value_primary_key_read_returned_from_create_many2_token_stream = Some(postgresql_crud::Value { value: #primary_key_read_returned_from_create_many2_token_stream.clone() });
+                                let #some_value_primary_key_read_returned_from_create_many1_token_stream = Some(postgresql_crud::Value { #value_snake_case: #primary_key_read_returned_from_create_many1_token_stream.clone() });
+                                let #some_value_primary_key_read_returned_from_create_many2_token_stream = Some(postgresql_crud::Value { #value_snake_case: #primary_key_read_returned_from_create_many2_token_stream.clone() });
                                 assert_eq!(
                                     #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case(vec![
                                         super::#ident_read_upper_camel_case {
@@ -3653,77 +3636,13 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             #fields_none_initialization_token_stream
                                         }
                                     ]),
-                                    vec_of_ident_read_returned_from_read_many,
-                                    "try_read_many result different after try_create_many"
-                                );
-                                let primary_key_returned_from_create_one = super::#ident::try_create_one(
-                                    &#url_snake_case,
-                                    super::#ident_create_one_parameters_upper_camel_case {
-                                        #payload_snake_case: #ident_create_default_snake_case
-                                    }
-                                ).await.unwrap();
-                                let primary_key_read_returned_from_create_one = primary_key_returned_from_create_one;
-                                let ident_read_returned_from_read_one = super::#ident::try_read_one(
-                                    &#url_snake_case,
-                                    super::#ident_read_one_parameters_upper_camel_case {
-                                        #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
-                                            #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
-                                            #select_snake_case: #select_primary_key_snake_case.clone(),
-                                        },
-                                    },
-                                )
-                                .await
-                                .unwrap();
-                                let #some_value_primary_key_read_returned_from_create_one_token_stream = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_one.clone() });
-                                assert_eq!(
-                                    super::#ident_read_upper_camel_case {
-                                        #primary_key_field_ident: #some_value_primary_key_read_returned_from_create_one_token_stream.clone(),
-                                        #fields_none_initialization_token_stream
-                                    },
-                                    ident_read_returned_from_read_one,
-                                    "try_read_one result different after try_create_one"
-                                );
-                                //update part start
-                                #columns_test_cases_declaration_token_stream
-                                for #index_snake_case in #test_cases_max_len_token_stream {
-                                    #update_try_new_parameters_declaration_token_stream
-                                    #ident_read_fields_declaration_token_stream
-                                    let vec_of_primary_keys_returned_from_update_many = {
-                                        let mut #value_snake_case = super::#ident::try_update_many(
-                                            &#url_snake_case,
-                                            super::#ident_update_many_parameters_upper_camel_case {
-                                                #payload_snake_case: super::#ident_update_many_payload_upper_camel_case::try_new({
-                                                    let generate_element = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
-                                                        super::#ident_update_upper_camel_case::try_new(
-                                                            #primary_key_field_type_as_postgresql_type_update_token_stream::from(#value_snake_case),
-                                                            #update_try_new_parameters_cloned_token_stream
-                                                        ).unwrap()
-                                                    };
-                                                    vec![generate_element(#primary_key_read_returned_from_create_many1_token_stream.clone()), generate_element(#primary_key_read_returned_from_create_many2_token_stream.clone())]
-                                                }).unwrap(),
-                                            },
-                                        )
-                                        .await
-                                        .unwrap();
-                                        #value_snake_case.sort();
-                                        #value_snake_case
-                                    };
-                                    assert_eq!(
-                                        {
-                                            let mut #value_snake_case = vec![#primary_key_read_returned_from_create_many1_token_stream.clone(), #primary_key_read_returned_from_create_many2_token_stream.clone()];
-                                            #value_snake_case.sort();
-                                            #value_snake_case
-                                        },
-                                        vec_of_primary_keys_returned_from_update_many,
-                                        "try_update_many result different"
-                                    );
-                                    let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#ident_select_columns_token_stream]).unwrap();
-                                    let vec_of_ident_read_returned_from_read_many = #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case(super::#ident::try_read_many(
+                                    #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case(
+                                        super::#ident::try_read_many(
                                             &#url_snake_case,
                                             super::#ident_read_many_parameters_upper_camel_case {
                                                 #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
                                                     #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone(),
-                                                    #select_snake_case: select_primary_key_field_ident.clone(),
+                                                    #select_snake_case: #select_primary_key_snake_case.clone(),
                                                     #order_by_snake_case: postgresql_crud::OrderBy {
                                                         #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
                                                         #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
@@ -3734,10 +3653,72 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         )
                                         .await
                                         .unwrap()
+                                    ),
+                                    "try_read_many result different after try_create_many"
+                                );
+                                let primary_key_returned_from_create_one = super::#ident::try_create_one(
+                                    &#url_snake_case,
+                                    super::#ident_create_one_parameters_upper_camel_case {
+                                        #payload_snake_case: #ident_create_default_snake_case
+                                    }
+                                ).await.unwrap();
+                                let primary_key_read_returned_from_create_one = primary_key_returned_from_create_one;
+                                let #some_value_primary_key_read_returned_from_create_one_token_stream = Some(postgresql_crud::Value { value: primary_key_read_returned_from_create_one.clone() });
+                                assert_eq!(
+                                    super::#ident_read_upper_camel_case {
+                                        #primary_key_field_ident: #some_value_primary_key_read_returned_from_create_one_token_stream.clone(),
+                                        #fields_none_initialization_token_stream
+                                    },
+                                    super::#ident::try_read_one(
+                                        &#url_snake_case,
+                                        super::#ident_read_one_parameters_upper_camel_case {
+                                            #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
+                                                #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
+                                                #select_snake_case: #select_primary_key_snake_case.clone(),
+                                            },
+                                        },
+                                    )
+                                    .await
+                                    .unwrap(),
+                                    "try_read_one result different after try_create_one"
+                                );
+                                //update part start
+                                #columns_test_cases_declaration_token_stream
+                                for #index_snake_case in #test_cases_max_len_token_stream {
+                                    #update_try_new_parameters_declaration_token_stream
+                                    #ident_read_fields_declaration_token_stream
+                                    assert_eq!(
+                                        {
+                                            let mut #value_snake_case = vec![#primary_key_read_returned_from_create_many1_token_stream.clone(), #primary_key_read_returned_from_create_many2_token_stream.clone()];
+                                            #value_snake_case.sort();
+                                            #value_snake_case
+                                        },
+                                        {
+                                            let mut #value_snake_case = super::#ident::try_update_many(
+                                                &#url_snake_case,
+                                                super::#ident_update_many_parameters_upper_camel_case {
+                                                    #payload_snake_case: super::#ident_update_many_payload_upper_camel_case::try_new({
+                                                        let #generate_element_snake_case = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
+                                                            super::#ident_update_upper_camel_case::try_new(
+                                                                #primary_key_field_type_as_postgresql_type_update_token_stream::from(#value_snake_case),
+                                                                #update_try_new_parameters_cloned_token_stream
+                                                            ).unwrap()
+                                                        };
+                                                        vec![#generate_element_snake_case(#primary_key_read_returned_from_create_many1_token_stream.clone()), #generate_element_snake_case(#primary_key_read_returned_from_create_many2_token_stream.clone())]
+                                                    }).unwrap(),
+                                                },
+                                            )
+                                            .await
+                                            .unwrap();
+                                            #value_snake_case.sort();
+                                            #value_snake_case
+                                        },
+                                        "try_update_many result different"
                                     );
+                                    let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![#ident_select_columns_token_stream]).unwrap();
                                     assert_eq!(
                                         #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case({
-                                            let generate_element = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
+                                            let #generate_element_snake_case = |#value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read|{
                                                 super::#ident_read_upper_camel_case {
                                                     #primary_key_field_ident: Some(postgresql_crud::Value {
                                                         #value_snake_case: <#primary_key_field_type as postgresql_crud::PostgresqlType>::Read::from(
@@ -3747,39 +3728,43 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                                     #ident_read_fields_cloned_token_stream
                                                 }
                                             };
-                                            vec![generate_element(#primary_key_read_returned_from_create_many1_token_stream.clone()), generate_element(#primary_key_read_returned_from_create_many2_token_stream.clone())]
+                                            vec![#generate_element_snake_case(#primary_key_read_returned_from_create_many1_token_stream.clone()), #generate_element_snake_case(#primary_key_read_returned_from_create_many2_token_stream.clone())]
                                         }),
-                                        vec_of_ident_read_returned_from_read_many,
+                                        #sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case(super::#ident::try_read_many(
+                                                &#url_snake_case,
+                                                super::#ident_read_many_parameters_upper_camel_case {
+                                                    #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
+                                                        #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone(),
+                                                        #select_snake_case: select_primary_key_field_ident.clone(),
+                                                        #order_by_snake_case: postgresql_crud::OrderBy {
+                                                            #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                                            #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                                        },
+                                                        #pagination_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                                    },
+                                                },
+                                            )
+                                            .await
+                                            .unwrap()
+                                        ),
                                         "try_read_many result different after try_update_many"
                                     );
-                                    let primary_key_returned_from_update_one = super::#ident::try_update_one(
-                                        &#url_snake_case,
-                                        super::#ident_update_one_parameters_upper_camel_case {
-                                            #payload_snake_case: super::#ident_update_upper_camel_case::try_new(
-                                                #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_one.clone()),
-                                                #update_try_new_parameters_token_stream
-                                            )
-                                            .unwrap(),
-                                        },
-                                    )
-                                    .await
-                                    .unwrap();
                                     assert_eq!(
                                         primary_key_read_returned_from_create_one.clone(),
-                                        primary_key_returned_from_update_one,
+                                        super::#ident::try_update_one(
+                                            &#url_snake_case,
+                                            super::#ident_update_one_parameters_upper_camel_case {
+                                                #payload_snake_case: super::#ident_update_upper_camel_case::try_new(
+                                                    #primary_key_field_type_as_postgresql_type_update_token_stream::from(primary_key_read_returned_from_create_one.clone()),
+                                                    #update_try_new_parameters_token_stream
+                                                )
+                                                .unwrap(),
+                                            },
+                                        )
+                                        .await
+                                        .unwrap(),
                                         "try_update_one result different"
                                     );
-                                    let ident_read_returned_from_read_one = super::#ident::try_read_one(
-                                        &#url_snake_case,
-                                        super::#ident_read_one_parameters_upper_camel_case {
-                                            #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
-                                                #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
-                                                #select_snake_case: select_primary_key_field_ident.clone(),
-                                            },
-                                        },
-                                    )
-                                    .await
-                                    .unwrap();
                                     assert_eq!(
                                         super::#ident_read_upper_camel_case {
                                             #primary_key_field_ident: match some_value_primary_key_read_returned_from_create_one.clone() {
@@ -3790,25 +3775,21 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                             },
                                             #ident_read_fields_token_stream
                                         },
-                                        ident_read_returned_from_read_one,
+                                        super::#ident::try_read_one(
+                                            &#url_snake_case,
+                                            super::#ident_read_one_parameters_upper_camel_case {
+                                                #payload_snake_case: super::#ident_read_one_payload_upper_camel_case {
+                                                    #primary_key_field_ident: primary_key_read_returned_from_create_one.clone(),
+                                                    #select_snake_case: select_primary_key_field_ident.clone(),
+                                                },
+                                            },
+                                        )
+                                        .await
+                                        .unwrap(),
                                         "try_read_one result different after try_update_one"
                                     );
                                 }
                                 //update part end
-                                let vec_of_primary_keys_returned_from_delete_many = {
-                                    let mut #value_snake_case = super::#ident::try_delete_many(
-                                        &#url_snake_case,
-                                        super::#ident_delete_many_parameters_upper_camel_case {
-                                            #payload_snake_case: super::#ident_delete_many_payload_upper_camel_case {
-                                                #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone()
-                                            },
-                                        },
-                                    )
-                                    .await
-                                    .unwrap();
-                                    #value_snake_case.sort();
-                                    #value_snake_case
-                                };
                                 assert_eq!(
                                     {
                                         let mut #value_snake_case = vec![
@@ -3818,30 +3799,42 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
                                         #value_snake_case.sort();
                                         #value_snake_case
                                     },
-                                    vec_of_primary_keys_returned_from_delete_many,
+                                    {
+                                        let mut #value_snake_case = super::#ident::try_delete_many(
+                                            &#url_snake_case,
+                                            super::#ident_delete_many_parameters_upper_camel_case {
+                                                #payload_snake_case: super::#ident_delete_many_payload_upper_camel_case {
+                                                    #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone()
+                                                },
+                                            },
+                                        )
+                                        .await
+                                        .unwrap();
+                                        #value_snake_case.sort();
+                                        #value_snake_case
+                                    },
                                     "try_delete_many result different"
                                 );
-                                let vec_of_ident_read_returned_from_read_many = super::#ident::try_read_many(
-                                    &#url_snake_case,
-                                    super::#ident_read_many_parameters_upper_camel_case {
-                                        #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
-                                            #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone(),
-                                            #select_snake_case: #select_primary_key_snake_case.clone(),
-                                            #order_by_snake_case: postgresql_crud::OrderBy {
-                                                #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
-                                                    #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
-                                                ),
-                                                #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
-                                            },
-                                            #pagination_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
-                                        },
-                                    },
-                                )
-                                .await
-                                .unwrap();
                                 assert_eq!(
                                     std::vec::Vec::<super::#ident_read_upper_camel_case>::default(),
-                                    vec_of_ident_read_returned_from_read_many,
+                                    super::#ident::try_read_many(
+                                        &#url_snake_case,
+                                        super::#ident_read_many_parameters_upper_camel_case {
+                                            #payload_snake_case: super::#ident_read_many_payload_upper_camel_case {
+                                                #where_many_snake_case: #where_many_1_and_2_primary_keys_token_stream.clone(),
+                                                #select_snake_case: #select_primary_key_snake_case.clone(),
+                                                #order_by_snake_case: postgresql_crud::OrderBy {
+                                                    #column_snake_case: super::#ident_select_upper_camel_case::#primary_key_field_ident_upper_camel_case_token_stream(
+                                                        #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream
+                                                    ),
+                                                    #order_snake_case: Some(#postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream),
+                                                },
+                                                #pagination_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
+                                            },
+                                        },
+                                    )
+                                    .await
+                                    .unwrap(),
                                     "try_read_many result different after try_delete_many"
                                 );
                                 let primary_key_returned_from_delete_one = super::#ident::try_delete_one(
