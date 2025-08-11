@@ -33,7 +33,7 @@ pub struct Example {
     #[generate_postgresql_crud_primary_key]
     pub primary_key_column: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql,
 
-    // pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
+    pub column_0: postgresql_crud::postgresql_type::StdPrimitiveI16AsNotNullInt2,
     // pub column_1: postgresql_crud::postgresql_type::OptionStdPrimitiveI16AsNullableInt2,
     // pub column_2: postgresql_crud::postgresql_type::VecOfStdPrimitiveI16AsNotNullArrayOfNotNullInt2,
     // pub column_3: postgresql_crud::postgresql_type::OptionVecOfStdPrimitiveI16AsNullableArrayOfNotNullInt2,
@@ -147,11 +147,11 @@ pub struct Example {
     // pub column_111: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxTypesMacAddressMacAddressAsNullableArrayOfNullableMacAddr,
 
     // pub column_112: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullInt4Range,
-    pub column_113: postgresql_crud::postgresql_type::OptionSqlxPostgresTypesPgRangeStdPrimitiveI32AsNullableInt4Range,
-    pub column_114: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4Range,
-    pub column_115: postgresql_crud::postgresql_type::OptionVecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNullableArrayOfNotNullInt4Range,
-    pub column_116: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNullableInt4Range,
-    pub column_117: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgRangeStdPrimitiveI32AsNullableArrayOfNullableInt4Range,
+    // pub column_113: postgresql_crud::postgresql_type::OptionSqlxPostgresTypesPgRangeStdPrimitiveI32AsNullableInt4Range,
+    // pub column_114: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNotNullInt4Range,
+    // pub column_115: postgresql_crud::postgresql_type::OptionVecOfSqlxPostgresTypesPgRangeStdPrimitiveI32AsNullableArrayOfNotNullInt4Range,
+    // pub column_116: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgRangeStdPrimitiveI32AsNotNullArrayOfNullableInt4Range,
+    // pub column_117: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgRangeStdPrimitiveI32AsNullableArrayOfNullableInt4Range,
     // pub column_118: postgresql_crud::postgresql_type::SqlxPostgresTypesPgRangeStdPrimitiveI64AsNotNullInt8Range,
     // pub column_119: postgresql_crud::postgresql_type::OptionSqlxPostgresTypesPgRangeStdPrimitiveI64AsNullableInt8Range,
     // pub column_120: postgresql_crud::postgresql_type::VecOfSqlxPostgresTypesPgRangeStdPrimitiveI64AsNotNullArrayOfNotNullInt8Range,
@@ -176,6 +176,7 @@ pub struct Example {
     // pub column_139: postgresql_crud::postgresql_type::OptionVecOfSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNotNullTimestampTzRange,
     // pub column_140: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTzRange,
     // pub column_141: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
+
     pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
     // pub column_155: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
     // pub column_156: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
