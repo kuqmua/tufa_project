@@ -5474,7 +5474,13 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                             PostgresqlTypePattern::ArrayDimension1 { dimension1_not_null_or_nullable } => match (&not_null_or_nullable, &dimension1_not_null_or_nullable) {
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::NotNull) => {
                                     quote::quote! {
-                                        #value_snake_case
+                                        #ident_read_upper_camel_case(#ident_origin_upper_camel_case(
+                                            #value_snake_case.0.0.into_iter().map(|#element_snake_case|{
+                                                <#ident_standart_not_null_upper_camel_case as crate::PostgresqlType>::normalize(
+                                                    #ident_standart_not_null_read_upper_camel_case(#element_snake_case)
+                                                ).0
+                                            }).collect()
+                                        ))
                                     }
                                 },
                                 (postgresql_crud_macros_common::NotNullOrNullable::NotNull, postgresql_crud_macros_common::NotNullOrNullable::Nullable) => {
