@@ -3912,7 +3912,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote!{
                             let mut #acc_snake_case = vec![];
                             #(#content_token_stream)*
-                            println!(#format_handle_token_stream, #acc_snake_case.len());
+                            // println!(#format_handle_token_stream, #acc_snake_case.len());
                             #acc_snake_case
                         }
                     },
