@@ -1770,7 +1770,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             };
                             match &not_null_or_nullable {
                                 NotNullOrNullable::NotNull => format_handle,
-                                NotNullOrNullable::Nullable => format!("case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident})='null' then null else ({format_handle}) end"),
+                                NotNullOrNullable::Nullable => format!("case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident})='null' then 'null'::jsonb else ({format_handle}) end"),
                             }
                         };
                         let maybe_dimensions_start_end_initialization = {

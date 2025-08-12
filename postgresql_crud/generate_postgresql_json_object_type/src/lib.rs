@@ -1207,8 +1207,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 PostgresqlJsonObjectTypePattern::Array => quote::quote!{column_name_and_maybe_field_getter},
                             };
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&match &postgresql_json_object_type_pattern {
-                                PostgresqlJsonObjectTypePattern::Standart => "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))",
-                                PostgresqlJsonObjectTypePattern::Array => "case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end"
+                                PostgresqlJsonObjectTypePattern::Standart => "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({}) end))",
+                                PostgresqlJsonObjectTypePattern::Array => "case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({}) end"
                             });
                             let type_token_stream: &dyn quote::ToTokens = match &postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
@@ -1229,7 +1229,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 //     )
                                 // })
                                 format!(
-                                    "case when jsonb_typeof({column}) = 'null' then null else ({}) end",
+                                    "case when jsonb_typeof({column}) = 'null' then 'null'::jsonb else ({}) end",
                                     {
                                         let #value_snake_case = match &self.0 {
                                             Some(#value_snake_case) => #value_snake_case,
@@ -1252,8 +1252,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 PostgresqlJsonObjectTypePattern::Array => quote::quote!{column_name_and_maybe_field_getter},
                             };
                             let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&match &postgresql_json_object_type_pattern {
-                                PostgresqlJsonObjectTypePattern::Standart => "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))",
-                                PostgresqlJsonObjectTypePattern::Array => "case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end"
+                                PostgresqlJsonObjectTypePattern::Standart => "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({}) end))",
+                                PostgresqlJsonObjectTypePattern::Array => "case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({}) end"
                             });
                             let type_token_stream: &dyn quote::ToTokens = match &postgresql_json_object_type_pattern {
                                 PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
@@ -2950,7 +2950,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_update_query_part_standart_not_null_postgresql_type_content_token_stream(&is_standart_with_id_false),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"));
+                                let none_format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!(
+                                    "${{{increment_snake_case}}}"
+                                    // "jsonb_set({{{jsonb_set_accumulator_snake_case}}},'{{{{{{{jsonb_set_path_snake_case}}}}}}}',${{{increment_snake_case}}})"
+                                ));
                                 quote::quote!{
                                     match &self.0 {
                                         Some(#value_snake_case) => #value_snake_case.#update_query_part_postgresql_type_snake_case(
@@ -3577,8 +3580,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             PostgresqlJsonObjectTypePattern::Array => quote::quote!{column_name_and_maybe_field_getter},
                         };
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&match &postgresql_json_object_type_pattern {
-                            PostgresqlJsonObjectTypePattern::Standart => "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))",
-                            PostgresqlJsonObjectTypePattern::Array => "case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end"
+                            PostgresqlJsonObjectTypePattern::Standart => "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({}) end))",
+                            PostgresqlJsonObjectTypePattern::Array => "case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({}) end"
                         });
                         let type_token_stream: &dyn quote::ToTokens = match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
@@ -3599,7 +3602,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             //     )
                             // })
                             let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
-                            format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))", {
+                            format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({}) end))", {
                                 let #value_snake_case = match &#value_snake_case.0 {
                                     Some(#value_snake_case) => #value_snake_case,
                                     None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
@@ -3620,8 +3623,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             PostgresqlJsonObjectTypePattern::Array => quote::quote!{column_name_and_maybe_field_getter},
                         };
                         let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&match &postgresql_json_object_type_pattern {
-                            PostgresqlJsonObjectTypePattern::Standart => "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))",
-                            PostgresqlJsonObjectTypePattern::Array => "case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value',null)) else ({}) end"
+                            PostgresqlJsonObjectTypePattern::Standart => "jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then 'null'::jsonb else ({}) end))",
+                            PostgresqlJsonObjectTypePattern::Array => "case when jsonb_typeof({column_name_and_maybe_field_getter}->'{field_ident}') = 'null' then jsonb_build_object('{field_ident}',jsonb_build_object('value','null'::jsonb)) else ({}) end"
                         });
                         let type_token_stream: &dyn quote::ToTokens = match &postgresql_json_object_type_pattern {
                             PostgresqlJsonObjectTypePattern::Standart => &ident_standart_not_null_as_postgresql_json_type_select_token_stream,
@@ -3915,16 +3918,11 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                         quote::quote!{
-                            let 
-                            mut 
-                            acc: std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>
-                            
-                            = vec![];
-                            // <#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases<
-                            //     <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner
-                            // >>::test_cases().into_iter().map(|element|Some(
-                            //     element
-                            // )).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>();
+                            let mut acc = <#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner
+                            >>::test_cases().into_iter().map(|element|Some(
+                                element
+                            )).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>();
                             acc.push(None);
                             acc
                         }
