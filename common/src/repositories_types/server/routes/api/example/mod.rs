@@ -177,9 +177,9 @@ pub struct Example {
     // pub column_140: postgresql_crud::postgresql_type::VecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNotNullArrayOfNullableTimestampTzRange,
     // pub column_141: postgresql_crud::postgresql_type::OptionVecOfOptionSqlxPostgresTypesPgRangeSqlxTypesChronoDateTimeSqlxTypesChronoUtcAsNullableArrayOfNullableTimestampTzRange,
 
-    pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
+    // pub column_154: crate::repositories_types::server::routes::api::example::AnimalAsNotNullJsonbObject,
     // pub column_155: crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId,
-    // pub column_156: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
+    pub column_156: crate::repositories_types::server::routes::api::example::OptionAnimalAsNullableJsonbObject,
     // pub column_157: crate::repositories_types::server::routes::api::example::OptionVecOfAnimalWithIdAsNullableArrayOfNotNullJsonbObjectWithId,
 }
 
@@ -192,11 +192,11 @@ pub struct Example {
     {
         "Concrete": 
         // [
-            {
-                "not_null_or_nullable": "NotNull",
-                "postgresql_json_object_type_pattern": "Standart",
-                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            }
+            // {
+            //     "not_null_or_nullable": "NotNull",
+            //     "postgresql_json_object_type_pattern": "Standart",
+            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            // }
             // ,
             // {
             //     "not_null_or_nullable": "NotNull",
@@ -204,11 +204,11 @@ pub struct Example {
             //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
             // }
             // ,
-            // {
-            //     "not_null_or_nullable": "Nullable",
-            //     "postgresql_json_object_type_pattern": "Standart",
-            //     "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
-            // }
+            {
+                "not_null_or_nullable": "Nullable",
+                "postgresql_json_object_type_pattern": "Standart",
+                "trait_gen": "PostgresqlTypeAndPostgresqlJsonType"
+            }
             // ,
             // {
             //     "not_null_or_nullable": "Nullable",
@@ -1428,142 +1428,3 @@ pub struct Animal {
 // }
 
 ////////////////////////////////////////
-
-//HERE3
-// impl postgresql_crud::PostgresqlJsonType for OptionAnimalAsNullableJsonbObject {
-//     type TableTypeDeclaration = OptionAnimalAsNullableJsonbObjectTableTypeDeclaration;
-//     type Create = OptionAnimalAsNullableJsonbObjectCreate;
-//     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         value.create_query_part(increment)
-//     }
-//     fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         value.create_query_bind(query)
-//     }
-//     type Select = OptionAnimalAsNullableJsonbObjectSelect;
-//     fn select_query_part(
-//         value: &Self::Select,
-//         field_ident: &std::primitive::str,
-//         column_name_and_maybe_field_getter: &std::primitive::str,
-//         column_name_and_maybe_field_getter_for_error_message: &std::primitive::str,
-//         is_postgresql_type: std::primitive::bool
-//     ) -> std::string::String {
-//         //HERE2
-//         // value.select_query_part(field_ident, column_name_and_maybe_field_getter, column_name_and_maybe_field_getter_for_error_message, is_postgresql_type)
-//         let column_name_and_maybe_field_getter_field_ident = format!("{column_name_and_maybe_field_getter}->'{field_ident}'");
-//         format!("jsonb_build_object('{field_ident}',jsonb_build_object('value',case when jsonb_typeof({column_name_and_maybe_field_getter_field_ident}) = 'null' then null else ({}) end))", {
-//             let value = match &value.0 {
-//                 Some(value) => value,
-//                 None => &<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//             };
-//             value.select_query_part(field_ident, &column_name_and_maybe_field_getter_field_ident, column_name_and_maybe_field_getter_for_error_message, true)
-//         })
-//     }
-//     type WhereElement = OptionAnimalAsNullableJsonbObjectWhereElement;
-//     type Read = OptionAnimalAsNullableJsonbObjectRead;
-//     type ReadInner = OptionAnimalAsNullableJsonbObjectReadInner;
-//     fn into_inner(value: Self::Read) -> Self::ReadInner {
-//         value.into_inner()
-//     }
-//     type Update = OptionAnimalAsNullableJsonbObjectUpdate;
-//     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
-//     }
-//     fn update_query_bind(value: Self::Update, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         value.update_query_bind(query)
-//     }
-// }
-// impl postgresql_crud::PostgresqlType for OptionAnimalAsNullableJsonbObject {
-//     type TableTypeDeclaration = OptionAnimalAsNullableJsonbObjectTableTypeDeclaration;
-//     type Create = OptionAnimalAsNullableJsonbObjectCreate;
-//     fn create_query_part(value: &Self::Create, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         value.create_query_part(increment)
-//     }
-//     fn create_query_bind(value: Self::Create, query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         value.create_query_bind(query)
-//     }
-//     type Select = OptionAnimalAsNullableJsonbObjectSelect;
-//     fn select_query_part(value: &Self::Select, column: &std::primitive::str) -> std::string::String {
-//         //HERE
-//         format!(
-//             "case when jsonb_typeof({column}) = 'null' then null else ({}) end as {column}",
-//             {
-//                 let value = match &value.0 {
-//                     Some(value) => value,
-//                     None => &<<AnimalAsNotNullJsonbObject as postgresql_crud::PostgresqlJsonType>::Select as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-//                 };
-//                 value.select_query_part("", column, column, true)
-//             }
-//         )
-//     }
-//     type WhereElement = OptionAnimalAsNullableJsonbObjectWhereElement;
-//     type Read = OptionAnimalAsNullableJsonbObjectRead;
-//     fn normalize(value: Self::Read) -> Self::Read {
-//         value
-//     }
-//     type ReadInner = OptionAnimalAsNullableJsonbObjectReadInner;
-//     fn into_inner(value: Self::Read) -> Self::ReadInner {
-//         value.into_inner()
-//     }
-//     type Update = OptionAnimalAsNullableJsonbObjectUpdate;
-//     fn update_query_part(value: &Self::Update, jsonb_set_accumulator: &std::primitive::str, jsonb_set_target: &std::primitive::str, jsonb_set_path: &std::primitive::str, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
-//         value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment)
-//     }
-//     fn update_query_bind<'a>(value: Self::Update, query: sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'a, sqlx::Postgres, sqlx::postgres::PgArguments> {
-//         value.update_query_bind(query)
-//     }
-// }
-
-// #[cfg(test)]
-// impl postgresql_crud::tests::PostgresqlTypeTestCases<OptionAnimalAsNullableJsonbObjectReadInner> for OptionAnimalAsNullableJsonbObject {
-//     type Element = Self;
-//     fn test_cases() -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner> {
-//         let 
-//         // mut 
-//         acc = <AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases<AnimalAsNotNullJsonbObjectReadInner>>::test_cases().into_iter().map(|element|Some(
-//             element
-//         )).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>();
-//         // acc.push(None);
-//         acc
-//     }
-//     fn read_new_or_try_new_unwraped_for_test(value: OptionAnimalAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Read {
-//         // todo!()
-//         <Self::Element as postgresql_crud::PostgresqlType>::Read::new(match value {
-//             Some(value) => Some(<AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<AnimalAsNotNullJsonbObjectReadInner>>::read_new_or_try_new_unwraped_for_test(value)),
-//             None => None
-//         })
-//     }
-//     fn update_new_or_try_new_unwraped_for_test(value: OptionAnimalAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlType>::Update {
-//         // todo!()
-//         <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
-//             Some(value) => Some(<AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<AnimalAsNotNullJsonbObjectReadInner>>::update_new_or_try_new_unwraped_for_test(value)),
-//             None => None
-//         })
-//     }
-// }
-// #[cfg(test)]
-// impl postgresql_crud::tests::PostgresqlJsonTypeTestCases<OptionAnimalAsNullableJsonbObjectReadInner> for OptionAnimalAsNullableJsonbObject {
-//     type Element = Self;
-//     fn test_cases() -> std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlJsonType>::ReadInner> {
-//         let 
-//         // mut 
-//         acc = <AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlJsonTypeTestCases<AnimalAsNotNullJsonbObjectReadInner>>::test_cases().into_iter().map(|element|Some(
-//             element
-//         )).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>();
-//         // acc.push(None);
-//         acc
-//     }
-//     fn read_new_or_try_new_unwraped_for_test(value: OptionAnimalAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Read {
-//         // todo!()
-//         <Self::Element as postgresql_crud::PostgresqlType>::Read::new(match value {
-//             Some(value) => Some(<AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<AnimalAsNotNullJsonbObjectReadInner>>::read_new_or_try_new_unwraped_for_test(value)),
-//             None => None
-//         })
-//     }
-//     fn update_new_or_try_new_unwraped_for_test(value: OptionAnimalAsNullableJsonbObjectReadInner) -> <Self::Element as postgresql_crud::PostgresqlJsonType>::Update {
-//         // todo!()
-//         <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
-//             Some(value) => Some(<AnimalAsNotNullJsonbObject as postgresql_crud::tests::PostgresqlTypeTestCases<AnimalAsNotNullJsonbObjectReadInner>>::update_new_or_try_new_unwraped_for_test(value)),
-//             None => None
-//         })
-//     }
-// }

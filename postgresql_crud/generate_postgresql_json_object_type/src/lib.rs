@@ -158,6 +158,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let create_query_part_snake_case = naming::CreateQueryPartSnakeCase;
         let create_query_bind_snake_case = naming::CreateQueryBindSnakeCase;
         let select_query_part_snake_case = naming::SelectQueryPartSnakeCase;
+        let select_query_part_postgresql_type_snake_case = naming::SelectQueryPartPostgresqlTypeSnakeCase;
+        let select_query_part_postgresql_json_type_snake_case = naming::SelectQueryPartPostgresqlJsonTypeSnakeCase;
         let increment_snake_case = naming::IncrementSnakeCase;
         let increments_snake_case = naming::IncrementsSnakeCase;
         let query_snake_case = naming::QuerySnakeCase;
@@ -1226,13 +1228,13 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             //     )
                             // })
                             format!(
-                                "case when jsonb_typeof({column}) = 'null' then null else ({}) end as {column}",
+                                "case when jsonb_typeof({column}) = 'null' then null else ({}) end",
                                 {
-                                    let #value_snake_case = match &#value_snake_case.0 {
+                                    let #value_snake_case = match &self.0 {
                                         Some(#value_snake_case) => #value_snake_case,
                                         None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
                                     };
-                                    value.select_query_part("", column, column, true)
+                                    value.#select_query_part_postgresql_type_snake_case(column)
                                 }
                             )
                         }
@@ -1263,7 +1265,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Some(#value_snake_case) => #value_snake_case,
                                     None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
                                 };
-                                #value_snake_case.select_query_part(
+                                #value_snake_case.#select_query_part_postgresql_type_snake_case(
                                     field_ident,
                                     &#column_name_and_maybe_field_getter_or_column_name_and_maybe_field_getter_field_ident_token_stream,
                                     column_name_and_maybe_field_getter_for_error_message,
@@ -1301,7 +1303,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 };
                 quote::quote!{
                     impl #ident_select_upper_camel_case {
-                        fn #select_query_part_snake_case(
+                        fn #select_query_part_postgresql_type_snake_case(
                             &self,
                             #column_snake_case: &std::primitive::str,
                         ) -> #std_string_string_token_stream {
@@ -3314,7 +3316,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                     Some(#value_snake_case) => #value_snake_case,
                                     None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
                                 };
-                                value.select_query_part(field_ident, &column_name_and_maybe_field_getter_field_ident, column_name_and_maybe_field_getter_for_error_message, true)
+                                <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_query_part(value, field_ident, &column_name_and_maybe_field_getter_field_ident, column_name_and_maybe_field_getter_for_error_message, true)
                             })
                         }
                     };
@@ -3403,7 +3405,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &postgresql_crud_macros_common::SelectQueryPartValueUnderscore::False,
                 &{
                     quote::quote!{
-                        format!("{} as {column}", value.select_query_part(column))
+                        format!("{} as {column}", value.#select_query_part_postgresql_type_snake_case(column))
                     }
                 },
                 &ident_where_element_upper_camel_case,
@@ -3604,7 +3606,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                         quote::quote!{
-                            todo!()
+                            let 
+                            // mut 
+                            acc = <#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlJsonTypeTestCases<
+                                <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner
+                            >>::test_cases().into_iter().map(|element|Some(
+                                element
+                            )).collect::<std::vec::Vec<<Self::Element as postgresql_crud::PostgresqlType>::ReadInner>>();
+                            // acc.push(None);
+                            acc
                         }
                     },
                 },
@@ -3649,7 +3659,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                         quote::quote!{
-                            todo!()
+                            <Self::Element as postgresql_crud::PostgresqlType>::Read::new(match value {
+                                Some(value) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                >>::read_new_or_try_new_unwraped_for_test(value)),
+                                None => None
+                            })
                         }
                     },
                 },
@@ -3701,7 +3716,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                         quote::quote!{
-                            todo!()
+                            <Self::Element as postgresql_crud::PostgresqlType>::Update::new(match value {
+                                Some(value) => Some(<#ident_standart_not_null_upper_camel_case as postgresql_crud::tests::PostgresqlTypeTestCases<
+                                    <#ident_standart_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::ReadInner
+                                >>::update_new_or_try_new_unwraped_for_test(value)),
+                                None => None
+                            })
                         }
                     },
                 },

@@ -677,7 +677,9 @@ naming_macros::generate_upper_camel_and_snake_case_stringified_and_token_stream!
     ["generate", "element"],
     ["some", "value", "primary", "key", "read", "returned", "from", "create", "one"],
     ["primary", "key", "read", "returned", "from", "create", "one"],
-    ["select", "primary", "key", "field", "ident"]
+    ["select", "primary", "key", "field", "ident"],
+    ["select", "query", "part", "postgresql", "type"],
+    ["select", "query", "part", "postgresql", "json", "type"]
 ]);
 
 #[derive(Debug, Clone, Copy)]
