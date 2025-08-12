@@ -2855,32 +2855,6 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     #query_snake_case
                 }
             };
-            let generate_impl_ident_update_token_stream = |
-                ident_token_stream: &dyn quote::ToTokens,
-                update_query_part_content_token_stream: &dyn quote::ToTokens,
-                is_query_bind_mutable: postgresql_crud_macros_common::IsQueryBindMutable,
-                update_query_bind_content_token_stream: &dyn quote::ToTokens,
-            |{
-                quote::quote!{
-                    impl #ident_token_stream {
-                        fn #update_query_part_snake_case(
-                            &self,
-                            #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
-                            #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
-                            #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
-                            #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
-                        ) -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
-                            #update_query_part_content_token_stream
-                        }
-                        fn #update_query_bind_snake_case(
-                            self,
-                            #is_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
-                        ) -> #query_postgres_arguments_token_stream {
-                            #update_query_bind_content_token_stream
-                        }
-                    }
-                }
-            };
             let impl_ident_update_token_stream = {
                 let update_query_part_token_stream = {
                     let content_token_stream = match &postgresql_json_object_type_pattern {
@@ -3153,30 +3127,58 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         #fields_snake_case: #postgresql_crud_default_but_option_is_always_some_and_vec_always_contains_one_element_call_token_stream,
                     }}
                 );
-                let impl_ident_with_id_update_element_standart_not_null_token_stream = generate_impl_ident_update_token_stream(
-                    &ident_with_id_update_element_standart_not_null_upper_camel_case,
-                    &quote::quote!{
-                        let id_increment = match increment.checked_add(1) {
-                            Some(value) => {
-                                *increment = value;
-                                increment.to_string()
-                            }
-                            None => {
-                                return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
+                let impl_ident_with_id_update_element_standart_not_null_token_stream = {
+                    let update_query_part_token_stream = {
+                        let content_token_stream = quote::quote!{
+                            let id_increment = match increment.checked_add(1) {
+                                Some(value) => {
+                                    *increment = value;
+                                    increment.to_string()
+                                }
+                                None => {
+                                    return Err(#import_path_query_part_error_named_checked_add_initialization_token_stream);
+                                }
+                            };
+                            match self.fields.#update_query_part_snake_case(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
+                                Ok(value) => Ok(format!("when {jsonb_set_target}->>'id' = ${id_increment} then {value} ")),
+                                Err(error) => Err(error)
                             }
                         };
-                        match self.fields.#update_query_part_snake_case(&jsonb_set_accumulator, &jsonb_set_target, &jsonb_set_path, increment) {
-                            Ok(value) => Ok(format!("when {jsonb_set_target}->>'id' = ${id_increment} then {value} ")),
-                            Err(error) => Err(error)
+                        quote::quote!{
+                            fn #update_query_part_snake_case(
+                                &self,
+                                #jsonb_set_accumulator_snake_case: #reference_std_primitive_str_token_stream,
+                                #jsonb_set_target_snake_case: #reference_std_primitive_str_token_stream,
+                                #jsonb_set_path_snake_case: #reference_std_primitive_str_token_stream,
+                                #increment_snake_case: #reference_mut_std_primitive_u64_token_stream,
+                            ) -> Result<#std_string_string_token_stream, #import_path_query_part_error_named_token_stream> {
+                                #content_token_stream
+                            }
                         }
-                    },
-                    postgresql_crud_macros_common::IsQueryBindMutable::True,
-                    &quote::quote!{
-                        query = self.id.query_bind_as_postgresql_text(query);
-                        query = self.fields.#update_query_bind_snake_case(query);
-                        query
-                    },
-                );
+                    };
+                    let update_query_bind_token_stream = {
+                        let is_query_bind_mutable = postgresql_crud_macros_common::IsQueryBindMutable::True;
+                        let content_token_stream = quote::quote!{
+                            query = self.id.query_bind_as_postgresql_text(query);
+                            query = self.fields.#update_query_bind_snake_case(query);
+                            query
+                        };
+                        quote::quote!{
+                            fn #update_query_bind_snake_case(
+                                self,
+                                #is_query_bind_mutable #query_snake_case: #query_postgres_arguments_token_stream
+                            ) -> #query_postgres_arguments_token_stream {
+                                #content_token_stream
+                            }
+                        }
+                    };
+                    quote::quote!{
+                        impl #ident_with_id_update_element_standart_not_null_upper_camel_case {
+                            #update_query_part_token_stream
+                            #update_query_bind_token_stream
+                        }
+                    }
+                };
                 quote::quote! {
                     #ident_with_id_update_element_standart_not_null_token_stream
                     #impl_new_for_ident_with_id_update_element_standart_not_null_token_stream
