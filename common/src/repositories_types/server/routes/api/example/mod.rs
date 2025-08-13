@@ -1711,7 +1711,14 @@ impl Example {
             query_string.push_str(&"
                 ,
                 (
-                    SELECT jsonb_agg(jsonb_build_object('id', elem->'id'))
+                    SELECT jsonb_agg(jsonb_build_object(
+                        'id',
+                        elem->'id',
+                        'field_0',
+                        'null'::jsonb,
+                        'field_1',
+                        'null'::jsonb
+                    ))
                     FROM jsonb_array_elements(column_155) AS elem
                 ) AS column_155
             ");
@@ -3001,4 +3008,3 @@ mod example_tests {
     }
 }
 /////////////////////tests end
-

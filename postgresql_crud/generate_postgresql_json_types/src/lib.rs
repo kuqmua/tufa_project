@@ -1804,7 +1804,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                             inner_type_standart_not_null_token_stream.clone()
                         }
                         else {
-                            quote::quote!{()}
+                            quote::quote!{std::option::Option<()>}
                         }
                     },
                     &ident_read_inner_upper_camel_case,
