@@ -1260,6 +1260,10 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                 PostgresqlJsonObjectTypePattern::Array => &ident_with_id_array_not_null_as_postgresql_json_type_select_token_stream
                             };
                             quote::quote!{
+                                let field_ident = column;
+                                let column_name_and_maybe_field_getter = column;
+                                let column_name_and_maybe_field_getter_for_error_message = column;
+
                                 #maybe_column_name_and_maybe_field_getter_field_ident_token_stream
                                 format!(#format_handle_token_stream, {
                                     let #value_snake_case = match &self.0 {
@@ -1267,10 +1271,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                                         None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
                                     };
                                     #value_snake_case.#select_query_part_postgresql_type_snake_case(
-                                        field_ident,
-                                        &#column_name_and_maybe_field_getter_or_column_name_and_maybe_field_getter_field_ident_token_stream,
-                                        column_name_and_maybe_field_getter_for_error_message,
-                                        true
+                                        column
                                     )
                                 })
                             }
@@ -3039,7 +3040,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                 match &self.0 {
-                                    Some(value) => value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment),
+                                    Some(value) => value.#update_query_part_postgresql_type_snake_case(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment),
                                     None => match increment.checked_add(1) {
                                         Some(value) => {
                                             *increment = value;
@@ -3150,7 +3151,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                 match &self.0 {
-                                    Some(value) => value.update_query_part(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment),
+                                    Some(value) => value.#update_query_part_postgresql_json_type_snake_case(jsonb_set_accumulator, jsonb_set_target, jsonb_set_path, increment),
                                     None => match increment.checked_add(1) {
                                         Some(value) => {
                                             *increment = value;
@@ -3267,7 +3268,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote! {
                                 match self.0 {
-                                    Some(#value_snake_case) => #value_snake_case.update_query_bind(#query_snake_case),
+                                    Some(#value_snake_case) => #value_snake_case.#update_query_bind_postgresql_json_type_snake_case(#query_snake_case),
                                     None => #query_snake_case.bind(sqlx::types::Json(Self(None))),
                                 }
                             },
@@ -3637,13 +3638,14 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote!{
                             #maybe_column_name_and_maybe_field_getter_field_ident_token_stream
                             format!(#format_handle_token_stream, {
-                                let #value_snake_case = match &self.0 {
+                                let #value_snake_case = match &#value_snake_case.0 {
                                     Some(#value_snake_case) => #value_snake_case,
                                     None => &<#type_token_stream as #import_path::#default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case>::#default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case(),
                                 };
-                                #value_snake_case.select_query_part(
+                                <#ident_with_id_array_not_null_upper_camel_case as postgresql_crud::PostgresqlJsonType>::select_query_part(
+                                    #value_snake_case,
                                     field_ident,
-                                    &#column_name_and_maybe_field_getter_or_column_name_and_maybe_field_getter_field_ident_token_stream,
+                                    &column_name_and_maybe_field_getter,
                                     column_name_and_maybe_field_getter_for_error_message,
                                     true
                                 )
@@ -3942,7 +3944,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                     postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
                         quote::quote!{
-                            todo!()
+                            //todo
+                            vec![]
                         }
                     },
                 },
