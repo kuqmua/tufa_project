@@ -3837,6 +3837,61 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases<VecOfAnimalWithIdAsNotN
 
 
 /////////////////////crud start
+#[derive(
+    Debug,
+    Clone,
+    serde :: Serialize,
+    serde :: Deserialize,
+    utoipa ::
+ToSchema,
+)]
+pub struct ExampleCreate {
+    pub column_155: <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::Create,
+}
+impl ExampleCreate {
+    fn create_query_part(&self, increment: &mut std::primitive::u64) -> Result<std::string::String, postgresql_crud::QueryPartErrorNamed> {
+        let mut acc = std::string::String::default();
+        match <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::create_query_part(
+            &<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(
+            ),
+            increment,
+        ) {
+            Ok(value) => {
+                acc.push_str(&format!("{value},"));
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        match <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::create_query_part(&self.column_155, increment) {
+            Ok(value) => {
+                acc.push_str(&format!("{value},"));
+            }
+            Err(error_0) => {
+                return Err(error_0);
+            }
+        }
+        let _: Option<char> = acc.pop();
+        Ok(acc)
+    }
+    fn create_query_bind(self, mut query: sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments>) -> sqlx::query::Query<'_, sqlx::Postgres, sqlx::postgres::PgArguments> {
+        query = <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::create_query_bind(
+            <<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Create as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element(
+            ),
+            query,
+        );
+        query = <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::create_query_bind(self.column_155, query);
+        query
+    }
+}
+impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement for ExampleCreate {
+    fn default_but_option_is_always_some_and_vec_always_contains_one_element() -> Self {
+        Self {
+            column_155: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+        }
+    }
+}
+/////////////////////
 #[derive(Debug)]
 pub struct ExampleCreateOneParameters {
     pub payload: ExampleCreate,

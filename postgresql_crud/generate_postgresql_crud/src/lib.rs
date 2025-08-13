@@ -3880,7 +3880,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     // }
     let common_token_stream = quote::quote! {
         #impl_ident_token_stream
-        #ident_create_token_stream
+        // #ident_create_token_stream
         #ident_where_many_token_stream
         #std_option_option_ident_where_many_token_stream
         #select_token_stream
