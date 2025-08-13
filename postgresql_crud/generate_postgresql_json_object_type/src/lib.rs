@@ -2271,15 +2271,15 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 #maybe_ident_with_id_read_token_stream
             }
         };
+        let ident_with_id_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
         //todo
         let maybe_ident_with_id_read_only_ids_standart_not_null_token_stream = if is_standart_not_null {
-            let ident_with_id_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
             let ident_with_id_read_only_ids_standart_not_null_token_stream = {
                 quote::quote!{
                     #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
                     pub struct #ident_with_id_read_only_ids_standart_not_null_upper_camel_case {
                         //todo
-                        // id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Read,
+                        id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Read,
                         //todo additional
                     }
                 }
@@ -3725,6 +3725,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
+                &quote::quote!{()},
                 &ident_read_inner_upper_camel_case,
                 &value_into_inner_token_stream,
                 &ident_update_upper_camel_case,
@@ -3890,6 +3891,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 },
                 &ident_with_id_where_element_standart_not_null_upper_camel_case,
                 &ident_with_id_read_standart_not_null_upper_camel_case,
+                &ident_with_id_read_only_ids_standart_not_null_upper_camel_case,
                 &ident_with_id_read_inner_standart_not_null_upper_camel_case,
                 &value_into_inner_token_stream,
                 &ident_with_id_update_standart_not_null_upper_camel_case,
@@ -4284,6 +4286,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             #ident_select_token_stream
             #ident_where_element_token_stream
             #ident_read_token_stream
+            #maybe_ident_with_id_read_only_ids_standart_not_null_token_stream
             #ident_read_inner_token_stream
             #ident_update_token_stream
             #maybe_impl_postgresql_crud_postgresql_json_type_for_ident_token_stream

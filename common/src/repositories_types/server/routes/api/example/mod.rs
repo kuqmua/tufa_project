@@ -2548,6 +2548,7 @@ impl postgresql_crud::PostgresqlJsonType for AnimalAsNotNullJsonbObject {
     }
     type WhereElement = AnimalAsNotNullJsonbObjectWhereElement;
     type Read = AnimalAsNotNullJsonbObjectRead;
+    type ReadOnlyIds = ();//todo
     type ReadInner = AnimalAsNotNullJsonbObjectReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner {
         value.into_inner()
@@ -2638,6 +2639,7 @@ impl postgresql_crud::PostgresqlJsonType for AnimalWithIdAsNotNullJsonbObjectWit
     }
     type WhereElement = AnimalWithIdAsNotNullJsonbObjectWithIdWhereElement;
     type Read = AnimalWithIdAsNotNullJsonbObjectWithIdRead;
+    type ReadOnlyIds = ();//todo
     type ReadInner = AnimalWithIdAsNotNullJsonbObjectWithIdReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner {
         value.into_inner()
@@ -3061,6 +3063,7 @@ impl postgresql_crud::PostgresqlJsonType for OptionAnimalAsNullableJsonbObject {
     }
     type WhereElement = OptionAnimalAsNullableJsonbObjectWhereElement;
     type Read = OptionAnimalAsNullableJsonbObjectRead;
+    type ReadOnlyIds = ();//todo
     type ReadInner = OptionAnimalAsNullableJsonbObjectReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner {
         value.into_inner()
@@ -3823,6 +3826,7 @@ impl postgresql_crud::PostgresqlJsonType for VecOfAnimalWithIdAsNotNullArrayOfNo
     }
     type WhereElement = VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdWhereElement;
     type Read = VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead;
+    type ReadOnlyIds = ();//todo
     type ReadInner = VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner {
         value.into_inner()

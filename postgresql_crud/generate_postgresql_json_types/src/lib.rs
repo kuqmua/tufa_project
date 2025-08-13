@@ -1796,6 +1796,7 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
+                    &quote::quote!{()},
                     &ident_read_inner_upper_camel_case,
                     &{
                         let generate_match_element_zero_token_stream = |match_token_stream: &dyn quote::ToTokens, content_token_stream: &dyn quote::ToTokens| {
