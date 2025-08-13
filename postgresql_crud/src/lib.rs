@@ -190,7 +190,7 @@ pub trait PostgresqlJsonType {
     //todo impl get fields from read
     //todo maybe add sqlx::Decode trait here and sqlx::Type
     type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
-    type ReadOnlyIds: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__>;
+    type ReadOnlyIds: std::fmt::Debug + serde::Serialize + for<'__> serde::Deserialize<'__>;
     type ReadInner;
     fn into_inner(value: Self::Read) -> Self::ReadInner;
     type Update: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;

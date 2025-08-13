@@ -2282,7 +2282,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 let field_type = &element.ty;
                 quote::quote!{#field_ident: <#field_type as postgresql_crud::PostgresqlJsonType>::#read_only_ids_upper_camel_case}
             });
-            quote::quote!{#(#content_token_stream),*}
+            quote::quote!{{#(#content_token_stream),*}}
         };
         let ident_read_only_ids_token_stream = {
             let ident_read_only_ids_token_stream = {
@@ -2291,23 +2291,21 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream(
                             &IsStandartWithId::False
                         ),
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            quote::quote!{std::option::Option<#ident_with_id_standart_not_null_upper_camel_case>}
-                        },
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{(std::option::Option<#ident_with_id_read_only_ids_standart_not_null_upper_camel_case>);},
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{std::vec::Vec<#ident_with_id_read_only_ids_standart_not_null_upper_camel_case>},
+                        postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{(std::vec::Vec<#ident_with_id_read_only_ids_standart_not_null_upper_camel_case>);},
                         postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                            let ident_with_id_array_not_null_upper_camel_case = &generate_ident_upper_camel_case(
+                            let ident_with_id_read_only_ids_array_not_null_upper_camel_case = &naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&generate_ident_upper_camel_case(
                                 &IdentPattern::NotNullArrayWithId
-                            );
-                            quote::quote!{std::option::Option<#ident_with_id_array_not_null_upper_camel_case>}
+                            ));
+                            quote::quote!{(std::option::Option<#ident_with_id_read_only_ids_array_not_null_upper_camel_case>);}
                         }
                     },
                 };
                 quote::quote!{
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub struct #ident_read_only_ids_upper_camel_case(std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdReadOnlyIds>);
+                    #[derive(Debug, serde::Serialize, serde::Deserialize)]
+                    pub struct #ident_read_only_ids_upper_camel_case #content_token_stream
                 }
             };
             let impl_sqlx_decode_sqlx_postgres_for_ident_read_only_ids_token_stream = {
@@ -2346,10 +2344,8 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &IsStandartWithId::True
                 );
                 quote::quote!{
-                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
-                    pub struct #ident_with_id_read_only_ids_standart_not_null_upper_camel_case {
-                        #content_token_stream
-                    }
+                    #[derive(Debug, serde::Serialize, serde::Deserialize)]
+                    pub struct #ident_with_id_read_only_ids_standart_not_null_upper_camel_case #content_token_stream
                 }
             };
             let impl_sqlx_decode_sqlx_postgres_for_ident_with_id_read_only_ids_standart_not_null_token_stream = {
@@ -4111,6 +4107,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         quote::quote!{
                             // println!("meow");
                             todo!()
+                            // vec![]
                             // <Self::Element as postgresql_crud::PostgresqlType>::Read::new(true)
                         }
                     },
