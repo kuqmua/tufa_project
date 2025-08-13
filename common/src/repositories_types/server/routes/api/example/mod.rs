@@ -1457,11 +1457,11 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 
 //here
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct AnimalWithIdAsNotNullJsonbObjectWithIdOnlyIds {
+pub struct AnimalWithIdAsNotNullJsonbObjectWithIdReadOnlyIds {
     id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Read,
     //todo additional
 }
-impl sqlx::Decode<'_, sqlx::Postgres> for AnimalWithIdAsNotNullJsonbObjectWithIdOnlyIds {
+impl sqlx::Decode<'_, sqlx::Postgres> for AnimalWithIdAsNotNullJsonbObjectWithIdReadOnlyIds {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
             Ok(value) => Ok(value.0),
@@ -1469,7 +1469,7 @@ impl sqlx::Decode<'_, sqlx::Postgres> for AnimalWithIdAsNotNullJsonbObjectWithId
         }
     }
 }
-impl sqlx::Type<sqlx::Postgres> for AnimalWithIdAsNotNullJsonbObjectWithIdOnlyIds {
+impl sqlx::Type<sqlx::Postgres> for AnimalWithIdAsNotNullJsonbObjectWithIdReadOnlyIds {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
@@ -3349,8 +3349,8 @@ impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwa
 
 //here
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
-pub struct VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds(std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdOnlyIds>);
-impl sqlx::Decode<'_, sqlx::Postgres> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds {
+pub struct VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds(std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdReadOnlyIds>);
+impl sqlx::Decode<'_, sqlx::Postgres> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds {
     fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
         match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
             Ok(value) => Ok(value.0),
@@ -3358,7 +3358,7 @@ impl sqlx::Decode<'_, sqlx::Postgres> for VecOfAnimalWithIdAsNotNullArrayOfNotNu
         }
     }
 }
-impl sqlx::Type<sqlx::Postgres> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds {
+impl sqlx::Type<sqlx::Postgres> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds {
     fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
         <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
     }
@@ -3952,11 +3952,11 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
 
 // //here
 #[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize)]
-pub struct ExampleCreateOnlyIds {
+pub struct ExampleCreateReadOnlyIds {
     pub primary_key_column: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey,
-    pub column_155: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds
+    pub column_155: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds
 }
-impl ExampleCreateOnlyIds {
+impl ExampleCreateReadOnlyIds {
     fn try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value: sqlx::postgres::PgRow) -> Self {//temp
         let primary_key_column = match sqlx::Row::try_get::<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(
             &value,
@@ -3968,7 +3968,7 @@ impl ExampleCreateOnlyIds {
                 todo!()
             }
         };
-        let column_155 = match sqlx::Row::try_get::<VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds, &std::primitive::str>(
+        let column_155 = match sqlx::Row::try_get::<VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdReadOnlyIds, &std::primitive::str>(
             &value,
             "column_155"
         ) {
@@ -4260,12 +4260,12 @@ impl Example {
                 match binded_query.fetch_one(executor.as_mut()).await {
                     //here
                     Ok(value) => {
-                        // ExampleCreateOnlyIds
+                        // ExampleCreateReadOnlyIds
                         // match sqlx::Row::try_get::<
                         //     <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey,
                         //     &std::primitive::str
                         //     >(&value, &Example::primary_key())
-                        // sqlx::query_as::<_, ExampleCreateOnlyIds>(value)
+                        // sqlx::query_as::<_, ExampleCreateReadOnlyIds>(value)
                         // {
                         //     //here
                         //     Ok(value) => value,
@@ -4311,7 +4311,7 @@ impl Example {
                         //         }
                         //     },
                         // }
-                        let f = ExampleCreateOnlyIds::try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value);
+                        let f = ExampleCreateReadOnlyIds::try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value);
                         println!("ok {f:#?}");
                         f.primary_key_column
                     },
