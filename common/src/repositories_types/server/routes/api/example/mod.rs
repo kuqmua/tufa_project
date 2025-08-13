@@ -1452,6 +1452,38 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         }
     }
 }
+
+
+
+//here
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct AnimalWithIdAsNotNullJsonbObjectWithIdOnlyIds {
+    id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Read,
+    //todo additional
+}
+impl sqlx::Decode<'_, sqlx::Postgres> for AnimalWithIdAsNotNullJsonbObjectWithIdOnlyIds {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(value.0),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for AnimalWithIdAsNotNullJsonbObjectWithIdOnlyIds {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+
+
+
+
+
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct AnimalWithIdAsNotNullJsonbObjectWithIdTableTypeDeclaration {
     id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::TableTypeDeclaration,
@@ -3313,6 +3345,31 @@ impl postgresql_crud::AllEnumVariantsArrayDefaultButOptionIsAlwaysSomeAndVecAlwa
         ]
     }
 }
+
+
+//here
+#[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+pub struct VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds(std::vec::Vec<AnimalWithIdAsNotNullJsonbObjectWithIdOnlyIds>);
+impl sqlx::Decode<'_, sqlx::Postgres> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds {
+    fn decode(value: sqlx::postgres::PgValueRef<'_>) -> Result<Self, sqlx::error::BoxDynError> {
+        match <sqlx::types::Json<Self> as sqlx::Decode<sqlx::Postgres>>::decode(value) {
+            Ok(value) => Ok(value.0),
+            Err(error) => Err(error),
+        }
+    }
+}
+impl sqlx::Type<sqlx::Postgres> for VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds {
+    fn type_info() -> <sqlx::Postgres as sqlx::Database>::TypeInfo {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::type_info()
+    }
+    fn compatible(ty: &<sqlx::Postgres as sqlx::Database>::TypeInfo) -> std::primitive::bool {
+        <sqlx::types::Json<Self> as sqlx::Type<sqlx::Postgres>>::compatible(ty)
+    }
+}
+
+
+
+
 #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
 pub struct VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead(std::vec::Vec<<AnimalWithIdAsNotNullJsonbObjectWithId as postgresql_crud::PostgresqlJsonType>::Read>);
 impl VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdRead {
@@ -3891,6 +3948,40 @@ impl postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement
         }
     }
 }
+
+
+// //here
+#[derive(Debug, Clone, serde :: Serialize, serde :: Deserialize)]
+pub struct ExampleCreateOnlyIds {
+    pub primary_key_column: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey,
+    pub column_155: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds
+}
+impl ExampleCreateOnlyIds {
+    fn try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value: sqlx::postgres::PgRow) -> Self {//temp
+        let primary_key_column = match sqlx::Row::try_get::<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(
+            &value,
+            "primary_key_column"
+        ) {
+            Ok(value) => value,
+            Err(error_0) => {
+                println!("meow1");
+                todo!()
+            }
+        };
+        let column_155 = match sqlx::Row::try_get::<VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithIdOnlyIds, &std::primitive::str>(
+            &value,
+            "column_155"
+        ) {
+            Ok(value) => value,
+            Err(error_0) => {
+                println!("meow2 {error_0:#?}");
+                todo!()
+            }
+        };
+        // Ok(Self { primary_key_column, column_155 })
+        Self { primary_key_column, column_155 }
+    }
+}
 /////////////////////
 #[derive(Debug)]
 pub struct ExampleCreateOneParameters {
@@ -4054,33 +4145,44 @@ impl Example {
                 }
             },
         };
-        let query_string = postgresql_crud::generate_create_one_query_string(
-            &Example::table_name(),
-            "primary_key_column,column_155",
-            match parameters.payload.create_query_part(&mut 0) {
-                Ok(value) => value,
-                Err(error_0) => {
-                    let error = ExampleCreateOneErrorNamed::QueryPart {
-                        error: error_0,
-                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                            file!().to_owned(),
-                            line!(),
-                            column!(),
-                            Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                line: 2381,
-                                column: 254,
-                            }),
-                        ),
-                    };
-                    eprintln!("{error}");
-                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
-                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
-                    return response;
-                }
-            },
-            &Example::primary_key(),
-        );
+        let query_string = {
+            let mut query_string = postgresql_crud::generate_create_one_query_string(
+                &Example::table_name(),
+                "primary_key_column,column_155",
+                match parameters.payload.create_query_part(&mut 0) {
+                    Ok(value) => value,
+                    Err(error_0) => {
+                        let error = ExampleCreateOneErrorNamed::QueryPart {
+                            error: error_0,
+                            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                file!().to_owned(),
+                                line!(),
+                                column!(),
+                                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                    line: 2381,
+                                    column: 254,
+                                }),
+                            ),
+                        };
+                        eprintln!("{error}");
+                        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                        *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                        return response;
+                    }
+                },
+                &Example::primary_key(),
+            );
+            //here
+            query_string.push_str(&"
+                ,
+                (
+                    SELECT jsonb_agg(jsonb_build_object('id', elem->'id'))
+                    FROM jsonb_array_elements(column_155) AS elem
+                ) AS column_155
+            ");
+            query_string
+        };
         println!("{}", query_string);
         let binded_query = {
             let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
@@ -4156,49 +4258,62 @@ impl Example {
             };
             let value = {
                 match binded_query.fetch_one(executor.as_mut()).await {
-                    Ok(value) => match sqlx::Row::try_get::<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(&value, &Example::primary_key()) {
-                        Ok(value) => value,
-                        Err(error_0) => match executor.rollback().await {
-                            Ok(_) => {
-                                let error = ExampleCreateOneErrorNamed::Postgresql {
-                                    postgresql: error_0,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                        file!().to_owned(),
-                                        line!(),
-                                        column!(),
-                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line: 2234,
-                                            column: 120,
-                                        }),
-                                    ),
-                                };
-                                eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
-                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-                                return response;
-                            }
-                            Err(error_1) => {
-                                let error = ExampleCreateOneErrorNamed::RowAndRollback {
-                                    row: error_0,
-                                    rollback: error_1,
-                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
-                                        file!().to_owned(),
-                                        line!(),
-                                        column!(),
-                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
-                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
-                                            line: 2234,
-                                            column: 149,
-                                        }),
-                                    ),
-                                };
-                                eprintln!("{error}");
-                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
-                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
-                                return response;
-                            }
-                        },
+                    //here
+                    Ok(value) => {
+                        // ExampleCreateOnlyIds
+                        // match sqlx::Row::try_get::<
+                        //     <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey,
+                        //     &std::primitive::str
+                        //     >(&value, &Example::primary_key())
+                        // sqlx::query_as::<_, ExampleCreateOnlyIds>(value)
+                        // {
+                        //     //here
+                        //     Ok(value) => value,
+                        //     Err(error_0) => match executor.rollback().await {
+                        //         Ok(_) => {
+                        //             let error = ExampleCreateOneErrorNamed::Postgresql {
+                        //                 postgresql: error_0,
+                        //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        //                     file!().to_owned(),
+                        //                     line!(),
+                        //                     column!(),
+                        //                     Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        //                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        //                         line: 2234,
+                        //                         column: 120,
+                        //                     }),
+                        //                 ),
+                        //             };
+                        //             eprintln!("{error}");
+                        //             let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                        //             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        //             return response;
+                        //         }
+                        //         Err(error_1) => {
+                        //             let error = ExampleCreateOneErrorNamed::RowAndRollback {
+                        //                 row: error_0,
+                        //                 rollback: error_1,
+                        //                 code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        //                     file!().to_owned(),
+                        //                     line!(),
+                        //                     column!(),
+                        //                     Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        //                         file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        //                         line: 2234,
+                        //                         column: 149,
+                        //                     }),
+                        //                 ),
+                        //             };
+                        //             eprintln!("{error}");
+                        //             let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                        //             *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                        //             return response;
+                        //         }
+                        //     },
+                        // }
+                        let f = ExampleCreateOnlyIds::try_from_sqlx_postgres_pg_row_with_not_empty_unique_enum_vec_example_select(value);
+                        println!("ok {f:#?}");
+                        f.primary_key_column
                     },
                     Err(error_0) => match executor.rollback().await {
                         Ok(_) => {
