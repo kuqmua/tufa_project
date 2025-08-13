@@ -3837,6 +3837,551 @@ impl postgresql_crud::tests::PostgresqlJsonTypeTestCases<VecOfAnimalWithIdAsNotN
 
 
 /////////////////////crud start
+#[derive(Debug)]
+pub struct ExampleCreateOneParameters {
+    pub payload: ExampleCreate,
+}
+#[derive(Debug, serde :: Serialize, serde :: Deserialize)]
+pub enum ExampleCreateOneResponseVariants {
+    Desirable(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey),
+    CheckBodySize {
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        postgresql: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        serde_json: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        row: std::string::String,
+        rollback: std::string::String,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        error: postgresql_crud::QueryPartErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl std::convert::From<ExampleCreateOneErrorNamed> for ExampleCreateOneResponseVariants {
+    fn from(value: ExampleCreateOneErrorNamed) -> Self {
+        match value.into_serialize_deserialize_version() {
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence } => Self::CheckBodySize { check_body_size, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence } => Self::Postgresql { postgresql, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence } => Self::SerdeJson { serde_json, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence } => Self::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence } => Self::CheckCommit { check_commit, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence } => Self::RowAndRollback { row, rollback, code_occurence },
+            ExampleCreateOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence } => Self::QueryPart { error, code_occurence },
+        }
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleCreateOneErrorNamed {
+    CheckBodySize {
+        #[eo_error_occurence]
+        check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Postgresql {
+        #[eo_to_std_string_string]
+        postgresql: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    SerdeJson {
+        #[eo_to_std_string_string]
+        serde_json: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    HeaderContentTypeApplicationJsonNotFound {
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    CheckCommit {
+        #[eo_error_occurence]
+        check_commit: postgresql_crud::check_commit::CheckCommitErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    RowAndRollback {
+        #[eo_to_std_string_string]
+        row: sqlx::Error,
+        #[eo_to_std_string_string]
+        rollback: sqlx::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    QueryPart {
+        #[eo_error_occurence]
+        error: postgresql_crud::QueryPartErrorNamed,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn create_one(app_state: axum::extract::State<std::sync::Arc<dyn postgresql_crud::CombinationOfAppStateLogicTraits>>, request: axum::extract::Request) -> axum::response::Response {
+        let (parts, body) = request.into_parts();
+        let headers = parts.headers;
+        if !matches!
+        (headers.get(axum :: http :: header :: CONTENT_TYPE), Some(value) if
+        value == axum :: http :: header :: HeaderValue ::
+        from_static("application/json"))
+        {
+            let error = ExampleCreateOneErrorNamed::HeaderContentTypeApplicationJsonNotFound {
+                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                    file!().to_owned(),
+                    line!(),
+                    column!(),
+                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                        line: 1931,
+                        column: 196,
+                    }),
+                ),
+            };
+            eprintln!("{error}");
+            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+            *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+            return response;
+        }
+        let body_bytes = match postgresql_crud::check_body_size::check_body_size(body, *app_state.get_maximum_size_of_http_body_in_bytes()).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleCreateOneErrorNamed::CheckBodySize {
+                    check_body_size: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 1932,
+                            column: 264,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                return response;
+            }
+        };
+        let parameters = ExampleCreateOneParameters {
+            payload: match serde_json::from_slice::<ExampleCreate>(&body_bytes) {
+                Ok(value) => {
+                    let value = ExampleCreate::from(value);
+                    value
+                }
+                Err(error_0) => {
+                    let error = ExampleCreateOneErrorNamed::SerdeJson {
+                        serde_json: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 2007,
+                                column: 249,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+        };
+        let query_string = postgresql_crud::generate_create_one_query_string(
+            &Example::table_name(),
+            "primary_key_column,column_155",
+            match parameters.payload.create_query_part(&mut 0) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleCreateOneErrorNamed::QueryPart {
+                        error: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 2381,
+                                column: 254,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::BAD_REQUEST;
+                    return response;
+                }
+            },
+            &Example::primary_key(),
+        );
+        println!("{}", query_string);
+        let binded_query = {
+            let mut query = sqlx::query::<sqlx::Postgres>(&query_string);
+            query = parameters.payload.create_query_bind(query);
+            query
+        };
+        let mut pool_connection = match app_state.get_postgres_pool().acquire().await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleCreateOneErrorNamed::Postgresql {
+                    postgresql: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 1958,
+                            column: 253,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let executor = match sqlx::Acquire::acquire(&mut pool_connection).await {
+            Ok(value) => value,
+            Err(error_0) => {
+                let error = ExampleCreateOneErrorNamed::Postgresql {
+                    postgresql: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 1958,
+                            column: 253,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+        };
+        let value = {
+            let mut executor = match sqlx::Acquire::begin(executor).await {
+                Ok(value) => value,
+                Err(error_0) => {
+                    let error = ExampleCreateOneErrorNamed::Postgresql {
+                        postgresql: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 1716,
+                                column: 245,
+                            }),
+                        ),
+                    };
+                    eprintln!("{error}");
+                    let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                    *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                    return response;
+                }
+            };
+            let value = {
+                match binded_query.fetch_one(executor.as_mut()).await {
+                    Ok(value) => match sqlx::Row::try_get::<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(&value, &Example::primary_key()) {
+                        Ok(value) => value,
+                        Err(error_0) => match executor.rollback().await {
+                            Ok(_) => {
+                                let error = ExampleCreateOneErrorNamed::Postgresql {
+                                    postgresql: error_0,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line: 2234,
+                                            column: 120,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                            Err(error_1) => {
+                                let error = ExampleCreateOneErrorNamed::RowAndRollback {
+                                    row: error_0,
+                                    rollback: error_1,
+                                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                        file!().to_owned(),
+                                        line!(),
+                                        column!(),
+                                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                            line: 2234,
+                                            column: 149,
+                                        }),
+                                    ),
+                                };
+                                eprintln!("{error}");
+                                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                                return response;
+                            }
+                        },
+                    },
+                    Err(error_0) => match executor.rollback().await {
+                        Ok(_) => {
+                            let error = ExampleCreateOneErrorNamed::Postgresql {
+                                postgresql: error_0,
+                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                    file!().to_owned(),
+                                    line!(),
+                                    column!(),
+                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                        line: 2236,
+                                        column: 116,
+                                    }),
+                                ),
+                            };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                        Err(error_1) => {
+                            let error = ExampleCreateOneErrorNamed::RowAndRollback {
+                                row: error_0,
+                                rollback: error_1,
+                                code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                                    file!().to_owned(),
+                                    line!(),
+                                    column!(),
+                                    Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                        file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                        line: 2236,
+                                        column: 145,
+                                    }),
+                                ),
+                            };
+                            eprintln!("{error}");
+                            let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                            *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                            return response;
+                        }
+                    },
+                }
+            };
+            if let Err(error_0) = executor.commit().await {
+                let error = ExampleCreateOneErrorNamed::Postgresql {
+                    postgresql: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 1727,
+                            column: 245,
+                        }),
+                    ),
+                };
+                eprintln!("{error}");
+                let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::from(error)));
+                *response.status_mut() = axum::http::StatusCode::INTERNAL_SERVER_ERROR;
+                return response;
+            }
+            value
+        };
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(ExampleCreateOneResponseVariants::Desirable(value)));
+        *response.status_mut() = axum::http::StatusCode::CREATED;
+        return response;
+    }
+}
+#[derive(Debug, thiserror :: Error, error_occurence_lib :: ErrorOccurence)]
+pub enum ExampleTryCreateOneErrorNamed {
+    SerdeJsonToString {
+        #[eo_to_std_string_string]
+        serde_json_to_string: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    FailedToGetResponseText {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    DeserializeResponse {
+        #[eo_to_std_string_string]
+        status_code: http::StatusCode,
+        #[eo_to_std_string_string]
+        headers: reqwest::header::HeaderMap,
+        #[eo_to_std_string_string_serialize_deserialize]
+        response_text: std::string::String,
+        #[eo_to_std_string_string]
+        serde: serde_json::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    Reqwest {
+        #[eo_to_std_string_string]
+        reqwest: reqwest::Error,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+    ExampleCreateOneErrorNamedWithSerializeDeserialize {
+        #[eo_to_std_string_string]
+        create_one_error_named_with_serialize_deserialize: ExampleCreateOneErrorNamedWithSerializeDeserialize,
+        code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
+    },
+}
+impl Example {
+    pub async fn try_create_one(
+        endpoint_location: &std::primitive::str,
+        parameters: ExampleCreateOneParameters,
+    ) -> Result<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, ExampleTryCreateOneErrorNamed> {
+        let payload = {
+            let value = ExampleCreate::from(parameters.payload);
+            match serde_json::to_string(&value) {
+                Ok(value) => value,
+                Err(error_0) => {
+                    return Err(ExampleTryCreateOneErrorNamed::SerdeJsonToString {
+                        serde_json_to_string: error_0,
+                        code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                            file!().to_owned(),
+                            line!(),
+                            column!(),
+                            Some(error_occurence_lib::code_occurence::MacroOccurence {
+                                file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                                line: 2037,
+                                column: 178,
+                            }),
+                        ),
+                    });
+                }
+            }
+        };
+        let url = format!("{}/example/create_one", endpoint_location,);
+        let future = reqwest::Client::new()
+            .post(&url)
+            .header(&postgresql_crud::CommitSnakeCase.to_string(), git_info::PROJECT_GIT_INFO.commit)
+            .header(reqwest::header::CONTENT_TYPE, "application/json")
+            .body(payload)
+            .send();
+        let response = match future.await {
+            Ok(value) => value,
+            Err(error_0) => {
+                return Err(ExampleTryCreateOneErrorNamed::Reqwest {
+                    reqwest: error_0,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 2086,
+                            column: 152,
+                        }),
+                    ),
+                });
+            }
+        };
+        let error_0 = response.status();
+        let error_1 = response.headers().clone();
+        let error_2 = match response.text().await {
+            Ok(value) => value,
+            Err(error_2) => {
+                return Err(ExampleTryCreateOneErrorNamed::FailedToGetResponseText {
+                    status_code: error_0,
+                    headers: error_1,
+                    reqwest: error_2,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 2103,
+                            column: 192,
+                        }),
+                    ),
+                });
+            }
+        };
+        let expected_response = match serde_json::from_str::<ExampleCreateOneResponseVariants>(&error_2) {
+            Ok(value) => value,
+            Err(error_3) => {
+                return Err(ExampleTryCreateOneErrorNamed::DeserializeResponse {
+                    status_code: error_0,
+                    headers: error_1,
+                    response_text: error_2,
+                    serde: error_3,
+                    code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                        file!().to_owned(),
+                        line!(),
+                        column!(),
+                        Some(error_occurence_lib::code_occurence::MacroOccurence {
+                            file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                            line: 2115,
+                            column: 178,
+                        }),
+                    ),
+                });
+            }
+        };
+        let create_one_error_named_with_serialize_deserialize = match expected_response {
+            ExampleCreateOneResponseVariants::Desirable(value) => {
+                let value = value;
+                return Ok(value);
+            }
+            ExampleCreateOneResponseVariants::CheckBodySize { check_body_size, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::CheckBodySize { check_body_size, code_occurence },
+            ExampleCreateOneResponseVariants::Postgresql { postgresql, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence },
+            ExampleCreateOneResponseVariants::SerdeJson { serde_json, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::SerdeJson { serde_json, code_occurence },
+            ExampleCreateOneResponseVariants::HeaderContentTypeApplicationJsonNotFound { code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::HeaderContentTypeApplicationJsonNotFound { code_occurence },
+            ExampleCreateOneResponseVariants::CheckCommit { check_commit, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::CheckCommit { check_commit, code_occurence },
+            ExampleCreateOneResponseVariants::RowAndRollback { row, rollback, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::RowAndRollback { row, rollback, code_occurence },
+            ExampleCreateOneResponseVariants::QueryPart { error, code_occurence } => ExampleCreateOneErrorNamedWithSerializeDeserialize::QueryPart { error, code_occurence },
+        };
+        Err(ExampleTryCreateOneErrorNamed::ExampleCreateOneErrorNamedWithSerializeDeserialize {
+            create_one_error_named_with_serialize_deserialize,
+            code_occurence: error_occurence_lib::code_occurence::CodeOccurence::new(
+                file!().to_owned(),
+                line!(),
+                column!(),
+                Some(error_occurence_lib::code_occurence::MacroOccurence {
+                    file: std::string::String::from("postgresql_crud/generate_postgresql_crud/src/lib.rs"),
+                    line: 2153,
+                    column: 223,
+                }),
+            ),
+        })
+    }
+}
+impl Example {
+    pub async fn create_one_payload_example() -> axum::response::Response {
+        let mut response = axum::response::IntoResponse::into_response(axum::Json(<ExampleCreate as postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement>::default_but_option_is_always_some_and_vec_always_contains_one_element()));
+        *response.status_mut() = axum::http::StatusCode::OK;
+        return response;
+    }
+}
+////////////
 #[derive(Debug, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema)]
 pub struct ExampleReadOnePayload {
     pub primary_key_column: postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresqlRead,
@@ -4365,83 +4910,83 @@ mod example_tests {
                         ::
                         default_but_option_is_always_some_and_vec_always_contains_one_element()
                     };
-                    let vec_of_primary_keys_returned_from_create_many = super::Example::try_create_many(
-                        &url,
-                        super::ExampleCreateManyParameters {
-                            payload: super::ExampleCreateManyPayload(vec![ident_create_default.clone(), ident_create_default.clone()]),
-                        },
-                    )
-                    .await
-                    .expect("error d2dd57bc-4419-40f3-a9b2-4231a930d075");
-                    assert_eq!(2, vec_of_primary_keys_returned_from_create_many.len(), "try_create_many result different");
-                    let (primary_key_read_returned_from_create_many1, primary_key_read_returned_from_create_many2) = {
-                        let mut value = vec_of_primary_keys_returned_from_create_many.into_iter();
-                        (value.next().expect("error 07c805ec-cd86-497e-9a9a-b2c29df46c52"), value.next().expect("error d356475f-364c-4778-8c05-1d2b6c89d5b6"))
-                    };
+                    // let vec_of_primary_keys_returned_from_create_many = super::Example::try_create_many(
+                    //     &url,
+                    //     super::ExampleCreateManyParameters {
+                    //         payload: super::ExampleCreateManyPayload(vec![ident_create_default.clone(), ident_create_default.clone()]),
+                    //     },
+                    // )
+                    // .await
+                    // .expect("error d2dd57bc-4419-40f3-a9b2-4231a930d075");
+                    // assert_eq!(2, vec_of_primary_keys_returned_from_create_many.len(), "try_create_many result different");
+                    // let (primary_key_read_returned_from_create_many1, primary_key_read_returned_from_create_many2) = {
+                    //     let mut value = vec_of_primary_keys_returned_from_create_many.into_iter();
+                    //     (value.next().expect("error 07c805ec-cd86-497e-9a9a-b2c29df46c52"), value.next().expect("error d356475f-364c-4778-8c05-1d2b6c89d5b6"))
+                    // };
                     let select_primary_key = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec![super::ExampleSelect::PrimaryKeyColumn(
                         <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Select::default(),
                     )])
                     .expect("error 0776170e-4dd6-4c14-a412-ce10b0c746f1");
-                    let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
-                        primary_key_column: Some(
-                            postgresql_crud::PostgresqlTypeWhere::try_new(
-                                postgresql_crud::LogicalOperator::Or,
-                                vec![
-                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
-                                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read_returned_from_create_many1.clone()),
-                                    }),
-                                    <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
-                                        logical_operator: postgresql_crud::LogicalOperator::Or,
-                                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read_returned_from_create_many2.clone()),
-                                    }),
-                                ],
-                            )
-                            .expect("error 50dfb6a8-361e-4791-b223-9243a4516779"),
-                        ),
-                        column_155: None,
-                    }));
+                    // let where_many_1_and_2_primary_keys = super::StdOptionOptionExampleWhereMany(Some(super::ExampleWhereMany {
+                    //     primary_key_column: Some(
+                    //         postgresql_crud::PostgresqlTypeWhere::try_new(
+                    //             postgresql_crud::LogicalOperator::Or,
+                    //             vec![
+                    //                 <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                    //                     logical_operator: postgresql_crud::LogicalOperator::Or,
+                    //                     value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read_returned_from_create_many1.clone()),
+                    //                 }),
+                    //                 <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::WhereElement::Equal(postgresql_crud::where_element_filters::PostgresqlTypeWhereElementEqual {
+                    //                     logical_operator: postgresql_crud::LogicalOperator::Or,
+                    //                     value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::TableTypeDeclaration::from(primary_key_read_returned_from_create_many2.clone()),
+                    //                 }),
+                    //             ],
+                    //         )
+                    //         .expect("error 50dfb6a8-361e-4791-b223-9243a4516779"),
+                    //     ),
+                    //     column_155: None,
+                    // }));
                     let sort_vec_of_ident_read_with_primary_key_by_primary_key = |mut value: std::vec::Vec<super::ExampleRead>| -> std::vec::Vec<super::ExampleRead> {
                         value.sort_by_key(|element| element.primary_key_column.clone().expect("error 4f25860e-5b1a-408f-a4db-d49b6969ad4a").value);
                         value
                     };
-                    let some_value_primary_key_read_returned_from_create_many1 = Some(postgresql_crud::Value {
-                        value: primary_key_read_returned_from_create_many1.clone(),
-                    });
-                    let some_value_primary_key_read_returned_from_create_many2 = Some(postgresql_crud::Value {
-                        value: primary_key_read_returned_from_create_many2.clone(),
-                    });
-                    assert_eq!(
-                        sort_vec_of_ident_read_with_primary_key_by_primary_key(vec![
-                            super::ExampleRead {
-                                primary_key_column: some_value_primary_key_read_returned_from_create_many1.clone(),
-                                column_155: None
-                            },
-                            super::ExampleRead {
-                                primary_key_column: some_value_primary_key_read_returned_from_create_many2.clone(),
-                                column_155: None
-                            }
-                        ]),
-                        sort_vec_of_ident_read_with_primary_key_by_primary_key(
-                            super::Example::try_read_many(
-                                &url,
-                                super::ExampleReadManyParameters {
-                                    payload: super::ExampleReadManyPayload {
-                                        where_many: where_many_1_and_2_primary_keys.clone(),
-                                        select: select_primary_key.clone(),
-                                        order_by: postgresql_crud::OrderBy {
-                                            column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                            order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                        },
-                                        pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                    },
-                                },
-                            )
-                            .await
-                            .expect("error 8219870c-0290-4806-b0ce-15692284c30d")
-                        ),
-                        "try_read_many result different after try_create_many"
-                    );
+                    // let some_value_primary_key_read_returned_from_create_many1 = Some(postgresql_crud::Value {
+                    //     value: primary_key_read_returned_from_create_many1.clone(),
+                    // });
+                    // let some_value_primary_key_read_returned_from_create_many2 = Some(postgresql_crud::Value {
+                    //     value: primary_key_read_returned_from_create_many2.clone(),
+                    // });
+                    // assert_eq!(
+                    //     sort_vec_of_ident_read_with_primary_key_by_primary_key(vec![
+                    //         super::ExampleRead {
+                    //             primary_key_column: some_value_primary_key_read_returned_from_create_many1.clone(),
+                    //             column_155: None
+                    //         },
+                    //         super::ExampleRead {
+                    //             primary_key_column: some_value_primary_key_read_returned_from_create_many2.clone(),
+                    //             column_155: None
+                    //         }
+                    //     ]),
+                    //     sort_vec_of_ident_read_with_primary_key_by_primary_key(
+                    //         super::Example::try_read_many(
+                    //             &url,
+                    //             super::ExampleReadManyParameters {
+                    //                 payload: super::ExampleReadManyPayload {
+                    //                     where_many: where_many_1_and_2_primary_keys.clone(),
+                    //                     select: select_primary_key.clone(),
+                    //                     order_by: postgresql_crud::OrderBy {
+                    //                         column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                    //                         order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                    //                     },
+                    //                     pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    //                 },
+                    //             },
+                    //         )
+                    //         .await
+                    //         .expect("error 8219870c-0290-4806-b0ce-15692284c30d")
+                    //     ),
+                    //     "try_read_many result different after try_create_many"
+                    // );
                     let primary_key_read_returned_from_create_one = super::Example::try_create_one(&url, super::ExampleCreateOneParameters { payload: ident_create_default }).await.expect("error 32e30b87-b46a-4f39-aeb0-39694fc52d30");
                     let some_value_primary_key_read_returned_from_create_one = Some(postgresql_crud::Value {
                         value: primary_key_read_returned_from_create_one.clone(),
@@ -4467,280 +5012,283 @@ mod example_tests {
                     let column_155_test_cases = <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::tests::PostgresqlTypeTestCases<
                         <crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::ReadInner,
                     >>::test_cases();
-                    for index in 0..column_155_test_cases.len() {
-                        let column_155_some_value_update = match column_155_test_cases.get(index)
-                        {
-                            Some(value) =>
-                            Some(postgresql_crud :: Value
-                            {
-                                value : < crate :: repositories_types :: server :: routes ::
-                                api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: tests :: PostgresqlTypeTestCases << crate
-                                :: repositories_types :: server :: routes :: api :: example
-                                :: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId
-                                as postgresql_crud :: PostgresqlType > :: ReadInner >> ::
-                                update_new_or_try_new_unwraped_for_test(value.clone())
-                            }), None =>
-                            Some(postgresql_crud :: Value
-                            {
-                                value : < crate :: repositories_types :: server :: routes ::
-                                api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: tests :: PostgresqlTypeTestCases << crate
-                                :: repositories_types :: server :: routes :: api :: example
-                                :: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId
-                                as postgresql_crud :: PostgresqlType > :: ReadInner >> ::
-                                update_new_or_try_new_unwraped_for_test(< crate ::
-                                repositories_types :: server :: routes :: api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: PostgresqlType > ::
-                                into_inner(< < crate :: repositories_types :: server ::
-                                routes :: api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: PostgresqlType > :: Read as
-                                postgresql_crud ::
-                                DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
-                                ::
-                                default_but_option_is_always_some_and_vec_always_contains_one_element())),
-                            }),
-                        };
-                        let column_155_some_value_read = match column_155_test_cases.get(index) {
-                            Some(value) =>
-                            Some(postgresql_crud :: Value
-                            {
-                                value : < crate :: repositories_types :: server :: routes ::
-                                api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: PostgresqlType > ::
-                                normalize(< crate :: repositories_types :: server :: routes
-                                :: api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: tests :: PostgresqlTypeTestCases < <
-                                crate :: repositories_types :: server :: routes :: api ::
-                                example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: PostgresqlType > :: ReadInner, >> ::
-                                read_new_or_try_new_unwraped_for_test(value.clone()))
-                            }), None =>
-                            Some(postgresql_crud :: Value
-                            {
-                                value : < crate :: repositories_types :: server :: routes ::
-                                api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: PostgresqlType > ::
-                                normalize(< crate :: repositories_types :: server :: routes
-                                :: api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: tests :: PostgresqlTypeTestCases < <
-                                crate :: repositories_types :: server :: routes :: api ::
-                                example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: PostgresqlType > :: ReadInner, >> ::
-                                read_new_or_try_new_unwraped_for_test(< crate ::
-                                repositories_types :: server :: routes :: api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: PostgresqlType > ::
-                                into_inner(< < crate :: repositories_types :: server ::
-                                routes :: api :: example ::
-                                VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                                postgresql_crud :: PostgresqlType > :: Read as
-                                postgresql_crud ::
-                                DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
-                                ::
-                                default_but_option_is_always_some_and_vec_always_contains_one_element())))
-                            }),
-                        };
-                        // assert_eq!(
-                        //     {
-                        //         let mut value = vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()];
-                        //         value.sort();
-                        //         value
-                        //     },
-                        //     {
-                        //         let mut value = super::Example::try_update_many(
-                        //             &url,
-                        //             super::ExampleUpdateManyParameters {
-                        //                 payload: super::ExampleUpdateManyPayload::try_new({
-                        //                     let generate_element = |value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read| {
-                        //                         super::ExampleUpdate::try_new(
-                        //                             <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(value),
-                        //                             column_155_some_value_update.clone(),
-                        //                         )
-                        //                         .expect("error ceb42476-3ef3-4d67-982a-866ace9e0958")
-                        //                     };
-                        //                     vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
-                        //                 })
-                        //                 .expect("error 8c7aac34-27b3-43f0-8a16-63c0244a1623"),
-                        //             },
-                        //         )
-                        //         .await
-                        //         .expect("error fa294163-442f-4ae4-8db9-7eeb90ec34c8");
-                        //         value.sort();
-                        //         value
-                        //     },
-                        //     "try_update_many result different"
-                        // );
-                        let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec!
-                        [super :: ExampleSelect ::
-                        PrimaryKeyColumn(< < postgresql_crud :: postgresql_type ::
-                        SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as
-                        postgresql_crud :: PostgresqlType > :: Select as
-                        postgresql_crud ::
-                        DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
-                        ::
-                        default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                        super :: ExampleSelect ::
-                        Column155(< < crate :: repositories_types :: server ::
-                        routes :: api :: example ::
-                        VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
-                        postgresql_crud :: PostgresqlType > :: Select as
-                        postgresql_crud ::
-                        DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
-                        ::
-                        default_but_option_is_always_some_and_vec_always_contains_one_element())])
-                        .expect("error 5fc78974-50e1-47c8-8cf0-156675513f3f");
-                        // assert_eq!(
-                        //     sort_vec_of_ident_read_with_primary_key_by_primary_key({
-                        //         let generate_element = |value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read| super::ExampleRead {
-                        //             primary_key_column: Some(postgresql_crud::Value {
-                        //                 value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::from(value),
-                        //             }),
-                        //             column_155: column_155_some_value_read.clone(),
-                        //         };
-                        //         vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
-                        //     }),
-                        //     sort_vec_of_ident_read_with_primary_key_by_primary_key(
-                        //         super::Example::try_read_many(
-                        //             &url,
-                        //             super::ExampleReadManyParameters {
-                        //                 payload: super::ExampleReadManyPayload {
-                        //                     where_many: where_many_1_and_2_primary_keys.clone(),
-                        //                     select: select_primary_key_field_ident.clone(),
-                        //                     order_by: postgresql_crud::OrderBy {
-                        //                         column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                        //                         order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                        //                     },
-                        //                     pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                        //                 },
-                        //             },
-                        //         )
-                        //         .await
-                        //         .expect("error 3efbb893-4d65-4a65-a8d3-f7f6ac518057")
-                        //     ),
-                        //     "try_read_many result different after try_update_many"
-                        // );
-                        assert_eq!(
-                            primary_key_read_returned_from_create_one.clone(),
-                            super::Example::try_update_one(
-                                &url,
-                                super::ExampleUpdateOneParameters {
-                                    payload: super::ExampleUpdate::try_new(
-                                        <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_one.clone()),
-                                        column_155_some_value_update
-                                    )
-                                    .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2"),
-                                },
-                            )
-                            .await
-                            .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
-                            "try_update_one result different"
-                        );
-                        assert_eq!(
-                            super::ExampleRead {
-                                primary_key_column: match some_value_primary_key_read_returned_from_create_one.clone() {
-                                    Some(value) => Some(postgresql_crud::Value {
-                                        value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::normalize(value.value)
-                                    }),
-                                    None => None,
-                                },
-                                column_155: column_155_some_value_read
-                            },
-                            super::Example::try_read_one(
-                                &url,
-                                super::ExampleReadOneParameters {
-                                    payload: super::ExampleReadOnePayload {
-                                        primary_key_column: primary_key_read_returned_from_create_one.clone(),
-                                        select: select_primary_key_field_ident,
-                                    },
-                                },
-                            )
-                            .await
-                            .expect("error 770fc785-f87a-42b0-a0c7-d08291f65293"),
-                            "try_read_one result different after try_update_one"
-                        );
-                    }
-                    assert_eq!(
-                        {
-                            let mut value = vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()];
-                            value.sort();
-                            value
-                        },
-                        {
-                            let mut value = super::Example::try_delete_many(
-                                &url,
-                                super::ExampleDeleteManyParameters {
-                                    payload: super::ExampleDeleteManyPayload { where_many: where_many_1_and_2_primary_keys.clone() },
-                                },
-                            )
-                            .await
-                            .expect("error 99780d6d-3dfc-45ad-923b-e5d898d84ec6");
-                            value.sort();
-                            value
-                        },
-                        "try_delete_many result different"
-                    );
-                    assert_eq!(
-                        std::vec::Vec::<super::ExampleRead>::default(),
-                        super::Example::try_read_many(
-                            &url,
-                            super::ExampleReadManyParameters {
-                                payload: super::ExampleReadManyPayload {
-                                    where_many: where_many_1_and_2_primary_keys.clone(),
-                                    select: select_primary_key.clone(),
-                                    order_by: postgresql_crud::OrderBy {
-                                        column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                        order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
-                                    },
-                                    pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
-                                },
-                            },
-                        )
-                        .await
-                        .expect("error 560e761c-e8ad-4ed3-a1d9-d489bb42c3e2"),
-                        "try_read_many result different after try_delete_many"
-                    );
-                    let primary_key_returned_from_delete_one = super::Example::try_delete_one(
-                        &url,
-                        super::ExampleDeleteOneParameters {
-                            payload: super::ExampleDeleteOnePayload {
-                                primary_key_column: primary_key_read_returned_from_create_one.clone(),
-                            },
-                        },
-                    )
-                    .await
-                    .expect("error ade96823-3158-43af-95ac-f8f464b2a2aa");
-                    assert_eq!(primary_key_read_returned_from_create_one.clone(), primary_key_returned_from_delete_one, "try_delete_one result different");
-                    if let Err(error) = super::Example::try_read_one(
-                        &url,
-                        super::ExampleReadOneParameters {
-                            payload: super::ExampleReadOnePayload {
-                                primary_key_column: primary_key_read_returned_from_create_one,
-                                select: select_primary_key.clone(),
-                            },
-                        },
-                    )
-                    .await
-                        && let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize {
-                            read_one_error_named_with_serialize_deserialize,
-                            code_occurence: _,
-                        } = &error
-                        && let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize
-                        && "no rows returned by a query that expected to return at least one row".to_string() != *postgresql
-                    {
-                        panic!("try_read_one result different after try_delete_one");
-                    }
-                    drop_table_if_exists(&postgres_pool).await;
+
+
+                    // //new 
+                    // for index in 0..column_155_test_cases.len() {
+                    //     let column_155_some_value_update = match column_155_test_cases.get(index)
+                    //     {
+                    //         Some(value) =>
+                    //         Some(postgresql_crud :: Value
+                    //         {
+                    //             value : < crate :: repositories_types :: server :: routes ::
+                    //             api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: tests :: PostgresqlTypeTestCases << crate
+                    //             :: repositories_types :: server :: routes :: api :: example
+                    //             :: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId
+                    //             as postgresql_crud :: PostgresqlType > :: ReadInner >> ::
+                    //             update_new_or_try_new_unwraped_for_test(value.clone())
+                    //         }), None =>
+                    //         Some(postgresql_crud :: Value
+                    //         {
+                    //             value : < crate :: repositories_types :: server :: routes ::
+                    //             api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: tests :: PostgresqlTypeTestCases << crate
+                    //             :: repositories_types :: server :: routes :: api :: example
+                    //             :: VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId
+                    //             as postgresql_crud :: PostgresqlType > :: ReadInner >> ::
+                    //             update_new_or_try_new_unwraped_for_test(< crate ::
+                    //             repositories_types :: server :: routes :: api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: PostgresqlType > ::
+                    //             into_inner(< < crate :: repositories_types :: server ::
+                    //             routes :: api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: PostgresqlType > :: Read as
+                    //             postgresql_crud ::
+                    //             DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                    //             ::
+                    //             default_but_option_is_always_some_and_vec_always_contains_one_element())),
+                    //         }),
+                    //     };
+                    //     let column_155_some_value_read = match column_155_test_cases.get(index) {
+                    //         Some(value) =>
+                    //         Some(postgresql_crud :: Value
+                    //         {
+                    //             value : < crate :: repositories_types :: server :: routes ::
+                    //             api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: PostgresqlType > ::
+                    //             normalize(< crate :: repositories_types :: server :: routes
+                    //             :: api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: tests :: PostgresqlTypeTestCases < <
+                    //             crate :: repositories_types :: server :: routes :: api ::
+                    //             example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: PostgresqlType > :: ReadInner, >> ::
+                    //             read_new_or_try_new_unwraped_for_test(value.clone()))
+                    //         }), None =>
+                    //         Some(postgresql_crud :: Value
+                    //         {
+                    //             value : < crate :: repositories_types :: server :: routes ::
+                    //             api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: PostgresqlType > ::
+                    //             normalize(< crate :: repositories_types :: server :: routes
+                    //             :: api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: tests :: PostgresqlTypeTestCases < <
+                    //             crate :: repositories_types :: server :: routes :: api ::
+                    //             example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: PostgresqlType > :: ReadInner, >> ::
+                    //             read_new_or_try_new_unwraped_for_test(< crate ::
+                    //             repositories_types :: server :: routes :: api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: PostgresqlType > ::
+                    //             into_inner(< < crate :: repositories_types :: server ::
+                    //             routes :: api :: example ::
+                    //             VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //             postgresql_crud :: PostgresqlType > :: Read as
+                    //             postgresql_crud ::
+                    //             DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                    //             ::
+                    //             default_but_option_is_always_some_and_vec_always_contains_one_element())))
+                    //         }),
+                    //     };
+                    //     // assert_eq!(
+                    //     //     {
+                    //     //         let mut value = vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()];
+                    //     //         value.sort();
+                    //     //         value
+                    //     //     },
+                    //     //     {
+                    //     //         let mut value = super::Example::try_update_many(
+                    //     //             &url,
+                    //     //             super::ExampleUpdateManyParameters {
+                    //     //                 payload: super::ExampleUpdateManyPayload::try_new({
+                    //     //                     let generate_element = |value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read| {
+                    //     //                         super::ExampleUpdate::try_new(
+                    //     //                             <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(value),
+                    //     //                             column_155_some_value_update.clone(),
+                    //     //                         )
+                    //     //                         .expect("error ceb42476-3ef3-4d67-982a-866ace9e0958")
+                    //     //                     };
+                    //     //                     vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
+                    //     //                 })
+                    //     //                 .expect("error 8c7aac34-27b3-43f0-8a16-63c0244a1623"),
+                    //     //             },
+                    //     //         )
+                    //     //         .await
+                    //     //         .expect("error fa294163-442f-4ae4-8db9-7eeb90ec34c8");
+                    //     //         value.sort();
+                    //     //         value
+                    //     //     },
+                    //     //     "try_update_many result different"
+                    //     // );
+                    //     let select_primary_key_field_ident = postgresql_crud::NotEmptyUniqueEnumVec::try_new(vec!
+                    //     [super :: ExampleSelect ::
+                    //     PrimaryKeyColumn(< < postgresql_crud :: postgresql_type ::
+                    //     SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as
+                    //     postgresql_crud :: PostgresqlType > :: Select as
+                    //     postgresql_crud ::
+                    //     DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                    //     ::
+                    //     default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                    //     super :: ExampleSelect ::
+                    //     Column155(< < crate :: repositories_types :: server ::
+                    //     routes :: api :: example ::
+                    //     VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as
+                    //     postgresql_crud :: PostgresqlType > :: Select as
+                    //     postgresql_crud ::
+                    //     DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement >
+                    //     ::
+                    //     default_but_option_is_always_some_and_vec_always_contains_one_element())])
+                    //     .expect("error 5fc78974-50e1-47c8-8cf0-156675513f3f");
+                    //     // assert_eq!(
+                    //     //     sort_vec_of_ident_read_with_primary_key_by_primary_key({
+                    //     //         let generate_element = |value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read| super::ExampleRead {
+                    //     //             primary_key_column: Some(postgresql_crud::Value {
+                    //     //                 value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Read::from(value),
+                    //     //             }),
+                    //     //             column_155: column_155_some_value_read.clone(),
+                    //     //         };
+                    //     //         vec![generate_element(primary_key_read_returned_from_create_many1.clone()), generate_element(primary_key_read_returned_from_create_many2.clone())]
+                    //     //     }),
+                    //     //     sort_vec_of_ident_read_with_primary_key_by_primary_key(
+                    //     //         super::Example::try_read_many(
+                    //     //             &url,
+                    //     //             super::ExampleReadManyParameters {
+                    //     //                 payload: super::ExampleReadManyPayload {
+                    //     //                     where_many: where_many_1_and_2_primary_keys.clone(),
+                    //     //                     select: select_primary_key_field_ident.clone(),
+                    //     //                     order_by: postgresql_crud::OrderBy {
+                    //     //                         column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                    //     //                         order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                    //     //                     },
+                    //     //                     pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    //     //                 },
+                    //     //             },
+                    //     //         )
+                    //     //         .await
+                    //     //         .expect("error 3efbb893-4d65-4a65-a8d3-f7f6ac518057")
+                    //     //     ),
+                    //     //     "try_read_many result different after try_update_many"
+                    //     // );
+                    //     assert_eq!(
+                    //         primary_key_read_returned_from_create_one.clone(),
+                    //         super::Example::try_update_one(
+                    //             &url,
+                    //             super::ExampleUpdateOneParameters {
+                    //                 payload: super::ExampleUpdate::try_new(
+                    //                     <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::Update::from(primary_key_read_returned_from_create_one.clone()),
+                    //                     column_155_some_value_update
+                    //                 )
+                    //                 .expect("error 0e5d65a5-12c8-4c48-a24c-0f1fe376ada2"),
+                    //             },
+                    //         )
+                    //         .await
+                    //         .expect("error d2de0bd6-1b01-4ef2-b074-a60878241b52"),
+                    //         "try_update_one result different"
+                    //     );
+                    //     assert_eq!(
+                    //         super::ExampleRead {
+                    //             primary_key_column: match some_value_primary_key_read_returned_from_create_one.clone() {
+                    //                 Some(value) => Some(postgresql_crud::Value {
+                    //                     value: <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::normalize(value.value)
+                    //                 }),
+                    //                 None => None,
+                    //             },
+                    //             column_155: column_155_some_value_read
+                    //         },
+                    //         super::Example::try_read_one(
+                    //             &url,
+                    //             super::ExampleReadOneParameters {
+                    //                 payload: super::ExampleReadOnePayload {
+                    //                     primary_key_column: primary_key_read_returned_from_create_one.clone(),
+                    //                     select: select_primary_key_field_ident,
+                    //                 },
+                    //             },
+                    //         )
+                    //         .await
+                    //         .expect("error 770fc785-f87a-42b0-a0c7-d08291f65293"),
+                    //         "try_read_one result different after try_update_one"
+                    //     );
+                    // }
+                    // assert_eq!(
+                    //     {
+                    //         let mut value = vec![primary_key_read_returned_from_create_many1.clone(), primary_key_read_returned_from_create_many2.clone()];
+                    //         value.sort();
+                    //         value
+                    //     },
+                    //     {
+                    //         let mut value = super::Example::try_delete_many(
+                    //             &url,
+                    //             super::ExampleDeleteManyParameters {
+                    //                 payload: super::ExampleDeleteManyPayload { where_many: where_many_1_and_2_primary_keys.clone() },
+                    //             },
+                    //         )
+                    //         .await
+                    //         .expect("error 99780d6d-3dfc-45ad-923b-e5d898d84ec6");
+                    //         value.sort();
+                    //         value
+                    //     },
+                    //     "try_delete_many result different"
+                    // );
+                    // assert_eq!(
+                    //     std::vec::Vec::<super::ExampleRead>::default(),
+                    //     super::Example::try_read_many(
+                    //         &url,
+                    //         super::ExampleReadManyParameters {
+                    //             payload: super::ExampleReadManyPayload {
+                    //                 where_many: where_many_1_and_2_primary_keys.clone(),
+                    //                 select: select_primary_key.clone(),
+                    //                 order_by: postgresql_crud::OrderBy {
+                    //                     column: super::ExampleSelect::PrimaryKeyColumn(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                    //                     order: Some(postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element()),
+                    //                 },
+                    //                 pagination: postgresql_crud::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement::default_but_option_is_always_some_and_vec_always_contains_one_element(),
+                    //             },
+                    //         },
+                    //     )
+                    //     .await
+                    //     .expect("error 560e761c-e8ad-4ed3-a1d9-d489bb42c3e2"),
+                    //     "try_read_many result different after try_delete_many"
+                    // );
+                    // let primary_key_returned_from_delete_one = super::Example::try_delete_one(
+                    //     &url,
+                    //     super::ExampleDeleteOneParameters {
+                    //         payload: super::ExampleDeleteOnePayload {
+                    //             primary_key_column: primary_key_read_returned_from_create_one.clone(),
+                    //         },
+                    //     },
+                    // )
+                    // .await
+                    // .expect("error ade96823-3158-43af-95ac-f8f464b2a2aa");
+                    // assert_eq!(primary_key_read_returned_from_create_one.clone(), primary_key_returned_from_delete_one, "try_delete_one result different");
+                    // if let Err(error) = super::Example::try_read_one(
+                    //     &url,
+                    //     super::ExampleReadOneParameters {
+                    //         payload: super::ExampleReadOnePayload {
+                    //             primary_key_column: primary_key_read_returned_from_create_one,
+                    //             select: select_primary_key.clone(),
+                    //         },
+                    //     },
+                    // )
+                    // .await
+                    //     && let super::ExampleTryReadOneErrorNamed::ExampleReadOneErrorNamedWithSerializeDeserialize {
+                    //         read_one_error_named_with_serialize_deserialize,
+                    //         code_occurence: _,
+                    //     } = &error
+                    //     && let super::ExampleReadOneErrorNamedWithSerializeDeserialize::Postgresql { postgresql, code_occurence: _ } = &read_one_error_named_with_serialize_deserialize
+                    //     && "no rows returned by a query that expected to return at least one row".to_string() != *postgresql
+                    // {
+                    //     panic!("try_read_one result different after try_delete_one");
+                    // }
+                    // drop_table_if_exists(&postgres_pool).await;
                 });
             })
             .expect("error 4d329978-f5af-424e-8757-e8a32dbeb5a1")
