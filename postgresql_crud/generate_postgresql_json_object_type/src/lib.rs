@@ -182,6 +182,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let column_name_and_maybe_field_getter_snake_case = naming::ColumnNameAndMaybeFieldGetterSnakeCase;
         let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
         let column_snake_case = naming::ColumnSnakeCase;
+        let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
         let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
         let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -2272,15 +2273,19 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
         };
         let ident_with_id_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
-        //todo
         let maybe_ident_with_id_read_only_ids_standart_not_null_token_stream = if is_standart_not_null {
             let ident_with_id_read_only_ids_standart_not_null_token_stream = {
+                let content_token_stream = get_vec_syn_field(&is_standart_with_id_true).iter().map(|element| {
+                    let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                        panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                    });
+                    let field_type = &element.ty;
+                    quote::quote!{#field_ident: <#field_type as postgresql_crud::PostgresqlJsonType>::#read_only_ids_upper_camel_case}
+                });
                 quote::quote!{
-                    #[derive(Debug, Clone, PartialEq, serde :: Serialize, serde :: Deserialize, utoipa :: ToSchema, schemars :: JsonSchema)]
+                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
                     pub struct #ident_with_id_read_only_ids_standart_not_null_upper_camel_case {
-                        //todo
-                        id: <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::Read,
-                        //todo additional
+                        #(#content_token_stream),*
                     }
                 }
             };
