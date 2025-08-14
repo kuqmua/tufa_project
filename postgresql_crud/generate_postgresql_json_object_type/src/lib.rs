@@ -3792,6 +3792,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &{
                     quote::quote!{std::option::Option<()>}
                 },
+                &{
+                    quote::quote!{todo!()}
+                },
                 &ident_read_inner_upper_camel_case,
                 &value_into_inner_token_stream,
                 &ident_update_upper_camel_case,
@@ -3958,6 +3961,9 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_with_id_where_element_standart_not_null_upper_camel_case,
                 &ident_with_id_read_standart_not_null_upper_camel_case,
                 &ident_with_id_read_only_ids_standart_not_null_upper_camel_case,
+                &{
+                    quote::quote!{todo!()}
+                },
                 &ident_with_id_read_inner_standart_not_null_upper_camel_case,
                 &value_into_inner_token_stream,
                 &ident_with_id_update_standart_not_null_upper_camel_case,

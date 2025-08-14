@@ -1708,20 +1708,26 @@ impl Example {
                 &Example::primary_key(),
             );
             //here
-            query_string.push_str(&"
-                ,
-                (
-                    SELECT jsonb_agg(jsonb_build_object(
-                        'id',
-                        elem->'id',
-                        'field_0',
-                        'null'::jsonb,
-                        'field_1',
-                        'null'::jsonb
-                    ))
-                    FROM jsonb_array_elements(column_155) AS elem
-                ) AS column_155
-            ");
+            query_string.push_str(
+                &format!("
+                        ,
+                        (
+                            SELECT jsonb_agg(jsonb_build_object(
+                                'id',
+                                {},
+                                'field_0',
+                                {},
+                                'field_1',
+                                {}
+                            ))
+                            FROM jsonb_array_elements(column_155) AS elem
+                        ) AS column_155
+                    ",
+                    <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'id'"),
+                    <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("'null'::jsonb"),
+                    <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("'null'::jsonb"),
+                )
+            );
             query_string
         };
         println!("{}", query_string);

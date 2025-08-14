@@ -1796,16 +1796,23 @@ pub fn generate_postgresql_json_types(input_token_stream: proc_macro::TokenStrea
                     },
                     &ident_where_element_upper_camel_case,
                     &ident_read_upper_camel_case,
-                    &{
-                        if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern &&
-                        let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable &&
-                        let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
-                        {
-                            inner_type_standart_not_null_token_stream.clone()
-                        }
-                        else {
-                            quote::quote!{std::option::Option<()>}
-                        }
+                    &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern &&
+                    let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable &&
+                    let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                    {
+                        inner_type_standart_not_null_token_stream.clone()
+                    }
+                    else {
+                        quote::quote!{std::option::Option<()>}
+                    },
+                    &if let PostgresqlJsonTypePattern::Standart = &element.postgresql_json_type_pattern &&
+                    let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &element.not_null_or_nullable &&
+                    let PostgresqlJsonType::UuidUuidAsJsonbString = &element.postgresql_json_type
+                    {
+                        quote::quote!{format!("{column_name_and_maybe_field_getter}")}
+                    }
+                    else {
+                        quote::quote!{"'null'::jsonb".to_string()}
                     },
                     &ident_read_inner_upper_camel_case,
                     &{

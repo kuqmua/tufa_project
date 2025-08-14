@@ -302,6 +302,7 @@ pub fn generate_postgresql_json_type_token_stream(
     where_element_type_token_stream: &dyn quote::ToTokens,
     read_type_token_stream: &dyn quote::ToTokens,
     read_only_ids_type_token_stream: &dyn quote::ToTokens,
+    select_only_ids_query_part_token_stream: &dyn quote::ToTokens,
     read_inner_type_token_stream: &dyn quote::ToTokens,
     into_inner_token_stream: &dyn quote::ToTokens,
     update_type_token_stream: &dyn quote::ToTokens,
@@ -318,6 +319,7 @@ pub fn generate_postgresql_json_type_token_stream(
     let select_upper_camel_case = naming::SelectUpperCamelCase;
     let read_upper_camel_case = naming::ReadUpperCamelCase;
     let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+    let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
     let read_inner_upper_camel_case = naming::ReadInnerUpperCamelCase;
     let where_element_upper_camel_case = naming::WhereElementUpperCamelCase;
     let update_upper_camel_case = naming::UpdateUpperCamelCase;
@@ -371,6 +373,11 @@ pub fn generate_postgresql_json_type_token_stream(
             type #where_element_upper_camel_case = #where_element_type_token_stream;
             type #read_upper_camel_case = #read_type_token_stream;
             type #read_only_ids_upper_camel_case = #read_only_ids_type_token_stream;
+            fn #select_only_ids_query_part_snake_case(
+                #column_name_and_maybe_field_getter_snake_case: #reference_std_primitive_str_token_stream,
+            ) -> #std_string_string_token_stream {
+                #select_only_ids_query_part_token_stream
+            }
             type #read_inner_upper_camel_case = #read_inner_type_token_stream;
             fn into_inner(#value_snake_case: Self::#read_upper_camel_case) -> Self::#read_inner_upper_camel_case {
                 #into_inner_token_stream

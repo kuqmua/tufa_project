@@ -192,7 +192,6 @@ pub trait PostgresqlJsonType {
     type Read: std::fmt::Debug + Clone + PartialEq + serde::Serialize + for<'__> serde::Deserialize<'__> + for<'__> utoipa::ToSchema<'__> + schemars::JsonSchema + crate::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElement;
     type ReadOnlyIds: std::fmt::Debug + serde::Serialize + for<'__> serde::Deserialize<'__>;
     fn select_only_ids_query_part(
-        field_ident: &std::primitive::str,
         column_name_and_maybe_field_getter: &std::primitive::str,
     ) -> std::string::String;
     type ReadInner;
