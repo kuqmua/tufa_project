@@ -1620,27 +1620,7 @@ impl Example {
             &{
                 let mut acc = std::string::String::new();
                 acc.push_str(&<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlType>::select_only_ids_query_part("primary_key_column", true));
-                acc.push_str(&{
-                    format!("
-                            (
-                               select jsonb_agg(jsonb_build_object(
-                                   'id',
-                                   {},
-                                   'field_0',
-                                   {},
-                                   'field_1',
-                                   {}
-                               ))
-                               from
-                               jsonb_array_elements(column_155)
-                               as elem
-                            )
-                            as column_155,",
-                        <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'id'"),
-                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'field_0'"),
-                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'field_1'")
-                    )
-                });
+                acc.push_str(&<crate::repositories_types::server::routes::api::example::VecOfAnimalWithIdAsNotNullArrayOfNotNullJsonbObjectWithId as postgresql_crud::PostgresqlType>::select_only_ids_query_part("column_155", false));
                 let _ = acc.pop();
                 acc
             }

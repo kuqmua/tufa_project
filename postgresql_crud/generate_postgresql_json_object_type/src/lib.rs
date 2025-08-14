@@ -3824,15 +3824,75 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_only_ids_query_part_token_stream(&is_standart_with_id_false),
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote!{todo!()}
+                                quote::quote!{
+                                    format!(
+                                        "case when jsonb_typeof({column_name_and_maybe_field_getter})='null' then 'null'::jsonb else 
+                                            (
+                                                jsonb_build_object(
+                                                    'id',
+                                                    {},
+                                                    'field_0',
+                                                    {},
+                                                    'field_1',
+                                                    {}
+                                                )
+                                            )
+                                        end",
+                                        <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("{column_name_and_maybe_field_getter}->'id'")),
+                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("{column_name_and_maybe_field_getter}->'field_0'")),
+                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("{column_name_and_maybe_field_getter}->'field_1'"))
+                                    )
+                                }
                             },
                         },
                         PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                             postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote!{todo!()}
+                                quote::quote!{
+                                    format!(
+                                        "
+                                            (
+                                               select jsonb_agg(jsonb_build_object(
+                                                   'id',
+                                                   {},
+                                                   'field_0',
+                                                   {},
+                                                   'field_1',
+                                                   {}
+                                               ))
+                                               from
+                                               jsonb_array_elements({column_name_and_maybe_field_getter})
+                                               as elem
+                                            )
+                                        ",
+                                        <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'id'")),
+                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_0'")),
+                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_1'"))
+                                    )
+                                }
                             },
                             postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote!{todo!()}
+                                quote::quote!{
+                                    format!(
+                                        "case when jsonb_typeof({column_name_and_maybe_field_getter})='null' then 'null'::jsonb else 
+                                            (
+                                               select jsonb_agg(jsonb_build_object(
+                                                   'id',
+                                                   {},
+                                                   'field_0',
+                                                   {},
+                                                   'field_1',
+                                                   {}
+                                               ))
+                                               from
+                                               jsonb_array_elements({column_name_and_maybe_field_getter})
+                                               as elem
+                                            )
+                                        end",
+                                        <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'id'")),
+                                        <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_0'")),
+                                        <postgresql_crud::postgresql_json_type::OptionStdPrimitiveI8AsNullableJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(&format!("elem->'field_1'"))
+                                    )
+                                }
                             },
                         }
                     }
