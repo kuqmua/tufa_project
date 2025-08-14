@@ -1669,7 +1669,11 @@ pub struct ExampleUpdateOneParameters {
 }
 #[derive(Debug, serde :: Serialize, serde :: Deserialize)]
 pub enum ExampleUpdateOneResponseVariants {
-    Desirable(<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey),
+    Desirable(
+        //here
+        // <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
+        ExampleReadOnlyIds
+    ),
     CheckBodySize {
         check_body_size: postgresql_crud::check_body_size::CheckBodySizeErrorNamedWithSerializeDeserialize,
         code_occurence: error_occurence_lib::code_occurence::CodeOccurence,
@@ -1961,7 +1965,17 @@ impl Example {
             };
             let value = {
                 match binded_query.fetch_one(executor.as_mut()).await {
-                    Ok(value) => match sqlx::Row::try_get::<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(&value, &Example::primary_key()) {
+                    Ok(value) => match 
+                    //here
+                    ExampleReadOnlyIds::try_from(value)
+                    
+                    // sqlx::Row::try_get::<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, &std::primitive::str>(
+                    //     &value,
+                    //     &Example::primary_key()
+                    // )
+                    
+                    
+                    {
                         Ok(value) => value,
                         Err(error_0) => match executor.rollback().await {
                             Ok(_) => {
@@ -2116,7 +2130,12 @@ impl Example {
     pub async fn try_update_one(
         endpoint_location: &std::primitive::str,
         parameters: ExampleUpdateOneParameters,
-    ) -> Result<<postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey, ExampleTryUpdateOneErrorNamed> {
+    ) -> Result<
+        //here
+        ExampleReadOnlyIds
+        // <postgresql_crud::postgresql_type::SqlxTypesUuidUuidAsNotNullUuidV4InitializedByPostgresql as postgresql_crud::PostgresqlTypePrimaryKey>::PrimaryKey
+    
+        , ExampleTryUpdateOneErrorNamed> {
         let payload = {
             let value = ExampleUpdate::from(parameters.payload);
             match serde_json::to_string(&value) {
