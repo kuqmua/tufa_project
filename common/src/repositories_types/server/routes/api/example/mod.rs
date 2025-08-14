@@ -1712,7 +1712,8 @@ impl Example {
                 &format!("
                         ,
                         (
-                            SELECT jsonb_agg(jsonb_build_object(
+                            SELECT 
+                            jsonb_agg(jsonb_build_object(
                                 'id',
                                 {},
                                 'field_0',
@@ -1720,8 +1721,11 @@ impl Example {
                                 'field_1',
                                 {}
                             ))
-                            FROM jsonb_array_elements(column_155) AS elem
-                        ) AS column_155
+                            FROM
+                            jsonb_array_elements(column_155)
+                            AS elem
+                        )
+                        AS column_155
                     ",
                     <postgresql_crud::postgresql_json_type::UuidUuidAsNotNullJsonbString as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'id'"),
                     <postgresql_crud::postgresql_json_type::StdPrimitiveI8AsNotNullJsonbNumber as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part("elem->'field_0'"),
