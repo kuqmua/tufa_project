@@ -172,9 +172,9 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
     let select_primary_key_snake_case = naming::SelectPrimaryKeySnakeCase;
     let generate_element_snake_case = naming::GenerateElementSnakeCase;
     let select_primary_key_field_ident_snake_case = naming::SelectPrimaryKeyFieldIdentSnakeCase;
-    let some_value_read_only_ids_returned_from_create_one_snake_case = naming::SomeValuePrimaryKeyReadReturnedFromCreateOneSnakeCase;
+    let some_value_read_only_ids_returned_from_create_one_snake_case = naming::SomeValueReadOnlyIdsReturnedFromCreateOneSnakeCase;
     let sort_vec_of_ident_read_with_primary_key_by_primary_key_snake_case = naming::SortVecOfIdentReadWithPrimaryKeyByPrimaryKeySnakeCase;//here
-    let read_only_ids_returned_from_create_one_snake_case = naming::PrimaryKeyReadReturnedFromCreateOneSnakeCase;
+    let read_only_ids_returned_from_create_one_snake_case = naming::ReadOnlyIdsReturnedFromCreateOneSnakeCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
     let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
     let error_0_token_stream = token_patterns::Error0;
@@ -4028,7 +4028,7 @@ pub fn generate_postgresql_crud(input: proc_macro::TokenStream) -> proc_macro::T
         // #read_many_token_stream
         #read_one_token_stream
         // #update_many_token_stream
-        #update_one_token_stream
+        // #update_one_token_stream
         // #delete_many_token_stream
         #delete_one_token_stream
         #routes_token_stream
