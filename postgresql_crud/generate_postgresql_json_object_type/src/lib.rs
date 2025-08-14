@@ -183,6 +183,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
         let column_name_and_maybe_field_getter_for_error_message_snake_case = naming::ColumnNameAndMaybeFieldGetterForErrorMessageSnakeCase;
         let column_snake_case = naming::ColumnSnakeCase;
         let read_only_ids_upper_camel_case = naming::ReadOnlyIdsUpperCamelCase;
+        let select_only_ids_query_part_snake_case = naming::SelectOnlyIdsQueryPartSnakeCase;
         let default_but_option_is_always_some_and_vec_always_contains_one_element_upper_camel_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementUpperCamelCase;
         let default_but_option_is_always_some_and_vec_always_contains_one_element_snake_case = naming::DefaultButOptionIsAlwaysSomeAndVecAlwaysContainsOneElementSnakeCase;
 
@@ -3865,33 +3866,12 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &create_query_bind_token_stream,
                 &ident_select_upper_camel_case,
                 &postgresql_crud_macros_common::SelectQueryPartValueUnderscore::False,
-                &{
-                    quote::quote!{
-                        format!("{} as {column}", value.#select_query_part_postgresql_type_snake_case(column))
-                    }
-                },
+                &quote::quote!{format!("{} as {column}", #value_snake_case.#select_query_part_postgresql_type_snake_case(#column_snake_case))},
                 &ident_where_element_upper_camel_case,
                 &ident_read_upper_camel_case,
                 &value_snake_case,
                 &ident_read_only_ids_upper_camel_case,
-                &{
-                    match &postgresql_json_object_type_pattern {
-                        PostgresqlJsonObjectTypePattern::Standart => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_select_only_ids_query_part_token_stream(&is_standart_with_id_false),
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote!{todo!()}
-                            },
-                        },
-                        PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
-                            postgresql_crud_macros_common::NotNullOrNullable::NotNull => {
-                                quote::quote!{todo!()}
-                            },
-                            postgresql_crud_macros_common::NotNullOrNullable::Nullable => {
-                                quote::quote!{todo!()}
-                            },
-                        }
-                    }
-                },
+                &quote::quote!{format!("{} as {column},", <#ident as postgresql_crud::PostgresqlJsonType>::#select_only_ids_query_part_snake_case(&#column_snake_case))},
                 &ident_read_inner_upper_camel_case,
                 &value_into_inner_token_stream,
                 &ident_update_upper_camel_case,

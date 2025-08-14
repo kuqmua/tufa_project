@@ -5555,7 +5555,15 @@ pub fn generate_postgresql_types(input_token_stream: proc_macro::TokenStream) ->
                         }
                     },
                     &ident_read_only_ids_upper_camel_case,
-                    &quote::quote!{#column_snake_case.to_string()},
+                    &if let PostgresqlTypePattern::Standart = &postgresql_type_pattern &&
+                    let postgresql_crud_macros_common::NotNullOrNullable::NotNull = &not_null_or_nullable &&
+                    let CanBePrimaryKey::True = &can_be_primary_key
+                    {
+                        quote::quote!{format!("{column},")}
+                    }
+                    else {
+                        quote::quote!{std::string::String::default()}
+                    },
                     &ident_read_inner_upper_camel_case,
                     &{
                         let generate_ident_standart_not_null_into_inner_ident_standart_not_null_read_token_stream = |content_token_stream: &dyn quote::ToTokens|{
