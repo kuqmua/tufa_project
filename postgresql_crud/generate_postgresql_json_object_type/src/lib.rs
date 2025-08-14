@@ -2274,6 +2274,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
             }
         };
         let ident_with_id_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_with_id_standart_not_null_upper_camel_case);
+        let ident_read_only_ids_standart_not_null_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident_standart_not_null_upper_camel_case);
         let ident_read_only_ids_upper_camel_case = naming::parameter::SelfReadOnlyIdsUpperCamelCase::from_tokens(&ident);
         let generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream = |is_standart_with_id: &IsStandartWithId|{
             let content_token_stream = get_vec_syn_field(&is_standart_with_id).iter().map(|element| {
@@ -2292,7 +2293,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => generate_ident_read_only_ids_or_ident_with_id_read_only_ids_content_token_stream(
                             &IsStandartWithId::False
                         ),
-                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{(std::option::Option<#ident_with_id_read_only_ids_standart_not_null_upper_camel_case>);},
+                        postgresql_crud_macros_common::NotNullOrNullable::Nullable => quote::quote!{(std::option::Option<#ident_read_only_ids_standart_not_null_upper_camel_case>);},
                     },
                     PostgresqlJsonObjectTypePattern::Array => match &not_null_or_nullable {
                         postgresql_crud_macros_common::NotNullOrNullable::NotNull => quote::quote!{(std::vec::Vec<#ident_with_id_read_only_ids_standart_not_null_upper_camel_case>);},
