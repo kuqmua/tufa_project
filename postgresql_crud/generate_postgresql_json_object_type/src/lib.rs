@@ -2306,7 +2306,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     },
                 };
                 quote::quote!{
-                    #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
                     pub struct #ident_read_only_ids_upper_camel_case #content_token_stream
                 }
             };
@@ -2346,7 +2346,7 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                     &IsStandartWithId::True
                 );
                 quote::quote!{
-                    #[derive(Debug, Clone, serde::Serialize, serde::Deserialize)]
+                    #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
                     pub struct #ident_with_id_read_only_ids_standart_not_null_upper_camel_case #content_token_stream
                 }
             };
