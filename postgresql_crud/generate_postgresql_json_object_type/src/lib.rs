@@ -3962,7 +3962,32 @@ pub fn generate_postgresql_json_object_type(input_token_stream: proc_macro::Toke
                 &ident_with_id_read_standart_not_null_upper_camel_case,
                 &ident_with_id_read_only_ids_standart_not_null_upper_camel_case,
                 &{
-                    quote::quote!{todo!()}
+                    let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&{
+                        let mut acc = get_vec_syn_field(&is_standart_with_id_true).iter().fold(
+                            std::string::String::new(),
+                            |mut acc, element| {
+                                let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                                    panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                                });
+                                acc.push_str(&format!("'{field_ident}',{{}},"));
+                                acc
+                            }
+                        );
+                        let _ = acc.pop();
+                        format!("jsonb_build_object({acc})")
+                    });
+                    let select_only_ids_query_part_calls_token_stream = get_vec_syn_field(&is_standart_with_id_true).iter().map(|element| {
+                        let field_ident = element.ident.as_ref().unwrap_or_else(|| {
+                            panic!("{}", naming::FIELD_IDENT_IS_NONE);
+                        });
+                        let field_type = &element.ty;
+                        let format_handle_token_stream = generate_quotes::double_quotes_token_stream(&format!("{{{column_name_and_maybe_field_getter_snake_case}}}->'{field_ident};"));
+                        quote::quote! {<#field_type as postgresql_crud::PostgresqlJsonType>::select_only_ids_query_part(#format_handle_token_stream)}
+                    });
+                    quote::quote!{format!(
+                        #format_handle_token_stream,
+                        #(#select_only_ids_query_part_calls_token_stream),*
+                    )}
                 },
                 &ident_with_id_read_inner_standart_not_null_upper_camel_case,
                 &value_into_inner_token_stream,
